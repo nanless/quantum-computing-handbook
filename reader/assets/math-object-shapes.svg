@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 750" role="img" aria-labelledby="math-shapes-title math-shapes-desc">
+  <title id="math-shapes-title">从 ket 到 bra：内积得到一个数，外积得到一个矩阵</title>
+  <desc id="math-shapes-desc">例子使用归一化列向量 v 等于一除根号二乘以列向量 1、i。共轭转置后，bra 等于一除根号二乘以行向量 1、负 i。bra 乘 ket 为一乘一标量 1；ket 乘 bra 为二乘二矩阵，元素依次为 1、负 i、i、1，再整体除以 2。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f7fafc}.card{fill:#fff;stroke:#c6d6e2;stroke-width:2}.scal{fill:#eaf7f5;stroke:#3aa69e;stroke-width:2.5}.mat{fill:#f3effd;stroke:#8f77c6;stroke-width:2.5;stroke-dasharray:10 6}.ink{fill:#17324a}.sub{fill:#466278}.arrow{stroke:#5b7284;stroke-width:3;fill:none}.head{fill:#5b7284}.bracket{stroke:#17324a;stroke-width:3;fill:none}.title{font:700 30px system-ui,sans-serif}.section{font:650 26px system-ui,sans-serif}.math{font:500 31px system-ui,sans-serif}.small{font:400 20px system-ui,sans-serif}.mid{font:500 22px system-ui,sans-serif}
+    @media(prefers-color-scheme:dark){.bg{fill:#101b25}.card{fill:#192b39;stroke:#4d6578}.scal{fill:#173a3a;stroke:#69d2c7}.mat{fill:#302944;stroke:#c5b1f3}.ink{fill:#eef7ff}.sub{fill:#c4d7e6}.arrow{stroke:#b7cad8}.head{fill:#b7cad8}.bracket{stroke:#eef7ff}}
+  </style>
+  <rect class="bg" width="1220" height="750" rx="26"/>
+  <text class="title ink" x="45" y="57">先看形状，再做乘法</text>
+  <text class="small sub" x="45" y="91">同一个向量 v：列写法叫 ket；共轭转置后，行写法叫 bra。</text>
+
+  <rect class="card" x="40" y="118" width="1140" height="205" rx="20"/>
+  <text class="section ink" x="76" y="164">列向量 ket（2 × 1）</text>
+  <text class="math ink" x="82" y="230">|v⟩ = 1/√2</text>
+  <path class="bracket" d="M300 191h-10v81h10M359 191h10v81h-10"/>
+  <text class="math ink" x="315" y="220">1</text><text class="math ink" x="315" y="259">i</text>
+  <line class="arrow" x1="456" y1="228" x2="694" y2="228"/>
+  <path class="head" d="M694 228l-15-8v16z"/>
+  <text class="small sub" x="466" y="205">转成行；i 取共轭为 −i</text>
+  <text class="section ink" x="733" y="164">行向量 bra（1 × 2）</text>
+  <text class="math ink" x="740" y="237">⟨v| = 1/√2</text>
+  <path class="bracket" d="M952 207h-10v52h10M1086 207h10v52h-10"/>
+  <text class="math ink" x="973" y="242">1</text><text class="math ink" x="1027" y="242">−i</text>
+  <text class="small sub" x="75" y="296">这一步叫共轭转置：先把列转成行，再把每个复数换成它的共轭。</text>
+
+  <rect class="scal" x="40" y="350" width="544" height="328" rx="20"/>
+  <text class="section ink" x="74" y="396">内积：行 × 列 → 标量</text>
+  <text class="small sub" x="74" y="427">形状： (1 × 2) × (2 × 1) = 1 × 1</text>
+  <text class="math ink" x="74" y="488">⟨v|v⟩ = (1×1 + (−i)×i) / 2</text>
+  <text class="math ink" x="74" y="542">= (1 + 1) / 2</text>
+  <text class="math ink" x="74" y="596">= 1</text>
+  <text class="small sub" x="74" y="646">得到长度平方；归一化态的结果是 1。</text>
+
+  <rect class="mat" x="612" y="350" width="568" height="328" rx="20"/>
+  <text class="section ink" x="646" y="396">外积：列 × 行 → 矩阵</text>
+  <text class="small sub" x="646" y="427">形状： (2 × 1) × (1 × 2) = 2 × 2</text>
+  <text class="math ink" x="646" y="488">|v⟩⟨v| = 1/2</text>
+  <path class="bracket" d="M900 453h-11v119h11M1094 453h11v119h-11"/>
+  <text class="math ink" x="944" y="493">1</text><text class="math ink" x="1021" y="493">−i</text>
+  <text class="math ink" x="944" y="546">i</text><text class="math ink" x="1039" y="546">1</text>
+  <text class="small sub" x="646" y="617">第 1 行来自 1 × [1, −i]；</text>
+  <text class="small sub" x="646" y="646">第 2 行来自 i × [1, −i]。</text>
+  <text class="small sub" x="41" y="722">同样两个对象，乘法顺序不同，结果的形状就不同；矩阵乘法通常不能交换。</text>
+</svg>

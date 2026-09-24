@@ -1,0 +1,8 @@
+{
+  "name": "quantum-handbook-reader",
+  "private": true,
+  "type": "module",
+  "description": "Build and verify an offline reading edition of the quantum handbook",
+  "scripts": {"build": "node build.mjs", "verify": "node verify.mjs"},
+  "dependencies": {"katex": "0.16.22", "marked": "15.0.12", "mermaid": "11.6.0", "playwright": "1.61.1"}
+}

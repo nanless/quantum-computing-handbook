@@ -1,0 +1,211 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>量子计算：从直觉到研究入口 · 量子计算手册</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">量子力学基础篇</div><a href="quantum-mechanics/index.html">基础篇导读与先修说明</a><a href="quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">量子计算主篇</div><a href="00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="01-math.html">01｜够用而不跳步的数学工具</a><a href="02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="05-noise-channels.html">05｜混态、噪声与量子信道</a><a href="06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="08-applications.html">08｜应用、变分算法与证据边界</a><a href="09-hardware.html">09｜从物理量子比特到控制栈</a><a href="10-error-correction.html">10｜量子错误校正与容错计算</a><a href="11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><a href="13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><a href="16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">附录</div><a href="appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="appendices/notation.html">符号表</a><a href="appendices/glossary.html">术语表</a><a href="appendices/exercises.html">练习答案与推导提示</a><a href="appendices/references.html">参考资料与证据等级</a><a href="appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#这套文档解决什么问题">这套文档解决什么问题</a><a class="toc-level-2" href="#阅读路线">阅读路线</a><a class="toc-level-2" href="#章节">章节</a><a class="toc-level-2" href="#从问题找到可手算的例子">从问题找到可手算的例子</a><a class="toc-level-2" href="#统一约定">统一约定</a><a class="toc-level-2" href="#怎样核查一句量子突破新闻">怎样核查一句“量子突破”新闻</a></nav></details><article><h1 id="量子计算从直觉到研究入口">量子计算：从直觉到研究入口</h1>
+<blockquote>
+<p>面向第一次系统学习量子计算的读者，也面向需要补齐数学、算法、硬件和容错基础的入门研究生。</p>
+<p>版本：2026-09-24。带有“会变化”标记的产业与工程信息应结合原始资料重新核验；各条事实保留各自的核验日期。</p>
+</blockquote>
+<p><a href="index.html">打开离线排版阅读版</a>：包含公式排版、可检索章节目录、页内导航和已经渲染的流程图。手机上可展开“本页导航”直接找到小节；复杂插图可打开原尺寸查看。整个 <code>reader/</code> 文件夹可复制到其他电脑后打开；外部参考文献仍需联网访问。</p>
+<h2 id="这套文档解决什么问题">这套文档解决什么问题</h2>
+<p>量子计算横跨线性代数、概率、量子力学、计算复杂性与工程。很多入门材料只讲“叠加、纠缠、并行”，容易留下三种误解：量子比特等于同时保存两个经典答案；测量能一次读出全部振幅；量子计算机会普遍替代经典计算机。本书从可计算的小例子出发，把直觉、公式和物理限制放在同一条线上。</p>
+<p>读完核心章节后，你应该能：</p>
+<ol>
+<li>用向量、矩阵与张量积描述量子态和量子门；</li>
+<li>手算 1–3 个量子比特的电路、测量概率与测量后状态；</li>
+<li>解释干涉为何是算法获得优势的关键，而不是笼统的“量子并行”；</li>
+<li>逐步分析 Grover、相位估计和 Shor 算法的核心子程序；</li>
+<li>区分物理量子比特、逻辑量子比特、门保真度、线路深度和应用级资源；</li>
+<li>理解噪声、量子错误校正和容错开销；</li>
+<li>对硬件路线、产业里程碑和“量子优势”声明做基本事实核查。</li>
+</ol>
+<h2 id="阅读路线">阅读路线</h2>
+<p>开始前可用<a href="appendices/prerequisites.html">七道先修自测与补习路线</a>检查分数、复数、矩阵、张量积、模运算和实验统计；每题都有逐步核对。量子力学基础篇 <a href="quantum-mechanics/index.html">Q1–Q4</a>从干涉与自旋实验，走到可观测量、薛定谔演化、能级、驱动，以及波函数、势阱和隧穿。它独立成篇，原有 00–19 章的编号和链接保持不变。</p>
+<figure class="flowchart"><img src="assets/flow-c04d61cabed49c.svg" style="width:857px" alt="主篇 00—19 章的主题分组与推荐衔接" loading="lazy"><figcaption>图 1｜主篇 00—19 章的主题分组与推荐衔接 · 横向较长时可在图内滚动 · <a href="assets/flow-c04d61cabed49c.svg">打开完整图</a></figcaption></figure>
+
+<p>图中展示原主篇的主题分组，箭头表示推荐衔接；新增基础篇的插入位置见下方路线。每章的具体先修条件以章节表为准；第 15 章的练习可随学习进度穿插进行。</p>
+<ul>
+<li><strong>零基础主线</strong>：按 00 → 01 → <a href="quantum-mechanics/01-experiments-states.html">Q1 实验与量子态</a> → 02 → <a href="quantum-mechanics/02-observables-dynamics.html">Q2 可观测量与演化</a> → 03 → 04 → 05 阅读，再进入算法或硬件。</li>
+<li><strong>硬件物理补充</strong>：先读 <a href="quantum-mechanics/03-levels-control.html">Q3 能级与驱动</a>，再进入 09、14；需要波函数与模型推导时读 <a href="quantum-mechanics/04-wavefunctions-models.html">Q4</a>，该章另需一元微积分。</li>
+<li><strong>计算机背景</strong>：可快速浏览 01 的复数部分，但不要跳过张量积、谱分解和复杂度记号。</li>
+<li><strong>物理背景</strong>：可略读态矢量入门，重点补齐可逆计算、oracle、复杂度与资源估算。</li>
+<li><strong>研究生速查</strong>：先做各章的“自检”，不会的题再回读对应段落。</li>
+</ul>
+<p>第一次读时，不必把每一页的进阶推导都读完。每章先找出它要回答的具体问题，跟着最小算例把输入、计算、输出写在纸上；遇到“进阶回看”可先跳过。算例能复算之后，再回来读一般公式及适用条件。附录答案保留中间步骤，适合用来定位自己究竟卡在符号、计算，还是对实验结果的解释。</p>
+<p>一个可执行的节奏是：读完 00、01、Q1、02 后，独立算出 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi mathvariant="normal">∣</mi><mn>0</mn><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">H|0\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord">∣0</span><span class="mclose">⟩</span></span></span></span></span> 的两个测量概率，以及 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Z</mi><mi>H</mi><mi mathvariant="normal">∣</mi><mn>0</mn><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">HZH|0\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord">∣0</span><span class="mclose">⟩</span></span></span></span></span> 的确定结果；读完 03、04 后，手算一次 Bell 态的测量和传态中的一个条件分支；读完 05、06 后，再比较“成功概率”和“实际门数”分别怎么算。这样每走一步都有可以核对的结果，不必只凭术语判断自己是否学会。</p>
+<h2 id="章节">章节</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>章节</th>
+<th>核心问题</th>
+<th>先修</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="00-overview.html">00 全景与边界</a></td>
+<td>量子计算能做什么、不能做什么？</td>
+<td>无</td>
+</tr>
+<tr>
+<td><a href="01-math.html">01 数学工具</a></td>
+<td>振幅、内积、酉矩阵、张量积怎样算？</td>
+<td>高中代数</td>
+</tr>
+<tr>
+<td><a href="02-single-qubit.html">02 单量子比特</a></td>
+<td>状态、相位、Bloch 球、测量是什么？</td>
+<td>01</td>
+</tr>
+<tr>
+<td><a href="03-multiple-qubits.html">03 多比特与纠缠</a></td>
+<td>张量积、纠缠、约化态如何判断与计算？</td>
+<td>01–02</td>
+</tr>
+<tr>
+<td><a href="04-circuits-protocols.html">04 量子门、电路与协议</a></td>
+<td>怎样从矩阵读懂电路？纠缠能完成什么任务？</td>
+<td>01–03</td>
+</tr>
+<tr>
+<td><a href="05-noise-channels.html">05 混态、噪声与量子信道</a></td>
+<td>现实设备为何不能只用态矢量描述？</td>
+<td>01–04</td>
+</tr>
+<tr>
+<td><a href="06-algorithmic-primitives.html">06 算法的共同骨架</a></td>
+<td>oracle、干涉、QFT、相位估计如何连接？</td>
+<td>01–05</td>
+</tr>
+<tr>
+<td><a href="07-algorithms.html">07 代表性量子算法</a></td>
+<td>搜索、因数分解、模拟为何可能加速？</td>
+<td>06</td>
+</tr>
+<tr>
+<td><a href="08-applications.html">08 应用、变分算法与证据</a></td>
+<td>NISQ 应用怎样评估，哪些说法证据不足？</td>
+<td>05–07</td>
+</tr>
+<tr>
+<td><a href="09-hardware.html">09 硬件与控制栈</a></td>
+<td>不同物理路线在优化什么？</td>
+<td>02–05</td>
+</tr>
+<tr>
+<td><a href="10-error-correction.html">10 错误校正与容错</a></td>
+<td>不复制未知态，怎样纠错？</td>
+<td>03–05</td>
+</tr>
+<tr>
+<td><a href="11-resources-benchmarks.html">11 资源估算与基准</a></td>
+<td>“1000 个量子比特”为什么不是完整指标？</td>
+<td>07、09–10</td>
+</tr>
+<tr>
+<td><a href="12-security-network-frontiers.html">12 安全、网络与研究前沿</a></td>
+<td>Shor、PQC、QKD、量子网络是什么关系？</td>
+<td>04、07、10</td>
+</tr>
+<tr>
+<td><a href="13-quantum-information.html">13 量子信息量度</a></td>
+<td>熵、迹距离、保真度、互信息与 Holevo 界怎样计算？</td>
+<td>03、05</td>
+</tr>
+<tr>
+<td><a href="14-compilation-control.html">14 编译、调度与控制</a></td>
+<td>抽象电路怎样变成原生门、时序和物理控制？</td>
+<td>04、05、09</td>
+</tr>
+<tr>
+<td><a href="15-practice-research.html">15 实践与论文复核</a></td>
+<td>怎样从手算走到模拟、真机实验和可复现研究？</td>
+<td>01–14 按需</td>
+</tr>
+<tr>
+<td><a href="16-advanced-algorithms-verification.html">16 高级算法与验证</a></td>
+<td>怎样理解查询下界、量子行走、QSVT 与可扩展验证？</td>
+<td>06–08、13</td>
+</tr>
+<tr>
+<td><a href="17-computation-models.html">17 量子计算模型</a></td>
+<td>门、测量型、绝热、退火、模拟与数字—模拟混合模型怎样比较？</td>
+<td>04、07、09、14</td>
+</tr>
+<tr>
+<td><a href="18-channels-capacities-complexity.html">18 信道、容量与验证复杂度</a></td>
+<td>怎样从信道表示走到容量、假设检验、证明系统和连续变量？</td>
+<td>03、05、07、13；连续变量另需 09</td>
+</tr>
+<tr>
+<td><a href="19-engineering-architecture.html">19 可维护量子系统工程</a></td>
+<td>处理器怎样从一次实验走向可扩展、可校准、可运维的系统？</td>
+<td>09–11、14</td>
+</tr>
+</tbody></table></div>
+<p>附录：<a href="appendices/prerequisites.html">先修自测</a> · <a href="appendices/notation.html">符号表</a> · <a href="appendices/glossary.html">术语表</a> · <a href="appendices/exercises.html">练习与答案</a> · <a href="appendices/references.html">参考资料与证据等级</a> · <a href="appendices/audit-log.html">审校记录</a></p>
+<h2 id="从问题找到可手算的例子">从问题找到可手算的例子</h2>
+<p>下面这些算例适合在读完相应先修内容后独立复算。先写自己的中间步骤，再对照正文；只记住最终数字，往往发现不了位序、分母和条件是否用错。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>想弄清的问题</th>
+<th>可从哪里开始</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>装置记录路径但没人读取，为什么仍会影响干涉？</td>
+<td><a href="quantum-mechanics/01-experiments-states.html">Q1</a>：两路径振幅、记录条件与输出概率</td>
+</tr>
+<tr>
+<td>不确定关系到底约束什么，量子门怎样由能量产生？</td>
+<td><a href="quantum-mechanics/02-observables-dynamics.html">Q2</a>：Pauli 算例、Robertson 推导与矩阵指数</td>
+</tr>
+<tr>
+<td>10 MHz 的驱动为什么不是 10 ns 的翻转？</td>
+<td><a href="quantum-mechanics/03-levels-control.html">Q3</a>：角频率、旋转坐标系、Rabi 振荡与失谐</td>
+</tr>
+<tr>
+<td>势阱能级为什么离散，隧穿概率怎样求？</td>
+<td><a href="quantum-mechanics/04-wavefunctions-models.html">Q4</a>：边界条件、归一化、势垒匹配与数值例子</td>
+</tr>
+<tr>
+<td>复数振幅怎样变成概率，怎样归一化？</td>
+<td><a href="01-math.html">第 01 章</a>：<span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>+</mo><mi>i</mi><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">[1,1+i]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mord mathnormal">i</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span> 的归一化与正半定矩阵反例</td>
+</tr>
+<tr>
+<td>为什么相同的 0/1 概率，不代表同一个量子态？</td>
+<td><a href="02-single-qubit.html">第 02 章</a>：<span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Z</mi><mi>H</mi></mrow><annotation encoding="application/x-tex">HZH</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span></span></span></span></span> 如何把相位差变成确定输出</td>
+</tr>
+<tr>
+<td>为什么一次周期测量不等于找到了因子？</td>
+<td><a href="07-algorithms.html">第 07 章</a>：从分解 15 到 35 的非整齐相位读数与连分数</td>
+</tr>
+<tr>
+<td>为什么窃听模型的错误率会出现两个百分数？</td>
+<td><a href="12-security-network-frontiers.html#31-算例截获再发送为什么带来-25-错误">第 12 章第 3.1 节</a>：保留数与发送数的分母区别</td>
+</tr>
+<tr>
+<td>为什么平均等待时间不足以预测平均剩余相干性？</td>
+<td><a href="12-security-network-frontiers.html#62-等待另一段的时间不等于总完成时间">第 12 章第 6.2 节</a>：先平均再取指数与逐次取指数再平均</td>
+</tr>
+<tr>
+<td>信息上界是否就是一次测量真正取得的信息？</td>
+<td><a href="13-quantum-information.html">第 13 章</a>：同一对非正交态的 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.601</mn></mrow><annotation encoding="application/x-tex">0.601</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.601</span></span></span></span></span> bit 上界与 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.399</mn></mrow><annotation encoding="application/x-tex">0.399</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.399</span></span></span></span></span> bit 可访问信息</td>
+</tr>
+<tr>
+<td>Bell 见证的点估计超过 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/2</span></span></span></span></span>，就足以宣称纠缠吗？</td>
+<td><a href="15-practice-research.html">第 15 章</a>：三组原始计数、抽样误差界与保守下界，附可复算图</td>
+</tr>
+</tbody></table></div>
+<h2 id="统一约定">统一约定</h2>
+<ul>
+<li>计算基按顺序写成 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mn>0</mn><mo stretchy="false">⟩</mo><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mn>1</mn><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">|0\rangle,|1\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣0</span><span class="mclose">⟩</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣1</span><span class="mclose">⟩</span></span></span></span></span>；两比特基按 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mn>00</mn><mo stretchy="false">⟩</mo><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mn>01</mn><mo stretchy="false">⟩</mo><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mn>10</mn><mo stretchy="false">⟩</mo><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mn>11</mn><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">|00\rangle,|01\rangle,|10\rangle,|11\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣00</span><span class="mclose">⟩</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣01</span><span class="mclose">⟩</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣10</span><span class="mclose">⟩</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣11</span><span class="mclose">⟩</span></span></span></span></span>。</li>
+<li>多比特字符串中，左边是高位。例如本书把四维列向量的第 3 个分量对应到 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mn>10</mn><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">|10\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣10</span><span class="mclose">⟩</span></span></span></span></span>。若软件把编号较小的量子比特显示在字符串右端，必须同时写出“线路上的量子比特编号”和“显示字符串的位序”，不能只贴一个 <code>10</code>。</li>
+<li>对纯态采用列向量；门从右向左作用：<span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mi>U</mi><mi mathvariant="normal">∣</mi><mi>ψ</mi><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">VU|\psi\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="mclose">⟩</span></span></span></span></span> 表示先做 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span></span>，再做 <span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></span>。</li>
+<li>对测量分别说明结果概率、已知结果时的条件后态，以及忽略结果时的非选择后态。</li>
+<li>退极化、退相位等信道的参数在不同资料中未必同义；每次使用都写出信道公式，不仅写参数名。</li>
+<li><span class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo></mrow><annotation encoding="application/x-tex">\log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span></span></span></span></span> 默认底数为 2；若底数影响结论，会明确写出。</li>
+<li>“量子优势”仅指在明确任务、误差容忍和资源口径下优于已知经典方法，不等于通用加速。</li>
+<li>每个重要结论尽量标注证据类型：<strong>定理</strong>、<strong>受控实验</strong>、<strong>数值模拟</strong>、<strong>工程报告</strong>或<strong>展望</strong>。</li>
+</ul>
+<h2 id="怎样核查一句量子突破新闻">怎样核查一句“量子突破”新闻</h2>
+<p>依次问五个问题：任务是否实用；输出是否验证；经典基线是否为当时最强；比较是否包含数据装载、纠错、重复采样与能耗；结果是同行评审论文、预印本还是公司路线图。只要其中两项不清楚，就不应把它改写成“量子计算机已解决某行业问题”。</p>
+</article><div class="page-turn"></div><footer>2026-09-24 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#这套文档解决什么问题">这套文档解决什么问题</a><a class="toc-level-2" href="#阅读路线">阅读路线</a><a class="toc-level-2" href="#章节">章节</a><a class="toc-level-2" href="#从问题找到可手算的例子">从问题找到可手算的例子</a><a class="toc-level-2" href="#统一约定">统一约定</a><a class="toc-level-2" href="#怎样核查一句量子突破新闻">怎样核查一句“量子突破”新闻</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>

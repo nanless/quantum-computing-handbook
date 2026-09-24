@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 450" role="img" aria-labelledby="title desc">
+  <title id="title">两步制备 Bell 态：先做 Hadamard，再做受控非门</title>
+  <desc id="desc">两条量子线路按从左到右的时间方向绘制。上方量子比特 A 从零态经过 Hadamard 门，再作为受控非门的控制端；下方 B 是目标端。虚线分开初态、叠加态与纠缠态三个阶段，最终计算基测量只有零零或一一，各占一半。</desc>
+  <style>
+    .bg{fill:#f7faf5}.ink{fill:#1e4238}.muted{fill:#5b7067}.wire{stroke:#244f43;stroke-width:3;fill:none}.dash{stroke:#9cad9d;stroke-width:1.5;stroke-dasharray:5 6}.gate{fill:#e0eee4;stroke:#44775f;stroke-width:2}.panel{fill:#fffefa;stroke:#d2ded0}.small{font:17px 'PingFang SC',system-ui,sans-serif}.text{font:21px 'PingFang SC',system-ui,sans-serif}.title{font:600 25px 'PingFang SC',system-ui,sans-serif}.math{font:23px 'Cambria Math','Times New Roman',serif}.gateText{font:30px Georgia,serif}.head{fill:#244f43}
+    @media(prefers-color-scheme:dark){.bg{fill:#152620}.ink{fill:#e9f4ec}.muted{fill:#bed0c2}.wire{stroke:#c1e3cd}.head{fill:#c1e3cd}.gate{fill:#274c3c;stroke:#a0cbb2}.panel{fill:#1b3027;stroke:#567462}.dash{stroke:#789480}}
+  </style>
+  <rect class="bg" width="960" height="450" rx="20"/>
+  <text x="32" y="45" class="title ink">从乘积态到纠缠态，只需两个门</text>
+  <text x="32" y="77" class="small muted">本图约定：上方 A 是第一个张量因子，基顺序为 00、01、10、11。</text>
+  <path class="wire" d="M660 113H905"/><path class="head" d="M905 113l-12-6v12z"/>
+  <text x="705" y="103" class="small muted">时间从左向右</text>
+  <text x="32" y="171" class="text ink">A：|0⟩</text><text x="32" y="251" class="text ink">B：|0⟩</text>
+  <path class="wire" d="M135 164H898M135 244H898"/>
+  <path class="dash" d="M202 132V281M500 132V281M780 132V281"/>
+  <rect class="gate" x="289" y="136" width="64" height="56" rx="6"/>
+  <text x="321" y="174" text-anchor="middle" class="gateText ink">H</text>
+  <path class="wire" d="M640 164V244"/><circle class="head" cx="640" cy="164" r="8"/>
+  <circle class="gate" cx="640" cy="244" r="18"/><path class="wire" d="M624 244H656M640 228V260"/>
+  <text x="675" y="148" class="small muted">控制端</text><text x="675" y="278" class="small muted">目标端</text>
+  <text x="306" y="222" class="small muted">只作用于 A</text>
+  <rect class="panel" x="28" y="300" width="250" height="108" rx="10"/>
+  <rect class="panel" x="295" y="300" width="300" height="108" rx="10"/>
+  <rect class="panel" x="612" y="300" width="320" height="108" rx="10"/>
+  <text x="48" y="332" class="small muted">① 初态：两个独立的零态</text>
+  <text x="48" y="372" class="math ink">|00⟩</text>
+  <text x="315" y="332" class="small muted">② H 后：仍然是乘积态</text>
+  <text x="315" y="372" class="math ink">(|00⟩ + |10⟩) / √2</text>
+  <text x="632" y="332" class="small muted">③ CNOT 后：Bell 纠缠态</text>
+  <text x="632" y="372" class="math ink">(|00⟩ + |11⟩) / √2</text>
+  <text x="32" y="435" class="small muted">联合态写在下方；不能在纠缠态阶段为 A、B 各指定一个独立纯态。示意图不按门时长绘制。</text>
+</svg>

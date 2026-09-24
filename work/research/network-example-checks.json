@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-09-24T17:34:10.311Z",
+  "node": "v22.22.2",
+  "branches": [
+    {
+      "bell": "Phi+",
+      "probability": 0.25000000000000006,
+      "correctedOverlap": 1.0000000000000002
+    },
+    {
+      "bell": "Phi-",
+      "probability": 0.25000000000000006,
+      "correctedOverlap": 1.0000000000000002
+    },
+    {
+      "bell": "Psi+",
+      "probability": 0.25000000000000006,
+      "correctedOverlap": 1.0000000000000002
+    },
+    {
+      "bell": "Psi-",
+      "probability": 0.25000000000000006,
+      "correctedOverlap": -1.0000000000000002
+    }
+  ],
+  "unconditionalState": [
+    [
+      0.25000000000000006,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0.25000000000000006,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0.25000000000000006,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0.25000000000000006
+    ]
+  ],
+  "memory": {
+    "p": 0.1,
+    "slotMilliseconds": 1,
+    "effectiveCoherenceMilliseconds": 20,
+    "meanWaitMilliseconds": 9.473684210526313,
+    "doubleSum": 0.6789035130765396,
+    "closed": 0.6789035130766081,
+    "atMean": 0.6227038648477501
+  },
+  "bb84": {
+    "siftedErrorRate": 0.25,
+    "retainedAndWrongFraction": 0.125,
+    "noErrorsIn20Checks": 0.0031712119389339932,
+    "asymptoticRateAtOnePercent": 0.8384137282081776,
+    "asymptoticRateAtFivePercent": 0.4272060857680875
+  },
+  "assertions": "passed"
+}

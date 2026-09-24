@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 390" role="img" aria-labelledby="title desc">
+  <title id="title">Bell 态重叠的点估计、保守置信区间与可分离态阈值</title>
+  <desc id="desc">横轴是无量纲 Bell 态重叠 f 的局部放大范围 0.4 到 0.8。可分离态上界为 0.5，三组各一千次测量给出点估计 0.6625；只考虑独立抽样误差的保守 95% 区间从 0.5891 到 0.7359。整个区间位于阈值右侧。图示不包含校准误差和漂移。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f7f9fc}.card{fill:#fff;stroke:#d4dce9;stroke-width:1.5}.ink{fill:#1b2b40}.muted{fill:#52657d}.axis{stroke:#52657d;stroke-width:2}.grid{stroke:#d8e0ea;stroke-width:1.5}.threshold{stroke:#a55532;stroke-width:3;stroke-dasharray:9 7}.interval{stroke:#176e86;stroke-width:9;stroke-linecap:round}.cap{stroke:#176e86;stroke-width:3}.estimate{fill:#176e86;stroke:#fff;stroke-width:3}.pill{fill:#eaf4f6}.warn{fill:#fff1e8}.small{font:17px -apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","PingFang SC",sans-serif}.body{font:21px -apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","PingFang SC",sans-serif}.head{font:600 28px -apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","PingFang SC",sans-serif}.strong{font-weight:700}
+    @media(prefers-color-scheme:dark){.bg{fill:#101b2a}.card{fill:#192a3c;stroke:#40576e}.ink{fill:#e9f2fb}.muted{fill:#b4c5d7}.axis{stroke:#c5d3e1}.grid{stroke:#40566b}.threshold{stroke:#f7ae86}.interval{stroke:#66c5df}.cap{stroke:#66c5df}.estimate{fill:#66c5df;stroke:#192a3c}.pill{fill:#173f4b}.warn{fill:#513827}}
+  </style>
+  <rect class="bg" width="960" height="390" rx="20"/>
+  <rect class="card" x="18" y="18" width="924" height="354" rx="18"/>
+  <text class="head ink" x="50" y="66">仅凭点估计超过 1/2，还不够</text>
+  <text class="body muted" x="50" y="102">三种测量各做 1000 次；图中只计独立抽样误差</text>
+
+  <rect class="warn" x="50" y="130" width="270" height="45" rx="10"/>
+  <text class="small ink strong" x="65" y="159">可分离态的上界  0.5000</text>
+  <rect class="pill" x="342" y="130" width="420" height="45" rx="10"/>
+  <text class="small ink strong" x="358" y="159">保守 95% 区间  0.5891—0.7359</text>
+
+  <line class="axis" x1="180" y1="266" x2="860" y2="266"/>
+  <g class="small muted" text-anchor="middle">
+    <line class="grid" x1="180" y1="248" x2="180" y2="276"/><text x="180" y="304">0.4</text>
+    <line class="grid" x1="350" y1="248" x2="350" y2="276"/><text x="350" y="304">0.5</text>
+    <line class="grid" x1="520" y1="248" x2="520" y2="276"/><text x="520" y="304">0.6</text>
+    <line class="grid" x1="690" y1="248" x2="690" y2="276"/><text x="690" y="304">0.7</text>
+    <line class="grid" x1="860" y1="248" x2="860" y2="276"/><text x="860" y="304">0.8</text>
+  </g>
+  <line class="threshold" x1="350" y1="185" x2="350" y2="260"/>
+  <text class="small ink" text-anchor="end" x="337" y="206">阈值</text>
+  <line class="interval" x1="501.5" y1="232" x2="751" y2="232"/>
+  <line class="cap" x1="501.5" y1="216" x2="501.5" y2="248"/>
+  <line class="cap" x1="751" y1="216" x2="751" y2="248"/>
+  <polygon class="estimate" points="626.3,215 643.3,232 626.3,249 609.3,232"/>
+  <g class="small ink" text-anchor="middle">
+    <text x="501.5" y="206">下界 0.5891</text>
+    <text x="626.3" y="197">估计 0.6625</text>
+    <text x="751" y="206">上界 0.7359</text>
+  </g>
+  <text class="small muted" x="50" y="346">横轴：Bell 态重叠 f（无量纲；仅展示 0.4—0.8 的局部范围）。校准偏差与时间漂移未计入。</text>
+</svg>

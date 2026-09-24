@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="title desc">
+  <title id="title">偏迹把被忽略系统的相同标签相加</title>
+  <desc id="desc">左侧是按 00、01、10、11 排列的 Bell 态四乘四密度矩阵。标记一的 00,00 和 01,01 两格相加，成为右侧约化矩阵的 0,0 格；标记二的 10,10 与 11,11 相加，成为 1,1 格。另两格按同一规则求和。图中的矩阵数值均包含前面的二分之一系数。</desc>
+  <style>
+    .bg{fill:#f7faf5}.ink{fill:#173d32}.muted{fill:#547166}.paper{fill:#fffefa;stroke:#c6d8ce;stroke-width:2}.grid{stroke:#9ab4a5;stroke-width:1.5}.one{fill:#d7e9df;stroke:#277255;stroke-width:2}.two{fill:#eee3cb;stroke:#946b24;stroke-width:2}.zero{fill:#fbfcf8}.flow{stroke:#467b66;stroke-width:2.5;fill:none}.label{font:18px 'PingFang SC',system-ui,sans-serif}.head{font:600 25px 'PingFang SC',system-ui,sans-serif}.num{font:24px 'Cambria Math','Times New Roman',serif}.tag{font:600 17px 'PingFang SC',system-ui,sans-serif}
+    @media(prefers-color-scheme:dark){.bg{fill:#14251e}.ink{fill:#e8f2eb}.muted{fill:#bdd1c3}.paper{fill:#21372a;stroke:#5d826c}.grid{stroke:#6b8b78}.one{fill:#254a36;stroke:#8dccaa}.two{fill:#52462e;stroke:#e3bc77}.zero{fill:#1c3025}.flow{stroke:#9fd0b0}}
+  </style>
+  <rect class="bg" width="1120" height="660" rx="22"/>
+  <text x="35" y="49" class="head ink">只看 A：把 B 的同号格相加</text>
+  <text x="35" y="83" class="label muted">行列顺序固定为 00、01、10、11；这里示范 Bell 态的 ρ_AB → ρ_A。</text>
+  <rect x="30" y="111" width="610" height="478" rx="15" class="paper"/>
+  <text x="55" y="151" class="label ink">联合矩阵 ρ_AB（4 × 4）</text>
+  <text x="146" y="201" class="label muted">列</text>
+  <text x="64" y="272" class="label muted">行</text>
+  <g class="label muted" text-anchor="middle">
+    <text x="225" y="206">00</text><text x="315" y="206">01</text><text x="405" y="206">10</text><text x="495" y="206">11</text>
+    <text x="138" y="264">00</text><text x="138" y="354">01</text><text x="138" y="444">10</text><text x="138" y="534">11</text>
+  </g>
+  <g>
+    <rect x="181" y="220" width="88" height="88" class="one"/><rect x="271" y="220" width="88" height="88" class="zero"/><rect x="361" y="220" width="88" height="88" class="zero"/><rect x="451" y="220" width="88" height="88" class="zero"/>
+    <rect x="181" y="310" width="88" height="88" class="zero"/><rect x="271" y="310" width="88" height="88" class="one"/><rect x="361" y="310" width="88" height="88" class="zero"/><rect x="451" y="310" width="88" height="88" class="zero"/>
+    <rect x="181" y="400" width="88" height="88" class="zero"/><rect x="271" y="400" width="88" height="88" class="zero"/><rect x="361" y="400" width="88" height="88" class="two"/><rect x="451" y="400" width="88" height="88" class="zero"/>
+    <rect x="181" y="490" width="88" height="88" class="zero"/><rect x="271" y="490" width="88" height="88" class="zero"/><rect x="361" y="490" width="88" height="88" class="zero"/><rect x="451" y="490" width="88" height="88" class="two"/>
+  </g>
+  <g class="num ink" text-anchor="middle">
+    <text x="225" y="274">1/2</text><text x="315" y="274">0</text><text x="405" y="274">0</text><text x="495" y="274">1/2</text>
+    <text x="225" y="364">0</text><text x="315" y="364">0</text><text x="405" y="364">0</text><text x="495" y="364">0</text>
+    <text x="225" y="454">0</text><text x="315" y="454">0</text><text x="405" y="454">0</text><text x="495" y="454">0</text>
+    <text x="225" y="544">1/2</text><text x="315" y="544">0</text><text x="405" y="544">0</text><text x="495" y="544">1/2</text>
+  </g>
+  <path d="M644 333H704" class="flow"/><path d="M704 333l-12-7v14z" class="flow"/>
+  <text x="655" y="310" class="label muted">Tr_B</text>
+  <rect x="720" y="111" width="370" height="434" rx="15" class="paper"/>
+  <text x="742" y="151" class="label ink">A 的约化矩阵 ρ_A（2 × 2）</text>
+  <g class="label muted" text-anchor="middle"><text x="850" y="206">0</text><text x="970" y="206">1</text><text x="758" y="299">0</text><text x="758" y="419">1</text></g>
+  <rect x="790" y="220" width="118" height="118" class="one"/><rect x="910" y="220" width="118" height="118" class="zero"/>
+  <rect x="790" y="340" width="118" height="118" class="zero"/><rect x="910" y="340" width="118" height="118" class="two"/>
+  <g class="num ink" text-anchor="middle"><text x="849" y="285">1/2</text><text x="969" y="285">0</text><text x="849" y="405">0</text><text x="969" y="405">1/2</text></g>
+  <text x="748" y="508" class="label muted">① 1/2 + 0 = 1/2</text>
+  <text x="748" y="535" class="label muted">② 0 + 1/2 = 1/2</text>
+  <text x="35" y="628" class="label muted">非对角格也按同一规则相加：例如 (ρ_A)₀₁ = ρ₀₀,₁₀ + ρ₀₁,₁₁ = 0。</text>
+</svg>

@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-09-24T17:34:10.316Z",
+  "reviewer": "primary agent",
+  "chapters": 24,
+  "questions": 251,
+  "answers": 251,
+  "matchingFoundationDrafts": 4,
+  "globalPhaseProbabilityChecks": 21,
+  "counts": [
+    {
+      "file": "handbook/00-overview.md",
+      "questions": 6,
+      "answers": 6
+    },
+    {
+      "file": "handbook/01-math.md",
+      "questions": 14,
+      "answers": 14
+    },
+    {
+      "file": "handbook/02-single-qubit.md",
+      "questions": 11,
+      "answers": 11
+    },
+    {
+      "file": "handbook/03-multiple-qubits.md",
+      "questions": 11,
+      "answers": 11
+    },
+    {
+      "file": "handbook/04-circuits-protocols.md",
+      "questions": 9,
+      "answers": 9
+    },
+    {
+      "file": "handbook/05-noise-channels.md",
+      "questions": 8,
+      "answers": 8
+    },
+    {
+      "file": "handbook/06-algorithmic-primitives.md",
+      "questions": 14,
+      "answers": 14
+    },
+    {
+      "file": "handbook/07-algorithms.md",
+      "questions": 15,
+      "answers": 15
+    },
+    {
+      "file": "handbook/08-applications.md",
+      "questions": 15,
+      "answers": 15
+    },
+    {
+      "file": "handbook/09-hardware.md",
+      "questions": 11,
+      "answers": 11
+    },
+    {
+      "file": "handbook/10-error-correction.md",
+      "questions": 10,
+      "answers": 10
+    },
+    {
+      "file": "handbook/11-resources-benchmarks.md",
+      "questions": 9,
+      "answers": 9
+    },
+    {
+      "file": "handbook/12-security-network-frontiers.md",
+      "questions": 17,
+      "answers": 17
+    },
+    {
+      "file": "handbook/13-quantum-information.md",
+      "questions": 6,
+      "answers": 6
+    },
+    {
+      "file": "handbook/14-compilation-control.md",
+      "questions": 8,
+      "answers": 8
+    },
+    {
+      "file": "handbook/15-practice-research.md",
+      "questions": 8,
+      "answers": 8
+    },
+    {
+      "file": "handbook/16-advanced-algorithms-verification.md",
+      "questions": 12,
+      "answers": 12
+    },
+    {
+      "file": "handbook/17-computation-models.md",
+      "questions": 10,
+      "answers": 10
+    },
+    {
+      "file": "handbook/18-channels-capacities-complexity.md",
+      "questions": 14,
+      "answers": 14
+    },
+    {
+      "file": "handbook/19-engineering-architecture.md",
+      "questions": 12,
+      "answers": 12
+    },
+    {
+      "file": "handbook/quantum-mechanics/01-experiments-states.md",
+      "questions": 7,
+      "answers": 7
+    },
+    {
+      "file": "handbook/quantum-mechanics/02-observables-dynamics.md",
+      "questions": 8,
+      "answers": 8
+    },
+    {
+      "file": "handbook/quantum-mechanics/03-levels-control.md",
+      "questions": 8,
+      "answers": 8
+    },
+    {
+      "file": "handbook/quantum-mechanics/04-wavefunctions-models.md",
+      "questions": 8,
+      "answers": 8
+    }
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 940" role="img" aria-labelledby="title desc">
+  <title id="title">低温量子计算机的控制、读出与热流分层</title>
+  <desc id="desc">用一种代表性分区，从室温、四开尔文、常见毫开尔文级到十至二十毫开尔文量子平面，分层显示数字控制、低温电子学、放大与隔离、线缆和量子芯片，并区分向下的控制信号、向上的读出信号与热负载。器件的实际温区依具体系统而异。</desc>
+  <style>
+    :root{color-scheme:light dark}.bg{fill:#f7fafc}.title{font:600 29px system-ui,sans-serif;fill:#13263a}.sub{font:400 16px system-ui,sans-serif;fill:#4b6073}
+    .stage{stroke-width:2}.rt{fill:#fff2dc;stroke:#bd8432}.k4{fill:#e8eff8;stroke:#547ca6}.mk100{fill:#e8f4f3;stroke:#4a8b86}.mk10{fill:#eae9fa;stroke:#7068ae}
+    .staget{font:700 22px system-ui,sans-serif;fill:#173047}.stagec{font:400 15px system-ui,sans-serif;fill:#405b70}.box{fill:#fff;stroke:#92a9ba;stroke-width:1.5}.boxt{font:600 16px system-ui,sans-serif;fill:#1e3a50}.small{font:400 14px system-ui,sans-serif;fill:#4c6578}
+    .ctrl{stroke:#2c78a3;stroke-width:4;fill:none;marker-end:url(#blue)}.read{stroke:#3d8b63;stroke-width:4;fill:none;marker-end:url(#green)}.heat{stroke:#c05c45;stroke-width:4;stroke-dasharray:8 7;fill:none;marker-end:url(#red)}.brace{stroke:#73899b;stroke-width:2;fill:none}
+    .legend{font:600 15px system-ui,sans-serif;fill:#2b4358}.formula{font:500 16px ui-monospace,monospace;fill:#243c51}.warn{fill:#fff8e6;stroke:#c49234;stroke-width:1.5}
+    .markerBlue{fill:#2c78a3}.markerGreen{fill:#3d8b63}.markerRed{fill:#c05c45}
+    @media(prefers-color-scheme:dark){.bg{fill:#101820}.title{fill:#eef6ff}.sub{fill:#b7c8d7}.rt{fill:#49371f}.k4{fill:#20364d}.mk100{fill:#1d403d}.mk10{fill:#302e51}.staget,.boxt{fill:#edf6fc}.stagec,.small,.legend{fill:#bfd0dc}.box{fill:#172632;stroke:#6d879a}.formula{fill:#e5f0f7}.warn{fill:#43391f;stroke:#d2a34a}.ctrl{stroke:#72bde7}.read{stroke:#7bd0a1}.heat{stroke:#f0927c}.markerBlue{fill:#72bde7}.markerGreen{fill:#7bd0a1}.markerRed{fill:#f0927c}}
+  </style>
+  <defs>
+    <marker id="blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="markerBlue" d="M0 0L10 5L0 10z"/></marker>
+    <marker id="green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="markerGreen" d="M0 0L10 5L0 10z"/></marker>
+    <marker id="red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="markerRed" d="M0 0L10 5L0 10z"/></marker>
+  </defs>
+  <rect class="bg" width="1240" height="940" rx="28"/>
+  <text class="title" x="54" y="55">低温控制栈：每少一根室温线缆，冷端就多一笔功耗账</text>
+  <text class="sub" x="54" y="84">温区不是装饰标签；信号、噪声、导热、局部热点和可维护性必须同时满足。</text>
+
+  <g transform="translate(55 116)">
+    <rect class="stage rt" width="850" height="142" rx="20"/>
+    <text class="staget" x="24" y="38">室温 · 300 K</text><text class="stagec" x="24" y="65">功率充足，适合编译和作业控制</text><text class="stagec" x="24" y="88">线缆长，数字处理维护较方便</text>
+    <g transform="translate(330 24)"><rect class="box" width="220" height="92" rx="13"/><text class="boxt" x="110" y="30" text-anchor="middle">编译器 / 作业控制</text><text class="small" x="110" y="54" text-anchor="middle">指令、校准数据库</text><text class="small" x="110" y="75" text-anchor="middle">监控与变更记录</text></g>
+    <g transform="translate(580 24)"><rect class="box" width="240" height="92" rx="13"/><text class="boxt" x="120" y="30" text-anchor="middle">DAC / ADC / FPGA</text><text class="small" x="120" y="54" text-anchor="middle">波形、数字化、分类</text><text class="small" x="120" y="75" text-anchor="middle">可部分下沉到低温</text></g>
+  </g>
+  <g transform="translate(55 276)">
+    <rect class="stage k4" width="850" height="142" rx="20"/>
+    <text class="staget" x="24" y="38">4 K 级</text><text class="stagec" x="24" y="65">制冷量较大，可放部分控制电子学</text><text class="stagec" x="24" y="88">仍须限制瓦级功耗与噪声</text>
+    <g transform="translate(330 24)"><rect class="box" width="220" height="92" rx="13"/><text class="boxt" x="110" y="30" text-anchor="middle">cryo-CMOS / 复用</text><text class="small" x="110" y="54" text-anchor="middle">本地序列与基带驱动</text><text class="small" x="110" y="75" text-anchor="middle">固定功耗 + 活动功耗</text></g>
+    <g transform="translate(580 24)"><rect class="box" width="240" height="92" rx="13"/><text class="boxt" x="120" y="30" text-anchor="middle">HEMT / 热锚 / 滤波</text><text class="small" x="120" y="54" text-anchor="middle">读出增益与噪声预算</text><text class="small" x="120" y="75" text-anchor="middle">线缆热化与连接器</text></g>
+  </g>
+  <g transform="translate(55 436)">
+    <rect class="stage mk100" width="850" height="142" rx="20"/>
+    <text class="staget" x="24" y="38">常见 mK 级 · 位置依系统</text><text class="stagec" x="24" y="65">部分系统制冷量可达毫瓦量级</text><text class="stagec" x="24" y="88">近端控制缩短线缆，也会加热样品</text>
+    <g transform="translate(330 24)"><rect class="box" width="220" height="92" rx="13"/><text class="boxt" x="110" y="30" text-anchor="middle">近端模拟单元</text><text class="small" x="110" y="54" text-anchor="middle">开关、采样保持、偏置</text><text class="small" x="110" y="75" text-anchor="middle">局部热点不可忽略</text></g>
+    <g transform="translate(580 24)"><rect class="box" width="240" height="92" rx="13"/><text class="boxt" x="120" y="30" text-anchor="middle">放大 / 隔离（示意）</text><text class="small" x="120" y="54" text-anchor="middle">JPA、TWPA、环行器等</text><text class="small" x="120" y="75" text-anchor="middle">实际冷级依损耗与泵浦而定</text></g>
+  </g>
+  <g transform="translate(55 596)">
+    <rect class="stage mk10" width="850" height="142" rx="20"/>
+    <text class="staget" x="24" y="38">10–20 mK · 量子平面</text><text class="stagec" x="24" y="65">制冷量最小，要求低损耗、低噪声</text><text class="stagec" x="24" y="88">还须充分热化并保持封装稳定</text>
+    <g transform="translate(330 24)"><rect class="box" width="220" height="92" rx="13"/><text class="boxt" x="110" y="30" text-anchor="middle">量子芯片 / 裸片</text><text class="small" x="110" y="54" text-anchor="middle">量子比特、耦合器、谐振腔</text><text class="small" x="110" y="75" text-anchor="middle">电子温度 ≠ 冷台温度</text></g>
+    <g transform="translate(580 24)"><rect class="box" width="240" height="92" rx="13"/><text class="boxt" x="120" y="30" text-anchor="middle">中介层 / TSV / 凸点</text><text class="small" x="120" y="54" text-anchor="middle">高密度 I/O 与接地</text><text class="small" x="120" y="75" text-anchor="middle">热循环和可测试性</text></g>
+  </g>
+
+  <path class="ctrl" d="M965 175V665"/><text class="legend" x="965" y="150" text-anchor="middle">控制↓</text>
+  <path class="read" d="M1040 675V175"/><text class="legend" x="1040" y="150" text-anchor="middle">读出↑</text>
+  <path class="heat" d="M1115 175V665"/><text class="legend" x="1115" y="150" text-anchor="middle">热流↓</text>
+
+  <rect class="warn" x="935" y="750" width="260" height="150" rx="16"/>
+  <text class="formula" x="1065" y="782" text-anchor="middle">Pₛ = Pstatic + Pswitched</text>
+  <text class="formula" x="1065" y="809" text-anchor="middle">+ Panalog + PIO + Pwire</text>
+  <text class="small" x="1065" y="842" text-anchor="middle">每个温区都要满足</text>
+  <text class="formula" x="1065" y="872" text-anchor="middle">Pₛ &lt; Pcool(Tₛ)</text>
+
+  <text class="sub" x="55" y="925">读图提示：铭牌制冷量、冷台温度、样品电子温度、局部热点和墙插功耗是五个不同量。</text>
+</svg>

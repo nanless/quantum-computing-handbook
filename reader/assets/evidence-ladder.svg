@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" role="img" aria-labelledby="title desc">
+  <title id="title">判断量子优势的四类证据</title>
+  <desc id="desc">两行两列并排展示可运行性、结果可信度、模型内算法优势与实测端到端优势。它们回答不同问题，不能按箭头自动升级或互相替代。</desc>
+  <style>
+    .bg{fill:#f7faf8}.ink{fill:#17352f}.muted{fill:#506d63}.card{stroke-width:2}.c1{fill:#e8f3ec;stroke:#6ca383}.c2{fill:#e7f2f6;stroke:#6b9db1}.c3{fill:#f0edf8;stroke:#9387ba}.c4{fill:#f9f0dc;stroke:#b39554}.head{font:600 29px 'PingFang SC',system-ui,sans-serif}.name{font:600 24px 'PingFang SC',system-ui,sans-serif}.body{font:18px 'PingFang SC',system-ui,sans-serif}.small{font:17px 'PingFang SC',system-ui,sans-serif}
+    @media(prefers-color-scheme:dark){.bg{fill:#14231f}.ink{fill:#eff8f1}.muted{fill:#c0d2c7}.c1{fill:#254235;stroke:#83ba95}.c2{fill:#23414d;stroke:#87b9cf}.c3{fill:#39334c;stroke:#aa9bcf}.c4{fill:#493d27;stroke:#d0b677}}
+  </style>
+  <rect class="bg" width="1000" height="560" rx="24"/>
+  <text x="40" y="53" class="head ink">量子优势主张：并排检查四类证据</text>
+  <text x="42" y="82" class="small muted">每一类只回答自己的问题；不能沿着顺序自动推出下一类。</text>
+
+  <rect x="40" y="110" width="444" height="160" rx="17" class="card c1"/>
+  <text x="63" y="148" class="name ink">可运行性</text>
+  <text x="63" y="183" class="body ink">设备能否执行线路、产生记录？</text>
+  <text x="63" y="216" class="body muted">不能单独证明输出正确，</text>
+  <text x="63" y="244" class="body muted">也不能证明实际加速。</text>
+
+  <rect x="516" y="110" width="444" height="160" rx="17" class="card c2"/>
+  <text x="539" y="148" class="name ink">结果可信度</text>
+  <text x="539" y="183" class="body ink">输出能否用校验或交叉实验支持？</text>
+  <text x="539" y="216" class="body muted">可信结果不等于已排除</text>
+  <text x="539" y="244" class="body muted">所有强的经典算法。</text>
+
+  <rect x="40" y="289" width="444" height="160" rx="17" class="card c3"/>
+  <text x="63" y="327" class="name ink">模型内算法优势</text>
+  <text x="63" y="362" class="body ink">同一输入、误差条件下成本更低？</text>
+  <text x="63" y="395" class="body muted">查询数优势不直接等于</text>
+  <text x="63" y="423" class="body muted">真实机器运行更快。</text>
+
+  <rect x="516" y="289" width="444" height="160" rx="17" class="card c4"/>
+  <text x="539" y="327" class="name ink">实测端到端优势</text>
+  <text x="539" y="362" class="body ink">完整流程胜过同任务的强经典基线？</text>
+  <text x="539" y="395" class="body muted">单一任务的胜出不等于</text>
+  <text x="539" y="423" class="body muted">对其他任务也有优势。</text>
+
+  <text x="42" y="495" class="body ink">交叉判断：理论成本、实验可信度和实际用时各需独立证据。</text>
+  <text x="42" y="526" class="small muted">本图是读论文的提问清单，不是技术成熟度排名。</text>
+</svg>

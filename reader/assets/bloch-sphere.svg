@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Bloch 球上的六个基准量子态</title>
+  <desc id="desc">球面标出正负 X、Y、Z 轴及其对应量子态，旁边说明纯态在球面、混态在球内。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f8fafc}.ink{stroke:#19324d;fill:none}.muted{stroke:#8aa0b5;fill:none}.axis{stroke:#19324d;stroke-width:2}.axishead{fill:#19324d}.sphere{stroke:#2e6f95;stroke-width:3;fill:#dff4ff;fill-opacity:.52}.equator{stroke:#5397ba;stroke-width:2;stroke-dasharray:7 7;fill:none}.point{fill:#d04a4a}.label{font:500 22px system-ui,sans-serif;fill:#13263a}.small{font:400 18px system-ui,sans-serif;fill:#3e566d}.note{fill:#fff7dc;stroke:#c18b21;stroke-width:1.5}
+    @media(prefers-color-scheme:dark){.bg{fill:#101820}.label{fill:#eef6ff}.small{fill:#bdd0e1}.ink,.axis{stroke:#d7e8f5}.axishead{fill:#d7e8f5}.muted{stroke:#7890a3}.sphere{fill:#164968;stroke:#7ed4ff}.equator{stroke:#7ed4ff}.note{fill:#3b3218;stroke:#d6aa4b}}
+  </style>
+  <rect class="bg" width="900" height="620" rx="28"/>
+  <text class="label" x="42" y="52">单量子比特的 Bloch 球</text>
+  <text class="small" x="42" y="82">纯态位于球面；混态位于球内。相对相位沿赤道方向变化。</text>
+  <circle class="sphere" cx="355" cy="330" r="205"/>
+  <ellipse class="equator" cx="355" cy="330" rx="205" ry="66"/>
+  <ellipse class="muted" cx="355" cy="330" rx="66" ry="205" transform="rotate(-28 355 330)"/>
+  <line class="axis" x1="355" y1="98" x2="355" y2="584"/>
+  <line class="axis" x1="116" y1="430" x2="594" y2="230"/>
+  <line class="axis" x1="167" y1="223" x2="543" y2="437"/>
+  <path class="axishead" d="M355 98l-8 18h16zM594 230l-19 1 7 16zM543 437l-17-10-3 18z"/>
+  <circle class="point" cx="355" cy="125" r="8"/><circle class="point" cx="355" cy="535" r="8"/>
+  <circle class="point" cx="543" cy="251" r="8"/><circle class="point" cx="167" cy="409" r="8"/>
+  <circle class="point" cx="518" cy="423" r="8"/><circle class="point" cx="192" cy="237" r="8"/>
+  <text class="label" x="374" y="130">|0⟩ (+Z)</text><text class="label" x="374" y="546">|1⟩ (−Z)</text>
+  <text class="label" x="500" y="210">|+⟩ (+X)</text><text class="label" x="42" y="424">|−⟩ (−X)</text>
+  <text class="label" x="536" y="452">|+i⟩ (+Y)</text><text class="label" x="52" y="224">|−i⟩ (−Y)</text>
+  <rect class="note" x="630" y="172" width="230" height="246" rx="18"/>
+  <text class="label" x="654" y="211">参数化</text>
+  <text class="small" x="654" y="252">|ψ⟩ = cos(θ/2)|0⟩</text>
+  <text class="small" x="654" y="283">      + eⁱᵠ sin(θ/2)|1⟩</text>
+  <text class="small" x="654" y="330">θ：从 +Z 轴量起</text>
+  <text class="small" x="654" y="362">φ：赤道方位角</text>
+  <text class="small" x="654" y="402">球心 I/2：最大混态</text>
+</svg>

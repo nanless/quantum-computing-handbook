@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+tools/reader/node_modules/
+work/rendered/
+work/render-cache/
+*.zip

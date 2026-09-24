@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 590" role="img" aria-labelledby="title desc">
+  <title id="title">纠缠交换：中间联合测量，端点按经典记录修正</title>
+  <desc id="desc">从上往下读。初始只有A与B1、B2与C两对Bell纠缠，中间节点持有B1和B2。中间节点完成Bell测量，发送两位经典结果。端点收到记录并按需要作Pauli修正后得到A与C的Bell对。忽略中间记录且未作条件修正时，AC的平均态为四维单位矩阵除以四。实线表示纠缠配对关系，不是光子路径；虚线表示经典消息。</desc>
+  <style>
+    text{font-family:'PingFang SC','Microsoft YaHei',sans-serif}.bg{fill:#f7faf5}.ink{fill:#203e36}.muted{fill:#586f64}.panel{fill:#edf3e9;stroke:#c4d4c4}.node{fill:#fffefa;stroke:#38745a;stroke-width:2.5}.pair{stroke:#34765b;stroke-width:4;fill:none}.message{stroke:#9a631b;stroke-width:2.5;stroke-dasharray:9 6;fill:none}.head{fill:#9a631b}.box{fill:#fff2db;stroke:#c69747;stroke-width:2}.title{font-size:28px;font-weight:600}.body{font-size:21px}.small{font-size:18px}.label{font-size:24px;font-weight:600}.math{font-family:'Cambria Math','Times New Roman',serif;font-size:24px}
+    @media(prefers-color-scheme:dark){.bg{fill:#172820}.ink{fill:#eaf5ed}.muted{fill:#bacfc0}.panel{fill:#20392c;stroke:#52715c}.node{fill:#244734;stroke:#a9d7ba}.pair{stroke:#a9d7ba}.message{stroke:#e9bd72}.head{fill:#e9bd72}.box{fill:#433824;stroke:#c9a262}}
+  </style>
+  <rect class="bg" width="1100" height="590" rx="20"/>
+  <text class="title ink" x="32" y="46">纠缠交换：两段资源，连接两个端点</text>
+  <text class="small muted" x="32" y="79">从上往下读。实线＝纠缠配对关系；虚线＝经典消息。位置与时间均不按比例。</text>
+  <rect class="panel" x="344" y="105" width="412" height="291" rx="16"/>
+  <text class="small muted" x="450" y="133">同一个中间节点 B</text>
+  <text class="body ink" x="32" y="130">① 两个独立 Bell 对</text>
+  <path class="pair" d="M146 181H411M689 181H954"/>
+  <text class="math ink" x="240" y="171">Φ⁺</text><text class="math ink" x="810" y="171">Φ⁺</text>
+  <circle class="node" cx="120" cy="181" r="26"/><circle class="node" cx="437" cy="181" r="26"/>
+  <circle class="node" cx="663" cy="181" r="26"/><circle class="node" cx="980" cy="181" r="26"/>
+  <text class="label ink" x="120" y="190" text-anchor="middle">A</text><text class="label ink" x="437" y="190" text-anchor="middle">B₁</text>
+  <text class="label ink" x="663" y="190" text-anchor="middle">B₂</text><text class="label ink" x="980" y="190" text-anchor="middle">C</text>
+  <text class="small muted" x="410" y="230">B₁ 与 B₂ 起初没有纠缠</text>
+  <text class="body ink" x="32" y="278">② 联合测量并通知端点</text>
+  <rect class="box" x="395" y="291" width="310" height="77" rx="12"/>
+  <text class="label ink" x="550" y="324" text-anchor="middle">Bell 测量 B₁B₂</text>
+  <text class="small muted" x="550" y="352" text-anchor="middle">四种结果，由两位经典比特标识</text>
+  <path class="message" d="M394 328H141M706 328H959"/>
+  <path class="head" d="M131 328l13-7v14zM969 328l-13-7v14z"/>
+  <text class="small muted" x="190" y="356">经典记录</text><text class="small muted" x="812" y="356">经典记录</text>
+  <text class="body ink" x="32" y="432">③ 按记录修正后，端点共享 Bell 对</text>
+  <path class="pair" d="M147 482H953"/>
+  <circle class="node" cx="120" cy="482" r="26"/><circle class="node" cx="980" cy="482" r="26"/>
+  <text class="label ink" x="120" y="491" text-anchor="middle">A</text><text class="label ink" x="980" y="491" text-anchor="middle">C</text>
+  <rect class="bg" x="322" y="457" width="450" height="48"/>
+  <text class="math ink" x="550" y="489" text-anchor="middle">|Φ⁺⟩ = (|00⟩ + |11⟩) / √2</text>
+  <text class="small muted" x="32" y="552">若忽略记录且不做条件修正：ρ_AC = I₄ / 4；不能用这一步超光速传信。</text>
+  <text class="small muted" x="32" y="578">理想图假设四种 Bell 结果均可区分。实际成功率还受探测、损耗与操作质量限制。</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" role="img" aria-labelledby="title desc">
+  <title id="title">表面码中空间错误链与时间读出错误的检测事件</title>
+  <desc id="desc">左图为概念性综合征图，红色数据错误链与蓝色候选修正链连接同一对橙色检测事件，合并为可收缩闭环。右图为同一个检查在三轮的读数零、一、零；中间一次读出错误使相邻两处时间边界出现检测事件。图不表示特定器件的精确布线或含孔补丁的全部边界规则。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f7faf9}.panel{fill:#fff;stroke:#b9d2ca;stroke-width:1.5}.head{fill:#eaf3f0}
+    .title{font:600 27px system-ui,sans-serif;fill:#183934}.subtitle{font:400 16px system-ui,sans-serif;fill:#49645e}.section{font:600 20px system-ui,sans-serif;fill:#183934}.label{font:500 16px system-ui,sans-serif;fill:#294c45}.small{font:400 14px system-ui,sans-serif;fill:#49645e}
+    .grid{stroke:#b6c7c2;stroke-width:3;fill:none}.edge{stroke:#bd5745;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}.repair{stroke:#26779b;stroke-width:7;stroke-dasharray:14 9;stroke-linecap:round;stroke-linejoin:round;fill:none}.boundary{stroke:#8a9d98;stroke-width:2;stroke-dasharray:7 7;fill:none}
+    .check{fill:#fff;stroke:#527a70;stroke-width:3}.event{fill:#e6a13b;stroke:#8f5522;stroke-width:3}.data{fill:#fff;stroke:#344d46;stroke-width:2}.time{stroke:#57776e;stroke-width:3;fill:none}.readout{fill:#e8f2ef;stroke:#7b9d92;stroke-width:1.5}.fault{fill:#fae9e2;stroke:#bd5745;stroke-width:2}
+    @media(prefers-color-scheme:dark){.bg{fill:#101a18}.panel{fill:#172521;stroke:#497469}.head{fill:#203a33}.title,.section{fill:#edf7f2}.subtitle,.label,.small{fill:#c4ded2}.grid{stroke:#59766e}.edge{stroke:#f18b74}.repair{stroke:#79c8e7}.boundary{stroke:#77958a}.check,.data{fill:#172521;stroke:#a0c9b5}.event{fill:#f6ba5b;stroke:#ffdb9b}.time{stroke:#a0c9b5}.readout{fill:#264039;stroke:#86aa99}.fault{fill:#4b302b;stroke:#f18b74}}
+  </style>
+  <rect class="bg" width="1200" height="670" rx="24"/>
+  <text class="title" x="40" y="53">表面码解码：空间中的数据错误与时间中的读出错误</text>
+  <text class="subtitle" x="40" y="82">仅画检测 X 数据错误所用的一组 Z 型检查；X 型检查交错放置，此图不表示实际芯片布线。</text>
+  <rect class="panel" x="32" y="110" width="550" height="500" rx="18"/>
+  <rect class="head" x="33" y="111" width="548" height="63" rx="17"/>
+  <text class="section" x="58" y="151">空间：两条路径连接同一对事件</text>
+  <path class="boundary" d="M92 208V473 M484 208V473"/>
+  <text class="small" x="93" y="199">补丁边界</text>
+  <text class="small" x="403" y="199">补丁边界</text>
+  <path class="grid" d="M132 240H432 M132 330H432 M132 420H432 M132 240V420 M232 240V420 M332 240V420 M432 240V420"/>
+  <path class="edge" d="M132 330H332V420"/>
+  <path class="repair" d="M132 330V420H332"/>
+  <g class="check"><circle cx="132" cy="240" r="11"/><circle cx="232" cy="240" r="11"/><circle cx="332" cy="240" r="11"/><circle cx="432" cy="240" r="11"/><circle cx="232" cy="330" r="11"/><circle cx="332" cy="330" r="11"/><circle cx="432" cy="330" r="11"/><circle cx="132" cy="420" r="11"/><circle cx="232" cy="420" r="11"/><circle cx="432" cy="420" r="11"/></g>
+  <g class="data"><rect x="177" y="324" width="10" height="10" transform="rotate(45 182 329)"/><rect x="277" y="324" width="10" height="10" transform="rotate(45 282 329)"/><rect x="327" y="369" width="10" height="10" transform="rotate(45 332 374)"/><rect x="127" y="369" width="10" height="10" transform="rotate(45 132 374)"/><rect x="177" y="414" width="10" height="10" transform="rotate(45 182 419)"/><rect x="277" y="414" width="10" height="10" transform="rotate(45 282 419)"/></g>
+  <g class="event"><circle cx="132" cy="330" r="16"/><circle cx="332" cy="420" r="16"/></g>
+  <text class="label" x="54" y="515">红色实线：实际 X 错误经过的数据位</text>
+  <text class="label" x="54" y="542">蓝色虚线：一种候选修正；两路合并成闭环</text>
+  <text class="small" x="54" y="574">橙圆是 Z 检查变化；白圆是未触发检查，菱形是路径上的数据位。</text>
+  <rect class="panel" x="618" y="110" width="550" height="500" rx="18"/>
+  <rect class="head" x="619" y="111" width="548" height="63" rx="17"/>
+  <text class="section" x="644" y="151">时间：一次读出错误产生两个变化</text>
+  <path class="time" d="M698 223V472"/>
+  <path class="time" d="M698 472l-7-15h14z"/>
+  <text class="small" x="655" y="207">时间 t 向下</text>
+  <path class="grid" d="M796 239V435"/>
+  <g class="check"><circle cx="796" cy="239" r="14"/><circle cx="796" cy="337" r="14"/><circle cx="796" cy="435" r="14"/></g>
+  <rect class="readout" x="859" y="215" width="118" height="49" rx="10"/><rect class="fault" x="859" y="313" width="118" height="49" rx="10"/><rect class="readout" x="859" y="411" width="118" height="49" rx="10"/>
+  <text class="label" x="879" y="245">第 1 轮：0</text><text class="label" x="879" y="343">第 2 轮：1</text><text class="label" x="879" y="441">第 3 轮：0</text>
+  <path class="edge" d="M796 288V386"/>
+  <g class="event"><circle cx="796" cy="288" r="13"/><circle cx="796" cy="386" r="13"/></g>
+  <text class="small" x="999" y="336">中间一轮</text><text class="small" x="999" y="358">读出翻转</text>
+  <text class="label" x="650" y="515">相邻读数变化：δ₂ = 1，δ₃ = 1</text>
+  <text class="small" x="650" y="544">同一检查位置的两次变化，在时间方向配对。</text>
+  <text class="small" x="40" y="642">边界和闭环的逻辑含义依赖具体补丁拓扑；空间/时间配对只是解码线索，不替代完整噪声模型。</text>
+</svg>

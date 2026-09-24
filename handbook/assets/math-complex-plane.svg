@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" role="img" aria-labelledby="math-complex-title math-complex-desc">
+  <title id="math-complex-title">复平面中的 1+i：横坐标、纵坐标、模与相位</title>
+  <desc id="math-complex-desc">横轴是实部，纵轴是虚部。实线箭头从原点指向 z=1+i，虚线箭头指向共轭 z*=1−i；两箭头长度都是根号 2，与正实轴夹角分别为正负四分之 π。这是画复数的平面，不是 Bloch 球。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f7fafc}.card{fill:#fff;stroke:#c5d4e0;stroke-width:2}.ink{fill:#153047}.sub{fill:#3d586d}.axis{stroke:#49677c;stroke-width:2.5}.head{fill:#49677c}.grid{stroke:#d5e2eb;stroke-width:1.5;stroke-dasharray:5 7}.zline{stroke:#087d89;stroke-width:5;fill:none}.zhead{fill:#087d89}.conj{stroke:#b65a33;stroke-width:4.5;stroke-dasharray:12 8;fill:none}.conjhead{fill:#b65a33}.pointz{fill:#087d89;stroke:#fff;stroke-width:3}.pointc{fill:#b65a33;stroke:#fff;stroke-width:3}.angle{stroke:#6353a5;stroke-width:3;fill:none}.tag{fill:#ebf7f7;stroke:#83c4c5;stroke-width:1.5}.tag2{fill:#fff1e9;stroke:#dba182;stroke-width:1.5}.small{font:400 20px system-ui,sans-serif}.mid{font:500 22px system-ui,sans-serif}.big{font:600 30px system-ui,sans-serif}.title{font:700 30px system-ui,sans-serif}
+    @media(prefers-color-scheme:dark){.bg{fill:#101b25}.card{fill:#192b39;stroke:#496276}.ink{fill:#eef7ff}.sub{fill:#c4d7e6}.axis{stroke:#adc5d5}.head{fill:#adc5d5}.grid{stroke:#466073}.zline{stroke:#5ed8dd}.zhead{fill:#5ed8dd}.conj{stroke:#ffb487}.conjhead{fill:#ffb487}.pointz{fill:#5ed8dd;stroke:#192b39}.pointc{fill:#ffb487;stroke:#192b39}.angle{stroke:#c9b9ff}.tag{fill:#173b42;stroke:#498e95}.tag2{fill:#4a2d25;stroke:#b87854}}
+  </style>
+  <rect class="bg" width="1120" height="650" rx="26"/>
+  <text class="title ink" x="45" y="58">复数可以画在一张平面上</text>
+  <text class="small sub" x="45" y="92">以 z = 1 + i 为例：横坐标 1 是实部，纵坐标 1 是虚部。</text>
+
+  <rect class="card" x="39" y="116" width="576" height="485" rx="20"/>
+  <line class="axis" x1="96" y1="356" x2="565" y2="356"/>
+  <path class="head" d="M565 356l-16-8v16z"/>
+  <line class="axis" x1="282" y1="550" x2="282" y2="153"/>
+  <path class="head" d="M282 153l-8 16h16z"/>
+  <text class="mid ink" x="527" y="390">Re</text>
+  <text class="mid ink" x="297" y="177">Im</text>
+  <text class="small sub" x="251" y="387">0</text>
+  <text class="small sub" x="427" y="389">1</text>
+  <text class="small sub" x="250" y="218">1</text>
+  <text class="small sub" x="240" y="504">−1</text>
+  <line class="grid" x1="432" y1="206" x2="432" y2="506"/>
+  <line class="grid" x1="282" y1="206" x2="432" y2="206"/>
+  <line class="grid" x1="282" y1="506" x2="432" y2="506"/>
+  <path class="zline" d="M282 356L432 206"/>
+  <path class="zhead" d="M432 206l-21 6 15 15z"/>
+  <path class="conj" d="M282 356L432 506"/>
+  <path class="conjhead" d="M432 506l-6-21-15 15z"/>
+  <circle class="pointz" cx="432" cy="206" r="8"/>
+  <circle class="pointc" cx="432" cy="506" r="8"/>
+  <path class="angle" d="M349 356 A67 67 0 0 0 330 309"/>
+  <text class="small ink" x="353" y="329">π/4</text>
+  <text class="mid ink" x="454" y="209">z = 1 + i</text>
+  <text class="mid ink" x="454" y="509">z* = 1 − i</text>
+  <text class="small ink" x="313" y="267">|z| = √2</text>
+
+  <rect class="tag" x="645" y="137" width="432" height="112" rx="17"/>
+  <text class="mid ink" x="672" y="177">① 读坐标：z = 1 + i</text>
+  <text class="small sub" x="672" y="215">实部 = 1；虚部 = 1。</text>
+  <rect class="tag2" x="645" y="267" width="432" height="112" rx="17"/>
+  <text class="mid ink" x="672" y="307">② 共轭：z* = 1 − i</text>
+  <text class="small sub" x="672" y="345">虚部变号，关于实轴镜像。</text>
+  <rect class="card" x="645" y="397" width="432" height="112" rx="17"/>
+  <text class="mid ink" x="672" y="437">③ 长度与角度</text>
+  <text class="small sub" x="672" y="474">|z| = √(1² + 1²) = √2；θ = π/4。</text>
+  <text class="small sub" x="646" y="560">这里画的是一个复数，不是量子态的 Bloch 球。</text>
+  <text class="small sub" x="646" y="590">实线是 z；虚线是 z*，二者长度相同。</text>
+</svg>
