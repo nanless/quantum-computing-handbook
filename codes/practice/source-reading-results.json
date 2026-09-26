@@ -1,0 +1,65 @@
+{
+  "scope": "independent authored math; no upstream runtime tests",
+  "S04_Chebyshev": [
+    {
+      "x": 0,
+      "correct": 0.0,
+      "wrong": -1
+    },
+    {
+      "x": 0.5,
+      "correct": 0.25,
+      "wrong": -0.5
+    },
+    {
+      "x": 1,
+      "correct": 1.0,
+      "wrong": 1
+    }
+  ],
+  "S05_LCU": {
+    "matrix": [
+      [
+        -0.4,
+        0.3
+      ],
+      [
+        0.3,
+        0.4
+      ]
+    ],
+    "square": [
+      [
+        0.25,
+        0.0
+      ],
+      [
+        0.0,
+        0.25
+      ]
+    ],
+    "norm": 0.5,
+    "alpha": 0.7
+  },
+  "S06_shadow": {
+    "matrix": [
+      [
+        0.5,
+        1.5
+      ],
+      [
+        1.5,
+        0.5
+      ]
+    ],
+    "eigenvalues": [
+      2,
+      -1
+    ],
+    "trace": 1
+  },
+  "S08_order": {
+    "correct": 0.7000000000000001,
+    "swapped": -0.5
+  }
+}

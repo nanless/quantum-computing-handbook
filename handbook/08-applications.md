@@ -680,6 +680,66 @@ $$
 
 **实验 08-A。** 核对上述严格测量预算，并直接模拟三顶点路径的 $p=1$ QAOA。取 $\gamma=\pi/3,\beta=\pi/8$，分别求期望割值与得到最优割的概率。代码入口为 `python3 codes/algorithms/experiments.py 08`；[完整实验与答案](labs/algorithms.md#实验-08-a测量预算与最优解概率)给出八个基态概率和独立解析验算。这个实验正好检验“好的平均值不等于每次都给最优解”。
 
+## 实操扩展 B：一个参数出现在两道门时，不能把整条线路一起平移
+
+第 4 节的参数偏移规则可以准确求某些量子期望值的导数。其常用形式有明确条件：考虑某一道 $R_P(\vartheta)=e^{-i\vartheta P/2}$，其中 $P^2=I$、本征值为 $\pm1$；固定其余所有门参数，测量期望记为 $f(\vartheta)$。由 $R_P=\cos(\vartheta/2)I-i\sin(\vartheta/2)P$ 展开可知
+
+$$
+f(\vartheta)=c_0+c_1\cos\vartheta+c_2\sin\vartheta.
+$$
+
+对实常数 $c_j$ 求导，再代入正负偏移点，得到
+
+$$
+\frac{\partial f}{\partial\vartheta}
+=\frac{f(\vartheta+\pi/2)-f(\vartheta-\pi/2)}2.
+$$
+
+它没有有限差分的截断误差；但有限 shots 仍带来统计方差。“一道门”是条件的一部分。若一个训练参数控制多道门，应该先把每个门角当成独立变量，再按链式法则合并各偏导。[Schuld 等的原始论文](https://arxiv.org/abs/1811.11184)给出生成元条件；[PennyLane 官方参数偏移实现](https://github.com/PennyLaneAI/pennylane/blob/main/pennylane/gradients/parameter_shift.py)是可追踪的工程入口（访问于 2026-09-26）。
+
+**共享参数的反例。** 两道门共用 $\theta$：
+
+$$
+|\psi(\theta)\rangle=R_y(\theta)R_y(\theta)|0\rangle,
+\qquad f(\theta)=\langle Z\rangle=\cos(2\theta).
+$$
+
+其真导数是 $-2\sin(2\theta)$。若把两道门一起改成 $\theta\pm\pi/2$，两条线路都给 $-\cos(2\theta)$，半差恒为 0。在 $\theta=\pi/8$，真导数为 $-\sqrt2$，错误公式却报零，会把可训练方向误判为平坦。
+
+正确做法是先写 $F(\theta_1,\theta_2)=\cos(\theta_1+\theta_2)$。当 $\theta_1=\theta_2=\theta$，链式法则给
+
+$$
+\begin{aligned}
+\frac{df}{d\theta}
+&=\left.\frac{\partial F}{\partial\theta_1}\right|_{\theta_1=\theta_2=\theta}
++\left.\frac{\partial F}{\partial\theta_2}\right|_{\theta_1=\theta_2=\theta}\\
+&=\frac{F(\theta+\pi/2,\theta)-F(\theta-\pi/2,\theta)}2\\
+&\quad+\frac{F(\theta,\theta+\pi/2)-F(\theta,\theta-\pi/2)}2\\
+&=-\sin(2\theta)-\sin(2\theta).
+\end{aligned}
+$$
+
+本例四条线路因同轴对称性成对相同，可以合并；一般电路不能假定这种简化。若门角是 $g_j(\theta)$，还要乘 $g'_j(\theta)$。QAOA 一个层角控制多项 Pauli 旋转时同样需要核对生成元谱，不能把单 Pauli 门的两点规则直接套给整个层。
+
+**方差账。** 对一个符合两点规则的单门期望，每条偏移线路独立测 $S$ 次 $\pm1$ 读数。两组均值方差各至多 $1/S$，因此半差估计的方差至多 $1/(2S)$。中央有限差分除以 $2h$，其方差上界却为 $1/(2Sh^2)$，另有有限差分偏差。这里比较的是相同每条线路 shots 下的保守上界，不是说参数偏移不需测量，或任何生成元都只需两条线路。
+
+**练习 08-B（含答案）。** 在 $\theta=\pi/8$ 时，分别计算一起平移与逐门平移的导数。另考虑符合单门规则的两点估计器，每条线路 $S=1000$ 次，参数偏移与 $h=0.01$ 有限差分的标准差上界各是多少？
+
+**解答。** 前两值为 0 和 $-\sqrt2$。两种单门估计器的标准差上界分别为 $1/\sqrt{2000}\approx0.02236$ 与 $1/(0.01\sqrt{2000})\approx2.2361$；此数不是上面四条共享参数线路之和的方差。运行 `python3 codes/algorithms/round70_checks.py 08`，以实际两维旋转矩阵核对四个偏移点，并用解析导数独立检查；浮点近似不是硬件测量。
+
+### 工业研究入口：先选工作流，再检查它提供哪种证据
+
+下表是截至 2026-09-26 核验的四条具体路线，不是“全部工业算法”清单。源码可见只证明实现可检查，不证明已部署或有商业优势。
+
+| 路线与官方入口 | 输入、输出及关键代价 | 当前引用支持的证据 | 复现还要保留什么 |
+|---|---|---|---|
+| [Qiskit SQD](https://github.com/Qiskit/qiskit-addon-sqd) | 输入测量比特串与化学模型；输出子空间能量/态表示；经典子空间矩阵与求解可能主导 | 公开研究软件；算法和研究示例可检查 | 轨道排序、粒子数、恢复规则、随机种子、子空间大小、经典时间 |
+| [Qualtran 化学资源估计](https://qualtran.readthedocs.io/en/latest/bloqs/chemistry/resource_estimation.html) | 输入模型分解与精度；输出逻辑资源估算；构造成本、态重叠及物理纠错须接续 | 容错算法资源模型，见[方法论文](https://arxiv.org/abs/2409.04643) | Hamiltonian 系数与分解误差、归一化、容错假设；估算不等于实机运行 |
+| [Qiskit Finance 幅度估计](https://qiskit-community.github.io/qiskit-finance/tutorials/00_amplitude_estimation.html) | 输入可逆分布制备和收益编码；输出概率/期望估计 | 教学和研究接口，未由教程证明真实市场优势 | 原始分布、离散化偏差、收益范围、每次 oracle 成本、强经典采样基线 |
+| [D-Wave 嵌入与链管理](https://docs.dwavequantum.com/en/latest/quantum_research/embedding_guidance.html) | 输入 QUBO/Ising 与连接图；输出候选样本；嵌入、断链处理和重试计成本 | 官方设备编程流程与案例，不是一般最优性或加速定理 | 原题可行性、链强度、样本原计数、调参预算、端到端 TTS |
+
+研究选择也要区分年代与能力。QSVT 的近最优查询结论适合容错算法设计；SQD 把更多求解交给经典子空间；参数偏移改善的是梯度计算规则；嵌入处理硬件连接约束。这几种进展解决不同瓶颈，不能排成一个脱离任务的“最先进算法”榜单。第三方固定版本摘录统一见 [源码清单](../codes/vendor/manifest.json)，自编小例见本节实验；本节没有执行云任务或调用付费求解器。
+
 ## 11. 自检
 
 1. VQE 的变分原理保证什么，又没有保证什么？为什么有限次测量的估计可偶然低于 $E_0$？

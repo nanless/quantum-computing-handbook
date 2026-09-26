@@ -9,11 +9,11 @@ MANIFEST = BASE / 'vendor' / 'manifest.json'
 PROJECTS = {
  'qiskit-algorithms': ('qiskit-community/qiskit-algorithms', ['qiskit_algorithms/amplitude_amplifiers/grover.py','qiskit_algorithms/amplitude_estimators/iae.py','qiskit_algorithms/phase_estimators/phase_estimation.py','qiskit_algorithms/minimum_eigensolvers/vqe.py']),
  'cirq': ('quantumlib/Cirq', ['examples/grover.py','examples/shor.py','examples/phase_estimator.py']),
- 'pennylane': ('PennyLaneAI/pennylane', ['pennylane/templates/subroutines/qsvt.py','pennylane/qaoa/cost.py']),
- 'openfermion': ('quantumlib/OpenFermion', ['src/openfermion/transforms/opconversions/jordan_wigner.py']),
- 'qualtran': ('quantumlib/Qualtran', ['qualtran/bloqs/qft/qft_text_book.py','qualtran/bloqs/arithmetic/addition.py']),
+ 'pennylane': ('PennyLaneAI/pennylane', ['pennylane/templates/subroutines/qsvt.py','pennylane/qaoa/cost.py','pennylane/shadows/classical_shadow.py','pennylane/gradients/parameter_shift.py']),
+ 'openfermion': ('quantumlib/OpenFermion', ['src/openfermion/transforms/opconversions/jordan_wigner.py','src/openfermion/circuits/trotter/simulate_trotter.py']),
+ 'qualtran': ('quantumlib/Qualtran', ['qualtran/bloqs/qft/qft_text_book.py','qualtran/bloqs/arithmetic/addition.py','qualtran/bloqs/qubitization/qubitization_walk_operator.py','qualtran/bloqs/block_encoding/linear_combination.py']),
  'qiskit-addon-sqd': ('Qiskit/qiskit-addon-sqd', ['qiskit_addon_sqd/configuration_recovery.py','qiskit_addon_sqd/fermion.py']),
- 'qutip': ('qutip/qutip', ['qutip/solver/mesolve.py']),
+ 'qutip': ('qutip/qutip', ['qutip/solver/mesolve.py','qutip/solver/mcsolve.py']),
  'quimb': ('jcmgray/quimb', ['quimb/tensor/circuit_gen.py','quimb/tensor/contraction.py']),
  'stim': ('quantumlib/Stim', ['src/stim/gen/gen_surface_code.cc','src/stim/gen/gen_rep_code.cc']),
  'pymatching': ('oscarhiggott/PyMatching', ['src/pymatching/matching.py']),
@@ -22,6 +22,10 @@ PROJECTS = {
  'qiskit': ('Qiskit/qiskit', ['qiskit/transpiler/passes/routing/sabre_swap.py','qiskit/quantum_info/states/utils.py']),
  'sequence': ('sequence-toolbox/SeQUeNCe', ['sequence/entanglement_management/teleportation.py','sequence/entanglement_management/entanglement_protocol.py']),
  'liboqs': ('open-quantum-safe/liboqs', ['tests/example_kem.c']),
+ 'pyqsp': ('ichuang/pyqsp', ['pyqsp/angle_sequence.py','pyqsp/sym_qsp_opt.py','pyqsp/response.py']),
+ 'qutip-qtrl': ('qutip/qutip-qtrl', ['src/qutip_qtrl/pulseoptim.py','src/qutip_qtrl/grape.py']),
+ 'qiskit-addon-cutting': ('Qiskit/qiskit-addon-cutting', ['qiskit_addon_cutting/qpd/weights.py','qiskit_addon_cutting/cutting_reconstruction.py']),
+ 'qiskit-aer': ('Qiskit/qiskit-aer', ['qiskit_aer/noise/errors/standard_errors.py']),
 }
 def command(args):
  return subprocess.check_output(args, stderr=subprocess.PIPE, timeout=90)

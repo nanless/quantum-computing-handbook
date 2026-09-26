@@ -1,0 +1,178 @@
+{
+  "data_type": "fixed synthetic inputs and analytic model calculations",
+  "random_seed": null,
+  "cases": {
+    "00": {
+      "blocks": 10,
+      "repeats_per_block": 100,
+      "recorded_rows": 1000,
+      "enumerated_histories": 1024,
+      "mean": 0.5000000000000007,
+      "true_frequency_sd": 0.15811388300841933,
+      "wrongly_assumed_iid_sd": 0.015811388300841896,
+      "fixed_block_sample": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "01": {
+      "basis_output_norms": [
+        1.0,
+        1.0
+      ],
+      "plus_output_norm_squared": 1.9999999999999996,
+      "minus_output_norm_squared": 0.0,
+      "a_dagger_a": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "02": {
+      "synthetic_counts_plus_minus": {
+        "X": [
+          9,
+          1
+        ],
+        "Y": [
+          9,
+          1
+        ],
+        "Z": [
+          5,
+          5
+        ]
+      },
+      "bloch": [
+        0.8,
+        0.8,
+        0.0
+      ],
+      "bloch_length": 1.1313708498984762,
+      "raw_eigenvalues": [
+        -0.06568542494923812,
+        1.0656854249492382
+      ],
+      "euclidean_projected_bloch": [
+        0.7071067811865475,
+        0.7071067811865475,
+        0.0
+      ],
+      "projected_eigenvalues": [
+        5.551115123125783e-17,
+        1.0
+      ],
+      "method": "Euclidean Bloch-ball projection, not claimed to be binomial MLE"
+    },
+    "03": {
+      "correlations": {
+        "ZZ": 0.9999999999999998,
+        "XX": 0.0,
+        "XY": 0.9999999999999998
+      },
+      "original_witness": 0.9999999999999998,
+      "rotated_witness": 1.9999999999999996
+    },
+    "04": {
+      "control_one_after_h_with_CI": 0.0,
+      "control_one_after_h_with_CminusI": 0.9999999999999996
+    },
+    "05": {
+      "gamma": 0.36,
+      "equilibrium_excited_population": 0.1,
+      "output_excited_populations": {
+        "zero": 0.036,
+        "one": 0.676,
+        "plus": 0.356
+      },
+      "plus_coherence": 0.3999999999999999,
+      "fixed_point": [
+        [
+          0.9,
+          0
+        ],
+        [
+          0,
+          0.1
+        ]
+      ],
+      "tested_parameter_pairs": 9
+    },
+    "13": {
+      "initial_equal_prior_trace_distance": 0.8,
+      "success_probabilities": [
+        0.25,
+        0.7300000000000001
+      ],
+      "mean_success_probability": 0.49000000000000005,
+      "conditional_trace_distance": 0.9363291775690445,
+      "prior_zero_given_success": 0.2551020408163265,
+      "conditional_optimal_guess": 0.9759960730485959,
+      "all_flags_trace_distance": 0.7064761515876241
+    },
+    "q1": [
+      {
+        "path_zero": 0.9,
+        "record_overlap": 1,
+        "p0_max": 0.7999999999999998,
+        "p0_min": 0.2,
+        "visibility": 0.6,
+        "purity": 1.0
+      },
+      {
+        "path_zero": 0.5,
+        "record_overlap": 0.6,
+        "p0_max": 0.7999999999999999,
+        "p0_min": 0.19999999999999998,
+        "visibility": 0.6000000000000001,
+        "purity": 0.6799999999999999
+      }
+    ],
+    "q2": {
+      "energy_zero_probability": 1,
+      "return_probability_luders": 0.9999999999999997,
+      "return_probability_refine_then_forget": 0.49999999999999983
+    },
+    "q3": {
+      "rabi_time_seconds": 5e-08,
+      "population_plus_detuning": 0.6863134503642551,
+      "population_minus_detuning": 0.6863134503642551,
+      "ramsey_time_seconds": 4.166666666666667e-08,
+      "ramsey_Y_expectations": [
+        0.9999999999999998,
+        -0.9999999999999998
+      ],
+      "ramsey_convention": "H_eff = hbar*delta*Z/2"
+    },
+    "q4": {
+      "cutoff_dimension": 4,
+      "commutator_diagonal": [
+        1.0,
+        1.0000000000000004,
+        0.9999999999999991,
+        -2.9999999999999996
+      ],
+      "synthetic_populations": [
+        0.97,
+        0,
+        0,
+        0.03
+      ],
+      "commutator_expectation": 0.88,
+      "expectation_error_vs_identity": 0.12
+    }
+  }
+}

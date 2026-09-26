@@ -37,3 +37,31 @@ python3 codes/foundations/foundations_lab.py --case all --output /tmp/foundation
 - [QuTiP 主方程求解器文档](https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html)：`mesolve` 接收 Hamiltonian、初态、时间列表、塌缩算符与观测量，用于 Lindblad 模型；对弛豫塌缩算符应使用 `sqrt(rate) * |0><1|`，不能把速率本身当振幅。源码仓库：[qutip/qutip](https://github.com/qutip/qutip)。有限能级截断必须提高维数、缩小步长复查，且 Markov 模型适用性由物理假设决定。
 
 Qiskit 的电路模拟适合检查门序、端序和协议；QuTiP 的开放系统模型适合检查连续驱动、耗散与多能级泄漏。它们都不把输入的教学参数自动转成真实设备的校准数据。移到工程场景前需要明确读出错判、泄漏标签、驱动幅度单位、采样批次和漂移记录，才能比较输出。
+
+## 新增诊断实验
+
+每章增加一个“看起来合理但还不足以成立”的反例。题目、条件、分步解答就地放在对应章的“新增诊断练习”，不改变原自检编号。[diagnostic_lab.py](diagnostic_lab.py) 复用同目录中本书自编的 `foundations_lab.py` 矩阵助手；没有第三方运行依赖。Python 3.9 及以上可运行；固定输入、无随机采样，故不设置随机种子。
+
+```sh
+python3 codes/foundations/diagnostic_lab.py --case all
+python3 codes/foundations/diagnostic_lab.py --case 05
+python3 codes/foundations/diagnostic_lab.py --case all --output /tmp/diagnostic-results.json
+```
+
+[diagnostic-results.json](diagnostic-results.json) 保存实际运行的全部固定输入与结果；全部是合成计数或理想模型，未连接硬件。矩阵和数值断言容差沿用 `1e-10`，不要用 `python3 -O` 关闭断言。
+
+| 编号 | 对应章节诊断 | 关键检查结果 |
+|---|---|---|
+| 00 | 重复记录的相关性 | 10 块各复制 100 次：真实频率标准差 0.158114，误当独立则 0.015811 |
+| 01 | 基态检查不等于酉性 | 两列均归一化，但 $A^\dagger A\ne I$；叠加输出长度平方 2 或 0 |
+| 02 | 有限数据层析的物理性 | 原本征值约 -0.065685、1.065685；径向投影不是通用最大似然法 |
+| 03 | 复相位纠缠的测量方向 | ZZ=1，XX=0，XY=1；旋转见证后可检测 |
+| 04 | 受控门的相位 | C(I) 与 C(-I) 的控制 H 读出分别为 0、1 |
+| 05 | 非零平衡占据的阻尼 | γ=0.36，r=0.1；三个激发输出 0.036、0.676、0.356 |
+| 13 | 后选与收缩定理 | 条件距离 0.936329；保留全部标记距离 0.706476 ≤ 输入 0.8 |
+| Q1 | 不等路径权重与退相干 | 同为可见度 0.6，纯度却分别为 1 和 0.68 |
+| Q2 | 简并测量与精细测量 | 相同读数统计，返回叠加态的概率为 1 或 1/2 |
+| Q3 | 失谐符号的不可辨识性 | 两条 Rabi 曲线相同；有相位参考的 Y 测量可读符号 |
+| Q4 | Fock 截断的边界误差 | 四维对易子对角为 1、1、1、-3；最高层占据 3% 时期望为 0.88 |
+
+工程延伸入口：Qiskit Experiments 的[态层析拟合](https://qiskit-community.github.io/qiskit-experiments/manuals/verification/state_tomography)、Qiskit Aer 的[广义振幅阻尼](https://qiskit.github.io/qiskit-aer/stubs/qiskit_aer.noise.amplitude_damping_error.html)、QuTiP 的[有限维 Fock 算符](https://qutip.readthedocs.io/en/stable/guide/guide-states.html)。这些是经过网页核查的官方接口入口，未在本诊断脚本中安装或执行；具体源码快照及许可由 [vendor 清单](../vendor/README.md)单独管理。GAD 参数文字与矩阵的上游矛盾见第 05 章，不凭名称猜热占据指哪一个能级。

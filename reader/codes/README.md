@@ -4,18 +4,22 @@
 
 | 目录 | 内容 | 入口 |
 |---|---|---|
-| foundations | 00–05、13、Q1–Q4 共11组基础实验 | `python3 codes/foundations/foundations_lab.py --case all` |
-| algorithms | 06–08、16–18 共6组算法模型实验 | `python3 codes/algorithms/experiments.py all` |
-| systems | 09–12、14、19 共6个系统程序 | 见该目录 README |
-| practice | 15章统计实验、5个合成音频、科学图 | `python3 codes/practice/experiments.py` |
-| vendor | 15个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
+| foundations | 00–05、13、Q1–Q4 共11组原实验及11组新增诊断 | `python3 codes/foundations/foundations_lab.py --case all` |
+| algorithms | 06–08、16–18 共6组原实验及6组新增检查 | `python3 codes/algorithms/experiments.py all` |
+| systems | 09–12、14、19 共12个系统程序 | 见该目录 README |
+| practice | 15章7组统计实验、5个合成音频、科学图 | `python3 codes/practice/experiments.py` |
+| vendor | 19个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
 
-教学实验结果是精确小模型、合成计数或固定种子模拟；不是新采集的真机数据。程序中的断言和各目录的 `expected-results.json` / `results.json` 提供复算依据。统一运行报告保存在 `work/research/round69-code-validation.json`。
+教学实验结果是精确小模型、合成计数或固定种子模拟；不是新采集的真机数据。程序中的断言和各目录的 `expected-results.json` / `results.json` 提供复算依据。统一运行报告保存在 `work/research/code-validation.json`。
 
-音频生成：`python3 codes/practice/generate_audio.py`。绘图需要 `practice/requirements-figures.txt` 中锁定的包，生成命令是 `python3 codes/practice/plot_figures.py` 与 `python3 codes/algorithms/generate_figure.py`。这两个绘图程序不属于标准库统一运行入口。
+音频生成：`python3 codes/practice/generate_audio.py`。绘图需要 `practice/requirements-figures.txt` 中锁定的包，生成命令是 `python3 codes/practice/plot_figures.py` 与 `python3 codes/algorithms/generate_figure.py`。绘图程序不属于标准库统一运行入口；新增生成器还包括 `practice/research_figures.py`、`foundations/generate_diagnostic_figure.py`、`algorithms/round70_figures.py`、`systems/plot_round70_cutoff.py`，具体命令、图名和依赖见各组README。
 
 本仓库未对原创教材和教学代码声明开放许可证；公开可读不自动赋予转载或再许可权。第三方材料遵循各自原许可证，不因放在同一仓库而改变。详见 [vendor/README.md](vendor/README.md)。
 
 离线阅读版也附带代码副本，方便阅读或另存；主要开发和运行入口是仓库根目录的本目录。Markdown 教材中的代码链接会自动转到离线副本。
 
 `tests/test_snapshot_sources.py` 提供六种完全离线的隔离回归，包括下载失败、校验失败、成功发布和目录替换回滚；统一运行入口也执行这些测试。
+
+第15章新增后选择、零失败上界、时间预算与准概率四组固定样本：`python3 codes/practice/research_checks.py`，输出 `practice/research-results.json`。图由 `python3 codes/practice/research_figures.py` 生成，依赖仍见 `practice/requirements-figures.txt`。
+
+源码阅读练习的独立数学核对：`python3 codes/practice/source_reading_checks.py`。该程序不导入vendor文件；新版基础、算法和系统实验均已接入统一入口。历史round69报告保留，最新统一结果写入 `work/research/code-validation.json`。

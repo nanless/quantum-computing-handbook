@@ -1,0 +1,290 @@
+{
+  "06": {
+    "hadamard_tests": [
+      {
+        "U_11_or_scalar": "1j",
+        "Re_z": 0.4999999999999999,
+        "Im_z": 0.4999999999999999,
+        "p0_X": 0.7499999999999997,
+        "p0_Y": 0.7499999999999997,
+        "wrong_S_mean": -0.5000000000000002
+      },
+      {
+        "U_11_or_scalar": "(-0-1j)",
+        "Re_z": 0.4999999999999999,
+        "Im_z": -0.4999999999999999,
+        "p0_X": 0.7499999999999997,
+        "p0_Y": 0.2499999999999999,
+        "wrong_S_mean": 0.49999999999999933
+      },
+      {
+        "U_11_or_scalar": "1",
+        "Re_z": 0.9999999999999998,
+        "Im_z": 0.0,
+        "p0_X": 0.9999999999999996,
+        "p0_Y": 0.4999999999999998,
+        "wrong_S_mean": -4.440892098500626e-16
+      },
+      {
+        "U_11_or_scalar": "-1",
+        "Re_z": -0.9999999999999998,
+        "Im_z": 0.0,
+        "p0_X": 0.0,
+        "p0_Y": 0.4999999999999998,
+        "wrong_S_mean": -4.440892098500626e-16
+      }
+    ],
+    "reflection_order_success": {
+      "D_after_S": 0.9999999999999998,
+      "S_after_D": 0.2499999999999999
+    }
+  },
+  "07": {
+    "synthetic_counts": [
+      {
+        "k": 0,
+        "successes": 25,
+        "shots": 100
+      },
+      {
+        "k": 1,
+        "successes": 100,
+        "shots": 100
+      }
+    ],
+    "grid_max_a": 0.25,
+    "A_and_inverse_calls": 400,
+    "good_reflections": 100,
+    "likelihood_a1": "zero",
+    "log_likelihood_a025": -56.23351446188084
+  },
+  "08": {
+    "theta": 0.39269908169872414,
+    "wrong_shared_shift": -2.220446049250313e-16,
+    "partial_derivatives": [
+      -0.7071067811865475,
+      -0.7071067811865475
+    ],
+    "correct_gradient": -1.414213562373095,
+    "single_gate_shift_std_bound": 0.022360679774997897,
+    "finite_difference_h001_std_bound": 2.2360679774997894
+  },
+  "16": [
+    {
+      "epsilon": 0.001,
+      "ideal_success": 0.0001,
+      "actual_success": 0.000101,
+      "conditional_vector_error": 0.09962740376031952,
+      "error_bound": 0.2,
+      "root_fidelity": 0.9950371902099892,
+      "squared_fidelity": 0.9900990099009901
+    },
+    {
+      "epsilon": 5e-05,
+      "ideal_success": 0.0001,
+      "actual_success": 0.00010000250000000002,
+      "conditional_vector_error": 0.004999953125756821,
+      "error_bound": 0.01,
+      "root_fidelity": 0.99998750023437,
+      "squared_fidelity": 0.9999750006249841
+    }
+  ],
+  "17": [
+    {
+      "J": 1,
+      "four_energies": [
+        [
+          -1,
+          -1,
+          -1
+        ],
+        [
+          -1,
+          1,
+          5
+        ],
+        [
+          1,
+          -1,
+          -3
+        ],
+        [
+          1,
+          1,
+          -1
+        ]
+      ],
+      "ground_energy": -3,
+      "ground_states": [
+        [
+          1,
+          -1
+        ]
+      ],
+      "broken_ground_states": 1,
+      "scaled_field_magnitude": 1.0
+    },
+    {
+      "J": 2,
+      "four_energies": [
+        [
+          -1,
+          -1,
+          -2
+        ],
+        [
+          -1,
+          1,
+          6
+        ],
+        [
+          1,
+          -1,
+          -2
+        ],
+        [
+          1,
+          1,
+          -2
+        ]
+      ],
+      "ground_energy": -2,
+      "ground_states": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "broken_ground_states": 1,
+      "scaled_field_magnitude": 1.0
+    },
+    {
+      "J": 3,
+      "four_energies": [
+        [
+          -1,
+          -1,
+          -3
+        ],
+        [
+          -1,
+          1,
+          7
+        ],
+        [
+          1,
+          -1,
+          -1
+        ],
+        [
+          1,
+          1,
+          -3
+        ]
+      ],
+      "ground_energy": -3,
+      "ground_states": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "broken_ground_states": 0,
+      "scaled_field_magnitude": 0.6666666666666666
+    },
+    {
+      "J": 8,
+      "four_energies": [
+        [
+          -1,
+          -1,
+          -8
+        ],
+        [
+          -1,
+          1,
+          12
+        ],
+        [
+          1,
+          -1,
+          4
+        ],
+        [
+          1,
+          1,
+          -8
+        ]
+      ],
+      "ground_energy": -8,
+      "ground_states": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "broken_ground_states": 0,
+      "scaled_field_magnitude": 0.25
+    }
+  ],
+  "18": {
+    "repeat_code": [
+      "000",
+      "111"
+    ],
+    "parity_code": [
+      "000",
+      "011",
+      "101",
+      "110"
+    ],
+    "all_eight_masks_checked_per_message": true,
+    "rates_bit_per_use": [
+      0.3333333333333333,
+      0.6666666666666666
+    ],
+    "results": [
+      {
+        "erasure_probability": 0,
+        "repeat_block_failure": 0.0,
+        "parity_block_failure": 0.0
+      },
+      {
+        "erasure_probability": 0.25,
+        "repeat_block_failure": 0.015625,
+        "parity_block_failure": 0.15625
+      },
+      {
+        "erasure_probability": 0.5,
+        "repeat_block_failure": 0.125,
+        "parity_block_failure": 0.5
+      },
+      {
+        "erasure_probability": 0.75,
+        "repeat_block_failure": 0.421875,
+        "parity_block_failure": 0.84375
+      },
+      {
+        "erasure_probability": 1,
+        "repeat_block_failure": 1.0,
+        "parity_block_failure": 1.0
+      }
+    ]
+  }
+}

@@ -103,9 +103,22 @@
           "bytes": 54717,
           "sha256": "b7cb42a08b8aa251db03ef5b93b5905457b04a6372f46e5ce861c63cf33caa16",
           "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/pennylane/templates/subroutines/qsvt.py"
+        },
+        {
+          "path": "pennylane/shadows/classical_shadow.py",
+          "bytes": 24231,
+          "sha256": "9bde0a1c6822b92ce1b21efff390c680068bd0d3fe519f3e7a6c8bce4133e67a",
+          "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/pennylane/shadows/classical_shadow.py"
+        },
+        {
+          "path": "pennylane/gradients/parameter_shift.py",
+          "bytes": 56974,
+          "sha256": "693c50c16e9e6e6fd5896a97f0c55bcfa3c1e3a63084173d5881d9630820287d",
+          "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/pennylane/gradients/parameter_shift.py"
         }
       ],
-      "missing_requested_paths": []
+      "missing_requested_paths": [],
+      "extended_at_utc": "2026-09-26T15:13:46.265439+00:00"
     },
     {
       "name": "openfermion",
@@ -136,9 +149,16 @@
           "bytes": 16175,
           "sha256": "7c52297355cc20ef35553a37b529c4170e550439cdad5a9dd4069a4502b270ab",
           "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/src/openfermion/transforms/opconversions/jordan_wigner.py"
+        },
+        {
+          "path": "src/openfermion/circuits/trotter/simulate_trotter.py",
+          "bytes": 8240,
+          "sha256": "8fca44067c5d8366594d5446f9390034816f349add6f424ab484233933b2c1b9",
+          "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/src/openfermion/circuits/trotter/simulate_trotter.py"
         }
       ],
-      "missing_requested_paths": []
+      "missing_requested_paths": [],
+      "extended_at_utc": "2026-09-26T15:13:46.842030+00:00"
     },
     {
       "name": "qualtran",
@@ -163,9 +183,22 @@
           "bytes": 4681,
           "sha256": "11128dc63f4c0f0e495a7e5c36cd26f50d9bb8f6a6a8ed325fa94a08adc3c8ca",
           "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/qualtran/bloqs/qft/qft_text_book.py"
+        },
+        {
+          "path": "qualtran/bloqs/qubitization/qubitization_walk_operator.py",
+          "bytes": 8880,
+          "sha256": "6569ab92dbb9dc6ba87a4467d210b5ffdfa762dac76c6ced319fe22a7b1a116e",
+          "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/qualtran/bloqs/qubitization/qubitization_walk_operator.py"
+        },
+        {
+          "path": "qualtran/bloqs/block_encoding/linear_combination.py",
+          "bytes": 17152,
+          "sha256": "d297f482774325d0f42cecf5c34bb1afedeb1d9801b98bbd2fc30983a399d399",
+          "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/qualtran/bloqs/block_encoding/linear_combination.py"
         }
       ],
-      "missing_requested_paths": []
+      "missing_requested_paths": [],
+      "extended_at_utc": "2026-09-26T15:13:49.045346+00:00"
     },
     {
       "name": "qiskit-addon-sqd",
@@ -211,9 +244,16 @@
           "bytes": 12694,
           "sha256": "d6fe8857404757be00b0f7d8086d8b7adc445c5e62aee6f5c4fb2c9def6f636d",
           "url": "https://raw.githubusercontent.com/qutip/qutip/310b91e7d8bbfcffa523c380cc4e733906d0a330/qutip/solver/mesolve.py"
+        },
+        {
+          "path": "qutip/solver/mcsolve.py",
+          "bytes": 39804,
+          "sha256": "4e49d382a3cff5fd7cfe51452b309560e6d8bc91d105b0d974bda2be298b559b",
+          "url": "https://raw.githubusercontent.com/qutip/qutip/310b91e7d8bbfcffa523c380cc4e733906d0a330/qutip/solver/mcsolve.py"
         }
       ],
-      "missing_requested_paths": []
+      "missing_requested_paths": [],
+      "extended_at_utc": "2026-09-26T15:13:50.428787+00:00"
     },
     {
       "name": "quimb",
@@ -412,6 +452,115 @@
         }
       ],
       "missing_requested_paths": []
+    },
+    {
+      "name": "pyqsp",
+      "repository": "https://github.com/ichuang/pyqsp",
+      "commit": "065492b65e3029dd38c37252f17ac798b6f10702",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1133,
+          "sha256": "8c7cdfeb46f1d0069627c155a0a1718cb0ceb663286d929d138552473e092ad4",
+          "url": "https://raw.githubusercontent.com/ichuang/pyqsp/065492b65e3029dd38c37252f17ac798b6f10702/LICENSE"
+        },
+        {
+          "path": "pyqsp/angle_sequence.py",
+          "bytes": 13109,
+          "sha256": "0c714ab074557095ab72f5d0c505131303acd45b24f5903b44c1dbd88a89fe2e",
+          "url": "https://raw.githubusercontent.com/ichuang/pyqsp/065492b65e3029dd38c37252f17ac798b6f10702/pyqsp/angle_sequence.py"
+        },
+        {
+          "path": "pyqsp/sym_qsp_opt.py",
+          "bytes": 12131,
+          "sha256": "4d8889dc44344dc27d50e14c6586860ab5f77597d2e72c0935201d568079f9bf",
+          "url": "https://raw.githubusercontent.com/ichuang/pyqsp/065492b65e3029dd38c37252f17ac798b6f10702/pyqsp/sym_qsp_opt.py"
+        },
+        {
+          "path": "pyqsp/response.py",
+          "bytes": 10624,
+          "sha256": "a14c14e40c3bb560fd81e64915ab180b03aa996fa041705bee11a3d4a8b72e06",
+          "url": "https://raw.githubusercontent.com/ichuang/pyqsp/065492b65e3029dd38c37252f17ac798b6f10702/pyqsp/response.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qutip-qtrl",
+      "repository": "https://github.com/qutip/qutip-qtrl",
+      "commit": "83364c383ba2fd7ea5205912f07350b4bf11e338",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1538,
+          "sha256": "3e4668094b637cdc9b99a81c943fbceb3982c1c0f01f2cbb39a870e6b565b236",
+          "url": "https://raw.githubusercontent.com/qutip/qutip-qtrl/83364c383ba2fd7ea5205912f07350b4bf11e338/LICENSE"
+        },
+        {
+          "path": "src/qutip_qtrl/pulseoptim.py",
+          "bytes": 80152,
+          "sha256": "71afbb0a58c00dc66304e84171db1fc16aaa9530dd2300a5e503d7f72bdfe20d",
+          "url": "https://raw.githubusercontent.com/qutip/qutip-qtrl/83364c383ba2fd7ea5205912f07350b4bf11e338/src/qutip_qtrl/pulseoptim.py"
+        },
+        {
+          "path": "src/qutip_qtrl/grape.py",
+          "bytes": 18960,
+          "sha256": "40898772468e014448afd71d2d85585ebf62f9cf5fe1a0ee6d0bd3d9ec008b0a",
+          "url": "https://raw.githubusercontent.com/qutip/qutip-qtrl/83364c383ba2fd7ea5205912f07350b4bf11e338/src/qutip_qtrl/grape.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-addon-cutting",
+      "repository": "https://github.com/Qiskit/qiskit-addon-cutting",
+      "commit": "0bebe901d3a4e06abc0a055d281b5270946f73b1",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "e6ec0abeff799393d772183db4253c324810e123058548de9fc0352c5ac87a68",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-cutting/0bebe901d3a4e06abc0a055d281b5270946f73b1/LICENSE.txt"
+        },
+        {
+          "path": "qiskit_addon_cutting/qpd/weights.py",
+          "bytes": 18001,
+          "sha256": "967ec889e5e953686839b3dbe295722bd4d3ea7c1c6c9e32362ecbf8afe9f48d",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-cutting/0bebe901d3a4e06abc0a055d281b5270946f73b1/qiskit_addon_cutting/qpd/weights.py"
+        },
+        {
+          "path": "qiskit_addon_cutting/cutting_reconstruction.py",
+          "bytes": 10665,
+          "sha256": "186461ec1ebe21e972a4ba5d583550128e210a1c8d36692a3b31ce1582cf173a",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-cutting/0bebe901d3a4e06abc0a055d281b5270946f73b1/qiskit_addon_cutting/cutting_reconstruction.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-aer",
+      "repository": "https://github.com/Qiskit/qiskit-aer",
+      "commit": "755381a015037c66af3e3d0cc54ff1a56dbe7ace",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "62110f3e60f594c861674f74d007283a8ed8dfee449859132e11d28e5c2b0d96",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-aer/755381a015037c66af3e3d0cc54ff1a56dbe7ace/LICENSE.txt"
+        },
+        {
+          "path": "qiskit_aer/noise/errors/standard_errors.py",
+          "bytes": 17095,
+          "sha256": "25057e6ddab0f2861c363bf01e7c01a5337d3acb8757dcd2eb36a010d14206b4",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-aer/755381a015037c66af3e3d0cc54ff1a56dbe7ace/qiskit_aer/noise/errors/standard_errors.py"
+        }
+      ],
+      "missing_requested_paths": []
     }
-  ]
+  ],
+  "extended_at_utc": "2026-09-26T15:14:28.420348+00:00"
 }

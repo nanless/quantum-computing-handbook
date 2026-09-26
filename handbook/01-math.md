@@ -810,6 +810,34 @@ $$1\prec\log n\prec n\prec n\log n\prec n^2\prec2^n\prec n!.$$
 
 答案见[练习与答案：第 1 章](appendices/exercises.md#第-1-章)。
 
+## 新增诊断练习：两个基态都归一化，还不能证明是量子门
+
+**题目。** 取二维线性矩阵
+
+$$
+A=\begin{bmatrix}1&1\\0&0\end{bmatrix}.
+$$
+
+它把 $|0\rangle$ 和 $|1\rangle$ 都送到 $|0\rangle$，两个输出的长度都是 1。是否可以据此说 $A$ 是酉门？请检查 $|+\rangle$、$|-\rangle$ 和 $A^\dagger A$。
+
+**逐步解答。** 矩阵两列长度为 1，只验证了 $A^\dagger A$ 的对角格；酉性还要求不同列的内积为零。这里两列相同，其内积为 1，所以
+
+$$
+A^\dagger A=\begin{bmatrix}1&1\\1&1\end{bmatrix}\ne I.
+$$
+
+按线性计算叠加输入，得到
+
+$$
+A|+\rangle=\sqrt2|0\rangle,\qquad A|-\rangle=0.
+$$
+
+前者长度平方为 2，后者为 0，均不能作为归一化输出态。不能在每个输出后偷偷归一化并继续称作同一个确定性酉门：零向量根本无法归一化；对其他输入，按输入依赖的长度相除也不是原来的线性变换。
+
+这个反例不否认物理复位。第 05 章的复位由两个 Kraus 算子 $|0\rangle\langle0|$、$|0\rangle\langle1|$ 分支相加描述，而不是把它们先相加成上面的 $A$ 再作用在 ket 上。**概率合并分支**与**相干合并振幅**在这里会给不同结果。
+
+运行 `python3 codes/foundations/diagnostic_lab.py --case 01`，核对两列的长度、交叉内积和两个叠加输入。程序及[固定结果](../codes/foundations/diagnostic-results.json)都使用基序 $0,1$；可把 $A$ 换为 $H$ 对照，后者的两列既归一化又正交。
+
 ## 配套数值实验与展开答案
 
 用含复数的输入检查内积、外积和门后的概率。遗漏共轭会把长度算成复数；只检查两个结果加起来是 1，也不能替代对计算过程的核查。

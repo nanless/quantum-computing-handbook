@@ -15,6 +15,8 @@
 
 `codes/` 包含可运行教学实验与带许可的第三方固定源码摘录；`handbook/` 是 Markdown 原稿；`reader/` 是已生成的离线阅读版；`tools/reader/` 包含构建和检查程序；`work/research/` 保存与正文相互引用的审校、算例和验证记录。
 
+本轮新增32组诊断与源码练习、6张科学图；源码阅读摘录共19项目64文件。逐章修改、独立复核、验收范围与限制见[第70轮整合记录](work/research/round70-final-integration.md)。
+
 ## 重新生成阅读版
 
 需要 Node.js 和 Chromium。在仓库根目录运行：

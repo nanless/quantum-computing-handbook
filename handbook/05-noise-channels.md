@@ -432,6 +432,38 @@ $$
 
 答案见[练习与答案：第 5 章](appendices/exercises.md#第-5-章)。
 
+## 新增诊断练习：有限温度弛豫为何也能把基态激发起来
+
+**问题。** §5.3 的零温阻尼只向下跃迁。若平衡态仍有激发占据 $r$，等待很久就不应总得到纯基态。以下补上一个有明确固定点的模型；它不把真实非平衡噪声一概称作温度。
+
+对基序 $0,1$，取 $0\le\gamma\le1$ 为本次弛豫强度，$0\le r\le1$ 为模型固定点的激发占据，四个 Kraus 算子为
+
+$$
+\begin{aligned}
+K_0&=\sqrt{1-r}\begin{bmatrix}1&0\\0&\sqrt{1-\gamma}\end{bmatrix},&
+K_1&=\sqrt{1-r}\begin{bmatrix}0&\sqrt\gamma\\0&0\end{bmatrix},\\
+K_2&=\sqrt r\begin{bmatrix}\sqrt{1-\gamma}&0\\0&1\end{bmatrix},&
+K_3&=\sqrt r\begin{bmatrix}0&0\\\sqrt\gamma&0\end{bmatrix}.
+\end{aligned}
+$$
+
+前两项是权重 $1-r$ 的向下阻尼，后两项是权重 $r$ 的向上阻尼。分别相加 $K_0^\dagger K_0+K_1^\dagger K_1=(1-r)I$ 与 $K_2^\dagger K_2+K_3^\dagger K_3=rI$，合计为 $I$，所以保迹；Kraus 形式同时保证完全正。这叫广义振幅阻尼。若解释为正温度、非简并二能级热平衡，另有 $r<1/2$；完整数学信道允许的范围更大。
+
+**题目。** 输入写为 $\rho=\left[\begin{smallmatrix}1-b&c\\c^*&b\end{smallmatrix}\right]$。先逐项求输出，再令 $\gamma=0.36,r=0.10$，比较输入 $|0\rangle,|1\rangle,|+\rangle$，并求固定点。
+
+**逐步解答。** 向下分支使激发占据成为 $(1-\gamma)b$；向上分支使它成为 $b+\gamma(1-b)$。按权重相加：
+
+$$
+b'=(1-r)(1-\gamma)b+r[b+\gamma(1-b)]
+=(1-\gamma)b+\gamma r.
+$$
+
+两类分支都让非对角元乘 $\sqrt{1-\gamma}$，故 $c'=\sqrt{1-\gamma}\,c$。本题三个输入的 $b'$ 依次为 $0.036,0.676,0.356$；$|+\rangle$ 输入还给 $c'=0.4$。基态也会被激发，是非零 $r$ 的直接后果。
+
+当 $\gamma>0$，固定点是 $\rho_{\rm eq}=\operatorname{diag}(1-r,r)$。反复应用 $n$ 次，有 $b_n-r=(1-\gamma)^n(b_0-r)$；若 $\gamma=0$，信道为恒等，每个态都是固定点，不能说它会热化。令 $\gamma=1-e^{-t/T_1}$，可见 $b(t)=r+(b_0-r)e^{-t/T_1}$，把非零平衡底座与衰减率区分开了。
+
+运行 `python3 codes/foundations/diagnostic_lab.py --case 05`，程序核对三个输入、固定点、Kraus 完备性和九组边界参数。模型参数与 [Qiskit Aer 的四 Kraus 定义](https://qiskit.github.io/qiskit-aer/stubs/qiskit_aer.noise.amplitude_damping_error.html)相接：`param_amp=gamma`、`excited_state_population=r`。核查的 0.17.1 文档（页面更新 2025-06-04，访问 2026-09-26）参数文字一处写成 $|0\rangle$ 占据，与同页公式及固定点矛盾；本书依据明确矩阵把 $r$ 定义为 $|1\rangle$ 占据。移植代码时应以版本源码、矩阵和固定点共同核对，不能只抄参数说明的一行。
+
 ## 配套数值实验与展开答案
 
 组合振幅阻尼与纯退相位，分别计算 40 μs 后的激发占据和相干项。代码检查 Kraus 完备关系、输出本征值与恒等／复位边界，不把一种输入的结果当成全部信道质量。

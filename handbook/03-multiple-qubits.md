@@ -504,6 +504,39 @@ $$
 
 答案见[练习与答案：第 3 章](appendices/exercises.md#第-3-章)。
 
+## 新增诊断练习：相位转了四分之一圈，纠缠见证为什么漏检
+
+**题目。** 在基序 $00,01,10,11$ 中取
+
+$$
+|\psi_i\rangle=\frac{|00\rangle+i|11\rangle}{\sqrt2}.
+$$
+
+计算 $C_Z=\langle ZZ\rangle$、$C_X=\langle XX\rangle$ 与 $C_{XY}=\langle X\otimes Y\rangle$。若前两项之和没有超过 1，能否判定无纠缠？怎样改变测量基？
+
+**第一步：先独立判断态。** 四系数为 $(1,0,0,i)/\sqrt2$，所以 $ad-bc=i/2\ne0$；两个 Schmidt 权重仍各为 $1/2$，这是最大纠缠纯态。其 $ZZ$ 作用在 $00,11$ 上都给 $+1$，故 $C_Z=1$。
+
+**第二步：逐项追踪复相位。** $XX$ 交换 $00$ 与 $11$，所以
+
+$$
+XX|\psi_i\rangle=\frac{i|00\rangle+|11\rangle}{\sqrt2},\qquad
+\langle\psi_i|XX|\psi_i\rangle=\frac{i-i}{2}=0.
+$$
+
+因此原来的 $C_Z+C_X=1$，绝对值版也只有 1。这里的漏检确实来自关联旋转到其他轴，而不是仅仅把 $XX$ 的正负号选错。
+
+由于 $Y|0\rangle=i|1\rangle$、$Y|1\rangle=-i|0\rangle$，
+
+$$
+(X\otimes Y)|\psi_i\rangle
+=\frac{i|11\rangle+i(-i)|00\rangle}{\sqrt2}
+=|\psi_i\rangle.
+$$
+
+于是 $C_{XY}=1$，改用 $\langle ZZ\rangle+\langle XY\rangle$ 得 2。可分上界仍为 1：对乘积态，表达式为 $z_Az_B+x_Ay_B$，对二维实向量 $(z_A,x_A)$ 和 $(z_B,y_B)$ 用 Cauchy–Schwarz 即可；再对可分混合线性加权。
+
+等价的做法是在 Bob 测 $X$ 前施加 $S^\dagger$，把原来所测的方向变为 $Y$；它也把本题态变成 $|\Phi^+\rangle$。运行 `python3 codes/foundations/diagnostic_lab.py --case 03` 核对三个相关值与局域修正。以上是精确模型值；若看过数据后才挑最有利的测量轴，统计检验还须计入选择过程或使用独立验证样本，不能直接沿用事先固定单一见证的错误概率。
+
 ## 配套数值实验与展开答案
 
 对含复相位的非最大纠缠态逐格偏迹，再施加远端局域旋转，确认本地约化态不变。明确比较完整矩阵，而不只比较一个计算基概率。

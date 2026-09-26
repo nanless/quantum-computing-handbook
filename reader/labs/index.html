@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实验、练习、代码与声音 · 量子计算手册</title><link rel="stylesheet" href="../assets/katex/katex.min.css"><link rel="stylesheet" href="../assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="../index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">量子力学基础篇</div><a href="../quantum-mechanics/index.html">基础篇导读与先修说明</a><a href="../quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="../quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="../quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">量子计算主篇</div><a href="../00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="../01-math.html">01｜够用而不跳步的数学工具</a><a href="../02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="../03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="../04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="../05-noise-channels.html">05｜混态、噪声与量子信道</a><a href="../06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="../07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="../08-applications.html">08｜应用、变分算法与证据边界</a><a href="../09-hardware.html">09｜从物理量子比特到控制栈</a><a href="../10-error-correction.html">10｜量子错误校正与容错计算</a><a href="../11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="../12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><a href="../13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="../14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="../15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><a href="../16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="../17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="../18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="../19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">实验、代码与音频</div><a aria-current="page" href="../labs/index.html">实验、练习、代码与声音</a><a href="../labs/algorithms.html">算法实验：把输出概率、成本和证明边界一起核对</a><a href="../labs/audio.html">声音实验：相位、抵消与退相干的教学映射</a><a href="../labs/foundations.html">基础实验册｜从复振幅到可核查的数值结果</a><a href="../labs/practice.html">实验：有限样本、外推代价与多重比较</a><a href="../labs/systems.html">系统实验册：六个跨层问题的手算、代码与研究入口</a><div class="nav-label">附录</div><a href="../appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="../appendices/notation.html">符号表</a><a href="../appendices/glossary.html">术语表</a><a href="../appendices/exercises.html">练习答案与推导提示</a><a href="../appendices/references.html">参考资料与证据等级</a><a href="../appendices/software-practice.html">算法、工业实践与开源代码对照</a><a href="../appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a></nav></details><article><h1 id="实验练习代码与声音">实验、练习、代码与声音</h1>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实验、练习、代码与声音 · 量子计算手册</title><link rel="stylesheet" href="../assets/katex/katex.min.css"><link rel="stylesheet" href="../assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="../index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">量子力学基础篇</div><a href="../quantum-mechanics/index.html">基础篇导读与先修说明</a><a href="../quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="../quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="../quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">量子计算主篇</div><a href="../00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="../01-math.html">01｜够用而不跳步的数学工具</a><a href="../02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="../03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="../04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="../05-noise-channels.html">05｜混态、噪声与量子信道</a><a href="../06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="../07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="../08-applications.html">08｜应用、变分算法与证据边界</a><a href="../09-hardware.html">09｜从物理量子比特到控制栈</a><a href="../10-error-correction.html">10｜量子错误校正与容错计算</a><a href="../11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="../12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><a href="../13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="../14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="../15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><a href="../16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="../17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="../18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="../19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">实验、代码与音频</div><a aria-current="page" href="../labs/index.html">实验、练习、代码与声音</a><a href="../labs/algorithms.html">算法实验：把输出概率、成本和证明边界一起核对</a><a href="../labs/audio.html">声音实验：相位、抵消与退相干的教学映射</a><a href="../labs/foundations.html">基础实验册｜从复振幅到可核查的数值结果</a><a href="../labs/practice.html">实验：有限样本、外推代价与多重比较</a><a href="../labs/systems.html">系统实验册：六个跨层问题的手算、代码与研究入口</a><div class="nav-label">附录</div><a href="../appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="../appendices/notation.html">符号表</a><a href="../appendices/glossary.html">术语表</a><a href="../appendices/exercises.html">练习答案与推导提示</a><a href="../appendices/references.html">参考资料与证据等级</a><a href="../appendices/software-practice.html">算法、工业实践与开源代码对照</a><a href="../appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a></nav></details><article><h1 id="实验练习代码与声音">实验、练习、代码与声音</h1>
 <p>这里把全书 24 篇正文连接到可运行的小实验。先读题目、写预测，再运行程序；每题都有计算过程、答案和模型边界。既有的 <a href="../appendices/exercises.html">251 道自检及答案</a>保持原编号，新增实验使用独立标签。</p>
 <h2 id="怎样开始">怎样开始</h2>
 <ol>
@@ -94,8 +94,8 @@
 </tr>
 <tr>
 <td>15</td>
-<td>不等 shots、外推方差及多重比较</td>
-<td><a href="practice.html">P15-A–C</a></td>
+<td>不等shots、外推、多重比较、后选择、零失败、时间预算、切割</td>
+<td><a href="practice.html">P15-A–G</a></td>
 </tr>
 <tr>
 <td>16</td>
@@ -111,6 +111,11 @@
 <td>18</td>
 <td>擦除信道降解映射及熵</td>
 <td><a href="algorithms.html">18-A</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td>故障区间并集、可用率与合格服务吞吐</td>
+<td><a href="systems.html">S19</a></td>
 </tr>
 <tr>
 <td>Q1</td>
@@ -142,4 +147,136 @@
 <h2 id="如何把练习改成自己的研究">如何把练习改成自己的研究</h2>
 <p>一次只改变一个因素：先把初态换成含非零复相位的态，再改变噪声，再增加系统大小。记录何时解析断言仍成立、何时已越出模型条件。失败例子比只贴一张漂亮成功图更有价值。</p>
 <p>真实硬件实验还需要软件锁定、编译与校准快照、原始计数、时间顺序和费用预算。第三方源码清单支持代码溯源，没有替读者完成这些设备实验。</p>
-</article><div class="page-turn"></div><footer>2026-09-26 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>
+<h2 id="第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</h2>
+<p>本组题目和完整解答直接放在相应正文的“新增诊断练习”“实操扩展B”或“练习与实验”中；不必在两个文档间来回找答案。原251道自检与上表第一组实验继续保留。全部新数值程序已接入统一入口，输入是合成计数或明示模型。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>章节入口</th>
+<th>新练习要回答的问题</th>
+<th>程序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="../00-overview.html">00</a></td>
+<td>重复复制的日志为何不能算独立shots</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断00</a></td>
+</tr>
+<tr>
+<td><a href="../01-math.html">01</a></td>
+<td>两列归一化为何还不保证酉性</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断01</a></td>
+</tr>
+<tr>
+<td><a href="../02-single-qubit.html">02</a></td>
+<td>合法计数为何重构出负本征值</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断02</a></td>
+</tr>
+<tr>
+<td><a href="../03-multiple-qubits.html">03</a></td>
+<td>复相位纠缠应测哪个相关方向</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断03</a></td>
+</tr>
+<tr>
+<td><a href="../04-circuits-protocols.html">04</a></td>
+<td>门的全局相位加控制后为何不能删</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断04</a></td>
+</tr>
+<tr>
+<td><a href="../05-noise-channels.html">05</a></td>
+<td>有限温度阻尼为何也能激发基态</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断05</a></td>
+</tr>
+<tr>
+<td><a href="../06-algorithmic-primitives.html">06</a></td>
+<td>Hadamard测试如何读复期望值的实部和虚部</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查06</a></td>
+</tr>
+<tr>
+<td><a href="../07-algorithms.html">07</a></td>
+<td>单个Grover深度为什么分不清不同振幅</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查07</a></td>
+</tr>
+<tr>
+<td><a href="../08-applications.html">08</a></td>
+<td>多个门共享参数时如何正确求导</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查08</a></td>
+</tr>
+<tr>
+<td><a href="../09-hardware.html">09</a></td>
+<td>如何把有限标定样本的不确定性一起算</td>
+<td><a href="../codes/systems/calibration_uncertainty.py">标定传播</a></td>
+</tr>
+<tr>
+<td><a href="../10-error-correction.html">10</a></td>
+<td>综合征测后为何仍有相干逻辑误差</td>
+<td><a href="../codes/systems/coherent_repetition.py">相干重复码</a></td>
+</tr>
+<tr>
+<td><a href="../11-resources-benchmarks.html">11</a></td>
+<td>批内漂移怎样减少有效独立信息</td>
+<td><a href="../codes/systems/correlated_shots.py">相关shots</a></td>
+</tr>
+<tr>
+<td><a href="../12-security-network-frontiers.html">12</a></td>
+<td>存储超时怎样交换速率与条件质量</td>
+<td><a href="../codes/systems/network_cutoff.py">网络超时</a></td>
+</tr>
+<tr>
+<td><a href="../13-quantum-information.html">13</a></td>
+<td>后选择为何不违反迹距离收缩定理</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断13</a></td>
+</tr>
+<tr>
+<td><a href="../14-compilation-control.html">14</a></td>
+<td>不共用比特的门为何还不能并行</td>
+<td><a href="../codes/systems/resource_schedule.py">共享资源调度</a></td>
+</tr>
+<tr>
+<td><a href="../15-practice-research.html">15</a></td>
+<td>后选择、零失败、时间预算、负权重怎样报告</td>
+<td><a href="../codes/practice/research_checks.py">P15-D–G</a></td>
+</tr>
+<tr>
+<td><a href="../16-advanced-algorithms-verification.html">16</a></td>
+<td>小成功率为何放大条件态误差</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查16</a></td>
+</tr>
+<tr>
+<td><a href="../17-computation-models.html">17</a></td>
+<td>链强度阈值为何有简并和缩放代价</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查17</a></td>
+</tr>
+<tr>
+<td><a href="../18-channels-capacities-complexity.html">18</a></td>
+<td>有限块码可靠性为何不能等同信道容量</td>
+<td><a href="../codes/algorithms/round70_checks.py">算法检查18</a></td>
+</tr>
+<tr>
+<td><a href="../19-engineering-architecture.html">19</a></td>
+<td>校准更新怎样传播失效和拒绝过期发布</td>
+<td><a href="../codes/systems/calibration_dependencies.py">校准依赖</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/01-experiments-states.html">Q1</a></td>
+<td>相同可见度能否区分不等权与退相干</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断q1</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/02-observables-dynamics.html">Q2</a></td>
+<td>同一简并读数能否来自不同测后作用</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断q2</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/03-levels-control.html">Q3</a></td>
+<td>Rabi人口能否辨认失谐符号</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断q3</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4</a></td>
+<td>Fock截断如何改变对易子</td>
+<td><a href="../codes/foundations/diagnostic_lab.py">基础诊断q4</a></td>
+</tr>
+</tbody></table></div>
+<p>此外，<a href="../appendices/software-practice.html">源码阅读练习S04–S08</a>把多项式基、LCU归一化、阴影快照、控制约束和重构顺序连接到固定的上游文件。四组数值题有<a href="../codes/practice/source_reading_checks.py">独立复算代码</a>，工程讨论题保留其无法单靠程序断言验收的边界。</p>
+</article><div class="page-turn"></div><footer>2026-09-26 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>

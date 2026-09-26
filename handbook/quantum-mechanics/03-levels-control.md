@@ -511,6 +511,31 @@ $$
 
 答案见[练习与答案：量子力学 Q3](../appendices/exercises.md#量子力学-q3)。
 
+## 新增诊断练习：只看 Rabi 布居，能否知道失谐的正负
+
+**题目。** 在 §6 的理想恒幅两能级 RWA 模型中，设 $\Omega/2\pi=10\ \mathrm{MHz}$，两个候选失谐为 $\Delta/2\pi=+6\ \mathrm{MHz}$ 与 $-6\ \mathrm{MHz}$。从 $|0\rangle$ 出发，测量 50 ns 后的激发概率，能否区分正负失谐？若把整个时长扫描完，又能否区分？
+
+**第一步：先检查公式怎样依赖未知参数。**
+
+$$
+P_1(t;\Delta)=\frac{\Omega^2}{\Omega^2+\Delta^2}
+\sin^2\!\left(\frac{\sqrt{\Omega^2+\Delta^2}\,t}{2}\right)
+=P_1(t;-\Delta).
+$$
+
+两处都只含 $\Delta^2$。代入本题数值，在 $t=50\ \mathrm{ns}$ 时两者都约为 $0.686313$；即使没有噪声、采无限多点，整条布居振荡曲线也相同。这是该实验对参数符号的**不可辨识性**，不是再多采样就一定能解决的精度不足。换驱动频率进行额外扫描会改变实验设计，当然可提供新信息。
+
+**第二步：加一个能区分符号的相位实验。** 为避免与 §6 的 $Z_E=-Z$ 混淆，这里单独声明有效 Ramsey 模型为 $H_{\rm eff}=\hbar\delta Z/2$，$\delta$ 是这个约定中的有符号角频率。先制备 $|+\rangle$，等待 $\tau$ 后
+
+$$
+|\psi(\tau)\rangle\sim\frac{|0\rangle+e^{i\delta\tau}|1\rangle}{\sqrt2},\qquad
+\langle X\rangle=\cos(\delta\tau),\quad \langle Y\rangle=\sin(\delta\tau).
+$$
+
+只测 $X$ 仍分不出正负；测 $Y$ 才读出正弦的符号。若 $\delta/2\pi=\pm6\ \mathrm{MHz}$，选 $\tau=1/(4\times6\ \mathrm{MHz})\approx41.667\ \mathrm{ns}$，理想 $Y$ 期望分别为 $+1,-1$。若沿用 §6 的自由项 $\hbar\Delta Z_E/2$，应代入 $\delta=-\Delta$，不能跨约定直接复制正负号。
+
+运行 `python3 codes/foundations/diagnostic_lab.py --case q3`，从旋转矩阵而非只从正弦公式核对 Ramsey 两个结果。真实实验还要校准 $Y$ 测量的脉冲相位、时间零点与参考振荡器；本题不宣称这些理想概率是设备测量值。控制标定的核心不只是拟合得更精确，还包括判断所选实验能否区分待估参数。
+
 ## 配套数值实验与展开答案
 
 用统一 SI 单位计算三个温度的热占据，并从二维 Hamiltonian 核对失谐 Rabi 的峰高和峰值时间。程序采用负指数形式，避免极低温计算的正指数溢出。

@@ -2,7 +2,7 @@
 
 核验日期：2026-09-26。本页把全书已有主题连接到可运行教学实验、真实开源实现和产业证据。它覆盖本书主要算法族及工程环节，不声称穷尽整个量子计算领域。具体数学条件仍以对应章节为准；“有库实现”“可在真机运行”“已获得商业收益”“证明量子加速”是四个不同问题。
 
-本地保存了 15 个项目的 46 份文件（源码、许可证及声明），固定到 40 位提交哈希；见[完整源码索引](../../codes/vendor/README.md)与[机器可读校验清单](../../codes/vendor/manifest.json)。这些是未改写的源码摘录，便于对照阅读；完整安装还需要原仓库的其余模块、依赖及构建步骤。教学代码与第三方摘录分别存放。
+本地保存了 19 个项目的 64 份文件（源码、许可证及声明），固定到 40 位提交哈希；见[完整源码索引](../../codes/vendor/README.md)与[机器可读校验清单](../../codes/vendor/manifest.json)。这些是未改写的源码摘录，便于对照阅读；完整安装还需要原仓库的其余模块、依赖及构建步骤。教学代码与第三方摘录分别存放。
 
 ## 1. 怎样读算法对照表
 
@@ -20,9 +20,9 @@
 | Grover / 振幅放大，07 | 可制备初态及成功判据 → 标记样本 | Cirq 与 Qiskit Grover；[重试账本实验](../labs/algorithms.md) | 初始成功率、未知解数、反射、解的验证与总重试成本 |
 | 振幅估计及迭代变体，07、16 | 制备和成功投影 → 概率估计 | Qiskit `iae.py` 固定源码 | 每个 Grover 幂的深度；置信保证不同于一次点估计 |
 | Shor / 阶寻找，07 | 整数及模乘电路 → 周期候选、经典因子 | Cirq `examples/shor.py`；正文 15/35 例 | 可逆模算术、辅助位、连分数、失败分支；小整数例不代表破解规模 |
-| 乘积公式 Hamiltonian 模拟，07、16 | 局域项、总时间与精度 → 近似演化 | OpenFermion 映射源码；乘积公式在正文推导，本轮未完整实现 | 非对易误差、时间步、分解后门数 |
-| LCU / block-encoding / qubitization，16 | 加权算子访问 → 嵌入块与演化 | Qualtran 完整项目为研究入口；本地只摘录 QFT/加法模块 | 归一化因子、选择/制备 oracle、后选择与辅助位 |
-| QSP / QSVT，16 | 块编码与可实现多项式 → 奇异值变换 | PennyLane `qsvt.py`；[非厄米反例](../labs/algorithms.md) | 奇偶约束、相位约定；不能把奇异值变换一概写成矩阵多项式 |
+| 乘积公式 Hamiltonian 模拟，07、16 | 局域项、总时间与精度 → 近似演化 | OpenFermion 映射与 `simulate_trotter.py` 固定源码；未安装完整上游包 | 非对易误差、时间步、分解后门数 |
+| LCU / block-encoding / qubitization，16 | 加权算子访问 → 嵌入块与演化 | Qualtran `LinearCombination` 与 `QubitizationWalkOperator` 源码，另有QFT/加法 | 归一化因子、选择/制备 oracle、后选择与辅助位 |
+| QSP / QSVT，16 | 块编码与可实现多项式 → 奇异值变换 | PennyLane `qsvt.py`、pyqsp相位求解与响应源码；[非厄米反例](../labs/algorithms.md) | 奇偶约束、相位约定；不能把奇异值变换一概写成矩阵多项式 |
 | HHL / 量子线性系统，07、16 | 矩阵访问、右端态 → 解态或少量可观测量 | 正文条件分析；本轮无完整 HHL 实装 | 条件数、稀疏/块访问、态制备、精度与结果读出 |
 | 量子行走，16 | 图或 Markov 链访问 → 搜索/谱信息 | 本章模型比较；本轮无完整行走库摘录 | 建立成本、更新成本、谱隙、标记比例 |
 | 容错算术与资源分解，11、16 | 高级子程序 → 分解与逻辑资源 | [Qualtran](https://github.com/quantumlib/Qualtran)，本地加法/QFT 源码 | 逻辑门数不等于物理位数；路由、工厂和等待需再估算 |
@@ -37,11 +37,11 @@ Qualtran 官方说明其仍是实验预览，接口和个别算法可能变化�
 | QAOA | 成本层和混合层 → 采样 → 可行解筛选 | PennyLane `qaoa/cost.py`；08 三顶点路径图精确分布 | 与穷举、局部搜索、成熟整数规划在相同时间预算比较 |
 | SQD | 量子样本 → 组态恢复 → 子空间经典对角化 | Qiskit addon 的恢复与费米子模块 | 对比精选组态相互作用/DMRG；记录子空间维度和经典内存 |
 | 量子核/变分学习 | 数据编码 → 重叠或测量特征 → 学习 | PennyLane 完整项目入口；本轮不存完整训练流水线 | 数据集划分、预处理、调参预算、强经典模型及数据加载成本 |
-| 随机测量/经典阴影，16 | 随机测量与快照逆映射 → 可观测量估计 | 正文原论文入口；本轮没有声称提供完整阴影程序 | 目标可观测量族、方差/阴影范数、多重比较 |
+| 随机测量/经典阴影，16 | 随机测量与快照逆映射 → 可观测量估计 | PennyLane `ClassicalShadow` 后处理源码；量子采集与完整运行仍未复现 | 目标可观测量族、方差/阴影范数、多重比较 |
 | ZNE / PEC / 读出缓解，08、15 | 额外线路/校准 → 带权估计 | Mitiq 折叠和外推源码；[ZNE 预算实验](../labs/practice.md) | 总 shots、校准、噪声漂移、偏差与方差分别记录 |
 | 退火 / QUBO，17 | 建模、嵌入、采样、链修复与验证 | dimod `ExactSolver` 为经典基线；云求解器另行获取 | 建模损失、链长、可行率、端到端 TTS；混合器不等于纯 QPU |
 | MPS / 张量网络 | 线路/态的分解与收缩 → 可观测量 | quimb 的线路生成及收缩源码 | bond dimension、截断误差、收缩顺序、收敛；“位数多”不自动难 |
-| 主方程/轨迹法，05、09 | Hamiltonian、耗散算符 → 密度矩阵或轨迹 | QuTiP `mesolve.py`；本轮未归档全部轨迹模块 | 马尔可夫近似、截断维度、步长/容差、迹与正性 |
+| 主方程/轨迹法，05、09 | Hamiltonian、耗散算符 → 密度矩阵或轨迹 | QuTiP `mesolve.py` 与 `mcsolve.py`；两种模型入口均已归档 | 马尔可夫近似、截断维度、步长/容差、迹与正性 |
 
 对于 SQD，官方工具文档说明先从量子设备采样，再用经典计算做组态恢复和投影对角化；这与“量子处理器独自计算整个分子答案”不同。[SQD 官方说明](https://quantum.cloud.ibm.com/docs/en/addons/qiskit-addon-sqd)
 
@@ -56,7 +56,7 @@ Qualtran 官方说明其仍是实验预览，接口和个别算法可能变化�
 | 网络协议，12 | 链路成功/记忆/交换 → 纠缠服务 | SeQUeNCe 传态及协议基类；两链路等待实验 | 丢包、经典信令、同步、储存寿命及保真度，不能只报链路距离 |
 | 擦除标记、校准、运维，09、19 | 观测标签与维护事件 → 判定与可用率 | 自编 Bayes 与区间并集实验 | 基率、误报、事件重叠；小模型不替代生产监控 |
 | 后量子密码，12 | 经典随机数/密钥 → 封装与解封装 | liboqs 的 C 语言 KEM 例子 | 这是经典密码代码，不是量子算法；研究原型不等于生产安全认证 |
-| 最优控制/GRAPE，14 | 控制参数与目标酉 → 优化脉冲 | 正文原论文；本轮未归档完整控制优化库 | 带宽、幅度、泄漏、硬件传递函数、梯度和鲁棒性 |
+| 最优控制/GRAPE，14 | 控制参数与目标酉 → 优化脉冲 | qutip-qtrl `pulseoptim.py` 与 `grape.py` 固定摘录；未安装完整包 | 带宽、幅度、泄漏、硬件传递函数、梯度和鲁棒性 |
 
 Stim 的官方范围是稳定子操作，`stim.Circuit` 的噪声模型亦有限制；把任意振幅阻尼和 T 门直接塞进去不是同一个模拟问题。[Stim 官方能力与限制](https://github.com/quantumlib/Stim)
 
@@ -112,4 +112,95 @@ PQC 的工程目标是替换受未来量子攻击威胁的经典密码。liboqs 
 
 ## 7. 明确没有交付的部分
 
-本轮未完整实现所有隐藏子群、量子行走、HHL、经典阴影、GRAPE、连续变量、拓扑量子计算、分布式容错等算法系统；这些主题仍需按原论文条件和外部项目进一步复现。未收集闭源生产代码、私有设备固件、付费后端数据及未经授权的录音。用户可以从表中看到这些差距，不会把一份有限代码目录误认为全领域完整实现。
+本轮未完整运行隐藏子群、量子行走、HHL、经典阴影、GRAPE、连续变量、拓扑量子计算、分布式容错等算法系统；其中经典阴影、GRAPE和qubitization行走已有代表性源码摘录，不能再将“未本地运行”写成“没有源文件”；这些主题仍需按原论文条件和外部项目进一步复现。未收集闭源生产代码、私有设备固件、付费后端数据及未经授权的录音。用户可以从表中看到这些差距，不会把一份有限代码目录误认为全领域完整实现。
+
+## 8. 新增源码怎样逐步读：从数学对象走到实现
+
+这一节针对实际保存在 `codes/vendor/` 的新增文件，不把项目名称当成算法说明。访问与下载核验日期为2026-09-26；完整commit与许可见[清单](../../codes/vendor/manifest.json)。每个条目都先指出正文连接，再说明输入输出、阅读顺序和未完成验证。S04、S05、S06、S08的独立数学复算可运行 `python3 codes/practice/source_reading_checks.py`，见[程序](../../codes/practice/source_reading_checks.py)与[固定样本结果](../../codes/practice/source-reading-results.json)；它不导入第三方摘录，S07的工程讨论不能由这几项数值断言替代。
+
+### 8.1 QSP相位求解：先核对多项式基，再核对复响应
+
+对应[第16章](../16-advanced-algorithms-verification.md)。多项式系数不是一种无需约定的数列。同一组数字可表示幂基 $1,x,x^2,\ldots$，也可表示Chebyshev基 $T_0,T_1,T_2,\ldots$；后者满足 $T_0=1,T_1=x,T_2=2x^2-1$。
+
+本地[相位入口](../../codes/vendor/pyqsp/pyqsp/angle_sequence.py)的 `QuantumSignalProcessingPhases` 在固定commit中把列表/数组直接构造为 `Chebyshev` 对象。因此 $x^2=(T_0+T_2)/2$ 应用系数 `[0.5,0,0.5]` 表达；幂基中的 `[0,0,1]` 在这个入口会成为 $2x^2-1$。有些上游README段落仍讨论另一种基约定，不能越过固定源码的实际转换逻辑。这个局部核查不意味着已证明整个求相位算法正确。
+
+随后读[对称相位迭代](../../codes/vendor/pyqsp/pyqsp/sym_qsp_opt.py)的 `newton_solver` 和[响应计算](../../codes/vendor/pyqsp/pyqsp/response.py)的 `ComputeQSPResponse`。需要同时记录signal operator、测量基、相位顺序和读取实部/虚部的约定；`sym_qsp` 路径返回矩阵元，不能把复矩阵元直接当测量概率。
+
+**源码练习S04。** 在 $x=0,1/2,1$ 比较上述两组系数的值。答案：目标 $x^2$ 为 $(0,1/4,1)$，错误解释为 $T_2$ 时是 $(-1,-1/2,1)$；仅检查端点1发现不了错误。完整安装后还须检查区间内近似误差与酉响应，而非只看优化器“收敛”标志。源码定位依据为[pyqsp作者仓库](https://github.com/ichuang/pyqsp)，本轮未运行其完整依赖和测试。
+
+### 8.2 LCU与qubitization：被隐藏的归一化因子
+
+对应[第16章](../16-advanced-algorithms-verification.md)。本地[LinearCombination](../../codes/vendor/qualtran/qualtran/bloqs/block_encoding/linear_combination.py)组合若干块编码。假设输入第 $i$ 项的归一化是 $\alpha_i$、组合权重是 $\lambda_i$，该构造记录的归一化为 $\alpha=\sum_i|\lambda_i|\alpha_i$，并非总取1。
+
+**源码练习S05。** 若 $A=0.3X-0.4Z$，两项各有 $\alpha_i=1$，组合归一化为0.7。利用 $XZ+ZX=0$，有 $A^2=(0.3^2+0.4^2)I=0.25I$，所以谱范数为0.5，确实不超过0.7。这里0.7是这个构造的系数上界，不是最小可能归一化；改变构造会影响资源。
+
+再读[qubitization行走算子](../../codes/vendor/qualtran/qualtran/bloqs/qubitization/qubitization_walk_operator.py)，跟踪prepare/select、辅助寄存器和反射。源码中能构造对象不代表这些oracle已廉价实现；资源研究要把分解成本和后选择成功率带回正文。与图搜索中的一般量子行走也不可仅因名称相同就互换。依据为[Qualtran官方项目](https://github.com/quantumlib/Qualtran)，本轮仅保存与阅读选定模块。
+
+### 8.3 经典阴影：保存测量基，理解非物理的单个快照
+
+对应[第16章的测量与验证](../16-advanced-algorithms-verification.md)。[PennyLane后处理代码](../../codes/vendor/pennylane/pennylane/shadows/classical_shadow.py)同时接收 `bits` 和 `recipes`，形状都是“shots数×测量位数”。只保存0/1而丢掉各次选用的Pauli基，就缺少逆映射所需信息。[官方API说明](https://docs.pennylane.ai/en/stable/code/api/pennylane.ClassicalShadow.html)也区分局域统计和昂贵的全态重构。
+
+**源码练习S06。** 单比特某次在X基得到正结果，相应快照为 $\hat\rho=3|+\rangle\langle+|-I$。在X基本征向量上，它的本征值是2和−1，迹为1却不是正半定。它是统计逆映射的单次估计量，不是这次实验制备出的密度矩阵；负本征值本身不能判定程序错误。多个快照平均的期望可恢复目标态，但有限样本均值仍可能非物理。
+
+工程核查应保留测量基生成规则、种子、原始位串、目标可观测量列表，以及是否在看到数据后挑目标。此处归档的是后处理模块，没有保存所有设备采集实现，也没有复现大体系阴影实验。
+
+### 8.4 变分梯度：参数、门角度和计算图是三层对象
+
+对应[第08章的参数共享反例](../08-applications.md)。[parameter_shift.py](../../codes/vendor/pennylane/pennylane/gradients/parameter_shift.py)是量子线路参数梯度变换入口，后续还需要经典计算图把门参数导数传回共享参数。两处门角都使用同一个训练变量，并不意味着可把整条线路的该变量平移一次后直接套单门二点规则。
+
+源码阅读时列出：可训练门参数索引、每个生成元的谱/频率、各移位线路、组合系数，以及外部参数的链式法则。核验样本使用[本书算法检查](../../codes/algorithms/round70_checks.py)；它独立比较正确逐门规则、错误整体移位和解析导数。本地保存上游梯度模块，不把本书标准库实验当作PennyLane完整测试。
+
+### 8.5 主方程与量子轨迹：一个平均不等于一条随机实现
+
+对应[第05章](../05-noise-channels.md)和[第09章](../09-hardware.md)。QuTiP的[mesolve](../../codes/vendor/qutip/qutip/solver/mesolve.py)处理密度矩阵等确定性演化；新增[mcsolve](../../codes/vendor/qutip/qutip/solver/mcsolve.py)入口通过量子轨迹进行随机求解。比较二者须使用同一个Hamiltonian、塌缩算符、初态与时间网格，再比较轨迹平均的可观测量和抽样误差。
+
+增加轨迹数处理蒙特卡洛误差，缩小积分容差处理数值积分误差，增大截断Hilbert空间处理截断误差；这三种调整不是同一件事。单条轨迹不必与密度矩阵曲线重合。本轮没有安装完整QuTiP或复现其随机求解器；物理模型小例由本书自编程序另行验证。接口原始入口见[QuTiP官方仓库](https://github.com/qutip/qutip)。
+
+### 8.6 GRAPE与CRAB：优化出的脉冲还要通过设备约束
+
+对应[第14章](../14-compilation-control.md)。新增qutip-qtrl的[pulseoptim.py](../../codes/vendor/qutip-qtrl/src/qutip_qtrl/pulseoptim.py)与[grape.py](../../codes/vendor/qutip-qtrl/src/qutip_qtrl/grape.py)，原许可为BSD三条款。先从目标酉算子、漂移Hamiltonian $H_0$、控制算符 $H_j$、时间网格与幅度数组读起，理解 $H(t)=H_0+\sum_j u_j(t)H_j$。各项与时间相乘后必须是无量纲的指数参数；若采用 $\hbar=1$，仍须统一角频率单位。
+
+GRAPE利用离散控制变量的梯度；CRAB用有限基函数参数化脉冲再优化系数。不同参数化、梯度计算和终止准则影响成本与局部极值，不能说二者之一无条件先进。`grape_unitary` 的原docstring还明确标为实验性工作；归档不能把该函数自动升级为生产保障。[项目官方说明](https://github.com/qutip/qutip-qtrl)确认该包从QuTiP核心分离并支持这两类方法。
+
+**源码练习S07。** 软件算出某脉冲在二能级模型中达到很小的目标误差，还需至少检查什么？答案：时间离散收敛、驱动幅度/带宽、控制链传递函数、向高能级泄漏、失谐和噪声鲁棒性、真实读出和校准。数学目标函数下降只支持该模型中的优化，不自动说明任意波形发生器能输出该脉冲。
+
+### 8.7 线路切割：采样权重与重构顺序必须同时保留
+
+对应[第14章](../14-compilation-control.md)、[第19章](../19-engineering-architecture.md)及[P15-G](../labs/practice.md)。新增[weights.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/qpd/weights.py)与[cutting_reconstruction.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/cutting_reconstruction.py)。前者区分精确计入的权重和抽样权重；后者要求结果顺序与子实验和可观测量的生成顺序一致。
+
+**源码练习S08。** 两项权重为1.5和−0.5，两组均值0.4和−0.2，正确结果是0.7；若仅交换结果顺序却不交换系数，得到 $1.5(-0.2)-0.5(0.4)=-0.5$。两个数都在 $[-1,1]$，所以“输出在物理范围内”抓不到顺序错误。作业ID、分区标签、可观测量和系数的对应关系都应保存，不能按任务完成先后盲目拼接。
+
+该项目实现流程见[官方文档](https://qiskit.github.io/qiskit-addon-cutting/)。本轮保存统计权重与重构入口，没有提供完整自动切口搜索、设备执行和全链路基准。
+
+### 8.8 噪声模型：名字相同，平衡态参数仍须核对
+
+新增[Aer standard_errors.py](../../codes/vendor/qiskit-aer/qiskit_aer/noise/errors/standard_errors.py)，用于对照退极化、振幅阻尼等模型。核查顺序是“读取矩阵或映射—验证保迹—寻找固定点—比对文字参数”。基础组发现某官方页面的平衡占据文字与其Kraus固定点不一致，具体核查放在[第05章](../05-noise-channels.md)及该组审查报告；不修改原始vendor文件掩盖上游差异。
+
+固定commit来源为[Qiskit Aer官方项目](https://github.com/Qiskit/qiskit-aer)。本书没有运行Aer的C++构建；保存一个模型文件不能替代安装和测试整套模拟器。
+
+## 9. 新方法与工业工作流：下一步究竟缺什么证据？
+
+[IBM于2026-03-12发布的量子与高性能计算参考架构说明](https://research.ibm.com/blog/quantum-centric-supercomputing-system-reference-architecture)把量子处理器放进异构计算流程，并讨论SQD、经典子空间计算和工作流编排（访问2026-09-26，厂商技术说明）。它支持“公开提出并描述这一体系结构与实例”，不能单独证明某业务在相同质量和总成本下优于强经典方法。
+
+下面这些入口来自[官方addons目录](https://quantum.cloud.ibm.com/docs/en/guides/addons)（访问2026-09-26）。它们帮助发现比单个算法更完整的工作流，但本轮**未保存和运行**表中新增四类项目的源码；不要与前面的19项目固定摘录混淆。
+
+| 方法/环节 | 要理解的核心变化 | 必须补做的验证 | 本轮状态 |
+|---|---|---|---|
+| Multi-product formulas | 用多个演化近似的带权组合控制误差 | 总shots、负权重方差、近似误差与同预算单一乘积公式比较 | 官方入口，未复现 |
+| Operator backpropagation | 把一部分线路作用转移到待测可观测量 | 可观测量项数增长、截断偏差、测量分组和经典开销 | 官方入口，未复现 |
+| SQD for HPC | 使样本子空间对角化适配经典HPC流程 | 子空间/节点规模、内存、通信、收敛和同Hamiltonian基线 | 官方入口；仅普通SQD摘录已归档 |
+| Shaded lightcones / Pauli propagation | 利用目标可观测量相关结构缩减噪声处理工作 | 被忽略项的误差、噪声模型标定、与完整PEC的预算比较 | 官方入口，未复现 |
+
+这些方法可能改变误差与成本的分配，不取消读入、经典预处理、校准、通信、采样和验证。一个可审查的工业实验应保存相同业务输入下的经典与量子混合两条完整流程，先设可行性和误差门槛，再画质量随端到端时间/成本变化的曲线。公开证据若只有论文图或供应商案例，就明确写这一层，不能补造客户生产日志。
+
+## 10. 覆盖状态与可继续研究的边界
+
+| 材料层 | 当前可交付 | 仍不能据此宣称 |
+|---|---|---|
+| 章节解释与自编小模型 | 全书对应章节、就地详解、固定样本和断言 | 已实现任意规模的全部算法 |
+| 第三方固定源码 | 19项目64文件，来源/许可/commit/哈希 | 是完整SDK或已通过所有上游测试 |
+| 上游算法入口 | HHL、一般行走、连续变量等外部研究路线 | 每个条目都已有可运行本地实现 |
+| 工业证据 | 原论文、官方工作流和限定场景 | 闭源生产代码、私有日志或普遍商业优势 |
+| 新增方法观察 | 官方addons目录的明确四类待研究项 | 本轮已下载、完整复现或证明其优越性 |
+
+下载范围围绕教材主题与许可明确的代表性实现，不无差别复制整个生态或不明来源合集。下一次扩展应先选可验证的问题和最小实例，再补完整环境与测试；新的模型或更大源码目录都不应代替这一验证步骤。

@@ -26,7 +26,7 @@ node tools/reader/check-qm-review.mjs
 
 ## 章级实验、源码和音频
 
-`python3 codes/run_all.py` 执行本书标准库实验并核对第三方快照哈希与5段WAV格式；科学图重建需要 `codes/practice/requirements-figures.txt` 中的可选依赖。第三方摘录不参与执行。
+`python3 codes/run_all.py` 执行本书标准库实验并核对第三方快照哈希与5段WAV格式；最新统一结果写入 `work/research/code-validation.json`，不会覆盖历史轮次报告。科学图重建需要 `codes/practice/requirements-figures.txt` 中的可选依赖。第三方摘录不参与执行。
 
 构建程序会复制 `codes/`，并仅改写本书自编代码说明中指向教材的链接；vendor 文件逐字节保留。`reader/codes/run_all.py` 也能在复制后的阅读版布局下运行；生成的本地检查报告在 `reader/work/research/`。浏览器检查涵盖40页两种宽度、代码副本哈希以及音频元数据加载。音频不自动播放。
 

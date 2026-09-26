@@ -371,6 +371,24 @@ $$
 
 答案见[练习与答案：第 4 章](appendices/exercises.md#第-4-章)。
 
+## 新增诊断练习：可忽略的全局相位，为什么加控制后不能删
+
+**题目。** 对单个目标比特，$U=I$ 与 $V=-I$ 只相差全局相位。控制比特为 $|+\rangle$、目标为 $|0\rangle$，分别执行受控 $U$ 和受控 $V$，再对控制做 $H$ 并测计算基。两个结果是否相同？
+
+**第一步：写四维门。** 控制是左因子，基序是 $00,01,10,11$。定义
+
+$$
+C(U)=|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes U.
+$$
+
+因此 $C(I)=I_4$，而 $C(-I)=\operatorname{diag}(1,1,-1,-1)=Z\otimes I$。后一个负号只在控制为 1 的分支上出现，不是整个四维态的全局相位。
+
+**第二步：从输入到输出。** 输入为 $(|00\rangle+|10\rangle)/\sqrt2$。经过 $C(I)$ 保持 $|+\rangle|0\rangle$；经过 $C(-I)$ 成为 $|-\rangle|0\rangle$。再用 $H$，控制分别成为 $|0\rangle$ 与 $|1\rangle$，可被确定地区分。
+
+一般地，$C(e^{i\phi}U)=[\operatorname{diag}(1,e^{i\phi})\otimes I]C(U)$。因此先把一个门的全局相位抹去、之后再加控制，会漏掉控制线上的相位门。编译器比较两个**无控制**门“相差全局相位”与比较两段**受控**线路，是两个不同的验证任务。[Qiskit 的 ControlledGate 定义](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.ControlledGate)提供相应软件对象（核查 2026-09-26）；本题结论由上面的四维矩阵直接得出，不依赖软件的默认简化方式。
+
+运行 `python3 codes/foundations/diagnostic_lab.py --case 04`，检查末态控制为 1 的概率依次为 0、1。拓展题：令 $\phi=\pi/2$，应得到 $\sin^2(\phi/2)=1/2$；先算控制末态振幅 $(1-e^{i\phi})/2$，再取模平方。
+
 ## 配套数值实验与展开答案
 
 用八个复振幅直接执行传态线路，检查四个测量结果各占 1/4、四种校正全部还原输入，以及不知道结果时 Bob 仍为最大混态。

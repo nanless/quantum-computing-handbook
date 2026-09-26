@@ -408,6 +408,40 @@ $$
 
 答案见[练习与答案：量子力学 Q4](../appendices/exercises.md#量子力学-q4)。
 
+## 新增诊断练习：计算机里的升降算符为什么不严格满足原对易关系
+
+**题目。** 将谐振子截断成 $d=4$ 维，只保留 $|0\rangle,|1\rangle,|2\rangle,|3\rangle$。按 $a|n\rangle=\sqrt n|n-1\rangle$ 写出矩阵及其共轭转置，求 $[a,a^\dagger]$。它应当等于第 5 节的 $I$ 吗？
+
+**第一步：写出截断实际做了什么。**
+
+$$
+a=\begin{bmatrix}0&1&0&0\\0&0&\sqrt2&0\\0&0&0&\sqrt3\\0&0&0&0\end{bmatrix}.
+$$
+
+在无限维中，$a^\dagger|3\rangle=2|4\rangle$；在这个四维矩阵中没有 $|4\rangle$，所以截断后的 $a^\dagger|3\rangle=0$。于是
+
+$$
+aa^\dagger=\operatorname{diag}(1,2,3,0),\qquad
+a^\dagger a=\operatorname{diag}(0,1,2,3),
+$$
+
+$$
+[a,a^\dagger]=\operatorname{diag}(1,1,1,-3)
+=I_4-4|3\rangle\langle3|.
+$$
+
+一般 $d$ 维 Fock 截断给 $I_d-d|d-1\rangle\langle d-1|$。这不是浮点误差：任何有限方阵都满足 $\operatorname{Tr}[A,B]=0$，但 $\operatorname{Tr}I_d=d$，所以有限维矩阵根本不可能在整个空间严格满足 $[a,a^\dagger]=I_d$。
+
+**第二步：把误差放回所用状态。** 对归一化 $\rho$，令最高层占据为 $p_{d-1}$，有
+
+$$
+\operatorname{Tr}(\rho[a,a^\dagger])=1-dp_{d-1}.
+$$
+
+四维时若固定合成占据为 $(0.97,0,0,0.03)$，期望值是 $1-4(0.03)=0.88$，与 1 相差 0.12。若当前最高层为空，这一个期望值可恰好正确，但不能据此保证后续动力学正确：驱动仍可能把概率推到截断边缘。
+
+**工程含义。** 应扩大截止维数并检查关心的占据、能量和演化曲线是否稳定，同时检查最高若干层的占据；只看矩阵指数保持归一化不足以证明无限维模型已收敛。[QuTiP 官方文档的 `destroy(5)` 示例](https://qutip.readthedocs.io/en/stable/guide/guide-states.html)正采用这种有限维降阶矩阵（核查 2026-09-26）；软件没有宣称整个有限矩阵可保持无限维正则对易关系。运行 `python3 codes/foundations/diagnostic_lab.py --case q4`，重算本题所有矩阵对角项与 0.88 的期望。该诊断补充前面的空间网格误差：**网格间距**和**Fock 维数截止**是两种不同的离散近似。
+
 ## 配套数值实验与展开答案
 
 把波函数变成数值向量时需要带上根号网格步长；再用四级网格检验无限势阱基态能量的二阶收敛。精确求解离散矩阵，仍不意味着连续问题已没有离散化误差。

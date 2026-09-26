@@ -1,0 +1,153 @@
+{
+  "calibration_uncertainty": {
+    "p": 0.5,
+    "variance_terms": [
+      0.0002948960302457468,
+      5.789224952741022e-06,
+      1.6658790170132344e-05
+    ],
+    "standard_error": 0.01781415295119642,
+    "fixed_calibration_standard_error": 0.01717253709402739,
+    "optimal_continuous_sizes": [
+      2177.401312826739,
+      305.0803457762538,
+      517.5183413970076
+    ],
+    "optimized_standard_error": 0.013660185913593885
+  },
+  "coherent_repetition": {
+    "theta_rad": 0.2,
+    "logical_p1": 0.0002960258961564761,
+    "logical_Y": -0.0039206898737685365,
+    "stochastic_model_Y": 0,
+    "max_formula_error": 3.3306690738754696e-16
+  },
+  "correlated_shots": {
+    "raw_shots": 10000,
+    "intrabatch_correlation": 0.03999999999999998,
+    "variance_inflation": 4.959999999999998,
+    "effective_shots": 2016.1290322580653,
+    "iid_standard_error": 0.005,
+    "actual_standard_error": 0.011135528725660045
+  },
+  "network_cutoff": [
+    {
+      "cutoff_slots": 0,
+      "expected_slots": 99.99999999999999,
+      "conditional_coherence": 1.0
+    },
+    {
+      "cutoff_slots": 1,
+      "expected_slots": 42.14285714285714,
+      "conditional_coherence": 0.9686474871790307
+    },
+    {
+      "cutoff_slots": 5,
+      "expected_slots": 20.75117247508714,
+      "conditional_coherence": 0.8872164323223094
+    },
+    {
+      "cutoff_slots": 20,
+      "expected_slots": 15.353439991882047,
+      "conditional_coherence": 0.7356203501126467
+    }
+  ],
+  "resource_schedule": {
+    "qubits_only": [
+      {
+        "name": "A",
+        "start_ns": 0,
+        "end_ns": 200,
+        "resources": [
+          "q0",
+          "q1"
+        ]
+      },
+      {
+        "name": "B",
+        "start_ns": 0,
+        "end_ns": 200,
+        "resources": [
+          "q2",
+          "q3"
+        ]
+      },
+      {
+        "name": "C",
+        "start_ns": 200,
+        "end_ns": 300,
+        "resources": [
+          "q1",
+          "q2"
+        ]
+      },
+      {
+        "name": "measure",
+        "start_ns": 300,
+        "end_ns": 1100,
+        "resources": [
+          "q0",
+          "q1",
+          "q2",
+          "q3",
+          "readout_bus"
+        ]
+      }
+    ],
+    "shared_bus": [
+      {
+        "name": "A",
+        "start_ns": 0,
+        "end_ns": 200,
+        "resources": [
+          "q0",
+          "q1",
+          "drive_bus"
+        ]
+      },
+      {
+        "name": "B",
+        "start_ns": 200,
+        "end_ns": 400,
+        "resources": [
+          "q2",
+          "q3",
+          "drive_bus"
+        ]
+      },
+      {
+        "name": "C",
+        "start_ns": 400,
+        "end_ns": 500,
+        "resources": [
+          "q1",
+          "q2"
+        ]
+      },
+      {
+        "name": "measure",
+        "start_ns": 500,
+        "end_ns": 1300,
+        "resources": [
+          "q0",
+          "q1",
+          "q2",
+          "q3",
+          "readout_bus"
+        ]
+      }
+    ]
+  },
+  "calibration_dependencies": {
+    "revalidation_order": [
+      "freq0",
+      "amp0",
+      "readout0",
+      "cx01",
+      "layer01"
+    ],
+    "failed_regression_version": 7,
+    "passed_regression_version": 8,
+    "unrelated_amp2": 1.0
+  }
+}

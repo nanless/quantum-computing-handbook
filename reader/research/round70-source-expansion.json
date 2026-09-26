@@ -1,0 +1,50 @@
+{
+  "extras": {
+    "pennylane": [
+      "pennylane/shadows/classical_shadow.py",
+      "pennylane/gradients/parameter_shift.py"
+    ],
+    "qualtran": [
+      "qualtran/bloqs/qubitization/qubitization_walk_operator.py",
+      "qualtran/bloqs/block_encoding/linear_combination.py"
+    ],
+    "openfermion": [
+      "src/openfermion/circuits/trotter/simulate_trotter.py"
+    ],
+    "qutip": [
+      "qutip/solver/mcsolve.py"
+    ]
+  },
+  "new": {
+    "pyqsp": [
+      "ichuang/pyqsp",
+      [
+        "pyqsp/angle_sequence.py",
+        "pyqsp/sym_qsp_opt.py",
+        "pyqsp/response.py"
+      ]
+    ],
+    "qutip-qtrl": [
+      "qutip/qutip-qtrl",
+      [
+        "src/qutip_qtrl/pulseoptim.py",
+        "src/qutip_qtrl/grape.py"
+      ]
+    ],
+    "qiskit-addon-cutting": [
+      "Qiskit/qiskit-addon-cutting",
+      [
+        "qiskit_addon_cutting/qpd/weights.py",
+        "qiskit_addon_cutting/cutting_reconstruction.py"
+      ]
+    ],
+    "qiskit-aer": [
+      "Qiskit/qiskit-aer",
+      [
+        "qiskit_aer/noise/errors/standard_errors.py"
+      ]
+    ]
+  },
+  "projects": 19,
+  "files": 64
+}

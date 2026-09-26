@@ -97,7 +97,7 @@ flowchart TB
 
 ## 配套实验、源码与声音
 
-新增[逐章实验路线](labs/README.md)、[基础](labs/foundations.md)、[算法](labs/algorithms.md)、[系统](labs/systems.md)及[统计](labs/practice.md)实验册，每组有手算步骤、答案和可运行代码。[五个声音样本](labs/audio.md)把相位和对比度变化映射到经典声音；[工业与开源对照](appendices/software-practice.md)区分教学程序、源码摘录和完整外部项目。
+配套[逐章实验路线](labs/README.md)、[基础](labs/foundations.md)、[算法](labs/algorithms.md)、[系统](labs/systems.md)及[统计](labs/practice.md)实验册，每组有手算步骤、答案和可运行代码。[五个声音样本](labs/audio.md)把相位和对比度变化映射到经典声音；[工业与开源对照](appendices/software-practice.md)区分教学程序、源码摘录和完整外部项目。
 
 ## 统一约定
 
@@ -113,3 +113,5 @@ flowchart TB
 ## 怎样核查一句“量子突破”新闻
 
 依次问五个问题：任务是否实用；输出是否验证；经典基线是否为当时最强；比较是否包含数据装载、纠错、重复采样与能耗；结果是同行评审论文、预印本还是公司路线图。只要其中两项不清楚，就不应把它改写成“量子计算机已解决某行业问题”。
+
+本次更新为24篇正文各补充诊断或扩展练习，另增加源码阅读练习、6张公式/数据驱动科学图，并把第三方固定摘录扩充至19个项目64份文件。新增内容与原自检题并列，见[第二组逐章练习](labs/README.md#第二组逐章练习检验容易遗漏的条件)；审查范围和未复现部分见[工业与开源对照](appendices/software-practice.md)。

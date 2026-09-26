@@ -5,7 +5,11 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experiments.py','all'],
  ['systems/hardware_flags.py'],['systems/weighted_decoder.py'],['systems/factory_schedule.py'],
  ['systems/network_wait.py'],['systems/routing_mapping.py'],['systems/service_timeline.py'],
- ['practice/experiments.py'],['snapshot_sources.py','--verify'],['tests/test_snapshot_sources.py']]
+ ['foundations/diagnostic_lab.py','--case','all'],['algorithms/round70_checks.py','all'],
+ ['systems/calibration_uncertainty.py'],['systems/coherent_repetition.py'],
+ ['systems/correlated_shots.py'],['systems/network_cutoff.py'],
+ ['systems/resource_schedule.py'],['systems/calibration_dependencies.py'],
+ ['practice/source_reading_checks.py'],['practice/experiments.py'],['practice/research_checks.py'],['snapshot_sources.py','--verify'],['tests/test_snapshot_sources.py']]
 
 def main():
     if not __debug__: raise RuntimeError('Run without -O: assertions are part of validation')
@@ -33,7 +37,7 @@ def main():
     report={'date_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
       'python':platform.python_version(),'checks':results,'verified_audio':audio,
       'scope':'authored stdlib tests, vendor integrity, WAV format; no upstream execution'}
-    dest=ROOT/'work/research/round69-code-validation.json'
+    dest=ROOT/'work/research/code-validation.json'
     dest.parent.mkdir(parents=True,exist_ok=True)
     dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     if any(x['returncode'] for x in results): raise SystemExit(1)

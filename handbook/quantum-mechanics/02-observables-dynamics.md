@@ -36,7 +36,7 @@ $$
 p(a)=\langle\psi|P_a|\psi\rangle.
 $$
 
-若保留结果 $a$，理想投影测量后的条件态为
+若保留结果 $a$，本章采用的理想 Lüders 投影工具给出条件态
 
 $$
 |\psi_a\rangle
@@ -637,6 +637,23 @@ $$
 8. 两段等时长的 $X$、$Z$ Hamiltonian 具有相同的时间积分。为什么交换顺序仍可能改变结果？用本章 $\pi/2$ 两段例子的 $X$ 基测量概率回答。
 
 答案见[练习与答案：量子力学 Q2](../appendices/exercises.md#量子力学-q2)。
+
+## 新增诊断练习：同一个简并读数，测量后为什么可能不同
+
+**题目。** 用三维基 $|0\rangle,|1\rangle,|2\rangle$，取可观测量 $A=\operatorname{diag}(0,0,1)$，输入 $|u\rangle=(|0\rangle+|1\rangle)/\sqrt2$。方案甲只区分 $A=0$ 与 $A=1$，使用 Lüders 投影工具；方案乙先精细地区分三个基态，再把前两个标签都改报为数值 0。两方案的读数分布、后态是否相同？
+
+**第一步：确定整个本征空间。** $A=0$ 的投影是 $P_0=\operatorname{diag}(1,1,0)$，不是 $|0\rangle\langle0|$。方案甲有 $P_0|u\rangle=|u\rangle$，故读数 0 的概率为 1，条件后态仍为 $|u\rangle\langle u|$；简并子空间内的相干保留下来。
+
+**第二步：合并标签不能撤销精细测量。** 方案乙数值 0 背后的工具含两个 Kraus 算子 $M_{00}=|0\rangle\langle0|$、$M_{01}=|1\rangle\langle1|$。即使删掉精细标签，状态仍成为
+
+$$
+\mathcal I_0(|u\rangle\langle u|)
+=\frac12|0\rangle\langle0|+\frac12|1\rangle\langle1|.
+$$
+
+两个方案的 POVM 元都为 $E_0=P_0,E_1=|2\rangle\langle2|$，读数统计一致，后态却不同。若随后测“是否回到 $|u\rangle$”的投影 $|u\rangle\langle u|$，甲必得成功，乙只以 $1/2$ 概率成功。细分后再遗忘与从未细分，不是同一物理工具。
+
+本题把 §1 的“理想投影更新”明确限定为 Lüders 实现，防止把**只给一个厄米算符**误认为已经唯一指定所有装置的测后态。一般工具定义见[第 02 章](../02-single-qubit.md#7-进阶回看一般测量为何还要说明后态)及 [Preskill 测量讲义](https://www.preskill.caltech.edu/ph229/notes/chap3.pdf)。运行 `python3 codes/foundations/diagnostic_lab.py --case q2`，直接用 $3\times3$ 矩阵核对两个后续概率 1 与 $1/2$。
 
 ## 配套数值实验与展开答案
 

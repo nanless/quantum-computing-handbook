@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="535" viewBox="0 0 940 535" role="img" aria-labelledby="title desc">
+<title id="title">Finite counts can put a linear state estimate outside the Bloch ball</title>
+<desc id="desc">The r z equals zero section is a unit disk. Counts 9/1 for X, 9/1 for Y, 5/5 for Z give the raw point (0.8,0.8), outside the disk. Euclidean projection gives (0.7071,0.7071) on the boundary, but adds no measurement evidence.</desc>
+<rect width="940" height="535" fill="#f7f9fc"/>
+<g font-family="Arial, sans-serif" fill="#152842">
+<text x="32" y="39" font-size="23" font-weight="700">Finite counts do not automatically yield a physical state</text>
+<text x="32" y="66" font-size="15">r_z = 0 slice · dimensionless Bloch coordinates · fixed synthetic counts</text>
+<rect x="30" y="89" width="480" height="398" rx="14" fill="white" stroke="#ccd8e8"/>
+
+<circle cx="280" cy="272" r="174" fill="#e8f1fa" stroke="#386b9c" stroke-width="2"/>
+<path d="M 81 272 H 479 M 280 464 V 80" stroke="#52657a" stroke-width="1.4"/>
+<path d="M 106 268 V 276" stroke="#52657a"/><text x="106" y="293" font-size="12" text-anchor="middle">-1</text>
+<path d="M 193.0 268 V 276" stroke="#52657a"/><text x="193.0" y="293" font-size="12" text-anchor="middle">-0.5</text>
+<path d="M 367.0 268 V 276" stroke="#52657a"/><text x="367.0" y="293" font-size="12" text-anchor="middle">0.5</text>
+<path d="M 454 268 V 276" stroke="#52657a"/><text x="454" y="293" font-size="12" text-anchor="middle">1</text>
+<text x="474" y="259" font-size="15">r_x</text><text x="291" y="109" font-size="15">r_y</text><text x="288" y="290" font-size="12">0</text>
+<path d="M 280 272 L 419.20000000000005 132.79999999999998" stroke="#b34131" stroke-width="2" stroke-dasharray="6 4"/>
+<path d="M 280 272 L 403.03657992645924 148.96342007354076" stroke="#176653" stroke-width="3"/>
+<rect x="414.20000000000005" y="127.79999999999998" width="10" height="10" fill="#b34131"/>
+<circle cx="403.03657992645924" cy="148.96342007354076" r="5" fill="white" stroke="#176653" stroke-width="3"/>
+<path d="M 428.20000000000005 132.79999999999998 H 470 V 121" fill="none" stroke="#b34131"/><text x="390" y="116" fill="#b34131" font-size="13">Raw (0.8, 0.8)</text>
+<path d="M 394.03657992645924 148.96342007354076 H 322 V 144" fill="none" stroke="#176653"/><text x="308" y="136" text-anchor="end" fill="#176653" font-size="13">Projected (0.7071, 0.7071)</text>
+<text x="122" y="419" font-size="15" fill="#386b9c">Physical disk: r_x² + r_y² ≤ 1</text>
+<g transform="translate(540 108)">
+<text y="4" font-size="18" font-weight="700">1. Preserve the raw counts</text>
+<text y="35" font-size="16">X: 9 plus, 1 minus</text><text y="61" font-size="16">Y: 9 plus, 1 minus</text><text y="87" font-size="16">Z: 5 plus, 5 minus</text>
+<text y="134" font-size="18" font-weight="700">2. Check the entire matrix</text>
+<text y="165" font-size="16">Raw radius = 1.13137 &gt; 1</text><text y="192" font-size="16">Eigenvalues: -0.06569, 1.06569</text>
+<text y="240" font-size="18" font-weight="700">3. Name the correction method</text>
+<text y="272" font-size="16">Euclidean projection → radius 1</text><text y="299" font-size="16">Eigenvalues after projection: 0, 1</text>
+<text y="337" font-size="14" fill="#52657a">Correction adds no new observations.</text>
+<text y="359" font-size="14" fill="#52657a">It is not a confidence interval.</text>
+</g><text x="32" y="517" font-size="13" fill="#52657a">Generated from diagnostic_lab.py case 02. Each measurement basis uses a separate batch of 10 shots.</text>
+</g></svg>

@@ -115,3 +115,13 @@
 ## 软件实现与工业工作流的补充入口
 
 [算法、工业实践与开源代码对照](software-practice.md)按输入输出、成本、实验层级和许可证组织资料；第三方实现固定到2026-09-26核验的具体提交。源码可读与生产可用分别记录，不把软件库存在当作量子优势证明。
+
+## 本轮统计、切割与源码核查来源
+
+以下来源访问日期为2026-09-26，新增公式旁也有直接链接。独立教学推导与原实现分别记录；“官方”说明出处，不排除文档笔误或版本错位。
+
+- NIST, [EXACT BINOMIAL](https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm)：精确二项置信上界的官方统计说明，B类技术参考；用于P15-E的抽样设计。
+- [Combining quantum processors with real-time classical communication](https://www.nature.com/articles/s41586-024-08178-2), *Nature* (2024)：A类同行评审研究；单门准概率分解及指定模型的抽样开销。
+- L. Schmitt, C. Piveteau, D. Sutter, [Cutting circuits with multiple two-qubit unitaries](https://quantum-journal.org/papers/q-2025-02-18-1634/), *Quantum* 9, 1634 (2025)：A类研究；说明独立乘积分解的开销不等于所有联合切割方案的下界。
+- [pyqsp作者仓库](https://github.com/ichuang/pyqsp)、[qutip-qtrl官方仓库](https://github.com/qutip/qutip-qtrl)、[Qiskit cutting官方仓库](https://github.com/Qiskit/qiskit-addon-cutting)、[Aer官方仓库](https://github.com/Qiskit/qiskit-aer)：实现证据，固定提交与原许可证位于源码清单；不作为算法普适性能或工业优势证明。
+- IBM Research, [量子与高性能计算参考架构说明](https://research.ibm.com/blog/quantum-centric-supercomputing-system-reference-architecture), 2026-03-12：C类厂商技术说明，支持公开工作流和架构主张；不提供本仓库自行复现的客户生产数据。

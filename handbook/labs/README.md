@@ -29,10 +29,11 @@
 | 12 | 两条快慢不同链路的等待 | [S12](systems.md) |
 | 13 | 不等先验的 Helstrom 判别 | [F13](foundations.md) |
 | 14 | 输出映射与线路等价 | [S14](systems.md) |
-| 15 | 不等 shots、外推方差及多重比较 | [P15-A–C](practice.md) |
+| 15 | 不等shots、外推、多重比较、后选择、零失败、时间预算、切割 | [P15-A–G](practice.md) |
 | 16 | 非厄米矩阵的 QSVT 反例 | [16-A](algorithms.md) |
 | 17 | MBQC 分支与重试失败预算 | [17-A](algorithms.md) |
 | 18 | 擦除信道降解映射及熵 | [18-A](algorithms.md) |
+| 19 | 故障区间并集、可用率与合格服务吞吐 | [S19](systems.md) |
 | Q1 | 环境重叠的模与相位 | [FQ1](foundations.md) |
 | Q2 | 时序和子系统能量零点 | [FQ2](foundations.md) |
 | Q3 | 热占据、角频率和失谐 | [FQ3](foundations.md) |
@@ -55,3 +56,36 @@ python3 codes/run_all.py
 一次只改变一个因素：先把初态换成含非零复相位的态，再改变噪声，再增加系统大小。记录何时解析断言仍成立、何时已越出模型条件。失败例子比只贴一张漂亮成功图更有价值。
 
 真实硬件实验还需要软件锁定、编译与校准快照、原始计数、时间顺序和费用预算。第三方源码清单支持代码溯源，没有替读者完成这些设备实验。
+
+## 第二组逐章练习：检验容易遗漏的条件
+
+本组题目和完整解答直接放在相应正文的“新增诊断练习”“实操扩展B”或“练习与实验”中；不必在两个文档间来回找答案。原251道自检与上表第一组实验继续保留。全部新数值程序已接入统一入口，输入是合成计数或明示模型。
+
+| 章节入口 | 新练习要回答的问题 | 程序 |
+|---|---|---|
+| [00](../00-overview.md) | 重复复制的日志为何不能算独立shots | [基础诊断00](../../codes/foundations/diagnostic_lab.py) |
+| [01](../01-math.md) | 两列归一化为何还不保证酉性 | [基础诊断01](../../codes/foundations/diagnostic_lab.py) |
+| [02](../02-single-qubit.md) | 合法计数为何重构出负本征值 | [基础诊断02](../../codes/foundations/diagnostic_lab.py) |
+| [03](../03-multiple-qubits.md) | 复相位纠缠应测哪个相关方向 | [基础诊断03](../../codes/foundations/diagnostic_lab.py) |
+| [04](../04-circuits-protocols.md) | 门的全局相位加控制后为何不能删 | [基础诊断04](../../codes/foundations/diagnostic_lab.py) |
+| [05](../05-noise-channels.md) | 有限温度阻尼为何也能激发基态 | [基础诊断05](../../codes/foundations/diagnostic_lab.py) |
+| [06](../06-algorithmic-primitives.md) | Hadamard测试如何读复期望值的实部和虚部 | [算法检查06](../../codes/algorithms/round70_checks.py) |
+| [07](../07-algorithms.md) | 单个Grover深度为什么分不清不同振幅 | [算法检查07](../../codes/algorithms/round70_checks.py) |
+| [08](../08-applications.md) | 多个门共享参数时如何正确求导 | [算法检查08](../../codes/algorithms/round70_checks.py) |
+| [09](../09-hardware.md) | 如何把有限标定样本的不确定性一起算 | [标定传播](../../codes/systems/calibration_uncertainty.py) |
+| [10](../10-error-correction.md) | 综合征测后为何仍有相干逻辑误差 | [相干重复码](../../codes/systems/coherent_repetition.py) |
+| [11](../11-resources-benchmarks.md) | 批内漂移怎样减少有效独立信息 | [相关shots](../../codes/systems/correlated_shots.py) |
+| [12](../12-security-network-frontiers.md) | 存储超时怎样交换速率与条件质量 | [网络超时](../../codes/systems/network_cutoff.py) |
+| [13](../13-quantum-information.md) | 后选择为何不违反迹距离收缩定理 | [基础诊断13](../../codes/foundations/diagnostic_lab.py) |
+| [14](../14-compilation-control.md) | 不共用比特的门为何还不能并行 | [共享资源调度](../../codes/systems/resource_schedule.py) |
+| [15](../15-practice-research.md) | 后选择、零失败、时间预算、负权重怎样报告 | [P15-D–G](../../codes/practice/research_checks.py) |
+| [16](../16-advanced-algorithms-verification.md) | 小成功率为何放大条件态误差 | [算法检查16](../../codes/algorithms/round70_checks.py) |
+| [17](../17-computation-models.md) | 链强度阈值为何有简并和缩放代价 | [算法检查17](../../codes/algorithms/round70_checks.py) |
+| [18](../18-channels-capacities-complexity.md) | 有限块码可靠性为何不能等同信道容量 | [算法检查18](../../codes/algorithms/round70_checks.py) |
+| [19](../19-engineering-architecture.md) | 校准更新怎样传播失效和拒绝过期发布 | [校准依赖](../../codes/systems/calibration_dependencies.py) |
+| [Q1](../quantum-mechanics/01-experiments-states.md) | 相同可见度能否区分不等权与退相干 | [基础诊断q1](../../codes/foundations/diagnostic_lab.py) |
+| [Q2](../quantum-mechanics/02-observables-dynamics.md) | 同一简并读数能否来自不同测后作用 | [基础诊断q2](../../codes/foundations/diagnostic_lab.py) |
+| [Q3](../quantum-mechanics/03-levels-control.md) | Rabi人口能否辨认失谐符号 | [基础诊断q3](../../codes/foundations/diagnostic_lab.py) |
+| [Q4](../quantum-mechanics/04-wavefunctions-models.md) | Fock截断如何改变对易子 | [基础诊断q4](../../codes/foundations/diagnostic_lab.py) |
+
+此外，[源码阅读练习S04–S08](../appendices/software-practice.md)把多项式基、LCU归一化、阴影快照、控制约束和重构顺序连接到固定的上游文件。四组数值题有[独立复算代码](../../codes/practice/source_reading_checks.py)，工程讨论题保留其无法单靠程序断言验收的边界。
