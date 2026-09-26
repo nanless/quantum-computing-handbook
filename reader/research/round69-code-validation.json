@@ -1,0 +1,80 @@
+{
+  "date_utc": "2026-09-26T05:45:02.145564+00:00",
+  "python": "3.9.6",
+  "checks": [
+    {
+      "command": "python3 codes/foundations/foundations_lab.py --case all",
+      "returncode": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"seed\": 20260926,\n  \"synthetic\": true,\n  \"tensor_order\": \"left factor is most significant\",\n  \"cases\": {\n    \"00\": {\n      \"shots\": 1000,\n      \"zeros\": 520,\n      \"ones\": 480,\n      \"frequency\": 0.48,\n      \"theoretical_standard_deviation\": 0.015811388300841896,\n      \"hoeffding_radius_95\": 0.04294694083467376,\n      \"probability_exactly_500_ones\": 0.0252250181783608\n    },\n    \"01\": {\n      \"norm_squared\": 1.0000000000000002,\n      \"wrong_no_conjugation\": [\n        0.3333333333333334,\n        0.6666666666666669\n      ],\n      \"output_probabilities\": [\n        0.8333333333333333,\n        0.16666666666666666\n      ],\n      \"purity\": 1.0000000000000007\n    },\n    \"02\": {\n      \"y_plus_probability\": 0.9330127018922192,\n      \"wrong_gate_order_probability\": 0.4999999999999999,\n      \"bloch\": [\n        0.0,\n        0.8660254037844386,\n        0.4999999999999999\n      ]\n    },\n    \"03\": {\n      \"local_probabilities\": [\n        0.7499999999999999,\n        0.25\n      ],\n      \"local_purity\": 0.6249999999999999,\n      \"remote_unitary_leaves_local_state\": true\n    },\n    \"04\": {\n      \"branch_probabilities\": [\n        0.2499999999999999,\n        0.2499999999999999,\n        0.2499999999999999,\n        0.2499999999999999\n      ],\n      \"all_four_corrected_density_matrices_match\": true,\n      \"bob_before_message_diagonal\": [\n        0.5,\n        0.5\n      ]\n    },\n    \"05\": {\n      \"gamma\": 0.36,\n      \"output_real\": [\n        [\n          0.6799999999999998,\n          0.3999999999999999\n        ],\n        [\n          0.3999999999999999,\n          0.31999999999999995\n        ]\n      ],\n      \"eigenvalues\": [\n        0.06136575601077382,\n        0.9386342439892259\n      ],\n      \"t2_microseconds\": 40.0,\n      \"population_at_40us\": 0.256708559516296,\n      \"coherence_at_40us\": 0.18393972058572117\n    },\n    \"13\": {\n      \"helstrom\": [\n        {\n          \"prior_zero\": 0.5,\n          \"success\": 0.8535533905932737,\n          \"always_guess_more_likely\": 0.5\n        },\n        {\n          \"prior_zero\": 0.9,\n          \"success\": 0.9527692569068709,\n          \"always_guess_more_likely\": 0.9\n        }\n      ],\n      \"root_fidelity\": 0.7071067811865475,\n      \"squared_fidelity\": 0.5,\n      \"entropy_diagonal_75_25\": 0.8112781244591328\n    },\n    \"q1\": {\n      \"record_overlap_magnitude\": 0.6,\n      \"visibility\": 0.6,\n      \"phase_scan\": [\n        {\n          \"phase_rad\": 0,\n          \"p0\": 0.6499999999999999\n        },\n        {\n          \"phase_rad\": 1.0471975511965976,\n          \"p0\": 0.7999999999999997\n        },\n        {\n          \"phase_rad\": 3.141592653589793,\n          \"p0\": 0.35\n        },\n        {\n          \"phase_rad\": 4.1887902047863905,\n          \"p0\": 0.19999999999999993\n        }\n      ]\n    },\n    \"q2\": {\n      \"x_plus_forward\": 0.9999999999999998,\n      \"x_plus_reverse\": 0.4999999999999999,\n      \"subsystem_identity_shift_changes_density_matrix\": false,\n      \"branch_phase_pi_bell_overlap_squared\": 0.0\n    },\n    \"q3\": {\n      \"gap_divided_by_kb_K\": 0.23996215366831103,\n      \"thermal\": [\n        {\n          \"temperature_K\": 0.02,\n          \"p1\": 6.155812261735633e-06\n        },\n        {\n          \"temperature_K\": 0.05,\n          \"p1\": 0.008168701470416753\n        },\n        {\n          \"temperature_K\": 300,\n          \"p1\": 0.4998000315492714\n        }\n      ],\n      \"detuned_peak_ns\": 42.87464628562721,\n      \"detuned_max_population\": 0.7352941176470591,\n      \"resonant_pi_pulse_ns\": 50.0\n    },\n    \"q4\": {\n      \"grid\": [\n        {\n          \"interior_points\": 15,\n          \"dx\": 0.0625,\n          \"energy\": 9.83793643354601,\n          \"absolute_error\": 0.03166796754334733\n        },\n        {\n          \"interior_points\": 31,\n          \"dx\": 0.03125,\n          \"energy\": 9.861679775340784,\n          \"absolute_error\": 0.007924625748573888\n        },\n        {\n          \"interior_points\": 63,\n          \"dx\": 0.015625,\n          \"energy\": 9.867622767227767,\n          \"absolute_error\": 0.0019816338615914475\n        },\n        {\n          \"interior_points\": 127,\n          \"dx\": 0.0078125,\n          \"energy\": 9.869108962780137,\n          \"absolute_error\": 0.0004954383092208303\n        }\n      ],\n      \"error_ratios\": [\n        3.9961467642867907,\n        3.9990363013930494,\n        3.999759051147939\n      ],\n      \"middle_half_probability\": 0.8183098874927855,\n      \"exact_energy\": 9.869604401089358\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/algorithms/experiments.py all",
+      "returncode": 0,
+      "stdout": "{\n  \"06\": {\n    \"phi_1_over_3\": [\n      0.06249999999999997,\n      0.6997595264191647,\n      0.18749999999999992,\n      0.05024047358083553\n    ],\n    \"near_one_peak\": 0,\n    \"near_one_peak_probability\": 0.8112208246716809,\n    \"circular_error\": 0.015625,\n    \"controlled_U_calls_t4\": 15\n  },\n  \"07\": {\n    \"single_target\": [\n      0.0625,\n      0.47265625,\n      0.908447265625,\n      0.9613189697265625,\n      0.5817041397094727\n    ],\n    \"four_targets\": [\n      0.25,\n      1.0,\n      0.25,\n      0.25,\n      1.0\n    ],\n    \"restarts_for_99_percent_at_p_quarter\": 17\n  },\n  \"08\": {\n    \"vqe_exact_minimum\": -0.7280109889280518,\n    \"hoeffding_total_shots\": 14940,\n    \"shots_Z\": 11620,\n    \"shots_X\": 3320,\n    \"guaranteed_halfwidth\": 0.019999974423786485,\n    \"qaoa_mean_cut\": 1.6495190528383286,\n    \"qaoa_optimal_cut_probability\": 0.6685095264191643,\n    \"qaoa_probabilities_000_to_111\": [\n      0.009495236790417748,\n      0.07812500000000001,\n      0.33425476320958214,\n      0.07812499999999997,\n      0.07812499999999997,\n      0.33425476320958214,\n      0.07812500000000001,\n      0.009495236790417748\n    ]\n  },\n  \"16\": {\n    \"A_squared\": [\n      [\n        0,\n        0\n      ],\n      [\n        0,\n        0\n      ]\n    ],\n    \"right_singular_square\": [\n      [\n        0.0,\n        0.0\n      ],\n      [\n        0.0,\n        0.25\n      ]\n    ],\n    \"x_T2_probability\": [\n      [\n        -1,\n        1.0,\n        1.0\n      ],\n      [\n        -0.5,\n        -0.4999999999999999,\n        0.2499999999999999\n      ],\n      [\n        0,\n        -1.0,\n        1.0\n      ],\n      [\n        0.5,\n        -0.4999999999999999,\n        0.2499999999999999\n      ],\n      [\n        1,\n        1.0,\n        1.0\n      ]\n    ]\n  },\n  \"17\": {\n    \"mbqc_branch_probabilities\": [\n      0.5,\n      0.5\n    ],\n    \"successes\": 20,\n    \"trials\": 100,\n    \"one_sided_95_percent_lower_p\": 0.07761265846595919,\n    \"repetitions_for_conditional_99_percent\": 58,\n    \"anneal_readout_reset_ms\": 6.96\n  },\n  \"18\": {\n    \"columns\": [\n      \"erasure\",\n      \"C\",\n      \"Q_theorem\",\n      \"P_theorem\",\n      \"CE\"\n    ],\n    \"capacity_rows\": [\n      [\n        0,\n        1,\n        1.0,\n        1.0,\n        2\n      ],\n      [\n        0.25,\n        0.75,\n        0.5,\n        0.5,\n        1.5\n      ],\n      [\n        0.5,\n        0.5,\n        0.0,\n        0.0,\n        1.0\n      ],\n      [\n        0.75,\n        0.25,\n        0.0,\n        0.0,\n        0.5\n      ],\n      [\n        1,\n        0,\n        0.0,\n        0.0,\n        0\n      ]\n    ],\n    \"negative_Ic_at_e075_q05\": -0.5\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/hardware_flags.py",
+      "returncode": 0,
+      "stdout": "{\n  \"fn\": 20.0,\n  \"fp\": 1998.0,\n  \"missed_loss_unflagged\": 2.0059737899464607e-05,\n  \"precision\": 0.32907991940899933,\n  \"tn\": 997002.0,\n  \"tp\": 980.0\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/weighted_decoder.py",
+      "returncode": 0,
+      "stdout": "{\n  \"weighted_failure\": 0.01,\n  \"unweighted_failure\": 0.043199999999999995,\n  \"syndrome_10_candidates\": {\n    \"011\": 0.0396,\n    \"100\": 0.0064\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/factory_schedule.py",
+      "returncode": 0,
+      "stdout": "[\n  {\n    \"factories\": 1,\n    \"starts\": [\n      3,\n      12,\n      15\n    ],\n    \"finish\": 16,\n    \"states_used\": 5,\n    \"states_produced\": 5\n  },\n  {\n    \"factories\": 2,\n    \"starts\": [\n      3,\n      6,\n      9\n    ],\n    \"finish\": 10,\n    \"states_used\": 5,\n    \"states_produced\": 6\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/network_wait.py",
+      "returncode": 0,
+      "stdout": "{\n  \"seed\": 69012,\n  \"shots\": 200000,\n  \"exact_total_slots\": 11.428571428571429,\n  \"exact_storage_slots\": 7.857142857142858,\n  \"sample_means\": [\n    11.44125,\n    7.87201\n  ],\n  \"sample_standard_errors\": [\n    0.020310903595148897,\n    0.0191704428829571\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/routing_mapping.py",
+      "returncode": 0,
+      "stdout": "{\n  \"seed\": 69014,\n  \"verified_states\": 9,\n  \"max_amplitude_error\": 0.0,\n  \"cx_without_restore\": 4,\n  \"cx_with_restore\": 7,\n  \"logical_to_physical\": [\n    1,\n    0,\n    2\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/service_timeline.py",
+      "returncode": 0,
+      "stdout": "{\n  \"online_hours\": 20,\n  \"qualified_hours\": 18,\n  \"online_fraction\": 0.8333333333333334,\n  \"qualified_fraction\": 0.75,\n  \"naive_independent_fraction\": 0.8020833333333333,\n  \"raw_shots\": 6768000000,\n  \"qualified_shots\": 6480000000,\n  \"qualified_wall_shots_per_second\": 75000.0\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/practice/experiments.py",
+      "returncode": 0,
+      "stdout": "{\n  \"model\": \"synthetic fixed counts, independent bounded outcomes assumed\",\n  \"bell_equal\": {\n    \"point\": 0.6625,\n    \"lower\": 0.5891111165732179,\n    \"radii\": [\n      0.0978518445690427,\n      0.0978518445690427,\n      0.0978518445690427\n    ]\n  },\n  \"bell_unequal\": {\n    \"point\": 0.6625,\n    \"lower\": 0.5362154021937405,\n    \"radii\": [\n      0.0978518445690427,\n      0.3094347020869523,\n      0.0978518445690427\n    ]\n  },\n  \"zne\": {\n    \"estimate\": 1.1,\n    \"equal_allocation_variance_upper\": 0.0012499999999999998,\n    \"optimal_allocation_variance_upper\": 0.001,\n    \"optimal_shots\": [\n      3000,\n      1000\n    ]\n  },\n  \"twenty_independent_tests_false_positive_probability\": 0.6415140775914581\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/snapshot_sources.py --verify",
+      "returncode": 0,
+      "stdout": "{\n  \"projects\": 15,\n  \"verified_files\": 46\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/tests/test_snapshot_sources.py",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_missing_source_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests) ... ok\ntest_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.022s\n\nOK\n"
+    }
+  ],
+  "verified_audio": [
+    "phase-0.wav",
+    "phase-120.wav",
+    "phase-180.wav",
+    "ramsey-ideal.wav",
+    "ramsey-decay.wav"
+  ],
+  "scope": "authored stdlib tests, vendor integrity, WAV format; no upstream execution"
+}

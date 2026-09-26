@@ -511,6 +511,12 @@ $$
 
 答案见[练习与答案：量子力学 Q3](../appendices/exercises.md#量子力学-q3)。
 
+## 配套数值实验与展开答案
+
+用统一 SI 单位计算三个温度的热占据，并从二维 Hamiltonian 核对失谐 Rabi 的峰高和峰值时间。程序采用负指数形式，避免极低温计算的正指数溢出。
+
+题目和逐步解答见[基础实验册](../labs/foundations.md)，本章程序编号为 `q3`。可从[代码说明](../../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - NIST, [Meet the Constants](https://www.nist.gov/si-redefinition/meet-constants)：SI 中 $h$ 与 $k_{\rm B}$ 的精确值。

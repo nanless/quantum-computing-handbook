@@ -1,0 +1,54 @@
+{
+  "origin": "synthetic classical teaching audio, not laboratory recording",
+  "sample_rate_hz": 22050,
+  "channels": 1,
+  "pcm_bits": 16,
+  "carrier_hz": 440,
+  "component_gain": 0.2,
+  "fade_s": 0.01,
+  "fringe_hz": 1,
+  "decay_time_s": 1.5,
+  "normalization": "same fixed gain; no per-file normalization",
+  "files": [
+    {
+      "file": "phase-0.wav",
+      "frames": 88200,
+      "duration_s": 4,
+      "peak": 0.39999989850315504,
+      "rms": 0.2823691034762081,
+      "sha256": "d98bfcb463715346f030c2d78e991b8154db5d8714c180c59df20402bbe783fe"
+    },
+    {
+      "file": "phase-120.wav",
+      "frames": 88200,
+      "duration_s": 4,
+      "peak": 0.19999994925164435,
+      "rms": 0.14118469337498746,
+      "sha256": "d310ac8958135e839dc24839225d648bd7f0d6ee4b4dc587511335bb1b6e30eb"
+    },
+    {
+      "file": "phase-180.wav",
+      "frames": 88200,
+      "duration_s": 4,
+      "peak": 1.1582818038036182e-13,
+      "rms": 3.8052904837684043e-14,
+      "sha256": "9954b1ec94cd58bd7debcf5e3a34585c545100427917cee822de476787090e3c"
+    },
+    {
+      "file": "ramsey-ideal.wav",
+      "frames": 88200,
+      "duration_s": 4,
+      "peak": 0.3998393697008081,
+      "rms": 0.19932978655791314,
+      "sha256": "ba21ffa4c5c716161b5bc099c6edeada9f34b951f08f303dc8855cde7efc2dbc"
+    },
+    {
+      "file": "ramsey-decay.wav",
+      "frames": 88200,
+      "duration_s": 4,
+      "peak": 0.39904869385342917,
+      "rms": 0.19987588535367204,
+      "sha256": "40247377eef83e5f8825bc70e80f5dd6a958020b8758885e82d74613b7cb6cfa"
+    }
+  ]
+}

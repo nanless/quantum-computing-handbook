@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "seed": 20260926,
+  "synthetic": true,
+  "tensor_order": "left factor is most significant",
+  "cases": {
+    "00": {
+      "shots": 1000,
+      "zeros": 520,
+      "ones": 480,
+      "frequency": 0.48,
+      "theoretical_standard_deviation": 0.015811388300841896,
+      "hoeffding_radius_95": 0.04294694083467376,
+      "probability_exactly_500_ones": 0.0252250181783608
+    },
+    "01": {
+      "norm_squared": 1.0000000000000002,
+      "wrong_no_conjugation": [
+        0.3333333333333334,
+        0.6666666666666669
+      ],
+      "output_probabilities": [
+        0.8333333333333333,
+        0.16666666666666666
+      ],
+      "purity": 1.0000000000000007
+    },
+    "02": {
+      "y_plus_probability": 0.9330127018922192,
+      "wrong_gate_order_probability": 0.4999999999999999,
+      "bloch": [
+        0.0,
+        0.8660254037844386,
+        0.4999999999999999
+      ]
+    },
+    "03": {
+      "local_probabilities": [
+        0.7499999999999999,
+        0.25
+      ],
+      "local_purity": 0.6249999999999999,
+      "remote_unitary_leaves_local_state": true
+    },
+    "04": {
+      "branch_probabilities": [
+        0.2499999999999999,
+        0.2499999999999999,
+        0.2499999999999999,
+        0.2499999999999999
+      ],
+      "all_four_corrected_density_matrices_match": true,
+      "bob_before_message_diagonal": [
+        0.5,
+        0.5
+      ]
+    },
+    "05": {
+      "gamma": 0.36,
+      "output_real": [
+        [
+          0.6799999999999998,
+          0.3999999999999999
+        ],
+        [
+          0.3999999999999999,
+          0.31999999999999995
+        ]
+      ],
+      "eigenvalues": [
+        0.06136575601077382,
+        0.9386342439892259
+      ],
+      "t2_microseconds": 40.0,
+      "population_at_40us": 0.256708559516296,
+      "coherence_at_40us": 0.18393972058572117
+    },
+    "13": {
+      "helstrom": [
+        {
+          "prior_zero": 0.5,
+          "success": 0.8535533905932737,
+          "always_guess_more_likely": 0.5
+        },
+        {
+          "prior_zero": 0.9,
+          "success": 0.9527692569068709,
+          "always_guess_more_likely": 0.9
+        }
+      ],
+      "root_fidelity": 0.7071067811865475,
+      "squared_fidelity": 0.5,
+      "entropy_diagonal_75_25": 0.8112781244591328
+    },
+    "q1": {
+      "record_overlap_magnitude": 0.6,
+      "visibility": 0.6,
+      "phase_scan": [
+        {
+          "phase_rad": 0,
+          "p0": 0.6499999999999999
+        },
+        {
+          "phase_rad": 1.0471975511965976,
+          "p0": 0.7999999999999997
+        },
+        {
+          "phase_rad": 3.141592653589793,
+          "p0": 0.35
+        },
+        {
+          "phase_rad": 4.1887902047863905,
+          "p0": 0.19999999999999993
+        }
+      ]
+    },
+    "q2": {
+      "x_plus_forward": 0.9999999999999998,
+      "x_plus_reverse": 0.4999999999999999,
+      "subsystem_identity_shift_changes_density_matrix": false,
+      "branch_phase_pi_bell_overlap_squared": 0.0
+    },
+    "q3": {
+      "gap_divided_by_kb_K": 0.23996215366831103,
+      "thermal": [
+        {
+          "temperature_K": 0.02,
+          "p1": 6.155812261735633e-06
+        },
+        {
+          "temperature_K": 0.05,
+          "p1": 0.008168701470416753
+        },
+        {
+          "temperature_K": 300,
+          "p1": 0.4998000315492714
+        }
+      ],
+      "detuned_peak_ns": 42.87464628562721,
+      "detuned_max_population": 0.7352941176470591,
+      "resonant_pi_pulse_ns": 50.0
+    },
+    "q4": {
+      "grid": [
+        {
+          "interior_points": 15,
+          "dx": 0.0625,
+          "energy": 9.83793643354601,
+          "absolute_error": 0.03166796754334733
+        },
+        {
+          "interior_points": 31,
+          "dx": 0.03125,
+          "energy": 9.861679775340784,
+          "absolute_error": 0.007924625748573888
+        },
+        {
+          "interior_points": 63,
+          "dx": 0.015625,
+          "energy": 9.867622767227767,
+          "absolute_error": 0.0019816338615914475
+        },
+        {
+          "interior_points": 127,
+          "dx": 0.0078125,
+          "energy": 9.869108962780137,
+          "absolute_error": 0.0004954383092208303
+        }
+      ],
+      "error_ratios": [
+        3.9961467642867907,
+        3.9990363013930494,
+        3.999759051147939
+      ],
+      "middle_half_probability": 0.8183098874927855,
+      "exact_energy": 9.869604401089358
+    }
+  }
+}

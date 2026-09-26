@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-24T17:32:08.459Z",
+  "generatedAt": "2026-09-26T05:47:38.121Z",
   "pages": [
     {
       "source": "handbook/00-overview.md",
       "output": "reader/00-overview.html",
-      "sourceSha256": "6bce6b9f6f49ab65ba11cf206a8544b0bea522a6bdc568c6f60155e6667edd3f",
-      "outputSha256": "deda7db2ff22d3819152cf3393752db030d6faf6c23462d53abf5b4c7347de2d",
+      "sourceSha256": "733ab07df9b643e70b7e46eaaa6d7af985001124ee96b9d0faf44b6047992d6d",
+      "outputSha256": "18ef76a37de02532234dae90666bf9f5be3efd592f58eb67a947a6d56b7b37e6",
       "mathSourceDigest": "9244285fa53fcddb0cbdc8d74af4ffd44d2a927df82a8a3b7a8768c65eb4fcd9",
       "headingIds": [
         "00全景量子计算是什么又不是什么",
@@ -23,17 +23,18 @@
         "7-一个从头到尾的最小实验产生随机比特",
         "8-常见误区",
         "9-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 16,
+      "headings": 17,
       "formulas": 52
     },
     {
       "source": "handbook/01-math.md",
       "output": "reader/01-math.html",
-      "sourceSha256": "819139a5fc848b837002b7650f390d0e6edbfa40f74b7e032f47883b244eef6a",
-      "outputSha256": "30cff93c4b6df4d1ab16784f88a1e9795daa448b9243f373a4752eab6f530612",
+      "sourceSha256": "b12bc63cfa7a0b20e0db97cf171d2407f726e1914801e3764bbdaaa67be23397",
+      "outputSha256": "31c089fe0b252db0c360d89bf1dbfadeb3579e7887b004441b5c90f241a16b9f",
       "mathSourceDigest": "2bd529b89c84097e6cadd92170f47680d31456f6252e67518f6e665c17f480f6",
       "headingIds": [
         "01够用而不跳步的数学工具",
@@ -68,17 +69,18 @@
         "查询复杂度与时间复杂度不是一回事",
         "10-常见错误",
         "11-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 33,
+      "headings": 34,
       "formulas": 659
     },
     {
       "source": "handbook/02-single-qubit.md",
       "output": "reader/02-single-qubit.html",
-      "sourceSha256": "580fea4101b9a0effb4563fdea402c10fe7a105c2f47c10e8223bee4802d7700",
-      "outputSha256": "fd1e6b70b04be5853a5d3dfd83af8d6587c3b2fa58170418679fc5b299cf7991",
+      "sourceSha256": "768170f3bf4d5de5273cc984135d6ac5681800e5d08767cd4fe4f763cd0ff4c5",
+      "outputSha256": "bb94ffbc41bc81a8de0b9eaeb687bfe00c2cdaecf7a25d0175a7dd6a21f327a2",
       "mathSourceDigest": "cd3b85d46bec62703f7d1c2a0f9d8dfec1c1c2ee94e462dbe9e21dcceb3460f1",
       "headingIds": [
         "02单量子比特状态相位与测量",
@@ -103,17 +105,18 @@
         "8-采样误差不是设备噪声",
         "9-常见误区",
         "10-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 23,
+      "headings": 24,
       "formulas": 427
     },
     {
       "source": "handbook/03-multiple-qubits.md",
       "output": "reader/03-multiple-qubits.html",
-      "sourceSha256": "e198a526d0dfaf74164d21cda643c4b77cdc0d7a9257eb38592e54565594e4d9",
-      "outputSha256": "c362141da92d9a4b2871694fb007f845fed8f961ca288a70ab1f198c143ac940",
+      "sourceSha256": "4bee6edcd467c617fd0838e2d3256e90e021a72acc3859f2200fff12c9e59b22",
+      "outputSha256": "ea5c81f7c056125aab40c7b0eb08721f529594eae1bebba46fa699a5ce1e93cd",
       "mathSourceDigest": "6bd615e0ac245c7959f2d782bca496167569e736b37f080b8450aeace5a8ef5e",
       "headingIds": [
         "03多量子比特纠缠与约化态",
@@ -140,17 +143,18 @@
         "8-单配性进阶回看",
         "9-常见误区",
         "10-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 25,
+      "headings": 26,
       "formulas": 443
     },
     {
       "source": "handbook/04-circuits-protocols.md",
       "output": "reader/04-circuits-protocols.html",
-      "sourceSha256": "d2394aa8e7f37e8668eee0ed0a414594bc16d5fe01a41f8d319995d6c5891c21",
-      "outputSha256": "70ec11a0af843b06ee1e2b3a1c043434f9bbbed6d06564c9e5bee6397d8cecac",
+      "sourceSha256": "9013fe3cffc0b6cb226dad921c63750c03c32a6e45e3e955ecf39f9cfe763260",
+      "outputSha256": "0865924c85521efb1f33dd8a89fa3f0edbb6bcc6bf5c156a5c0c4a7f92125ea9",
       "mathSourceDigest": "bba6a07dbeec7cff9a17ea2c8c65f7f88281b8f3e3ba30e46ed6aa5de693fe45",
       "headingIds": [
         "04量子门电路与三种基础协议",
@@ -165,18 +169,19 @@
         "9-通用性与近似",
         "10-常见误区",
         "11-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 13,
+      "headings": 14,
       "formulas": 326
     },
     {
       "source": "handbook/05-noise-channels.md",
       "output": "reader/05-noise-channels.html",
-      "sourceSha256": "e25249f7b256dac29b0c715d815fe7852ba556c8addf31b045136631e9030757",
-      "outputSha256": "8547b39c5073eeba8baf9f7b7bdc1d011b41a23358602f951ab32ef2a9237790",
-      "mathSourceDigest": "2cad98633f3f5e6cda2443a540f6de173ccd60fdf6ad4ac8647fe382a50b94cd",
+      "sourceSha256": "fa393d76d41364a4d1da1be711e101aaa2448c93a7481849dd6cf55ef899a3cc",
+      "outputSha256": "2a041a09dacf4a4c9de10b220f2952696adf5c36458829ad1e45872a946c1ca8",
+      "mathSourceDigest": "81761dbb946f29255eca7d2d3283a6df76c183437a4c70250c06b41dc27c3b41",
       "headingIds": [
         "05混态噪声与量子信道",
         "1-为什么态矢量不够",
@@ -199,18 +204,19 @@
         "8-过程表征与误差指标",
         "9-误差缓解不等于错误校正",
         "10-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 22,
-      "formulas": 204
+      "headings": 23,
+      "formulas": 210
     },
     {
       "source": "handbook/06-algorithmic-primitives.md",
       "output": "reader/06-algorithmic-primitives.html",
-      "sourceSha256": "e746586893b0fa53f8fee4cdbdb2876951f3a38939afe3613180683bef0d917c",
-      "outputSha256": "d4e64f38f083b6e73f29e09c3e68cc9ce6e011ec4f6acbe3d8bc375937ec85d3",
-      "mathSourceDigest": "30009594fb57aae4ea1e969d8f0575ce68ad1dc561be881de7dac3dab6e27798",
+      "sourceSha256": "1c44b0b335190f4bfae45c6c6f9082479f5ff6ab897c57904b4b3da9975b6fb0",
+      "outputSha256": "e161be7e17bf3a0a65ba559ae313148de63ac80e7f800328885a779bb8bf4681",
+      "mathSourceDigest": "b5d2a357f73f16a581f2efb206c11adc59c03ba47673e8d581fecdc7808795ab",
       "headingIds": [
         "06量子算法的共同骨架",
         "1-从经典函数到可逆-oracle",
@@ -241,19 +247,20 @@
         "101-多项式方法",
         "102-hybrid--adversary-直觉",
         "103-承诺问题为何特别重要",
+        "实操扩展相位绕过-1-时误差不能用普通减法",
         "11-自检",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 31,
-      "formulas": 456
+      "headings": 32,
+      "formulas": 472
     },
     {
       "source": "handbook/07-algorithms.md",
       "output": "reader/07-algorithms.html",
-      "sourceSha256": "699ff5bdbebd229d5ae61c7d09befde4d3dee0b4c614023f7f5b4a3544f9c5fa",
-      "outputSha256": "14843fec3f0df29f8fe68ca8aa2b092b213c360899e82907e2b84dbd93e051cd",
-      "mathSourceDigest": "5675cfa9e272454c92f470b4d9c52e6f75b6330f720e934ab0922753fd2698eb",
+      "sourceSha256": "c24d6e561f7899896ee8a4085c24ea4c9cac15fdf660319f0337bf2b0baccd32",
+      "outputSha256": "1ef698efdac9fde02dd785b4bb9e11cbe1d648fea3e792b7555871d45255cf7f",
+      "mathSourceDigest": "8877832c53c21c0af1f151b2289e229396a195d62581ba44f909da638b39502e",
       "headingIds": [
         "07代表性量子算法从隐藏周期到量子模拟",
         "1-simon-算法指数级查询优势的原型",
@@ -283,19 +290,20 @@
         "手算承诺间隙不等于谱隙",
         "8-算法选择与证据表",
         "9-常见误区",
+        "实操扩展单次成功率最高不一定平均查询最省",
         "10-自检",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 30,
-      "formulas": 580
+      "headings": 31,
+      "formulas": 598
     },
     {
       "source": "handbook/08-applications.md",
       "output": "reader/08-applications.html",
-      "sourceSha256": "3e0a6403451be30dd737df9153909262fca6c2d1b8779f6bb3cde0e262d9ed13",
-      "outputSha256": "ad93f0e0dc73cff50399ec43c7d988f1951626371ab94420ad6a52b700caf50c",
-      "mathSourceDigest": "089c9fea8d1d508cf157c8f8e13a9acbd4b57408e8bd1751ab67851ed4a79794",
+      "sourceSha256": "a04b119a8e1ebc5303acd1bbebb0f5dc1f5f9c6e9bda80624ebcabb10a990d70",
+      "outputSha256": "afff135b7d37d195d0dd7dd734f8aa8fde0348d5d29e1d70b140ee1eb0fe0b8e",
+      "mathSourceDigest": "cb3cfcec2d6cb9fc92d9b2ce6dfa0094c1c2f8b1ba55b0f244563beadb79af74",
       "headingIds": [
         "08应用变分算法与证据边界",
         "阅读前先固定究竟要交付什么",
@@ -323,19 +331,22 @@
         "一个能量差的误差预算",
         "9-何谓可信的实用量子优势",
         "10-错误缓解的证据边界",
+        "实操扩展把近似误差条变成有限样本保证",
+        "模型容量参数多不等于可学信息多",
+        "新方法入口sqd-把哪些工作交回经典计算机",
         "11-自检",
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 28,
-      "formulas": 369
+      "headings": 31,
+      "formulas": 401
     },
     {
       "source": "handbook/09-hardware.md",
       "output": "reader/09-hardware.html",
-      "sourceSha256": "48cac626b4f7aebc6f472de5b7099f1941f8ac4970325574f47d71b7ed29782a",
-      "outputSha256": "181f6e31550658d32c1261cee3e42cc490c927af3f3035c956207725e135fbb2",
-      "mathSourceDigest": "fee53865b2bb18d0189ae93b358de1be87e76488c5f658ebd6abd5d599c38b4e",
+      "sourceSha256": "7aeb9391307b4f2107c77ef524a7ac2ae0f27369e1b112acc8563504dddad474",
+      "outputSha256": "a805ba2319145b5cba07352442dce22ea3cd0c53b71a06eecd915402eaa3ea2f",
+      "mathSourceDigest": "78a17503827d1b02c7704df7f91210c9d1c1e43f3cdcaed90572e2ede593843f",
       "headingIds": [
         "09从物理量子比特到控制栈",
         "1-先把量子计算机拆成一整套系统",
@@ -354,6 +365,7 @@
         "51-t_1t_2-与-t_2",
         "52-spam门错误丢失与泄漏",
         "用-2000-次标定看懂不对称读出",
+        "53-练习与实验一个丢失告警究竟有多可信",
         "6-软件控制与云平台",
         "从一个远距-cnot-算到物理门",
         "反馈是一条有时限的数据通路",
@@ -364,15 +376,15 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 25,
-      "formulas": 132
+      "headings": 26,
+      "formulas": 145
     },
     {
       "source": "handbook/10-error-correction.md",
       "output": "reader/10-error-correction.html",
-      "sourceSha256": "43aac8a8c0ee32679bd625899ff66739ad7986328951b5573f049970e621f0a3",
-      "outputSha256": "e4fff68318abf76ba3f54e7d6d5bbb6156ed774771ee7190f5d07fc70269f647",
-      "mathSourceDigest": "17e1d72e06611ba3de61459e8dcfc45ad715753998f79ef39053ed214bd0dc2b",
+      "sourceSha256": "a5b284e166461ac51d906fa16820da1a96dd5d75cfa75304699e8e592c397e4f",
+      "outputSha256": "fbbc19a0b02eee953c8ab10ff224603089085f9421d7a4391e142584a1da7a2a",
+      "mathSourceDigest": "cca85af2f05d2fcdb4e4d718ae20867e02184de8018182ded8050e6f5050564a",
       "headingIds": [
         "10量子错误校正与容错计算",
         "1-不可克隆为何不妨碍纠错",
@@ -387,6 +399,7 @@
         "62-steane-码的综合征手算",
         "7-表面码",
         "71-为什么要比较相邻两轮而不是只看一轮综合征",
+        "72-练习与实验最少翻转为什么未必最可信",
         "8-阈值何时增加冗余才真正有用",
         "一个明确标注为示意的缩放例子",
         "9-容错纠错码之外还需要什么",
@@ -400,15 +413,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 24,
-      "formulas": 226
+      "headings": 25,
+      "formulas": 254
     },
     {
       "source": "handbook/11-resources-benchmarks.md",
       "output": "reader/11-resources-benchmarks.html",
-      "sourceSha256": "0f6b0298c4d419e4936480ece73c29b0c9d4eb0daab8be3a4bebf11289f1805d",
-      "outputSha256": "00d6823a3c4a32c50710743094b81b46ccc0c31922fa1cfe1bab45b36793f2f8",
-      "mathSourceDigest": "df4532634f2953bcacf85285a2664ebf56bc69db8630818a39adf6315da2e1e7",
+      "sourceSha256": "8ce0054e4bd5d977ba3895cbfa3673314bea47a9ca297ae67b050b554910ec60",
+      "outputSha256": "329d9f520895f50406dc39429df0037dd42e1cd237e9c11916210af6db453b03",
+      "mathSourceDigest": "cf66b8b4c9d26301f94c4351370a49e12ef8996ef4b2624be6b78a69bc2c5bbb",
       "headingIds": [
         "11资源估算与基准怎样比较才公平",
         "1-基准不是一个排行榜数字",
@@ -425,6 +438,7 @@
         "7-逻辑量子比特基准不能只说逻辑优于物理",
         "从总失败预算反推码距一遍可以复算的示意账",
         "8-端到端资源估算",
+        "练习与实验t-count-相同魔法态等待仍不同",
         "81-可靠性不是一次校准后的峰值",
         "82-能量比较先画清系统边界",
         "9-量子优势声明怎样公平比较",
@@ -434,15 +448,15 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 22,
-      "formulas": 93
+      "headings": 23,
+      "formulas": 117
     },
     {
       "source": "handbook/12-security-network-frontiers.md",
       "output": "reader/12-security-network-frontiers.html",
-      "sourceSha256": "1651c4ae46dcf170fd1c5c206d89035b0a28a818007ccee46c9690378aca631b",
-      "outputSha256": "63c5da62b90e497f8a20f9d2a53e2fe0d60e3b66f7511c0b20df279bcfff4005",
-      "mathSourceDigest": "d65133599ba4d9772c93d05b4927ae47b24cbf7c9ead18b2bb039af3b5341e2d",
+      "sourceSha256": "57e9ce0db948a7c83b22f6ca749a1fe3c22f3d828b258b67e33e7e1fca6ac20c",
+      "outputSha256": "fe018fb8917779f4c9b68b941c9c553743196cfe5ded589e9ef68b33f6bfc8c6",
+      "mathSourceDigest": "13b892b39626939bb444ef191d625ae1c11f6c1e14af4a6d62e4f63cd351ad18",
       "headingIds": [
         "12密码量子网络与研究前沿",
         "1-先分清三个经常混在一起的主题",
@@ -458,6 +472,7 @@
         "6-从物理光子到应用网络协议栈",
         "61-可复算例两段链路何时同时就绪",
         "62-等待另一段的时间不等于总完成时间",
+        "63-练习与实验两条链路不一样快时怎样计算",
         "7-纠缠交换与中继器",
         "71-四个量子比特怎样变成一对远程纠缠",
         "8-网络性能要看一组量",
@@ -470,15 +485,15 @@
         "参考资料"
       ],
       "diagrams": 2,
-      "headings": 24,
-      "formulas": 276
+      "headings": 25,
+      "formulas": 285
     },
     {
       "source": "handbook/13-quantum-information.md",
       "output": "reader/13-quantum-information.html",
-      "sourceSha256": "322832249cea9ded060904cff939ca1fa58248166138e84fd8417ee53016c1fd",
-      "outputSha256": "4472cf7a9debb2109224b5907d2c8d83b5752cb756cdb9c31aff11659b1c84d4",
-      "mathSourceDigest": "be68a807f023cf6009ad707a8e1173c2209b0ee44c465b6574e5e8e87f2f5d09",
+      "sourceSha256": "3b28cfabc00215abb8c3c1a3dfbb27d302b6c1e654e8e74f369a83878db2e5fe",
+      "outputSha256": "a4aa355cf527d3017ff45b8fcd429020b7f8f070243a017f448d3f4f095784a7",
+      "mathSourceDigest": "10b2b2703d478a10fa0e223ab527984793f36f9d763131bcbed5259d6dbd092f",
       "headingIds": [
         "13量子信息量度熵距离与可提取信息",
         "1-从经典熵开始",
@@ -492,6 +507,7 @@
         "算例",
         "5-相对熵与数据处理",
         "6-迹距离最优区分能力",
+        "先验不是各半时先把权重放进矩阵",
         "例-1正交态",
         "例-2非正交纯态",
         "把无歧义判别的测量写出来",
@@ -506,24 +522,26 @@
         "12-指标选择清单",
         "13-常见误区",
         "14-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 27,
-      "formulas": 227
+      "headings": 29,
+      "formulas": 237
     },
     {
       "source": "handbook/14-compilation-control.md",
       "output": "reader/14-compilation-control.html",
-      "sourceSha256": "c06eaec6f872822d5b664798cebb7a64350da88ab089edd5e8d3fdb71c7a8aac",
-      "outputSha256": "aaa045139fe309da112969aaa6fd4a0e2031affdb1fed3de868489b121557c55",
-      "mathSourceDigest": "4234861d65011785af23ecc8ab6cae99867d4b88de84fa6277f78d01c89c07b5",
+      "sourceSha256": "043d9e587d603f36698cdccc5ff2fec44e32a75393b22fec12b69fc1e72b5a56",
+      "outputSha256": "ada1c0d701cb5c046fc979cc8d004802e189c3682dd56fb8fcf8f9147b2d69b8",
+      "mathSourceDigest": "076e1de8dff32484f8dfa6a57d2007f2f0b597147d3842d092dfd3ce4e0cfde8",
       "headingIds": [
         "14从算法电路到物理执行编译调度与控制",
         "1-从算法到实验的表示层不要混在一起",
         "2-门分解任意门怎样落到有限门集",
         "3-连接约束与布局",
         "线形三比特例子",
+        "31-练习与实验省掉恢复-swap-后答案怎样读",
         "4-目标机编译流水线",
         "5-关键路径与调度",
         "简单关键路径",
@@ -546,14 +564,14 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 25,
-      "formulas": 91
+      "headings": 26,
+      "formulas": 121
     },
     {
       "source": "handbook/15-practice-research.md",
       "output": "reader/15-practice-research.html",
-      "sourceSha256": "0c2ff699b4803c059e6cea5def56de84bcfa77d1fcf1e4e9e5953d2e429f0559",
-      "outputSha256": "8b65215f35d6acd1194fb69846b658c92c4eb454352175c6e46a0c6ee8e25d3c",
+      "sourceSha256": "c21379453659cae737a1db575a205e46129cc0e6b1111dd3e4fa4ac908e9c056",
+      "outputSha256": "c56193c3443fb5e0a16abb5b14a258b91fd3f5650c7b40abe3e839aad6c71a12",
       "mathSourceDigest": "be21cd2163734e57994810ba70abc43dd76cb124eb292fbe0efb0edab003ca18",
       "headingIds": [
         "15实践路线手算模拟真机实验与论文复核",
@@ -589,19 +607,20 @@
         "项目-e经典基线复核",
         "13-怎样写一份不夸大的实验报告",
         "14-版本和时间敏感性",
-        "15-自检",
+        "15-配套实验从计算到可审查的结果",
+        "16-自检",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 35,
+      "headings": 36,
       "formulas": 147
     },
     {
       "source": "handbook/16-advanced-algorithms-verification.md",
       "output": "reader/16-advanced-algorithms-verification.html",
-      "sourceSha256": "477e802953b525e4f64f0190af381fd9018d8acbd1e0e38e5489838c5cac8275",
-      "outputSha256": "c5885fb67d0c95bd24a8db14f7ce92afd4d4ea6a3d034303523a2e1be83ec742",
-      "mathSourceDigest": "a84aaf2666bcfd1f8dfc1f4b4d8746a295c5ce289503a0d8bcbd156b98eeae13",
+      "sourceSha256": "23cc4c2d6de871bd798058ea43c65c38b6536da9f7c4bbe71e5f8034f0a6dea7",
+      "outputSha256": "510ec083a7f94a38c8519fa8955e38aa022e9ec3e92d02035b6eb2177ad0837d",
+      "mathSourceDigest": "1932bcdb84c24656f6aae9058d09713f4a593bcc8677446d7cd5d829905e47fc",
       "headingIds": [
         "16高级算法与验证从下界证明到可信输出",
         "1-读算法论文前先填六个空",
@@ -648,19 +667,21 @@
         "76-模拟器怎样从可验证尺度外推",
         "77-一套可执行的验证梯子",
         "8-常见误区",
+        "实操扩展qsvt-的奇异值变换不是任意矩阵的幂",
+        "合成相位之后还要查哪一层",
         "9-自检",
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 47,
-      "formulas": 379
+      "headings": 49,
+      "formulas": 401
     },
     {
       "source": "handbook/17-computation-models.md",
       "output": "reader/17-computation-models.html",
-      "sourceSha256": "d9b4a8a6e345004704b1e8e0f18322a0e762ff0d40507689520eb7a23e1e1b33",
-      "outputSha256": "2f99048b2d3024c58063292d6ca846033183b33109175b0feb2ce0ee9cb62a31",
-      "mathSourceDigest": "e174a7b9a85f6a5604834eb467c212a9a44f8494361ad3f4510e29c498fad661",
+      "sourceSha256": "9ca7fe6efb3d50378560884d00ee1da2d0242ed2ec3633928682f6ad0adb29ed",
+      "outputSha256": "3b8505408cf49fe7d8192de5c28c3ad02295f09461c89d38eace811e5bbd2f2b",
+      "mathSourceDigest": "e98c36bba693d4b4cc1187e9a89cc5dad91abd4400f05c5e56b8ccea28c24cda",
       "headingIds": [
         "17量子计算模型门测量绝热退火与模拟",
         "1-一张计算模型地图",
@@ -680,19 +701,21 @@
         "81-八位密钥的玩具资源账",
         "9-从模型名称到可检验声明",
         "10-常见误区",
+        "实操扩展未知成功率怎样进入-tts",
+        "从-qubo-到设备还有嵌入一步",
         "11-自检",
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 20,
-      "formulas": 145
+      "headings": 22,
+      "formulas": 166
     },
     {
       "source": "handbook/18-channels-capacities-complexity.md",
       "output": "reader/18-channels-capacities-complexity.html",
-      "sourceSha256": "743db8f694d358df3a96cd32e60aa0cbc2c2bacb97c50fd4d8451ffb17f33348",
-      "outputSha256": "fa87636d6cf05dd3818e2a562f02d57b73802bdc9279c4cc6ff8137559915566",
-      "mathSourceDigest": "3007635961614524c23ce8f528c045a13ca40d85a27918a6b3dceba76f26bdce",
+      "sourceSha256": "828238ca2e8188d892f93466dd02c7d6c5cfbbe385db63966a6ea5b487c52227",
+      "outputSha256": "420c64ee26cfb11c911b67669601c9c4070bbd1bd8350698f8febc1d6817a35f",
+      "mathSourceDigest": "9bade57a1e09c9fdce6e4892ac07a5e2e3444681527ca987d326aaff6e7d4f67",
       "headingIds": [
         "18从量子态到通信任务信道容量与验证复杂度",
         "1-纯化混态可以来自更大系统的纯态",
@@ -723,19 +746,21 @@
         "81-手算压缩真空不是两个方向都更准",
         "9-一张研究阅读清单",
         "10-常见误区",
+        "实操扩展从擦除事件构造降解映射",
+        "用熵计算检查输入优化不能用网格代替容量定理",
         "11-自检",
         "参考起点"
       ],
       "diagrams": 4,
-      "headings": 31,
-      "formulas": 448
+      "headings": 33,
+      "formulas": 479
     },
     {
       "source": "handbook/19-engineering-architecture.md",
       "output": "reader/19-engineering-architecture.html",
-      "sourceSha256": "09443e4fcb3c2842b438b1f5ffeab099ff8c82647247d5749d7be0f3ff32be91",
-      "outputSha256": "0f7b10e50d2027461329ab6b4c1c07b09e07d9acb967c5243a9d9fd59943a8f1",
-      "mathSourceDigest": "7ede57cf135b3b0a6f109d25477d4b90d7bf0590dbdc9cfe1a84e4d9209b96ca",
+      "sourceSha256": "311c09a093fba35a6cee9864cb783b41773ca42add4b2526c31e0a2086b10fdc",
+      "outputSha256": "b463c88b4939eb5be257adc67fa4c65225330c684ad916dc7dbc6f1443e14e56",
+      "mathSourceDigest": "cecbbd5e32c2ce5dc8ca297055cf75adb30eea323b6a9a909c53aa44bfdbebc4",
       "headingIds": [
         "19可维护量子系统工程",
         "1-本章要回答什么",
@@ -770,6 +795,7 @@
         "12-可用率能耗与云端运行状态",
         "121-可用率不是网页能打开",
         "可复算例-7从设备峰值到有效吞吐",
+        "练习与实验维护和故障重叠时不能重复扣时间",
         "122-能耗必须区分空闲和边际",
         "123-云端-manifest-还需要服务状态",
         "13-系统工程审稿清单",
@@ -777,14 +803,14 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 38,
-      "formulas": 103
+      "headings": 39,
+      "formulas": 119
     },
     {
       "source": "handbook/README.md",
       "output": "reader/index.html",
-      "sourceSha256": "68ceb7af2fc3632869308ae411ceb09cd6437e137e20ccf032bc82f2fafe7f8b",
-      "outputSha256": "8840cfd0f5a4232b56b6940b2a56811a78795914bcf9258eb86f542a95b5c8ea",
+      "sourceSha256": "5b0c4410c9e6b9bea4140192df8c0d0a82fa7ad1850453653a0fe286a3f66e4c",
+      "outputSha256": "ea267fd9d1b9c252a840fcd785f07f127c565320519ff065f220310f4c51902d",
       "mathSourceDigest": "cba32710c691cd0afd7d4823c5c03162bb60eb04b2d10a941e28b0d2d5596bcb",
       "headingIds": [
         "量子计算从直觉到研究入口",
@@ -792,18 +818,19 @@
         "阅读路线",
         "章节",
         "从问题找到可手算的例子",
+        "配套实验源码与声音",
         "统一约定",
         "怎样核查一句量子突破新闻"
       ],
       "diagrams": 1,
-      "headings": 7,
+      "headings": 8,
       "formulas": 14
     },
     {
       "source": "handbook/STYLE.md",
       "output": "reader/STYLE.html",
-      "sourceSha256": "08a2666d238cdec1549012f6852eb02d3bcaea6a3cf5c96078c8ca9d712faa67",
-      "outputSha256": "e936a0fdaf0f5a00a5d7f7b863ab1373916b438ac57a8082c96ec92d00c53b46",
+      "sourceSha256": "53001a8f776afa91bd008e1d7aac2e8251fd305cffb9f584bcee78162cdcfa54",
+      "outputSha256": "2e76bfa1f270aa96ec6bdd2ae33633e8c3f56d107b9067b241fb4ffad1c3eebd",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "编辑与审校规范",
@@ -820,8 +847,8 @@
     {
       "source": "handbook/appendices/audit-log.md",
       "output": "reader/appendices/audit-log.html",
-      "sourceSha256": "104d5ae9d11d912de9181475f4f26d236df874a87189a6c6adc2e525f7169288",
-      "outputSha256": "24e37540f1547abd904c8ffc0b1734d859659655cfdb21e30cc342809c82570f",
+      "sourceSha256": "ddd1104817aedb0f99c34ed838a9476f6e1b3f5b8d3989d732c986dec65d54db",
+      "outputSha256": "07b64ff32412ab9631041eb767120a082bd55e082d990fc8bf657d79d43a7a16",
       "mathSourceDigest": "8e61237a943abe6d5cd82d98673966cdaca2d9aa10264e782ac134958816c4d0",
       "headingIds": [
         "审校记录",
@@ -855,17 +882,18 @@
         "2026-09-24第六十一至第六十三轮全书再审",
         "2026-09-24第六十五至第六十七轮全书正确性复核",
         "已明确的非目标",
-        "发布门槛"
+        "发布门槛",
+        "第-69-轮逐章实验源码与声音整合2026-09-26"
       ],
       "diagrams": 0,
-      "headings": 32,
+      "headings": 33,
       "formulas": 17
     },
     {
       "source": "handbook/appendices/exercises.md",
       "output": "reader/appendices/exercises.html",
-      "sourceSha256": "854e4135d9ab6e9d88077244285325098ad03724c2521c58de884cb7285b1074",
-      "outputSha256": "455167121ff22c1e137fe46920fd84d4daca9cbb69f9dcfe91e7f08bebeffc4e",
+      "sourceSha256": "619128d741267ea457fdd9fd913e8f0e68611968394846ead1b6aca72ea248ea",
+      "outputSha256": "32e8f43727fda81eac3c692ffef90a075184e6ac95a1412c80bd78727ab8030b",
       "mathSourceDigest": "fc91e284a380e0a0967966e239a0c77636f6feb54f9eb2d4ff7a8c66b676d0e2",
       "headingIds": [
         "练习答案与推导提示",
@@ -892,18 +920,19 @@
         "量子力学-q1",
         "量子力学-q2",
         "量子力学-q3",
-        "量子力学-q4"
+        "量子力学-q4",
+        "新增章级实验与详细解答"
       ],
       "diagrams": 0,
-      "headings": 25,
+      "headings": 26,
       "formulas": 1216
     },
     {
       "source": "handbook/appendices/glossary.md",
       "output": "reader/appendices/glossary.html",
-      "sourceSha256": "5672690b9ec2ef09b896a2a900ed3dd6d06c2aff2be4a023d42f5860e28ff238",
-      "outputSha256": "069f98b7dd65e372a5d96a9b293138f58a852aa9a8f2d3731da2f87d5128a97d",
-      "mathSourceDigest": "5e27eb9638d549debc19b87931166b1d1a5c26a90932c163e4aa56c3db28b0f3",
+      "sourceSha256": "36724840fd8cdfa4acd1cf66dbcad3fc1e49ceebdcaae19b4ccd0c2d23ac4132",
+      "outputSha256": "e785d95b9bc7cb274a95e15487b51c118225297e2207688dde5412e1f84f3774",
+      "mathSourceDigest": "1e11efda13bfa7453bf570736b1365e884eb0b81dd187d253574a4b84410b933",
       "headingIds": [
         "术语表",
         "量子力学基础术语",
@@ -911,14 +940,14 @@
       ],
       "diagrams": 0,
       "headings": 3,
-      "formulas": 78
+      "formulas": 79
     },
     {
       "source": "handbook/appendices/notation.md",
       "output": "reader/appendices/notation.html",
-      "sourceSha256": "ad3f590b43c09d29548f49511d3a18f71854e329eb1ae6ec9ed16516bac57820",
-      "outputSha256": "dfb0be767d02a2eef863f3aab5ce6202191459d763434de554a3e2969192069c",
-      "mathSourceDigest": "b2ba3d57dd13e0db76a416ec46c2bc4fc33a57f81bd9e506e30d494fdec155e0",
+      "sourceSha256": "e4e8d8d2e116b346d891abd7d2c2425ce0ae4b3f8597e1067a903e56f437ca05",
+      "outputSha256": "027a074af1ed1ac527193ff4dd458e43456300f8740a9a146f9f95ac058cc9fc",
+      "mathSourceDigest": "8c101f3402555620008a16b0561f7fd38a086f24752583e0288a07911a901d92",
       "headingIds": [
         "符号表",
         "量子力学基础篇的物理符号",
@@ -926,13 +955,13 @@
       ],
       "diagrams": 0,
       "headings": 3,
-      "formulas": 100
+      "formulas": 102
     },
     {
       "source": "handbook/appendices/prerequisites.md",
       "output": "reader/appendices/prerequisites.html",
-      "sourceSha256": "a636147177246df3967565e01ff372d3d9238363784e53dd68d8a430d95c588c",
-      "outputSha256": "219388af5e00f56b3520fe63b8a7ebcfad7c1809a27cd998ac2c7040b4cd56d8",
+      "sourceSha256": "97ea4627909b7984b2d18f6813adb9c8ef185bb032897e5e19762343bc9956f6",
+      "outputSha256": "b2adb4689a18f7e26b9835adf7c43343162cc987034fe6c764446b46e7e4c35a",
       "mathSourceDigest": "5f9641e9941f7d4d0a14090ede77f023e8e437b006fbc8f1a719d6e19ac87701",
       "headingIds": [
         "入门先修自测与补习路线",
@@ -954,8 +983,8 @@
     {
       "source": "handbook/appendices/references.md",
       "output": "reader/appendices/references.html",
-      "sourceSha256": "d346b09c4c3e465d9ac177c52e3a844172ba92bcdd7d5d5dfbf1fb1b2d56c047",
-      "outputSha256": "cef6ff2985da900208ac302acb3ae36a536f65bbfc2e8caf9bb8df8328dc9eca",
+      "sourceSha256": "059c620b516f5a22c52d8a06dd3d754ee2549399bf6d53d0b47cc68bd4e7ef11",
+      "outputSha256": "4c804a204d65eb58663e6bf69013de1660b337b8dae60928a750b39033ece560",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "参考资料与证据等级",
@@ -969,17 +998,173 @@
         "信道容量通信复杂度与连续变量",
         "编译控制与实验",
         "量子力学基础篇",
-        "维护规则"
+        "维护规则",
+        "软件实现与工业工作流的补充入口"
+      ],
+      "diagrams": 0,
+      "headings": 13,
+      "formulas": 0
+    },
+    {
+      "source": "handbook/appendices/software-practice.md",
+      "output": "reader/appendices/software-practice.html",
+      "sourceSha256": "8162e76774335eb2a51ab7696111258ea57bc6117308d505297deac9841f9f24",
+      "outputSha256": "887270c814b45c2f6c9e1ed2c3c01206dcfc2bffa58ec07182da55315c51ae40",
+      "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "headingIds": [
+        "算法工业实践与开源代码对照",
+        "1-怎样读算法对照表",
+        "2-基础算法与容错算法族",
+        "3-近中期算法估计与经典基线",
+        "4-工程算法同样需要实测",
+        "5-工业实践用完整工作流审查不能只贴厂商名称",
+        "51-电子结构量子样本加经典子空间计算",
+        "52-优化建模成本和混合求解器边界",
+        "53-误差缓解可靠估计与额外预算",
+        "54-纠错网络与安全基础设施",
+        "6-源码阅读练习与答案",
+        "s01为什么下载一个-python-文件却不能直接运行",
+        "s02如何证明手中的源码没有悄悄改变",
+        "s03同样叫运行通过证据有何不同",
+        "7-明确没有交付的部分"
+      ],
+      "diagrams": 0,
+      "headings": 15,
+      "formulas": 0
+    },
+    {
+      "source": "handbook/labs/README.md",
+      "output": "reader/labs/index.html",
+      "sourceSha256": "ccac3fc453c63c5cfa0bb33a8f9e976cbed2781058b99e0610d308cb68c07385",
+      "outputSha256": "fe05f3eb8e22b45e2f15a43d026faaca8f1fbdbdded483683b2a610d9d67dde5",
+      "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "headingIds": [
+        "实验练习代码与声音",
+        "怎样开始",
+        "逐章实验映射",
+        "运行方式与结果",
+        "如何把练习改成自己的研究"
+      ],
+      "diagrams": 0,
+      "headings": 5,
+      "formulas": 0
+    },
+    {
+      "source": "handbook/labs/algorithms.md",
+      "output": "reader/labs/algorithms.html",
+      "sourceSha256": "34d00524dfadcfc254ddd254486bfcc3b0e3531d2188499d55c10656915a46f1",
+      "outputSha256": "f5fff69b00683d0a2e9a27461f01955e908cb2df07e98b6ba1ae0c0da138c62c",
+      "mathSourceDigest": "fb08c4133436fb12277b613aa04cd7d3e05d50d44ba57d3e3b24fab11f68c1f7",
+      "headingIds": [
+        "算法实验把输出概率成本和证明边界一起核对",
+        "实验-06-a有限相位网格与圆周距离",
+        "实验-07-a逐振幅检查过度旋转",
+        "实验-08-a测量预算与最优解概率",
+        "实验-16-a信号多项式与非厄米反例",
+        "实验-17-a前馈和退火成功率",
+        "实验-18-a擦除信道的四种任务",
+        "开源复现与工业研究入口"
+      ],
+      "diagrams": 0,
+      "headings": 8,
+      "formulas": 103
+    },
+    {
+      "source": "handbook/labs/audio.md",
+      "output": "reader/labs/audio.html",
+      "sourceSha256": "55ec7c8d292b84a3814044b1757624fb923dbdc8cf511d01914cfe2f24b8cbc9",
+      "outputSha256": "1cc0416c2c83b123c70ba3006086433e1135bd7e4a48ddbda43d1cdeed661591",
+      "mathSourceDigest": "a66508d1679e57e376f8365e5f3a28ac9ed7ea9e23c5ad2d19acebf78337a38c",
+      "headingIds": [
+        "声音实验相位抵消与退相干的教学映射",
+        "1-固定参数先预测再听",
+        "2-a01相位差-120-度为什么功率比是四分之一",
+        "两条经典正弦波先相加",
+        "再看量子线路的对应公式",
+        "3-a02对比度下降为何不等于声音越来越小到零",
+        "4-a03为什么不通过两个扬声器验证精确抵消",
+        "5-重新生成与核查"
+      ],
+      "diagrams": 0,
+      "headings": 8,
+      "formulas": 31
+    },
+    {
+      "source": "handbook/labs/foundations.md",
+      "output": "reader/labs/foundations.html",
+      "sourceSha256": "4aa5ee32fa95dba00b4300daf3dd574cc47d5482e1ad6d891abdddb54c6f656f",
+      "outputSha256": "3c616ccff859714c5cc08bad136f1a23837e7cc6c90871a280e20b6c980506a9",
+      "mathSourceDigest": "40d1e0dc43e6f6ce71948c821e9248f2a7316369f5320fac575b9b5d82a2b8d9",
+      "headingIds": [
+        "基础实验册从复振幅到可核查的数值结果",
+        "f001000-次测量为何很少恰好对半",
+        "f01不取复共轭会把长度算成复数",
+        "f02y-基测量需要先-s再-h",
+        "f03非均匀纠缠态配合远端旋转检查偏迹方向",
+        "f04传态必须逐支检验复振幅",
+        "f05布居与相干有不同时间常数",
+        "f13先验不相等时08536不再是答案",
+        "fq1环境重叠的相位移动条纹模长改变可见度",
+        "fq2子系统整体能量平移仍然只是全局相位",
+        "fq3同一实验中核对温度频率与时间",
+        "fq4把连续波函数放到网格上时别漏掉根号步长",
+        "从教学计算到工程记录"
+      ],
+      "diagrams": 0,
+      "headings": 13,
+      "formulas": 111
+    },
+    {
+      "source": "handbook/labs/practice.md",
+      "output": "reader/labs/practice.html",
+      "sourceSha256": "15443b8972185c8871f8fa04afbacb17223edcbe340480016fa43a346e7f971b",
+      "outputSha256": "5f7661f44ecc83b4ef8c00d0b575dcb7a931f5b5104d487444dc06fcb7dc75b4",
+      "mathSourceDigest": "38ed155439ead9e59ee571a155deb6303f7f959be3209b8d1d0819fecfa930cb",
+      "headingIds": [
+        "实验有限样本外推代价与多重比较",
+        "p15-a同一个-bell-点估计为什么下界不同",
+        "题目",
+        "从原始计数开始",
+        "把每组自己的样本量代入",
+        "p15-b为什么外推到-110-不代表测出了超物理态",
+        "题目-1",
+        "先算外推权重",
+        "固定总-shots-才能比较代价",
+        "p15-c做二十次检验再挑显著的一次",
+        "题目-2",
+        "详解"
       ],
       "diagrams": 0,
       "headings": 12,
-      "formulas": 0
+      "formulas": 43
+    },
+    {
+      "source": "handbook/labs/systems.md",
+      "output": "reader/labs/systems.html",
+      "sourceSha256": "0b644f06f6a24bf2cd1d5581cad3835040634975b24a27855c9e44c5a1a1638d",
+      "outputSha256": "d9fdf400ec6ce17a184d1f300dcc29e2dbfc655e862f11aff5fac8fc65a49be9",
+      "mathSourceDigest": "620c873e892cac2f1c283595362c20e7de0366f07289d6d76377e68aa52654a7",
+      "headingIds": [
+        "系统实验册六个跨层问题的手算代码与研究入口",
+        "1-实验路线与数据边界",
+        "2-六组进阶练习及答案",
+        "s09要让告警至少九成可信误报要压到多少",
+        "s10何时翻第一位与翻后两位一样可信",
+        "s11没有库存工厂够快也可能永远做不了下一层",
+        "s12把一条链路做成每轮必成功另一条仍然很慢",
+        "s14为什么只检查计算基概率还不够",
+        "s19每秒成功很多却没有一个可用答案",
+        "3-从教学程序走到开源研究实现"
+      ],
+      "diagrams": 0,
+      "headings": 10,
+      "formulas": 32
     },
     {
       "source": "handbook/quantum-mechanics/01-experiments-states.md",
       "output": "reader/quantum-mechanics/01-experiments-states.html",
-      "sourceSha256": "6c5ae25f8e5052c27838e983fed6fa40ade68465c0dacbb58faacbcd6614aeea",
-      "outputSha256": "eb4f0f0691489dc53b7e76cc8986d795921dee98ce8c72742418f6215f1f2cf5",
+      "sourceSha256": "b4875321e0b7631de0753baf09d447d10d5f1e64dbaf3b8e663df306425e9b5b",
+      "outputSha256": "766e20efd72226f9cda4d122c65948f5bd9fae41cd38b17d2b78d21d76d84e81",
       "mathSourceDigest": "5f0fc1a29f2c714fd6c6b4503ca6a517c25d55a8885754a30ecc3f0f77cafbd2",
       "headingIds": [
         "q1从实验认识量子态",
@@ -998,18 +1183,19 @@
         "6-状态依赖制备信息是什么意思",
         "7-常见误解",
         "8-自检",
+        "配套数值实验与展开答案",
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 17,
+      "headings": 18,
       "formulas": 243
     },
     {
       "source": "handbook/quantum-mechanics/02-observables-dynamics.md",
       "output": "reader/quantum-mechanics/02-observables-dynamics.html",
-      "sourceSha256": "7c7efd64d4c6e0ff84a20c3e1bb965e1df4cd8b1a4595e63d5d67e8302e96475",
-      "outputSha256": "21531c8b2ff9796d9e60dd56a38543d197c66256f858197d4fb047e63d88c242",
-      "mathSourceDigest": "1ea087b056a37bbdb0c179accc7433cd8f5726f56b09b37ce13b2119367aa453",
+      "sourceSha256": "9290879518bf3987a272035ae970dd2df9b34c931a9f18906b671143b0102998",
+      "outputSha256": "914fd709c58f198c048f3ade03869001e298d9d7b71b304e5c79b8eb182b11fd",
+      "mathSourceDigest": "923fdc0861e6cfd1c14fef755b4440f9e93d178171854993a5778caf59444049",
       "headingIds": [
         "q2可观测量与量子态的时间演化",
         "1-从物理量到厄米算符",
@@ -1033,17 +1219,18 @@
         "两段-xz-操作反例",
         "10-常见误区与检查顺序",
         "11-自检",
+        "配套数值实验与展开答案",
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 23,
-      "formulas": 266
+      "headings": 24,
+      "formulas": 273
     },
     {
       "source": "handbook/quantum-mechanics/03-levels-control.md",
       "output": "reader/quantum-mechanics/03-levels-control.html",
-      "sourceSha256": "6b5eb9b222a8727d7e8bdc3a80e2ab6dae040af972ad9ee91a3ffe973fe099a7",
-      "outputSha256": "15910632f701554b101ad67b8cd6f9e5dc13bd7329f7153007bf72f4c58a2b65",
+      "sourceSha256": "7fd1ab87f0da8f77c0c6ea332d736dd5a46113876cbf8fe8abacc7e1d00b31ab",
+      "outputSha256": "0a118f5781383c5a7885246a26b2751662dbccc677205e4ed42cd3f540437ba4",
       "mathSourceDigest": "6a35db7b682643b78f4a2757e900eb17b4e40077786b819ace8b534336dba21a",
       "headingIds": [
         "q3从能级到物理量子比特",
@@ -1063,17 +1250,18 @@
         "8-同样是量子比特不同平台选的两个态不同",
         "9-常见误区",
         "10-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 18,
+      "headings": 19,
       "formulas": 224
     },
     {
       "source": "handbook/quantum-mechanics/04-wavefunctions-models.md",
       "output": "reader/quantum-mechanics/04-wavefunctions-models.html",
-      "sourceSha256": "1b8c45b0c27f00254410319451da1c952e8dc2e28e52c6f7bba3eb5ebbacc06e",
-      "outputSha256": "b69845ecf1635829ea2f248e7de1fd9b89d094e029d789d13eae60cb918b8ee8",
+      "sourceSha256": "5b89ef21738f68b1516af28608ad9466bcad4ba312ea85bcb069690077b7dfaf",
+      "outputSha256": "c29469dafbc9cfaf62fed1c28f95c68c42712243bb0061459f3cd333705bd016",
       "mathSourceDigest": "db202990100b7fd84a1a8095577bc15b07c7ee215df39d61b0fa21187352c33b",
       "headingIds": [
         "q4波函数势阱谐振子与隧穿",
@@ -1093,17 +1281,18 @@
         "9-这些模型怎样回到量子计算",
         "10-常见误区",
         "11-自检",
+        "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 18,
+      "headings": 19,
       "formulas": 186
     },
     {
       "source": "handbook/quantum-mechanics/README.md",
       "output": "reader/quantum-mechanics/index.html",
       "sourceSha256": "d7682ad6877a1ebe3357b1c9d8c48874a3ebef5723547051d36b8db592366d0c",
-      "outputSha256": "289ea580ebd733125a601a193baf818239168d3e552bd0997a168529af0e4964",
+      "outputSha256": "4254133b9ac43801caf427378ccfe86013812a7193703cc2d5102d2498037d6b",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "量子力学基础篇从实验到量子计算",
@@ -1120,10 +1309,384 @@
   "mathErrors": [],
   "diagramErrors": [],
   "diagrams": 20,
-  "formulas": 8171,
+  "formulas": 8777,
+  "codeCopies": [
+    {
+      "source": "codes/README.md",
+      "output": "reader/codes/README.md",
+      "outputSha256": "fc2c3fac5ab5168768b96a6ecfc7f3ccd08088a417108cec4aa2f53c7e7f4b92"
+    },
+    {
+      "source": "codes/algorithms/README.md",
+      "output": "reader/codes/algorithms/README.md",
+      "outputSha256": "891c21930114d4151d0349d7182b629d7b551d862984ee4d3dd19db42b31a865"
+    },
+    {
+      "source": "codes/algorithms/expected-results.json",
+      "output": "reader/codes/algorithms/expected-results.json",
+      "outputSha256": "ab0251a9f35f07121fcf20306b1d7a4b2e55302a734ea56d02963ad279c7ff07"
+    },
+    {
+      "source": "codes/algorithms/experiments.py",
+      "output": "reader/codes/algorithms/experiments.py",
+      "outputSha256": "1903e22794348dbbb58038fcdf1d876dace95a96ad5c97216057c22cc204057f"
+    },
+    {
+      "source": "codes/algorithms/generate_figure.py",
+      "output": "reader/codes/algorithms/generate_figure.py",
+      "outputSha256": "b69ef799313f1f5303e717aaa611738022d97fbbb44b9e3691bf1b488c6dd338"
+    },
+    {
+      "source": "codes/foundations/README.md",
+      "output": "reader/codes/foundations/README.md",
+      "outputSha256": "4814f41078c7174bb6ff5fe2ab2c132a601390af7db056a33fc4b378623a61ba"
+    },
+    {
+      "source": "codes/foundations/expected-results.json",
+      "output": "reader/codes/foundations/expected-results.json",
+      "outputSha256": "63e0d9081fd29efe8f239a0c6bb43e4d313e47d732c94718c0114dec48c26eb2"
+    },
+    {
+      "source": "codes/foundations/foundations_lab.py",
+      "output": "reader/codes/foundations/foundations_lab.py",
+      "outputSha256": "f172cda81c77494c466a9ff8060c5ef947fd063904e4e1002de0bc07af6d0a65"
+    },
+    {
+      "source": "codes/practice/experiments.py",
+      "output": "reader/codes/practice/experiments.py",
+      "outputSha256": "6f5ccfadf6fcbcb94e63202e2138c28e950a3f3dc86c2f19106566a6b9c52a60"
+    },
+    {
+      "source": "codes/practice/figure-data.csv",
+      "output": "reader/codes/practice/figure-data.csv",
+      "outputSha256": "cd45c17d4d21e57eaa0ae12deaef1c75d3dbc3bef8c790f67436e78d33436c42"
+    },
+    {
+      "source": "codes/practice/generate_audio.py",
+      "output": "reader/codes/practice/generate_audio.py",
+      "outputSha256": "0f4af19469239c83d5a903323c3eff5eb7cbd1c209ec07481113a4f9c77151ee"
+    },
+    {
+      "source": "codes/practice/plot_figures.py",
+      "output": "reader/codes/practice/plot_figures.py",
+      "outputSha256": "9a54f89a842b2c6e6dcc014c0eefbe13983603fd5c651ad764677305e0c6170e"
+    },
+    {
+      "source": "codes/practice/requirements-figures.txt",
+      "output": "reader/codes/practice/requirements-figures.txt",
+      "outputSha256": "8cd335b1a0cdd98874ff3a6f5913bd9decbdadba4f77b85027764920496c5e0d"
+    },
+    {
+      "source": "codes/practice/results.json",
+      "output": "reader/codes/practice/results.json",
+      "outputSha256": "87c34c1055ea027e4b56a0edaa37ccf13cc21d24a5c78d06b56c9b94248afbc6"
+    },
+    {
+      "source": "codes/run_all.py",
+      "output": "reader/codes/run_all.py",
+      "outputSha256": "0543290c631d296faa8d111e7fb18da22b959c99fedcc5cb22402ff629e743ea"
+    },
+    {
+      "source": "codes/snapshot_sources.py",
+      "output": "reader/codes/snapshot_sources.py",
+      "outputSha256": "87cea6cfa76392f25dbfdfe4b1cc5b143cafad64fe43e143c4e855e4e5662785"
+    },
+    {
+      "source": "codes/systems/README.md",
+      "output": "reader/codes/systems/README.md",
+      "outputSha256": "db9ed9d7375370dc981be9e6ed1859bb884e3b3e7684d1d07c506f6ec324c03e"
+    },
+    {
+      "source": "codes/systems/expected-results.json",
+      "output": "reader/codes/systems/expected-results.json",
+      "outputSha256": "246cc96b8e5e070f0be062bd40234eb82a743db732bd5781f2f416c392015530"
+    },
+    {
+      "source": "codes/systems/factory_schedule.py",
+      "output": "reader/codes/systems/factory_schedule.py",
+      "outputSha256": "6e7aeeb6a9ff890145a91454c66af5d419932c9b7c36963ebda5c98b0d3a331a"
+    },
+    {
+      "source": "codes/systems/hardware_flags.py",
+      "output": "reader/codes/systems/hardware_flags.py",
+      "outputSha256": "0d2425a2f83c8ce94a2ce2b3866b71a1613dd4e543a24b663acaaffbafd23cb8"
+    },
+    {
+      "source": "codes/systems/network_wait.py",
+      "output": "reader/codes/systems/network_wait.py",
+      "outputSha256": "3e122aaa90531dfbdcceb3d64d8cd31dc089dc5a1e5923004054c25eccb57158"
+    },
+    {
+      "source": "codes/systems/routing_mapping.py",
+      "output": "reader/codes/systems/routing_mapping.py",
+      "outputSha256": "d1bccf72be23ec351f5e38d20cb29deab5d092f2d74aba0f15b8ea0681f83a38"
+    },
+    {
+      "source": "codes/systems/service_timeline.py",
+      "output": "reader/codes/systems/service_timeline.py",
+      "outputSha256": "31db1ec32e572e5775ef2fcdffbf3e90042512fdf5d6b42f27a5c2a2345a50d2"
+    },
+    {
+      "source": "codes/systems/weighted_decoder.py",
+      "output": "reader/codes/systems/weighted_decoder.py",
+      "outputSha256": "2102d23ec93ded9a2b55a85ebcdc45b33a493e122853af86d1ef4eab30bf4f5d"
+    },
+    {
+      "source": "codes/tests/test_snapshot_sources.py",
+      "output": "reader/codes/tests/test_snapshot_sources.py",
+      "outputSha256": "a03069df25a0e2412f45a90ff3f7f93b35f7ec4f66739874dba3de72612fbf45"
+    },
+    {
+      "source": "codes/vendor/README.md",
+      "output": "reader/codes/vendor/README.md",
+      "outputSha256": "4202e2d5c5d0bb1c4616b99bef4ba0254d1c2356d513d50feedeb7451b4b6e4c"
+    },
+    {
+      "source": "codes/vendor/cirq/AUTHORS",
+      "output": "reader/codes/vendor/cirq/AUTHORS",
+      "outputSha256": "172885d2068d2082c4ffdabb1c30ad28eb13970370bb4aac4db3805c5ebb17d0"
+    },
+    {
+      "source": "codes/vendor/cirq/LICENSE",
+      "output": "reader/codes/vendor/cirq/LICENSE",
+      "outputSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "source": "codes/vendor/cirq/examples/grover.py",
+      "output": "reader/codes/vendor/cirq/examples/grover.py",
+      "outputSha256": "d4f37944b99a58758dceee122b8a9178b724080f315fcbfbf97821e6a1ae573d"
+    },
+    {
+      "source": "codes/vendor/cirq/examples/phase_estimator.py",
+      "output": "reader/codes/vendor/cirq/examples/phase_estimator.py",
+      "outputSha256": "aa49b9a84bf18c36b3a4630b1505830dc1e403e064d59d36b242b3b795f8828b"
+    },
+    {
+      "source": "codes/vendor/cirq/examples/shor.py",
+      "output": "reader/codes/vendor/cirq/examples/shor.py",
+      "outputSha256": "e4dbf4843225c962cbe30dece4d507fce2d70e7b9b83af12a96610a4c08dceb9"
+    },
+    {
+      "source": "codes/vendor/dimod/LICENSE",
+      "output": "reader/codes/vendor/dimod/LICENSE",
+      "outputSha256": "e281216cf93feead53d8f617e956d3d78726d423dfd71c8057d0b6d67ec56e7e"
+    },
+    {
+      "source": "codes/vendor/dimod/dimod/reference/samplers/exact_solver.py",
+      "output": "reader/codes/vendor/dimod/dimod/reference/samplers/exact_solver.py",
+      "outputSha256": "770b3c8d4b6c4a4f2041cf445a0e13c20391c49455b6a72531be6deed74e659c"
+    },
+    {
+      "source": "codes/vendor/liboqs/LICENSE.txt",
+      "output": "reader/codes/vendor/liboqs/LICENSE.txt",
+      "outputSha256": "12f2f1491b92248ad4d1c1042cdc72bc3391b1237c2829b031c0a44408d2cf77"
+    },
+    {
+      "source": "codes/vendor/liboqs/tests/example_kem.c",
+      "output": "reader/codes/vendor/liboqs/tests/example_kem.c",
+      "outputSha256": "070bec2175035505dce374ec9670c11fcdd05c22e2033caf0acf901548306fc3"
+    },
+    {
+      "source": "codes/vendor/manifest.json",
+      "output": "reader/codes/vendor/manifest.json",
+      "outputSha256": "ddf09d66f6fff5e5679b4326cabe4cffce5bd4c62b155222329d605fa02d8248"
+    },
+    {
+      "source": "codes/vendor/mitiq/LICENSE",
+      "output": "reader/codes/vendor/mitiq/LICENSE",
+      "outputSha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "source": "codes/vendor/mitiq/mitiq/zne/inference.py",
+      "output": "reader/codes/vendor/mitiq/mitiq/zne/inference.py",
+      "outputSha256": "9b29a39b73317caf9c3c111aa5875854e74bb1abaa29a5895308434e565b7320"
+    },
+    {
+      "source": "codes/vendor/mitiq/mitiq/zne/scaling/folding.py",
+      "output": "reader/codes/vendor/mitiq/mitiq/zne/scaling/folding.py",
+      "outputSha256": "5636dfe12db1a5afdca28e66d4f769c5a59039b510adaac8a1237e62120b5f64"
+    },
+    {
+      "source": "codes/vendor/openfermion/AUTHORS",
+      "output": "reader/codes/vendor/openfermion/AUTHORS",
+      "outputSha256": "ba90370a3cbe80f7b049b9bd8faca4fbf312eff6eb677780a2dd505feae53dd4"
+    },
+    {
+      "source": "codes/vendor/openfermion/LICENSE",
+      "output": "reader/codes/vendor/openfermion/LICENSE",
+      "outputSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "source": "codes/vendor/openfermion/NOTICE",
+      "output": "reader/codes/vendor/openfermion/NOTICE",
+      "outputSha256": "e9dd31f8fa69c111d8f83634a2164b9ce35b5feb17efd8610a7aa167d0970cc3"
+    },
+    {
+      "source": "codes/vendor/openfermion/src/openfermion/transforms/opconversions/jordan_wigner.py",
+      "output": "reader/codes/vendor/openfermion/src/openfermion/transforms/opconversions/jordan_wigner.py",
+      "outputSha256": "7c52297355cc20ef35553a37b529c4170e550439cdad5a9dd4069a4502b270ab"
+    },
+    {
+      "source": "codes/vendor/pennylane/LICENSE",
+      "output": "reader/codes/vendor/pennylane/LICENSE",
+      "outputSha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "codes/vendor/pennylane/pennylane/qaoa/cost.py",
+      "output": "reader/codes/vendor/pennylane/pennylane/qaoa/cost.py",
+      "outputSha256": "007c687cb79a4d6c02cd132ef8b4ae94be2a0a1b7f67be487bbeb05ea93e5303"
+    },
+    {
+      "source": "codes/vendor/pennylane/pennylane/templates/subroutines/qsvt.py",
+      "output": "reader/codes/vendor/pennylane/pennylane/templates/subroutines/qsvt.py",
+      "outputSha256": "b7cb42a08b8aa251db03ef5b93b5905457b04a6372f46e5ce861c63cf33caa16"
+    },
+    {
+      "source": "codes/vendor/pymatching/LICENSE",
+      "output": "reader/codes/vendor/pymatching/LICENSE",
+      "outputSha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "codes/vendor/pymatching/src/pymatching/matching.py",
+      "output": "reader/codes/vendor/pymatching/src/pymatching/matching.py",
+      "outputSha256": "737b4b5344dbfdeef46d4354059bba24d3d0b0c056bb9082f2c31ce333071899"
+    },
+    {
+      "source": "codes/vendor/qiskit/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit/LICENSE.txt",
+      "outputSha256": "0a7558bc0c5a5bcac5e2bdc5e5367f3550b0c3b45b7e6f5a81b4f9fde6693374"
+    },
+    {
+      "source": "codes/vendor/qiskit/qiskit/quantum_info/states/utils.py",
+      "output": "reader/codes/vendor/qiskit/qiskit/quantum_info/states/utils.py",
+      "outputSha256": "d3a2ad260de30284e04945f526f4baadc352c5e54149e95941f1a6738e7395b0"
+    },
+    {
+      "source": "codes/vendor/qiskit/qiskit/transpiler/passes/routing/sabre_swap.py",
+      "output": "reader/codes/vendor/qiskit/qiskit/transpiler/passes/routing/sabre_swap.py",
+      "outputSha256": "254d471d60edfe1fc1fde63e25152b032c779bd24c0416a8971353e9612e9af7"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-sqd/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit-addon-sqd/LICENSE.txt",
+      "outputSha256": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/configuration_recovery.py",
+      "output": "reader/codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/configuration_recovery.py",
+      "outputSha256": "7ed342f51af2497018e36308538571eb985744f521c82532e69950e510c59db7"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/fermion.py",
+      "output": "reader/codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/fermion.py",
+      "outputSha256": "ccaf066ee4ea6efd7caafe4af3801c4fc53893f5f9b76da232f4c5119010acb6"
+    },
+    {
+      "source": "codes/vendor/qiskit-algorithms/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit-algorithms/LICENSE.txt",
+      "outputSha256": "217ac15dbcda2782e004f5152886d847988c6367aaa0c4fc8c355363c21bd224"
+    },
+    {
+      "source": "codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_amplifiers/grover.py",
+      "output": "reader/codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_amplifiers/grover.py",
+      "outputSha256": "472d1c99917da29242faa48294f15d38ff02e78832b44b101ed26d0583d5e217"
+    },
+    {
+      "source": "codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_estimators/iae.py",
+      "output": "reader/codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_estimators/iae.py",
+      "outputSha256": "d0687a6517f19bf9504ab368a305b35c596af3592be690ab9d20ea7b1da674bf"
+    },
+    {
+      "source": "codes/vendor/qiskit-algorithms/qiskit_algorithms/minimum_eigensolvers/vqe.py",
+      "output": "reader/codes/vendor/qiskit-algorithms/qiskit_algorithms/minimum_eigensolvers/vqe.py",
+      "outputSha256": "c52c53f57d7960a9337391c1096d17279187a61885319b849f2701ce94774c43"
+    },
+    {
+      "source": "codes/vendor/qiskit-algorithms/qiskit_algorithms/phase_estimators/phase_estimation.py",
+      "output": "reader/codes/vendor/qiskit-algorithms/qiskit_algorithms/phase_estimators/phase_estimation.py",
+      "outputSha256": "aca114b23214dc7f0b65fba90d2623555ce5cb72505bc6027fff277ea32b522e"
+    },
+    {
+      "source": "codes/vendor/qualtran/LICENSE",
+      "output": "reader/codes/vendor/qualtran/LICENSE",
+      "outputSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "source": "codes/vendor/qualtran/qualtran/bloqs/arithmetic/addition.py",
+      "output": "reader/codes/vendor/qualtran/qualtran/bloqs/arithmetic/addition.py",
+      "outputSha256": "27931d31d3b525b2a34013671bcbd7bfed4c47c5fe5b722276464db97387ece6"
+    },
+    {
+      "source": "codes/vendor/qualtran/qualtran/bloqs/qft/qft_text_book.py",
+      "output": "reader/codes/vendor/qualtran/qualtran/bloqs/qft/qft_text_book.py",
+      "outputSha256": "11128dc63f4c0f0e495a7e5c36cd26f50d9bb8f6a6a8ed325fa94a08adc3c8ca"
+    },
+    {
+      "source": "codes/vendor/quimb/LICENSE.txt",
+      "output": "reader/codes/vendor/quimb/LICENSE.txt",
+      "outputSha256": "e708fa9633397b771e5a7c14fc471e3b2185499e1820fe4b3c7837918918e621"
+    },
+    {
+      "source": "codes/vendor/quimb/quimb/tensor/circuit_gen.py",
+      "output": "reader/codes/vendor/quimb/quimb/tensor/circuit_gen.py",
+      "outputSha256": "09401427ba23c9dc81c309bf4282ef6e90f7cb8fec31c0ecf4d478f18222b426"
+    },
+    {
+      "source": "codes/vendor/quimb/quimb/tensor/contraction.py",
+      "output": "reader/codes/vendor/quimb/quimb/tensor/contraction.py",
+      "outputSha256": "6179412eb72b825667ea025bec5b5710f094d68fe1ae1aa4cecfb8004340952c"
+    },
+    {
+      "source": "codes/vendor/qutip/LICENSE.txt",
+      "output": "reader/codes/vendor/qutip/LICENSE.txt",
+      "outputSha256": "7bb5cf18e69c6321d9283f5fa390480417466d03344bf30190ef15303eb8fd39"
+    },
+    {
+      "source": "codes/vendor/qutip/qutip/solver/mesolve.py",
+      "output": "reader/codes/vendor/qutip/qutip/solver/mesolve.py",
+      "outputSha256": "d6fe8857404757be00b0f7d8086d8b7adc445c5e62aee6f5c4fb2c9def6f636d"
+    },
+    {
+      "source": "codes/vendor/sequence/LICENSE",
+      "output": "reader/codes/vendor/sequence/LICENSE",
+      "outputSha256": "f387e59c226fe1d4d7ac0acc9424c187eb8ceb569f46231a1c0c4b799782e05f"
+    },
+    {
+      "source": "codes/vendor/sequence/sequence/entanglement_management/entanglement_protocol.py",
+      "output": "reader/codes/vendor/sequence/sequence/entanglement_management/entanglement_protocol.py",
+      "outputSha256": "cbf62a1c92593ee69f622c08d08d120a961a54da49ca1258722a93f4c7c6d12e"
+    },
+    {
+      "source": "codes/vendor/sequence/sequence/entanglement_management/teleportation.py",
+      "output": "reader/codes/vendor/sequence/sequence/entanglement_management/teleportation.py",
+      "outputSha256": "146e7204d58608cdec8bd2a84649edace9a15938833314fb33d0f17ed3f801de"
+    },
+    {
+      "source": "codes/vendor/stim/LICENSE",
+      "output": "reader/codes/vendor/stim/LICENSE",
+      "outputSha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "source": "codes/vendor/stim/src/stim/gen/gen_rep_code.cc",
+      "output": "reader/codes/vendor/stim/src/stim/gen/gen_rep_code.cc",
+      "outputSha256": "dab5cb260a1d76239c9f16ffad16b539f67557efa09b2311de3f0001f7d90aa8"
+    },
+    {
+      "source": "codes/vendor/stim/src/stim/gen/gen_surface_code.cc",
+      "output": "reader/codes/vendor/stim/src/stim/gen/gen_surface_code.cc",
+      "outputSha256": "3b17c5442c14045b4332b8f69701d115276a1936edd5cab39842019f55a8589e"
+    }
+  ],
   "inputHashes": {
-    "tools/reader/build.mjs": "4e06545e717bbe928b153466076af94b037e99654a7e9626f5f57e9a5074bb2d",
-    "tools/reader/reader.css": "ab8ea8305b8307dda59104dc03be0412bb401574993be2e99acbd9ad0df2cd0a",
+    "tools/reader/build.mjs": "0fadfcaf69718a3ab2f5bdbadba38b0638e823680565fe19525834841119ada5",
+    "tools/reader/reader.css": "d5f848240f751a06a9e7279e3d6b950c45355d5586199d47c3be13ae3ffea8a9",
+    "handbook/assets/algorithm-lab-checks.svg": "bc2a6f20e343373e8524d221ab48bc51ab5bbb9b91d5ce11411133c8086d48bf",
+    "handbook/assets/audio/manifest.json": "052fe562e8a0487fbefabba2ef4cd26c5680a49749fa995941abbd897a4dd57d",
+    "handbook/assets/audio/phase-0.wav": "d98bfcb463715346f030c2d78e991b8154db5d8714c180c59df20402bbe783fe",
+    "handbook/assets/audio/phase-120.wav": "d310ac8958135e839dc24839225d648bd7f0d6ee4b4dc587511335bb1b6e30eb",
+    "handbook/assets/audio/phase-180.wav": "9954b1ec94cd58bd7debcf5e3a34585c545100427917cee822de476787090e3c",
+    "handbook/assets/audio/ramsey-decay.wav": "40247377eef83e5f8825bc70e80f5dd6a958020b8758885e82d74613b7cb6cfa",
+    "handbook/assets/audio/ramsey-ideal.wav": "ba21ffa4c5c716161b5bc099c6edeada9f34b951f08f303dc8855cde7efc2dbc",
     "handbook/assets/bell-circuit.svg": "0124b109fcf5cc63173533da01fe015dbad9ba9a784f4a65be0c8114354a8dfb",
     "handbook/assets/bell-witness-sampling.svg": "3f31827618a44e618d4c95b66772060f11228f2c5ec2d52bb6263fe348ee425f",
     "handbook/assets/bloch-sphere.svg": "8b0621a0e014dc547cdad86885dc33c98bf438299a3f4d2ed88548c0cd40e762",
@@ -1133,6 +1696,9 @@
     "handbook/assets/grover-four-amplitudes.svg": "39597ee949e7aafa796d2ff6c16f0726e85bd987a6cfc5f58186863f85c8f99e",
     "handbook/assets/hardware-control-lanes.svg": "e6342fca7c446bf2a057a8fe9ea51511a52ddde885b6b512667753556135f9e3",
     "handbook/assets/hsp-four-elements.svg": "79791cc96da5ba9a1763810d39cedc1104d24388b1a74c86e236b52edae30ebd",
+    "handbook/assets/lab-phase-audio.svg": "9c8f7a9067d74fb0044e4633ca777045ee175b0b8dc10b768d2e8a2ee765c630",
+    "handbook/assets/lab-ramsey-audio.svg": "c3b72a1349993ef1274f3bddc4d0b50a84797348ec378baabdb86fc3dae2dee6",
+    "handbook/assets/lab-zne-allocation.svg": "4a730663f8c106c2d6ba42798578abfa91ebf0aa7257d5f820126c29701f9c27",
     "handbook/assets/math-complex-plane.svg": "930620d4a8d18abe0bcb64d2ba89def0f0121455ecc7351e5db1c0df227c2fd2",
     "handbook/assets/math-object-shapes.svg": "6682aa556e41905028fa9d4d443f92b71bf32e20010fa35ff4dd3ac2ae84be16",
     "handbook/assets/partial-trace-grid.svg": "4e6f1fc9cfc1a3edba7ba6c79bbc0dbe55903e8f46bb8e7d06cca633a13a2d55",
@@ -1141,6 +1707,79 @@
     "handbook/assets/qm-interference.svg": "87108339d53583e694faac7ec8e9eea6514b9bad476761df8f5b5a1a2122267a",
     "handbook/assets/qm-well-wavefunctions.svg": "d7b13ff9621dff3e371adfb7ddb271fd37487f444234619ec8f47fd6e96c4292",
     "handbook/assets/surface-code-events.svg": "db3bbd91aebbdb466ee33e845d543e463e122f55e4e7c52603141037e904f5d9",
-    "handbook/assets/teleportation-map.svg": "e7f1835dfe3540ad45a659483a5ee805909554745ddcde01760814180d81339b"
+    "handbook/assets/teleportation-map.svg": "e7f1835dfe3540ad45a659483a5ee805909554745ddcde01760814180d81339b",
+    "codes/README.md": "fc2c3fac5ab5168768b96a6ecfc7f3ccd08088a417108cec4aa2f53c7e7f4b92",
+    "codes/algorithms/README.md": "74d8a07d4d6b3e0720da03016c2c11133e38ab564b2b9d60a40e1155fb147b7b",
+    "codes/algorithms/expected-results.json": "ab0251a9f35f07121fcf20306b1d7a4b2e55302a734ea56d02963ad279c7ff07",
+    "codes/algorithms/experiments.py": "1903e22794348dbbb58038fcdf1d876dace95a96ad5c97216057c22cc204057f",
+    "codes/algorithms/generate_figure.py": "b69ef799313f1f5303e717aaa611738022d97fbbb44b9e3691bf1b488c6dd338",
+    "codes/foundations/README.md": "e274d862ae96f238c1fc7cafab7897598830429132d0c9d6ac86edae5f6651e5",
+    "codes/foundations/expected-results.json": "63e0d9081fd29efe8f239a0c6bb43e4d313e47d732c94718c0114dec48c26eb2",
+    "codes/foundations/foundations_lab.py": "f172cda81c77494c466a9ff8060c5ef947fd063904e4e1002de0bc07af6d0a65",
+    "codes/practice/experiments.py": "6f5ccfadf6fcbcb94e63202e2138c28e950a3f3dc86c2f19106566a6b9c52a60",
+    "codes/practice/figure-data.csv": "cd45c17d4d21e57eaa0ae12deaef1c75d3dbc3bef8c790f67436e78d33436c42",
+    "codes/practice/generate_audio.py": "0f4af19469239c83d5a903323c3eff5eb7cbd1c209ec07481113a4f9c77151ee",
+    "codes/practice/plot_figures.py": "9a54f89a842b2c6e6dcc014c0eefbe13983603fd5c651ad764677305e0c6170e",
+    "codes/practice/requirements-figures.txt": "8cd335b1a0cdd98874ff3a6f5913bd9decbdadba4f77b85027764920496c5e0d",
+    "codes/practice/results.json": "87c34c1055ea027e4b56a0edaa37ccf13cc21d24a5c78d06b56c9b94248afbc6",
+    "codes/run_all.py": "0543290c631d296faa8d111e7fb18da22b959c99fedcc5cb22402ff629e743ea",
+    "codes/snapshot_sources.py": "87cea6cfa76392f25dbfdfe4b1cc5b143cafad64fe43e143c4e855e4e5662785",
+    "codes/systems/README.md": "139a555543fda5aa75e5d44d464a761876c5b3f0fcb382c16bbc3653e83a9f7d",
+    "codes/systems/expected-results.json": "246cc96b8e5e070f0be062bd40234eb82a743db732bd5781f2f416c392015530",
+    "codes/systems/factory_schedule.py": "6e7aeeb6a9ff890145a91454c66af5d419932c9b7c36963ebda5c98b0d3a331a",
+    "codes/systems/hardware_flags.py": "0d2425a2f83c8ce94a2ce2b3866b71a1613dd4e543a24b663acaaffbafd23cb8",
+    "codes/systems/network_wait.py": "3e122aaa90531dfbdcceb3d64d8cd31dc089dc5a1e5923004054c25eccb57158",
+    "codes/systems/routing_mapping.py": "d1bccf72be23ec351f5e38d20cb29deab5d092f2d74aba0f15b8ea0681f83a38",
+    "codes/systems/service_timeline.py": "31db1ec32e572e5775ef2fcdffbf3e90042512fdf5d6b42f27a5c2a2345a50d2",
+    "codes/systems/weighted_decoder.py": "2102d23ec93ded9a2b55a85ebcdc45b33a493e122853af86d1ef4eab30bf4f5d",
+    "codes/tests/test_snapshot_sources.py": "a03069df25a0e2412f45a90ff3f7f93b35f7ec4f66739874dba3de72612fbf45",
+    "codes/vendor/README.md": "4202e2d5c5d0bb1c4616b99bef4ba0254d1c2356d513d50feedeb7451b4b6e4c",
+    "codes/vendor/cirq/AUTHORS": "172885d2068d2082c4ffdabb1c30ad28eb13970370bb4aac4db3805c5ebb17d0",
+    "codes/vendor/cirq/LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "codes/vendor/cirq/examples/grover.py": "d4f37944b99a58758dceee122b8a9178b724080f315fcbfbf97821e6a1ae573d",
+    "codes/vendor/cirq/examples/phase_estimator.py": "aa49b9a84bf18c36b3a4630b1505830dc1e403e064d59d36b242b3b795f8828b",
+    "codes/vendor/cirq/examples/shor.py": "e4dbf4843225c962cbe30dece4d507fce2d70e7b9b83af12a96610a4c08dceb9",
+    "codes/vendor/dimod/LICENSE": "e281216cf93feead53d8f617e956d3d78726d423dfd71c8057d0b6d67ec56e7e",
+    "codes/vendor/dimod/dimod/reference/samplers/exact_solver.py": "770b3c8d4b6c4a4f2041cf445a0e13c20391c49455b6a72531be6deed74e659c",
+    "codes/vendor/liboqs/LICENSE.txt": "12f2f1491b92248ad4d1c1042cdc72bc3391b1237c2829b031c0a44408d2cf77",
+    "codes/vendor/liboqs/tests/example_kem.c": "070bec2175035505dce374ec9670c11fcdd05c22e2033caf0acf901548306fc3",
+    "codes/vendor/manifest.json": "ddf09d66f6fff5e5679b4326cabe4cffce5bd4c62b155222329d605fa02d8248",
+    "codes/vendor/mitiq/LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "codes/vendor/mitiq/mitiq/zne/inference.py": "9b29a39b73317caf9c3c111aa5875854e74bb1abaa29a5895308434e565b7320",
+    "codes/vendor/mitiq/mitiq/zne/scaling/folding.py": "5636dfe12db1a5afdca28e66d4f769c5a59039b510adaac8a1237e62120b5f64",
+    "codes/vendor/openfermion/AUTHORS": "ba90370a3cbe80f7b049b9bd8faca4fbf312eff6eb677780a2dd505feae53dd4",
+    "codes/vendor/openfermion/LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "codes/vendor/openfermion/NOTICE": "e9dd31f8fa69c111d8f83634a2164b9ce35b5feb17efd8610a7aa167d0970cc3",
+    "codes/vendor/openfermion/src/openfermion/transforms/opconversions/jordan_wigner.py": "7c52297355cc20ef35553a37b529c4170e550439cdad5a9dd4069a4502b270ab",
+    "codes/vendor/pennylane/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "codes/vendor/pennylane/pennylane/qaoa/cost.py": "007c687cb79a4d6c02cd132ef8b4ae94be2a0a1b7f67be487bbeb05ea93e5303",
+    "codes/vendor/pennylane/pennylane/templates/subroutines/qsvt.py": "b7cb42a08b8aa251db03ef5b93b5905457b04a6372f46e5ce861c63cf33caa16",
+    "codes/vendor/pymatching/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "codes/vendor/pymatching/src/pymatching/matching.py": "737b4b5344dbfdeef46d4354059bba24d3d0b0c056bb9082f2c31ce333071899",
+    "codes/vendor/qiskit/LICENSE.txt": "0a7558bc0c5a5bcac5e2bdc5e5367f3550b0c3b45b7e6f5a81b4f9fde6693374",
+    "codes/vendor/qiskit/qiskit/quantum_info/states/utils.py": "d3a2ad260de30284e04945f526f4baadc352c5e54149e95941f1a6738e7395b0",
+    "codes/vendor/qiskit/qiskit/transpiler/passes/routing/sabre_swap.py": "254d471d60edfe1fc1fde63e25152b032c779bd24c0416a8971353e9612e9af7",
+    "codes/vendor/qiskit-addon-sqd/LICENSE.txt": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65",
+    "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/configuration_recovery.py": "7ed342f51af2497018e36308538571eb985744f521c82532e69950e510c59db7",
+    "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/fermion.py": "ccaf066ee4ea6efd7caafe4af3801c4fc53893f5f9b76da232f4c5119010acb6",
+    "codes/vendor/qiskit-algorithms/LICENSE.txt": "217ac15dbcda2782e004f5152886d847988c6367aaa0c4fc8c355363c21bd224",
+    "codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_amplifiers/grover.py": "472d1c99917da29242faa48294f15d38ff02e78832b44b101ed26d0583d5e217",
+    "codes/vendor/qiskit-algorithms/qiskit_algorithms/amplitude_estimators/iae.py": "d0687a6517f19bf9504ab368a305b35c596af3592be690ab9d20ea7b1da674bf",
+    "codes/vendor/qiskit-algorithms/qiskit_algorithms/minimum_eigensolvers/vqe.py": "c52c53f57d7960a9337391c1096d17279187a61885319b849f2701ce94774c43",
+    "codes/vendor/qiskit-algorithms/qiskit_algorithms/phase_estimators/phase_estimation.py": "aca114b23214dc7f0b65fba90d2623555ce5cb72505bc6027fff277ea32b522e",
+    "codes/vendor/qualtran/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "codes/vendor/qualtran/qualtran/bloqs/arithmetic/addition.py": "27931d31d3b525b2a34013671bcbd7bfed4c47c5fe5b722276464db97387ece6",
+    "codes/vendor/qualtran/qualtran/bloqs/qft/qft_text_book.py": "11128dc63f4c0f0e495a7e5c36cd26f50d9bb8f6a6a8ed325fa94a08adc3c8ca",
+    "codes/vendor/quimb/LICENSE.txt": "e708fa9633397b771e5a7c14fc471e3b2185499e1820fe4b3c7837918918e621",
+    "codes/vendor/quimb/quimb/tensor/circuit_gen.py": "09401427ba23c9dc81c309bf4282ef6e90f7cb8fec31c0ecf4d478f18222b426",
+    "codes/vendor/quimb/quimb/tensor/contraction.py": "6179412eb72b825667ea025bec5b5710f094d68fe1ae1aa4cecfb8004340952c",
+    "codes/vendor/qutip/LICENSE.txt": "7bb5cf18e69c6321d9283f5fa390480417466d03344bf30190ef15303eb8fd39",
+    "codes/vendor/qutip/qutip/solver/mesolve.py": "d6fe8857404757be00b0f7d8086d8b7adc445c5e62aee6f5c4fb2c9def6f636d",
+    "codes/vendor/sequence/LICENSE": "f387e59c226fe1d4d7ac0acc9424c187eb8ceb569f46231a1c0c4b799782e05f",
+    "codes/vendor/sequence/sequence/entanglement_management/entanglement_protocol.py": "cbf62a1c92593ee69f622c08d08d120a961a54da49ca1258722a93f4c7c6d12e",
+    "codes/vendor/sequence/sequence/entanglement_management/teleportation.py": "146e7204d58608cdec8bd2a84649edace9a15938833314fb33d0f17ed3f801de",
+    "codes/vendor/stim/LICENSE": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+    "codes/vendor/stim/src/stim/gen/gen_rep_code.cc": "dab5cb260a1d76239c9f16ffad16b539f67557efa09b2311de3f0001f7d90aa8",
+    "codes/vendor/stim/src/stim/gen/gen_surface_code.cc": "3b17c5442c14045b4332b8f69701d115276a1936edd5cab39842019f55a8589e"
   }
 }

@@ -497,6 +497,12 @@ $$\sigma_{\hat p}=\sqrt{\frac{p(1-p)}N}.$$
 
 答案见[练习与答案：第 2 章](appendices/exercises.md#第-2-章)。
 
+## 配套数值实验与展开答案
+
+把 Y 基测量拆成先 S†、再 H、最后计算基读出。交换前置门顺序仍产生归一化概率，却会从正确的约 0.9330 变为错误的 0.5；这是比“代码能运行”更严格的检查。
+
+题目和逐步解答见[基础实验册](labs/foundations.md)，本章程序编号为 `02`。可从[代码说明](../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - IBM Quantum Learning, [Bloch sphere](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere)：单比特密度矩阵的 Pauli 展开与球面、球内态的区分。

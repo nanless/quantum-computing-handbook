@@ -1,0 +1,417 @@
+{
+  "retrieved_at_utc": "2026-09-26T05:27:30.245908+00:00",
+  "scope": "curated excerpts; no upstream runtime tests performed",
+  "projects": [
+    {
+      "name": "qiskit-algorithms",
+      "repository": "https://github.com/qiskit-community/qiskit-algorithms",
+      "commit": "bcb7ded3594dac02e14acce7f59f05976916d39d",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "217ac15dbcda2782e004f5152886d847988c6367aaa0c4fc8c355363c21bd224",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-algorithms/bcb7ded3594dac02e14acce7f59f05976916d39d/LICENSE.txt"
+        },
+        {
+          "path": "qiskit_algorithms/amplitude_amplifiers/grover.py",
+          "bytes": 15946,
+          "sha256": "472d1c99917da29242faa48294f15d38ff02e78832b44b101ed26d0583d5e217",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-algorithms/bcb7ded3594dac02e14acce7f59f05976916d39d/qiskit_algorithms/amplitude_amplifiers/grover.py"
+        },
+        {
+          "path": "qiskit_algorithms/amplitude_estimators/iae.py",
+          "bytes": 22707,
+          "sha256": "d0687a6517f19bf9504ab368a305b35c596af3592be690ab9d20ea7b1da674bf",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-algorithms/bcb7ded3594dac02e14acce7f59f05976916d39d/qiskit_algorithms/amplitude_estimators/iae.py"
+        },
+        {
+          "path": "qiskit_algorithms/minimum_eigensolvers/vqe.py",
+          "bytes": 18454,
+          "sha256": "c52c53f57d7960a9337391c1096d17279187a61885319b849f2701ce94774c43",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-algorithms/bcb7ded3594dac02e14acce7f59f05976916d39d/qiskit_algorithms/minimum_eigensolvers/vqe.py"
+        },
+        {
+          "path": "qiskit_algorithms/phase_estimators/phase_estimation.py",
+          "bytes": 10281,
+          "sha256": "aca114b23214dc7f0b65fba90d2623555ce5cb72505bc6027fff277ea32b522e",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-algorithms/bcb7ded3594dac02e14acce7f59f05976916d39d/qiskit_algorithms/phase_estimators/phase_estimation.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "cirq",
+      "repository": "https://github.com/quantumlib/Cirq",
+      "commit": "e1fa91b61d46437c63953b259c18a0c9d3b8ddad",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "AUTHORS",
+          "bytes": 292,
+          "sha256": "172885d2068d2082c4ffdabb1c30ad28eb13970370bb4aac4db3805c5ebb17d0",
+          "url": "https://raw.githubusercontent.com/quantumlib/Cirq/e1fa91b61d46437c63953b259c18a0c9d3b8ddad/AUTHORS"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "url": "https://raw.githubusercontent.com/quantumlib/Cirq/e1fa91b61d46437c63953b259c18a0c9d3b8ddad/LICENSE"
+        },
+        {
+          "path": "examples/grover.py",
+          "bytes": 4157,
+          "sha256": "d4f37944b99a58758dceee122b8a9178b724080f315fcbfbf97821e6a1ae573d",
+          "url": "https://raw.githubusercontent.com/quantumlib/Cirq/e1fa91b61d46437c63953b259c18a0c9d3b8ddad/examples/grover.py"
+        },
+        {
+          "path": "examples/phase_estimator.py",
+          "bytes": 3010,
+          "sha256": "aa49b9a84bf18c36b3a4630b1505830dc1e403e064d59d36b242b3b795f8828b",
+          "url": "https://raw.githubusercontent.com/quantumlib/Cirq/e1fa91b61d46437c63953b259c18a0c9d3b8ddad/examples/phase_estimator.py"
+        },
+        {
+          "path": "examples/shor.py",
+          "bytes": 12861,
+          "sha256": "e4dbf4843225c962cbe30dece4d507fce2d70e7b9b83af12a96610a4c08dceb9",
+          "url": "https://raw.githubusercontent.com/quantumlib/Cirq/e1fa91b61d46437c63953b259c18a0c9d3b8ddad/examples/shor.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "pennylane",
+      "repository": "https://github.com/PennyLaneAI/pennylane",
+      "commit": "45f1df84938b3bcbab9e20b284e90010d5f839aa",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/LICENSE"
+        },
+        {
+          "path": "pennylane/qaoa/cost.py",
+          "bytes": 27631,
+          "sha256": "007c687cb79a4d6c02cd132ef8b4ae94be2a0a1b7f67be487bbeb05ea93e5303",
+          "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/pennylane/qaoa/cost.py"
+        },
+        {
+          "path": "pennylane/templates/subroutines/qsvt.py",
+          "bytes": 54717,
+          "sha256": "b7cb42a08b8aa251db03ef5b93b5905457b04a6372f46e5ce861c63cf33caa16",
+          "url": "https://raw.githubusercontent.com/PennyLaneAI/pennylane/45f1df84938b3bcbab9e20b284e90010d5f839aa/pennylane/templates/subroutines/qsvt.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "openfermion",
+      "repository": "https://github.com/quantumlib/OpenFermion",
+      "commit": "60a6e1ab3362b6e580a3a96ebf24e42680c78799",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "AUTHORS",
+          "bytes": 299,
+          "sha256": "ba90370a3cbe80f7b049b9bd8faca4fbf312eff6eb677780a2dd505feae53dd4",
+          "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/AUTHORS"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/LICENSE"
+        },
+        {
+          "path": "NOTICE",
+          "bytes": 3222,
+          "sha256": "e9dd31f8fa69c111d8f83634a2164b9ce35b5feb17efd8610a7aa167d0970cc3",
+          "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/NOTICE"
+        },
+        {
+          "path": "src/openfermion/transforms/opconversions/jordan_wigner.py",
+          "bytes": 16175,
+          "sha256": "7c52297355cc20ef35553a37b529c4170e550439cdad5a9dd4069a4502b270ab",
+          "url": "https://raw.githubusercontent.com/quantumlib/OpenFermion/60a6e1ab3362b6e580a3a96ebf24e42680c78799/src/openfermion/transforms/opconversions/jordan_wigner.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qualtran",
+      "repository": "https://github.com/quantumlib/Qualtran",
+      "commit": "8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/LICENSE"
+        },
+        {
+          "path": "qualtran/bloqs/arithmetic/addition.py",
+          "bytes": 22937,
+          "sha256": "27931d31d3b525b2a34013671bcbd7bfed4c47c5fe5b722276464db97387ece6",
+          "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/qualtran/bloqs/arithmetic/addition.py"
+        },
+        {
+          "path": "qualtran/bloqs/qft/qft_text_book.py",
+          "bytes": 4681,
+          "sha256": "11128dc63f4c0f0e495a7e5c36cd26f50d9bb8f6a6a8ed325fa94a08adc3c8ca",
+          "url": "https://raw.githubusercontent.com/quantumlib/Qualtran/8db02b8b3fb39d69d2900dcc7b52d9d6a36834c3/qualtran/bloqs/qft/qft_text_book.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-addon-sqd",
+      "repository": "https://github.com/Qiskit/qiskit-addon-sqd",
+      "commit": "99ef7544aac30280bcee76737b1faedce06d197f",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd/99ef7544aac30280bcee76737b1faedce06d197f/LICENSE.txt"
+        },
+        {
+          "path": "qiskit_addon_sqd/configuration_recovery.py",
+          "bytes": 12787,
+          "sha256": "7ed342f51af2497018e36308538571eb985744f521c82532e69950e510c59db7",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd/99ef7544aac30280bcee76737b1faedce06d197f/qiskit_addon_sqd/configuration_recovery.py"
+        },
+        {
+          "path": "qiskit_addon_sqd/fermion.py",
+          "bytes": 51442,
+          "sha256": "ccaf066ee4ea6efd7caafe4af3801c4fc53893f5f9b76da232f4c5119010acb6",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd/99ef7544aac30280bcee76737b1faedce06d197f/qiskit_addon_sqd/fermion.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qutip",
+      "repository": "https://github.com/qutip/qutip",
+      "commit": "310b91e7d8bbfcffa523c380cc4e733906d0a330",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 1538,
+          "sha256": "7bb5cf18e69c6321d9283f5fa390480417466d03344bf30190ef15303eb8fd39",
+          "url": "https://raw.githubusercontent.com/qutip/qutip/310b91e7d8bbfcffa523c380cc4e733906d0a330/LICENSE.txt"
+        },
+        {
+          "path": "qutip/solver/mesolve.py",
+          "bytes": 12694,
+          "sha256": "d6fe8857404757be00b0f7d8086d8b7adc445c5e62aee6f5c4fb2c9def6f636d",
+          "url": "https://raw.githubusercontent.com/qutip/qutip/310b91e7d8bbfcffa523c380cc4e733906d0a330/qutip/solver/mesolve.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "quimb",
+      "repository": "https://github.com/jcmgray/quimb",
+      "commit": "ebe5a45718aa423a6b75d75e257e737044c077dd",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 558,
+          "sha256": "e708fa9633397b771e5a7c14fc471e3b2185499e1820fe4b3c7837918918e621",
+          "url": "https://raw.githubusercontent.com/jcmgray/quimb/ebe5a45718aa423a6b75d75e257e737044c077dd/LICENSE.txt"
+        },
+        {
+          "path": "quimb/tensor/circuit_gen.py",
+          "bytes": 12550,
+          "sha256": "09401427ba23c9dc81c309bf4282ef6e90f7cb8fec31c0ecf4d478f18222b426",
+          "url": "https://raw.githubusercontent.com/jcmgray/quimb/ebe5a45718aa423a6b75d75e257e737044c077dd/quimb/tensor/circuit_gen.py"
+        },
+        {
+          "path": "quimb/tensor/contraction.py",
+          "bytes": 9904,
+          "sha256": "6179412eb72b825667ea025bec5b5710f094d68fe1ae1aa4cecfb8004340952c",
+          "url": "https://raw.githubusercontent.com/jcmgray/quimb/ebe5a45718aa423a6b75d75e257e737044c077dd/quimb/tensor/contraction.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "stim",
+      "repository": "https://github.com/quantumlib/Stim",
+      "commit": "131793efb34238481fadb1b4959f2395ec3f722a",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "url": "https://raw.githubusercontent.com/quantumlib/Stim/131793efb34238481fadb1b4959f2395ec3f722a/LICENSE"
+        },
+        {
+          "path": "src/stim/gen/gen_rep_code.cc",
+          "bytes": 3759,
+          "sha256": "dab5cb260a1d76239c9f16ffad16b539f67557efa09b2311de3f0001f7d90aa8",
+          "url": "https://raw.githubusercontent.com/quantumlib/Stim/131793efb34238481fadb1b4959f2395ec3f722a/src/stim/gen/gen_rep_code.cc"
+        },
+        {
+          "path": "src/stim/gen/gen_surface_code.cc",
+          "bytes": 13553,
+          "sha256": "3b17c5442c14045b4332b8f69701d115276a1936edd5cab39842019f55a8589e",
+          "url": "https://raw.githubusercontent.com/quantumlib/Stim/131793efb34238481fadb1b4959f2395ec3f722a/src/stim/gen/gen_surface_code.cc"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "pymatching",
+      "repository": "https://github.com/oscarhiggott/PyMatching",
+      "commit": "6f63b2b9474ba0fa7e511fe52bffdce858a06984",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/oscarhiggott/PyMatching/6f63b2b9474ba0fa7e511fe52bffdce858a06984/LICENSE"
+        },
+        {
+          "path": "src/pymatching/matching.py",
+          "bytes": 98886,
+          "sha256": "737b4b5344dbfdeef46d4354059bba24d3d0b0c056bb9082f2c31ce333071899",
+          "url": "https://raw.githubusercontent.com/oscarhiggott/PyMatching/6f63b2b9474ba0fa7e511fe52bffdce858a06984/src/pymatching/matching.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "mitiq",
+      "repository": "https://github.com/unitaryfoundation/mitiq",
+      "commit": "1a892a9783ddfe8c39d3d035613d6f3d168df9af",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 35149,
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "url": "https://raw.githubusercontent.com/unitaryfoundation/mitiq/1a892a9783ddfe8c39d3d035613d6f3d168df9af/LICENSE"
+        },
+        {
+          "path": "mitiq/zne/inference.py",
+          "bytes": 65318,
+          "sha256": "9b29a39b73317caf9c3c111aa5875854e74bb1abaa29a5895308434e565b7320",
+          "url": "https://raw.githubusercontent.com/unitaryfoundation/mitiq/1a892a9783ddfe8c39d3d035613d6f3d168df9af/mitiq/zne/inference.py"
+        },
+        {
+          "path": "mitiq/zne/scaling/folding.py",
+          "bytes": 22877,
+          "sha256": "5636dfe12db1a5afdca28e66d4f769c5a59039b510adaac8a1237e62120b5f64",
+          "url": "https://raw.githubusercontent.com/unitaryfoundation/mitiq/1a892a9783ddfe8c39d3d035613d6f3d168df9af/mitiq/zne/scaling/folding.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "dimod",
+      "repository": "https://github.com/dwavesystems/dimod",
+      "commit": "7eadc49df61fdf01848d882636b719548d30b142",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11386,
+          "sha256": "e281216cf93feead53d8f617e956d3d78726d423dfd71c8057d0b6d67ec56e7e",
+          "url": "https://raw.githubusercontent.com/dwavesystems/dimod/7eadc49df61fdf01848d882636b719548d30b142/LICENSE"
+        },
+        {
+          "path": "dimod/reference/samplers/exact_solver.py",
+          "bytes": 11260,
+          "sha256": "770b3c8d4b6c4a4f2041cf445a0e13c20391c49455b6a72531be6deed74e659c",
+          "url": "https://raw.githubusercontent.com/dwavesystems/dimod/7eadc49df61fdf01848d882636b719548d30b142/dimod/reference/samplers/exact_solver.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit",
+      "repository": "https://github.com/Qiskit/qiskit",
+      "commit": "e9c25a42586aba7f513de65b020fc6360fac7c67",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11418,
+          "sha256": "0a7558bc0c5a5bcac5e2bdc5e5367f3550b0c3b45b7e6f5a81b4f9fde6693374",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit/e9c25a42586aba7f513de65b020fc6360fac7c67/LICENSE.txt"
+        },
+        {
+          "path": "qiskit/quantum_info/states/utils.py",
+          "bytes": 8759,
+          "sha256": "d3a2ad260de30284e04945f526f4baadc352c5e54149e95941f1a6738e7395b0",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit/e9c25a42586aba7f513de65b020fc6360fac7c67/qiskit/quantum_info/states/utils.py"
+        },
+        {
+          "path": "qiskit/transpiler/passes/routing/sabre_swap.py",
+          "bytes": 11871,
+          "sha256": "254d471d60edfe1fc1fde63e25152b032c779bd24c0416a8971353e9612e9af7",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit/e9c25a42586aba7f513de65b020fc6360fac7c67/qiskit/transpiler/passes/routing/sabre_swap.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "sequence",
+      "repository": "https://github.com/sequence-toolbox/SeQUeNCe",
+      "commit": "3133c66d80a898c6c3cc9af9eec3fa94fdbe2233",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1871,
+          "sha256": "f387e59c226fe1d4d7ac0acc9424c187eb8ceb569f46231a1c0c4b799782e05f",
+          "url": "https://raw.githubusercontent.com/sequence-toolbox/SeQUeNCe/3133c66d80a898c6c3cc9af9eec3fa94fdbe2233/LICENSE"
+        },
+        {
+          "path": "sequence/entanglement_management/teleportation.py",
+          "bytes": 9520,
+          "sha256": "146e7204d58608cdec8bd2a84649edace9a15938833314fb33d0f17ed3f801de",
+          "url": "https://raw.githubusercontent.com/sequence-toolbox/SeQUeNCe/3133c66d80a898c6c3cc9af9eec3fa94fdbe2233/sequence/entanglement_management/teleportation.py"
+        },
+        {
+          "path": "sequence/entanglement_management/entanglement_protocol.py",
+          "bytes": 2944,
+          "sha256": "cbf62a1c92593ee69f622c08d08d120a961a54da49ca1258722a93f4c7c6d12e",
+          "url": "https://raw.githubusercontent.com/sequence-toolbox/SeQUeNCe/3133c66d80a898c6c3cc9af9eec3fa94fdbe2233/sequence/entanglement_management/entanglement_protocol.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "liboqs",
+      "repository": "https://github.com/open-quantum-safe/liboqs",
+      "commit": "b196b57aa615c84d62cbf6a59a8bfc294e6747dd",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 1324,
+          "sha256": "12f2f1491b92248ad4d1c1042cdc72bc3391b1237c2829b031c0a44408d2cf77",
+          "url": "https://raw.githubusercontent.com/open-quantum-safe/liboqs/b196b57aa615c84d62cbf6a59a8bfc294e6747dd/LICENSE.txt"
+        },
+        {
+          "path": "tests/example_kem.c",
+          "bytes": 6658,
+          "sha256": "070bec2175035505dce374ec9670c11fcdd05c22e2033caf0acf901548306fc3",
+          "url": "https://raw.githubusercontent.com/open-quantum-safe/liboqs/b196b57aa615c84d62cbf6a59a8bfc294e6747dd/tests/example_kem.c"
+        }
+      ],
+      "missing_requested_paths": []
+    }
+  ]
+}

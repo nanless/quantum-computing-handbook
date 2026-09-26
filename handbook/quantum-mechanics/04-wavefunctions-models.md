@@ -408,6 +408,12 @@ $$
 
 答案见[练习与答案：量子力学 Q4](../appendices/exercises.md#量子力学-q4)。
 
+## 配套数值实验与展开答案
+
+把波函数变成数值向量时需要带上根号网格步长；再用四级网格检验无限势阱基态能量的二阶收敛。精确求解离散矩阵，仍不意味着连续问题已没有离散化误差。
+
+题目和逐步解答见[基础实验册](../labs/foundations.md)，本章程序编号为 `q4`。可从[代码说明](../../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - Barton Zwiebach，MIT 8.04，[第 5 讲：位置表示与薛定谔方程](https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/resources/mit8_04s16_lecnotes5/)。

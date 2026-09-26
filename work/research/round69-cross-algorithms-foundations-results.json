@@ -1,0 +1,54 @@
+{
+  "depolarizing_CP_boundary": [
+    {
+      "p": 0,
+      "choi_eigenvalues": [
+        0.0,
+        0.0,
+        0.0,
+        2.0
+      ],
+      "CP": true
+    },
+    {
+      "p": 1,
+      "choi_eigenvalues": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "CP": true
+    },
+    {
+      "p": 1.3333333333333333,
+      "choi_eigenvalues": [
+        1.2027416100105864e-16,
+        0.6666666666666666,
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "CP": true
+    },
+    {
+      "p": 1.4,
+      "choi_eigenvalues": [
+        -0.09999999999999984,
+        0.7,
+        0.7,
+        0.7
+      ],
+      "CP": false
+    }
+  ],
+  "amplitude_damping_CP_TP_points": [
+    0,
+    0.2,
+    0.36,
+    0.9,
+    1
+  ],
+  "generic_local_identity_phase_density_error": 1.1171304825904486e-16,
+  "fidelity_zero_plus_root": 0.7071067811865475,
+  "fidelity_zero_plus_squared": 0.5
+}

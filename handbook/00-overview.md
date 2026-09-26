@@ -172,6 +172,12 @@ $$
 
 答案见[练习与答案：第 0 章](appendices/exercises.md#第-0-章)。
 
+## 配套数值实验与展开答案
+
+1000 次随机测量为什么只有约 2.52% 的概率恰好 500 对 500？用原始计数、二项概率与有限样本界一起检验，而不是凭一张频率表认证量子随机性。
+
+题目和逐步解答见[基础实验册](labs/foundations.md)，本章程序编号为 `00`。可从[代码说明](../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - John Watrous, [Basics of Quantum Information](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information)：从经典信息、量子信息、电路到纠缠协议的系统课程。

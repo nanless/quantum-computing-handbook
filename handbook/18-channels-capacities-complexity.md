@@ -1043,6 +1043,38 @@ $$
 - “压缩态在两个正交分量上都更精确。”一个方向的方差下降伴随共轭方向上升。
 - “Gaussian 光学自动给通用量子计算。”通用性需要跳出受限的、可高效模拟的 Gaussian 过程集合。
 
+## 实操扩展：从擦除事件构造降解映射
+
+第 4 节使用了“擦除信道在 $\varepsilon\le1/2$ 时可降解”。这里把抽象条件 $\mathcal E^c=\mathcal D\circ\mathcal E$ 变成一个可实施的随机步骤。Bob 得到输入态的概率是 $1-\varepsilon$，环境得到输入态的概率是 $\varepsilon$。若 $0\le\varepsilon\le1/2$，Bob 在收到未擦除态时，以概率
+
+$$
+r=\frac{\varepsilon}{1-\varepsilon}
+$$
+
+保留它，否则把它换成环境的擦除旗标；已经擦除的分支仍输出旗标。$r\in[0,1]$，所以这是合法信道。最终保留输入态的概率为 $(1-\varepsilon)r=\varepsilon$，与互补信道完全相同；这个构造不需要知道输入态是什么，也不需要复制它。
+
+以 $\varepsilon=1/4$ 为例，$r=1/3$。原来 Bob 有 $3/4$ 的机会持有态，只保留其中三分之一，最终是 $1/4$，正好模拟环境。当 $\varepsilon>1/2$ 时，这个方向要求 $r>1$，不可能；反过来，让环境以 $(1-\varepsilon)/\varepsilon$ 保留它拿到的态，则能模拟 Bob，得到反降解。原始容量结果见 [Bennett、DiVincenzo 与 Smolin](https://doi.org/10.1103/PhysRevLett.78.3217)。
+
+### 用熵计算检查输入优化，不能用网格代替容量定理
+
+取输入 $\rho_q=\operatorname{diag}(q,1-q)$，$q\in[0,1]$。Bob 输出的三个本征值依次为
+
+$$
+(1-\varepsilon)q,\quad(1-\varepsilon)(1-q),\quad\varepsilon;
+$$
+
+环境则为
+
+$$
+\varepsilon q,\quad\varepsilon(1-q),\quad1-\varepsilon.
+$$
+
+逐项用 $S=-\sum_i p_i\log_2p_i$ 相减，应回到 $I_c=(1-2\varepsilon)h_2(q)$。端点约定 $0\log_2 0=0$，否则代码会在纯态或无擦除情形报错。擦除信道只依赖输入的谱，因此把 qubit 的本征值写成 $q,1-q$ 已覆盖所有输入谱；不是未经说明地把一般输入限制成对角态。
+
+若 $\varepsilon=3/4$，最大混合输入给 $I_c=-1/2$，而纯态输入给 0；最大值因而是 0，不是 $-1/2$。对 $q$ 作网格搜索可以检查这一数值现象，却不能证明任意多个信道联合编码都无益；完整容量仍依赖上面的反降解结论。纠缠辅助经典容量则仍为 $2(1-\varepsilon)=1/2$ bit/use，说明“无辅助量子容量为零”并不等于这条线路不能完成其他通信任务。
+
+**实验 18-A。** 从这两组三元概率直接算熵，在 $\varepsilon=0,1/4,1/2,3/4,1$ 及 101 个 $q$ 网格上核对相干信息恒等式，再分别列出 $C,Q,P,C_E$。代码入口为 `python3 codes/algorithms/experiments.py 18`；[完整实验与答案](labs/algorithms.md#实验-18-a擦除信道的四种任务)解释哪些列来自计算，哪些还使用容量定理。代码中的 `Q_theorem` 和 `P_theorem` 特意保留这层区别。
+
 ## 11. 自检
 
 1. 为 $\rho=0.8|0\rangle\langle0|+0.2|1\rangle\langle1|$ 写一个纯化，并逐项做偏迹。

@@ -1,0 +1,31 @@
+{
+  "model": "synthetic fixed counts, independent bounded outcomes assumed",
+  "bell_equal": {
+    "point": 0.6625,
+    "lower": 0.5891111165732179,
+    "radii": [
+      0.0978518445690427,
+      0.0978518445690427,
+      0.0978518445690427
+    ]
+  },
+  "bell_unequal": {
+    "point": 0.6625,
+    "lower": 0.5362154021937405,
+    "radii": [
+      0.0978518445690427,
+      0.3094347020869523,
+      0.0978518445690427
+    ]
+  },
+  "zne": {
+    "estimate": 1.1,
+    "equal_allocation_variance_upper": 0.0012499999999999998,
+    "optimal_allocation_variance_upper": 0.001,
+    "optimal_shots": [
+      3000,
+      1000
+    ]
+  },
+  "twenty_independent_tests_false_positive_probability": 0.6415140775914581
+}

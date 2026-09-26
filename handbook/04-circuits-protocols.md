@@ -371,6 +371,12 @@ $$
 
 答案见[练习与答案：第 4 章](appendices/exercises.md#第-4-章)。
 
+## 配套数值实验与展开答案
+
+用八个复振幅直接执行传态线路，检查四个测量结果各占 1/4、四种校正全部还原输入，以及不知道结果时 Bob 仍为最大混态。
+
+题目和逐步解答见[基础实验册](labs/foundations.md)，本章程序编号为 `04`。可从[代码说明](../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - IBM Quantum Learning, [Circuits](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information/quantum-circuits/circuits)：电路从左到右的读法和门序。

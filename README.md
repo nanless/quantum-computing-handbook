@@ -10,9 +10,10 @@
 - [先修知识自测](handbook/appendices/prerequisites.md)
 - [量子力学基础篇](handbook/quantum-mechanics/README.md)
 - [符号表](handbook/appendices/notation.md)与[术语表](handbook/appendices/glossary.md)
+- [实验、代码与音频](handbook/labs/README.md)及[算法与工业开源对照](handbook/appendices/software-practice.md)
 - [参考资料](handbook/appendices/references.md)与[审校记录](handbook/appendices/audit-log.md)
 
-`handbook/` 是 Markdown 原稿；`reader/` 是已生成的离线阅读版；`tools/reader/` 包含构建和检查程序；`work/research/` 保存与正文相互引用的审校、算例和验证记录。
+`codes/` 包含可运行教学实验与带许可的第三方固定源码摘录；`handbook/` 是 Markdown 原稿；`reader/` 是已生成的离线阅读版；`tools/reader/` 包含构建和检查程序；`work/research/` 保存与正文相互引用的审校、算例和验证记录。
 
 ## 重新生成阅读版
 

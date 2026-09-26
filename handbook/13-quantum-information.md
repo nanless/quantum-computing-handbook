@@ -241,6 +241,17 @@ p_{\mathrm{guess}}^{\max}
 =\frac12\bigl(1+T(\rho,\sigma)\bigr).
 $$
 
+### 先验不是各半时，先把权重放进矩阵
+
+若先验为 $\eta$ 与 $1-\eta$，其中 $0\le\eta\le1$，则最优成功率是
+
+$$
+p_{\rm guess}^{\max}
+=\frac12\left(1+\|\eta\rho-(1-\eta)\sigma\|_1\right).
+$$
+
+它不能只由未加权的 $T(\rho,\sigma)$ 和上面的等先验公式给出。即使完全不测量，总猜更常见的态也已有 $\max(\eta,1-\eta)$ 的成功率。设 $\rho=|0\rangle\langle0|,\sigma=|+\rangle\langle+|$，先验为 0.9、0.1，加权差矩阵是 $\left[\begin{smallmatrix}0.85&-0.05\\-0.05&-0.05\end{smallmatrix}\right]$。其本征值为 $(0.8\pm\sqrt{0.82})/2$，迹范数为 $\sqrt{0.82}$，最优成功率约 0.952769，高于总猜 0 的 0.9。[实验 F13](labs/foundations.md#f13先验不相等时08536不再是答案)给出完整特征方程和独立运行代码；一般公式可对照 [Watrous 教材第 3 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。
+
 ### 例 1：正交态
 
 $\rho=|0\rangle\langle0|$、$\sigma=|1\rangle\langle1|$，则 $T=1$，所以 $p_{\rm guess}=1$。计算基测量可完美区分。
@@ -575,6 +586,12 @@ $$
 6. 为什么对混合 $\rho_{AB}$，$S(\rho_A)$ 一般不能直接称为纠缠量？
 
 答案见[练习与答案：第 13 章](appendices/exercises.md#第-13-章)。
+
+## 配套数值实验与展开答案
+
+重新求不等先验的 Helstrom 成功率，并核对根保真度与软件平方保真度的关系。改变先验会改变最优判别，两个候选态本身的保真度却不变。
+
+题目和逐步解答见[基础实验册](labs/foundations.md)，本章程序编号为 `13`。可从[代码说明](../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
 
 ## 参考起点
 

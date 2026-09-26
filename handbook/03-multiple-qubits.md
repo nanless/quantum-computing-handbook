@@ -504,6 +504,12 @@ $$
 
 答案见[练习与答案：第 3 章](appendices/exercises.md#第-3-章)。
 
+## 配套数值实验与展开答案
+
+对含复相位的非最大纠缠态逐格偏迹，再施加远端局域旋转，确认本地约化态不变。明确比较完整矩阵，而不只比较一个计算基概率。
+
+题目和逐步解答见[基础实验册](labs/foundations.md)，本章程序编号为 `03`。可从[代码说明](../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考起点
 
 - John Watrous, [Quantum information: multiple systems](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information/multiple-systems/quantum-information)：联合基序、张量积与局部测量。

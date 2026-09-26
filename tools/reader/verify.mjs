@@ -18,6 +18,7 @@ if (!edition || Number.isNaN(Date.parse(edition + 'T00:00:00Z')) || new Date(edi
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 for (const [file, expected] of Object.entries(build.inputHashes || {})) if (digest(await fs.readFile(path.join(root,file))) !== expected) report.errors.push({file,message:'build input changed; rebuild required'});
 for (const entry of build.pages) for (const [key,hash] of [['source','sourceSha256'],['output','outputSha256']]) if (digest(await fs.readFile(path.join(root,entry[key]))) !== entry[hash]) report.errors.push({file:entry[key],message:'source/output hash differs from build'});
+for (const entry of build.codeCopies || []) if (digest(await fs.readFile(path.join(root, entry.output))) !== entry.outputSha256) report.errors.push({file:entry.output,message:'copied code differs from build'});
 const shots = path.join(root, 'work/rendered');
 await fs.mkdir(shots, { recursive: true });
 const browser = await chromium.launch(browserOptions);
@@ -95,9 +96,9 @@ try {
           }
         } catch { report.errors.push({ file: entry.output, message: 'broken file: ' + href }); }
       }
-      if (['reader/index.html','reader/02-single-qubit.html','reader/03-multiple-qubits.html','reader/04-circuits-protocols.html','reader/07-algorithms.html','reader/08-applications.html','reader/09-hardware.html','reader/12-security-network-frontiers.html','reader/16-advanced-algorithms-verification.html','reader/18-channels-capacities-complexity.html','reader/appendices/notation.html','reader/appendices/prerequisites.html'].includes(entry.output) || entry.output.startsWith('reader/quantum-mechanics/')) {
+      if (['reader/index.html','reader/02-single-qubit.html','reader/03-multiple-qubits.html','reader/04-circuits-protocols.html','reader/07-algorithms.html','reader/08-applications.html','reader/09-hardware.html','reader/12-security-network-frontiers.html','reader/16-advanced-algorithms-verification.html','reader/18-channels-capacities-complexity.html','reader/appendices/notation.html','reader/appendices/prerequisites.html'].includes(entry.output) || entry.output.startsWith('reader/quantum-mechanics/') || entry.output.startsWith('reader/labs/') || entry.output === 'reader/appendices/software-practice.html') {
         if (width === 390) await page.locator('.chapters details').evaluate(e => e.open = false);
-        const name = (entry.output.startsWith('reader/quantum-mechanics/') ? 'qm-' : '') + path.basename(entry.output, '.html') + '-' + width + '.png';
+        const name = (entry.output.startsWith('reader/quantum-mechanics/') ? 'qm-' : entry.output.startsWith('reader/labs/') ? 'lab-' : '') + path.basename(entry.output, '.html') + '-' + width + '.png';
         await page.screenshot({ path: path.join(shots, name) }); report.screenshots.push('work/rendered/' + name);
       }
     }
@@ -131,8 +132,20 @@ try {
     }
     await page.close();
   }
+  const audioPage = await browser.newPage();
+  await audioPage.goto(pathToFileURL(path.join(root, 'reader/labs/audio.html')).href);
+  report.audioChecks = await audioPage.locator('audio').evaluateAll(async elements => {
+    return Promise.all(elements.map(e => new Promise(resolve => {
+      const done = () => resolve({src:e.getAttribute('src'), duration:e.duration, readyState:e.readyState, error:e.error?.message || null, autoplay:e.autoplay, controls:e.controls});
+      e.addEventListener('loadedmetadata', done, {once:true});
+      e.addEventListener('error', done, {once:true});
+      setTimeout(done, 5000); e.load();
+    })));
+  });
+  if (report.audioChecks.length !== 5 || report.audioChecks.some(a => a.error || a.duration !== 4 || a.autoplay || !a.controls)) report.errors.push({message:'teaching WAV metadata/controls failed', audio:report.audioChecks});
+  await audioPage.close();
   const sample = await browser.newPage({viewport:{width:390,height:1000}});
-  for (const [file,selector,label] of [['appendices/notation.html','.table-scroll','table'],['appendices/prerequisites.html','.table-scroll','prerequisites-table'],['10-error-correction.html','.table-scroll','syndrome-table'],['06-algorithmic-primitives.html','.katex-display','formula'],['08-applications.html','.flowchart','flowchart'],['19-engineering-architecture.html','.scientific-svg[href$="hardware-control-lanes.svg"]','hardware-figure'],['10-error-correction.html','.scientific-svg[href$="surface-code-events.svg"]','surface-code-figure'],['15-practice-research.html','.scientific-svg[href$="bell-witness-sampling.svg"]','bell-witness-figure']]) {
+  for (const [file,selector,label] of [['labs/audio.html','.table-scroll','audio-controls'],['labs/practice.html','.katex-display','statistics-formula'],['appendices/notation.html','.table-scroll','table'],['appendices/prerequisites.html','.table-scroll','prerequisites-table'],['10-error-correction.html','.table-scroll','syndrome-table'],['06-algorithmic-primitives.html','.katex-display','formula'],['08-applications.html','.flowchart','flowchart'],['19-engineering-architecture.html','.scientific-svg[href$="hardware-control-lanes.svg"]','hardware-figure'],['10-error-correction.html','.scientific-svg[href$="surface-code-events.svg"]','surface-code-figure'],['15-practice-research.html','.scientific-svg[href$="bell-witness-sampling.svg"]','bell-witness-figure']]) {
     await sample.goto(pathToFileURL(path.join(root,'reader',file)).href);
     await sample.evaluate(()=>document.fonts.ready);
     await sample.locator(selector).evaluateAll(elements => { const e=elements.find(e=>e.scrollWidth>e.clientWidth+2)||elements[0]; if(e)e.setAttribute('data-scroll-sample','true'); });

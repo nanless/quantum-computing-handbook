@@ -1,0 +1,244 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>算法、工业实践与开源代码对照 · 量子计算手册</title><link rel="stylesheet" href="../assets/katex/katex.min.css"><link rel="stylesheet" href="../assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="../index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">量子力学基础篇</div><a href="../quantum-mechanics/index.html">基础篇导读与先修说明</a><a href="../quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="../quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="../quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">量子计算主篇</div><a href="../00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="../01-math.html">01｜够用而不跳步的数学工具</a><a href="../02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="../03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="../04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="../05-noise-channels.html">05｜混态、噪声与量子信道</a><a href="../06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="../07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="../08-applications.html">08｜应用、变分算法与证据边界</a><a href="../09-hardware.html">09｜从物理量子比特到控制栈</a><a href="../10-error-correction.html">10｜量子错误校正与容错计算</a><a href="../11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="../12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><a href="../13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="../14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="../15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><a href="../16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="../17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="../18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="../19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">实验、代码与音频</div><a href="../labs/index.html">实验、练习、代码与声音</a><a href="../labs/algorithms.html">算法实验：把输出概率、成本和证明边界一起核对</a><a href="../labs/audio.html">声音实验：相位、抵消与退相干的教学映射</a><a href="../labs/foundations.html">基础实验册｜从复振幅到可核查的数值结果</a><a href="../labs/practice.html">实验：有限样本、外推代价与多重比较</a><a href="../labs/systems.html">系统实验册：六个跨层问题的手算、代码与研究入口</a><div class="nav-label">附录</div><a href="../appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="../appendices/notation.html">符号表</a><a href="../appendices/glossary.html">术语表</a><a href="../appendices/exercises.html">练习答案与推导提示</a><a href="../appendices/references.html">参考资料与证据等级</a><a aria-current="page" href="../appendices/software-practice.html">算法、工业实践与开源代码对照</a><a href="../appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#1-怎样读算法对照表">1. 怎样读算法对照表</a><a class="toc-level-2" href="#2-基础算法与容错算法族">2. 基础算法与容错算法族</a><a class="toc-level-2" href="#3-近中期算法估计与经典基线">3. 近中期算法、估计与经典基线</a><a class="toc-level-2" href="#4-工程算法同样需要实测">4. 工程算法同样需要实测</a><a class="toc-level-2" href="#5-工业实践用完整工作流审查不能只贴厂商名称">5. 工业实践：用完整工作流审查，不能只贴厂商名称</a><a class="toc-level-3" href="#51-电子结构量子样本加经典子空间计算">5.1 电子结构：量子样本加经典子空间计算</a><a class="toc-level-3" href="#52-优化建模成本和混合求解器边界">5.2 优化：建模成本和混合求解器边界</a><a class="toc-level-3" href="#53-误差缓解可靠估计与额外预算">5.3 误差缓解：可靠估计与额外预算</a><a class="toc-level-3" href="#54-纠错网络与安全基础设施">5.4 纠错、网络与安全基础设施</a><a class="toc-level-2" href="#6-源码阅读练习与答案">6. 源码阅读练习与答案</a><a class="toc-level-3" href="#s01为什么下载一个-python-文件却不能直接运行">S01：为什么下载一个 Python 文件却不能直接运行？</a><a class="toc-level-3" href="#s02如何证明手中的源码没有悄悄改变">S02：如何证明手中的源码没有悄悄改变？</a><a class="toc-level-3" href="#s03同样叫运行通过证据有何不同">S03：同样叫“运行通过”，证据有何不同？</a><a class="toc-level-2" href="#7-明确没有交付的部分">7. 明确没有交付的部分</a></nav></details><article><h1 id="算法工业实践与开源代码对照">算法、工业实践与开源代码对照</h1>
+<p>核验日期：2026-09-26。本页把全书已有主题连接到可运行教学实验、真实开源实现和产业证据。它覆盖本书主要算法族及工程环节，不声称穷尽整个量子计算领域。具体数学条件仍以对应章节为准；“有库实现”“可在真机运行”“已获得商业收益”“证明量子加速”是四个不同问题。</p>
+<p>本地保存了 15 个项目的 46 份文件（源码、许可证及声明），固定到 40 位提交哈希；见<a href="../codes/vendor/README.md">完整源码索引</a>与<a href="../codes/vendor/manifest.json">机器可读校验清单</a>。这些是未改写的源码摘录，便于对照阅读；完整安装还需要原仓库的其余模块、依赖及构建步骤。教学代码与第三方摘录分别存放。</p>
+<h2 id="1-怎样读算法对照表">1. 怎样读算法对照表</h2>
+<p>先问输入是什么、允许什么访问方式，再问输出究竟是一个 bit、一组样本、一个数，还是一个量子态。例如 HHL 类算法的输出通常是与解向量成比例的量子态；若任务要求完整打印所有分量，不能把后处理成本忽略。类似地，振幅估计中“一次 oracle”可能含有昂贵的数据加载和可逆算术。</p>
+<p>表中的“本地源码”表示已经保存该项目的代表性文件，并不表示整行提到的所有变体均已实现。完整文件列表是可检查的界限；没有保存的模块明确标为外部入口或理论练习。</p>
+<h2 id="2-基础算法与容错算法族">2. 基础算法与容错算法族</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>算法族与章节</th>
+<th>输入与输出</th>
+<th>实现/实践入口</th>
+<th>最容易漏算的条件或成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Deutsch–Jozsa、Bernstein–Vazirani，06</td>
+<td>满足承诺的布尔 oracle → 分类或隐藏串</td>
+<td>本章显式线路；本轮未单独归档这两种上游实现</td>
+<td>承诺、oracle 构造、经典随机算法基线</td>
+</tr>
+<tr>
+<td>Simon / 隐藏子群，06、16</td>
+<td>隐藏结构函数 → 约束样本与经典恢复</td>
+<td>正文推导及 GF(2) 消元；完整 SDK 模块未纳入本地摘录</td>
+<td>多次采样、线性独立性、经典后处理</td>
+</tr>
+<tr>
+<td>QFT / QPE，06</td>
+<td>可控酉算子与输入态 → 相位分布</td>
+<td>Cirq 相位估计例、Qiskit 相位估计、Qualtran QFT 源码；<a href="../labs/algorithms.html">圆周边界实验</a></td>
+<td>本征态重叠、受控幂的执行成本、模 1 误差</td>
+</tr>
+<tr>
+<td>Grover / 振幅放大，07</td>
+<td>可制备初态及成功判据 → 标记样本</td>
+<td>Cirq 与 Qiskit Grover；<a href="../labs/algorithms.html">重试账本实验</a></td>
+<td>初始成功率、未知解数、反射、解的验证与总重试成本</td>
+</tr>
+<tr>
+<td>振幅估计及迭代变体，07、16</td>
+<td>制备和成功投影 → 概率估计</td>
+<td>Qiskit <code>iae.py</code> 固定源码</td>
+<td>每个 Grover 幂的深度；置信保证不同于一次点估计</td>
+</tr>
+<tr>
+<td>Shor / 阶寻找，07</td>
+<td>整数及模乘电路 → 周期候选、经典因子</td>
+<td>Cirq <code>examples/shor.py</code>；正文 15/35 例</td>
+<td>可逆模算术、辅助位、连分数、失败分支；小整数例不代表破解规模</td>
+</tr>
+<tr>
+<td>乘积公式 Hamiltonian 模拟，07、16</td>
+<td>局域项、总时间与精度 → 近似演化</td>
+<td>OpenFermion 映射源码；乘积公式在正文推导，本轮未完整实现</td>
+<td>非对易误差、时间步、分解后门数</td>
+</tr>
+<tr>
+<td>LCU / block-encoding / qubitization，16</td>
+<td>加权算子访问 → 嵌入块与演化</td>
+<td>Qualtran 完整项目为研究入口；本地只摘录 QFT/加法模块</td>
+<td>归一化因子、选择/制备 oracle、后选择与辅助位</td>
+</tr>
+<tr>
+<td>QSP / QSVT，16</td>
+<td>块编码与可实现多项式 → 奇异值变换</td>
+<td>PennyLane <code>qsvt.py</code>；<a href="../labs/algorithms.html">非厄米反例</a></td>
+<td>奇偶约束、相位约定；不能把奇异值变换一概写成矩阵多项式</td>
+</tr>
+<tr>
+<td>HHL / 量子线性系统，07、16</td>
+<td>矩阵访问、右端态 → 解态或少量可观测量</td>
+<td>正文条件分析；本轮无完整 HHL 实装</td>
+<td>条件数、稀疏/块访问、态制备、精度与结果读出</td>
+</tr>
+<tr>
+<td>量子行走，16</td>
+<td>图或 Markov 链访问 → 搜索/谱信息</td>
+<td>本章模型比较；本轮无完整行走库摘录</td>
+<td>建立成本、更新成本、谱隙、标记比例</td>
+</tr>
+<tr>
+<td>容错算术与资源分解，11、16</td>
+<td>高级子程序 → 分解与逻辑资源</td>
+<td><a href="https://github.com/quantumlib/Qualtran">Qualtran</a>，本地加法/QFT 源码</td>
+<td>逻辑门数不等于物理位数；路由、工厂和等待需再估算</td>
+</tr>
+</tbody></table></div>
+<p>Qualtran 官方说明其仍是实验预览，接口和个别算法可能变化；固定提交有助复查，不意味着库结果已经被独立证明。更多原始算法论文见<a href="references.html">参考资料</a>及各章文献。</p>
+<h2 id="3-近中期算法估计与经典基线">3. 近中期算法、估计与经典基线</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>实际工作分解</th>
+<th>本地/外部代码</th>
+<th>应如何比较</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VQE</td>
+<td>参数化态 → 多组 Pauli 测量 → 经典优化</td>
+<td>Qiskit <code>vqe.py</code>；<a href="../labs/algorithms.html">08 实验</a></td>
+<td>同一基组、活性空间、精度；计入优化调用和全部 shots</td>
+</tr>
+<tr>
+<td>QAOA</td>
+<td>成本层和混合层 → 采样 → 可行解筛选</td>
+<td>PennyLane <code>qaoa/cost.py</code>；08 三顶点路径图精确分布</td>
+<td>与穷举、局部搜索、成熟整数规划在相同时间预算比较</td>
+</tr>
+<tr>
+<td>SQD</td>
+<td>量子样本 → 组态恢复 → 子空间经典对角化</td>
+<td>Qiskit addon 的恢复与费米子模块</td>
+<td>对比精选组态相互作用/DMRG；记录子空间维度和经典内存</td>
+</tr>
+<tr>
+<td>量子核/变分学习</td>
+<td>数据编码 → 重叠或测量特征 → 学习</td>
+<td>PennyLane 完整项目入口；本轮不存完整训练流水线</td>
+<td>数据集划分、预处理、调参预算、强经典模型及数据加载成本</td>
+</tr>
+<tr>
+<td>随机测量/经典阴影，16</td>
+<td>随机测量与快照逆映射 → 可观测量估计</td>
+<td>正文原论文入口；本轮没有声称提供完整阴影程序</td>
+<td>目标可观测量族、方差/阴影范数、多重比较</td>
+</tr>
+<tr>
+<td>ZNE / PEC / 读出缓解，08、15</td>
+<td>额外线路/校准 → 带权估计</td>
+<td>Mitiq 折叠和外推源码；<a href="../labs/practice.html">ZNE 预算实验</a></td>
+<td>总 shots、校准、噪声漂移、偏差与方差分别记录</td>
+</tr>
+<tr>
+<td>退火 / QUBO，17</td>
+<td>建模、嵌入、采样、链修复与验证</td>
+<td>dimod <code>ExactSolver</code> 为经典基线；云求解器另行获取</td>
+<td>建模损失、链长、可行率、端到端 TTS；混合器不等于纯 QPU</td>
+</tr>
+<tr>
+<td>MPS / 张量网络</td>
+<td>线路/态的分解与收缩 → 可观测量</td>
+<td>quimb 的线路生成及收缩源码</td>
+<td>bond dimension、截断误差、收缩顺序、收敛；“位数多”不自动难</td>
+</tr>
+<tr>
+<td>主方程/轨迹法，05、09</td>
+<td>Hamiltonian、耗散算符 → 密度矩阵或轨迹</td>
+<td>QuTiP <code>mesolve.py</code>；本轮未归档全部轨迹模块</td>
+<td>马尔可夫近似、截断维度、步长/容差、迹与正性</td>
+</tr>
+</tbody></table></div>
+<p>对于 SQD，官方工具文档说明先从量子设备采样，再用经典计算做组态恢复和投影对角化；这与“量子处理器独自计算整个分子答案”不同。<a href="https://quantum.cloud.ibm.com/docs/en/addons/qiskit-addon-sqd">SQD 官方说明</a></p>
+<h2 id="4-工程算法同样需要实测">4. 工程算法同样需要实测</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>环节</th>
+<th>问题及输入输出</th>
+<th>代码入口</th>
+<th>必须保留的实验信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编译、布局、SABRE 路由，14</td>
+<td>抽象门图和连接图 → 原生线路与映射</td>
+<td>Qiskit SABRE Python 入口；<a href="../labs/systems.html">末态映射实验</a></td>
+<td>初/末布局、随机种子、设备 target、门数、时长及误差</td>
+</tr>
+<tr>
+<td>稳定子电路采样，10</td>
+<td>Pauli 噪声电路 → 探测事件/逻辑可观测量</td>
+<td>Stim 表面码/重复码生成器</td>
+<td>电路级模型、边界、轮数、相关错误；不是任意非Clifford模拟器</td>
+</tr>
+<tr>
+<td>匹配译码，10</td>
+<td>探测事件与图权重 → 逻辑预测</td>
+<td>PyMatching <code>matching.py</code></td>
+<td>权重来源、相关性、时空边界、总失败次数、置信区间</td>
+</tr>
+<tr>
+<td>魔法态工厂调度，11</td>
+<td>带时间的需求和产出 → 停顿与缓存</td>
+<td><a href="../labs/systems.html">自编离散事件实验</a></td>
+<td>吞吐不够描述突发需求；要有库存、首件延迟和时间线</td>
+</tr>
+<tr>
+<td>网络协议，12</td>
+<td>链路成功/记忆/交换 → 纠缠服务</td>
+<td>SeQUeNCe 传态及协议基类；两链路等待实验</td>
+<td>丢包、经典信令、同步、储存寿命及保真度，不能只报链路距离</td>
+</tr>
+<tr>
+<td>擦除标记、校准、运维，09、19</td>
+<td>观测标签与维护事件 → 判定与可用率</td>
+<td>自编 Bayes 与区间并集实验</td>
+<td>基率、误报、事件重叠；小模型不替代生产监控</td>
+</tr>
+<tr>
+<td>后量子密码，12</td>
+<td>经典随机数/密钥 → 封装与解封装</td>
+<td>liboqs 的 C 语言 KEM 例子</td>
+<td>这是经典密码代码，不是量子算法；研究原型不等于生产安全认证</td>
+</tr>
+<tr>
+<td>最优控制/GRAPE，14</td>
+<td>控制参数与目标酉 → 优化脉冲</td>
+<td>正文原论文；本轮未归档完整控制优化库</td>
+<td>带宽、幅度、泄漏、硬件传递函数、梯度和鲁棒性</td>
+</tr>
+</tbody></table></div>
+<p>Stim 的官方范围是稳定子操作，<code>stim.Circuit</code> 的噪声模型亦有限制；把任意振幅阻尼和 T 门直接塞进去不是同一个模拟问题。<a href="https://github.com/quantumlib/Stim">Stim 官方能力与限制</a></p>
+<h2 id="5-工业实践用完整工作流审查不能只贴厂商名称">5. 工业实践：用完整工作流审查，不能只贴厂商名称</h2>
+<h3 id="51-电子结构量子样本加经典子空间计算">5.1 电子结构：量子样本加经典子空间计算</h3>
+<p><strong>目标</strong>：给定分子几何、轨道基组和活性空间，估计能量或其他可观测量。输入的轨道积分本身通常由经典程序得到；不同的基组和活性空间意味着不同任务。</p>
+<p><strong>公开证据</strong>：IBM 2025 年的 SQD 技术报告介绍了 Heron 与 Fugaku 联合计算氮分子和铁硫簇的流程。它支持“公开展示了量子与超级计算机协作的电子结构计算”，不能单独推出“所有化学任务更快”或“已形成商业利润”。<a href="https://research.ibm.com/publications/sample-based-quantum-diagonalization-for-electronic-structure-on-quantum-centric-supercomputers">IBM 研究报告，2025-03-23</a></p>
+<p><strong>复现路线</strong>：先在可精确对角化的小体系验证费米子映射；再保存全部 bitstring、恢复前后的粒子数约束及子空间；最后比较同一 Hamiltonian 下的经典方法。源码中的组态恢复与 <code>fermion.py</code> 是两个不同阶段，不能把恢复策略的成功当作能量无偏的证明。</p>
+<p><strong>还缺什么才能证明优势</strong>：强经典基线的收敛曲线、相同误差容限、经典节点数/内存、量子 shots 和排队执行时间，以及更换规模后的结果。对完整生产化部署，本仓库没有私有日志，不能补造。</p>
+<h3 id="52-优化建模成本和混合求解器边界">5.2 优化：建模成本和混合求解器边界</h3>
+<p><strong>目标</strong>：排程、路径或资源分配中找到满足约束的低成本解。首先区分业务原问题与编码后的 QUBO；罚项太小可能产生低能量但不可行的结果，罚项过大可能压缩有效系数精度。</p>
+<p><strong>公开入口</strong>：D-Wave 官方工业优化文档展示通过 Leap 混合服务求解业务模型，并将直接使用 QPU 的研究路径分开。<a href="https://docs.dwavequantum.com/en/latest/industrial_optimization/index.html">工业优化文档</a>、<a href="https://docs.dwavequantum.com/en/latest/industrial_optimization/workflow.html">模型与采样工作流</a></p>
+<p><strong>复现路线</strong>：先用本地 dimod 的穷举求解器核对极小实例；扩大后用成熟经典启发式或整数规划。记录同一约束、同一可行性检查与同一时间上限下的解质量分布。若服务包含经典预处理和后处理，结果应标为混合工作流，不能把全部改善归因于量子退火。</p>
+<p><strong>证据边界</strong>：厂商 API 可用、客户案例或合同是工程/商业采用证据；量子加速需要对具体任务和基线另证。云硬件有费用及账户依赖，本轮只整理公开代码，没有执行付费任务。</p>
+<h3 id="53-误差缓解可靠估计与额外预算">5.3 误差缓解：可靠估计与额外预算</h3>
+<p><strong>公开证据</strong>：2023 年 IBM 的受控实验在指定模型和观测量上比较噪声缓解与经典近似。它是研究“噪声设备能否得到可用期望值”的案例；仅靠其标题不能作为 2026 年所有经典方法仍无法匹敌的证明。<a href="https://www.nature.com/articles/s41586-023-06096-3">原始论文</a></p>
+<p><strong>复现路线</strong>：使用已知理想值的小电路检查缓解偏差，再固定 shots 总预算，比较原始与缓解估计的均方误差。保留每种噪声缩放的原始计数。Mitiq 的折叠程序说明如何构造额外线路，外推程序说明如何处理结果；这两步的物理假设和统计开销需要分开核验。</p>
+<h3 id="54-纠错网络与安全基础设施">5.4 纠错、网络与安全基础设施</h3>
+<p>纠错工作流是“电路与噪声 → syndrome → 译码 → 与真实逻辑翻转比较”。只看译码器平均运行时间会漏掉最坏延迟和硬件反馈期限。Stim/PyMatching 的公开源码有助复算模拟，但不是生产控制栈的全部。实验硬件证据见<a href="../10-error-correction.html">10 章</a>，运维定义见<a href="../19-engineering-architecture.html">19 章</a>。</p>
+<p>网络模拟器能验证调度或协议逻辑，却不证明实测光纤损耗、记忆寿命已经达到模拟设置。SeQUeNCe 本地摘录是仿真协议代码；工程参数须来自自己的校准或公开实验。</p>
+<p>PQC 的工程目标是替换受未来量子攻击威胁的经典密码。liboqs 官方把项目定位于原型与实验；本地 KEM 例子用于理解 API 流程，不能凭运行成功宣称侧信道、参数选择、随机数和系统集成都安全。<a href="https://github.com/open-quantum-safe/liboqs">liboqs 官方说明</a></p>
+<h2 id="6-源码阅读练习与答案">6. 源码阅读练习与答案</h2>
+<h3 id="s01为什么下载一个-python-文件却不能直接运行">S01：为什么下载一个 Python 文件却不能直接运行？</h3>
+<p>找到 <code>vqe.py</code> 或 <code>qsvt.py</code> 的 import，列出其内部模块和外部依赖。答案：源码摘录仅保存算法的关键实现；它仍依赖包内类型、算子、电路表示和其他库。正确办法是按清单中的固定 commit 获取完整项目，在隔离环境按该提交的安装说明安装；不要靠连续修改 import 把摘录拼成不明版本。</p>
+<h3 id="s02如何证明手中的源码没有悄悄改变">S02：如何证明手中的源码没有悄悄改变？</h3>
+<p>运行 <code>python3 codes/snapshot_sources.py --verify</code>。程序逐文件比较字节长度和 SHA-256，并核对提交字段长度。答案：匹配意味着本地字节与本清单一致；清单不提供作者身份的密码学背书，也不证明算法数学正确。源 URL、提交和许可证共同提供可追溯性，运行测试提供另一层证据。</p>
+<h3 id="s03同样叫运行通过证据有何不同">S03：同样叫“运行通过”，证据有何不同？</h3>
+<p>把“本地教学断言通过”“原库自带测试通过”“特定芯片实验复现”“优于强经典基线”排序。答案：它们回答不同问题，不能简单看成同一分数的高低。本轮实际执行教学数值断言、文件校验和阅读版检查；没有谎称安装并测试全部上游仓库，也没有进行新的真机实验。</p>
+<h2 id="7-明确没有交付的部分">7. 明确没有交付的部分</h2>
+<p>本轮未完整实现所有隐藏子群、量子行走、HHL、经典阴影、GRAPE、连续变量、拓扑量子计算、分布式容错等算法系统；这些主题仍需按原论文条件和外部项目进一步复现。未收集闭源生产代码、私有设备固件、付费后端数据及未经授权的录音。用户可以从表中看到这些差距，不会把一份有限代码目录误认为全领域完整实现。</p>
+</article><div class="page-turn"></div><footer>2026-09-26 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#1-怎样读算法对照表">1. 怎样读算法对照表</a><a class="toc-level-2" href="#2-基础算法与容错算法族">2. 基础算法与容错算法族</a><a class="toc-level-2" href="#3-近中期算法估计与经典基线">3. 近中期算法、估计与经典基线</a><a class="toc-level-2" href="#4-工程算法同样需要实测">4. 工程算法同样需要实测</a><a class="toc-level-2" href="#5-工业实践用完整工作流审查不能只贴厂商名称">5. 工业实践：用完整工作流审查，不能只贴厂商名称</a><a class="toc-level-3" href="#51-电子结构量子样本加经典子空间计算">5.1 电子结构：量子样本加经典子空间计算</a><a class="toc-level-3" href="#52-优化建模成本和混合求解器边界">5.2 优化：建模成本和混合求解器边界</a><a class="toc-level-3" href="#53-误差缓解可靠估计与额外预算">5.3 误差缓解：可靠估计与额外预算</a><a class="toc-level-3" href="#54-纠错网络与安全基础设施">5.4 纠错、网络与安全基础设施</a><a class="toc-level-2" href="#6-源码阅读练习与答案">6. 源码阅读练习与答案</a><a class="toc-level-3" href="#s01为什么下载一个-python-文件却不能直接运行">S01：为什么下载一个 Python 文件却不能直接运行？</a><a class="toc-level-3" href="#s02如何证明手中的源码没有悄悄改变">S02：如何证明手中的源码没有悄悄改变？</a><a class="toc-level-3" href="#s03同样叫运行通过证据有何不同">S03：同样叫“运行通过”，证据有何不同？</a><a class="toc-level-2" href="#7-明确没有交付的部分">7. 明确没有交付的部分</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>

@@ -519,6 +519,12 @@ $$
 
 答案见[练习与答案：量子力学 Q1](../appendices/exercises.md#量子力学-q1)。
 
+## 配套数值实验与展开答案
+
+构造路径与记录的联合态，扫描复重叠的相位。重叠模长决定理想模型的可见度，重叠相位移动条纹，漏写复共轭会把移动方向算反。
+
+题目和逐步解答见[基础实验册](../labs/foundations.md)，本章程序编号为 `q1`。可从[代码说明](../../codes/foundations/README.md)进入独立脚本与保存的运行结果。所有模拟样本均明确标作合成数据，不是硬件实验。
+
 ## 参考资料
 
 - Barton Zwiebach, MIT OpenCourseWare, *Quantum Physics I, Lecture Note 1*（课程讲义，2016；本次访问 2026-09-22）：[单光子、Mach–Zehnder、叠加与概率振幅](https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/7f930e013cef9cd7dec5aa88baa83f0a_MIT8_04S16_LecNotes1.pdf)。

@@ -32,7 +32,8 @@ const outputName = f => path.relative(source, f).replace(/README\.md$/, 'index.h
 const chapters = files.filter(f => /^\d\d-/.test(path.basename(f)));
 const foundations = chapters.filter(f => path.dirname(f) === path.join(source, 'quantum-mechanics'));
 const mainChapters = chapters.filter(f => path.dirname(f) === source);
-const appendixOrder = ['prerequisites.md','notation.md','glossary.md','exercises.md','references.md','audit-log.md'];
+const appendixOrder = ['prerequisites.md','notation.md','glossary.md','exercises.md','references.md','software-practice.md','audit-log.md'];
+const labs = files.filter(f => f.includes('/labs/'));
 const appendices = files.filter(f => f.includes('/appendices/')).sort((a,b) => appendixOrder.indexOf(path.basename(a)) - appendixOrder.indexOf(path.basename(b)));
 // Keep diagram titles specific to the relationship shown, rather than generating
 // "flowchart 1" captions that tell readers nothing about the figure.
@@ -133,7 +134,10 @@ try {
       if (!/^(https?:|mailto:|#)/.test(href)) {
         const [p, anchor] = href.split('#'), target = path.resolve(path.dirname(f), p);
         if (contents.has(target)) href = path.relative(path.dirname(path.join(output, outputName(f))), path.join(output, outputName(target))) + (anchor ? '#' + anchor : '');
-        else if (target.startsWith(path.join(root, 'work/research') + path.sep)) {
+        else if (target.startsWith(path.join(root, 'codes') + path.sep)) {
+          const local = path.join(output, 'codes', path.relative(path.join(root, 'codes'), target));
+          href = path.relative(path.dirname(path.join(output, outputName(f))), local) + (anchor ? '#' + anchor : '');
+        } else if (target.startsWith(path.join(root, 'work/research') + path.sep)) {
           const local = path.join(output, 'research', path.basename(target));
           reportCopies.set(target, local);
           href = path.relative(path.dirname(path.join(output, outputName(f))), local) + (anchor ? '#' + anchor : '');
@@ -141,13 +145,14 @@ try {
           href = path.relative(path.dirname(path.join(output, outputName(f))), target) + (anchor ? '#' + anchor : '');
         }
       }
-      return `<a href="${esc(href)}"${title ? ` title="${esc(title)}"` : ''}>${this.parser.parseInline(tokens)}</a>`;
+      const link = `<a href="${esc(href)}"${title ? ` title="${esc(title)}"` : ''}>${this.parser.parseInline(tokens)}</a>`;
+      return /\.wav$/.test(href) ? `${link}<audio controls preload="none" src="${esc(href)}" aria-label="教学合成音频"></audio>` : link;
     };
     let body = restore(marked.parse(protectedText, { renderer, gfm: true }));
     body = body.replace(/<table>/g, '<div class="table-scroll" tabindex="0"><table>').replace(/<\/table>/g, '</table></div>');
     const prefix = outputName(f).includes('/') ? '../' : '';
     const chapterLinks = list => list.map(c => `<a ${c === f ? 'aria-current="page" ' : ''}href="${prefix + outputName(c)}">${esc(titleOf(c))}</a>`).join('');
-    const nav = (foundations.length ? `<div class="nav-label">量子力学基础篇</div><a href="${prefix}quantum-mechanics/index.html">基础篇导读与先修说明</a>${chapterLinks(foundations)}<div class="nav-label">量子计算主篇</div>` : '') + chapterLinks(mainChapters);
+    const nav = (foundations.length ? `<div class="nav-label">量子力学基础篇</div><a href="${prefix}quantum-mechanics/index.html">基础篇导读与先修说明</a>${chapterLinks(foundations)}<div class="nav-label">量子计算主篇</div>` : '') + chapterLinks(mainChapters) + `<div class="nav-label">实验、代码与音频</div>${chapterLinks(labs)}`;
     const appNav = appendices.map(c => `<a ${c === f ? 'aria-current="page" ' : ''}href="${prefix + outputName(c)}">${esc(titleOf(c))}</a>`).join('');
     const renderedHeadings = new Map([...body.matchAll(/<h[23] id="([^"]+)">([\s\S]*?)<\/h[23]>/g)].map(m => [m[1], m[2]]));
     const toc = headings.filter(h => h.level === 2 || h.level === 3).map(h => `<a class="toc-level-${h.level}" href="#${esc(h.id)}">${renderedHeadings.get(esc(h.id)) || esc(h.title)}</a>`).join('');
@@ -160,16 +165,50 @@ try {
     const target = path.join(output, outputName(f)); await fs.mkdir(path.dirname(target), { recursive: true }); await fs.writeFile(target, html);
     report.pages.push({ source: path.relative(root, f), output: path.relative(root, target), sourceSha256: digest(raw), outputSha256: digest(html), mathSourceDigest, headingIds: headings.map(h=>h.id), diagrams: diagramCount, headings: hi, formulas: report.formulas - formulasBefore });
   }
+  await fs.cp(path.join(root, 'codes'), path.join(output, 'codes'), { recursive: true, filter: f => !f.includes('__pycache__') && !f.endsWith('.pyc') });
+  // Only rewrite our own Markdown guides; third-party bytes remain untouched.
+  report.codeCopies = [];
+  for (const from of (await walk(path.join(root, 'codes'))).filter(f => !f.includes('__pycache__') && !f.endsWith('.pyc'))) {
+    const rel = path.relative(path.join(root, 'codes'), from);
+    const to = path.join(output, 'codes', rel);
+    if (from.endsWith('.md') && !rel.startsWith('vendor' + path.sep)) {
+      const raw = await fs.readFile(from, 'utf8');
+      const rewritten = raw.replace(/\]\(([^)]+)\)/g, (full, href) => {
+        if (/^(https?:|#|mailto:)/.test(href)) return full;
+        const [p, anchor] = href.split('#');
+        const target = path.resolve(path.dirname(from), p);
+        if (!contents.has(target)) return full;
+        return '](' + path.relative(path.dirname(to), path.join(output, outputName(target))) + (anchor ? '#' + anchor : '') + ')';
+      });
+      await fs.writeFile(to, rewritten);
+    }
+    report.codeCopies.push({source: path.relative(root, from), output: path.relative(root, to), outputSha256: digest(await fs.readFile(to))});
+  }
   await fs.cp(path.join(source, 'assets'), path.join(output, 'assets'), { recursive: true });
   await fs.cp(path.join(here, 'node_modules/katex/dist'), path.join(output, 'assets/katex'), { recursive: true });
   await fs.copyFile(path.join(here, 'reader.css'), path.join(output, 'assets/reader.css'));
   await fs.mkdir(path.join(output, 'research'), { recursive: true });
-  for (const [from, to] of reportCopies) await fs.copyFile(from, to);
+  // Follow research-report links so a portable audit record retains its evidence.
+  for (const [from, to] of reportCopies) {
+    await fs.copyFile(from, to);
+    if (from.endsWith('.md')) {
+      const raw = await fs.readFile(from, 'utf8');
+      for (const match of raw.matchAll(/\]\(([^)]+)\)/g)) {
+        if (/^(https?:|#|mailto:)/.test(match[1])) continue;
+        const target = path.resolve(path.dirname(from), match[1].split('#')[0]);
+        if (target.startsWith(path.join(root, 'work/research') + path.sep) && !reportCopies.has(target)) {
+          // Historical reports also contain quoted Markdown patches, not only links.
+          try { await fs.access(target); reportCopies.set(target, path.join(output, 'research', path.basename(target))); } catch {}
+        }
+      }
+    }
+  }
   await fs.mkdir(path.join(output, 'assets/licenses'), { recursive: true });
   for (const [pkg, license] of [['katex', 'LICENSE'], ['mermaid', 'LICENSE'], ['marked', 'LICENSE.md']]) await fs.copyFile(path.join(here, 'node_modules', pkg, license), path.join(output, 'assets/licenses', pkg + '.txt'));
   report.inputHashes = {};
-  for (const file of [fileURLToPath(import.meta.url), path.join(here,'reader.css'), ...(await walk(path.join(source,'assets')))]) report.inputHashes[path.relative(root,file)] = digest(await fs.readFile(file));
+  for (const file of [fileURLToPath(import.meta.url), path.join(here,'reader.css'), ...(await walk(path.join(source,'assets'))), ...(await walk(path.join(root,'codes'))).filter(f => !f.includes('__pycache__') && !f.endsWith('.pyc'))]) report.inputHashes[path.relative(root,file)] = digest(await fs.readFile(file));
   await fs.writeFile(path.join(root, 'work/research/reader-build-report.json'), JSON.stringify(report, null, 2));
+  await fs.writeFile(path.join(output, 'research/reader-build-report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ pages: report.pages.length, formulas: report.formulas, diagrams: report.diagrams, mathErrors: report.mathErrors, diagramErrors: report.diagramErrors }, null, 2));
   if (report.mathErrors.length || report.diagramErrors.length) process.exitCode = 1;
 } finally { if (browser) await browser.close(); if (server) await new Promise(resolve => server.close(resolve)); }
