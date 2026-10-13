@@ -26,3 +26,5 @@
 源码阅读练习的独立数学核对：`python3 codes/practice/source_reading_checks.py`。该程序不导入vendor文件；新版基础、算法和系统实验均已接入统一入口。历史round69报告保留，最新统一结果写入 `work/research/code-validation.json`。
 
 第71轮逐章细算：基础 `python3 codes/foundations/round71_checks.py --case all`，算法 `python3 codes/algorithms/round71_checks.py all`，系统 `python3 codes/systems/round71_checks.py --case all`。各组的round71说明与结果提供固定输入、单位、参数边界及详细答案；均接入统一入口。工业工作流独立模型为 `python3 codes/practice/workflow_checks.py`，结果见 `practice/workflow-results.json`；图生成命令 `python3 codes/practice/workflow_figures.py` 使用上述固定绘图依赖。它们不导入或执行vendor摘录。
+
+第72轮逐章核算新增三组入口：基础归档独立复算 `python3 codes/foundations/round72_stdlib.py --case all`、算法 `python3 codes/algorithms/round72_checks.py all`、系统 `python3 codes/systems/round72_checks.py --case all`。统一入口收录它们。完整26项目的实际SDK任务、依赖锁、原始样本和C/C++构建单列于[SDK说明](sdk/README.md)，需各自隔离环境，不由默认入口联网安装。

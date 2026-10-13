@@ -57,6 +57,39 @@ python3 codes/run_all.py
 
 真实硬件实验还需要软件锁定、编译与校准快照、原始计数、时间顺序和费用预算。第三方源码清单支持代码溯源，没有替读者完成这些设备实验。
 
+## 第四组逐章练习：完整SDK与独立复算
+
+本轮在24篇正文就地补充F72/A72/S72练习，原题编号保持。完整版本、任务、原始样本、六组集成流程练习与限定范围见[完整SDK实验册](sdk-validation.md)。SDK安装和运行需各组隔离环境；默认标准库入口只做教学实验及保存结果的独立重算。
+
+| 篇章 | 新标签与重点 | 代码入口 |
+|---|---|---|
+| [00](../00-overview.md) | F72-00：模拟表示与相同实验 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [01](../01-math.md) | F72-01：矩阵指数前置 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [02](../02-single-qubit.md) | F72-02：原计数/线性逆/PSD | [运行与结果](../../codes/foundations/round72-README.md) |
+| [03](../03-multiple-qubits.md) | F72-03：局部阻尼与纠缠 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [04](../04-circuits-protocols.md) | F72-04：缺少反馈的传态 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [05](../05-noise-channels.md) | F72-05：CP与TP分开检查 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [Q1](../quantum-mechanics/01-experiments-states.md) | F72-Q1：不等探测效率 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [Q2](../quantum-mechanics/02-observables-dynamics.md) | F72-Q2：主方程与随机轨迹 | [运行与结果](../../codes/foundations/round72-README.md) |
+| [06](../06-algorithmic-primitives.md) | A72-06：可逆oracle及承诺 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [07](../07-algorithms.md) | A72-07：完整非对角HHL | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [08](../08-applications.md) | A72-08：费米子映射与粒子数 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [13](../13-quantum-information.md) | A72-13：非线性插件偏差 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [16](../16-advanced-algorithms-verification.md) | A72-16：一般图行走/QSP/两位阴影 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [17](../17-computation-models.md) | A72-17：QUBO与自旋符号 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [18](../18-channels-capacities-complexity.md) | A72-18：Gaussian光子概率 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [Q4](../quantum-mechanics/04-wavefunctions-models.md) | A72-Q4：Fock截止与无限尾界 | [运行与结果](../../codes/algorithms/round72-README.md) |
+| [09](../09-hardware.md) | S72-09：噪声参数换算 | [运行与结果](../../codes/systems/round72-README.md) |
+| [10](../10-error-correction.md) | S72-10：电路级纠错与原样本 | [运行与结果](../../codes/systems/round72-README.md) |
+| [11](../11-resources-benchmarks.md) | S72-11：失败区间/时间分母 | [运行与结果](../../codes/systems/round72-README.md) |
+| [12](../12-security-network-frontiers.md) | S72-12：ML-KEM/网络时间轴 | [运行与结果](../../codes/systems/round72-README.md) |
+| [14](../14-compilation-control.md) | S72-14：受约束GRAPE及梯度 | [运行与结果](../../codes/systems/round72-README.md) |
+| [15](../15-practice-research.md) | S72-15：归档独立重建 | [运行与结果](../../codes/systems/round72-README.md) |
+| [19](../19-engineering-architecture.md) | S72-19：反馈队列与截止 | [运行与结果](../../codes/systems/round72-README.md) |
+| [Q3](../quantum-mechanics/03-levels-control.md) | S72-Q3：三能级泄漏/过滤 | [运行与结果](../../codes/systems/round72-README.md) |
+
+上表的A72-16包含a/b/c三项独立练习；完整集成实验册另有R72-IAE、OBP、CUT、MPF、GST、HPC六组计算和实际SDK代码。全部样本为本地模拟或明示模型；没有新采集真机数据。
+
 ## 第三组逐章练习：从解释断点到独立核算
 
 这组题于2026-10-13加入，分别嵌在每篇相关小节中，答案紧邻问题，不替换原题编号。每篇有独立标签，均有实际可运行的标准库核算；同一程序负责多篇时用章节参数选择。正文先给一般定义、条件或证明，程序再用固定小输入从独立路径核对。

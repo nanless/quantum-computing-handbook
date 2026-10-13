@@ -1,0 +1,47 @@
+[
+  {
+    "path": "codes/systems/round72_checks.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/sequence_timeline.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/grape_control.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/run_liboqs.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/verify_saved_results.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/stim_matching.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O: validation assertions are required"
+  },
+  {
+    "path": "codes/systems/sdk/systems_calculations.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/sdk/plot_results.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  },
+  {
+    "path": "codes/systems/crossreview72.py",
+    "returncode": 1,
+    "error": "RuntimeError: Run without -O"
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "access_date": "2026-10-13",
+  "status": "passed",
+  "installed_sdks": [
+    "stim 1.16.0",
+    "pymatching 2.4.0",
+    "qutip 5.2.3",
+    "qutip-qtrl 0.2.0",
+    "sequence 0.8.5",
+    "liboqs 0.15.0 (selected ML-KEM build)"
+  ],
+  "results": [
+    "stim-matching-results.json",
+    "grape-results.json",
+    "sequence-results.json",
+    "liboqs-build-run.json",
+    "systems-calculations.json",
+    "saved-results-verification.json"
+  ],
+  "scope": "Full installed SDK computations on local CPU; neither all upstream tests nor physical industrial deployments",
+  "first_attempts": [
+    {
+      "case": "qutip-qtrl generic L-BFGS-B",
+      "outcome": "SciPy unknown maxfev warning",
+      "repair": "qtrl dedicated FMIN_L_BFGS_B; actual rerun same results no warning"
+    },
+    {
+      "case": "plot font",
+      "outcome": "PingFang.ttc not present at assumed path",
+      "repair": "detect installed STHeiti, configurable CJK path; rerun both actual PNG visual inspection"
+    }
+  ],
+  "visual_check": "Both generated previews manually inspected; no claim of full book screen inspection"
+}

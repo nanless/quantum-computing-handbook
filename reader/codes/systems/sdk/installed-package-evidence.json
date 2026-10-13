@@ -1,0 +1,77 @@
+[
+  {
+    "package": "stim",
+    "version": "1.16.0",
+    "requires_python": ">=3.6.0",
+    "license": "Apache 2",
+    "license_expression": null,
+    "project_urls": null,
+    "license_files": [
+      {
+        "path": "stim-1.16.0.dist-info/licenses/LICENSE",
+        "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+      }
+    ]
+  },
+  {
+    "package": "pymatching",
+    "version": "2.4.0",
+    "requires_python": ">=3.8",
+    "license": "Apache 2",
+    "license_expression": null,
+    "project_urls": null,
+    "license_files": [
+      {
+        "path": "pymatching-2.4.0.dist-info/licenses/LICENSE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    ]
+  },
+  {
+    "package": "qutip",
+    "version": "5.2.3",
+    "requires_python": ">=3.10",
+    "license": null,
+    "license_expression": "BSD-3-Clause",
+    "project_urls": [
+      "Homepage, https://qutip.org",
+      "Issues, https://github.com/qutip/qutip/issues",
+      "Documentation, https://qutip.readthedocs.io/en/stable/",
+      "Source Code, https://github.com/qutip/qutip"
+    ],
+    "license_files": [
+      {
+        "path": "qutip-5.2.3.dist-info/licenses/LICENSE.txt",
+        "sha256": "7bb5cf18e69c6321d9283f5fa390480417466d03344bf30190ef15303eb8fd39"
+      }
+    ]
+  },
+  {
+    "package": "qutip-qtrl",
+    "version": "0.2.0",
+    "requires_python": null,
+    "license": "BSD 3-Clause License",
+    "license_expression": null,
+    "project_urls": null,
+    "license_files": [
+      {
+        "path": "qutip_qtrl-0.2.0.dist-info/licenses/LICENSE",
+        "sha256": "3e4668094b637cdc9b99a81c943fbceb3982c1c0f01f2cbb39a870e6b565b236"
+      }
+    ]
+  },
+  {
+    "package": "sequence",
+    "version": "0.8.5",
+    "requires_python": ">=3.11, <3.15",
+    "license": null,
+    "license_expression": null,
+    "project_urls": [
+      "Homepage, https://github.com/sequence-toolbox/SeQUeNCe",
+      "Documentation, https://sequence-rtd-tutorial.readthedocs.io/",
+      "Issues, https://github.com/sequence-toolbox/SeQUeNCe/issues",
+      "Changelog, https://github.com/sequence-toolbox/SeQUeNCe/blob/master/CHANGELOG.md"
+    ],
+    "license_files": []
+  }
+]

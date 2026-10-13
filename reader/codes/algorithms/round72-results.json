@@ -1,0 +1,49 @@
+{
+  "13": {
+    "N": 6,
+    "E_Zbar": 0.9999999999999997,
+    "E_Zbar_squared": 1.3333333333333328,
+    "E_plugin_purity": 1.166666666666666,
+    "true_purity": 1,
+    "independent_pair_Z_product": 1.0,
+    "single_snapshot_eigenvalues": [
+      2,
+      -1
+    ]
+  },
+  "q4": {
+    "alpha_squared": 1.0,
+    "rows": [
+      {
+        "d": 4,
+        "retained_mass": 0.9810118431238463,
+        "tail": 0.018988156876153812,
+        "root_fidelity": 0.9904604197664065,
+        "trace_distance": 0.1377975212990198,
+        "truncated_normalized_mean_n": 0.9375,
+        "exact_mean_n": 1.0
+      },
+      {
+        "d": 8,
+        "retained_mass": 0.9999897508033253,
+        "tail": 1.0249196674641692e-05,
+        "root_fidelity": 0.9999948753885318,
+        "trace_distance": 0.0032014366579149575,
+        "truncated_normalized_mean_n": 0.9999270072992701,
+        "exact_mean_n": 1.0
+      },
+      {
+        "d": 12,
+        "retained_mass": 0.9999999991683892,
+        "tail": 8.316107426882335e-10,
+        "root_fidelity": 0.9999999995841946,
+        "trace_distance": 2.883766187970574e-05,
+        "truncated_normalized_mean_n": 0.9999999907838444,
+        "exact_mean_n": 1.0
+      }
+    ],
+    "summed_tail_through_n": 59,
+    "remaining_tail_upper_bound": 4.4947884202136054e-83,
+    "boundary": "known infinite coherent state versus normalized projected state; not driven truncated-Hamiltonian error"
+  }
+}

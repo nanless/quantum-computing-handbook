@@ -1,0 +1,122 @@
+{
+  "accessed": "2026-10-13",
+  "packages": [
+    {
+      "name": "qiskit",
+      "version": "2.5.2",
+      "requires_python": ">=3.10",
+      "required_dependencies": [
+        "numpy<3,>=2.0",
+        "scipy>=1.14",
+        "rustworkx>=0.15.0",
+        "dill>=0.3",
+        "stevedore>=3.0.0",
+        "typing-extensions"
+      ],
+      "pypi": "https://pypi.org/project/qiskit/2.5.2/"
+    },
+    {
+      "name": "qiskit-algorithms",
+      "version": "0.4.0",
+      "requires_python": ">=3.9",
+      "required_dependencies": [
+        "qiskit>=1.0",
+        "scipy>=1.4",
+        "numpy>=1.17"
+      ],
+      "pypi": "https://pypi.org/project/qiskit-algorithms/0.4.0/"
+    },
+    {
+      "name": "qiskit-addon-sqd",
+      "version": "0.14.0",
+      "requires_python": ">=3.10",
+      "required_dependencies": [
+        "jax>=0.4.30",
+        "jaxlib>=0.4.30",
+        "numpy>=2.0",
+        "pyscf>=2.9; sys_platform != \"win32\"",
+        "qiskit<3,>=2.0",
+        "scipy>=1.14.1"
+      ],
+      "pypi": "https://pypi.org/project/qiskit-addon-sqd/0.14.0/"
+    },
+    {
+      "name": "qiskit-addon-mpf",
+      "version": "0.3.0",
+      "requires_python": ">=3.9",
+      "required_dependencies": [
+        "cvxpy>=1.6",
+        "numpy>=1.23",
+        "qiskit<3,>=1.2"
+      ],
+      "pypi": "https://pypi.org/project/qiskit-addon-mpf/0.3.0/"
+    },
+    {
+      "name": "qiskit-addon-obp",
+      "version": "0.3.0",
+      "requires_python": ">=3.9",
+      "required_dependencies": [
+        "matplotlib",
+        "numpy>=1.23",
+        "qiskit-ibm-runtime>=0.27",
+        "qiskit<3,>=1.2"
+      ],
+      "pypi": "https://pypi.org/project/qiskit-addon-obp/0.3.0/"
+    },
+    {
+      "name": "qiskit-addon-cutting",
+      "version": "0.10.0",
+      "requires_python": ">=3.9",
+      "required_dependencies": [
+        "numpy>=1.23.0",
+        "qiskit-aer>=0.14.0.1",
+        "qiskit-ibm-runtime>=0.24.0",
+        "qiskit<3,>=1.3.1",
+        "rustworkx>=0.15.0",
+        "scipy>=1.5.4"
+      ],
+      "pypi": "https://pypi.org/project/qiskit-addon-cutting/0.10.0/"
+    },
+    {
+      "name": "mitiq",
+      "version": "1.1.0",
+      "requires_python": "<3.13,>=3.11",
+      "required_dependencies": [
+        "numpy<2.3.0,>=2.0.0",
+        "scipy<=1.17.1,>=1.10.1",
+        "cirq-core<1.7.0,>=1.6.0",
+        "tabulate",
+        "matplotlib>=3.8"
+      ],
+      "pypi": "https://pypi.org/project/mitiq/1.1.0/"
+    },
+    {
+      "name": "pygsti",
+      "version": "0.10.2",
+      "requires_python": ">=3.10",
+      "required_dependencies": [
+        "numpy>=1.15.0",
+        "scipy",
+        "stim",
+        "plotly>=3.8.0",
+        "pandas",
+        "matplotlib",
+        "networkx",
+        "typing_extensions",
+        "tqdm>=4.42.0"
+      ],
+      "pypi": "https://pypi.org/project/pygsti/0.10.2/"
+    },
+    {
+      "name": "pauli-prop",
+      "version": "0.2.1",
+      "requires_python": ">=3.10",
+      "required_dependencies": [
+        "qiskit<3,>=2.1.2",
+        "numpy>=1.26",
+        "qiskit-aer>=0.17.1"
+      ],
+      "pypi": "https://pypi.org/project/pauli-prop/0.2.1/"
+    }
+  ]
+}

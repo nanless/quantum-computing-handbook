@@ -1,0 +1,4 @@
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-experiments==0.14.2
+qutip==5.3.1

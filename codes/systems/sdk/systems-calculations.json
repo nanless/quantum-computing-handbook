@@ -1,0 +1,198 @@
+{
+  "access_date": "2026-10-13",
+  "pauli_noise": {
+    "p": 0.001,
+    "qubit_average_overlap": 0.9993333333333333,
+    "two_qubit_average_error": 0.0008
+  },
+  "frechet_max_diff": 6.092551327012795e-12,
+  "naive_commuting_derivative_max_diff": 0.0021115544664203237,
+  "queue": {
+    "mean_service_us": 0.9600000000000003,
+    "max_latency_us": 4.0,
+    "misses": 10,
+    "jobs": [
+      {
+        "job": 0,
+        "arrival_us": 0,
+        "service_us": 0.8,
+        "start_us": 0.0,
+        "finish_us": 0.8,
+        "latency_us": 0.8,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 1,
+        "arrival_us": 1,
+        "service_us": 0.8,
+        "start_us": 1.0,
+        "finish_us": 1.8,
+        "latency_us": 0.8,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 2,
+        "arrival_us": 2,
+        "service_us": 4,
+        "start_us": 2.0,
+        "finish_us": 6.0,
+        "latency_us": 4.0,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 3,
+        "arrival_us": 3,
+        "service_us": 0.8,
+        "start_us": 6.0,
+        "finish_us": 6.8,
+        "latency_us": 3.8,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 4,
+        "arrival_us": 4,
+        "service_us": 0.8,
+        "start_us": 6.8,
+        "finish_us": 7.6,
+        "latency_us": 3.5999999999999996,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 5,
+        "arrival_us": 5,
+        "service_us": 0.8,
+        "start_us": 7.6,
+        "finish_us": 8.4,
+        "latency_us": 3.4000000000000004,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 6,
+        "arrival_us": 6,
+        "service_us": 0.8,
+        "start_us": 8.4,
+        "finish_us": 9.200000000000001,
+        "latency_us": 3.200000000000001,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 7,
+        "arrival_us": 7,
+        "service_us": 0.8,
+        "start_us": 9.200000000000001,
+        "finish_us": 10.000000000000002,
+        "latency_us": 3.0000000000000018,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 8,
+        "arrival_us": 8,
+        "service_us": 0.8,
+        "start_us": 10.000000000000002,
+        "finish_us": 10.800000000000002,
+        "latency_us": 2.8000000000000025,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 9,
+        "arrival_us": 9,
+        "service_us": 0.8,
+        "start_us": 10.800000000000002,
+        "finish_us": 11.600000000000003,
+        "latency_us": 2.600000000000003,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 10,
+        "arrival_us": 10,
+        "service_us": 0.8,
+        "start_us": 11.600000000000003,
+        "finish_us": 12.400000000000004,
+        "latency_us": 2.400000000000004,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 11,
+        "arrival_us": 11,
+        "service_us": 0.8,
+        "start_us": 12.400000000000004,
+        "finish_us": 13.200000000000005,
+        "latency_us": 2.2000000000000046,
+        "miss_2us_deadline": true
+      },
+      {
+        "job": 12,
+        "arrival_us": 12,
+        "service_us": 0.8,
+        "start_us": 13.200000000000005,
+        "finish_us": 14.000000000000005,
+        "latency_us": 2.0000000000000053,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 13,
+        "arrival_us": 13,
+        "service_us": 0.8,
+        "start_us": 14.000000000000005,
+        "finish_us": 14.800000000000006,
+        "latency_us": 1.800000000000006,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 14,
+        "arrival_us": 14,
+        "service_us": 0.8,
+        "start_us": 14.800000000000006,
+        "finish_us": 15.600000000000007,
+        "latency_us": 1.6000000000000068,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 15,
+        "arrival_us": 15,
+        "service_us": 0.8,
+        "start_us": 15.600000000000007,
+        "finish_us": 16.400000000000006,
+        "latency_us": 1.4000000000000057,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 16,
+        "arrival_us": 16,
+        "service_us": 0.8,
+        "start_us": 16.400000000000006,
+        "finish_us": 17.200000000000006,
+        "latency_us": 1.2000000000000064,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 17,
+        "arrival_us": 17,
+        "service_us": 0.8,
+        "start_us": 17.200000000000006,
+        "finish_us": 18.000000000000007,
+        "latency_us": 1.000000000000007,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 18,
+        "arrival_us": 18,
+        "service_us": 0.8,
+        "start_us": 18.000000000000007,
+        "finish_us": 18.800000000000008,
+        "latency_us": 0.8000000000000078,
+        "miss_2us_deadline": false
+      },
+      {
+        "job": 19,
+        "arrival_us": 19,
+        "service_us": 0.8,
+        "start_us": 19.0,
+        "finish_us": 19.8,
+        "latency_us": 0.8000000000000007,
+        "miss_2us_deadline": false
+      }
+    ]
+  },
+  "status": "passed"
+}

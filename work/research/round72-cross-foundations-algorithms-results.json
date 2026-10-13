@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-13",
+  "independent_hhl_DFT_matrix": [
+    {
+      "C": 1.0,
+      "success": 0.6249999999999989,
+      "x_real": [
+        0.9486832980505137,
+        0.3162277660168379
+      ],
+      "max_nonzero_phase": 2.4489724819694017e-16
+    },
+    {
+      "C": 0.5,
+      "success": 0.15624999999999972,
+      "x_real": [
+        0.9486832980505137,
+        0.3162277660168379
+      ],
+      "max_nonzero_phase": 1.2244862409847008e-16
+    }
+  ],
+  "qsp_max_selected_error": 6.938893903907228e-17,
+  "shadow_matching_counts": [
+    3376,
+    3386,
+    3304
+  ],
+  "plugin_purity_mean": 1.166666666666666,
+  "U_statistic_purity_mean": 0.9999999999999996,
+  "CV_tail_after_59_upper_bound": 4.4947884202136054e-83,
+  "scope": "independent fixed-input reconstruction and saved raw data; not repeated full SDK installation"
+}

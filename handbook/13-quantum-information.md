@@ -78,6 +78,40 @@ $$S(\rho)=-\sum_j\lambda_j\log_2\lambda_j.$$
 
 纯态熵为零不表示测量结果一定确定。$|+\rangle$ 在计算基测量仍随机；$S(\rho)$ 描述态本身的混合度，不等于任意指定测量的输出熵。
 
+### 练习 A72-13：无偏的测量估计，代进熵公式后不一定无偏
+
+第 16 章的 Pauli 阴影先构造一个用于估计期望的矩阵快照。比如选到 $Z$ 并得到 $+1$，单比特快照为 $3|0\rangle\langle0|-I=\operatorname{diag}(2,-1)$。它的迹为 1，却有负本征值，因此**不是密度矩阵**；不能直接求它的 von Neumann 熵。多个快照的平均也可能暂有负谱；这是估计器的取值，不是实验制备出了负概率。
+
+即使先只估计一个无偏量，再代进非线性公式，也会产生新问题。为隔离计算，设其余 Bloch 分量已知为零，只估计 $|0\rangle$ 的 $Z$ 期望。每个独立快照的 $\hat z$ 以概率 $1/3$ 取 3、以概率 $2/3$ 取 0；所以 $\mathbb E\hat z=1$、方差为 2。$N$ 次平均记为 $\bar z$，则
+
+$$
+\mathbb E\bar z=1,\qquad
+\mathbb E\bar z^2=\operatorname{Var}(\bar z)+(\mathbb E\bar z)^2=1+\frac2N.
+$$
+
+如果把 $\widehat\rho=(I+\bar zZ)/2$ 代进纯度公式，就得到
+
+$$
+\widehat{\mathcal P}_{\rm plug}=\operatorname{Tr}(\widehat\rho^2)
+=\frac{1+\bar z^2}{2},\qquad
+\mathbb E\widehat{\mathcal P}_{\rm plug}=1+\frac1N.
+$$
+
+真实纯度是 1，插件估计却平均超过 1。$N=6$ 时平均为 $7/6$；若这一批恰有四个 $Z$ 记录，$\bar z=3(4)/6=2$，插件数为 $5/2$，相应矩阵有本征值 $3/2,-1/2$。这仍不能解释成“态比纯态更纯”。
+
+**怎样消掉这一个平方偏差？** 用不同副本的独立快照作交叉乘积：
+
+$$
+\widehat{z^2}_{U}=\frac1{N(N-1)}\sum_{s\ne t}\hat z_s\hat z_t,
+\qquad N\ge2.
+$$
+
+不同轮独立使每项平均为 $(\mathbb E\hat z)^2=z^2$，所以 $(1+\widehat{z^2}_{U})/2$ 对这个限定模型的纯度无偏。实现时无需真的双重循环：分子是 $(\sum_s\hat z_s)^2-\sum_s\hat z_s^2$。去掉的是同一快照的二阶噪声项；读出偏差或相关轮次不会被这个代数自动修复。估计值仍可能超出物理范围，不能把无偏、正性和低方差混为一事。
+
+**练习与答案。** 在上述 $N=6$、四个非零记录的批次中，交叉乘积为 $[(4\times3)^2-4\times9]/(6\times5)=108/30=3.6$，纯度估计为 2.3；单批仍可不物理，但对全部可能批次按二项式概率平均才回到 1。若把矩阵投影到合法态集合再求熵，能改善物理性，却改变估计器及其偏差；特别是 $S=-\sum\lambda\log\lambda$ 和纯度都不是线性期望，不能仅凭单个 Pauli 估计无偏就宣称其无偏。
+
+`python3 codes/algorithms/round72_checks.py 13` 穷举 $N=6$ 的全部二项式计数，独立核对 $7/6$ 和交叉乘积平均；多比特原始阴影记录由 [PennyLane SDK 任务](../codes/algorithms/sdk/README.md)生成。理论入口是 [Huang–Kueng–Preskill 原论文](https://arxiv.org/abs/2002.08953)；[PennyLane 阴影文档](https://docs.pennylane.ai/en/stable/code/api/pennylane.ClassicalShadow.html)也分别说明负谱和非线性熵估计的边界（访问于 2026-10-13）。本例不提供一般熵的置信区间或联合测量最优性证明。
+
 ## 3. 联合熵、条件熵与互信息
 
 先回忆经典情形。联合分布 $p(x,y)$ 的互信息可以写成

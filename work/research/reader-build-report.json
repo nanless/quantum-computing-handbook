@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-13T05:41:47.674Z",
+  "generatedAt": "2026-10-13T07:53:23.692Z",
   "pages": [
     {
       "source": "handbook/00-overview.md",
       "output": "reader/00-overview.html",
-      "sourceSha256": "acd76828b61730c33733234c2949c1fda642aec28dc51be286e82541129cff5a",
-      "outputSha256": "54768a84094b34792ef22756041d8da636d8aef01a62a49d78a4facc20114ad3",
-      "mathSourceDigest": "84b21611948a7cad69df10ba66e4a23801d0149822632fb36d6a35541f652f70",
+      "sourceSha256": "9c2ff2a116e3ce8da60cedadc13d74a7503f7e92bf11fbd92438150c0bd32e34",
+      "outputSha256": "3c68b169b51ac5d6d9dfb3d646c37636347b517d7fbe820694df7f4b92b6696b",
+      "mathSourceDigest": "fda56c4e1afeb0d28480e471d975bef5dea3c0441f44c2c6b803cced08abe966",
       "headingIds": [
         "00全景量子计算是什么又不是什么",
         "1-一句话定义",
@@ -17,6 +17,7 @@
         "32-纠缠",
         "33-干涉",
         "f71-00指数多个振幅怎样变成经典模拟成本",
+        "f72-00换一种模拟表示怎样比较同一个实验",
         "4-量子计算可能在哪些地方加速",
         "读懂更快之前先固定四件事",
         "5-量子计算不会做什么",
@@ -29,15 +30,15 @@
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 19,
-      "formulas": 76
+      "headings": 20,
+      "formulas": 83
     },
     {
       "source": "handbook/01-math.md",
       "output": "reader/01-math.html",
-      "sourceSha256": "ea4b18ea34b7b2d66c0b6ec12c3c84b702c0d807e13ffded31c3acdb15c4705f",
-      "outputSha256": "41d99c664e87a15201b64bea247ef52946863ca84e05c3c118bd9c119d66074e",
-      "mathSourceDigest": "211a7d7d7ed7cebbd0d05b344a2d979120b32fecca563d9b5ebe29025b9de805",
+      "sourceSha256": "12284878a8c494908321e6d0c993c9adf6ff2603bb34ff5e313dc1094ec625cb",
+      "outputSha256": "1300096cead100462b259a70f1c8cef23abd540647cb00b0675de5afb4daf651",
+      "mathSourceDigest": "ffb779d755a66d24b415ed193adc27f5845e245e8925ab85010e9aac86a2d61e",
       "headingIds": [
         "01够用而不跳步的数学工具",
         "1-复数相位从这里进入",
@@ -58,6 +59,7 @@
         "先认识外积再写谱分解",
         "6-迹密度矩阵与正半定用到时回看",
         "进阶回看正半定为什么不能只看对角线",
+        "f72-01矩阵的指数先变本征值不逐格按计算器",
         "7-张量积组合系统的语言",
         "完整算例",
         "算例只对第一个比特作用",
@@ -77,15 +79,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 36,
-      "formulas": 704
+      "headings": 37,
+      "formulas": 729
     },
     {
       "source": "handbook/02-single-qubit.md",
       "output": "reader/02-single-qubit.html",
-      "sourceSha256": "c90a6b1303c02e846ea096fb66d7124ede6a1136ca913a45aeeeb99b53908926",
-      "outputSha256": "de9ecfd87e66559730b1dcc166f1877cb977931a1d5cbaf7944b935327ea824e",
-      "mathSourceDigest": "37fa7fc87c34b8271180245144817f0654ce99cc68645541002341cbd3d61927",
+      "sourceSha256": "0566413c3a160d44fed819711ea9856a1fe7b63cf5acb2c9e576c9d08984422b",
+      "outputSha256": "16d472af1b31c12aea82b5498562f23b6f03851bedd8f53d5c5a83dfc7343bdc",
+      "mathSourceDigest": "939a1f5e16ec787501c94f8702911d33a3cf2500e2ac9b35b9c6d9de32eb01a6",
       "headingIds": [
         "02单量子比特状态相位与测量",
         "1-量子态不是一个隐藏的经典位",
@@ -108,6 +110,7 @@
         "算例同一个-povm不同的测量后状态",
         "f71-02把前面的非投影概率模型补成一次完整测量",
         "8-采样误差不是设备噪声",
+        "f72-02完整层析运行怎样从计数追到拟合后的态",
         "9-常见误区",
         "10-自检",
         "新增诊断练习三组合法计数为何拼出一个不合法的态",
@@ -115,15 +118,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 26,
-      "formulas": 471
+      "headings": 27,
+      "formulas": 492
     },
     {
       "source": "handbook/03-multiple-qubits.md",
       "output": "reader/03-multiple-qubits.html",
-      "sourceSha256": "ce04aa32fc8099a785b3f843905175fa1d1cc106fb3300f5fcf02b11310dcccd",
-      "outputSha256": "d4dd6b0745233557a022e355828060293fbebc19c13fb9f2d2b6466b42af248a",
-      "mathSourceDigest": "8fdb00e489928c0b28f902ed50eef4d9a427fd4927d428bac555cc78f46c137c",
+      "sourceSha256": "7764f3e670c48f729c2ee5faad6d1c5c93699283df3b03a56b8e6a140a9862cf",
+      "outputSha256": "eb0f23222f872fe9fbe4ad604f14cee659a17ee39223025460718ae13b42da1f",
+      "mathSourceDigest": "f2557ea92c886927a0af9fa77ad7c1edac4f25c7bee3e5dbca82b66584eb8864",
       "headingIds": [
         "03多量子比特纠缠与约化态",
         "1-从两个比特的四种结果到联合态",
@@ -146,6 +149,7 @@
         "用熵比较这两个纯态",
         "6-经典关联和量子纠缠的区别",
         "从两组计数得到一个可检验的纠缠判据",
+        "f72-03远端阻尼不传信但联合纠缠还能剩多少",
         "7-bell-不等式说明什么",
         "8-单配性进阶回看",
         "9-常见误区",
@@ -155,15 +159,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 28,
-      "formulas": 507
+      "headings": 29,
+      "formulas": 526
     },
     {
       "source": "handbook/04-circuits-protocols.md",
       "output": "reader/04-circuits-protocols.html",
-      "sourceSha256": "1d1bda898c95ba89fa3d5d1f8cac3278420820dccac64e5e7cde5fbe5be198fb",
-      "outputSha256": "dea7551f06b3970804866775da16911d983d6beb1a425290f5b207768a6cb73e",
-      "mathSourceDigest": "86fb70d9f09f43c17d6a726dacedc2a034b26abcce9a6b5dd23a3ab0ecd02849",
+      "sourceSha256": "df9705665a9176f8a503f8754a27c9a1bdefd0010f80b28b0cbaedae105fff6c",
+      "outputSha256": "826e563441492a5af5a6b85776bdcb074499ab379e389078ad59d7ac5695d3fb",
+      "mathSourceDigest": "3255b5fab6d3be5ca6b98b2f7fd0240ecec9639c24f6d850c1f24237b70b3ce9",
       "headingIds": [
         "04量子门电路与三种基础协议",
         "1-电路怎样读",
@@ -173,6 +177,7 @@
         "5-不可删除与复位不是一回事",
         "6-量子隐形传态",
         "f71-04传态要保留联合关联不能只还原一个局部概率表",
+        "f72-04少发一位经典消息传态会怎样失败",
         "7-超密编码",
         "8-相位回踢",
         "9-通用性与近似",
@@ -183,15 +188,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 16,
-      "formulas": 393
+      "headings": 17,
+      "formulas": 414
     },
     {
       "source": "handbook/05-noise-channels.md",
       "output": "reader/05-noise-channels.html",
-      "sourceSha256": "983b1b75367736e1856f6200512637cdb998acf0f9013f16ea2640fcad108148",
-      "outputSha256": "be8c4d97cdffe37a711625624150a81d5b6e38bd2f35c7e1bf446877dda99b77",
-      "mathSourceDigest": "b6640b877cb3463082a0bb863a4ae332aa2a41f27756372aa020f3d6bb1ebda7",
+      "sourceSha256": "7589811705cdb7bdda32c6296c16e95c3537af147bf0dafa82c3059f523558a3",
+      "outputSha256": "51d7046d0a35cfee873e5df2e7142e9145ac56a71687c0b816dec82ba0bf7826",
+      "mathSourceDigest": "c59b63657f45a73a41a4da34582a790fb0b4e613724aad47038b6e77c028bc90",
       "headingIds": [
         "05混态噪声与量子信道",
         "1-为什么态矢量不够",
@@ -214,6 +219,7 @@
         "6-t_1t_2t_2-与-t_phi",
         "7-噪声为何不总是独立同分布",
         "8-过程表征与误差指标",
+        "f72-05过程层析正性与保迹必须分别验收",
         "9-误差缓解不等于错误校正",
         "10-自检",
         "新增诊断练习有限温度弛豫为何也能把基态激发起来",
@@ -221,15 +227,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 26,
-      "formulas": 271
+      "headings": 27,
+      "formulas": 296
     },
     {
       "source": "handbook/06-algorithmic-primitives.md",
       "output": "reader/06-algorithmic-primitives.html",
-      "sourceSha256": "89b9e1b014d5a268746d95531b64c96cec0695a49d0bc90bb4ecad5786ac2f71",
-      "outputSha256": "aaf4a1eb6fe28fd865f691518b30bef22ffc871d4efc98f602d140df74914fcd",
-      "mathSourceDigest": "027e9a0c63504f755b373b9da7974d4e35776a4e401f72028212478b74f44111",
+      "sourceSha256": "2e8940f2ede8190995de2e5e4b188e587db4dfb35b9500b08be5abccee9597c3",
+      "outputSha256": "a7e7be1be7a37d23765126d9d7eb29df20cced9f9ebcc6412bb0e11d6fc92b24",
+      "mathSourceDigest": "0ad05ca74fd2915aafaa998b28000301e17fdd8377ab697ca854f9a8995d299b",
       "headingIds": [
         "06量子算法的共同骨架",
         "1-从经典函数到可逆-oracle",
@@ -240,6 +246,7 @@
         "优势的准确说法",
         "3-bernsteinvazirani一次读出隐藏线性结构",
         "s101-手算",
+        "完整-sdk-练习-a72-06先写可逆-oracle再观察确定输出",
         "4-振幅放大",
         "n4-的精确算例",
         "5-量子傅里叶变换",
@@ -267,15 +274,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 34,
-      "formulas": 552
+      "headings": 35,
+      "formulas": 569
     },
     {
       "source": "handbook/07-algorithms.md",
       "output": "reader/07-algorithms.html",
-      "sourceSha256": "3c3a09a6c2ef1f6c496d691ab11036972beec1f3af086b349bec95cf63b06021",
-      "outputSha256": "2878d8ea83578cdfebc0f1657898a9aad41ff62804ea0902064593a96638540a",
-      "mathSourceDigest": "3e083fafcafa86b5394ab4374909d48625836cdc0b726fc04b77fcbc89e966d2",
+      "sourceSha256": "5bea1c3a39be59913a9508877f6027e3658b89501b01be5ce41fae3fe70065f7",
+      "outputSha256": "89103e160b82032259215397d04508b552c4dc2b6a362f8f6a3a7e7471c960c4",
+      "mathSourceDigest": "40dfa419111c561a9a68f7e3667b9e665326d42f40b510d85b6222faf5a232dc",
       "headingIds": [
         "07代表性量子算法从隐藏周期到量子模拟",
         "1-simon-算法指数级查询优势的原型",
@@ -299,6 +306,8 @@
         "手算qdrift-怎样抽样",
         "5-hhl-与量子线性系统算法",
         "二维手算输出是解态不是解向量清单",
+        "完整电路练习-a72-07非对角-hhl从相位写入到条件读出",
+        "simon-的实际函数电路也要核验承诺",
         "6-量子幅度估计",
         "两位相位估计的手算",
         "7-复杂度类的正确读法",
@@ -312,15 +321,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 33,
-      "formulas": 687
+      "headings": 35,
+      "formulas": 735
     },
     {
       "source": "handbook/08-applications.md",
       "output": "reader/08-applications.html",
-      "sourceSha256": "d7694d07061853aab8027383476daa9c3c1c31999c64d9a3b485207df145d2b8",
-      "outputSha256": "61aee559eb6f1fba58b6b12c3364a29d6d593f1ad6c71b688ef984f24a328b32",
-      "mathSourceDigest": "76368ae4227f935e742cbe5b6aebcc36d9e19f429771ea1fc9b63b957d32c4d6",
+      "sourceSha256": "85cc35ce1b60bf15d462995643316c66676a003bd05d6bbb8f51a8b4847707c5",
+      "outputSha256": "d6418eeb6e86d77c8a9246dd69c4e3ee96b9ac0a553c022626334d22c9d66c31",
+      "mathSourceDigest": "bff0c63d5b37005e61ba9fcf603724cbba5b7a4b145101a80089a6bc11e33e92",
       "headingIds": [
         "08应用变分算法与证据边界",
         "阅读前先固定究竟要交付什么",
@@ -347,6 +356,7 @@
         "一个二值收益采样成本与幅度估计",
         "8-化学与材料",
         "一个能量差的误差预算",
+        "开源化学接口练习-a72-08先固定粒子数再比较能量",
         "9-何谓可信的实用量子优势",
         "10-错误缓解的证据边界",
         "实操扩展把近似误差条变成有限样本保证",
@@ -358,15 +368,15 @@
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 34,
-      "formulas": 469
+      "headings": 35,
+      "formulas": 488
     },
     {
       "source": "handbook/09-hardware.md",
       "output": "reader/09-hardware.html",
-      "sourceSha256": "1de47639a114aafcf59609864fa70f82e0f48a873e189007ca3a147b9e515c53",
-      "outputSha256": "0f6710509709af18ac992ac6f83fe8a07eb6783ddf137fea2b38cd7d57a31f4e",
-      "mathSourceDigest": "e043b9e101c36048629179cc7c3cf44a65af975ed4418a3530d348dd146d8660",
+      "sourceSha256": "0c4633b53c22b593b0a740db7ba4760551fdb7ce98f6bf3cc444dcfa51d8e254",
+      "outputSha256": "4d843a05969e5a835fe2c167ce8a2baa42bd893095f2fca9f7376399ea472194",
+      "mathSourceDigest": "c0a9adb9e18c48bf87476949a91ad4c04e208bbedd8a9bf005caf0a8df98dd23",
       "headingIds": [
         "09从物理量子比特到控制栈",
         "1-先把量子计算机拆成一整套系统",
@@ -388,6 +398,7 @@
         "用-2000-次标定看懂不对称读出",
         "53-练习与实验一个丢失告警究竟有多可信",
         "54-练习与实验标定本身有误差怎样一起算",
+        "55-s72-09把门错误-01填进模拟器前先对齐定义",
         "6-软件控制与云平台",
         "从一个远距-cnot-算到物理门",
         "反馈是一条有时限的数据通路",
@@ -398,15 +409,15 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 28,
-      "formulas": 194
+      "headings": 29,
+      "formulas": 215
     },
     {
       "source": "handbook/10-error-correction.md",
       "output": "reader/10-error-correction.html",
-      "sourceSha256": "5cb596547098382b8e8fef5d8736b814cc538971890d43b14ce7edd563877f25",
-      "outputSha256": "61a215585c4dbe723cba730b084f1bf9393c49bb19e414d966b47192a509f2b0",
-      "mathSourceDigest": "39d90d44091bb2a10484794f2ad1989cc798d47192feafb7b6197a816bc0827a",
+      "sourceSha256": "3c00414a3df5e4f5d7f1f6a20cffe5913925bcb6ee4dc73085eb5ef23e38c221",
+      "outputSha256": "2282f33b02e8810da0a703f878570952c72644f5cc721409fcc5bccbfa3ef242",
+      "mathSourceDigest": "0dd93fb32d088905d1dc8c4806a6e9ece98dd9d595d0d02fed514ebc91e8b263",
       "headingIds": [
         "10量子错误校正与容错计算",
         "1-不可克隆为何不妨碍纠错",
@@ -424,6 +435,7 @@
         "7-表面码",
         "71-为什么要比较相邻两轮而不是只看一轮综合征",
         "72-练习与实验最少翻转为什么未必最可信",
+        "73-s72-10真正跑完电路检测事件译码逻辑判错",
         "8-阈值何时增加冗余才真正有用",
         "一个明确标注为示意的缩放例子",
         "9-容错纠错码之外还需要什么",
@@ -437,15 +449,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 27,
-      "formulas": 310
+      "headings": 28,
+      "formulas": 326
     },
     {
       "source": "handbook/11-resources-benchmarks.md",
       "output": "reader/11-resources-benchmarks.html",
-      "sourceSha256": "22da7381b3b88eb36371ec36ed717467ddd79e2eed3ea3eefdcd4133ee123bfb",
-      "outputSha256": "5da83a96332fbae5fbb5f594d45c7ce752d6a7d3b97f1ed2b0f83dac091bbc2b",
-      "mathSourceDigest": "4a68fe6ee65db9381b7bc90ca7e219c2180f07cd8694664abee79c01a27503da",
+      "sourceSha256": "702f7c47487705a8ede26d8dc136eee8269bf2fd4cc3f294876b0fdd14616ebf",
+      "outputSha256": "a2ea387893b6a40952b10b3b701374322c8030f7857151b2bfb28f4d24800690",
+      "mathSourceDigest": "8038bbba6174d932551e16fa1e94bc466085dcb740f047793c9def278f5fff52",
       "headingIds": [
         "11资源估算与基准怎样比较才公平",
         "1-基准不是一个排行榜数字",
@@ -462,6 +474,7 @@
         "7-逻辑量子比特基准不能只说逻辑优于物理",
         "从总失败预算反推码距一遍可以复算的示意账",
         "71-s71-11最终读错不等于中途一次也没错",
+        "72-s72-11完整存储的计数怎样换成可审查的证据",
         "8-端到端资源估算",
         "练习与实验t-count-相同魔法态等待仍不同",
         "81-可靠性不是一次校准后的峰值",
@@ -474,21 +487,22 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 25,
-      "formulas": 172
+      "headings": 26,
+      "formulas": 179
     },
     {
       "source": "handbook/12-security-network-frontiers.md",
       "output": "reader/12-security-network-frontiers.html",
-      "sourceSha256": "968cdb65406bd552ac554b943e2fb17fd236f43de16f3d72e179ed809e08aa2f",
-      "outputSha256": "ab183f83fb00fc6f5409075bd4fe65cf87e5a95f556ce5cc8886938ca884b440",
-      "mathSourceDigest": "9c9a1a7716920704dbdf2f74d3056cc0cbebf3c2674b02ecc15d570dadef2ff0",
+      "sourceSha256": "f2128b7cb1f547988acacb6637e00ec1309b44d2d7f73aed29470d5b3a91c96e",
+      "outputSha256": "070576b441576a555f364e27615bfe865ad66fcc592356c73075ee7af9b034b8",
+      "mathSourceDigest": "9c92790be8c5f0b97e4cfe6bed366e6fcabc36e8484e017a0ac40661ed549adf",
       "headingIds": [
         "12密码量子网络与研究前沿",
         "1-先分清三个经常混在一起的主题",
         "2-shorgrover-与密码迁移",
         "21-shor-改变哪些假设",
         "22-截至-2026-10-13-重新核查的-nist-状态",
+        "221-s72-12a完整-c-库的-kem怎样验证又不夸大",
         "23-grover-的边界",
         "3-bb84最小逻辑与真正的安全前提",
         "31-算例截获再发送为什么带来-25-错误",
@@ -500,6 +514,7 @@
         "62-等待另一段的时间不等于总完成时间",
         "63-练习与实验两条链路不一样快时怎样计算",
         "64-练习与实验等太久就丢弃速度与质量怎样交换",
+        "65-s72-12b真实离散事件-sdk通知什么时候才回来",
         "7-纠缠交换与中继器",
         "71-四个量子比特怎样变成一对远程纠缠",
         "72-s71-12每段重叠都是-90交换后是多少",
@@ -513,21 +528,22 @@
         "参考资料"
       ],
       "diagrams": 2,
-      "headings": 27,
-      "formulas": 353
+      "headings": 29,
+      "formulas": 362
     },
     {
       "source": "handbook/13-quantum-information.md",
       "output": "reader/13-quantum-information.html",
-      "sourceSha256": "72fb79db5fb622622d4921c33f52a6eac6dce11897c351f178969591fe748046",
-      "outputSha256": "93845f817d103c3680416064fa9a274ef56ead34efdbab478040f0ce014420fd",
-      "mathSourceDigest": "31fc70f728cea42bd03652875f99706a78200d1e02b420ae4c8677757c2cbb39",
+      "sourceSha256": "7edb8fbdee81115f44b70e2d1c0b0814a007b08f1b8aa4b2749c437c275c2ca0",
+      "outputSha256": "c013f1df4bd9523922b4d255f84263a8927b6a80d2293f448781259259b0fd61",
+      "mathSourceDigest": "40bd908808358ed668e0f653a2f1d6dd4c457c5bfde0df1f7a7830e2a1cf5f5f",
       "headingIds": [
         "13量子信息量度熵距离与可提取信息",
         "1-从经典熵开始",
         "二元熵",
         "2-von-neumann-熵",
         "三个单比特例子",
+        "练习-a72-13无偏的测量估计代进熵公式后不一定无偏",
         "3-联合熵条件熵与互信息",
         "bell-态的负条件熵",
         "经典相关混态",
@@ -556,15 +572,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 31,
-      "formulas": 307
+      "headings": 32,
+      "formulas": 336
     },
     {
       "source": "handbook/14-compilation-control.md",
       "output": "reader/14-compilation-control.html",
-      "sourceSha256": "a8a2f4aab43dc6dcbd174ac30ab0243058156ae7f8526c7aad7e713ad9385c28",
-      "outputSha256": "041f150219a0f7307c483c3797bf78f93baf8afdce4ab5dc60d2bf7ec5d10e08",
-      "mathSourceDigest": "52e779a879cbb5dc49683bf4c5ecc9754c7b15c474ca0cc8b8b7261b8c80b403",
+      "sourceSha256": "be83ab500aa15ca66754e53185a2d0a455f2d1b3e3134552b425c52b30a92c3c",
+      "outputSha256": "7d428016ba60a00ac94286aed1fb0d8d487616c0008a810bb2c6dfef482474c0",
+      "mathSourceDigest": "3da9f29ac03c9380d7be14fb12b608a98c622ffce99bad7ccb89bf9006bcdff8",
       "headingIds": [
         "14从算法电路到物理执行编译调度与控制",
         "1-从算法到实验的表示层不要混在一起",
@@ -580,6 +596,7 @@
         "6-从-hamiltonian-到脉冲",
         "旋转坐标系中的最小受驱模型",
         "可复算例从-rabi-频率得到门时长",
+        "61-s72-14grape-不只是一个库名梯度和目标是什么",
         "7-rabiramsey-与门校准",
         "软件边界历史脉冲教程须与当前版本区分",
         "8-门表征与层析",
@@ -597,15 +614,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 29,
-      "formulas": 174
+      "headings": 30,
+      "formulas": 211
     },
     {
       "source": "handbook/15-practice-research.md",
       "output": "reader/15-practice-research.html",
-      "sourceSha256": "f0734c895beb3778e033b8b2124918ad08c297dc7bf24541bfadf391d2caffa5",
-      "outputSha256": "c0fa1eb387c346dcc72f8d1e2cc18d45a4ac255ea6a5974549679f09f24184a4",
-      "mathSourceDigest": "24e38e90d2d41176f1970fa11ea4ecccb8eee8c590f4c1243535dc2f80e3d7ec",
+      "sourceSha256": "b0db1db8bd7354114af27a059fce13b29f6033c0a745dd164462f0217fdae815",
+      "outputSha256": "cd626bcbeb1be67296cb4de3508ac91974d64f2f77e82b99555c2fbeb5c84daa",
+      "mathSourceDigest": "8372b7cde19b148adb1f053fe9dccaee8a24ef97c5d90e3740a10ce5f7db96a8",
       "headingIds": [
         "15实践路线手算模拟真机实验与论文复核",
         "1-四级验证阶梯",
@@ -643,19 +660,20 @@
         "13-怎样写一份不夸大的实验报告",
         "14-版本和时间敏感性",
         "15-配套实验从计算到可审查的结果",
+        "151-s72-15完整-sdk-的通过需要留下哪条证据链",
         "16-自检",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 38,
-      "formulas": 171
+      "headings": 39,
+      "formulas": 172
     },
     {
       "source": "handbook/16-advanced-algorithms-verification.md",
       "output": "reader/16-advanced-algorithms-verification.html",
-      "sourceSha256": "b68d82d202b0a0d4223144dccb089283a8d01f4a7eb52f5c8f62c577096564bd",
-      "outputSha256": "7d9f8cbe921802f19b6d4cb6261095015e27bea0d0779761cc09f1852d439b64",
-      "mathSourceDigest": "b6b9f9f3927b6844054c4b35b7040c480ee361161777f94bba5c6a78a6806951",
+      "sourceSha256": "2138bf6d5c61071d6cc3cbbb295e102931381530408c336b5b9a3612f26296de",
+      "outputSha256": "21e94973fb6e030fb636ecba70a0bd778d201092696b2d89207c7a00eb354699",
+      "mathSourceDigest": "d0a21a8f9b1ce7c22ac2f4b1a332d4291be0054d7f4c5e0ed473481b907eb6cf",
       "headingIds": [
         "16高级算法与验证从下界证明到可信输出",
         "1-读算法论文前先填六个空",
@@ -674,6 +692,7 @@
         "34-一般-hsp-的边界",
         "4-量子行走利用搜索空间的邻接结构",
         "41-带硬币自由度的离散时间量子行走coined-walk",
+        "完整图实验-a72-16a任意小图的连续时间行走",
         "42-结构化搜索的成本",
         "43-element-distinctness-为什么优于对所有数对做-grover",
         "5-现代-hamiltonian-算法栈",
@@ -685,6 +704,7 @@
         "55-qspqsvt-把算法变成多项式逼近",
         "手算矩阵多项式不是逐元素运算",
         "手算两次信号调用怎样产生-t_2x",
+        "相位合成练习-a72-16bpyqsp-的目标在虚部不是整个左上元",
         "56-这条算法栈不自动消除输入和输出瓶颈",
         "6-算法级精度预算从应用误差反推资源",
         "61-误差来源不能各自用满总预算",
@@ -696,6 +716,7 @@
         "72-量子态层析tomography的目标是完整描述",
         "73-经典阴影classical-shadows预测许多指定可观察量",
         "手算单-qubit-的-z-阴影估计",
+        "实际随机测量练习-a72-16c两比特阴影的九倍权重从哪里来",
         "74-已知目标时直接验证常比层析便宜",
         "75-能量与能隙可给基态保真度下界",
         "手算",
@@ -709,15 +730,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 50,
-      "formulas": 498
+      "headings": 53,
+      "formulas": 584
     },
     {
       "source": "handbook/17-computation-models.md",
       "output": "reader/17-computation-models.html",
-      "sourceSha256": "6fa6fb22b3d7968453bb1531d86b2c33b2948c26bb928f059bfe76d428f098da",
-      "outputSha256": "9d58ad5079d40c0d65fde7f299561fc5dc070c17255b17f8bef1e7fde7af80c5",
-      "mathSourceDigest": "3e9072be1779eb635a04b87d03d4054517182a0d4b1000013f48a8e20ae116b5",
+      "sourceSha256": "54f8f2ca9db405442afe8c9af971dc35fa422f2a3eaa3d4da62802d6269fe432",
+      "outputSha256": "507e6f785f6d30bfeb12d72f9fdde9fdb6e40de2be4feac5ee07bdd587ca85cc",
+      "mathSourceDigest": "b6c8e14f4d39ee0b801611c2150fea6024967893d0aa2b8b0abb069237496d13",
       "headingIds": [
         "17量子计算模型门测量绝热退火与模拟",
         "1-一张计算模型地图",
@@ -730,6 +751,7 @@
         "42-与门模型的关系",
         "5-量子退火低能样本与-time-to-solution",
         "51-tts-手算",
+        "sdk-练习-a72-17quboising-与-pauli-的自旋符号不同",
         "6-数字模拟模拟量子模拟器与数字模拟混合",
         "61-echo-手算数字脉冲选择模拟耦合",
         "两半段没有等长时残余耦合怎样进入误差账",
@@ -745,15 +767,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 24,
-      "formulas": 238
+      "headings": 25,
+      "formulas": 253
     },
     {
       "source": "handbook/18-channels-capacities-complexity.md",
       "output": "reader/18-channels-capacities-complexity.html",
-      "sourceSha256": "f28b16c8c12972ab6dc160e3a9a456f1887a43b9f3859b686459639fc08d3904",
-      "outputSha256": "08c8b18e1d0d77d225f3c1acace59214da5ebe971bd90798d7bd123d3a57f1a9",
-      "mathSourceDigest": "a36d606f3cf16a3eff6e34abc62cf6927a8966fe0fc8033553aa8851b38e0969",
+      "sourceSha256": "f7154b9ad421b246cadbcee2b326b1cccf92e2213c4745029deed3d27023a092",
+      "outputSha256": "00b00afb99b822eeaae7f89213b9748d8bb30e195c0389d2a608d7fd43bd988e",
+      "mathSourceDigest": "7263fe138adab88350b4033af604e173ee956aac601c45400b7e85671f8c0a40",
       "headingIds": [
         "18从量子态到通信任务信道容量与验证复杂度",
         "1-纯化混态可以来自更大系统的纯态",
@@ -783,6 +805,7 @@
         "8-连续变量的最小入口",
         "协方差矩阵有正特征值还不一定对应量子态",
         "81-手算压缩真空不是两个方向都更准",
+        "完整-gaussian-sdk-练习-a72-18协方差到光子数概率",
         "9-一张研究阅读清单",
         "10-常见误区",
         "实操扩展从擦除事件构造降解映射",
@@ -792,15 +815,15 @@
         "参考起点"
       ],
       "diagrams": 4,
-      "headings": 35,
-      "formulas": 552
+      "headings": 36,
+      "formulas": 572
     },
     {
       "source": "handbook/19-engineering-architecture.md",
       "output": "reader/19-engineering-architecture.html",
-      "sourceSha256": "a73bbdd2012230471921a01fc67fda037127ffed19cd2ee305d66b4cb4da54af",
-      "outputSha256": "b5e33a29a4f56903ba64dc5052c7fa1c06ba3168a9845dcf3be2f408bd19a693",
-      "mathSourceDigest": "a1dec27b97a58e31da15456ea68f66cafc2fd1dc6e656d77fb87e4bb33d78994",
+      "sourceSha256": "dce9990bae6e5a139315991d4698becd8a2d93d7d935d1ef18868ced8bd551fb",
+      "outputSha256": "98edcd8114a016c334e6e19d4fe5bd6f0e3d2e92197cf48a3c3c1871882bc618",
+      "mathSourceDigest": "cfc6f5bd2be21de6f6451d69fbf1e58e310f39cfdee976e05a3a410b54bfd286",
       "headingIds": [
         "19可维护量子系统工程",
         "1-本章要回答什么",
@@ -831,6 +854,7 @@
         "10-错误信息何时可见决定译码器能做什么",
         "可复算例-6位置标签带来的距离收益",
         "101-三类容错架构的资源交换",
+        "102-s72-19平均服务比到达更快为什么仍会错过反馈",
         "11-标准成熟度与供应链",
         "111-标准状态不能混写",
         "112-供应链按依赖审计不按厂商排名",
@@ -845,14 +869,14 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 41,
-      "formulas": 159
+      "headings": 42,
+      "formulas": 169
     },
     {
       "source": "handbook/README.md",
       "output": "reader/index.html",
-      "sourceSha256": "4e3cbda54b0075062f03d242b55b55d5c599c7dca17e66384c1d91728c260628",
-      "outputSha256": "3e39509e2ec12b1d97201f7a27c227805ae3143a96e602b7b623a96c1bd1c2e6",
+      "sourceSha256": "123aeddc44972bf12b1c71a7c67727b4e04269a914ebcff6ad9cc0bce54cf8cf",
+      "outputSha256": "b80adc02b0239770b2c4a01fc1e865d9baf22bfaa0d639719f38a6dbaaed615a",
       "mathSourceDigest": "cba32710c691cd0afd7d4823c5c03162bb60eb04b2d10a941e28b0d2d5596bcb",
       "headingIds": [
         "量子计算从直觉到研究入口",
@@ -872,7 +896,7 @@
       "source": "handbook/STYLE.md",
       "output": "reader/STYLE.html",
       "sourceSha256": "53001a8f776afa91bd008e1d7aac2e8251fd305cffb9f584bcee78162cdcfa54",
-      "outputSha256": "5ecc26b580f8875478359ae3c544714ac65c5793f5a0c8afcc85846b8084d29f",
+      "outputSha256": "ad5ca212beb8ef7e02117e9445aa9d87397ba6cc2edd9cf5f275f6d57cd44027",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "编辑与审校规范",
@@ -889,8 +913,8 @@
     {
       "source": "handbook/appendices/audit-log.md",
       "output": "reader/appendices/audit-log.html",
-      "sourceSha256": "907b0284c9f9d9682792cc79b63cadb5390d25d7d5b0c5f8bdfb6b5659fb1cdd",
-      "outputSha256": "07bd2dbf4be559e83f655951661dd51b719ce2e10a9dc23eaf28f40cd5711e0a",
+      "sourceSha256": "a24d952630c461e995621520cce061bf77c4e6dd8bded478c8902134e6299785",
+      "outputSha256": "4cdb61775447c433b0a22034d3d176cb3cdae817e63693dc4a35e3becd278fdc",
       "mathSourceDigest": "8e61237a943abe6d5cd82d98673966cdaca2d9aa10264e782ac134958816c4d0",
       "headingIds": [
         "审校记录",
@@ -927,17 +951,18 @@
         "发布门槛",
         "第-69-轮逐章实验源码与声音整合2026-09-26",
         "第70轮逐章诊断算法源码与工业研究扩充2026-09-26",
-        "第71轮逐章展开与全书和谐性复核2026-10-13"
+        "第71轮逐章展开与全书和谐性复核2026-10-13",
+        "第72轮24篇再审完整sdk实跑与数学前置2026-10-13"
       ],
       "diagrams": 0,
-      "headings": 35,
+      "headings": 36,
       "formulas": 17
     },
     {
       "source": "handbook/appendices/exercises.md",
       "output": "reader/appendices/exercises.html",
       "sourceSha256": "8ba6171f52954de59efefdf2ee7cfae6b3ce3d401bfd6579567c454235b5cb50",
-      "outputSha256": "d8ded0e04c2345008ffdabb75781fe38df1bb35fd4adb0dd834283c1e21a0b3c",
+      "outputSha256": "d2409bd85fd1a12eeeb5ecba3698b40c078ae1dba2107d0c50c2e1276094570e",
       "mathSourceDigest": "c0b766b3273130f0e39a321fd3418aaa09d4033b9381216030266f02baeba25b",
       "headingIds": [
         "练习答案与推导提示",
@@ -974,25 +999,26 @@
     {
       "source": "handbook/appendices/glossary.md",
       "output": "reader/appendices/glossary.html",
-      "sourceSha256": "24cb8d6fd07ab5cf942e509e72ae359a1f909f73a0ec91b7c995182481496983",
-      "outputSha256": "b085afe6700b85dab27e09dbc4bdea04df2e45b748640d5d344eaa6395db39e3",
-      "mathSourceDigest": "8858faeb6ebcbe3e74cb4f8ce6c3532e7d8d1213b7ad6fd467990a14ff4ef59f",
+      "sourceSha256": "a05b282135ac153f6def0b6a0f29690100f7bcfd1f896ece60861dbc3796103a",
+      "outputSha256": "01f295a8c66c85b6546c7cdf4960d13377ef7be73b07d70ee0e4b1c1a00ebdb5",
+      "mathSourceDigest": "c77b413118db6dc4999280e58b06562c0057d1249a7743f722af634d5d3cf54f",
       "headingIds": [
         "术语表",
         "量子力学基础术语",
         "量子计算与信息术语",
-        "实验统计与算法接口补充"
+        "实验统计与算法接口补充",
+        "本轮完整算法实验的术语"
       ],
       "diagrams": 0,
-      "headings": 4,
-      "formulas": 87
+      "headings": 5,
+      "formulas": 102
     },
     {
       "source": "handbook/appendices/notation.md",
       "output": "reader/appendices/notation.html",
-      "sourceSha256": "17a3c2c2a3a91813f1f21fda539f6b412b2dd075eba5b57d37c5dc24679a44fa",
-      "outputSha256": "53b5860002860edd56747c42a5f668c940d683f5730e9d6510fe404b7563f75d",
-      "mathSourceDigest": "bdb6d8eba9a14fd385dd42f9c459c6fb34965cebc17d218601adf0ccec4cbbb2",
+      "sourceSha256": "3aa8885566e724fe0348879e83d10cdacfcbe06ce70442cc5565dde4bd34386e",
+      "outputSha256": "3de179fa90c83ef58566e42433b4e7cfc67ecc5e975b6a0f1eb5783225a382b7",
+      "mathSourceDigest": "dd1daaa5dbefdef86e79388ebad5d5857fcdfce13643ef5eb668e47356ae653a",
       "headingIds": [
         "符号表",
         "量子力学基础篇的物理符号",
@@ -1001,13 +1027,13 @@
       ],
       "diagrams": 0,
       "headings": 4,
-      "formulas": 144
+      "formulas": 175
     },
     {
       "source": "handbook/appendices/prerequisites.md",
       "output": "reader/appendices/prerequisites.html",
       "sourceSha256": "97ea4627909b7984b2d18f6813adb9c8ef185bb032897e5e19762343bc9956f6",
-      "outputSha256": "ffbd7f6922d0add0c532de58e04f1fd261ce787452c1c9a269f1aeaa32cec918",
+      "outputSha256": "b251ab817eab6064ee6429685b0a47792b40f27eaf42dc4ef60af02fbec0b6d7",
       "mathSourceDigest": "5f9641e9941f7d4d0a14090ede77f023e8e437b006fbc8f1a719d6e19ac87701",
       "headingIds": [
         "入门先修自测与补习路线",
@@ -1029,8 +1055,8 @@
     {
       "source": "handbook/appendices/references.md",
       "output": "reader/appendices/references.html",
-      "sourceSha256": "53127bbf48eac675f8f6ef6a4b421d3fa37617916f9f4c4c8ae95e98a3b2c882",
-      "outputSha256": "2c21ba91e43b33e9312f7dd6efddf4e468e853968990324e85feabde59c9cfda",
+      "sourceSha256": "549947b8d0a2ce72af2aa84986a3030b3bd79fab7c8b791d3eb3dfb38564ccd5",
+      "outputSha256": "12a7e475e47843d75e5871884ebaca6ff02a1db5c256f2c57eef1f96f7230d7e",
       "mathSourceDigest": "345f8e5b5f5063c5f64a98c56d11edbcad799460e7de03f498e32cfb7f935a91",
       "headingIds": [
         "参考资料与证据等级",
@@ -1046,17 +1072,18 @@
         "量子力学基础篇",
         "维护规则",
         "软件实现与工业工作流的补充入口",
-        "本轮统计切割与源码核查来源"
+        "本轮统计切割与源码核查来源",
+        "第72轮完整sdk与复现来源2026-10-13"
       ],
       "diagrams": 0,
-      "headings": 14,
+      "headings": 15,
       "formulas": 1
     },
     {
       "source": "handbook/appendices/software-practice.md",
       "output": "reader/appendices/software-practice.html",
-      "sourceSha256": "7ff8fe81da0b83f8bed132b48049b7df6ee804a16507b3fb89722cbbd3105574",
-      "outputSha256": "08aa2e0d7402e5ff3d5f8be48e9935dac70e9a2300124fbab6ed72cf73f8640d",
+      "sourceSha256": "6a550a80787c20408b8f8ddba9364b13930b85e8c9c07aa57a224083a1977f5a",
+      "outputSha256": "4445510e7df1560d8a754f84b99410e586848d138f994703cd9ae2ab6e068a61",
       "mathSourceDigest": "12abb4554e4190141331eb90f75e293d52c52b454ae6cbd0709fe54206e7e63c",
       "headingIds": [
         "算法工业实践与开源代码对照",
@@ -1103,8 +1130,8 @@
     {
       "source": "handbook/labs/README.md",
       "output": "reader/labs/index.html",
-      "sourceSha256": "c8bf25b9dd0f9332cec0fae3c1db65833cd8c805fe9fa8898c071a64e35eba06",
-      "outputSha256": "62a70e8809578153ce525ebdf6ee90c829c0357ed401cbe886eb29c5e8245bdc",
+      "sourceSha256": "09851641bec03c72fa5eae9b9e466fa1e58809afe861fc1405da51833baab425",
+      "outputSha256": "ffec7680c3adf7a5356b85c3d7acf49df2e64660a7ec757fbcdd320cd3d1efbb",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "实验练习代码与声音",
@@ -1112,18 +1139,19 @@
         "逐章实验映射",
         "运行方式与结果",
         "如何把练习改成自己的研究",
+        "第四组逐章练习完整sdk与独立复算",
         "第三组逐章练习从解释断点到独立核算",
         "第二组逐章练习检验容易遗漏的条件"
       ],
       "diagrams": 0,
-      "headings": 7,
+      "headings": 8,
       "formulas": 0
     },
     {
       "source": "handbook/labs/algorithms.md",
       "output": "reader/labs/algorithms.html",
       "sourceSha256": "34d00524dfadcfc254ddd254486bfcc3b0e3531d2188499d55c10656915a46f1",
-      "outputSha256": "aeeadd0a820bdca4d8471d3e1f56d603a57c64cf9437d5e868263232315058d4",
+      "outputSha256": "8f3abb57e4d0faf0b115fbb611df50e8d084ef037959c610a8481b5d4e5f01fb",
       "mathSourceDigest": "fb08c4133436fb12277b613aa04cd7d3e05d50d44ba57d3e3b24fab11f68c1f7",
       "headingIds": [
         "算法实验把输出概率成本和证明边界一起核对",
@@ -1143,7 +1171,7 @@
       "source": "handbook/labs/audio.md",
       "output": "reader/labs/audio.html",
       "sourceSha256": "55ec7c8d292b84a3814044b1757624fb923dbdc8cf511d01914cfe2f24b8cbc9",
-      "outputSha256": "9769879aa9ec9dad0dbfb526fcff60ce0de9195f690b97d2eca3bfff3b181a13",
+      "outputSha256": "5fcba84deb61c64e39a79890d5ffb2759efe6d23c38bb6b0d25f35738a49eec2",
       "mathSourceDigest": "a66508d1679e57e376f8365e5f3a28ac9ed7ea9e23c5ad2d19acebf78337a38c",
       "headingIds": [
         "声音实验相位抵消与退相干的教学映射",
@@ -1163,7 +1191,7 @@
       "source": "handbook/labs/foundations.md",
       "output": "reader/labs/foundations.html",
       "sourceSha256": "4aa5ee32fa95dba00b4300daf3dd574cc47d5482e1ad6d891abdddb54c6f656f",
-      "outputSha256": "3b57cfd509209aca564a73d97fd38c174a8206ab7c5a8f438ebac367a487e525",
+      "outputSha256": "0694be354a8a335ec5199b50c736fbbc61e372f78484c1aa2fa8cadb3a59df2a",
       "mathSourceDigest": "40d1e0dc43e6f6ce71948c821e9248f2a7316369f5320fac575b9b5d82a2b8d9",
       "headingIds": [
         "基础实验册从复振幅到可核查的数值结果",
@@ -1188,7 +1216,7 @@
       "source": "handbook/labs/practice.md",
       "output": "reader/labs/practice.html",
       "sourceSha256": "1c7f947c41665e150cef7d277be194ce9a326cc466a5c15e8d99735d07a0f344",
-      "outputSha256": "f76e2a07d8288d25e12072dd2771a228fc81ec6a994d24295303a420de7db56d",
+      "outputSha256": "32b341a0b053b8bec16302944e016b9a27be1defe99edc0e85988f44131dbb79",
       "mathSourceDigest": "f28d0e4eaa7f1029ca0ace681e81cbb9f81705c6665fd18fd4734265137433fa",
       "headingIds": [
         "实验有限样本外推代价与多重比较",
@@ -1223,10 +1251,31 @@
       "formulas": 97
     },
     {
+      "source": "handbook/labs/sdk-validation.md",
+      "output": "reader/labs/sdk-validation.html",
+      "sourceSha256": "787a6c4765c598ac77b4286dbe14aae4c2d9068118a6400768f20747a33fc364",
+      "outputSha256": "91488b68eafef6d306a2039039344a1e17f15c451f8e4c687c4047ab7f1a6ca0",
+      "mathSourceDigest": "240d8bd01cc8c2ebcc40105247dd1ee48a034d5d8017bd97a488496880a6c56d",
+      "headingIds": [
+        "完整-sdk-实验册从安装包到可核验输出",
+        "1-26个完整项目分别运行了什么",
+        "2-练习r72-iae为什么三批样本也可能花掉很多oracle调用",
+        "3-练习r72-obp预算拒绝后必须把原问题还给执行器",
+        "4-练习r72-cut重构精确也可能需要九倍采样预算",
+        "5-练习r72-mpf真正合成近似电路再比较偏差",
+        "6-练习r72-gst为何要比较预测概率而不是逐格比较门矩阵",
+        "7-练习r72-hpc无放回子采样不等于无限扩展子空间",
+        "8-怎样把工业实践继续做实"
+      ],
+      "diagrams": 0,
+      "headings": 9,
+      "formulas": 74
+    },
+    {
       "source": "handbook/labs/systems.md",
       "output": "reader/labs/systems.html",
       "sourceSha256": "0b644f06f6a24bf2cd1d5581cad3835040634975b24a27855c9e44c5a1a1638d",
-      "outputSha256": "c1a9abe13a4211d05750423218bf0bdcc01f8b0bfd8c3d9009c1c103f6c4915f",
+      "outputSha256": "4a293883cc9ae5246cac9b786c85221da50b5bdb8b9794c59404383475c1c635",
       "mathSourceDigest": "620c873e892cac2f1c283595362c20e7de0366f07289d6d76377e68aa52654a7",
       "headingIds": [
         "系统实验册六个跨层问题的手算代码与研究入口",
@@ -1247,9 +1296,9 @@
     {
       "source": "handbook/quantum-mechanics/01-experiments-states.md",
       "output": "reader/quantum-mechanics/01-experiments-states.html",
-      "sourceSha256": "779569d9199e56b83706916a2da8622726e15a31ae4fe66027f6f01d736af99c",
-      "outputSha256": "84dab3b8a62b4a1f8165d7a3a19ddaba56cfbabc891ee6ec2a1ea119e098a805",
-      "mathSourceDigest": "2a16cd43feb00f63d31f5614a1ea363bb01642bc3343c10d0691e9ebbcba77ac",
+      "sourceSha256": "ec8c86d554568d591e98fc6237f5c1421b52d7b80f9874cd221f05de0ea70659",
+      "outputSha256": "b3f707f0ab9ba1a4166b1264985a5f535cea1158f115f88207b56cc9ce81631a",
+      "mathSourceDigest": "2c5b648a9cae280dbf11cc27325d1a1ef5ce20143d25d38b2a0d5aba452d8bb0",
       "headingIds": [
         "q1从实验认识量子态",
         "1-状态首先是一套可检验的预测",
@@ -1260,6 +1309,7 @@
         "22-先用输出计数区分三种实验",
         "23-进阶回看部分路径记录怎样削弱干涉",
         "f71-q1量子擦除分组条纹为什么不等于整体条纹恢复",
+        "f72-q1只数被探测到的粒子会把概率改变多少",
         "3-全局相位与相对相位",
         "4-sterngerlach顺序筛选揭示互补基",
         "41-同方向连续筛选",
@@ -1273,15 +1323,15 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 20,
-      "formulas": 302
+      "headings": 21,
+      "formulas": 320
     },
     {
       "source": "handbook/quantum-mechanics/02-observables-dynamics.md",
       "output": "reader/quantum-mechanics/02-observables-dynamics.html",
-      "sourceSha256": "21585f696d8168cc151ea396bb3ab2394fee38fd94de604b38f0652b6967fb80",
-      "outputSha256": "a2b6c610c8eddef8d4b93664db429599503f847530dc8cd19c9d000f12d407f6",
-      "mathSourceDigest": "cbbd319976bc1a224ba5773542664e77303e8a6731deb426f84bbf2b44b5869c",
+      "sourceSha256": "fabaed4e8489f707d5f0d5281af886369db63f46bb2ff5480b92c8ce52518688",
+      "outputSha256": "b68a7654d33f2b4d173302b55b561af245af1ed08f0b9cf39e7fea2ebecff2dd",
+      "mathSourceDigest": "4e015f97c1ddb5ea7df3714e881ed3754448ea2cbdfdbc58c2bf0a5c70231724",
       "headingIds": [
         "q2可观测量与量子态的时间演化",
         "1-从物理量到厄米算符",
@@ -1304,6 +1354,7 @@
         "82-x-hamiltonianpi-脉冲和单位陷阱",
         "9-时变-hamiltonian不对易时操作顺序不能丢",
         "两段-xz-操作反例",
+        "f72-q2把开放演化接到求解器平均态与一条随机轨迹",
         "10-常见误区与检查顺序",
         "11-自检",
         "新增诊断练习同一个简并读数测量后为什么可能不同",
@@ -1311,15 +1362,15 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 26,
-      "formulas": 319
+      "headings": 27,
+      "formulas": 352
     },
     {
       "source": "handbook/quantum-mechanics/03-levels-control.md",
       "output": "reader/quantum-mechanics/03-levels-control.html",
-      "sourceSha256": "e1e795a7429c5079cf43a8afcdbf121e8acd188728f3eaf16313adf52071f40a",
-      "outputSha256": "c825f75032a8ae5a9b837506330d3f7d93126f15a938aa9eac8f19ba315d58d1",
-      "mathSourceDigest": "5248b7a6a3945ba832a0490aec92f802457bf5df9cca0d0c63d37b5c399d6a05",
+      "sourceSha256": "8b36121b7a7329112097f6712abeea62274e99ddbfcc33f89d8a660d55b415d5",
+      "outputSha256": "ccd055b5d73d048f4d970bd5c97e318f9eab4378b114ab2152a713f678afb801",
+      "mathSourceDigest": "b9143d0d467f0f22a3fb3755f0eac1d5531bcabee86d0117694db7edc7a871bc",
       "headingIds": [
         "q3从能级到物理量子比特",
         "1-同一个能隙的三种写法",
@@ -1335,6 +1386,7 @@
         "61-旋转坐标系与旋波近似",
         "62-不多也不少的那个二分之一",
         "算例失谐会同时改变振荡幅度和速度",
+        "63-s72-q3二能级优化得很好放回三能级会怎样",
         "7-退相干可以从系统环境纠缠看见",
         "8-同样是量子比特不同平台选的两个态不同",
         "9-常见误区",
@@ -1344,15 +1396,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 21,
-      "formulas": 283
+      "headings": 22,
+      "formulas": 301
     },
     {
       "source": "handbook/quantum-mechanics/04-wavefunctions-models.md",
       "output": "reader/quantum-mechanics/04-wavefunctions-models.html",
-      "sourceSha256": "46371428d15ab2b25ff09718beba5d9ad251f4ed0df401ff0d1cd29e3640ac54",
-      "outputSha256": "1de897d990d3c69060d34d84b2b3038b08256be025a4cee881499b0a3039d581",
-      "mathSourceDigest": "bf9d8b3d1a5043570a9e53dbf397c65b1554daf424931399e938747ebe78c4c1",
+      "sourceSha256": "b6ff4b6b3260196ee8d1e86e5a838075c4b13c453282e4afd7ef851b7da61762",
+      "outputSha256": "8556ad56090c7c1c12824f14e569e920cf9b8907c4776e569b3045e87935a652",
+      "mathSourceDigest": "16d8ea2fe54e16ead55df0c0461647e3df708fcdf5c7d117292e84689a97e715",
       "headingIds": [
         "q4波函数势阱谐振子与隧穿",
         "读公式前用三个算式找回微积分的手感",
@@ -1374,18 +1426,19 @@
         "10-常见误区",
         "11-自检",
         "新增诊断练习计算机里的升降算符为什么不严格满足原对易关系",
+        "练习-a72-q4截止误差不能只看最高一层要算漏掉的总概率",
         "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 22,
-      "formulas": 254
+      "headings": 23,
+      "formulas": 298
     },
     {
       "source": "handbook/quantum-mechanics/README.md",
       "output": "reader/quantum-mechanics/index.html",
-      "sourceSha256": "d7682ad6877a1ebe3357b1c9d8c48874a3ebef5723547051d36b8db592366d0c",
-      "outputSha256": "99c32a4aa9cdf9e43588bbb3ec0c2f131f6098a2fdf71f186eab4c483c623709",
+      "sourceSha256": "1342ab3e4ff941f9570050cb3df4a5da8a74539cc0bf15714ea3d5be06bb33bb",
+      "outputSha256": "13288c9acb47d7809e240bc32ccd02f570210c4296d2fbf7d19e1a5f69937486",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "量子力学基础篇从实验到量子计算",
@@ -1402,12 +1455,12 @@
   "mathErrors": [],
   "diagramErrors": [],
   "diagrams": 20,
-  "formulas": 10472,
+  "formulas": 11158,
   "codeCopies": [
     {
       "source": "codes/README.md",
       "output": "reader/codes/README.md",
-      "outputSha256": "a4dee19c8a1bd7f779d166ee380e0cbf520bc9e276ab3546607136f4149d05d5"
+      "outputSha256": "88917eeded89e89394d2d2540ab6df4ff897b79067bb8dae533ece07c7d82a1c"
     },
     {
       "source": "codes/algorithms/README.md",
@@ -1460,6 +1513,71 @@
       "outputSha256": "5c89d5ac5a64c4c99ac2623ed817299fe4b9a7f0f88f4b500822f08481a5e4f4"
     },
     {
+      "source": "codes/algorithms/round72-README.md",
+      "output": "reader/codes/algorithms/round72-README.md",
+      "outputSha256": "8ae9d9bc4c30f4b0b0ac0f154572c11e20f37f5ecae3de74edd9db603b89b309"
+    },
+    {
+      "source": "codes/algorithms/round72-results.json",
+      "output": "reader/codes/algorithms/round72-results.json",
+      "outputSha256": "ecb865f0acabd5d7b9b83a067ba7a7b71866891f51da821386e2a55cf0953a8d"
+    },
+    {
+      "source": "codes/algorithms/round72_checks.py",
+      "output": "reader/codes/algorithms/round72_checks.py",
+      "outputSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "source": "codes/algorithms/round72_figures.py",
+      "output": "reader/codes/algorithms/round72_figures.py",
+      "outputSha256": "e7d8ba146817bc67aa0ab31a07fe3b4001d139c6ad7e11a7e01bf2baaf19dfa5"
+    },
+    {
+      "source": "codes/algorithms/sdk/README.md",
+      "output": "reader/codes/algorithms/sdk/README.md",
+      "outputSha256": "48f6a631a7efddf77294d6fa577a910a5436dbabc877a61f3df0cdd33481cd7d"
+    },
+    {
+      "source": "codes/algorithms/sdk/hhl-circuit.txt",
+      "output": "reader/codes/algorithms/sdk/hhl-circuit.txt",
+      "outputSha256": "1e43fd435fbcb07188fa4ac978e61e378c4bdcbd82159513ef36c5012ca709af"
+    },
+    {
+      "source": "codes/algorithms/sdk/install.log",
+      "output": "reader/codes/algorithms/sdk/install.log",
+      "outputSha256": "e8be80a7ead8fe63c602b0cdda33f6bcb03685fd1b56091aaadda4fbf3b06878"
+    },
+    {
+      "source": "codes/algorithms/sdk/pyqsp-solver.log",
+      "output": "reader/codes/algorithms/sdk/pyqsp-solver.log",
+      "outputSha256": "7263ff024812a50460744dcadc8510bec2f8cf263c53fd9eae6fa8e49d1ee1fc"
+    },
+    {
+      "source": "codes/algorithms/sdk/requirements-lock.txt",
+      "output": "reader/codes/algorithms/sdk/requirements-lock.txt",
+      "outputSha256": "640c574e947191e8bd23b0a284b3cdda075fd2bd0e862f6a006b4cb40fc99f4b"
+    },
+    {
+      "source": "codes/algorithms/sdk/round72-results.json",
+      "output": "reader/codes/algorithms/sdk/round72-results.json",
+      "outputSha256": "0f1a939deebda994e8923cb430654e87d55280787761d894d87d2f231b53fb9a"
+    },
+    {
+      "source": "codes/algorithms/sdk/round72_sdk.py",
+      "output": "reader/codes/algorithms/sdk/round72_sdk.py",
+      "outputSha256": "5f51a6ea74ea516582e20e2f9f442acf9b47dc0d8259a1805efc88f3b303c646"
+    },
+    {
+      "source": "codes/algorithms/sdk/run.log",
+      "output": "reader/codes/algorithms/sdk/run.log",
+      "outputSha256": "0f882394a46c0f1392c28bf89a27bdd5ee24370c536acfab665de6b7598e80df"
+    },
+    {
+      "source": "codes/algorithms/sdk/shadow-samples.npz",
+      "output": "reader/codes/algorithms/sdk/shadow-samples.npz",
+      "outputSha256": "b484860b89bceea0da24b7881566671aa9585c53e158f5248d904ff9ab6dc997"
+    },
+    {
       "source": "codes/foundations/README.md",
       "output": "reader/codes/foundations/README.md",
       "outputSha256": "62d4d3d211b0accbc990dd212d25068a9b6061806db5d11cac207d722e288695"
@@ -1495,6 +1613,11 @@
       "outputSha256": "4b7d6b5687358ac687c885aa47bb1021e14b65e80f5e355800f5a3e59e05fcf7"
     },
     {
+      "source": "codes/foundations/generate_round72_figure.py",
+      "output": "reader/codes/foundations/generate_round72_figure.py",
+      "outputSha256": "12d2f706d5810d5c55d1e17da09b902b7f0f8e515c4251514658ba8dbd39c9df"
+    },
+    {
       "source": "codes/foundations/round71-README.md",
       "output": "reader/codes/foundations/round71-README.md",
       "outputSha256": "b8147ffcb94d7a6725c15c87f2c955f351cb2af00dda70a4620770a5480e0fa5"
@@ -1508,6 +1631,96 @@
       "source": "codes/foundations/round71_checks.py",
       "output": "reader/codes/foundations/round71_checks.py",
       "outputSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "source": "codes/foundations/round72-README.md",
+      "output": "reader/codes/foundations/round72-README.md",
+      "outputSha256": "0fbc882f9f0247adab947c1b99cd740cb3f65598dd62a8edc3d7b436378d8cb8"
+    },
+    {
+      "source": "codes/foundations/round72-results.json",
+      "output": "reader/codes/foundations/round72-results.json",
+      "outputSha256": "73fcc963dcf2512149e3f7d035d7c6912e0e4bdbd4ec9e4ec6c9cad8f39ed18e"
+    },
+    {
+      "source": "codes/foundations/round72-stdlib-all.json",
+      "output": "reader/codes/foundations/round72-stdlib-all.json",
+      "outputSha256": "aa6fe1560c19db1a555dbf6dac6df845ad2363c06b338538ee5b0dc3315cac3c"
+    },
+    {
+      "source": "codes/foundations/round72_checks.py",
+      "output": "reader/codes/foundations/round72_checks.py",
+      "outputSha256": "afb7132782ad9a41981a54b7a450cde52c55cb121b49776c255146c43506b088"
+    },
+    {
+      "source": "codes/foundations/round72_cross_algorithms.py",
+      "output": "reader/codes/foundations/round72_cross_algorithms.py",
+      "outputSha256": "de44cb9c98e0436e6d451ff09e3bce64569d900762ae6390ce49636106be16b3"
+    },
+    {
+      "source": "codes/foundations/round72_stdlib.py",
+      "output": "reader/codes/foundations/round72_stdlib.py",
+      "outputSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "source": "codes/foundations/sdk/all-results.json",
+      "output": "reader/codes/foundations/sdk/all-results.json",
+      "outputSha256": "2bbabe8f11d051a2e67da00a0dc85c2e4d41e9280d2f6ed49deef56799aa8ec0"
+    },
+    {
+      "source": "codes/foundations/sdk/chapter-run.log",
+      "output": "reader/codes/foundations/sdk/chapter-run.log",
+      "outputSha256": "6a5b3cc3d0543228dae3edd291def50ce7af151b815b1c60e638e8f7b6c2d50e"
+    },
+    {
+      "source": "codes/foundations/sdk/initial-failure-results.json",
+      "output": "reader/codes/foundations/sdk/initial-failure-results.json",
+      "outputSha256": "9bb3ede18287f319d63c2f81b79e5946453a08ceb5c159d3922ebbd9ade222db"
+    },
+    {
+      "source": "codes/foundations/sdk/initial-failure-run.log",
+      "output": "reader/codes/foundations/sdk/initial-failure-run.log",
+      "outputSha256": "6b587d9572303cd8b0d60355691953c0fbd3d2a49757906a7baa0b5351c5c5ba"
+    },
+    {
+      "source": "codes/foundations/sdk/install.log",
+      "output": "reader/codes/foundations/sdk/install.log",
+      "outputSha256": "ea2fb00a3e422985bfe4a77005a3b1192a319dcb511e3a0bd26cd9a5f3ee1861"
+    },
+    {
+      "source": "codes/foundations/sdk/pip-check.log",
+      "output": "reader/codes/foundations/sdk/pip-check.log",
+      "outputSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "source": "codes/foundations/sdk/pypi-release-metadata.json",
+      "output": "reader/codes/foundations/sdk/pypi-release-metadata.json",
+      "outputSha256": "672859a738e5cd501980fa1fa0228e93f8db3682b8dd6525ebb721de11bce9c7"
+    },
+    {
+      "source": "codes/foundations/sdk/requirements-lock.txt",
+      "output": "reader/codes/foundations/sdk/requirements-lock.txt",
+      "outputSha256": "320bdc4311933c7b33bc7fb6901e6702e884823893dd82e4914611b222133156"
+    },
+    {
+      "source": "codes/foundations/sdk/requirements.txt",
+      "output": "reader/codes/foundations/sdk/requirements.txt",
+      "outputSha256": "0e74ce561196029158fe28ea221c78801ca19a7e9b4506ff91d1dcd19b28ab33"
+    },
+    {
+      "source": "codes/foundations/sdk/run.log",
+      "output": "reader/codes/foundations/sdk/run.log",
+      "outputSha256": "1ea90e1073e8f370089fce0727289fcea7996bbb0be599d56bfc497852ffbf2e"
+    },
+    {
+      "source": "codes/foundations/sdk/source-checks.json",
+      "output": "reader/codes/foundations/sdk/source-checks.json",
+      "outputSha256": "071dc1a00c08bbb390ec1986ea1e4f4ed86591e2004a28b4f82cb17489d46605"
+    },
+    {
+      "source": "codes/foundations/sdk/validate_sdks.py",
+      "output": "reader/codes/foundations/sdk/validate_sdks.py",
+      "outputSha256": "df32ad582f5af10768443d5339cb21d89fed44c7ca232233d4d706e1d13f434c"
     },
     {
       "source": "codes/practice/experiments.py",
@@ -1597,7 +1810,147 @@
     {
       "source": "codes/run_all.py",
       "output": "reader/codes/run_all.py",
-      "outputSha256": "593d7f1f6cce878761263d9fb2be7b0c16b0b9793b4c12e0b1dde60f0fda2bbb"
+      "outputSha256": "aad6ad82e8e9631ed830f30e7de119228e9de6b3e306505b99d485df34d8be10"
+    },
+    {
+      "source": "codes/sdk/README.md",
+      "output": "reader/codes/sdk/README.md",
+      "outputSha256": "48026f3208a05b6605f3106ae1ef969a631b68e0fcabf060ea3fd1107eec56a1"
+    },
+    {
+      "source": "codes/sdk/hpc/CMakeLists.txt",
+      "output": "reader/codes/sdk/hpc/CMakeLists.txt",
+      "outputSha256": "cb5554cd9ea070f58b09dcabfdfaaa54858c0c2396b4480a4679462d95e4a6ea"
+    },
+    {
+      "source": "codes/sdk/hpc/README.md",
+      "output": "reader/codes/sdk/hpc/README.md",
+      "outputSha256": "0882325637e0d5ab15ca55ba64fd50bc854a5384b7995f77f513c037c97c7588"
+    },
+    {
+      "source": "codes/sdk/hpc/build.log",
+      "output": "reader/codes/sdk/hpc/build.log",
+      "outputSha256": "f37e905427df5cdbf2af6adb59019e3c0c8736ab5a15a5a33aee0bc50e4eb02a"
+    },
+    {
+      "source": "codes/sdk/hpc/configure.log",
+      "output": "reader/codes/sdk/hpc/configure.log",
+      "outputSha256": "44e8d5448257f3a5598a8ba21047bbc295cd0d21541226158fa5a1b4e9ef5e45"
+    },
+    {
+      "source": "codes/sdk/hpc/results.json",
+      "output": "reader/codes/sdk/hpc/results.json",
+      "outputSha256": "8fb77d7c7aa45d733ef62eb65d868c604d5baad9bc0cafb7c9d534defd781951"
+    },
+    {
+      "source": "codes/sdk/hpc/rng-first.txt",
+      "output": "reader/codes/sdk/hpc/rng-first.txt",
+      "outputSha256": "6ea58dc291a2c66b7b61332d471fce5deb5115357cdb7de8435adc17f05f0fe6"
+    },
+    {
+      "source": "codes/sdk/hpc/rng-second.txt",
+      "output": "reader/codes/sdk/hpc/rng-second.txt",
+      "outputSha256": "6ea58dc291a2c66b7b61332d471fce5deb5115357cdb7de8435adc17f05f0fe6"
+    },
+    {
+      "source": "codes/sdk/hpc/upstream-build.log",
+      "output": "reader/codes/sdk/hpc/upstream-build.log",
+      "outputSha256": "e47c3ca5ce7a4df93c7eeef3f1d7ff1f584ce2c30c233ccf48fedcf87f3fc2ca"
+    },
+    {
+      "source": "codes/sdk/hpc/upstream-configure.log",
+      "output": "reader/codes/sdk/hpc/upstream-configure.log",
+      "outputSha256": "ad52a2f76cc3841b94fa32044fae54e1b99c162f77d46680d025e1fc5ba5f4af"
+    },
+    {
+      "source": "codes/sdk/hpc/upstream-tests.log",
+      "output": "reader/codes/sdk/hpc/upstream-tests.log",
+      "outputSha256": "9e0144c5ee45804010d81b910c1c1ffcd72658f32fc18d14aa95b3bbde9b2c42"
+    },
+    {
+      "source": "codes/sdk/hpc/validate_hpc.cpp",
+      "output": "reader/codes/sdk/hpc/validate_hpc.cpp",
+      "outputSha256": "01d491ebb6cfd850d2cc80f8dc046aca912cba1f43d9cbd3d581cddb5e2005b4"
+    },
+    {
+      "source": "codes/sdk/workflows/README.md",
+      "output": "reader/codes/sdk/workflows/README.md",
+      "outputSha256": "f27a80402457aea0af969dfe3a43b5b6ce91a9df732b2d0ad2f9f26d23c07176"
+    },
+    {
+      "source": "codes/sdk/workflows/before-independent-review-results.json",
+      "output": "reader/codes/sdk/workflows/before-independent-review-results.json",
+      "outputSha256": "ca22ff67899513c40719fe1c2eab2aa659823926e29cd2e8763531b280c6fade"
+    },
+    {
+      "source": "codes/sdk/workflows/before-independent-review-run.log",
+      "output": "reader/codes/sdk/workflows/before-independent-review-run.log",
+      "outputSha256": "f1c0b8dc23ca2bbdbf1be4c5dc11a0825e670f0b377f216493110ddf2d64d4c2"
+    },
+    {
+      "source": "codes/sdk/workflows/gst-counts.json",
+      "output": "reader/codes/sdk/workflows/gst-counts.json",
+      "outputSha256": "dfbb5d59762c9a566a076cfb5a6d412f51e647ec045de5d1cbd2175a2001c3c0"
+    },
+    {
+      "source": "codes/sdk/workflows/independent-review-run.log",
+      "output": "reader/codes/sdk/workflows/independent-review-run.log",
+      "outputSha256": "56910cc99aabcf0c1a539a0f651dcfbb58b1f5c9012bcbbeef9acda3b102a0cd"
+    },
+    {
+      "source": "codes/sdk/workflows/initial-failures.json",
+      "output": "reader/codes/sdk/workflows/initial-failures.json",
+      "outputSha256": "bb502e2afca3f99790ac7094df501abd4b7dc450a2b3e9828e0fc8b0ca45793d"
+    },
+    {
+      "source": "codes/sdk/workflows/install.log",
+      "output": "reader/codes/sdk/workflows/install.log",
+      "outputSha256": "62725144682748d863d1b5ff48e091cd4bfa99f72c1649c6ddf99ca1eff2abff"
+    },
+    {
+      "source": "codes/sdk/workflows/package-metadata.json",
+      "output": "reader/codes/sdk/workflows/package-metadata.json",
+      "outputSha256": "91b4b0dc33463c3ec51aaa7a70a77509e4614e766453ef2fa93b571ed0294827"
+    },
+    {
+      "source": "codes/sdk/workflows/pip-check.log",
+      "output": "reader/codes/sdk/workflows/pip-check.log",
+      "outputSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "source": "codes/sdk/workflows/requirements-lock.txt",
+      "output": "reader/codes/sdk/workflows/requirements-lock.txt",
+      "outputSha256": "2fba4effc4d37fb12568f1b315b77f51dee5f82d2822ab97432701946f712b19"
+    },
+    {
+      "source": "codes/sdk/workflows/requirements.txt",
+      "output": "reader/codes/sdk/workflows/requirements.txt",
+      "outputSha256": "bfbc147b856087328f365d02f68959b77ed259add923b1d8ff4ea693e2fa9128"
+    },
+    {
+      "source": "codes/sdk/workflows/results-all.json",
+      "output": "reader/codes/sdk/workflows/results-all.json",
+      "outputSha256": "f10b20c3bfc8dd994699e25361b8b133ae67298df9b288a03ddc1739e609994c"
+    },
+    {
+      "source": "codes/sdk/workflows/run-debug.log",
+      "output": "reader/codes/sdk/workflows/run-debug.log",
+      "outputSha256": "02f3afa97df3541f5926f66b821c0f59cd76a58c219911e2dc2fb1da29541c60"
+    },
+    {
+      "source": "codes/sdk/workflows/run-initial.log",
+      "output": "reader/codes/sdk/workflows/run-initial.log",
+      "outputSha256": "ad86675b48990fbabbdf3440c4a3d6d0fd0e4cab02c749c0aae128367d1e864b"
+    },
+    {
+      "source": "codes/sdk/workflows/run.log",
+      "output": "reader/codes/sdk/workflows/run.log",
+      "outputSha256": "56910cc99aabcf0c1a539a0f651dcfbb58b1f5c9012bcbbeef9acda3b102a0cd"
+    },
+    {
+      "source": "codes/sdk/workflows/validate_workflows.py",
+      "output": "reader/codes/sdk/workflows/validate_workflows.py",
+      "outputSha256": "cf94d7198fba29eb06b74432d233a15b5b9bfedf81ce50c913eaad6748621ed4"
     },
     {
       "source": "codes/snapshot_sources.py",
@@ -1628,6 +1981,11 @@
       "source": "codes/systems/correlated_shots.py",
       "output": "reader/codes/systems/correlated_shots.py",
       "outputSha256": "6671b542ee30363a8870cae3b0ed54c576218f2f748cd2519b58ffa14f6543a6"
+    },
+    {
+      "source": "codes/systems/crossreview72.py",
+      "output": "reader/codes/systems/crossreview72.py",
+      "outputSha256": "6afff6558005645e0dd6c0f68e548a197dabb6138802e50297c50c0423c4c55e"
     },
     {
       "source": "codes/systems/expected-results.json",
@@ -1685,9 +2043,204 @@
       "outputSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
     },
     {
+      "source": "codes/systems/round72-README.md",
+      "output": "reader/codes/systems/round72-README.md",
+      "outputSha256": "415823e50a504450b4d39f45c20fa18d4b7060ee605d7fe905742e42b19b4d4a"
+    },
+    {
+      "source": "codes/systems/round72-results.json",
+      "output": "reader/codes/systems/round72-results.json",
+      "outputSha256": "cf43c726672f6f683059c939f6994a472badb650ebb9996241556468b8133dcb"
+    },
+    {
+      "source": "codes/systems/round72_checks.py",
+      "output": "reader/codes/systems/round72_checks.py",
+      "outputSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
       "source": "codes/systems/routing_mapping.py",
       "output": "reader/codes/systems/routing_mapping.py",
       "outputSha256": "d1bccf72be23ec351f5e38d20cb29deab5d092f2d74aba0f15b8ea0681f83a38"
+    },
+    {
+      "source": "codes/systems/sdk/README.md",
+      "output": "reader/codes/systems/sdk/README.md",
+      "outputSha256": "31f3215bdd754c4039a5f0cf15df103a5f571a8e9af25c93016eeca3d320fef5"
+    },
+    {
+      "source": "codes/systems/sdk/assertion-guard-results.json",
+      "output": "reader/codes/systems/sdk/assertion-guard-results.json",
+      "outputSha256": "309e4fc849f9c4e9261824d239607437c4b2f56c48d97906b9c06250e475f7ed"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0-samples.npz",
+      "output": "reader/codes/systems/sdk/d3-p0-samples.npz",
+      "outputSha256": "011e32d52be532df80863218493df8a65874f6445037b10ab8ab2d5ffd03f2e1"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0.001-samples.npz",
+      "output": "reader/codes/systems/sdk/d3-p0.001-samples.npz",
+      "outputSha256": "d26061cc3b1a8d91fc8c7b6ba7958d70ef2dadb1b5f7013a6ca6bc1f7365867a"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0.001.dem",
+      "output": "reader/codes/systems/sdk/d3-p0.001.dem",
+      "outputSha256": "de65616063e0edc148298b66ac8796250e42f9dc6e7e5529a069488e7b4d23e8"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0.001.stim",
+      "output": "reader/codes/systems/sdk/d3-p0.001.stim",
+      "outputSha256": "c31c3aec8676349f2380baed8b09276a9dc38d9bde15dcae3c1833ef27458ea9"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0.dem",
+      "output": "reader/codes/systems/sdk/d3-p0.dem",
+      "outputSha256": "392d6e63443e8e23326e1c447e19e7b1388816969859dee01f13b1b03a11111c"
+    },
+    {
+      "source": "codes/systems/sdk/d3-p0.stim",
+      "output": "reader/codes/systems/sdk/d3-p0.stim",
+      "outputSha256": "42b38e39509014013efcd4dcff8d582ddd218ff737f4dc20630367062b945a9b"
+    },
+    {
+      "source": "codes/systems/sdk/d5-p0.001-samples.npz",
+      "output": "reader/codes/systems/sdk/d5-p0.001-samples.npz",
+      "outputSha256": "7ff9b353abac87855562aab6f4a342e1469975cc4ce7da67ce5e04f30bfa7425"
+    },
+    {
+      "source": "codes/systems/sdk/d5-p0.001.dem",
+      "output": "reader/codes/systems/sdk/d5-p0.001.dem",
+      "outputSha256": "eac281ca5a4c24a34f7cfaee9ce7b7dc95e8322907daf6b3104a0c0eeb78a266"
+    },
+    {
+      "source": "codes/systems/sdk/d5-p0.001.stim",
+      "output": "reader/codes/systems/sdk/d5-p0.001.stim",
+      "outputSha256": "867ba3ba1f432111269cc6f7cfdcd9449c6935a9f9f3820e89348e74bb1e8207"
+    },
+    {
+      "source": "codes/systems/sdk/d7-p0.001-samples.npz",
+      "output": "reader/codes/systems/sdk/d7-p0.001-samples.npz",
+      "outputSha256": "f6c8f6e873c050b702c933b1d8698a72aaa58f6a578ed6bcdf8e10ef03ee2dfb"
+    },
+    {
+      "source": "codes/systems/sdk/d7-p0.001.dem",
+      "output": "reader/codes/systems/sdk/d7-p0.001.dem",
+      "outputSha256": "e0887b5d9cb0e8faa68e77ea7c4163447d4d2f2f1fb2bae2bfdb04c6632a8c53"
+    },
+    {
+      "source": "codes/systems/sdk/d7-p0.001.stim",
+      "output": "reader/codes/systems/sdk/d7-p0.001.stim",
+      "outputSha256": "378879e0ca7737bcfc8e4faf890e3382926cb8d964f45b317526d3ae3e9e191a"
+    },
+    {
+      "source": "codes/systems/sdk/grape-amplitudes.csv",
+      "output": "reader/codes/systems/sdk/grape-amplitudes.csv",
+      "outputSha256": "a0c4bdfebc831a2c1f41f241c2ecfcf1d1eaeaf4ba72157487dfc8c1d9092d0d"
+    },
+    {
+      "source": "codes/systems/sdk/grape-results.json",
+      "output": "reader/codes/systems/sdk/grape-results.json",
+      "outputSha256": "24be1a8e895c9e1def19962a2e6765a754f0994693e12a8d371c4db79cf95c23"
+    },
+    {
+      "source": "codes/systems/sdk/grape-run.log",
+      "output": "reader/codes/systems/sdk/grape-run.log",
+      "outputSha256": "24be1a8e895c9e1def19962a2e6765a754f0994693e12a8d371c4db79cf95c23"
+    },
+    {
+      "source": "codes/systems/sdk/grape_control.py",
+      "output": "reader/codes/systems/sdk/grape_control.py",
+      "outputSha256": "c8043aaa9c4953a00bcba8418a1e6afa7bda888e31eff365e131d10c5b78e890"
+    },
+    {
+      "source": "codes/systems/sdk/installed-package-evidence.json",
+      "output": "reader/codes/systems/sdk/installed-package-evidence.json",
+      "outputSha256": "08b9a62c5c7dbdcf20f04d68852425dc799321eff3c5eed403e2ef89cacc7b42"
+    },
+    {
+      "source": "codes/systems/sdk/liboqs-build-run.json",
+      "output": "reader/codes/systems/sdk/liboqs-build-run.json",
+      "outputSha256": "3ca0249f1fb02e98ffdcb3c4ca2513cc2283f8c13e19ae95b5378c2f26c19e97"
+    },
+    {
+      "source": "codes/systems/sdk/liboqs-run.log",
+      "output": "reader/codes/systems/sdk/liboqs-run.log",
+      "outputSha256": "ce792d5af9a43a5c439fed2e6c48073069a051619ae3c7312596dfb150c1694a"
+    },
+    {
+      "source": "codes/systems/sdk/liboqs_roundtrip.c",
+      "output": "reader/codes/systems/sdk/liboqs_roundtrip.c",
+      "outputSha256": "16fa2c23a512a2854b164b8d29376452282f348a589bc13d78e9b8af24b81e4b"
+    },
+    {
+      "source": "codes/systems/sdk/plot_results.py",
+      "output": "reader/codes/systems/sdk/plot_results.py",
+      "outputSha256": "fb5e5214ccc498c63a6d25036edd7baf02d8a2041be770996c8c6f803cc9c46a"
+    },
+    {
+      "source": "codes/systems/sdk/requirements-lock.txt",
+      "output": "reader/codes/systems/sdk/requirements-lock.txt",
+      "outputSha256": "5316ab9e66eaac8374a98a7d9f5452e3d903f928f56370ae4e96ebf03d4a63aa"
+    },
+    {
+      "source": "codes/systems/sdk/round72-systems-control-preview.png",
+      "output": "reader/codes/systems/sdk/round72-systems-control-preview.png",
+      "outputSha256": "533c10ac47be81db0e8f5773ef8979413e943ce36edf1a7cd411b7bb7e9fc427"
+    },
+    {
+      "source": "codes/systems/sdk/round72-systems-qec-preview.png",
+      "output": "reader/codes/systems/sdk/round72-systems-qec-preview.png",
+      "outputSha256": "32fe85f37ccd0691d4dbf892cc7394e7b8fd914e5e73471a0de4442ed839ee79"
+    },
+    {
+      "source": "codes/systems/sdk/round72-systems-results.json",
+      "output": "reader/codes/systems/sdk/round72-systems-results.json",
+      "outputSha256": "ea2693ac464821243aecbe90cd91e3ac457026a46769e8dccf6d089c9f1b047d"
+    },
+    {
+      "source": "codes/systems/sdk/run_liboqs.py",
+      "output": "reader/codes/systems/sdk/run_liboqs.py",
+      "outputSha256": "48f1ed9615b6b4d8eb69a746e0035b982865dc8b3312829bb7f800dc149a8c03"
+    },
+    {
+      "source": "codes/systems/sdk/saved-results-verification.json",
+      "output": "reader/codes/systems/sdk/saved-results-verification.json",
+      "outputSha256": "47adb181c9183c08718d0fcae7f982ef11d1379ec2085479a9c09bcb4e7017b4"
+    },
+    {
+      "source": "codes/systems/sdk/sequence-results.json",
+      "output": "reader/codes/systems/sdk/sequence-results.json",
+      "outputSha256": "1d2e643755fc8f953ef73deb30f0133b547062b5ed655f4d99fc5fb6ca9e95dd"
+    },
+    {
+      "source": "codes/systems/sdk/sequence_timeline.py",
+      "output": "reader/codes/systems/sdk/sequence_timeline.py",
+      "outputSha256": "5681e2bd822ad355e35bfdf560d403818e5ebe037834c106b878eaf82c560aa0"
+    },
+    {
+      "source": "codes/systems/sdk/stim-matching-results.json",
+      "output": "reader/codes/systems/sdk/stim-matching-results.json",
+      "outputSha256": "2dd40de15285f5521bb1b740c65f20320053b0c1e72132e3d7794754b471e298"
+    },
+    {
+      "source": "codes/systems/sdk/stim_matching.py",
+      "output": "reader/codes/systems/sdk/stim_matching.py",
+      "outputSha256": "106f82f89eab35617a6013b60d979f6d1a423ed5323964e1ebc604a92fbe887b"
+    },
+    {
+      "source": "codes/systems/sdk/systems-calculations.json",
+      "output": "reader/codes/systems/sdk/systems-calculations.json",
+      "outputSha256": "4440ed12fe188c20e6afc379fa827c6ecb1e90a1f6a68e5070f5342e762639a9"
+    },
+    {
+      "source": "codes/systems/sdk/systems_calculations.py",
+      "output": "reader/codes/systems/sdk/systems_calculations.py",
+      "outputSha256": "7362acb6c0964c0f23523663227bbeab07fa80dda463312c0465fc7ed1ae2311"
+    },
+    {
+      "source": "codes/systems/sdk/verify_saved_results.py",
+      "output": "reader/codes/systems/sdk/verify_saved_results.py",
+      "outputSha256": "e28aa829d6ba297aabc0bd288e76bbfa76fb5fb58e7045d43a1a39e9a390e11a"
     },
     {
       "source": "codes/systems/service_timeline.py",
@@ -2201,7 +2754,8 @@
     }
   ],
   "inputHashes": {
-    "tools/reader/build.mjs": "0fadfcaf69718a3ab2f5bdbadba38b0638e823680565fe19525834841119ada5",
+    "tools/reader/build.mjs": "8c2a3933aa67cd9290afec02cb1c52075e535a2f6402bc4b7fa72d79424e4e41",
+    "tools/reader/reading-order.mjs": "4c35d57352d85e6832396b5d77ce2fe38535298f09515c5d4777203a076205f3",
     "tools/reader/reader.css": "d5f848240f751a06a9e7279e3d6b950c45355d5586199d47c3be13ae3ffea8a9",
     "handbook/assets/algorithm-lab-checks.svg": "bc2a6f20e343373e8524d221ab48bc51ab5bbb9b91d5ce11411133c8086d48bf",
     "handbook/assets/audio/manifest.json": "052fe562e8a0487fbefabba2ef4cd26c5680a49749fa995941abbd897a4dd57d",
@@ -2238,10 +2792,15 @@
     "handbook/assets/round71-barrier-transmission.svg": "21bd81ed486ab705ccdbc82e0905fde7bbe4c569be3a13d6893145b9aded8a43",
     "handbook/assets/round71-foundations-eraser.svg": "ffb7490278bd0487858f7d18f680697245b80e6ccae98aa4dd8b9b69047e2db2",
     "handbook/assets/round71-systems-spectrum.svg": "c2f90e6b15b16de4948fc7e3203b367deda4eef95b2320402cd4d77c420f456f",
+    "handbook/assets/round72-algorithms.svg": "fc51e8a41d073c0d2b13be347ec44ce5a29fec10bc7bbf820dbe5cd413fd211d",
+    "handbook/assets/round72-foundations-trajectories.png": "998e9d8dcf6300770c9f4adb83b9fdc65f7e4ec6b71bd911730eefdc526498fe",
+    "handbook/assets/round72-foundations-trajectories.svg": "89483a058e84f68427f0e756404d3b9ae0ab30b65030d0ac338672bcc40c55f7",
+    "handbook/assets/round72-systems-control.svg": "92f9d6807af21711bcde3a2c19d287e2a6b3a43c12eb5ef4c276d6b1b78233f1",
+    "handbook/assets/round72-systems-qec.svg": "52d37a17d888126482e30682ae9941f872bc31b8e165a5458c0b7fb230685ca0",
     "handbook/assets/surface-code-events.svg": "db3bbd91aebbdb466ee33e845d543e463e122f55e4e7c52603141037e904f5d9",
     "handbook/assets/teleportation-map.svg": "e7f1835dfe3540ad45a659483a5ee805909554745ddcde01760814180d81339b",
     "handbook/assets/workflow-mpf-budget.svg": "4c0141bdc033501b3af6156d97a66aa8ec954ea429681698eaa6d31fd45de81a",
-    "codes/README.md": "a4dee19c8a1bd7f779d166ee380e0cbf520bc9e276ab3546607136f4149d05d5",
+    "codes/README.md": "88917eeded89e89394d2d2540ab6df4ff897b79067bb8dae533ece07c7d82a1c",
     "codes/algorithms/README.md": "6edda066720e8470d4d267bce5e2d765a4a828a4e2fa3b4cf671e178289822bf",
     "codes/algorithms/expected-results.json": "ab0251a9f35f07121fcf20306b1d7a4b2e55302a734ea56d02963ad279c7ff07",
     "codes/algorithms/experiments.py": "1903e22794348dbbb58038fcdf1d876dace95a96ad5c97216057c22cc204057f",
@@ -2252,6 +2811,19 @@
     "codes/algorithms/round71-results.json": "6fff4d0bf9f8f083793108a341683910e4b14a4eab7406dd7132a9d3e904dbd7",
     "codes/algorithms/round71_checks.py": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514",
     "codes/algorithms/round71_figures.py": "5c89d5ac5a64c4c99ac2623ed817299fe4b9a7f0f88f4b500822f08481a5e4f4",
+    "codes/algorithms/round72-README.md": "8ae9d9bc4c30f4b0b0ac0f154572c11e20f37f5ecae3de74edd9db603b89b309",
+    "codes/algorithms/round72-results.json": "ecb865f0acabd5d7b9b83a067ba7a7b71866891f51da821386e2a55cf0953a8d",
+    "codes/algorithms/round72_checks.py": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d",
+    "codes/algorithms/round72_figures.py": "e7d8ba146817bc67aa0ab31a07fe3b4001d139c6ad7e11a7e01bf2baaf19dfa5",
+    "codes/algorithms/sdk/README.md": "48f6a631a7efddf77294d6fa577a910a5436dbabc877a61f3df0cdd33481cd7d",
+    "codes/algorithms/sdk/hhl-circuit.txt": "1e43fd435fbcb07188fa4ac978e61e378c4bdcbd82159513ef36c5012ca709af",
+    "codes/algorithms/sdk/install.log": "e8be80a7ead8fe63c602b0cdda33f6bcb03685fd1b56091aaadda4fbf3b06878",
+    "codes/algorithms/sdk/pyqsp-solver.log": "7263ff024812a50460744dcadc8510bec2f8cf263c53fd9eae6fa8e49d1ee1fc",
+    "codes/algorithms/sdk/requirements-lock.txt": "640c574e947191e8bd23b0a284b3cdda075fd2bd0e862f6a006b4cb40fc99f4b",
+    "codes/algorithms/sdk/round72-results.json": "0f1a939deebda994e8923cb430654e87d55280787761d894d87d2f231b53fb9a",
+    "codes/algorithms/sdk/round72_sdk.py": "5f51a6ea74ea516582e20e2f9f442acf9b47dc0d8259a1805efc88f3b303c646",
+    "codes/algorithms/sdk/run.log": "0f882394a46c0f1392c28bf89a27bdd5ee24370c536acfab665de6b7598e80df",
+    "codes/algorithms/sdk/shadow-samples.npz": "b484860b89bceea0da24b7881566671aa9585c53e158f5248d904ff9ab6dc997",
     "codes/foundations/README.md": "71cc55c8e581ba8475a11c2bb05efe512606189cbfcc276e7dab3935fe5a310f",
     "codes/foundations/diagnostic-results.json": "8fbd02c393c383d5e041e590fd2fc4c2eb50b724ac9acf2e77949dc5fd7ba1e4",
     "codes/foundations/diagnostic_lab.py": "d490581e9e1808a67b465fd757ee6d7616a9652976507e2083af75cfb36658d2",
@@ -2259,9 +2831,28 @@
     "codes/foundations/foundations_lab.py": "f172cda81c77494c466a9ff8060c5ef947fd063904e4e1002de0bc07af6d0a65",
     "codes/foundations/generate_diagnostic_figure.py": "2c977df2c3d4c78c313cffc4cc700f6108d34bc0fe5027db5e64d9d2c8ee2794",
     "codes/foundations/generate_round71_eraser.py": "4b7d6b5687358ac687c885aa47bb1021e14b65e80f5e355800f5a3e59e05fcf7",
+    "codes/foundations/generate_round72_figure.py": "12d2f706d5810d5c55d1e17da09b902b7f0f8e515c4251514658ba8dbd39c9df",
     "codes/foundations/round71-README.md": "f24060815486844f155080829ce1d01762042c5ffaad58602c5e3b1b15e0810d",
     "codes/foundations/round71-results.json": "e5eff32c14f85c50d40367f50b88e3943a9dff422f7d8d14018673065b9e4f45",
     "codes/foundations/round71_checks.py": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22",
+    "codes/foundations/round72-README.md": "0fbc882f9f0247adab947c1b99cd740cb3f65598dd62a8edc3d7b436378d8cb8",
+    "codes/foundations/round72-results.json": "73fcc963dcf2512149e3f7d035d7c6912e0e4bdbd4ec9e4ec6c9cad8f39ed18e",
+    "codes/foundations/round72-stdlib-all.json": "aa6fe1560c19db1a555dbf6dac6df845ad2363c06b338538ee5b0dc3315cac3c",
+    "codes/foundations/round72_checks.py": "afb7132782ad9a41981a54b7a450cde52c55cb121b49776c255146c43506b088",
+    "codes/foundations/round72_cross_algorithms.py": "de44cb9c98e0436e6d451ff09e3bce64569d900762ae6390ce49636106be16b3",
+    "codes/foundations/round72_stdlib.py": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2",
+    "codes/foundations/sdk/all-results.json": "2bbabe8f11d051a2e67da00a0dc85c2e4d41e9280d2f6ed49deef56799aa8ec0",
+    "codes/foundations/sdk/chapter-run.log": "6a5b3cc3d0543228dae3edd291def50ce7af151b815b1c60e638e8f7b6c2d50e",
+    "codes/foundations/sdk/initial-failure-results.json": "9bb3ede18287f319d63c2f81b79e5946453a08ceb5c159d3922ebbd9ade222db",
+    "codes/foundations/sdk/initial-failure-run.log": "6b587d9572303cd8b0d60355691953c0fbd3d2a49757906a7baa0b5351c5c5ba",
+    "codes/foundations/sdk/install.log": "ea2fb00a3e422985bfe4a77005a3b1192a319dcb511e3a0bd26cd9a5f3ee1861",
+    "codes/foundations/sdk/pip-check.log": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "codes/foundations/sdk/pypi-release-metadata.json": "672859a738e5cd501980fa1fa0228e93f8db3682b8dd6525ebb721de11bce9c7",
+    "codes/foundations/sdk/requirements-lock.txt": "320bdc4311933c7b33bc7fb6901e6702e884823893dd82e4914611b222133156",
+    "codes/foundations/sdk/requirements.txt": "0e74ce561196029158fe28ea221c78801ca19a7e9b4506ff91d1dcd19b28ab33",
+    "codes/foundations/sdk/run.log": "1ea90e1073e8f370089fce0727289fcea7996bbb0be599d56bfc497852ffbf2e",
+    "codes/foundations/sdk/source-checks.json": "071dc1a00c08bbb390ec1986ea1e4f4ed86591e2004a28b4f82cb17489d46605",
+    "codes/foundations/sdk/validate_sdks.py": "df32ad582f5af10768443d5339cb21d89fed44c7ca232233d4d706e1d13f434c",
     "codes/practice/experiments.py": "6f5ccfadf6fcbcb94e63202e2138c28e950a3f3dc86c2f19106566a6b9c52a60",
     "codes/practice/figure-data.csv": "cd45c17d4d21e57eaa0ae12deaef1c75d3dbc3bef8c790f67436e78d33436c42",
     "codes/practice/generate_audio.py": "0f4af19469239c83d5a903323c3eff5eb7cbd1c209ec07481113a4f9c77151ee",
@@ -2279,13 +2870,42 @@
     "codes/review/README.md": "3c56f6515eaac760b487a8c961c9cfe969fb809306a871bf3889abcd5eef597e",
     "codes/review/cross_foundations.py": "98ed33a1145d886360d0194937954e3c664830f74f5d7c632a5dcab2e7868258",
     "codes/review/cross_systems.py": "9289f1a4915b2f3b6b8029d4e5785faba814986fa84dd0995c6b6a73a06895e6",
-    "codes/run_all.py": "593d7f1f6cce878761263d9fb2be7b0c16b0b9793b4c12e0b1dde60f0fda2bbb",
+    "codes/run_all.py": "aad6ad82e8e9631ed830f30e7de119228e9de6b3e306505b99d485df34d8be10",
+    "codes/sdk/README.md": "cb7e088b94ddd1b901f58c21502f82c3997c4b8628d52c8dbd6d0abda5f877b7",
+    "codes/sdk/hpc/CMakeLists.txt": "cb5554cd9ea070f58b09dcabfdfaaa54858c0c2396b4480a4679462d95e4a6ea",
+    "codes/sdk/hpc/README.md": "0882325637e0d5ab15ca55ba64fd50bc854a5384b7995f77f513c037c97c7588",
+    "codes/sdk/hpc/build.log": "f37e905427df5cdbf2af6adb59019e3c0c8736ab5a15a5a33aee0bc50e4eb02a",
+    "codes/sdk/hpc/configure.log": "44e8d5448257f3a5598a8ba21047bbc295cd0d21541226158fa5a1b4e9ef5e45",
+    "codes/sdk/hpc/results.json": "8fb77d7c7aa45d733ef62eb65d868c604d5baad9bc0cafb7c9d534defd781951",
+    "codes/sdk/hpc/rng-first.txt": "6ea58dc291a2c66b7b61332d471fce5deb5115357cdb7de8435adc17f05f0fe6",
+    "codes/sdk/hpc/rng-second.txt": "6ea58dc291a2c66b7b61332d471fce5deb5115357cdb7de8435adc17f05f0fe6",
+    "codes/sdk/hpc/upstream-build.log": "e47c3ca5ce7a4df93c7eeef3f1d7ff1f584ce2c30c233ccf48fedcf87f3fc2ca",
+    "codes/sdk/hpc/upstream-configure.log": "ad52a2f76cc3841b94fa32044fae54e1b99c162f77d46680d025e1fc5ba5f4af",
+    "codes/sdk/hpc/upstream-tests.log": "9e0144c5ee45804010d81b910c1c1ffcd72658f32fc18d14aa95b3bbde9b2c42",
+    "codes/sdk/hpc/validate_hpc.cpp": "01d491ebb6cfd850d2cc80f8dc046aca912cba1f43d9cbd3d581cddb5e2005b4",
+    "codes/sdk/workflows/README.md": "f27a80402457aea0af969dfe3a43b5b6ce91a9df732b2d0ad2f9f26d23c07176",
+    "codes/sdk/workflows/before-independent-review-results.json": "ca22ff67899513c40719fe1c2eab2aa659823926e29cd2e8763531b280c6fade",
+    "codes/sdk/workflows/before-independent-review-run.log": "f1c0b8dc23ca2bbdbf1be4c5dc11a0825e670f0b377f216493110ddf2d64d4c2",
+    "codes/sdk/workflows/gst-counts.json": "dfbb5d59762c9a566a076cfb5a6d412f51e647ec045de5d1cbd2175a2001c3c0",
+    "codes/sdk/workflows/independent-review-run.log": "56910cc99aabcf0c1a539a0f651dcfbb58b1f5c9012bcbbeef9acda3b102a0cd",
+    "codes/sdk/workflows/initial-failures.json": "bb502e2afca3f99790ac7094df501abd4b7dc450a2b3e9828e0fc8b0ca45793d",
+    "codes/sdk/workflows/install.log": "62725144682748d863d1b5ff48e091cd4bfa99f72c1649c6ddf99ca1eff2abff",
+    "codes/sdk/workflows/package-metadata.json": "91b4b0dc33463c3ec51aaa7a70a77509e4614e766453ef2fa93b571ed0294827",
+    "codes/sdk/workflows/pip-check.log": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "codes/sdk/workflows/requirements-lock.txt": "2fba4effc4d37fb12568f1b315b77f51dee5f82d2822ab97432701946f712b19",
+    "codes/sdk/workflows/requirements.txt": "bfbc147b856087328f365d02f68959b77ed259add923b1d8ff4ea693e2fa9128",
+    "codes/sdk/workflows/results-all.json": "f10b20c3bfc8dd994699e25361b8b133ae67298df9b288a03ddc1739e609994c",
+    "codes/sdk/workflows/run-debug.log": "02f3afa97df3541f5926f66b821c0f59cd76a58c219911e2dc2fb1da29541c60",
+    "codes/sdk/workflows/run-initial.log": "ad86675b48990fbabbdf3440c4a3d6d0fd0e4cab02c749c0aae128367d1e864b",
+    "codes/sdk/workflows/run.log": "56910cc99aabcf0c1a539a0f651dcfbb58b1f5c9012bcbbeef9acda3b102a0cd",
+    "codes/sdk/workflows/validate_workflows.py": "cf94d7198fba29eb06b74432d233a15b5b9bfedf81ce50c913eaad6748621ed4",
     "codes/snapshot_sources.py": "e16501d58d5644a7036789d97e0ed14d067b2ed7340e85f9ca95b949410a43c2",
     "codes/systems/README.md": "79b403b0608ae866a6cbbbde6c71f610b5c73ad5e6d5be149596812cda4b2fa2",
     "codes/systems/calibration_dependencies.py": "54ed30c8e56c551fd0209f3e2c3c323e818271d2702e61e8e14930d851ff9035",
     "codes/systems/calibration_uncertainty.py": "5e80de7eed6524f4d988b480ea83a5abbe520f77548c378d8cab69bd1d44fc77",
     "codes/systems/coherent_repetition.py": "536631d339521cc95c30634e123bfcc4a9826eb0dbc9bf4486acad29af434b7a",
     "codes/systems/correlated_shots.py": "6671b542ee30363a8870cae3b0ed54c576218f2f748cd2519b58ffa14f6543a6",
+    "codes/systems/crossreview72.py": "6afff6558005645e0dd6c0f68e548a197dabb6138802e50297c50c0423c4c55e",
     "codes/systems/expected-results.json": "246cc96b8e5e070f0be062bd40234eb82a743db732bd5781f2f416c392015530",
     "codes/systems/factory_schedule.py": "6e7aeeb6a9ff890145a91454c66af5d419932c9b7c36963ebda5c98b0d3a331a",
     "codes/systems/hardware_flags.py": "0d2425a2f83c8ce94a2ce2b3866b71a1613dd4e543a24b663acaaffbafd23cb8",
@@ -2297,7 +2917,46 @@
     "codes/systems/round70-expected-results.json": "fa4cddf4b5f6492ed2e089ed3e238f84bdc268691cfb60f906c46f1cc9bb35c3",
     "codes/systems/round71-expected-results.json": "80ff2604117e1bc16d6bf40a8a6ba27875bad7c5183efce797c586512e60b9ee",
     "codes/systems/round71_checks.py": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9",
+    "codes/systems/round72-README.md": "415823e50a504450b4d39f45c20fa18d4b7060ee605d7fe905742e42b19b4d4a",
+    "codes/systems/round72-results.json": "cf43c726672f6f683059c939f6994a472badb650ebb9996241556468b8133dcb",
+    "codes/systems/round72_checks.py": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467",
     "codes/systems/routing_mapping.py": "d1bccf72be23ec351f5e38d20cb29deab5d092f2d74aba0f15b8ea0681f83a38",
+    "codes/systems/sdk/README.md": "31f3215bdd754c4039a5f0cf15df103a5f571a8e9af25c93016eeca3d320fef5",
+    "codes/systems/sdk/assertion-guard-results.json": "309e4fc849f9c4e9261824d239607437c4b2f56c48d97906b9c06250e475f7ed",
+    "codes/systems/sdk/d3-p0-samples.npz": "011e32d52be532df80863218493df8a65874f6445037b10ab8ab2d5ffd03f2e1",
+    "codes/systems/sdk/d3-p0.001-samples.npz": "d26061cc3b1a8d91fc8c7b6ba7958d70ef2dadb1b5f7013a6ca6bc1f7365867a",
+    "codes/systems/sdk/d3-p0.001.dem": "de65616063e0edc148298b66ac8796250e42f9dc6e7e5529a069488e7b4d23e8",
+    "codes/systems/sdk/d3-p0.001.stim": "c31c3aec8676349f2380baed8b09276a9dc38d9bde15dcae3c1833ef27458ea9",
+    "codes/systems/sdk/d3-p0.dem": "392d6e63443e8e23326e1c447e19e7b1388816969859dee01f13b1b03a11111c",
+    "codes/systems/sdk/d3-p0.stim": "42b38e39509014013efcd4dcff8d582ddd218ff737f4dc20630367062b945a9b",
+    "codes/systems/sdk/d5-p0.001-samples.npz": "7ff9b353abac87855562aab6f4a342e1469975cc4ce7da67ce5e04f30bfa7425",
+    "codes/systems/sdk/d5-p0.001.dem": "eac281ca5a4c24a34f7cfaee9ce7b7dc95e8322907daf6b3104a0c0eeb78a266",
+    "codes/systems/sdk/d5-p0.001.stim": "867ba3ba1f432111269cc6f7cfdcd9449c6935a9f9f3820e89348e74bb1e8207",
+    "codes/systems/sdk/d7-p0.001-samples.npz": "f6c8f6e873c050b702c933b1d8698a72aaa58f6a578ed6bcdf8e10ef03ee2dfb",
+    "codes/systems/sdk/d7-p0.001.dem": "e0887b5d9cb0e8faa68e77ea7c4163447d4d2f2f1fb2bae2bfdb04c6632a8c53",
+    "codes/systems/sdk/d7-p0.001.stim": "378879e0ca7737bcfc8e4faf890e3382926cb8d964f45b317526d3ae3e9e191a",
+    "codes/systems/sdk/grape-amplitudes.csv": "a0c4bdfebc831a2c1f41f241c2ecfcf1d1eaeaf4ba72157487dfc8c1d9092d0d",
+    "codes/systems/sdk/grape-results.json": "24be1a8e895c9e1def19962a2e6765a754f0994693e12a8d371c4db79cf95c23",
+    "codes/systems/sdk/grape-run.log": "24be1a8e895c9e1def19962a2e6765a754f0994693e12a8d371c4db79cf95c23",
+    "codes/systems/sdk/grape_control.py": "c8043aaa9c4953a00bcba8418a1e6afa7bda888e31eff365e131d10c5b78e890",
+    "codes/systems/sdk/installed-package-evidence.json": "08b9a62c5c7dbdcf20f04d68852425dc799321eff3c5eed403e2ef89cacc7b42",
+    "codes/systems/sdk/liboqs-build-run.json": "3ca0249f1fb02e98ffdcb3c4ca2513cc2283f8c13e19ae95b5378c2f26c19e97",
+    "codes/systems/sdk/liboqs-run.log": "ce792d5af9a43a5c439fed2e6c48073069a051619ae3c7312596dfb150c1694a",
+    "codes/systems/sdk/liboqs_roundtrip.c": "16fa2c23a512a2854b164b8d29376452282f348a589bc13d78e9b8af24b81e4b",
+    "codes/systems/sdk/plot_results.py": "fb5e5214ccc498c63a6d25036edd7baf02d8a2041be770996c8c6f803cc9c46a",
+    "codes/systems/sdk/requirements-lock.txt": "5316ab9e66eaac8374a98a7d9f5452e3d903f928f56370ae4e96ebf03d4a63aa",
+    "codes/systems/sdk/round72-systems-control-preview.png": "533c10ac47be81db0e8f5773ef8979413e943ce36edf1a7cd411b7bb7e9fc427",
+    "codes/systems/sdk/round72-systems-qec-preview.png": "32fe85f37ccd0691d4dbf892cc7394e7b8fd914e5e73471a0de4442ed839ee79",
+    "codes/systems/sdk/round72-systems-results.json": "ea2693ac464821243aecbe90cd91e3ac457026a46769e8dccf6d089c9f1b047d",
+    "codes/systems/sdk/run_liboqs.py": "48f1ed9615b6b4d8eb69a746e0035b982865dc8b3312829bb7f800dc149a8c03",
+    "codes/systems/sdk/saved-results-verification.json": "47adb181c9183c08718d0fcae7f982ef11d1379ec2085479a9c09bcb4e7017b4",
+    "codes/systems/sdk/sequence-results.json": "1d2e643755fc8f953ef73deb30f0133b547062b5ed655f4d99fc5fb6ca9e95dd",
+    "codes/systems/sdk/sequence_timeline.py": "5681e2bd822ad355e35bfdf560d403818e5ebe037834c106b878eaf82c560aa0",
+    "codes/systems/sdk/stim-matching-results.json": "2dd40de15285f5521bb1b740c65f20320053b0c1e72132e3d7794754b471e298",
+    "codes/systems/sdk/stim_matching.py": "106f82f89eab35617a6013b60d979f6d1a423ed5323964e1ebc604a92fbe887b",
+    "codes/systems/sdk/systems-calculations.json": "4440ed12fe188c20e6afc379fa827c6ecb1e90a1f6a68e5070f5342e762639a9",
+    "codes/systems/sdk/systems_calculations.py": "7362acb6c0964c0f23523663227bbeab07fa80dda463312c0465fc7ed1ae2311",
+    "codes/systems/sdk/verify_saved_results.py": "e28aa829d6ba297aabc0bd288e76bbfa76fb5fb58e7045d43a1a39e9a390e11a",
     "codes/systems/service_timeline.py": "31db1ec32e572e5775ef2fcdffbf3e90042512fdf5d6b42f27a5c2a2345a50d2",
     "codes/systems/weighted_decoder.py": "2102d23ec93ded9a2b55a85ebcdc45b33a493e122853af86d1ef4eab30bf4f5d",
     "codes/tests/test_snapshot_sources.py": "a03069df25a0e2412f45a90ff3f7f93b35f7ec4f66739874dba3de72612fbf45",
@@ -2400,5 +3059,31 @@
     "codes/vendor/stim/src/stim/gen/gen_surface_code.cc": "3b17c5442c14045b4332b8f69701d115276a1936edd5cab39842019f55a8589e",
     "codes/vendor/thewalrus/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "codes/vendor/thewalrus/thewalrus/quantum/gaussian_checks.py": "d0dd43904193c69f365a32488e1daeaf44fb043ca224ebb8e0171142dc0da18f"
-  }
+  },
+  "readingOrder": [
+    "reader/00-overview.html",
+    "reader/01-math.html",
+    "reader/quantum-mechanics/01-experiments-states.html",
+    "reader/02-single-qubit.html",
+    "reader/quantum-mechanics/02-observables-dynamics.html",
+    "reader/03-multiple-qubits.html",
+    "reader/04-circuits-protocols.html",
+    "reader/05-noise-channels.html",
+    "reader/06-algorithmic-primitives.html",
+    "reader/07-algorithms.html",
+    "reader/08-applications.html",
+    "reader/quantum-mechanics/03-levels-control.html",
+    "reader/09-hardware.html",
+    "reader/10-error-correction.html",
+    "reader/11-resources-benchmarks.html",
+    "reader/12-security-network-frontiers.html",
+    "reader/13-quantum-information.html",
+    "reader/14-compilation-control.html",
+    "reader/15-practice-research.html",
+    "reader/16-advanced-algorithms-verification.html",
+    "reader/17-computation-models.html",
+    "reader/18-channels-capacities-complexity.html",
+    "reader/19-engineering-architecture.html",
+    "reader/quantum-mechanics/04-wavefunctions-models.html"
+  ]
 }

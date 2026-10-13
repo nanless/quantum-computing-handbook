@@ -1,0 +1,19 @@
+{
+  "date_utc": "2026-10-13T07:56:48.133088+00:00",
+  "status": "passed_in_declared_scope",
+  "chapters": 24,
+  "chapter_exercise_labels": 27,
+  "integration_exercise_groups": 6,
+  "complete_project_tasks": 26,
+  "stdlib_entries": 30,
+  "html_pages": 41,
+  "formula_fragments": 11158,
+  "browser_viewport_cases": 82,
+  "browser_page_errors": 0,
+  "external_requests": 0,
+  "new_chapter_context_screenshots": 48,
+  "new_figure_screenshots": 12,
+  "primary_manually_inspected_images": 10,
+  "browser_cleanup": "installed Chrome transport cleanup timed out after checks; bounded CLI exit recorded separately",
+  "scope": "local CPU SDK tasks and declared source/layout checks; not every upstream feature or industrial deployment"
+}

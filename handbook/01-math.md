@@ -517,6 +517,28 @@ $$
 
 **暂停算一格。** $|0\rangle\langle1|$ 的四格是什么、迹是多少？核对：$\bigl[\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\bigr]$，迹为 0。
 
+### F72-01｜矩阵的指数：先变本征值，不逐格按计算器
+
+后文把演化写成 $e^{-i\mathcal Ht/\hbar}$，这里补上数学入口。若 $A$ 是有限维方阵，**矩阵指数**定义为 $e^A=I+A+A^2/2!+A^3/3!+\cdots$；$m!$ 是从 1 乘到 $m$ 的积，$0!=1$。每一项都是同尺寸矩阵，$A^2$ 是矩阵乘法。若 $A=\sum_j a_jP_j$ 可谱分解，正交投影满足 $P_jP_k=0$（$j\ne k$），所以 $A^m=\sum_j a_j^mP_j$，逐项求和给
+
+$$e^A=\sum_j e^{a_j}P_j.$$
+
+**练习。** 对 $X=\left[\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right]$，求 $e^{-i\pi X/4}$，并检查把每一格分别取指数的做法。
+
+**第一步：使用已经会算的谱。** $X=P_+-P_-$，$P_\pm=(I\pm X)/2$。代入得到
+
+$$
+e^{-i\pi X/4}=e^{-i\pi/4}P_++e^{i\pi/4}P_-
+=\frac{I-iX}{\sqrt2}
+=\frac1{\sqrt2}\begin{bmatrix}1&-i\\-i&1\end{bmatrix}.
+$$
+
+第一列给输入 $|0\rangle$ 的输出 $(|0\rangle-i|1\rangle)/\sqrt2$，两个模平方各半。也可用 $X^2=I$ 分开幂级数的奇偶项，得到 $\cos(\pi/4)I-i\sin(\pi/4)X$，两条路径一致。
+
+**第二步：反查错误算法。** 逐格取指数会把原来的零格变成 $e^0=1$，得到 $\left[\begin{smallmatrix}1&e^{-i\pi/4}\\e^{-i\pi/4}&1\end{smallmatrix}\right]$；每列长度平方为 2，不能作为这个酉门。即使 $A$ 已对角化，也应只给对角本征值取指数，保留非对角零格，而非对整张数组逐格取指数。
+
+运行 [F72-01](../codes/foundations/round72-README.md)：独立公式与 SciPy `expm`、QuTiP `Qobj.expm`、Qiskit `RXGate(pi/2)` 实际矩阵相符，误差小于 $10^{-12}$。这为[第 02 章旋转门](02-single-qubit.md#5-旋转门)和[Q2 时间演化](quantum-mechanics/02-observables-dynamics.md#6-时不变-hamiltonian从能谱构造-ut)提供前置工具；它不允许把两个不对易矩阵的指数直接合成指数里的和。[QuTiP 官方动力学说明](https://qutip.readthedocs.io/en/v5.3.1/guide/dynamics/dynamics-master.html)采用相同矩阵演化约定（访问 2026-10-13）。
+
 ## 7. 张量积：组合系统的语言
 
 两个量子比特合在一起时，需要同时说明“第一个是什么、第二个是什么”。本书把第一个比特写在左边：$|01\rangle=|0\rangle\otimes|1\rangle$。符号 $\otimes$ 读作“张量积”，在这里是把两个单比特状态组成一个双比特状态，**不是**求两个向量的内积。

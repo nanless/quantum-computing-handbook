@@ -1,0 +1,68 @@
+[ 11%] Building CXX object CMakeFiles/sqd_tests.dir/test/doctest_main.cpp.o
+[ 22%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_postselection.cpp.o
+[ 33%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_subsampling.cpp.o
+[ 44%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_configuration_recovery.cpp.o
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_postselection.cpp:25:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:27:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   27 | static void set_bitset(unsigned int N_, Bitset2::bitset2<N> &bitset, unsigned int value)
+      |                                     ^
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:42:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   42 | static void set_bitset(unsigned int N_, std::bitset<N> &bitset, unsigned int value)
+      |                                     ^
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_subsampling.cpp:23:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:27:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   27 | static void set_bitset(unsigned int N_, Bitset2::bitset2<N> &bitset, unsigned int value)
+      |                                     ^
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:42:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   42 | static void set_bitset(unsigned int N_, std::bitset<N> &bitset, unsigned int value)
+      |                                     ^
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_configuration_recovery.cpp:14:
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/configuration_recovery.hpp:31:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/internal/parallel-rng.hpp:347:33: warning: unused variable 'index_mask' [-Wunused-variable]
+  347 |         constexpr std::uint64_t index_mask =
+      |                                 ^~~~~~~~~~
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_configuration_recovery.cpp:23:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:27:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   27 | static void set_bitset(unsigned int N_, Bitset2::bitset2<N> &bitset, unsigned int value)
+      |                                     ^
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:42:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   42 | static void set_bitset(unsigned int N_, std::bitset<N> &bitset, unsigned int value)
+      |                                     ^
+2 warnings generated.
+[ 55%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_rng_substitutability.cpp.o
+2 warnings generated.
+[ 66%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_sample_without_replacement.cpp.o
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_rng_substitutability.cpp:30:
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/configuration_recovery.hpp:31:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/internal/parallel-rng.hpp:347:33: warning: unused variable 'index_mask' [-Wunused-variable]
+  347 |         constexpr std::uint64_t index_mask =
+      |                                 ^~~~~~~~~~
+[ 77%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_headers_odr.cpp.o
+[ 88%] Building CXX object CMakeFiles/sqd_tests.dir/test/test_fermion.cpp.o
+3 warnings generated.
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_headers_odr.cpp:21:
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/configuration_recovery.hpp:31:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/internal/parallel-rng.hpp:347:33: warning: unused variable 'index_mask' [-Wunused-variable]
+  347 |         constexpr std::uint64_t index_mask =
+      |                                 ^~~~~~~~~~
+1 warning generated.
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/test_fermion.cpp:19:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:27:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   27 | static void set_bitset(unsigned int N_, Bitset2::bitset2<N> &bitset, unsigned int value)
+      |                                     ^
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/test/bitset_compat.hpp:42:37: warning: unused parameter 'N_' [-Wunused-parameter]
+   42 | static void set_bitset(unsigned int N_, std::bitset<N> &bitset, unsigned int value)
+      |                                     ^
+2 warnings generated.
+1 warning generated.
+[100%] Linking CXX executable sqd_tests
+[100%] Built target sqd_tests
+[ 50%] Building CXX object CMakeFiles/sqd_rng_reproducibility_dump.dir/tools/rng_reproducibility_dump.cpp.o
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/tools/rng_reproducibility_dump.cpp:30:
+In file included from /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/configuration_recovery.hpp:31:
+/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/include/qiskit/addon/sqd/internal/parallel-rng.hpp:347:33: warning: unused variable 'index_mask' [-Wunused-variable]
+  347 |         constexpr std::uint64_t index_mask =
+      |                                 ^~~~~~~~~~
+1 warning generated.
+[100%] Linking CXX executable sqd_rng_reproducibility_dump
+[100%] Built target sqd_rng_reproducibility_dump

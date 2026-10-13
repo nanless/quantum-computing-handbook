@@ -1,0 +1,99 @@
+{
+  "access_date": "2026-10-13",
+  "python": "3.11.15",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "versions": {
+    "stim": "1.16.0",
+    "pymatching": "2.4.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "model": "Pauli stochastic circuit-level noise; rotated X memory, rounds=distance; offline batch MWPM",
+  "cases": [
+    {
+      "distance": 3,
+      "rounds": 3,
+      "noise_each": 0.0,
+      "shots": 1000,
+      "seed": 720100,
+      "detectors": 24,
+      "measurements": 33,
+      "qubit_index_span": 26,
+      "logical_observables": 1,
+      "failures": 0,
+      "p_experiment": 0.0,
+      "exact_binomial_95": [
+        0.0,
+        0.0036820838968656708
+      ],
+      "sample_seconds": 0.0011599999852478504,
+      "decode_batch_seconds": 0.00037566700484603643,
+      "decode_seconds_per_memory_shot": 3.756670048460364e-07,
+      "raw_sample_sha256": "011e32d52be532df80863218493df8a65874f6445037b10ab8ab2d5ffd03f2e1"
+    },
+    {
+      "distance": 3,
+      "rounds": 3,
+      "noise_each": 0.001,
+      "shots": 20000,
+      "seed": 720103,
+      "detectors": 24,
+      "measurements": 33,
+      "qubit_index_span": 26,
+      "logical_observables": 1,
+      "failures": 13,
+      "p_experiment": 0.00065,
+      "exact_binomial_95": [
+        0.0003461415732329871,
+        0.0011112633024966876
+      ],
+      "sample_seconds": 0.0017882080283015966,
+      "decode_batch_seconds": 0.0018054579850286245,
+      "decode_seconds_per_memory_shot": 9.027289925143123e-08,
+      "raw_sample_sha256": "d26061cc3b1a8d91fc8c7b6ba7958d70ef2dadb1b5f7013a6ca6bc1f7365867a"
+    },
+    {
+      "distance": 5,
+      "rounds": 5,
+      "noise_each": 0.001,
+      "shots": 20000,
+      "seed": 720105,
+      "detectors": 120,
+      "measurements": 145,
+      "qubit_index_span": 64,
+      "logical_observables": 1,
+      "failures": 2,
+      "p_experiment": 0.0001,
+      "exact_binomial_95": [
+        1.211069336541704e-05,
+        0.0003611872030449162
+      ],
+      "sample_seconds": 0.009081624913960695,
+      "decode_batch_seconds": 0.01056491700001061,
+      "decode_seconds_per_memory_shot": 5.282458500005305e-07,
+      "raw_sample_sha256": "7ff9b353abac87855562aab6f4a342e1469975cc4ce7da67ce5e04f30bfa7425"
+    },
+    {
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "shots": 20000,
+      "seed": 720107,
+      "detectors": 336,
+      "measurements": 385,
+      "qubit_index_span": 118,
+      "logical_observables": 1,
+      "failures": 0,
+      "p_experiment": 0.0,
+      "exact_binomial_95": [
+        0.0,
+        0.0001844269639618992
+      ],
+      "sample_seconds": 0.01909287495072931,
+      "decode_batch_seconds": 0.02985087502747774,
+      "decode_seconds_per_memory_shot": 1.492543751373887e-06,
+      "raw_sample_sha256": "f6c8f6e873c050b702c933b1d8698a72aaa58f6a578ed6bcdf8e10ef03ee2dfb"
+    }
+  ],
+  "status": "passed"
+}

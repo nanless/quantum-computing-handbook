@@ -1,0 +1,138 @@
+{
+  "access_date": "2026-10-13",
+  "tag": "0.15.0",
+  "commit": "97f6b86b1b6d109cfd43cf276ae39c2e776aed80",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "algorithms": [
+    {
+      "algorithm": "ML-KEM-512",
+      "public_key_bytes": 800,
+      "secret_key_bytes": 1632,
+      "ciphertext_bytes": 768,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    },
+    {
+      "algorithm": "ML-KEM-768",
+      "public_key_bytes": 1184,
+      "secret_key_bytes": 2400,
+      "ciphertext_bytes": 1088,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    },
+    {
+      "algorithm": "ML-KEM-1024",
+      "public_key_bytes": 1568,
+      "secret_key_bytes": 3168,
+      "ciphertext_bytes": 1568,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/bin/cmake",
+        "-S",
+        "/private/tmp/quantum-round72-liboqs",
+        "-B",
+        "/private/tmp/quantum-round72-liboqs/build",
+        "-DOQS_MINIMAL_BUILD=KEM_ml_kem_512;KEM_ml_kem_768;KEM_ml_kem_1024",
+        "-DOQS_USE_OPENSSL=OFF",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Algorithms filtered for KEM_ml_kem_512;KEM_ml_kem_768;KEM_ml_kem_1024\n-- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) \n-- Configuring done (0.2s)\n-- Generating done (0.1s)\n-- Build files have been written to: /private/tmp/quantum-round72-liboqs/build\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/cmake",
+        "--build",
+        "/private/tmp/quantum-round72-liboqs/build",
+        "--clean-first",
+        "--parallel",
+        "4"
+      ],
+      "returncode": 0,
+      "stdout": "[  0%] Building C object src/common/CMakeFiles/common.dir/aes/aes_impl.c.o\n[  2%] Building C object src/common/sha3/xkcp_low/CMakeFiles/xkcp_low_keccakp_1600_plain64.dir/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c.o\n[  2%] Building C object src/common/sha3/xkcp_low/CMakeFiles/xkcp_low_keccakp_1600times4_serial.dir/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c.o\n[  2%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/compress.c.o\n[  2%] Built target xkcp_low_keccakp_1600times4_serial\n[  3%] Building C object src/common/CMakeFiles/common.dir/aes/aes_c.c.o\n[  3%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/kem_ml_kem_512.c.o\n[  4%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/compress.c.o\n[  4%] Building C object src/common/CMakeFiles/common.dir/aes/aes128_armv8.c.o\n[  5%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/debug.c.o\n[  5%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/indcpa.c.o\n[  6%] Building C object src/common/CMakeFiles/common.dir/aes/aes256_armv8.c.o\n[  7%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/kem.c.o\n[  7%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/debug.c.o\n[  8%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/indcpa.c.o\n[  8%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/aarch64_zetas.c.o\n[  8%] Building C object src/common/CMakeFiles/common.dir/aes/aes.c.o\n[  9%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/intt.S.o\n[  9%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/kem.c.o\n[ 10%] Building C object src/common/CMakeFiles/common.dir/sha2/sha2_impl.c.o\n[ 11%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/ntt.S.o\n[ 12%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/poly.c.o\n[ 13%] Building C object src/common/CMakeFiles/common.dir/sha2/sha2_c.c.o\n[ 13%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/poly_mulcache_compute_asm.S.o\n[ 14%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/poly_reduce_asm.S.o\n[ 14%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/poly_tobytes_asm.S.o\n[ 15%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/poly_tomont_asm.S.o\n[ 15%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2.S.o\n[ 16%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3.S.o\n[ 17%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/poly_k.c.o\n[ 18%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4.S.o\n[ 18%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/rej_uniform_asm.S.o\n[ 18%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/sampling.c.o\n[ 19%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/native/aarch64/src/rej_uniform_table.c.o\n[ 19%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/poly.c.o\n[ 20%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_ref.dir/mlkem-native_ml-kem-512_ref/mlkem/src/verify.c.o\n[ 21%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/poly_k.c.o\n[ 21%] Built target ml_kem_512_ref\n[ 21%] Building C object src/common/CMakeFiles/common.dir/sha2/sha2_armv8.c.o\n[ 21%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/sampling.c.o\n[ 22%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_aarch64.dir/mlkem-native_ml-kem-1024_aarch64/mlkem/src/verify.c.o\n[ 23%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/compress.c.o\n[ 23%] Built target ml_kem_1024_aarch64\n[ 24%] Building C object src/common/CMakeFiles/common.dir/sha2/sha2.c.o\n[ 24%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/debug.c.o\n[ 24%] Building C object src/common/CMakeFiles/common.dir/sha3/xkcp_sha3.c.o\n[ 25%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/kem_ml_kem_768.c.o\n[ 26%] Building C object src/common/CMakeFiles/common.dir/sha3/xkcp_sha3x4.c.o\n[ 26%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/compress.c.o\n[ 27%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/indcpa.c.o\n[ 27%] Building C object src/common/CMakeFiles/common.dir/sha3/sha3.c.o\n[ 28%] Building C object src/common/CMakeFiles/common.dir/sha3/sha3x4.c.o\n[ 28%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/kem.c.o\n[ 29%] Building C object src/common/CMakeFiles/common.dir/common.c.o\n[ 30%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/debug.c.o\n[ 31%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/aarch64_zetas.c.o\n[ 31%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/indcpa.c.o\n[ 31%] Building C object src/common/CMakeFiles/common.dir/pqclean_shims/fips202.c.o\n[ 32%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/intt.S.o\n[ 32%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/ntt.S.o\n[ 33%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/kem.c.o\n[ 34%] Building C object src/common/CMakeFiles/common.dir/pqclean_shims/fips202x4.c.o\n[ 35%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/poly_mulcache_compute_asm.S.o\n[ 35%] Building C object src/common/CMakeFiles/common.dir/rand/rand.c.o\n[ 36%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/poly.c.o\n[ 36%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/poly_reduce_asm.S.o\n[ 36%] Built target common\n[ 36%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/poly_k.c.o\n[ 37%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/poly_tobytes_asm.S.o\n[ 37%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/poly_tomont_asm.S.o\n[ 37%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/compress.c.o\n[ 38%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2.S.o\n[ 39%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3.S.o\n[ 39%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4.S.o\n[ 40%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/sampling.c.o\n[ 41%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/rej_uniform_asm.S.o\n[ 41%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_ref.dir/mlkem-native_ml-kem-768_ref/mlkem/src/verify.c.o\n[ 41%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/native/aarch64/src/rej_uniform_table.c.o\n[ 42%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/debug.c.o\n[ 42%] Built target ml_kem_768_ref\n[ 42%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/indcpa.c.o\n[ 43%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/poly.c.o\n[ 44%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/kem.c.o\n[ 44%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/poly_k.c.o\n[ 45%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/aarch64_zetas.c.o\n[ 46%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/kem_ml_kem_1024.c.o\n[ 47%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/sampling.c.o\n[ 47%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/intt.S.o\n[ 47%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/compress.c.o\n[ 48%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/ntt.S.o\n[ 49%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_512_aarch64.dir/mlkem-native_ml-kem-512_aarch64/mlkem/src/verify.c.o\n[ 49%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/poly_mulcache_compute_asm.S.o\n[ 50%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/poly_reduce_asm.S.o\n[ 50%] Built target ml_kem_512_aarch64\n[ 51%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/debug.c.o\n[ 51%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/poly_tobytes_asm.S.o\n[ 51%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/indcpa.c.o\n[ 52%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/kem.c.o\n[ 53%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/poly_tomont_asm.S.o\n[ 54%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2.S.o\n[ 54%] Building C object src/common/CMakeFiles/internal.dir/aes/aes_impl.c.o\n[ 54%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/poly.c.o\n[ 54%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3.S.o\n[ 55%] Building C object src/common/CMakeFiles/internal.dir/aes/aes_c.c.o\n[ 56%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4.S.o\n[ 56%] Built target xkcp_low_keccakp_1600_plain64\n[ 56%] Building ASM object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/rej_uniform_asm.S.o\n[ 57%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/poly_k.c.o\n[ 58%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/native/aarch64/src/rej_uniform_table.c.o\n[ 59%] Building C object src/common/CMakeFiles/internal.dir/aes/aes128_armv8.c.o\n[ 59%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/poly.c.o\n[ 60%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/sampling.c.o\n[ 60%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_1024_ref.dir/mlkem-native_ml-kem-1024_ref/mlkem/src/verify.c.o\n[ 61%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/poly_k.c.o\n[ 61%] Building C object src/common/CMakeFiles/internal.dir/aes/aes256_armv8.c.o\n[ 62%] Building C object src/common/CMakeFiles/internal.dir/aes/aes.c.o\n[ 62%] Built target ml_kem_1024_ref\n[ 63%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/sampling.c.o\n[ 63%] Building C object src/kem/ml_kem/CMakeFiles/ml_kem_768_aarch64.dir/mlkem-native_ml-kem-768_aarch64/mlkem/src/verify.c.o\n[ 63%] Building C object src/common/CMakeFiles/internal.dir/sha2/sha2_impl.c.o\n[ 64%] Building C object src/common/CMakeFiles/internal.dir/sha2/sha2_c.c.o\n[ 64%] Building C object src/common/CMakeFiles/internal.dir/sha2/sha2_armv8.c.o\n[ 65%] Building C object src/common/CMakeFiles/internal.dir/sha2/sha2.c.o\n[ 65%] Built target ml_kem_768_aarch64\n[ 66%] Building C object src/common/CMakeFiles/internal.dir/sha3/xkcp_sha3.c.o\n[ 66%] Building C object src/common/CMakeFiles/internal.dir/sha3/xkcp_sha3x4.c.o\n[ 67%] Building C object src/CMakeFiles/oqs.dir/kem/kem.c.o\n[ 68%] Building C object src/common/CMakeFiles/internal.dir/sha3/sha3.c.o\n[ 68%] Building C object src/common/CMakeFiles/internal.dir/sha3/sha3x4.c.o\n[ 68%] Building C object src/CMakeFiles/oqs.dir/sig/sig.c.o\n[ 69%] Building C object src/CMakeFiles/oqs.dir/sig_stfl/sig_stfl.c.o\n[ 70%] Building C object src/common/CMakeFiles/internal.dir/common.c.o\n[ 70%] Building C object src/common/CMakeFiles/internal.dir/rand/rand_nist.c.o\n[ 71%] Linking C static library ../lib/liboqs.a\n[ 71%] Built target oqs\n[ 71%] Built target internal\n[ 71%] Linking C static library ../lib/liboqs-internal.a\n[ 71%] Built target oqs-internal\n[ 73%] Building C object tests/CMakeFiles/test_sha3.dir/test_sha3.c.o\n[ 73%] Building C object tests/CMakeFiles/speed_common.dir/speed_common.c.o\n[ 73%] Building C object tests/CMakeFiles/test_aes.dir/test_aes.c.o\n[ 73%] Building C object tests/CMakeFiles/test_hash.dir/test_hash.c.o\n[ 74%] Linking C executable test_hash\n[ 75%] Linking C executable test_aes\n[ 75%] Linking C executable speed_common\n[ 75%] Built target test_hash\n[ 75%] Built target test_aes\n[ 75%] Built target speed_common\n[ 76%] Building C object tests/CMakeFiles/example_kem.dir/example_kem.c.o\n[ 77%] Building C object tests/CMakeFiles/kat_kem.dir/kat_kem.c.o\n[ 78%] Linking C executable test_sha3\n[ 79%] Building C object tests/CMakeFiles/test_kem.dir/test_kem.c.o\n[ 80%] Linking C executable example_kem\n[ 80%] Built target test_sha3\n[ 81%] Building C object tests/CMakeFiles/kat_kem.dir/test_helpers.c.o\n[ 81%] Building C object tests/CMakeFiles/test_kem.dir/test_helpers.c.o\n[ 81%] Built target example_kem\n[ 81%] Building C object tests/CMakeFiles/test_kem_mem.dir/test_kem_mem.c.o\n[ 82%] Building C object tests/CMakeFiles/speed_kem.dir/speed_kem.c.o\n[ 82%] Linking C executable kat_kem\n[ 83%] Linking C executable test_kem\n[ 84%] Building C object tests/CMakeFiles/test_kem_mem.dir/test_helpers.c.o\n[ 84%] Built target kat_kem\n[ 84%] Built target test_kem\n[ 84%] Linking C executable speed_kem\n[ 84%] Building C object tests/CMakeFiles/example_sig.dir/example_sig.c.o\n[ 84%] Building C object tests/CMakeFiles/example_sig_stfl.dir/example_sig_stfl.c.o\n[ 84%] Linking C executable test_kem_mem\n[ 84%] Built target speed_kem\n[ 85%] Linking C executable example_sig\n[ 86%] Linking C executable example_sig_stfl\n[ 87%] Building C object tests/CMakeFiles/kat_sig.dir/kat_sig.c.o\n[ 87%] Built target test_kem_mem\n[ 87%] Building C object tests/CMakeFiles/kat_sig.dir/test_helpers.c.o\n[ 87%] Built target example_sig\n[ 87%] Built target example_sig_stfl\n[ 87%] Building C object tests/CMakeFiles/kat_sig_stfl.dir/kat_sig_stfl.c.o\n[ 87%] Building C object tests/CMakeFiles/test_sig.dir/test_sig.c.o\n[ 88%] Linking C executable kat_sig\n[ 89%] Building C object tests/CMakeFiles/test_sig_mem.dir/test_sig_mem.c.o\n[ 90%] Building C object tests/CMakeFiles/kat_sig_stfl.dir/test_helpers.c.o\n[ 91%] Building C object tests/CMakeFiles/test_sig.dir/test_helpers.c.o\n[ 91%] Built target kat_sig\n[ 92%] Building C object tests/CMakeFiles/speed_sig.dir/speed_sig.c.o\n[ 92%] Linking C executable test_sig_mem\n[ 93%] Linking C executable test_sig\n[ 93%] Linking C executable kat_sig_stfl\n[ 93%] Built target test_sig_mem\n[ 94%] Linking C executable speed_sig\n[ 95%] Building C object tests/CMakeFiles/test_sig_stfl.dir/test_sig_stfl.c.o\n[ 95%] Built target kat_sig_stfl\n[ 95%] Built target test_sig\n[ 96%] Building C object tests/CMakeFiles/test_sig_stfl.dir/test_helpers.c.o\n[ 96%] Building C object tests/CMakeFiles/speed_sig_stfl.dir/speed_sig_stfl.c.o\n[ 96%] Built target speed_sig\n[ 97%] Building C object tests/CMakeFiles/dump_alg_info.dir/dump_alg_info.c.o\n[ 97%] Linking C executable test_sig_stfl\n[ 98%] Building C object tests/CMakeFiles/vectors_sig.dir/vectors_sig.c.o\n[ 99%] Linking C executable speed_sig_stfl\n[ 99%] Linking C executable dump_alg_info\n[ 99%] Built target test_sig_stfl\n[ 99%] Built target speed_sig_stfl\n[ 99%] Built target dump_alg_info\n[ 99%] Linking C executable vectors_sig\n[100%] Building C object tests/CMakeFiles/vectors_kem.dir/vectors_kem.c.o\n[100%] Built target vectors_sig\n[100%] Linking C executable vectors_kem\n[100%] Built target vectors_kem\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/quantum-round72-liboqs/build/tests/example_kem"
+      ],
+      "returncode": 0,
+      "stdout": "[example_stack] OQS_KEM_ml_kem_768 operations completed.\n[example_heap]  OQS_KEM_ml_kem_768 operations completed.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/quantum-round72-liboqs/build/tests/test_kem",
+        "ML-KEM-512"
+      ],
+      "returncode": 0,
+      "stdout": "Testing KEM algorithms using liboqs version 0.15.0\nConfiguration info\n==================\nTarget platform:  arm64-Darwin-25.6.0\nCompiler:         clang (21.0.0 (clang-2100.3.34.2))\nCompile options:  [-march=armv8-a+crypto;-Wa,--noexecstack;-O3;-fomit-frame-pointer;-Wbad-function-cast;-Wcast-qual;-Wnarrowing;-Wconversion]\nOQS version:      0.15.0 (major: 0, minor: 15, patch: 0)\nGit commit:       cce153fe5e5c301b7df964cd2bc571eb06dd1ad8 (+ local modifications)\nOpenSSL enabled:  No\nAES:              C and ARM CRYPTO extensions\nSHA-2:            C and ARM CRYPTO extensions\nSHA-3:            C\nOQS build flags:  OQS_DIST_BUILD OQS_LIBJADE_BUILD OQS_OPT_TARGET=generic CMAKE_BUILD_TYPE=Release \nCPU exts active:  AES SHA2 SHA3 NEON\n================================================================================\nsample computation for KEM ML-KEM-512\nVersion source: FIPS203\n================================================================================\nshared secrets are equal\nshared secrets are equal\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/quantum-round72-liboqs/build/tests/test_kem",
+        "ML-KEM-768"
+      ],
+      "returncode": 0,
+      "stdout": "Testing KEM algorithms using liboqs version 0.15.0\nConfiguration info\n==================\nTarget platform:  arm64-Darwin-25.6.0\nCompiler:         clang (21.0.0 (clang-2100.3.34.2))\nCompile options:  [-march=armv8-a+crypto;-Wa,--noexecstack;-O3;-fomit-frame-pointer;-Wbad-function-cast;-Wcast-qual;-Wnarrowing;-Wconversion]\nOQS version:      0.15.0 (major: 0, minor: 15, patch: 0)\nGit commit:       cce153fe5e5c301b7df964cd2bc571eb06dd1ad8 (+ local modifications)\nOpenSSL enabled:  No\nAES:              C and ARM CRYPTO extensions\nSHA-2:            C and ARM CRYPTO extensions\nSHA-3:            C\nOQS build flags:  OQS_DIST_BUILD OQS_LIBJADE_BUILD OQS_OPT_TARGET=generic CMAKE_BUILD_TYPE=Release \nCPU exts active:  AES SHA2 SHA3 NEON\n================================================================================\nsample computation for KEM ML-KEM-768\nVersion source: FIPS203\n================================================================================\nshared secrets are equal\nshared secrets are equal\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/quantum-round72-liboqs/build/tests/test_kem",
+        "ML-KEM-1024"
+      ],
+      "returncode": 0,
+      "stdout": "Testing KEM algorithms using liboqs version 0.15.0\nConfiguration info\n==================\nTarget platform:  arm64-Darwin-25.6.0\nCompiler:         clang (21.0.0 (clang-2100.3.34.2))\nCompile options:  [-march=armv8-a+crypto;-Wa,--noexecstack;-O3;-fomit-frame-pointer;-Wbad-function-cast;-Wcast-qual;-Wnarrowing;-Wconversion]\nOQS version:      0.15.0 (major: 0, minor: 15, patch: 0)\nGit commit:       cce153fe5e5c301b7df964cd2bc571eb06dd1ad8 (+ local modifications)\nOpenSSL enabled:  No\nAES:              C and ARM CRYPTO extensions\nSHA-2:            C and ARM CRYPTO extensions\nSHA-3:            C\nOQS build flags:  OQS_DIST_BUILD OQS_LIBJADE_BUILD OQS_OPT_TARGET=generic CMAKE_BUILD_TYPE=Release \nCPU exts active:  AES SHA2 SHA3 NEON\n================================================================================\nsample computation for KEM ML-KEM-1024\nVersion source: FIPS203\n================================================================================\nshared secrets are equal\nshared secrets are equal\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cc",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-I",
+        "/private/tmp/quantum-round72-liboqs/build/include",
+        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk/liboqs_roundtrip.c",
+        "/private/tmp/quantum-round72-liboqs/build/lib/liboqs.a",
+        "-o",
+        "/private/tmp/quantum-round72-liboqs/build/round72-roundtrip"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/quantum-round72-liboqs/build/round72-roundtrip"
+      ],
+      "returncode": 0,
+      "stdout": "[{\"algorithm\":\"ML-KEM-512\",\"public_key_bytes\":800,\"secret_key_bytes\":1632,\"ciphertext_bytes\":768,\"shared_secret_bytes\":32,\"valid_roundtrips\":10,\"tampered_different_secrets\":10},{\"algorithm\":\"ML-KEM-768\",\"public_key_bytes\":1184,\"secret_key_bytes\":2400,\"ciphertext_bytes\":1088,\"shared_secret_bytes\":32,\"valid_roundtrips\":10,\"tampered_different_secrets\":10},{\"algorithm\":\"ML-KEM-1024\",\"public_key_bytes\":1568,\"secret_key_bytes\":3168,\"ciphertext_bytes\":1568,\"shared_secret_bytes\":32,\"valid_roundtrips\":10,\"tampered_different_secrets\":10}]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cc",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+      "stderr": ""
+    }
+  ],
+  "source_license_sha256": "12f2f1491b92248ad4d1c1042cdc72bc3391b1237c2829b031c0a44408d2cf77",
+  "scope": "Complete official build dependency for selected ML-KEM algorithms; no TLS/FIPS certification",
+  "status": "passed"
+}

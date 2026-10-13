@@ -15,7 +15,7 @@
 
 `codes/` 包含可运行教学实验与带许可的第三方固定源码摘录；`handbook/` 是 Markdown 原稿；`reader/` 是已生成的离线阅读版；`tools/reader/` 包含构建和检查程序；`work/research/` 保存与正文相互引用的审校、算例和验证记录。
 
-本轮新增32组诊断与源码练习、6张科学图；源码阅读摘录共19项目64文件。逐章修改、独立复核、验收范围与限制见[第70轮整合记录](work/research/round70-final-integration.md)。
+第72轮对24篇正文逐篇复核，补充章节练习、完整HHL/QSP/阴影等实现，以及26个完整SDK或C/C++项目的实际本地任务。代码、依赖锁、原始样本和明确边界见[完整SDK实验册](handbook/labs/sdk-validation.md)；当前第三方固定摘录仍为26项目97文件。数学01位于实验Q1之前，离线侧栏与翻页统一采用该顺序。逐章修改和验收见[第72轮整合记录](work/research/round72-final-integration.md)。
 
 ## 重新生成阅读版
 

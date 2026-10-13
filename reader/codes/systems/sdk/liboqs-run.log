@@ -1,0 +1,33 @@
+{
+  "commit": "97f6b86b1b6d109cfd43cf276ae39c2e776aed80",
+  "algorithms": [
+    {
+      "algorithm": "ML-KEM-512",
+      "public_key_bytes": 800,
+      "secret_key_bytes": 1632,
+      "ciphertext_bytes": 768,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    },
+    {
+      "algorithm": "ML-KEM-768",
+      "public_key_bytes": 1184,
+      "secret_key_bytes": 2400,
+      "ciphertext_bytes": 1088,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    },
+    {
+      "algorithm": "ML-KEM-1024",
+      "public_key_bytes": 1568,
+      "secret_key_bytes": 3168,
+      "ciphertext_bytes": 1568,
+      "shared_secret_bytes": 32,
+      "valid_roundtrips": 10,
+      "tampered_different_secrets": 10
+    }
+  ],
+  "status": "passed"
+}

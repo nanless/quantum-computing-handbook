@@ -1,0 +1,421 @@
+{
+  "qiskit": {
+    "version": "2.5.2",
+    "requires_python": ">=3.10",
+    "release_files": [
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-macosx_10_12_x86_64.whl",
+        "sha256": "4aa7ddb0d9c1cd14298bf2fdd242646a5e0eaeebdebd2f31d5d2a018c75fa744",
+        "upload_time": "2026-08-13T19:08:56.878910Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-macosx_11_0_arm64.whl",
+        "sha256": "c559ee1e2a92b5ded6a130f1fd8dc4bea19a5b35e99d39180889746f12550666",
+        "upload_time": "2026-08-13T19:08:04.199944Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-manylinux_2_28_aarch64.whl",
+        "sha256": "2835e38af67932e592562c7b1b6b7fadd015bd1101a1320e2c5051de12508428",
+        "upload_time": "2026-08-13T19:08:06.860314Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-manylinux_2_28_ppc64le.whl",
+        "sha256": "d7940da5ea03d638bace6f9cc47bb892502c85a9c05eebe1cbe3c0e693586109",
+        "upload_time": "2026-08-13T19:08:59.707610Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-manylinux_2_28_s390x.whl",
+        "sha256": "c2eab89804161dd927d25d521c6c43af1bcd17042e6b02124166d6d07a9c9cb1",
+        "upload_time": "2026-08-13T19:09:02.586846Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-manylinux_2_28_x86_64.whl",
+        "sha256": "28fcb983e565b8f027a13ef43cda7aaeb1f1a6caf9df07408708abcf7bc0b59d",
+        "upload_time": "2026-08-13T19:08:09.439868Z"
+      },
+      {
+        "filename": "qiskit-2.5.2-cp310-abi3-win_amd64.whl",
+        "sha256": "d436cd45db22ea0132be815930d7c90343774756da9620dee68714968966f65e",
+        "upload_time": "2026-08-13T19:08:11.872486Z"
+      },
+      {
+        "filename": "qiskit-2.5.2.tar.gz",
+        "sha256": "cf05388c717392cff5d01be4ea9b45652c2709a5c697c174428d8863089b6247",
+        "upload_time": "2026-08-13T19:08:14.183757Z"
+      }
+    ]
+  },
+  "qiskit-aer": {
+    "version": "0.17.2",
+    "requires_python": ">=3.7",
+    "release_files": [
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-macosx_10_9_x86_64.whl",
+        "sha256": "4cef22b09c6d7f1afa4886fe8ff14f54ccfe830c50f322182f06f5f8a72b48d3",
+        "upload_time": "2025-09-17T13:53:56.779313Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-macosx_11_0_arm64.whl",
+        "sha256": "99b92f70d669e3f869bc341ed4b3b1943e8a7c85643f1d289db8b08e0e4397a4",
+        "upload_time": "2025-09-17T13:53:59.107830Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "45f149e5921f54cbefc220021b6144a197cbc132474a7ea55e36e5b7909ab67a",
+        "upload_time": "2025-09-17T15:22:20.030066Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "sha256": "4a84a59750faa83186373bd32af3af43d6303c6469899aa9018031e6fa296754",
+        "upload_time": "2025-09-17T13:54:00.795376Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+        "sha256": "909213047102b591ab04cf4bb7d4f0a6aa56d38cee331c8a29060d1174be536d",
+        "upload_time": "2025-09-17T14:51:04.845215Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "32b2b056b1132f21af3ec76ec4de19b1b1871aa842a8fa3f01617a88f929365c",
+        "upload_time": "2025-09-17T13:54:02.370406Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-win32.whl",
+        "sha256": "ddc7360317d652ed7fbc12a83f3b3adf28258433b55f2c6022c1448473fdb407",
+        "upload_time": "2025-09-17T13:54:04.823768Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp310-cp310-win_amd64.whl",
+        "sha256": "38b2c99d7af65716f6c48616a57ffa79ec827a8fc70257f925f6904c7b1a1a0f",
+        "upload_time": "2025-09-17T13:54:06.461114Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-macosx_10_9_x86_64.whl",
+        "sha256": "a8723a61aa3925508a977dd92ae135f2aee465cf74bb9ed7c75b5cc98628e4b3",
+        "upload_time": "2025-09-17T13:54:08.286611Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "55bdf5aacaf27576de988dc1aea915fdcb18c83a9732de2278137004fc076470",
+        "upload_time": "2025-09-17T13:54:09.761400Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "2ecd74ca2ce45bbc673d5f7d2e3fdc5218dc7d05a9d24feaa84d48cf23ca028d",
+        "upload_time": "2025-09-17T15:22:22.668660Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "sha256": "4e5df2f2aa8cf189639df870303543c3febb3a282113c91bc27a8c7c4624d225",
+        "upload_time": "2025-09-17T13:54:11.452170Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+        "sha256": "d1274f5609269fc9762835d978d9e8110ca84af2d0d1dc9b08552a34a6068520",
+        "upload_time": "2025-09-17T14:51:07.607675Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "0bd91f682dc62c0e62c30651daf45aebd462bdbc2b1a2d028be3cc85b4b09eed",
+        "upload_time": "2025-09-17T13:54:13.362345Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-win32.whl",
+        "sha256": "7ea01d85d9d6a4cddd205ed118075401323517b69624f59f5607f8a14b72fef9",
+        "upload_time": "2025-09-17T13:54:15.783900Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp311-cp311-win_amd64.whl",
+        "sha256": "ba8ee895803d618cf1cc13f948c5806e52c27d673d828e196f57774649b05cdf",
+        "upload_time": "2025-09-17T13:54:17.445595Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-macosx_10_13_x86_64.whl",
+        "sha256": "5f03bf3f45f7f6cc6e480df473e4750178cb66ee7fb44d85d98c13901e81c42c",
+        "upload_time": "2025-09-17T13:54:19.202583Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-macosx_11_0_arm64.whl",
+        "sha256": "abb03d621cfd30e608ba8ddbb9e673707e6f790a744130d1d6355e3e10554d13",
+        "upload_time": "2025-09-17T13:54:21.009737Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "6e3ee2debad4dd9d1ff021002e82363a83ee22b1440ccbc293a444072c9fd0c1",
+        "upload_time": "2025-09-17T15:22:24.811386Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "sha256": "782f6ba0bdd08faec19f7bbb65e95fc70b0c2d097b056fc929a95c084b57c203",
+        "upload_time": "2025-09-17T13:54:22.628893Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+        "sha256": "2e91fc4f0a26540ff0e9d0a30b8be3e0f12b4c9c59ec1afffb753944d47e1888",
+        "upload_time": "2025-09-17T14:51:09.356597Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "7a8857aad723036ff818af14bbd4c3375559741366bffce7b36b4eeb306b88cf",
+        "upload_time": "2025-09-17T13:54:24.582807Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-win32.whl",
+        "sha256": "a9abdb24318c417b69867c6d43aed4684b67320b1e7010f4c57c84fdeff89a13",
+        "upload_time": "2025-09-17T13:54:26.703188Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp312-cp312-win_amd64.whl",
+        "sha256": "80c419bb3fb65a5135286ce4e98abd68b9dc836b77affbbc4b06721d53ce1e3c",
+        "upload_time": "2025-09-17T13:54:28.885827Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-macosx_10_13_x86_64.whl",
+        "sha256": "a8ac09544489e34cb60bc0e615bc5ae725de581c9a6bf5cd17b57f2a7baf9f16",
+        "upload_time": "2025-09-17T13:54:32.728817Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-macosx_11_0_arm64.whl",
+        "sha256": "4c1bf5072bc54250009751350aaaed06bef15ada7ab43e6ce2c934831f6ee6ea",
+        "upload_time": "2025-09-17T13:54:34.080163Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "bd9d3c5e6c5d09cb0a821bf5077a14e7f5f8db5c3d700023be92ce6a05923309",
+        "upload_time": "2025-09-17T15:22:26.783951Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "sha256": "46820fb38bf85f8c6f8aaa350dd90d01b0be10d16f5f1ef4188882b3a0531f38",
+        "upload_time": "2025-09-17T13:54:36.414958Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "2749e6027f67e1f6b9d328d2dda2d4bf926aebd3653edc62e94c45d8237294d8",
+        "upload_time": "2025-09-17T13:54:38.092051Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-win32.whl",
+        "sha256": "c3ffd40a64bfcf8a6d10cbfdca8734d49ec57502fd70dc63aae9ed3819249dd6",
+        "upload_time": "2025-09-17T13:54:40.024758Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp313-cp313-win_amd64.whl",
+        "sha256": "b38c5dfdc6cb2bacac78a47b0df8247123051564007fdecedb8ffbd4256f0f09",
+        "upload_time": "2025-09-17T13:54:42.061065Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp314-cp314-macosx_10_15_x86_64.whl",
+        "sha256": "c282b9b65f2b011d740e76b0ab44201c70d8d48894ddc12e22442acbb81cc7eb",
+        "upload_time": "2026-02-04T21:30:47.913727Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp314-cp314-macosx_11_0_arm64.whl",
+        "sha256": "193de16895ee989a5259331d0f1b1dcad606d506e5e831683ff165e82851a7ac",
+        "upload_time": "2026-02-04T21:30:55.486231Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "b84564d563fb06adb454f3528dcc343be327c30cbd5f9f40aec7efd21d241e55",
+        "upload_time": "2026-02-04T21:30:57.829174Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp314-cp314-win_amd64.whl",
+        "sha256": "5d7b22dd945df4c69d57e966efb549cf9186055e5f32c649a91b7dd1eb133f07",
+        "upload_time": "2026-02-04T21:30:59.913808Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-macosx_10_9_x86_64.whl",
+        "sha256": "58078b26f8ae29c4189eb373267a651f0d8046449faead786a69c3f33e7e5672",
+        "upload_time": "2025-09-17T13:54:43.857783Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-macosx_11_0_arm64.whl",
+        "sha256": "c752cf5a650a22763eeccc9cd13a90ab10d7012612b5729056e1dcf2d92c1f5a",
+        "upload_time": "2025-09-17T13:54:45.178727Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "d8e7414a1a308c13bfb126df34fec4ee7c717c6d9050452aebced2b3920515e8",
+        "upload_time": "2025-09-17T15:22:28.673734Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl",
+        "sha256": "cf4e5eb45566ff2edebea8e776eabf0197e6862c0fc614affc2bd85506de6301",
+        "upload_time": "2025-09-17T13:54:46.917282Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+        "sha256": "200cf0a89fa98bc15868596618bf94be11f20cf27ec381e70b1ac11bc6394ef5",
+        "upload_time": "2025-09-17T14:51:11.361556Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "f9133fbb34d64e17c0829e223b8387618745f97f254453e0ee4cfdb76ccb37fd",
+        "upload_time": "2025-09-17T13:54:48.509443Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-win32.whl",
+        "sha256": "1adc2df888fb98e3ae37f918190b488b91889fc3596e6550b6e2b3091d1d01c9",
+        "upload_time": "2025-09-17T13:54:50.520199Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2-cp39-cp39-win_amd64.whl",
+        "sha256": "fbdb82e3b0c5804006aa09a0541d9366cac423ea3fc2f38d6a759c565d7b9ce2",
+        "upload_time": "2025-09-17T13:54:52.464359Z"
+      },
+      {
+        "filename": "qiskit_aer-0.17.2.tar.gz",
+        "sha256": "134eef8e509311955a15be543d2ba368f988f3583a2bc1f548af3196da820eb4",
+        "upload_time": "2025-09-17T13:55:25.165791Z"
+      }
+    ]
+  },
+  "qiskit-experiments": {
+    "version": "0.14.2",
+    "requires_python": ">=3.10",
+    "release_files": [
+      {
+        "filename": "qiskit_experiments-0.14.2-py3-none-any.whl",
+        "sha256": "0e65e1177a5ba301f7c5c25f064ae29edf38e193c8ced8b17c2fa52dd1b4f874",
+        "upload_time": "2026-08-25T12:42:59.373058Z"
+      },
+      {
+        "filename": "qiskit_experiments-0.14.2.tar.gz",
+        "sha256": "b06b46311d022ed4a15dc3e0ec89d3a7965caec1e58a758f23727085fb404ce4",
+        "upload_time": "2026-08-25T12:43:00.906753Z"
+      }
+    ]
+  },
+  "qutip": {
+    "version": "5.3.1",
+    "requires_python": ">=3.11",
+    "release_files": [
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-macosx_10_9_x86_64.whl",
+        "sha256": "e60af909389ba890c53c4d74f0256bb46b35b9cc5de157af64343a516469944d",
+        "upload_time": "2026-08-04T04:34:18.622277Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "75248ffb91acd09885b992166d297764af6d037ac993e00c9757cae21c9e81c9",
+        "upload_time": "2026-08-04T04:34:20.856503Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+        "sha256": "1947d62bb932ddb455a0b21d6965139eb9576be68027e8aeba112f4a24a1447e",
+        "upload_time": "2026-08-04T04:34:23.193974Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "8353fd3a5c438e3154068b229a4c7ea4b420411c7c967b84ba9a97f5f439fa50",
+        "upload_time": "2026-08-04T04:34:26.284437Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-win_amd64.whl",
+        "sha256": "a8d885ed40d1a4c0ed7f55b091f04a66dab368ec09bd3a0f6bc6fbf996d4f9fe",
+        "upload_time": "2026-08-04T04:34:28.809484Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp311-cp311-win_arm64.whl",
+        "sha256": "e2a719d8f3d9b1b29907f0b94ae4917f541c4dda95f26e70ee2c4b7ca4dd222a",
+        "upload_time": "2026-08-04T04:34:31.371707Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-macosx_10_13_x86_64.whl",
+        "sha256": "17933eeb2a1bc73318369fa660d8f1314615f20ffa4d2668e039909f36f56f16",
+        "upload_time": "2026-08-04T04:34:33.464394Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-macosx_11_0_arm64.whl",
+        "sha256": "3daedeec808c87f4b3f899fd874720cf7a5609171afacbc8d2fcdcf7f31a177b",
+        "upload_time": "2026-08-04T04:34:36.150379Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+        "sha256": "d88da28f1757f1ce02ae3a3b6b3432474969302dacef56f996d1b068ed36faed",
+        "upload_time": "2026-08-04T04:34:38.508007Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "63217730f61da7d410684f77f71498347f8afee22995fa7c93578d32b5623640",
+        "upload_time": "2026-08-04T04:34:41.399921Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-win_amd64.whl",
+        "sha256": "300bd4a8ab301dae405611928a5eeaf4ac8b7dcdddb59652efc130558d71b2ea",
+        "upload_time": "2026-08-04T04:34:43.956304Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp312-cp312-win_arm64.whl",
+        "sha256": "73732d1c294d7a53a239225f93ff776470260126377b545a575ccd46e9671d14",
+        "upload_time": "2026-08-04T04:34:46.062557Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-macosx_10_13_x86_64.whl",
+        "sha256": "de0a97c26817c1937606d30dcae2246acb3eae45bce826e29d3fc7cccb50acb1",
+        "upload_time": "2026-08-04T04:34:48.339126Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-macosx_11_0_arm64.whl",
+        "sha256": "8e6070cc3ca6f1d006fbecb4a357eecc7e1420016579719925d0cdf93abb37b8",
+        "upload_time": "2026-08-04T04:34:51.274836Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+        "sha256": "45ed41d771fb2aa250fca920af8604affde55563cbe1921280f585bd86ba3a17",
+        "upload_time": "2026-08-04T04:34:55.028352Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "a95248e9d06f2d6d7ca9ccdcb77c184066a4e4284eb97408f0354a705043c8cd",
+        "upload_time": "2026-08-04T04:34:58.492608Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-win_amd64.whl",
+        "sha256": "5b3f95ceb0b7c4c0003c82f3022b674e1881bd40e8b0728305efc59605c05ac5",
+        "upload_time": "2026-08-04T04:35:01.191629Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp313-cp313-win_arm64.whl",
+        "sha256": "34abc3daf2dd7c73514e39cbece84076e9a27fe8abfc3f051004b263c4289cdd",
+        "upload_time": "2026-08-04T04:35:03.626180Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-macosx_10_15_x86_64.whl",
+        "sha256": "2ad0a6e5098a2e6390cf939cecef09082d49e558d6d2750e3cceb9672aa3ed67",
+        "upload_time": "2026-08-04T04:35:06.005017Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-macosx_11_0_arm64.whl",
+        "sha256": "624f738f284579b24757b741dbca898d371450f13dcb4100a3a3031da44335f2",
+        "upload_time": "2026-08-04T04:35:08.254207Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+        "sha256": "b6c1f2119ad530764dea638b65bec0843f63164bb4bdc3d6404e2084d486fd6a",
+        "upload_time": "2026-08-04T04:35:11.388795Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "252db589f736318540bd8e04b5162273aaab4e96a78beda6bb941c4865c2f58a",
+        "upload_time": "2026-08-04T04:35:14.774093Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-win_amd64.whl",
+        "sha256": "7b891aa2cc71377a8870d3b33d1616874f7308fb93e75c72fce51377ddc084cd",
+        "upload_time": "2026-08-04T04:35:17.443493Z"
+      },
+      {
+        "filename": "qutip-5.3.1-cp314-cp314-win_arm64.whl",
+        "sha256": "c09c138c81fd2187e5d34d37e9ecc62eae9004ba3b801caf732cca093da59462",
+        "upload_time": "2026-08-04T04:35:20.024255Z"
+      },
+      {
+        "filename": "qutip-5.3.1.tar.gz",
+        "sha256": "056206b40cbe97c3c7e4f85eff11873406669cd72b2db039fa1a3812767395e9",
+        "upload_time": "2026-08-04T04:35:22.044092Z"
+      }
+    ]
+  }
+}

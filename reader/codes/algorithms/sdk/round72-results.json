@@ -1,0 +1,431 @@
+{
+  "python": "3.11.15 (main, Mar 25 2026, 02:58:47) [Clang 22.1.1 ]",
+  "seed": 72013,
+  "evidence": "installed public release packages, ideal local CPU simulation; no cloud or vendor excerpts",
+  "cases": {
+    "cirq": {
+      "version": "1.7.0",
+      "wall_seconds": 0.7734981249086559,
+      "cpu_seconds": 0.607083,
+      "result": {
+        "A": [
+          [
+            1.4999999999999998,
+            -0.49999999999999994
+          ],
+          [
+            -0.49999999999999994,
+            1.4999999999999998
+          ]
+        ],
+        "eigenvalues": [
+          1,
+          2
+        ],
+        "input": [
+          1,
+          0
+        ],
+        "success_exact": 0.625,
+        "conditional_amplitudes": [
+          0.9486832980505137,
+          0.3162277660168382
+        ],
+        "conditional_Z_exact": 0.7999999999999995,
+        "conditional_X_exact": 0.6000000000000004,
+        "conditional_x_counts": [
+          10022,
+          2466
+        ],
+        "x_successes": 12488,
+        "shots": 20000,
+        "successes": 12461,
+        "conditional_z_counts": [
+          11252,
+          1209
+        ],
+        "primitive_outputs": {
+          "dj_constant": "000",
+          "dj_balanced": "100",
+          "bv_101": "101"
+        },
+        "simon_probabilities": [
+          0.25,
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.25,
+          0.25
+        ],
+        "simon_histogram": {
+          "6": 12,
+          "7": 18,
+          "0": 16,
+          "1": 18
+        },
+        "simon_recovered": "110",
+        "oracle_boundary": "explicit tiny circuit, not efficient arbitrary black-box synthesis"
+      },
+      "status": "passed"
+    },
+    "pennylane": {
+      "version": "0.45.1",
+      "wall_seconds": 0.6351110830437392,
+      "cpu_seconds": 0.588077,
+      "result": {
+        "shots": 30000,
+        "observables": [
+          "XX",
+          "YY",
+          "ZZ",
+          "ZI"
+        ],
+        "estimates": [
+          1.0128,
+          -1.0158,
+          0.9912,
+          -0.0019
+        ],
+        "analytic": [
+          1,
+          -1,
+          1,
+          0
+        ],
+        "raw_pair_counts": [
+          {
+            "axis": 0,
+            "matching_snapshots": 3376,
+            "positive": 3376,
+            "negative": 0,
+            "empirical_variance": 8.089436159999998,
+            "exact_variance": 8
+          },
+          {
+            "axis": 1,
+            "matching_snapshots": 3386,
+            "positive": 0,
+            "negative": 3386,
+            "empirical_variance": 8.11035036,
+            "exact_variance": 8
+          },
+          {
+            "axis": 2,
+            "matching_snapshots": 3304,
+            "positive": 3304,
+            "negative": 0,
+            "empirical_variance": 7.9383225600000005,
+            "exact_variance": 8
+          }
+        ],
+        "seed": 72013,
+        "vqe_steps": 100,
+        "vqe_energy": -0.7280109889280264,
+        "vqe_theta": 3.4198920485369353,
+        "vqe_gradient": -1.922371034301929e-07,
+        "statistical_check": "fixed-seed regression threshold only; not a universal confidence guarantee"
+      },
+      "status": "passed"
+    },
+    "openfermion": {
+      "version": "1.8.1",
+      "wall_seconds": 0.012537250062450767,
+      "cpu_seconds": 0.012521000000000004,
+      "result": {
+        "fermion_input": "1 [0^ 0] +\n-0.5 [0^ 1] +\n-0.5 [1^ 0] +\n2 [1^ 1]",
+        "jordan_wigner": "(1.5+0j) [] +\n(-0.25+0j) [X0 X1] +\n(-0.25+0j) [Y0 Y1] +\n(-0.5+0j) [Z0] +\n(-1+0j) [Z1]",
+        "basis": [
+          "00",
+          "01",
+          "10",
+          "11"
+        ],
+        "one_particle_block": [
+          [
+            2.0,
+            -0.5
+          ],
+          [
+            -0.5,
+            1.0
+          ]
+        ],
+        "one_particle_eigenvalues": [
+          0.7928932188134525,
+          2.2071067811865475
+        ],
+        "ground_energy": 0.7928932188134525,
+        "particle_sector": "one particle, not unrestricted vacuum ground state",
+        "model_boundary": "two orbital hopping toy, not a molecular integral calculation"
+      },
+      "status": "passed"
+    },
+    "qualtran": {
+      "version": "0.7.0",
+      "wall_seconds": 0.23704979103058577,
+      "cpu_seconds": 0.2366060000000001,
+      "result": {
+        "mod_exp_rows": [
+          {
+            "exponent": 0,
+            "output": 1
+          },
+          {
+            "exponent": 1,
+            "output": 2
+          },
+          {
+            "exponent": 2,
+            "output": 4
+          },
+          {
+            "exponent": 3,
+            "output": 8
+          },
+          {
+            "exponent": 4,
+            "output": 1
+          },
+          {
+            "exponent": 5,
+            "output": 2
+          },
+          {
+            "exponent": 6,
+            "output": 4
+          },
+          {
+            "exponent": 7,
+            "output": 8
+          }
+        ],
+        "toffoli_max_matrix_error": 0.0,
+        "decomposition_counts": {
+          "CModMulK": "3",
+          "|1>": "1"
+        },
+        "boundary": "ModExp classical semantics and Toffoli tensor verified; not a simulated large modular exponentiation circuit or physical RSA attack"
+      },
+      "status": "passed"
+    },
+    "pyqsp": {
+      "version": "0.2.0",
+      "wall_seconds": 0.015231624944135547,
+      "cpu_seconds": 0.015212000000000003,
+      "result": {
+        "chebyshev_coefficients": [
+          0.0,
+          0.3,
+          0.0,
+          0.2
+        ],
+        "phases_radians": [
+          0.10328832343060845,
+          0.15851106436854098,
+          0.15851106436854098,
+          0.10328832343060845
+        ],
+        "reduced_phases": [
+          0.15851106436854098,
+          0.10328832343060845
+        ],
+        "parity": 1,
+        "target": "0.8*x^3-0.3*x = 0.3*T1+0.2*T3",
+        "encoded_component": "imaginary U00; not whole U00",
+        "grid_points": 1001,
+        "SDK_grid_max_error": 1.8041124150158794e-16,
+        "independent_grid_max_error": 1.8041124150158794e-16,
+        "unitary_max_error": 8.881784197001252e-16,
+        "continuous_boundary": "finite-grid numerical regression, not a certified uniform error theorem"
+      },
+      "status": "passed"
+    },
+    "quimb": {
+      "version": "1.15.0",
+      "wall_seconds": 0.014159291051328182,
+      "cpu_seconds": 0.013969999999999816,
+      "result": {
+        "path3_time": 2.221441469079183,
+        "path3_probabilities": [
+          6.306558236530293e-32,
+          1.8822504620298754e-31,
+          0.9999999999999987
+        ],
+        "weighted5_edges": [
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            0.7
+          ],
+          [
+            2,
+            3,
+            1.3
+          ],
+          [
+            3,
+            4,
+            0.2
+          ],
+          [
+            0,
+            4,
+            0.9
+          ],
+          [
+            1,
+            4,
+            0.4
+          ]
+        ],
+        "weighted5_time": 0.8,
+        "weighted5_probabilities": [
+          0.23962341346915086,
+          0.3774443231948624,
+          0.03230275429619556,
+          0.0071611265369765035,
+          0.343468382502814
+        ],
+        "weighted5_energy": -2.498001805406602e-16,
+        "boundary": "dense small graph CTQW, not coined/MNRS search or scalable classical simulation"
+      },
+      "status": "passed"
+    },
+    "thewalrus": {
+      "version": "0.22.0",
+      "wall_seconds": 0.1656814580783248,
+      "cpu_seconds": 0.16547599999999996,
+      "result": {
+        "r": 0.34657359027997264,
+        "hbar": 1,
+        "covariance": [
+          [
+            0.25,
+            0.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "physical": true,
+        "pure": true,
+        "default_hbar2_rejects_same_numbers": true,
+        "probabilities_0_to_19": [
+          0.9428090415820635,
+          0.0,
+          0.0523782800878924,
+          0.0,
+          0.004364856673991033,
+          0.0,
+          0.00040415339573991044,
+          0.0,
+          3.92926912524913e-05,
+          0.0,
+          3.929269125249129e-06,
+          0.0,
+          4.0020333683092977e-07,
+          0.0,
+          4.129082046668321e-08,
+          0.0,
+          4.301127131946168e-09,
+          0.0,
+          4.513528471795363e-10,
+          0.0
+        ],
+        "retained_mass": 0.9999999999467017,
+        "cutoff_tail": 5.3298254698574965e-11,
+        "mean_photons_truncated": 0.1249999989213747,
+        "analytic_mean_photons": 0.125,
+        "multi_mode_grouped_covariance": [
+          [
+            0.25,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.5
+          ]
+        ],
+        "boundary": "Gaussian photon-number probabilities via SDK; truncation not automatically renormalized; not boson-sampling advantage"
+      },
+      "status": "passed"
+    },
+    "dimod": {
+      "version": "0.12.22",
+      "wall_seconds": 0.04312679194845259,
+      "cpu_seconds": 0.04306600000000005,
+      "result": {
+        "rows": [
+          {
+            "sample": [
+              1,
+              0
+            ],
+            "energy": -3.0,
+            "feasible": true
+          },
+          {
+            "sample": [
+              0,
+              1
+            ],
+            "energy": -2.0,
+            "feasible": true
+          },
+          {
+            "sample": [
+              1,
+              1
+            ],
+            "energy": -1.0,
+            "feasible": false
+          },
+          {
+            "sample": [
+              0,
+              0
+            ],
+            "energy": 0.0,
+            "feasible": true
+          }
+        ],
+        "ising_s_equals_2x_minus_1": {
+          "h": {
+            "x1": -0.5,
+            "x2": 0.0
+          },
+          "J": {
+            "('x2', 'x1')": 1.0
+          },
+          "offset": -1.5
+        },
+        "boundary": "classical exact enumeration; no QPU/annealing dynamics/TTS measured"
+      },
+      "status": "passed"
+    }
+  }
+}

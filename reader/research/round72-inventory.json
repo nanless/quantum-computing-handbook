@@ -1,0 +1,295 @@
+{
+  "generatedAt": "2026-10-13T07:51:36.986Z",
+  "scope": "24 chapter groups, six integration exercises, 26 complete installed/built projects with explicit CPU-task limits",
+  "chapters": [
+    {
+      "id": "00",
+      "label": "F72-00",
+      "file": "handbook/00-overview.md",
+      "sourceSha256": "9c2ff2a116e3ce8da60cedadc13d74a7503f7e92bf11fbd92438150c0bd32e34",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "01",
+      "label": "F72-01",
+      "file": "handbook/01-math.md",
+      "sourceSha256": "12284878a8c494908321e6d0c993c9adf6ff2603bb34ff5e313dc1094ec625cb",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "02",
+      "label": "F72-02",
+      "file": "handbook/02-single-qubit.md",
+      "sourceSha256": "0566413c3a160d44fed819711ea9856a1fe7b63cf5acb2c9e576c9d08984422b",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "03",
+      "label": "F72-03",
+      "file": "handbook/03-multiple-qubits.md",
+      "sourceSha256": "7764f3e670c48f729c2ee5faad6d1c5c93699283df3b03a56b8e6a140a9862cf",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "04",
+      "label": "F72-04",
+      "file": "handbook/04-circuits-protocols.md",
+      "sourceSha256": "df9705665a9176f8a503f8754a27c9a1bdefd0010f80b28b0cbaedae105fff6c",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "05",
+      "label": "F72-05",
+      "file": "handbook/05-noise-channels.md",
+      "sourceSha256": "7589811705cdb7bdda32c6296c16e95c3537af147bf0dafa82c3059f523558a3",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "q1",
+      "label": "F72-Q1",
+      "file": "handbook/quantum-mechanics/01-experiments-states.md",
+      "sourceSha256": "ec8c86d554568d591e98fc6237f5c1421b52d7b80f9874cd221f05de0ea70659",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "q2",
+      "label": "F72-Q2",
+      "file": "handbook/quantum-mechanics/02-observables-dynamics.md",
+      "sourceSha256": "fabaed4e8489f707d5f0d5281af886369db63f46bb2ff5480b92c8ce52518688",
+      "script": "codes/foundations/round72_stdlib.py",
+      "scriptSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "id": "06",
+      "label": "A72-06",
+      "file": "handbook/06-algorithmic-primitives.md",
+      "sourceSha256": "2e8940f2ede8190995de2e5e4b188e587db4dfb35b9500b08be5abccee9597c3",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "07",
+      "label": "A72-07",
+      "file": "handbook/07-algorithms.md",
+      "sourceSha256": "5bea1c3a39be59913a9508877f6027e3658b89501b01be5ce41fae3fe70065f7",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "08",
+      "label": "A72-08",
+      "file": "handbook/08-applications.md",
+      "sourceSha256": "85cc35ce1b60bf15d462995643316c66676a003bd05d6bbb8f51a8b4847707c5",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "13",
+      "label": "A72-13",
+      "file": "handbook/13-quantum-information.md",
+      "sourceSha256": "7edb8fbdee81115f44b70e2d1c0b0814a007b08f1b8aa4b2749c437c275c2ca0",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "16",
+      "label": "A72-16",
+      "file": "handbook/16-advanced-algorithms-verification.md",
+      "sourceSha256": "2138bf6d5c61071d6cc3cbbb295e102931381530408c336b5b9a3612f26296de",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "17",
+      "label": "A72-17",
+      "file": "handbook/17-computation-models.md",
+      "sourceSha256": "54f8f2ca9db405442afe8c9af971dc35fa422f2a3eaa3d4da62802d6269fe432",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "18",
+      "label": "A72-18",
+      "file": "handbook/18-channels-capacities-complexity.md",
+      "sourceSha256": "f7154b9ad421b246cadbcee2b326b1cccf92e2213c4745029deed3d27023a092",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "q4",
+      "label": "A72-Q4",
+      "file": "handbook/quantum-mechanics/04-wavefunctions-models.md",
+      "sourceSha256": "b6ff4b6b3260196ee8d1e86e5a838075c4b13c453282e4afd7ef851b7da61762",
+      "script": "codes/algorithms/round72_checks.py",
+      "scriptSha256": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d"
+    },
+    {
+      "id": "09",
+      "label": "S72-09",
+      "file": "handbook/09-hardware.md",
+      "sourceSha256": "0c4633b53c22b593b0a740db7ba4760551fdb7ce98f6bf3cc444dcfa51d8e254",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "10",
+      "label": "S72-10",
+      "file": "handbook/10-error-correction.md",
+      "sourceSha256": "3c00414a3df5e4f5d7f1f6a20cffe5913925bcb6ee4dc73085eb5ef23e38c221",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "11",
+      "label": "S72-11",
+      "file": "handbook/11-resources-benchmarks.md",
+      "sourceSha256": "702f7c47487705a8ede26d8dc136eee8269bf2fd4cc3f294876b0fdd14616ebf",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "12",
+      "label": "S72-12",
+      "file": "handbook/12-security-network-frontiers.md",
+      "sourceSha256": "f2128b7cb1f547988acacb6637e00ec1309b44d2d7f73aed29470d5b3a91c96e",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "14",
+      "label": "S72-14",
+      "file": "handbook/14-compilation-control.md",
+      "sourceSha256": "be83ab500aa15ca66754e53185a2d0a455f2d1b3e3134552b425c52b30a92c3c",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "15",
+      "label": "S72-15",
+      "file": "handbook/15-practice-research.md",
+      "sourceSha256": "b0db1db8bd7354114af27a059fce13b29f6033c0a745dd164462f0217fdae815",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "19",
+      "label": "S72-19",
+      "file": "handbook/19-engineering-architecture.md",
+      "sourceSha256": "dce9990bae6e5a139315991d4698becd8a2d93d7d935d1ef18868ced8bd551fb",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "id": "q3",
+      "label": "S72-Q3",
+      "file": "handbook/quantum-mechanics/03-levels-control.md",
+      "sourceSha256": "8b36121b7a7329112097f6712abeea62274e99ddbfcc33f89d8a660d55b415d5",
+      "script": "codes/systems/round72_checks.py",
+      "scriptSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    }
+  ],
+  "chapterExerciseLabels": [
+    "A72-06",
+    "A72-07",
+    "A72-08",
+    "A72-13",
+    "A72-16a",
+    "A72-16b",
+    "A72-16c",
+    "A72-17",
+    "A72-18",
+    "A72-Q4",
+    "F72-00",
+    "F72-01",
+    "F72-02",
+    "F72-03",
+    "F72-04",
+    "F72-05",
+    "F72-Q1",
+    "F72-Q2",
+    "S72-09",
+    "S72-10",
+    "S72-11",
+    "S72-12A",
+    "S72-12B",
+    "S72-14",
+    "S72-15",
+    "S72-19",
+    "S72-Q3"
+  ],
+  "workflowExerciseGroups": 6,
+  "completeProjects": [
+    "cirq",
+    "dimod",
+    "liboqs",
+    "mitiq",
+    "openfermion",
+    "pauli-prop",
+    "pennylane",
+    "pygsti",
+    "pymatching",
+    "pyqsp",
+    "qiskit",
+    "qiskit-addon-cutting",
+    "qiskit-addon-mpf",
+    "qiskit-addon-obp",
+    "qiskit-addon-sqd",
+    "qiskit-addon-sqd-hpc",
+    "qiskit-aer",
+    "qiskit-algorithms",
+    "qiskit-experiments",
+    "qualtran",
+    "quimb",
+    "qutip",
+    "qutip-qtrl",
+    "sequence",
+    "stim",
+    "thewalrus"
+  ],
+  "evidence": [
+    {
+      "file": "codes/foundations/sdk/all-results.json",
+      "sha256": "2bbabe8f11d051a2e67da00a0dc85c2e4d41e9280d2f6ed49deef56799aa8ec0"
+    },
+    {
+      "file": "codes/algorithms/sdk/round72-results.json",
+      "sha256": "0f1a939deebda994e8923cb430654e87d55280787761d894d87d2f231b53fb9a"
+    },
+    {
+      "file": "codes/sdk/workflows/results-all.json",
+      "sha256": "f10b20c3bfc8dd994699e25361b8b133ae67298df9b288a03ddc1739e609994c"
+    },
+    {
+      "file": "codes/systems/sdk/stim-matching-results.json",
+      "sha256": "2dd40de15285f5521bb1b740c65f20320053b0c1e72132e3d7794754b471e298"
+    },
+    {
+      "file": "codes/systems/sdk/grape-results.json",
+      "sha256": "24be1a8e895c9e1def19962a2e6765a754f0994693e12a8d371c4db79cf95c23"
+    },
+    {
+      "file": "codes/systems/sdk/sequence-results.json",
+      "sha256": "1d2e643755fc8f953ef73deb30f0133b547062b5ed655f4d99fc5fb6ca9e95dd"
+    },
+    {
+      "file": "codes/systems/sdk/liboqs-build-run.json",
+      "sha256": "3ca0249f1fb02e98ffdcb3c4ca2513cc2283f8c13e19ae95b5378c2f26c19e97"
+    },
+    {
+      "file": "codes/sdk/hpc/results.json",
+      "sha256": "8fb77d7c7aa45d733ef62eb65d868c604d5baad9bc0cafb7c9d534defd781951"
+    },
+    {
+      "file": "codes/sdk/hpc/upstream-tests.log",
+      "sha256": "9e0144c5ee45804010d81b910c1c1ffcd72658f32fc18d14aa95b3bbde9b2c42"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,3 @@
+[ 50%] Building CXX object CMakeFiles/handbook_sqd.dir/validate_hpc.cpp.o
+[100%] Linking CXX executable handbook_sqd
+[100%] Built target handbook_sqd

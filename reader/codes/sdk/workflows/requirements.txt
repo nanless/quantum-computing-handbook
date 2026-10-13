@@ -1,0 +1,9 @@
+qiskit==2.5.2
+qiskit-algorithms==0.4.0
+qiskit-addon-sqd==0.14.0
+qiskit-addon-mpf==0.3.0
+qiskit-addon-obp==0.3.0
+qiskit-addon-cutting==0.10.0
+mitiq==1.1.0
+pygsti==0.10.2
+pauli-prop==0.2.1

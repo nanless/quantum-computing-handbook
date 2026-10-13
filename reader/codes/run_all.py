@@ -8,6 +8,8 @@ COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experim
  ['foundations/diagnostic_lab.py','--case','all'],['algorithms/round70_checks.py','all'],
  ['foundations/round71_checks.py','--case','all'],['algorithms/round71_checks.py','all'],
  ['systems/round71_checks.py','--case','all'],
+ ['foundations/round72_stdlib.py','--case','all'],['algorithms/round72_checks.py','all'],
+ ['systems/round72_checks.py','--case','all'],
  ['review/cross_foundations.py'],['review/cross_systems.py'],
  ['systems/calibration_uncertainty.py'],['systems/coherent_repetition.py'],
  ['systems/correlated_shots.py'],['systems/network_cutoff.py'],

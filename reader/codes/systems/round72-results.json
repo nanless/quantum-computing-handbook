@@ -1,0 +1,274 @@
+{
+  "access_date": "2026-10-13",
+  "implementation": "Python standard library only; independent formulas and archived SDK data",
+  "cases": {
+    "09": {
+      "p": 0.001,
+      "qubit_average_overlap": 0.9993333333333333,
+      "two_qubit_average_error": 0.0008,
+      "reverse_two_qubit_p_for_r001": 0.00125
+    },
+    "10": {
+      "raw_bitpacked_recount": [
+        {
+          "d": 3,
+          "rounds": 3,
+          "p": 0.0,
+          "shots": 1000,
+          "recounted_failures": 0
+        },
+        {
+          "d": 3,
+          "rounds": 3,
+          "p": 0.001,
+          "shots": 20000,
+          "recounted_failures": 13
+        },
+        {
+          "d": 5,
+          "rounds": 5,
+          "p": 0.001,
+          "shots": 20000,
+          "recounted_failures": 2
+        },
+        {
+          "d": 7,
+          "rounds": 7,
+          "p": 0.001,
+          "shots": 20000,
+          "recounted_failures": 0
+        }
+      ],
+      "boundary": "No SDK resampling or redecoding; tests the archived logical evidence"
+    },
+    "11": {
+      "independent_CDF_intervals": [
+        {
+          "d": 3,
+          "p": 0.0,
+          "binomial_tail_inversion": [
+            0,
+            0.003682083896865672
+          ]
+        },
+        {
+          "d": 3,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            0.0003461415732329866,
+            0.0011112633024966878
+          ]
+        },
+        {
+          "d": 5,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            1.2110693365417037e-05,
+            0.0003611872030449163
+          ]
+        },
+        {
+          "d": 7,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            0,
+            0.00018442696396189925
+          ]
+        }
+      ],
+      "zero_failure_one_sided_95_upper": 0.000149775396222962
+    },
+    "12": {
+      "network_received": 624,
+      "eta": 0.6309573444801932,
+      "ack_delay_us": 110,
+      "kem_bytes": [
+        [
+          800,
+          1632,
+          768,
+          32
+        ],
+        [
+          1184,
+          2400,
+          1088,
+          32
+        ],
+        [
+          1568,
+          3168,
+          1568,
+          32
+        ]
+      ],
+      "scope": "Archived C run and network event checks, no security proof"
+    },
+    "14": {
+      "Pauli_closed_form_overlap": 0.9999999999933719,
+      "average_gate_fidelity": 0.9999999999911625,
+      "g_error": 6.628142479314647e-12
+    },
+    "15": {
+      "raw_samples_hashed": 4,
+      "waveform_rebuilt": true,
+      "scope": "Internal evidence consistency, not model correctness or cross-machine seed identity"
+    },
+    "19": {
+      "rational_queue": [
+        {
+          "job": 0,
+          "start": 0.0,
+          "finish": 0.8,
+          "latency": 0.8,
+          "miss": false
+        },
+        {
+          "job": 1,
+          "start": 1.0,
+          "finish": 1.8,
+          "latency": 0.8,
+          "miss": false
+        },
+        {
+          "job": 2,
+          "start": 2.0,
+          "finish": 6.0,
+          "latency": 4.0,
+          "miss": true
+        },
+        {
+          "job": 3,
+          "start": 6.0,
+          "finish": 6.8,
+          "latency": 3.8,
+          "miss": true
+        },
+        {
+          "job": 4,
+          "start": 6.8,
+          "finish": 7.6,
+          "latency": 3.6,
+          "miss": true
+        },
+        {
+          "job": 5,
+          "start": 7.6,
+          "finish": 8.4,
+          "latency": 3.4,
+          "miss": true
+        },
+        {
+          "job": 6,
+          "start": 8.4,
+          "finish": 9.2,
+          "latency": 3.2,
+          "miss": true
+        },
+        {
+          "job": 7,
+          "start": 9.2,
+          "finish": 10.0,
+          "latency": 3.0,
+          "miss": true
+        },
+        {
+          "job": 8,
+          "start": 10.0,
+          "finish": 10.8,
+          "latency": 2.8,
+          "miss": true
+        },
+        {
+          "job": 9,
+          "start": 10.8,
+          "finish": 11.6,
+          "latency": 2.6,
+          "miss": true
+        },
+        {
+          "job": 10,
+          "start": 11.6,
+          "finish": 12.4,
+          "latency": 2.4,
+          "miss": true
+        },
+        {
+          "job": 11,
+          "start": 12.4,
+          "finish": 13.2,
+          "latency": 2.2,
+          "miss": true
+        },
+        {
+          "job": 12,
+          "start": 13.2,
+          "finish": 14.0,
+          "latency": 2.0,
+          "miss": false
+        },
+        {
+          "job": 13,
+          "start": 14.0,
+          "finish": 14.8,
+          "latency": 1.8,
+          "miss": false
+        },
+        {
+          "job": 14,
+          "start": 14.8,
+          "finish": 15.6,
+          "latency": 1.6,
+          "miss": false
+        },
+        {
+          "job": 15,
+          "start": 15.6,
+          "finish": 16.4,
+          "latency": 1.4,
+          "miss": false
+        },
+        {
+          "job": 16,
+          "start": 16.4,
+          "finish": 17.2,
+          "latency": 1.2,
+          "miss": false
+        },
+        {
+          "job": 17,
+          "start": 17.2,
+          "finish": 18.0,
+          "latency": 1.0,
+          "miss": false
+        },
+        {
+          "job": 18,
+          "start": 18.0,
+          "finish": 18.8,
+          "latency": 0.8,
+          "miss": false
+        },
+        {
+          "job": 19,
+          "start": 19.0,
+          "finish": 19.8,
+          "latency": 0.8,
+          "miss": false
+        }
+      ],
+      "mean_service_us": 0.96,
+      "max_latency_us": 4,
+      "misses": 10
+    },
+    "q3": {
+      "Taylor3D_leakage": [
+        0.013256573089656066,
+        0.023628700185850292
+      ],
+      "unitarity_max_error": 5.7731664084647005e-15,
+      "terms_per_exponential": 49
+    }
+  },
+  "status": "passed"
+}

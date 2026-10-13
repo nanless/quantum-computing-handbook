@@ -1,0 +1,22 @@
+[
+  {
+    "file": "handbook/assets/round72-systems-control.svg",
+    "same_xml_geometry_and_labels": true,
+    "sha256": "92f9d6807af21711bcde3a2c19d287e2a6b3a43c12eb5ef4c276d6b1b78233f1"
+  },
+  {
+    "file": "handbook/assets/round72-foundations-trajectories.svg",
+    "same_xml_geometry_and_labels": true,
+    "sha256": "89483a058e84f68427f0e756404d3b9ae0ab30b65030d0ac338672bcc40c55f7"
+  },
+  {
+    "file": "handbook/assets/round72-systems-qec.svg",
+    "same_xml_geometry_and_labels": true,
+    "sha256": "52d37a17d888126482e30682ae9941f872bc31b8e165a5458c0b7fb230685ca0"
+  },
+  {
+    "file": "handbook/assets/round72-algorithms.svg",
+    "same_xml_geometry_and_labels": true,
+    "sha256": "fc51e8a41d073c0d2b13be347ec44ce5a29fec10bc7bbf820dbe5cd413fd211d"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "files": [
+    {
+      "package_relative_file": "qiskit_aer/noise/errors/standard_errors.py",
+      "sha256": "25057e6ddab0f2861c363bf01e7c01a5337d3acb8757dcd2eb36a010d14206b4",
+      "read_functions": [
+        "amplitude_damping_error",
+        "phase_amplitude_damping_error"
+      ]
+    },
+    {
+      "package_relative_file": "qiskit_experiments/library/tomography/fitters/postprocess_fit.py",
+      "sha256": "c03f7926f8196b4d0be146d03274feaf98d332283eea9b21d9e95ab54ecd17dc",
+      "read_functions": [
+        "_make_positive"
+      ]
+    },
+    {
+      "package_relative_file": "qutip/solver/multitrajresult.py",
+      "sha256": "3736bd25d9d6f30e7de81293df8c452f04ff7c02f30a08a823d1a9409b88ba59",
+      "read_functions": [
+        "_create_e_data",
+        "_target_tolerance_end"
+      ]
+    }
+  ]
+}

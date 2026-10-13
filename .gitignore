@@ -3,6 +3,7 @@
 .vscode/
 .env
 .env.*
+.venv*/
 tools/reader/node_modules/
 work/rendered/
 work/render-cache/

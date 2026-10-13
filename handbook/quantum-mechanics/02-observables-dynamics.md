@@ -653,6 +653,38 @@ $$
 
 从实验记录看，“先 $X$ 后 $Z$”不只是文字备注，而是动力学输入的一部分。控制系统需要保存每段开始时间、持续时间、振幅、相位和所用旋转坐标系；只保存时间平均 Hamiltonian 会丢失顺序信息。对很短的时间步，数值模拟也正是把各小段指数按时间排列后相乘，再检查缩短步长时结果是否收敛。
 
+### F72-Q2｜把开放演化接到求解器：平均态与一条随机轨迹
+
+前面封闭系统由酉矩阵演化；若激发能量流向环境，单系统的纯 ket 通常不够。这里先给一个与第 05 章零温阻尼相接的 Markov 模型，供学过密度矩阵后回看。取时间单位 $\mu\mathrm{s}$，$h=\mathcal H/\hbar=-\omega Z/2$，$\omega=.9\ \mathrm{rad}/\mu\mathrm{s}$；塌缩算符 $L=\sqrt\kappa|0\rangle\langle1|$，$\kappa=.7\ \mu\mathrm{s}^{-1}$，L 的单位是 $\mu\mathrm{s}^{-1/2}$。平均密度矩阵满足
+
+$$
+\dot\rho=-i[h,\rho]+L\rho L^\dagger-\frac12(L^\dagger L\rho+\rho L^\dagger L).
+$$
+
+这是一种具体开放动力学假设，不能从封闭薛定谔方程不加环境条件就推出它适合任意装置。[QuTiP 主方程文档](https://qutip.readthedocs.io/en/v5.3.1/guide/dynamics/dynamics-master.html)给出求解器接口与塌缩算符的速率平方根约定（访问 2026-10-13）。
+
+**练习。** 初态为 $(\sqrt3|0\rangle+i|1\rangle)/2$，写 $b=\rho_{11},c=\rho_{01}$。求 $b(t),c(t)$；为什么 4096 条随机轨迹的平均不必逐格等于主方程数值解？
+
+**第一步：逐格取方程。** $L^\dagger L=\kappa|1\rangle\langle1|$，故 $\dot b=-\kappa b$；耗散使 $\dot c$ 含 $-\kappa c/2$。由于 $h_{00}-h_{11}=-\omega$，对易子项另给 $+i\omega c$，所以
+
+$$
+b(t)=\frac14e^{-.7t},\qquad
+c(t)=-\frac{i\sqrt3}{4}e^{(-.35+.9i)t},\qquad
+\rho(t)=\begin{bmatrix}1-b(t)&c(t)\\c(t)^*&b(t)\end{bmatrix}.
+$$
+
+t 的数值以 $\mu\mathrm{s}$ 输入。将 $\gamma(t)=1-e^{-\kappa t}$ 代回零温阻尼，并叠加相位旋转，也得到同一矩阵。QuTiP 5.3.1 的 `mesolve` 在 $0\le t\le4$ 的 41 个点实际求解，最大逐格误差 $6.35\times10^{-11}$。
+
+**第二步：分清三种误差。** `mcsolve` 生成 4096 条条件随机轨迹（种子 72），逐条纯态外积平均成密度矩阵；平均矩阵距解析态最大逐格差约 $.00305354$。ODE 容差控制每条积分近似，轨迹数控制平均的采样涨落，真实器件误差则在本次本地模拟之外。单条轨迹的 ket 不是不记录环境结果后的平均态。
+
+取“4 μs 前是否发生跃迁”为 $0/1$ 随机变量。本模型至多跃迁一次，概率 $p_J=\tfrac14(1-e^{-2.8})\approx.2347974843$。实际 965/4096 条发生跃迁，比例 $.2355957031$。独立轨迹平均的方差为 $p_J(1-p_J)/N$，标准误为 $\sqrt{p_J(1-p_J)/N}\approx.00662300$；所以一般标准误按 $N^{-1/2}$ 缩小，而**方差**按 $N^{-1}$ 缩小。
+
+[QuTiP stable MC 指南](https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-monte.html)在本次读取中把未定义的“errors”写成 $1/n$。不能把它直接当标准误：5.3.1 的 `MultiTrajResult._create_e_data` 算 `std_expect` 为轨迹观测期望的总体标准差，尚未除 $\sqrt N$；程序从 `runs_expect` 独立计算样本标准差再除 $\sqrt N$，并实际核对 SDK 的标准差。[源码入口](https://qutip.readthedocs.io/en/stable/_modules/qutip/solver/multitrajresult.html)与[固定版本哈希及全部结果](../../codes/foundations/round72-README.md)记录这一核查（访问 2026-10-13）。该检查使用普通独立采样；重要性采样、加权混态或相关轨迹必须重算误差模型，不能照套。
+
+![主方程与4096条随机轨迹的平均激发占据相符，随机平均还有有限轨迹误差](../assets/round72-foundations-trajectories.svg)
+
+实线为解析总体占据，虚线为 `mesolve`，方形点及误差线为 `mcsolve` 平均与一倍经验标准误；横轴时间为 $\mu\mathrm{s}$，纵轴占据无量纲。图是合成动力学数据，不是设备测量。[原尺寸图](../assets/round72-foundations-trajectories.svg)和[生成程序](../../codes/foundations/generate_round72_figure.py)随书保存；同一批轨迹的不同时间点相关，误差线不构成整条曲线的同时置信带。
+
 ## 10. 常见误区与检查顺序
 
 - **把期望值当成单次读数**：先列出谱中的可能结果，再求加权平均。

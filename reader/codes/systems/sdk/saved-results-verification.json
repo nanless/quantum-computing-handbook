@@ -1,0 +1,36 @@
+{
+  "qec": [
+    {
+      "distance": 3,
+      "noise_each": 0.0,
+      "failures": 0,
+      "actual_qubits": 17
+    },
+    {
+      "distance": 3,
+      "noise_each": 0.001,
+      "failures": 13,
+      "actual_qubits": 17
+    },
+    {
+      "distance": 5,
+      "noise_each": 0.001,
+      "failures": 2,
+      "actual_qubits": 49
+    },
+    {
+      "distance": 7,
+      "noise_each": 0.001,
+      "failures": 0,
+      "actual_qubits": 97
+    }
+  ],
+  "trace_overlap": 0.9999999999933711,
+  "three_level_leakage": [
+    0.013256573089655705,
+    0.02362870018585038
+  ],
+  "network_received": 624,
+  "network_ack_delay_ps": 110000000,
+  "status": "passed"
+}

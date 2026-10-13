@@ -1,0 +1,343 @@
+{
+  "date_utc": "2026-10-13T07:12:44.078899+00:00",
+  "python": "3.11.15",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "scope": "installed official SDK CPU tasks; no cloud/QPU, not all upstream tests",
+  "records": [
+    {
+      "case": "qiskit",
+      "status": "passed",
+      "versions": {
+        "qiskit": "2.5.2"
+      },
+      "checks": {
+        "packages": [
+          "qiskit"
+        ],
+        "input": "H(q0), CX(q0,q2), RZ(0.4,q2)",
+        "basis_order": "q2 q1 q0; binary indices 000 and 101",
+        "depth_before": 3,
+        "depth_after": 5,
+        "native_gate_counts": {
+          "rz": 3,
+          "sx": 1,
+          "cx": 1
+        },
+        "layout_corrected_operator_equivalent": true,
+        "occupied_probabilities": {
+          "000": 0.4999999999999998,
+          "101": 0.4999999999999998
+        }
+      },
+      "warnings": [],
+      "elapsed_seconds": 0.7590779999736696
+    },
+    {
+      "case": "algorithms",
+      "status": "passed",
+      "versions": {
+        "qiskit-algorithms": "0.4.0"
+      },
+      "checks": {
+        "packages": [
+          "qiskit-algorithms"
+        ],
+        "grover_iterations": 1,
+        "grover_raw_distribution": [
+          {
+            "11": 1.0
+          }
+        ],
+        "grover_answer": "11",
+        "vqe_energy": -0.7280109889280518,
+        "exact_ground_energy": -0.7280109889280517,
+        "objective_calls": 46,
+        "objective_history": [
+          -0.10944330021786322,
+          -0.6647707460083383,
+          -0.608911033666114,
+          -0.44110610206206213,
+          -0.7175298001624041,
+          -0.7256763266414815,
+          -0.6887038138861612,
+          -0.7278669552109889,
+          -0.7227849777648551,
+          -0.727681052757699,
+          -0.7272775246660167,
+          -0.7279302609268049,
+          -0.7280022765749211,
+          -0.7280014926020465,
+          -0.7279753684240104,
+          -0.7280089056675229,
+          -0.7280109847068339,
+          -0.7280085136798604,
+          -0.728010699098973,
+          -0.7280105423037709,
+          -0.7280109329042682,
+          -0.7280109423570875,
+          -0.7280109889065405,
+          -0.7280109858261371,
+          -0.7280109877167009,
+          -0.72801098881895,
+          -0.7280109888141748,
+          -0.7280109889261052,
+          -0.7280109888728684,
+          -0.7280109889254228,
+          -0.728010988919621,
+          -0.7280109889274248,
+          -0.7280109889280161,
+          -0.7280109889278797,
+          -0.7280109889278114,
+          -0.7280109889280504,
+          -0.7280109889280388,
+          -0.7280109889280421,
+          -0.7280109889280513,
+          -0.7280109889280449,
+          -0.7280109889280518,
+          -0.7280109889280504,
+          -0.7280109889280517,
+          -0.7280109889280515,
+          -0.7280109889280518,
+          -0.7280109889280518
+        ],
+        "sampling": "Grover finite 1024; VQE exact StatevectorEstimator"
+      },
+      "warnings": [
+        "The class ``qiskit.circuit.library.grover_operator.GroverOperator`` is deprecated as of Qiskit 2.1. It will be removed in Qiskit 3.0. Use qiskit.circuit.library.grover_operator instead.",
+        "The method ``qiskit.circuit.library.standard_gates.x.MCXGate.get_num_ancilla_qubits()`` is deprecated as of Qiskit 2.1. It will be removed in Qiskit 3.0. For an MCXGate it is no longer possible to know the number of ancilla qubits that would be eventually used by the transpiler when the gate is created. Instead, it is recommended to use MCXGate and let HighLevelSynthesis choose the best synthesis method depending on the number of ancilla qubits available. However, if a specific synthesis method using a specific number of ancilla qubits is required, one can create a custom gate by calling the corresponding synthesis function directly.",
+        "``qiskit.circuit.quantumcircuit.QuantumCircuit.mcx()``'s argument ``mode`` is deprecated as of Qiskit 2.1. It will be removed no earlier than 3 months after the release date. Instead, add a generic MCXGate to the circuit and specify the synthesis method via the ``hls_config`` in the transpilation. Alternatively, specific decompositions are available at https://qisk.it/mcx."
+      ],
+      "elapsed_seconds": 0.275233207968995
+    },
+    {
+      "case": "sqd",
+      "status": "passed",
+      "versions": {
+        "qiskit-addon-sqd": "0.14.0"
+      },
+      "checks": {
+        "packages": [
+          "qiskit-addon-sqd"
+        ],
+        "raw_counts": {
+          "10": 300,
+          "00": 3191,
+          "11": 556,
+          "01": 49
+        },
+        "shots": 4096,
+        "deduplicated_bitstrings": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "hamiltonian": [
+          [
+            "ZI",
+            [
+              0.3,
+              0.0
+            ]
+          ],
+          [
+            "IZ",
+            [
+              0.7,
+              0.0
+            ]
+          ],
+          [
+            "XI",
+            [
+              0.2,
+              0.0
+            ]
+          ],
+          [
+            "IX",
+            [
+              0.15,
+              0.0
+            ]
+          ],
+          [
+            "XX",
+            [
+              0.1,
+              0.0
+            ]
+          ]
+        ],
+        "full_subspace_energy": -1.0704041015138661,
+        "dense_reference": -1.070404101513866,
+        "residual_norm": 6.063497558204533e-16,
+        "restricted_dimension": 2,
+        "restricted_energy": -1.004987562112089,
+        "scope": "sample -> deduplicate -> SDK projection/ARPACK; not molecular production benchmark"
+      },
+      "warnings": [],
+      "elapsed_seconds": 0.8715842500096187
+    },
+    {
+      "case": "mpf",
+      "status": "passed",
+      "versions": {
+        "qiskit-addon-mpf": "0.3.0"
+      },
+      "checks": {
+        "packages": [
+          "qiskit-addon-mpf"
+        ],
+        "steps": [
+          2,
+          4
+        ],
+        "coefficients": [
+          -0.33333333333333326,
+          1.3333333333333333
+        ],
+        "cvxpy_status": "optimal",
+        "solver": "CLARABEL",
+        "gamma": 1.6666666666666665,
+        "synthesized_gate_counts": [
+          {
+            "u": 6
+          },
+          {
+            "u": 12
+          }
+        ],
+        "values": [
+          0.35368081646218247,
+          0.3141599796425099
+        ],
+        "combined": 0.30098636736928575,
+        "exact": 0.3011069005521366,
+        "scope": "static MPF constraint solver and explicitly synthesized circuits; dynamic TN backend not exercised"
+      },
+      "warnings": [],
+      "elapsed_seconds": 0.1557136670453474
+    },
+    {
+      "case": "obp",
+      "status": "failed",
+      "error": "AssertionError()",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 263, in main\n    result=CASES[name]();versions={p:importlib.metadata.version(p) for p in result['packages']}\n           ^^^^^^^^^^^^^\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 154, in obp_case\n    assert len(stopped)==2\n           ^^^^^^^^^^^^^^^\nAssertionError\n",
+      "warnings": [
+        "The `NoiseLearnerResult`, `LayerError` and `PauliLindbladError` classes has been moved to the `qiskit_ibm_runtime.results` package as of qiskit_ibm_runtime v0.48.0, and it will be its  only location in a future release, 3 months or more after v0.48.0. Please adjust your imports accordingly."
+      ],
+      "elapsed_seconds": 0.004033458069898188
+    },
+    {
+      "case": "cutting",
+      "status": "failed",
+      "error": "AttributeError(\"'list' object has no attribute 'tolist'\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 263, in main\n    result=CASES[name]();versions={p:importlib.metadata.version(p) for p in result['packages']}\n           ^^^^^^^^^^^^^\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 181, in cutting_case\n    'reconstructed':estimates.tolist(),'target':target,\n                    ^^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'tolist'\n",
+      "warnings": [],
+      "elapsed_seconds": 0.014449625043198466
+    },
+    {
+      "case": "mitiq",
+      "status": "passed",
+      "versions": {
+        "mitiq": "1.1.0"
+      },
+      "checks": {
+        "packages": [
+          "mitiq"
+        ],
+        "cirq_pauli_probability": 0.02,
+        "raw": -0.9733332991600037,
+        "mitigated": -0.9999535158276566,
+        "ideal": -1,
+        "executor_calls": [
+          {
+            "operations": 1,
+            "value": -0.9733332991600037
+          },
+          {
+            "operations": 1,
+            "value": -0.9733332991600037
+          },
+          {
+            "operations": 3,
+            "value": -0.9221143126487732
+          },
+          {
+            "operations": 5,
+            "value": -0.8735905885696411
+          }
+        ],
+        "scope": "exact synthetic channel; finite-shot variance/calibration not inferred"
+      },
+      "warnings": [
+        "The input circuit is very short. This may reduce the accuracy of noise scaling."
+      ],
+      "elapsed_seconds": 0.755467165959999
+    },
+    {
+      "case": "pygsti",
+      "status": "failed",
+      "error": "ValueError(\"Adding circuits with incompatible line labels: {('*',), (0,)}. The problem is that one of these labels uses the placeholder value of '*', while the other label does not. The placeholder value arises when when a Circuit is initialized without specifying the line labels, either explicitly by setting the line_labels or by num_lines kwarg, or implicitly from specifying layer labels with non-None state-space labels. Circuits with '*' line labels can be used, but only in conjunction with other circuits with '*' line labels (and vice-versa for circuits with standard line labels).\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 263, in main\n    result=CASES[name]();versions={p:importlib.metadata.version(p) for p in result['packages']}\n           ^^^^^^^^^^^^^\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/workflows/validate_workflows.py\", line 221, in pygsti_case\n    probabilities=model.probabilities(Circuit([('Gypi2',0),name,name]))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/models/model.py\", line 2236, in probabilities\n    return self.sim.probs(circuit, outcomes, time)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/forwardsims/forwardsim.py\", line 204, in probs\n    copa_layout = self.create_layout([circuit], array_types=('e',), resource_alloc=resource_alloc)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/forwardsims/mapforwardsim.py\", line 299, in create_layout\n    layout = _MapCOPALayout(circuits, self.model, dataset, self._max_cache_size, natoms, na, npp,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/layouts/maplayout.py\", line 316, in __init__\n    super().__init__(circuits, unique_circuits, to_unique, unique_complete_circuits,\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/layouts/distlayout.py\", line 332, in __init__\n    atoms_dict = {iAtom: create_atom_fn(create_atom_args[iAtom]) for iAtom in myAtomIndices}\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/layouts/distlayout.py\", line 332, in <dictcomp>\n    atoms_dict = {iAtom: create_atom_fn(create_atom_args[iAtom]) for iAtom in myAtomIndices}\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/layouts/maplayout.py\", line 310, in _create_atom\n    return _MapCOPALayoutAtom(unique_complete_circuits, ds_circuits, group,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/layouts/maplayout.py\", line 70, in __init__\n    d = model.expand_instruments_and_separate_povm(unique_complete_circuits[i], unique_observed_outcomes)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/models/model.py\", line 1630, in expand_instruments_and_separate_povm\n    expanded_circuit_outcomes = self.bulk_expand_instruments_and_separate_povm([circuit], [observed_outcomes])\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/models/model.py\", line 1762, in bulk_expand_instruments_and_separate_povm\n    add_expanded_circuit_outcomes(circuit_without_povm, (), ootree, start=0)\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/models/model.py\", line 1740, in add_expanded_circuit_outcomes\n    add_expanded_circuit_outcomes(circuit[0:k] + _Circuit((expanded_layer_lbl,)) + circuit[k + 1:],\n                                  ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  File \"/tmp/quantum-round72-workflow-sdk/lib/python3.11/site-packages/pygsti/circuits/circuit.py\", line 958, in __add__\n    raise ValueError(msg)\nValueError: Adding circuits with incompatible line labels: {('*',), (0,)}. The problem is that one of these labels uses the placeholder value of '*', while the other label does not. The placeholder value arises when when a Circuit is initialized without specifying the line labels, either explicitly by setting the line_labels or by num_lines kwarg, or implicitly from specifying layer labels with non-None state-space labels. Circuits with '*' line labels can be used, but only in conjunction with other circuits with '*' line labels (and vice-versa for circuits with standard line labels).\n",
+      "warnings": [],
+      "elapsed_seconds": 0.13893966597970575
+    },
+    {
+      "case": "pauli-prop",
+      "status": "passed",
+      "versions": {
+        "pauli-prop": "0.2.1"
+      },
+      "checks": {
+        "packages": [
+          "pauli-prop"
+        ],
+        "full_terms": [
+          [
+            "X",
+            [
+              -0.49999999999999994,
+              0.0
+            ]
+          ],
+          [
+            "Z",
+            [
+              0.8660254037844387,
+              0.0
+            ]
+          ]
+        ],
+        "full_discarded_l1": 0.0,
+        "one_term_result": [
+          [
+            "Z",
+            [
+              0.8660254037844387,
+              0.0
+            ]
+          ]
+        ],
+        "discarded_l1_bound": 0.49999999999999994,
+        "plus_state_bias": 0.49999999999999983,
+        "scope": "actual Rust extension propagation; shading/PNA workflows not claimed"
+      },
+      "warnings": [],
+      "elapsed_seconds": 0.018040832947008312
+    }
+  ]
+}

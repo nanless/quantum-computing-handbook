@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import katex from 'katex';
+import { readingPlan } from './reading-order.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
@@ -32,6 +33,7 @@ const outputName = f => path.relative(source, f).replace(/README\.md$/, 'index.h
 const chapters = files.filter(f => /^\d\d-/.test(path.basename(f)));
 const foundations = chapters.filter(f => path.dirname(f) === path.join(source, 'quantum-mechanics'));
 const mainChapters = chapters.filter(f => path.dirname(f) === source);
+const orderedReading = readingPlan(chapters);
 const appendixOrder = ['prerequisites.md','notation.md','glossary.md','exercises.md','references.md','software-practice.md','audit-log.md'];
 const labs = files.filter(f => f.includes('/labs/'));
 const appendices = files.filter(f => f.includes('/appendices/')).sort((a,b) => appendixOrder.indexOf(path.basename(a)) - appendixOrder.indexOf(path.basename(b)));
@@ -152,12 +154,12 @@ try {
     body = body.replace(/<table>/g, '<div class="table-scroll" tabindex="0"><table>').replace(/<\/table>/g, '</table></div>');
     const prefix = outputName(f).includes('/') ? '../' : '';
     const chapterLinks = list => list.map(c => `<a ${c === f ? 'aria-current="page" ' : ''}href="${prefix + outputName(c)}">${esc(titleOf(c))}</a>`).join('');
-    const nav = (foundations.length ? `<div class="nav-label">量子力学基础篇</div><a href="${prefix}quantum-mechanics/index.html">基础篇导读与先修说明</a>${chapterLinks(foundations)}<div class="nav-label">量子计算主篇</div>` : '') + chapterLinks(mainChapters) + `<div class="nav-label">实验、代码与音频</div>${chapterLinks(labs)}`;
+    const nav = orderedReading.groups.map((group, i) => `<div class="nav-label">${esc(group.label)}</div>${i === 1 ? `<a href="${prefix}quantum-mechanics/index.html">物理篇导读与先修说明</a>` : ''}${chapterLinks(group.files)}`).join('') + `<div class="nav-label">实验、代码与音频</div>${chapterLinks(labs)}`;
     const appNav = appendices.map(c => `<a ${c === f ? 'aria-current="page" ' : ''}href="${prefix + outputName(c)}">${esc(titleOf(c))}</a>`).join('');
     const renderedHeadings = new Map([...body.matchAll(/<h[23] id="([^"]+)">([\s\S]*?)<\/h[23]>/g)].map(m => [m[1], m[2]]));
     const toc = headings.filter(h => h.level === 2 || h.level === 3).map(h => `<a class="toc-level-${h.level}" href="#${esc(h.id)}">${renderedHeadings.get(esc(h.id)) || esc(h.title)}</a>`).join('');
     const mobileToc = toc ? `<details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节">${toc}</nav></details>` : '';
-    const sequence = foundations.includes(f) ? foundations : mainChapters;
+    const sequence = orderedReading.sequence;
     const index = sequence.indexOf(f);
     const prev = index > 0 ? `<a href="${prefix + outputName(sequence[index - 1])}">← ${esc(titleOf(sequence[index - 1]))}</a>` : '';
     const next = index >= 0 && index < sequence.length - 1 ? `<a href="${prefix + outputName(sequence[index + 1])}">${esc(titleOf(sequence[index + 1]))} →</a>` : '';
@@ -206,7 +208,8 @@ try {
   await fs.mkdir(path.join(output, 'assets/licenses'), { recursive: true });
   for (const [pkg, license] of [['katex', 'LICENSE'], ['mermaid', 'LICENSE'], ['marked', 'LICENSE.md']]) await fs.copyFile(path.join(here, 'node_modules', pkg, license), path.join(output, 'assets/licenses', pkg + '.txt'));
   report.inputHashes = {};
-  for (const file of [fileURLToPath(import.meta.url), path.join(here,'reader.css'), ...(await walk(path.join(source,'assets'))), ...(await walk(path.join(root,'codes'))).filter(f => !f.includes('__pycache__') && !f.endsWith('.pyc'))]) report.inputHashes[path.relative(root,file)] = digest(await fs.readFile(file));
+  report.readingOrder = orderedReading.sequence.map(file => path.relative(root, path.join(output, outputName(file))));
+  for (const file of [fileURLToPath(import.meta.url), path.join(here,'reading-order.mjs'), path.join(here,'reader.css'), ...(await walk(path.join(source,'assets'))), ...(await walk(path.join(root,'codes'))).filter(f => !f.includes('__pycache__') && !f.endsWith('.pyc'))]) report.inputHashes[path.relative(root,file)] = digest(await fs.readFile(file));
   await fs.writeFile(path.join(root, 'work/research/reader-build-report.json'), JSON.stringify(report, null, 2));
   await fs.writeFile(path.join(output, 'research/reader-build-report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ pages: report.pages.length, formulas: report.formulas, diagrams: report.diagrams, mathErrors: report.mathErrors, diagramErrors: report.diagramErrors }, null, 2));

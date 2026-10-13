@@ -3,6 +3,8 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
+import { readingPlan } from './reading-order.mjs';
+import { closeBrowser } from './browser-cleanup.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const require = createRequire(import.meta.url);
@@ -13,6 +15,8 @@ const browserOptions = { headless: true };
 if (process.env.HANDBOOK_CHROMIUM) browserOptions.executablePath = process.env.HANDBOOK_CHROMIUM;
 const report = { generatedAt: new Date().toISOString(), pages: [], errors: [], externalRequests: [], screenshots: [] };
 const build = JSON.parse(await fs.readFile(path.join(root, 'work/research/reader-build-report.json'), 'utf8'));
+const expectedReading = readingPlan(build.pages.filter(p=>/^reader\/(?:quantum-mechanics\/)?\d\d-/.test(p.output)).map(p=>p.output)).sequence;
+if (JSON.stringify(build.readingOrder) !== JSON.stringify(expectedReading)) throw new Error('Build reading order differs from the pedagogical plan');
 const edition = (await fs.readFile(path.join(root, 'handbook/README.md'), 'utf8')).match(/^>\s*版本：(\d{4}-\d{2}-\d{2})/m)?.[1];
 if (!edition || Number.isNaN(Date.parse(edition + 'T00:00:00Z')) || new Date(edition + 'T00:00:00Z').toISOString().slice(0, 10) !== edition) throw new Error('handbook/README.md must declare a valid YYYY-MM-DD edition');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
@@ -34,13 +38,16 @@ try {
         const isFoundation = /^reader\/quantum-mechanics\/\d/.test(entry.output);
         const isMain = /^reader\/\d/.test(entry.output);
         if (isFoundation || isMain) {
-          const sequence = build.pages.filter(p => isFoundation ? /^reader\/quantum-mechanics\/\d/.test(p.output) : /^reader\/\d/.test(p.output)).map(p=>p.output).sort();
+          const sequence = expectedReading;
           const at = sequence.indexOf(entry.output);
           const expected = [sequence[at-1],sequence[at+1]].filter(Boolean).map(p=>pathToFileURL(path.join(root,p)).href);
           const actual = await page.locator('.page-turn a').evaluateAll(links=>links.map(a=>a.href));
-          if (JSON.stringify(actual) !== JSON.stringify(expected)) report.errors.push({file:entry.output,message:'part-local previous/next navigation differs',expected,actual});
+          if (JSON.stringify(actual) !== JSON.stringify(expected)) report.errors.push({file:entry.output,message:'pedagogical previous/next navigation differs',expected,actual});
         }
         if (await page.locator('.chapters nav a[href$="quantum-mechanics/index.html"]').count() !== 1) report.errors.push({file:entry.output,message:'foundation guide missing from navigation'});
+        const sidebar = await page.locator('.chapters nav a').evaluateAll(links=>links.map(a=>a.href).filter(href=>/\/(?:quantum-mechanics\/)?\d\d-[^/]+\.html$/.test(href)));
+        const expectedSidebar = expectedReading.map(file=>pathToFileURL(path.join(root,file)).href);
+        if (JSON.stringify(sidebar) !== JSON.stringify(expectedSidebar)) report.errors.push({file:entry.output,message:'sidebar order differs; mathematics must precede dependent chapters'});
       }
       const result = await page.evaluate(() => {
         const failures = [];
@@ -218,4 +225,5 @@ try {
   await fs.writeFile(path.join(root, 'reader/research/reader-verification.json'), reportJson);
   console.log(JSON.stringify({ pagesAtTwoWidths: report.pages.length, screenshots: report.screenshots.length, externalRequests: report.externalRequests.length, errors: report.errors }, null, 2));
   if (report.errors.length || report.externalRequests.length) process.exitCode = 1;
-} finally { await browser.close(); }
+} catch (error) { process.exitCode = 1; throw error; }
+finally { await closeBrowser(browser); }

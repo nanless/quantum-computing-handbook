@@ -482,6 +482,39 @@ $$
 
 失谐并非只是“门慢一点”：广义振荡频率反而变大，但旋转轴倾斜，无法把全部概率送到 $|1\rangle$。
 
+### 6.3 S72-Q3：二能级优化得很好，放回三能级会怎样
+
+前面提醒“高保真度两级门不保证无泄漏”，现在用完整实际优化波形给出可复算反例。第 14 章 S72-14 的 GRAPE 在两级模型中实现近乎理想的 $X_\pi$。保持其 40 ns 时长、0.5 ns 槽宽及全部波形不变，将它放入下面的合成三能级模型。
+
+**先写矩阵而不是口头说“加一个能级”。** 基顺序为 $|0\rangle,|1\rangle,|2\rangle$，截断升降算符与粒子数矩阵为
+
+$$
+a=\begin{pmatrix}0&1&0\\0&0&\sqrt2\\0&0&0\end{pmatrix},\qquad
+n=a^\dagger a=\operatorname{diag}(0,1,2).
+$$
+
+沿用第 14 章计算基失谐 $\Delta=\omega_d-\omega_0=2\pi(0.005)$ rad/ns，非谐性 $\alpha=2\pi(-0.2)$ rad/ns，取
+
+$$
+H_j/\hbar=-\Delta n+\frac\alpha2 n(n-I_3)
++\frac{u_{x,j}}2(a+a^\dagger)
+-\frac{i u_{y,j}}2(a-a^\dagger).
+$$
+
+漂移对角元依次是 $0,-\Delta,-2\Delta+\alpha$。在最低两级中，$-\Delta n$ 去掉共同能量后正好是 $\Delta Z/2$；控制项也分别约化为 $u_xX/2,u_yY/2$。因此这个扩展与第 14 章的符号、二分之一和失谐方向一致。$\sqrt2$ 则使 $1\leftrightarrow2$ 耦合强于 $0\leftrightarrow1$，新增能级不是一条与驱动无关的旁观线。
+
+**练习。** 对输入 0 与 1 分别传播相同波形，计算末态泄漏 $L_j=|\langle2|U_3|j\rangle|^2$。二级优化器的 $1-g\approx6.63\times10^{-12}$ 能否当这两个数的上界？
+
+**实际计算与答案。** [grape_control.py](../../codes/systems/sdk/grape_control.py)对每槽计算完整 $3\times3$ 指数，得到
+
+$$
+L_0\approx0.0132566,\qquad L_1\approx0.0236287.
+$$
+
+约为 1.33% 和 2.36%，都远大于二级优化误差。不是优化器计算错了；它原先的目标函数根本没有这条泄漏通路。末态 $U_3$ 保持全三维归一化，但投影回两级的有效矩阵通常不酉。若事后只保留“仍在计算子空间”的记录，分母便改变，须同时报告接受率和条件输出，不能把投影矩阵直接当一扇完美门。
+
+**扩展与边界。** 这个 RWA 三能级模型还没有真实传递函数、弛豫、退相位、第四能级或器件标定，并非真实 transmon 的工业测试。它已足够反驳“二级优化误差自动约束器件泄漏”。可进一步在三维目标中规定计算子空间的目标作用与非计算态相位，加入泄漏惩罚、鲁棒参数和带宽约束后重新优化；这些属于新的实验设计，本轮未声称已实现受所有约束的最优门。[Motzoi 等 DRAG 原论文](https://doi.org/10.1103/PhysRevLett.103.110501)与 [qutip-qtrl 控制说明](https://qutip.readthedocs.io/projects/qutip-qtrl/en/latest/guide/guide-control.html)提供方法入口（访问 2026-10-13）。
+
 ## 7. 退相干可以从系统—环境纠缠看见
 
 设系统初态为 $\alpha|0\rangle+\beta|1\rangle$，环境初态为 $|E\rangle$。联合酉演化可能把它变成

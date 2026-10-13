@@ -1062,6 +1062,24 @@ $$
 
 无限维还带来有限维量子比特中不明显的边界：若不限制平均能量，某些容量或精度问题会变得不合物理实际。理想 GKP 码字是无限能量的梳状态；硬件实现只能制备有限压缩的近似态，估算所需资源时必须考虑有限能量与位移噪声。
 
+### 完整 Gaussian SDK 练习 A72-18：协方差到光子数概率
+
+物理性判据通过之后，还能从 Gaussian 描述计算另一种测量的概率。以本章 $r=(\ln2)/2$、零均值、$V=\operatorname{diag}(1/4,1)$ 的纯压缩真空为例，The Walrus `probabilities` 把一二阶矩转换成截断 Fock 概率。程序明确传 `hbar=1`；若原样采用默认 `hbar=2`，同一组数连不确定性检查都不通过，不能把返回错误解释成态不存在。
+
+压缩真空只有偶数光子占据。按 $S(r)=\exp[(r/2)(a^2-a^{\dagger2})]$ 的压缩约定展开，概率为
+
+$$
+p_{2k}=\frac{(2k)!}{2^{2k}(k!)^2}\frac{\tanh^{2k}r}{\cosh r},\qquad p_{2k+1}=0.
+$$
+
+符号随压缩相位改变，但这些光子数概率不变。这里 $\tanh r=1/3$、$\cosh r=3/(2\sqrt2)$，所以 $p_0=2\sqrt2/3\approx0.942809$，$p_2=(1/2)(1/9)p_0=\sqrt2/27\approx0.0523783$，$p_4=(3/8)(1/81)p_0=\sqrt2/324\approx0.00436486$。概率和通过生成函数 $\sum_k\binom{2k}{k}u^k/4^k=(1-u)^{-1/2}$ 取 $u=\tanh^2r$ 回到 1；平均光子数为 $\sinh^2r=1/8$，与协方差计算一致。
+
+**练习与答案。** 只保留 $n=0,1,2,3$，概率和为 $p_0+p_2=19\sqrt2/27\approx0.995187$，遗漏质量约 0.004813；将这四项重新归一化后，条件平均光子数为 $2p_2/(p_0+p_2)=2/19\approx0.105263$，已经不同于完整态的 $1/8$。不能在归一化之后才报告“概率和为 1，所以截止已经足够”。
+
+[Walrus SDK 程序](../codes/algorithms/sdk/README.md)实际计算 $n=0$ 到 19 的概率，逐项对照独立组合数公式；还检查不物理相关矩阵被拒绝、纯态判据、默认 $\hbar$ 的反例及两模 `xxpp` 排序。`cutoff=20` 的返回数组是前 20 项，程序保存其真实质量及未重归一化光子数矩；没有把有限 Fock 截断当成完整无限维态。多模库排序为 $(q_1,q_2,p_1,p_2)$，书中交错排序为 $(q_1,p_1,q_2,p_2)$，必须同时置换行、列，不能只换标签。
+
+The Walrus 是 Gaussian 概率和 hafnian 计算工具；“可以更新 Gaussian 协方差”不表示任意光子数探测都属于 Gaussian 测量。光子数分辨测量本身是非 Gaussian，Gaussian boson sampling 的输出概率涉及 hafnian，小规模算得出来并不证明大规模可高效采样，也不构成工业优势实验。官方 [快速接口表](https://the-walrus.readthedocs.io/en/stable/quick_guide.html)与[Gaussian 物理性实现](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)核查于 2026-10-13。
+
 ## 9. 一张研究阅读清单
 
 遇到量子信道、通信或验证论文时，依次填写：

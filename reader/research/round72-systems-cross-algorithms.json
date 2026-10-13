@@ -1,0 +1,21 @@
+{
+  "phase_reverse_action_max_error": 8.326672684688674e-17,
+  "phase_points": 7,
+  "shadow_means": [
+    1.0128,
+    -1.0158,
+    0.9912
+  ],
+  "shadow_variances": [
+    8.089436159999998,
+    8.11035036,
+    7.9383225600000005
+  ],
+  "hhl_dense_inverse_success": 0.625,
+  "hhl_dense_inverse_normalized": [
+    0.9486832980505138,
+    0.31622776601683794
+  ],
+  "walrus_mass": 0.9999999999467017,
+  "status": "passed"
+}
