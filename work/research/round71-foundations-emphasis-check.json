@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-13",
+  "kind": "marked static HTML check; no new screenshot",
+  "result": [
+    {
+      "file": "handbook/01-math.md",
+      "residualEmphasisCount": 0
+    },
+    {
+      "file": "handbook/quantum-mechanics/01-experiments-states.md",
+      "residualEmphasisCount": 0
+    }
+  ]
+}

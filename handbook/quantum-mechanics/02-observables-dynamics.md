@@ -304,6 +304,44 @@ $$
 
 还要区分两类常被混写的问题。Robertson 关系约束同一制备态的两个结果分布，通常通过把样本分成两组、分别测 $A$ 和 $B$ 来检验。它本身不是“先测 $A$ 给后测 $B$ 带来多少扰动”的通用定量公式。顺序测量确实可能有反作用，但那要结合具体测量工具和测后态另算；不能只把 $\Delta A\Delta B$ 叫作仪器扰动乘积。
 
+### F71-Q2｜保留刚才舍去的实部，能得到怎样更紧的下界
+
+§4.2 的两种标准差都为 $1/\sqrt2$，Robertson 却只给零下界。回到推导中的 $z=\langle\widetilde A\widetilde B\rangle$：从 $|z|^2$ 只取虚部平方，丢掉了 $({\rm Re}\,z)^2$。把它保留下来，就得到 **Schrödinger 不确定关系**；不是要另加一种动力学假设。
+
+先定义对称协方差
+
+$$
+\operatorname{Cov}_\psi(A,B)
+=\frac12\langle\widetilde A\widetilde B+\widetilde B\widetilde A\rangle
+=\frac12\langle AB+BA\rangle-\langle A\rangle\langle B\rangle.
+$$
+
+它是实数，因为括号中的对称和是厄米算符；量纲为 A 的单位乘 B 的单位。对易时它退回普通协方差形式，但对不对易的量，不能把它解释成同一粒子上两份未受扰动的同时读数的乘积平均。
+
+仍用已证明的 $(\Delta A)^2(\Delta B)^2\ge|z|^2$。由于 ${\rm Re}\,z=(z+z^*)/2=\operatorname{Cov}_\psi(A,B)$，而 ${\rm Im}\,z=\langle[A,B]\rangle/(2i)$，完整保留两项得到
+
+$$
+\boxed{(\Delta A)^2(\Delta B)^2\ge
+\operatorname{Cov}_\psi(A,B)^2
++\frac14|\langle[A,B]\rangle|^2.}
+$$
+
+两项都非负，舍掉第一项便是 Robertson 的平方形式。这个加强由 Schrödinger 在 1930 年提出；[原论文的英译及注释](https://arxiv.org/abs/quant-ph/9903100)（v3，2008-05-23；访问 2026-10-13）保留了对称协方差项。本章只在有限维纯态框架中沿原 Cauchy–Schwarz 推导，不把有限矩阵检查称作连续无界算符的通用证明。
+
+**练习。** 对 §4.2 的 $|\phi\rangle=\cos(\pi/8)|0\rangle+\sin(\pi/8)|1\rangle$，取 $A=X,B=Z$，新的下界是多少？
+
+**逐步解答。** 已有 $\langle X\rangle=\langle Z\rangle=1/\sqrt2$、两方差各为 $1/2$。因 $XZ+ZX=0$，对称乘积的期望为 0，所以
+
+$$
+\operatorname{Cov}_\phi(X,Z)=0-\frac1{\sqrt2}\frac1{\sqrt2}=-\frac12.
+$$
+
+对易子期望仍为零，但协方差平方为 $1/4$。左边两方差相乘也为 $1/4$，所以加强后的关系在此恰好饱和。若取标准差乘积的下界，则是 $\sqrt{1/4}=1/2$；不要把方差乘积 $1/4$ 和标准差乘积 $1/2$ 混写。
+
+**怎样接到实验。** 单独用两批样本估计 $X,Z$ 的均值，不能对这两张互不配对的记录逐行相乘就声称测出了协方差。需要另估计厄米量 $(XZ+ZX)/2$；在本例它恰是零矩阵，可由 Pauli 恒等式确定。另作校验时可用不同批次测 $C=(X+Z)/\sqrt2$ 与 $D=(X-Z)/\sqrt2$，两者仍是合法二值可观测量；本态给 $\langle C\rangle=1$、$\langle D\rangle=0$，说明确定的是斜轴方向，未要求 $X,Z$ 各自确定。
+
+运行 `python3 codes/foundations/round71_checks.py --case q2`；[固定结果](../../codes/foundations/round71-README.md)逐项计算均值、方差、对称和及对易子。若用真实有限计数替代精确值，均值与二阶矩都有估计误差，应传播不确定度后再检验不等式，不能把一点浮动称为理论被推翻。
+
 ## 5. 薛定谔方程是动力学公设
 
 前面一直比较“制备后测到什么”；现在问在两者之间等待一段时间，状态怎样改变。对封闭系统，薛定谔绘景把时间依赖放在态上：

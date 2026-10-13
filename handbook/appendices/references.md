@@ -116,6 +116,16 @@
 
 [算法、工业实践与开源代码对照](software-practice.md)按输入输出、成本、实验层级和许可证组织资料；第三方实现固定到2026-09-26核验的具体提交。源码可读与生产可用分别记录，不把软件库存在当作量子优势证明。
 
+第71轮于2026-10-13扩充固定摘录，旧19项目提交保留，新增7项目并补1份旧项目源码，共26项目97份文件。新增来源分别对应MPF、OBP、SQD-HPC、Pauli传播、Gaussian检查、过程层析和量子工具；完整文件边界见[清单](../../codes/vendor/manifest.json)。
+
+- Carrera Vazquez et al., [Well-conditioned multi-product formulas for hardware-friendly Hamiltonian simulation](https://quantum-journal.org/papers/q-2023-07-25-1067/)，*Quantum* 7, 1067（2023-07-25）：A类理论/研究来源；软件实践第11节的教学数字另独立构造。
+- [MPF官方教程](https://qiskit.github.io/qiskit-addon-mpf/tutorials/01_getting_started.html)与[稳定性说明](https://qiskit.github.io/qiskit-addon-mpf/explanations/mpf_stability.html)：实现/技术说明，解释权重重构与近似条件，不是生产收益证明。
+- [OBP官方API](https://qiskit.github.io/qiskit-addon-obp/apidocs/qiskit_addon_obp.html)：传播与剩余线路的接口；本书$L_1$截断偏差由算符范数独立推导，不自动套到任意高阶预算。
+- [Pauli propagation官方说明](https://quantum.cloud.ibm.com/docs/en/addons/pauli-prop)：实现证据；Pauli稀疏传播、噪声与截断，固定Python/Rust源码已归档，完整扩展未编译运行。
+- [SQD-HPC官方说明](https://qiskit.github.io/qiskit-addon-sqd-hpc/)与[随机数约定](https://qiskit.github.io/qiskit-addon-sqd-hpc/random-number-generation.html)：工程接口与复现条件；本书未做MPI或多节点基准。
+- [ProcessTomography官方API](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.ProcessTomography.html)：完整积式方案的默认设置与条件记录；不当作所有过程学习方法的复杂度下界。
+- [The Walrus官方Gaussian源码](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)与[pyGSTi Instrument源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)：函数定义、hbar/平方保真度与测量分支的实现证据；独立数学核算及本地上游运行分别记录。
+
 ## 本轮统计、切割与源码核查来源
 
 以下来源访问日期为2026-09-26，新增公式旁也有直接链接。独立教学推导与原实现分别记录；“官方”说明出处，不排除文档笔误或版本错位。

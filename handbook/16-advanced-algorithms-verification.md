@@ -455,19 +455,47 @@ $$
 
 ### 5.4 qubitization 把本征值变成相位
 
-对 Hermitian block encoding，可把信号酉与关于辅助子空间的反射组合成 qubitization walk。按常见约定，若
+左上块是 Hermitian，并不表示提供这个块的整个酉矩阵也是 Hermitian。只有满足相应信号条件、或先完成 qubitization 的补充构造，才能把“编码酉乘一个反射”直接解释成下述二维旋转。先给一个足够、可从头核对的版本。
+
+设 $A=A^\dagger$，使用**精确**块编码 $U$，并额外满足 $U=U^\dagger$（因 $U$ 为酉，此时 $U^2=I$）。令 $\Pi=|0^a\rangle\langle0^a|\otimes I$，$R_\Pi=2\Pi-I$。选归一化本征态 $A|\lambda\rangle=\lambda|\lambda\rangle$，记
 
 $$
-A|\lambda\rangle=\lambda|\lambda\rangle,
+x=\lambda/\alpha,\quad |g\rangle=|0^a\rangle|\lambda\rangle,
+\quad |b\rangle=\frac{U|g\rangle-x|g\rangle}{\sqrt{1-x^2}},
+\qquad |x|<1.
 $$
 
-则对应二维不变子空间中的 walk 相位满足
+精确编码使 $\Pi U|g\rangle=x|g\rangle$，故 $\Pi|b\rangle=0$；酉性使 $|b\rangle$ 归一化。再用 $U^2=I$ 可得 $U|b\rangle=\sqrt{1-x^2}|g\rangle-x|b\rangle$。因此这两个向量确实张成不变子空间。在 $|g\rangle,|b\rangle$ 基上，
 
 $$
-\cos\theta_\lambda=\lambda/\alpha.
+U=\begin{pmatrix}x&\sqrt{1-x^2}\\\sqrt{1-x^2}&-x\end{pmatrix},
+\quad R_\Pi=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\quad Q=R_\Pi U=\begin{pmatrix}x&\sqrt{1-x^2}\\-\sqrt{1-x^2}&x\end{pmatrix}.
 $$
 
-不同论文的反射次序可能带来符号或相位平移，所以实现时应从所用定义重新推导，不能只背 $\arccos$ 公式。
+$Q$ 的特征方程是 $(\mu-x)^2+(1-x^2)=0$，于是本征值为 $x\pm i\sqrt{1-x^2}=e^{\pm i\theta_\lambda}$，$\cos\theta_\lambda=x$。$x=\pm1$ 时不再定义 $|b\rangle$：信号向量本身是不变的一维方向，分别给相位 0 或 $\pi$。不同反射顺序会交换旋转方向；额外整体负号又可能平移相位，须连同约定核对。
+
+本章 LCU 例的 SELECT 由 Hermitian 的 $X,Z$ 构成，故 $W=\mathrm{PREPARE}^\dagger\mathrm{SELECT}\,\mathrm{PREPARE}$ 本身 Hermitian，满足这个充分条件。对一般精确编码酉，可加一个比特构造
+
+$$
+U_h=\begin{pmatrix}0&U\\U^\dagger&0\end{pmatrix},
+\qquad \Pi_h=|+\rangle\langle+|\otimes\Pi.
+$$
+
+$U_h=U_h^\dagger$、$U_h^2=I$；信号块为原块与其共轭转置的平均，若原块为 $A/\alpha$ 且 $A$ Hermitian，这个平均仍是 $A/\alpha$。$|+\rangle$ 子空间可用一对 Hadamard 换成全零辅助位约定。工程上需能相干选择 $U,U^\dagger$，反射也增加门和辅助位成本。[Low–Chuang 原论文第 4 节](https://arxiv.org/html/1610.06546v3)的 qubitization 定理处理这类信号条件和补充构造（2019 期刊版；访问于 2026-10-13）。若编码只有近似块，必须另传播编码误差；不能把上述精确不变子空间自动当成近似情形的严格等式。
+
+**练习 A71-16（含详解）。** 一个标量 Hermitian 算子 $A=[x]$ 有精确编码
+
+$$
+U_o(x)=\begin{pmatrix}x&i\sqrt{1-x^2}\\i\sqrt{1-x^2}&x\end{pmatrix},
+\quad \Pi=|0\rangle\langle0|,\quad R_\Pi=Z.
+$$
+
+它的左上块确实是 $x$。不做补充构造直接取 $Q_o=ZU_o$，在 $x=1/2$ 时会得到目标相位 $\pm\pi/3$ 吗？对照 Hermitian 编码的正确 $Q$。
+
+**解答。** 令 $s=\sqrt{1-x^2}$，则 $Q_o=\left[\begin{smallmatrix}x&is\\-is&-x\end{smallmatrix}\right]$。直接平方得到对角元 $x^2+s^2=1$，非对角元为零，所以 $Q_o^2=I$；迹为零，本征值始终为 $+1,-1$，相位为 0、$\pi$。$x=1/2$ 的目标 $\pm\pi/3$ 根本不在其中。正确 Hermitian 编码给 $Q=\left[\begin{smallmatrix}1/2&\sqrt3/2\\-\sqrt3/2&1/2\end{smallmatrix}\right]$，本征值才是 $e^{\pm i\pi/3}$。两种编码都酉、都编码同一标量；差异在于原信号酉是否满足直接旋转构造所需的条件。
+
+运行 `python3 codes/algorithms/round71_checks.py 16`，检查两种编码的酉性、块和 $Q_o^2$，并实际构造四维 $U_h$ 和信号向量核对补充构造。软件入口可看 [Qualtran 的 qubitization walk](https://github.com/quantumlib/Qualtran/blob/main/qualtran/bloqs/qubitization/qubitization_walk_operator.py)：实现的反射、块编码约定与控制成本须一起读取，不能只根据接口名字猜相位。本例不实现一般 QSP 相位综合。
 
 ### 5.5 QSP/QSVT 把算法变成多项式逼近
 
@@ -528,6 +556,14 @@ i\sqrt{1-x^2}&x
 $$
 
 它的两个本征值是 $x\pm i\sqrt{1-x^2}=e^{\pm i\arccos x}$。这给出了上一节“把归一化本征值 $x=\lambda/\alpha$ 变成相位”的二维原型；真实 qubitization walk 仍须按所用反射次序检查符号约定。
+
+这里的 $W(x)$ 与练习 A71-16 的编码酉 $U_o(x)$ 数值相同，却扮演不同角色。本节把 $W$ 作为**已经约定的二维信号表示**，不再把它左乘一个 $Z$ 当作未经补充构造的 walk。具体地，对上一节正确的 Hermitian 编码所生成的 $Q$，令二维相位换基矩阵 $S=\operatorname{diag}(1,i)$，直接相乘得到
+
+$$
+S^\dagger Q S=\begin{pmatrix}x&i\sqrt{1-x^2}\\i\sqrt{1-x^2}&x\end{pmatrix}=W(x).
+$$
+
+所以 $Q$ 与 $W$ 共享 $\arccos x$ 的本征相位；反例中错误的 $Q_o=ZU_o$ 则只有 $0,\pi$ 相位。二维表示的换基不会免除从一般块编码构造信号子空间、实施反射及其控制操作的成本，也没有推翻前节的缺条件反例。
 
 一次调用的左上元是 $x=T_1(x)$。若所有插入相位暂取 0，两次调用得到
 

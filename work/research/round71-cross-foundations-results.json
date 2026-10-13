@@ -1,0 +1,62 @@
+{
+  "00": {
+    "ket22_over20": 4,
+    "rho22_over20": 16
+  },
+  "01": {
+    "passive_mean": 1,
+    "active_fixed_Z_mean": 0
+  },
+  "02": {
+    "purity": 0.8749999999999993,
+    "repeat0_given0": 0.625
+  },
+  "03": {
+    "weights": [
+      0.872677996249965,
+      0.12732200375003502
+    ],
+    "entropy": 0.5500477595827573,
+    "spectral_projector_reconstruction": true
+  },
+  "04": {
+    "inputs": 3,
+    "direct_Bell_branches_checked": 12
+  },
+  "05": {
+    "p_gamma": 0.09,
+    "four_matrix_units_checked": true
+  },
+  "q1": {
+    "POVM_density_probabilities": [
+      [
+        0.49999999999999967,
+        0.0,
+        0.0,
+        0.49999999999999967
+      ],
+      [
+        0.37499999999999983,
+        0.12499999999999989,
+        0.12499999999999989,
+        0.37499999999999983
+      ],
+      [
+        0.24999999999999986,
+        0.2499999999999998,
+        0.2499999999999998,
+        0.24999999999999986
+      ],
+      [
+        0.0,
+        0.49999999999999967,
+        0.49999999999999967,
+        0.0
+      ]
+    ]
+  },
+  "q2": {
+    "Bloch_states_checked": 4,
+    "bound_slack_equals_1_minus_Bloch_norm_squared": true
+  }
+}

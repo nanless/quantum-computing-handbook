@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-13",
+  "kind": "KaTeX syntax render; no screenshot",
+  "files": [
+    {
+      "name": "00-overview.md",
+      "formulas": 76
+    },
+    {
+      "name": "01-math.md",
+      "formulas": 704
+    },
+    {
+      "name": "02-single-qubit.md",
+      "formulas": 471
+    },
+    {
+      "name": "03-multiple-qubits.md",
+      "formulas": 507
+    },
+    {
+      "name": "04-circuits-protocols.md",
+      "formulas": 393
+    },
+    {
+      "name": "05-noise-channels.md",
+      "formulas": 271
+    },
+    {
+      "name": "quantum-mechanics/01-experiments-states.md",
+      "formulas": 302
+    },
+    {
+      "name": "quantum-mechanics/02-observables-dynamics.md",
+      "formulas": 319
+    }
+  ],
+  "errors": []
+}

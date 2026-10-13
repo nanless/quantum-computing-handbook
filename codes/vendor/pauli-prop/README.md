@@ -1,0 +1,133 @@
+# Pauli Propagation
+
+The `pauli-prop` package provides a Rust-accelerated Python interface for performing Pauli propagation.
+
+Pauli propagation is a framework for approximating the evolution of operators in the Pauli basis
+under the action of other operators, such as quantum circuit gates and noise channels [[1-5]](#references).
+This approach can be effective when the operators involved are expected to remain sparse in the
+Pauli basis.
+
+The subroutines in this package may be used to implement error mitigation techniques such as [lightcone shading](https://github.com/Qiskit/qiskit-addon-slc) [[6]](#references), [propagated noise absorption](https://github.com/Qiskit/qiskit-addon-pna) [[7]](#references), [operator backpropagation](https://github.com/Qiskit/qiskit-addon-obp) [[8]](#references) for circuit depth reduction, and classical simulation of expectation values [[1-5]](#references).
+
+----------------------------------------------------------------------------------------------------
+
+### Documentation
+
+All documentation is available at https://quantum.cloud.ibm.com/docs/addons/pauli-prop.
+
+----------------------------------------------------------------------------------------------------
+
+### Installation
+
+We encourage installing this package via `pip`, when possible:
+
+```bash
+pip install 'pauli-prop'
+```
+
+For more installation information refer to these [installation instructions](docs/install.rst).
+
+----------------------------------------------------------------------------------------------------
+
+### Getting started
+
+A simple guide to help you get started quickly with this package is available in the [quickstart guide](docs/guides/quickstart.ipynb).
+
+----------------------------------------------------------------------------------------------------
+
+### Use case examples
+
+Pauli propagation can be used as a lower-level engine to implement a variety of techniques. Some examples of where this has been used are:
+
+- Lightcone shading to reduce the sampling overhead of probabilistic error cancellation (PEC) for mitigating expectation values in a 1- and 2D transverse field Ising model [[6]](#references)
+- Absorbing noise model information into a target observable to mitigate expectation values in a 2D transverse field Ising model [[7]](#references)
+- Trimming trailing gates to produce lower-depth Trotter circuits for the time-evolution of a 2D spin model [[8]](#references)
+
+----------------------------------------------------------------------------------------------------
+
+### Technical discussion
+
+#### Software details
+
+- Rust-accelerated Python interface
+- Support for noisy simulations [[tutorial 3]](docs/guides/simulate_noisy_expectation_values.ipynb)]
+- Ability to truncate operator terms during evolution based on an absolute coefficient
+tolerance, a fixed number of terms in the evolving operator, or a combination of both.
+- Ability to perform Pauli propagation in both the Schrödinger and Heisenberg frameworks.
+- Novel technique for approximating the conjugation of two Pauli-sum operators. This heuristic
+implementation greedily generates contributions to the product expected to be most significant. See
+section B of [[7]](#references) for more information.
+- Current implementation is single-threaded
+
+#### Computational requirements
+
+Both the memory and time cost for Pauli propagation routines generally scale with the size to which
+the evolved operator is allowed to grow.
+
+[`propagate_through_rotation_gates`](https://quantum.cloud.ibm.com/docs/api/pauli-prop/pauli-prop-propagation#propagate_through_rotation_gates): As the Pauli operator is propagated in the Pauli basis under
+the action of a sequence of $N$ Pauli rotation gates of an $M$-qubit circuit, the number of terms
+will grow as $\mathcal{O}(2^{N})$ towards a maximum of $4^M$ unique Pauli components. To control
+the memory usage, the operator is truncated after application of each gate, which introduces some
+error proportional to the magnitudes of the truncated terms' coefficients. The memory requirements
+are generally linear in the size of the evolved operator and runtime scales linearly in both the
+operator size and the number of gates.
+
+[`propagate_through_operator`](https://quantum.cloud.ibm.com/docs/api/pauli-prop/pauli-prop-propagation#propagate_through_operator): Conjugates one operator in the Pauli basis by another by greedily
+accumulating terms in the sum, $\sum_{i,j,k}G^{\dagger}_iO_jG_k$, where $i,j,k$ are sparse indices
+over the Pauli basis. This implementation sorts the coefficients in each operator by descending
+magnitude then searches the 3D index space for the terms with the largest coefficients, starting
+with the origin, $(0, 0, 0)$, and accumulating $(i,j,k)$ triplets up to a specified cutoff. The time
+spent searching can often be made negligible by increasing the search step size in $(i,j,k)$ space,
+which provides a cubic speedup for this subroutine. In our profiling, significant time can be spent
+sorting the operators and performing Pauli multiplication to generate the terms in the new operator.
+
+----------------------------------------------------------------------------------------------------
+
+### Contributing
+
+The source code is available [on GitHub](https://github.com/Qiskit/pauli-prop).
+
+The developer guide is located at [CONTRIBUTING.md](https://github.com/Qiskit/pauli-prop/blob/main/CONTRIBUTING.md)
+in the root of this project's repository.
+By participating, you are expected to uphold Qiskit's [code of conduct](https://github.com/Qiskit/qiskit/blob/main/CODE_OF_CONDUCT.md).
+
+----------------------------------------------------------------------------------------------------
+
+### Citing this package
+
+If you use this package in your research, use the [CITATION.bib](CITATION.bib) file in this project’s repository to cite the appropriate reference(s).
+
+----------------------------------------------------------------------------------------------------
+
+### License
+
+[Apache License 2.0](LICENSE.txt)
+
+----------------------------------------------------------------------------------------------------
+
+### Deprecation policy
+
+We follow [semantic versioning](https://semver.org/). We may occasionally make breaking changes in
+order to improve the user experience. When possible, we will keep old interfaces and mark them as
+deprecated, as long as they can co-exist with the new ones. Each substantial improvement, breaking
+change, or deprecation will be documented in the [release notes](https://quantum.cloud.ibm.com/docs/api/pauli-prop/release-notes).
+
+----------------------------------------------------------------------------------------------------
+
+### References
+
+[1] Tomislav Begušić, Johnnie Gray, Garnet Kin-Lic Chan, [Fast and converged classical simulations of evidence for the utility of quantum computing before fault tolerance](https://arxiv.org/abs/2308.05077), arXiv:2308.05077 [quant-ph].
+
+[2] Nicolas Loizeau, et al., [Quantum many-body simulations with PauliStrings.jl](https://arxiv.org/abs/2410.09654), arXiv:2410.09654 [quant-ph].
+
+[3] Manuel S. Rudolph, et al., [Pauli Propagation: A Computational Framework for Simulating Quantum Systems](https://arxiv.org/abs/2505.21606), arXiv:2505.21606 [quant-ph].
+
+[4] Hrant Gharibyan, et al., [A Practical Guide to using Pauli Path Simulators for Utility-Scale Quantum Experiments](https://arxiv.org/abs/2507.10771), arXiv:2507.10771 [quant-ph].
+
+[5] Lukas Broers, et al., [Scalable Simulation of Quantum Many-Body Dynamics with Or-Represented Quantum Algebra](https://arxiv.org/abs/2506.13241), arXiv:2506.13241 [quant-ph].
+
+[6] Andrew Eddins, Minh C. Tran, Patrick Rall, [Lightcone shading for classically accelerated quantum error mitigation](https://arxiv.org/abs/2409.04401), arXiv:2409.04401 [quant-ph].
+
+[7] Andrew Eddins, et al., [Computing noise-canceling observables via Pauli propagation](https://arxiv.org/abs/2606.20441), arXiv:2606.20441 [quant-ph].
+
+[8] Bryce Fuller, et al., [Improved Quantum Computation using Operator Backpropagation](https://arxiv.org/abs/2502.01897), arXiv:2502.01897 [quant-ph].

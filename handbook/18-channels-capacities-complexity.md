@@ -973,6 +973,53 @@ $$
 
 Gaussian 态由一阶矩和协方差矩阵完全决定。位移、相移、分束器和压缩等 Gaussian 操作把 Gaussian 态仍映为 Gaussian 态；同相探测测量一个选定相位的正交分量，外差探测则联合估计两个正交分量并引入额外真空噪声。
 
+### 协方差矩阵有正特征值，还不一定对应量子态
+
+经典随机向量的协方差只需为实对称正半定矩阵。量子正交分量还受到对易关系约束。沿用本章交错排序 $\hat R=(\hat q_1,\hat p_1,\ldots)^T$，定义实反对称矩阵
+
+$$
+\Omega=\bigoplus_{j=1}^{n}\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad [\hat R_i,\hat R_j]=i\Omega_{ij}.
+$$
+
+由于 $\langle\Delta\hat R_i\Delta\hat R_j\rangle=V_{ij}+i\Omega_{ij}/2$，任意复向量 $u$ 都有
+
+$$
+u^\dagger(V+i\Omega/2)u
+=\left\langle\left(\sum_j u_j\Delta\hat R_j\right)^\dagger
+\left(\sum_j u_j\Delta\hat R_j\right)\right\rangle\ge0.
+$$
+
+因此量子协方差必须满足 $V+i\Omega/2\succeq0$。这条约束来自任意算符 $L$ 的 $\langle L^\dagger L\rangle\ge0$，不是软件额外加上的“误差阈值”。对有限一二阶矩，它也是存在具有这些矩的 Gaussian 态的充分条件；对一般非 Gaussian 态，满足它仍不使一二阶矩唯一确定整个态。
+
+单模时写 $V=\left[\begin{smallmatrix}a&c\\c&b\end{smallmatrix}\right]$，$a,b$ 分别为两方差、$c$ 为对称协方差。要检查的是 Hermitian 矩阵
+
+$$
+V+i\Omega/2=\begin{pmatrix}a&c+i/2\\c-i/2&b\end{pmatrix}.
+$$
+
+二维正性要求 $a,b\ge0$ 和行列式 $ab-c^2-1/4\ge0$；后一个条件又迫使 $a,b>0$。所以单模的完整判据是
+
+$$
+a>0,\quad b>0,\quad \det V=ab-c^2\ge1/4.
+$$
+
+只检查方差乘积 $ab\ge1/4$ 会漏掉协方差项。下表给出三种固定数值矩阵，所有数值都使用 $[q,p]=i$ 的无量纲约定：
+
+| $V$ | $V$ 本身是否正定 | $\det V$ | 是否可作量子协方差 |
+|---|---|---:|---|
+| $\operatorname{diag}(0.1,0.1)$ | 是 | 0.01 | 否，两轴同时低于真空 |
+| $\operatorname{diag}(1/4,1)$ | 是 | $1/4$ | 是，下一节的纯压缩态 |
+| $\left[\begin{smallmatrix}1/2&2/5\\2/5&1/2\end{smallmatrix}\right]$ | 是，本征值 $0.9,0.1$ | $0.09$ | 否，忽略 $c$ 会误判 |
+
+第三行虽然两边边缘方差都等于真空方差，但相关项使旋转后的某个共轭方向组合违反完整不确定性矩阵；不能仅凭两根误差条判断。
+
+**练习 A71-18（含详解）。** 求第三行 $V+i\Omega/2$ 的两个本征值。若某软件采用 $[q',p']=2i$、真空方差为 1，同一个压缩态 $V=\operatorname{diag}(1/4,1)$ 应如何输入？
+
+**解答。** 特征方程为 $(1/2-\lambda)^2-[(2/5)^2+(1/2)^2]=0$，故 $\lambda_\pm=1/2\pm\sqrt{41}/10$，最小值约 $-0.140312$，不能通过物理性检查。换算 $q'=\sqrt2q,p'=\sqrt2p$ 时，整个矩阵乘 2，得到 $V'=\operatorname{diag}(1/2,2)$；检验也同步改为 $V'+i\Omega\succeq0$，行列式下界改为 1。不能只改真空标准而不改矩阵数值。
+
+运行 `python3 codes/algorithms/round71_checks.py 18`，直接计算这三个二维 Hermitian 矩阵的谱，并检查缩放前后结论一致。理论对照 [Weedbrook 等 Gaussian 综述](https://arxiv.org/html/1110.3234v1)式 17（该文采用真空方差 1，需作上述换算）；软件对照 [The Walrus 的 `is_valid_cov`](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)（访问于 2026-10-13）。该函数默认 `hbar=2`；使用本书数值须显式传 `hbar=1`。多模输入的排序也要转换：该库以所有位置分量在前、所有动量分量在后排列，本书则逐模交错；单模时两者恰好一致。软件容差适用于数值舍入，不能把显著负本征值解释为合法压缩。
+
 ### 8.1 手算：压缩真空不是“两个方向都更准”
 
 选择压缩相位使 $\hat q$ 为压缩轴，并取 $r>0$。此时单模压缩真空的协方差矩阵可写为

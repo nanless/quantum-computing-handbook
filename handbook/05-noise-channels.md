@@ -204,6 +204,24 @@ $$
 
 这也是一个理想目标信道，不是所有硬件复位的自动结果。被动等待若接近平衡态，只会把系统带向由温度决定的热态，未必是纯 $|0\rangle$；主动复位可以采用测量后条件翻转、光学抽运或与耗散辅助系统交换。实际复位要报告残余激发概率、所需时间、是否产生泄漏，以及对邻近量子比特的扰动。
 
+### 4.3 局域 CPTP 操作为什么不能改变远端无条件统计
+
+第 03 章用 Bell 态解释无信号，现在可对任意有限维联合态证明。设 Bob 仅在 B 上施加信道，Kraus 算子为 $K_k$ 且 $\sum_kK_k^\dagger K_k=I_B$。Alice 任意一个局部测量结果的 POVM 元为 $E_a$，输入为 $\rho_{AB}$。操作后该结果概率是
+
+$$
+\begin{aligned}
+p'(a)&=\sum_k\operatorname{Tr}\!\left[(E_a\otimes I_B)
+(I_A\otimes K_k)\rho_{AB}(I_A\otimes K_k^\dagger)\right]\\
+&=\operatorname{Tr}\!\left[
+\left(E_a\otimes\sum_kK_k^\dagger K_k\right)\rho_{AB}\right]\\
+&=\operatorname{Tr}[(E_a\otimes I_B)\rho_{AB}]=p(a).
+\end{aligned}
+$$
+
+第二行先在**整个联合矩阵的迹内循环移动**最后一个因子，再用张量积乘法；没有声称矩阵本身可以交换。等式对所有 $E_a$ 成立，因此 Alice 的整个约化密度矩阵不变。两边维度可以不同；这个证明依赖 Bob 的全部分支保迹，而不依赖输入一定是 Bell 态。
+
+若 Bob 只保留某个测量结果，对应分支未必保迹；知道该结果的 Alice 可以使用不同的条件态。但是她需要收到这个经典标签才知道怎样筛选自己的记录。完整标签丢弃时仍须相加所有分支，上式仍适用。F71-05 代码在非最大、含复相位的纠缠输入上实际核验远端阻尼；一般证明不由这个小样本代替。
+
 ## 5. 四个基础噪声模型
 
 ### 5.1 比特翻转
@@ -321,6 +339,41 @@ $$
 $$q=\frac{3p}{4}.$$
 
 因此本书的 $p\in[0,1]$ 对应 $q\in[0,3/4]$；随机 Pauli 模型仍可取 $q>3/4$，但这时 Bloch 向量已翻向反侧，不能继续解释为“以 $p\le1$ 的概率替换成最大混态”。所以两个资料都写“退极化概率 0.1”时，不能在未看公式的情况下认定它们噪声相同。软件库也可能允许更广的数学参数范围；代码、正文和图必须使用同一约定。
+
+### F71-05｜两个合法噪声信道，交换次序为什么仍不同
+
+**题目。** $\mathcal F_p$ 是 §5.1 的随机 $X$ 翻转，$\mathcal A_\gamma$ 是 §5.3 的零温振幅阻尼；取 $p=1/4,\gamma=0.36$。输入 $|0\rangle$，先翻转再阻尼，与先阻尼再翻转的结果一样吗？
+
+**第一步：每步分别计算激发占据。** 令 $b=\rho_{11}$，其中 $0\le b\le1$。翻转把两个布居交换后加权，故 $b\mapsto(1-p)b+p(1-b)=p+(1-2p)b$；零温阻尼把它变为 $(1-\gamma)b$。从 $b=0$ 出发：
+
+$$
+\begin{aligned}
+\text{先翻转再阻尼：}&\quad0\longmapsto0.25\longmapsto0.64\times0.25=0.16,\\
+\text{先阻尼再翻转：}&\quad0\longmapsto0\longmapsto0.25.
+\end{aligned}
+$$
+
+两条输出分别为 $\operatorname{diag}(0.84,0.16)$ 与 $\operatorname{diag}(0.75,0.25)$；都合法，归一化测试发现不了门序的错误。物理上，第一条线路中翻转产生的激发还有机会衰减；第二条线路在等待结束后才产生激发。
+
+**第二步：检查带相干的任意输入。** 写 $\rho=\left[\begin{smallmatrix}1-b&c\\c^*&b\end{smallmatrix}\right]$。翻转的非对角元为 $(1-p)c+pc^*$，阻尼的非对角元为 $\sqrt{1-\gamma}\,c$；后一个因子是实数，所以本模型里非对角项的两种次序恰相同。用下标 FA 表示先翻转后阻尼、AF 表示反向顺序，布居满足
+
+$$
+\begin{aligned}
+b_{FA}&=(1-\gamma)[p+(1-2p)b],\\
+b_{AF}&=p+(1-2p)(1-\gamma)b,
+\end{aligned}
+$$
+
+前者减后者为 $-p\gamma$，因此完整矩阵差为
+
+$$
+\mathcal A_\gamma(\mathcal F_p(\rho))-
+\mathcal F_p(\mathcal A_\gamma(\rho))=p\gamma Z.
+$$
+
+这个式子适用于本例任意归一化单比特输入；若 $p=0$ 或 $\gamma=0$，差为零。不能把两个“错误概率”简单相加，就认为得到了等价的单信道。
+
+**代码与软件对照。** 运行 `python3 codes/foundations/round71_checks.py --case 05`；[固定矩阵和边界检查](../codes/foundations/round71-README.md)使用 Kraus 分支组合，不直接填入答案。移植到 [Qiskit 的 Kraus API](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.quantum_info.Kraus)时，`compose`、`dot`、`front` 的调用语义不同（访问 2026-10-13）；先用这里的 0.16/0.25 反例核对，不能只凭方法名猜执行顺序。§6的阻尼与纯退相位恰可交换，是那一对模型的结构，不能推广成任意噪声都可交换。
 
 ## 6. $T_1$、$T_2^*$、$T_2$ 与 $T_\phi$
 

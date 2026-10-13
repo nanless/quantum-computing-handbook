@@ -42,3 +42,28 @@ python3 codes/algorithms/round70_checks.py all
 可选科学图生成：`python3 codes/algorithms/round70_figures.py`，需要 matplotlib 3.9.4（本轮同时使用 NumPy 2.0.2）。生成 `handbook/assets/round70-amplitude-aliasing.svg` 与 `round70-chain-strength.svg`，PNG 预览写到 `work/rendered/`。正文有中文轴释与原尺寸入口；线型和标记避免只靠颜色区分。图由公式生成，不运行云服务、不导入 vendor 源码。
 
 这组例子不实现完整 MLAE 自适应置信区间、QSVT 相位合成、退火动力学或长块长最优译码；它们分别验证正文的具体推导和接口边界。
+
+## 第 71 轮：接口前提、有限预算和独立核对
+
+```sh
+python3 codes/algorithms/round71_checks.py all
+python3 codes/algorithms/round71_checks.py all --write-results
+python3 codes/algorithms/round71_figures.py
+```
+
+这组标准库代码另覆盖 13 和 Q4，可把 `all` 换为 `06`、`07`、`08`、`13`、`16`、`17`、`18`、`q4`。`--write-results` 只允许与 `all` 同用，写入 [固定结果](round71-results.json)；程序拒绝关闭断言的 `-O`。固定模型/人为计数，无随机采样、无需随机种子，也无云请求、下载或执行 vendor 源码。普通 Python 3 可运行，不要求 NumPy 或绘图库；数值断言容差为 `1e-10`。
+
+| 编号 | 原始固定输入 | 独立核对路径 |
+|---|---|---|
+| A71-06 | 工作态重叠 0、1、3/5、i | 四维联合向量偏迹、内积表达式与局部复位 Kraus |
+| A71-07 | s=110，允许串 000/001/110/111 | 全部 k≤5 采样序列的 GF(2) 秩与有理满秩概率 |
+| A71-08 | Bell 关联；两组各 100 个指定配对计数 | 联合读数二阶矩、协方差、固定总态制备预算 |
+| A71-13 | 经典链和 XOR 各四个非零概率 | 实际边缘化、熵相减与经典链恢复 |
+| A71-16 | 标量 x=-1,-1/2,0,1/2,1 的两种编码 | 酉性、反例平方、四维厄米化和二维信号子空间 |
+| A71-17 | J=2π MHz，50.5/49.5 ns 两段 | 八维逐段酉乘法、合并指数和 X 基概率 |
+| A71-18 | 三种单模 V | V+iΩ/2 的二维谱、行列式与 hbar=2 缩放 |
+| A71-Q4 | g=2、4；顶部和两侧及共振能量 | 四条复边界方程求解与闭式、R+T=1 |
+
+八组题目/分步答案就在对应正文的主题旁，新增标签独立于附录原编号。Q4 图 [round71-barrier-transmission.svg](../../handbook/assets/round71-barrier-transmission.svg) 由连续散射公式驱动，生成器还在抽样点用边界方程独立复核；横轴 E/V0、纵轴 T，无量纲，保留解析顶点和共振标记。连线不是实验数据。
+
+边界：满秩公式依赖 i.i.d. 均匀 Simon 样本；分组方差未包含读出偏差；二维 qubitization 不实现一般 QSP 相位合成；echo 仍假设瞬时脉冲；Gaussian 检查只针对一二阶矩，不重构非 Gaussian 态；方势垒是定态、固定质量、相同外侧势的单粒子模型，未模拟波包。科学图的稠密网格不是连续区间误差定理。

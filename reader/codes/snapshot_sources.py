@@ -19,13 +19,20 @@ PROJECTS = {
  'pymatching': ('oscarhiggott/PyMatching', ['src/pymatching/matching.py']),
  'mitiq': ('unitaryfoundation/mitiq', ['mitiq/zne/scaling/folding.py','mitiq/zne/inference.py']),
  'dimod': ('dwavesystems/dimod', ['dimod/reference/samplers/exact_solver.py']),
- 'qiskit': ('Qiskit/qiskit', ['qiskit/transpiler/passes/routing/sabre_swap.py','qiskit/quantum_info/states/utils.py']),
+ 'qiskit': ('Qiskit/qiskit', ['qiskit/transpiler/passes/routing/sabre_swap.py','qiskit/quantum_info/states/utils.py','qiskit/quantum_info/operators/channel/kraus.py']),
  'sequence': ('sequence-toolbox/SeQUeNCe', ['sequence/entanglement_management/teleportation.py','sequence/entanglement_management/entanglement_protocol.py']),
  'liboqs': ('open-quantum-safe/liboqs', ['tests/example_kem.c']),
  'pyqsp': ('ichuang/pyqsp', ['pyqsp/angle_sequence.py','pyqsp/sym_qsp_opt.py','pyqsp/response.py']),
  'qutip-qtrl': ('qutip/qutip-qtrl', ['src/qutip_qtrl/pulseoptim.py','src/qutip_qtrl/grape.py']),
  'qiskit-addon-cutting': ('Qiskit/qiskit-addon-cutting', ['qiskit_addon_cutting/qpd/weights.py','qiskit_addon_cutting/cutting_reconstruction.py']),
  'qiskit-aer': ('Qiskit/qiskit-aer', ['qiskit_aer/noise/errors/standard_errors.py']),
+ 'qiskit-addon-mpf': ('Qiskit/qiskit-addon-mpf', ['qiskit_addon_mpf/static.py','qiskit_addon_mpf/dynamic.py','qiskit_addon_mpf/costs/lse.py','qiskit_addon_mpf/costs/exact.py']),
+ 'qiskit-addon-obp': ('Qiskit/qiskit-addon-obp', ['qiskit_addon_obp/backpropagation.py','qiskit_addon_obp/utils/truncating.py','qiskit_addon_obp/utils/metadata.py']),
+ 'qiskit-addon-sqd-hpc': ('Qiskit/qiskit-addon-sqd-hpc', ['include/qiskit/addon/sqd/subsampling.hpp','include/qiskit/addon/sqd/configuration_recovery.hpp','include/qiskit/addon/sqd/fermion.hpp','include/qiskit/addon/sqd/internal/parallel-rng.hpp']),
+ 'pauli-prop': ('Qiskit/pauli-prop', ['python/pauli_prop/propagation.py','src/lib.rs']),
+ 'thewalrus': ('XanaduAI/thewalrus', ['thewalrus/quantum/gaussian_checks.py']),
+ 'qiskit-experiments': ('qiskit-community/qiskit-experiments', ['qiskit_experiments/library/tomography/qpt_experiment.py','qiskit_experiments/library/tomography/tomography_analysis.py']),
+ 'pygsti': ('sandialabs/pyGSTi', ['pygsti/modelmembers/instruments/instrument.py']),
 }
 def command(args):
  return subprocess.check_output(args, stderr=subprocess.PIPE, timeout=90)
@@ -48,7 +55,7 @@ def refresh_project(pair, destination=None):
  sha=command(['git','ls-remote',f'https://github.com/{repo}.git','HEAD']).decode().split()[0]
  assert re.fullmatch(r'[0-9a-f]{40}',sha)
  records=[]
- for rel in ['LICENSE','LICENSE.txt','LICENSE.md','COPYING','NOTICE','NOTICE.txt','AUTHORS','AUTHORS.md']:
+ for rel in ['LICENSE','LICENSE.txt','LICENSE.md','COPYING','NOTICE','NOTICE.txt','THIRD_PARTY_NOTICES.md','AUTHORS','AUTHORS.md']:
   record=save_file(name,repo,sha,rel,True,destination)
   if record: records.append(record)
  if not any(r['path'].startswith(('LICENSE','COPYING')) for r in records):

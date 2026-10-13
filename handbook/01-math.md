@@ -284,6 +284,38 @@ $$
 
 它们的模平方各为 $1/2$。反过来展开 $c_+|+\rangle+c_-|-\rangle$，$|0\rangle$ 前的系数是 $(c_++c_-)/\sqrt2=1/\sqrt2$，$|1\rangle$ 前的是 $(c_+-c_-)/\sqrt2=i/\sqrt2$，正好回到原态。**暂停算一格：** $|1\rangle$ 在 $|+\rangle,|-\rangle$ 基中的坐标是多少？核对：$1/\sqrt2,-1/\sqrt2$，两个模平方相加仍是 1。
 
+### F71-01｜换坐标与真正做门，怎样分开
+
+本节说“换基不改变物理态”，下一节却会说“$H$ 门把态变了”。区别在于下面两种情况。
+
+**只改写坐标时，表示同一测量的矩阵也必须一起改写；真的施加门时，通常仍用原先固定的测量装置。**
+
+学过下一节的矩阵乘法后，回来算这个含复数的例子。
+
+把新基取为 $|{+i}\rangle=(|0\rangle+i|1\rangle)/\sqrt2$ 与 $|{-i}\rangle=(|0\rangle-i|1\rangle)/\sqrt2$。将它们在旧基中的列向量依次排为一个 $2\times2$ 矩阵：
+
+$$
+W=\frac1{\sqrt2}\begin{bmatrix}1&1\\i&-i\end{bmatrix},
+\qquad W^\dagger W=I.
+$$
+
+若旧坐标是 $\psi$，新坐标 $c$ 要满足 $\psi=Wc$，所以 $c=W^\dagger\psi$。对同一个 $|0\rangle$，$c=(1,1)^T/\sqrt2$；这两个数说的是“在 $\pm i$ 基中的展开”，没有把粒子制备成旧基里的 $|+\rangle$。
+
+以旧基里的 $Z=\operatorname{diag}(1,-1)$ 测量为例。同一测量在新基中表示为
+
+$$
+Z_{\rm new}=W^\dagger ZW
+=\frac12\begin{bmatrix}1&-i\\1&i\end{bmatrix}
+\begin{bmatrix}1&1\\-i&i\end{bmatrix}
+=\begin{bmatrix}0&1\\1&0\end{bmatrix}=X.
+$$
+
+因此旧表示给 $\psi^\dagger Z\psi=1$，新表示给 $c^\dagger Z_{\rm new}c=c^\dagger Xc=1$，预测相同。一般地，$c^\dagger(W^\dagger AW)c=\psi^\dagger A\psi$，因为 $WW^\dagger=I$。
+
+若实际对初态 $|0\rangle$ **施加**酉门 $W^\dagger$，输出在仍固定的计算基中是 $|+\rangle$；随后仍测旧装置 $Z$，结果就各半、期望为 0。这里 $W^\dagger$ 数值相同，但描述的实验不同。报告门与测量时应分别写“状态怎样变”“测量方向是什么”。
+
+**练习与答案。** 对输入 $|{+i}\rangle$，正确的新坐标是什么？$W^\dagger|{+i}\rangle=(1,0)^T$。若错用 $W^T$，第二个坐标反而成为 1，因为 $(i)(i)=-1$；普通转置遗漏共轭，把两个方向认反。运行 `python3 codes/foundations/round71_checks.py --case 01`；[代码与固定样本](../codes/foundations/round71-README.md)同时核验坐标、算符和两种实验。换基公式是有限维线性代数；一般表示可对照 [Watrous 数学预备](https://cs.uwaterloo.ca/~watrous/TQI/TQI.double.1.pdf)（访问 2026-10-13）。
+
 ## 4. 矩阵与线性算符
 
 矩阵可以看作一张按行列排列的数字表。一个 $2\times2$ 矩阵有两行、两列；它乘一个 $2\times1$ 列向量，结果是 $2\times1$。通用规则是每一行分别与输入列“同位置相乘，再相加”：

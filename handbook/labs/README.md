@@ -57,6 +57,39 @@ python3 codes/run_all.py
 
 真实硬件实验还需要软件锁定、编译与校准快照、原始计数、时间顺序和费用预算。第三方源码清单支持代码溯源，没有替读者完成这些设备实验。
 
+## 第三组逐章练习：从解释断点到独立核算
+
+这组题于2026-10-13加入，分别嵌在每篇相关小节中，答案紧邻问题，不替换原题编号。每篇有独立标签，均有实际可运行的标准库核算；同一程序负责多篇时用章节参数选择。正文先给一般定义、条件或证明，程序再用固定小输入从独立路径核对。
+
+| 章节与标签 | 分步练习及解释重点 | 核算程序 |
+|---|---|---|
+| [00：F71-00](../00-overview.md) | 振幅数组与密度矩阵的实际字节数；表示成本与模拟困难区别 | [基础](../../codes/foundations/round71_checks.py) `--case 00` |
+| [01：F71-01](../01-math.md) | 含复数的换基；坐标变化与主动门分开计算 | [基础](../../codes/foundations/round71_checks.py) `--case 01` |
+| [02：F71-02](../02-single-qubit.md) | 非投影POVM的平方根工具、每支后态和非选择态 | [基础](../../codes/foundations/round71_checks.py) `--case 02` |
+| [03：F71-03](../03-multiple-qubits.md) | 从复系数四项态构造两侧Schmidt向量并逐格还原 | [基础](../../codes/foundations/round71_checks.py) `--case 03` |
+| [04：F71-04](../04-circuits-protocols.md) | 与参考位纠缠的输入传态，四分支与联合关联 | [基础](../../codes/foundations/round71_checks.py) `--case 04` |
+| [05：F71-05](../05-noise-channels.md) | 合法噪声不交换；局域保迹与无信号的一般证明 | [基础](../../codes/foundations/round71_checks.py) `--case 05` |
+| [06：A71-06](../06-algorithmic-primitives.md) | 垃圾态内积怎样压低干涉；复位为何不等于反计算 | [算法](../../codes/algorithms/round71_checks.py) `06` |
+| [07：A71-07](../07-algorithms.md) | Simon固定采样预算的满秩概率和失败上界 | [算法](../../codes/algorithms/round71_checks.py) `07` |
+| [08：A71-08](../08-applications.md) | 共测的协方差、配对原始计数和总制备预算 | [算法](../../codes/algorithms/round71_checks.py) `08` |
+| [09：S71-09](../09-hardware.md) | 有限温度的被动复位底限、初态与速率方程 | [系统](../../codes/systems/round71_checks.py) `--case 09` |
+| [10：S71-10](../10-error-correction.md) | 未知错误加已知擦除的距离条件及边界反例 | [系统](../../codes/systems/round71_checks.py) `--case 10` |
+| [11：S71-11](../11-resources-benchmarks.md) | 每周期概率、最终奇偶翻转与至少一次事件区别 | [系统](../../codes/systems/round71_checks.py) `--case 11` |
+| [12：S71-12](../12-security-network-frontiers.md) | 两段噪声Bell对交换；四分支与标签卷积 | [系统](../../codes/systems/round71_checks.py) `--case 12` |
+| [13：A71-13](../13-quantum-information.md) | 经典Markov链与XOR的条件互信息 | [算法](../../codes/algorithms/round71_checks.py) `13` |
+| [14：S71-14](../14-compilation-control.md) | 虚拟Z后的脉冲相位、矩阵等式和错误对照 | [系统](../../codes/systems/round71_checks.py) `--case 14` |
+| [15：S71-15](../15-practice-research.md) | 多次查看与停止规则；预先分配错误概率 | [系统](../../codes/systems/round71_checks.py) `--case 15` |
+| [16：A71-16](../16-advanced-algorithms-verification.md) | qubitization信号条件、反例和厄米化构造 | [算法](../../codes/algorithms/round71_checks.py) `16` |
+| [17：A71-17](../17-computation-models.md) | echo时间失配的残余耦合与不可见相位误差 | [算法](../../codes/algorithms/round71_checks.py) `17` |
+| [18：A71-18](../18-channels-capacities-complexity.md) | 协方差物理性、正矩阵反例、hbar与多模排序 | [算法](../../codes/algorithms/round71_checks.py) `18` |
+| [19：S71-19](../19-engineering-architecture.md) | 相同POVM、不同测后过程；QND与重复性区别 | [系统](../../codes/systems/round71_checks.py) `--case 19` |
+| [Q1：F71-Q1](../quantum-mechanics/01-experiments-states.md) | 两组相反的条件擦除条纹与整体概率 | [基础](../../codes/foundations/round71_checks.py) `--case q1` |
+| [Q2：F71-Q2](../quantum-mechanics/02-observables-dynamics.md) | 不确定关系中保留对称协方差的加强界 | [基础](../../codes/foundations/round71_checks.py) `--case q2` |
+| [Q3：S71-Q3](../quantum-mechanics/03-levels-control.md) | 矩形脉冲频谱零点；泄漏近似的条件 | [系统](../../codes/systems/round71_checks.py) `--case q3` |
+| [Q4：A71-Q4](../quantum-mechanics/04-wavefunctions-models.md) | 势垒顶连续极限、超势垒反射、共振及边界匹配 | [算法](../../codes/algorithms/round71_checks.py) `q4` |
+
+源码实践另有S71-MPF、OBP、NOISE、SQD、RNG、TOMO六组[带解练习](../appendices/software-practice.md)，连接权重约束、采样预算、截断偏差、噪声伴随、投影归一化、并行样本与过程层析。运行 `python3 codes/practice/workflow_checks.py`；固定结果可与逐步答案对照。它们是自编小模型，不导入vendor、不申请真机作业。
+
 ## 第二组逐章练习：检验容易遗漏的条件
 
 本组题目和完整解答直接放在相应正文的“新增诊断练习”“实操扩展B”或“练习与实验”中；不必在两个文档间来回找答案。原251道自检与上表第一组实验继续保留。全部新数值程序已接入统一入口，输入是合成计数或明示模型。

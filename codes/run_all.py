@@ -6,10 +6,14 @@ COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experim
  ['systems/hardware_flags.py'],['systems/weighted_decoder.py'],['systems/factory_schedule.py'],
  ['systems/network_wait.py'],['systems/routing_mapping.py'],['systems/service_timeline.py'],
  ['foundations/diagnostic_lab.py','--case','all'],['algorithms/round70_checks.py','all'],
+ ['foundations/round71_checks.py','--case','all'],['algorithms/round71_checks.py','all'],
+ ['systems/round71_checks.py','--case','all'],
+ ['review/cross_foundations.py'],['review/cross_systems.py'],
  ['systems/calibration_uncertainty.py'],['systems/coherent_repetition.py'],
  ['systems/correlated_shots.py'],['systems/network_cutoff.py'],
  ['systems/resource_schedule.py'],['systems/calibration_dependencies.py'],
- ['practice/source_reading_checks.py'],['practice/experiments.py'],['practice/research_checks.py'],['snapshot_sources.py','--verify'],['tests/test_snapshot_sources.py']]
+ ['practice/source_reading_checks.py'],['practice/experiments.py'],['practice/research_checks.py'],
+ ['practice/workflow_checks.py'],['snapshot_sources.py','--verify'],['tests/test_snapshot_sources.py']]
 
 def main():
     if not __debug__: raise RuntimeError('Run without -O: assertions are part of validation')

@@ -197,6 +197,61 @@ $$
 
 时间与频谱的制约也不是要求门无限慢。慢脉冲会增加系统暴露在弛豫和低频漂移中的时间，快脉冲则增加宽带激发与波形失真的风险。控制设计是在这两类误差之间寻找可校准的工作点。评价一个“更快的门”时，至少还应同时查看泄漏、相位误差、邻近量子比特串扰和门后残余激发，而不能只比较脉冲长度。
 
+### 4.1 S71-Q3：矩形脉冲的谱零点，为什么不是零泄漏保证
+
+前面的 $1/\tau$ 给出频谱宽度量级，没有给出每个频率的权重。**题目与模型。** 单独研究一个不希望被激发的跃迁 $|a\rangle\leftrightarrow|b\rangle$；初态为 $|a\rangle$，其角频率失谐为 $\delta$。相互作用绘景中的矩形弱驱动写为
+
+$$
+H_I(t)=\frac{\hbar\Omega_{ab}}2
+\left(e^{i\delta t}|b\rangle\langle a|
++e^{-i\delta t}|a\rangle\langle b|\right),\quad 0\le t\le\tau.
+$$
+
+$\Omega_{ab}$ 和 $\delta$ 的单位均为 rad/s；$\Omega_{ab}$ 已包含这一跃迁的矩阵元，不一定等于计算跃迁的 Rabi 频率。取弱脉冲面积 $\Omega_{ab}\tau=0.1$ rad，$\delta/2\pi=200$ MHz，分别算 $\tau=2.5,5,10$ ns 的一阶跃迁概率。
+
+**从振幅积分开始。** 一阶时间依赖微扰只保留一次相互作用：
+
+$$
+A_{a\to b}^{(1)}=-\frac{i}{\hbar}\int_0^\tau
+\langle b|H_I(t)|a\rangle\,dt
+=-\frac{i\Omega_{ab}}2\int_0^\tau e^{i\delta t}\,dt.
+$$
+
+对 $\delta\ne0$，积分为 $(e^{i\delta\tau}-1)/(i\delta)$。用 $e^{ix}-1=2ie^{ix/2}\sin(x/2)$，写成保留相位的形式：
+
+$$
+A_{a\to b}^{(1)}=-i\frac{\Omega_{ab}\tau}{2}
+e^{i\delta\tau/2}\operatorname{sinc}\left(\frac{\delta\tau}{2}\right),
+\qquad \operatorname{sinc}(x)=\frac{\sin x}{x},\quad\operatorname{sinc}(0)=1.
+$$
+
+先取模平方，得到 $P^{(1)}=(\Omega_{ab}\tau/2)^2\operatorname{sinc}^2(\delta\tau/2)$。指数相位的模为 1，不能把它当成额外衰减。以 Hz 写失谐 $\delta f=\delta/(2\pi)$ 时，sinc 的自变量是 $\pi\delta f\tau$。首个非零频谱零点满足 $|\delta f|\tau=1$，这也给前文的 $1/\tau$ 量级一个精确定义：矩形包络从谱中心到第一零点的频率距离。
+
+| 时长 $\tau$ | sinc 自变量 | 一阶跃迁概率 |
+|---:|---:|---:|
+| 2.5 ns | $\pi/2$ | $0.0025(2/\pi)^2\approx0.00101321$ |
+| 5 ns | $\pi$ | 0 |
+| 10 ns | $2\pi$ | 0 |
+
+此表固定的是**面积**，所以缩短时长同时提高了 $\Omega_{ab}$，不是固定驱动幅度比较。更一般地，应把真实包络代入复积分；滤波、时间误差或失谐漂移会移动这些相消位置。
+
+![固定弱驱动面积0.1弧度时，矩形脉冲在200MHz失谐处的一阶跃迁概率随时长振荡，并在5、10、15ns出现谱零点；该合成两态模型不等于三能级门泄漏](../assets/round71-systems-spectrum.svg)
+
+图中纵轴是无量纲概率，横轴为 ns；圆点标出题中三个时长，虚线标出谱零点。[原尺寸 SVG](../assets/round71-systems-spectrum.svg)和[公式生成器](../../codes/systems/plot_round71_spectrum.py)可独立打开。
+
+横轴的 $\tau=0$ 仅表示固定面积公式的数学极限：$\Omega_{ab}=0.1/\tau$ 在此发散。真实控制器幅度有限，且须满足 RWA 等条件，因此不能从曲线原点推断能零时间完成有限旋转；实际时长范围必须依据器件重新限制。
+
+**零点为何仍不是完整答案。** 对同一个孤立的恒驱动两态问题，§6 的精确 Rabi 式给
+
+$$
+P_{\rm exact}=\frac{\Omega_{ab}^2}{\Omega_{ab}^2+\delta^2}
+\sin^2\left(\frac{\tau\sqrt{\Omega_{ab}^2+\delta^2}}2\right).
+$$
+
+在 $\tau=5$ ns、面积 0.1 的点，一阶项是零，精确值却约为 $4.009\times10^{-11}$；高阶项没有被一阶积分保证消失。更不能把本题直接当成完整 transmon 的 $|1\rangle\to|2\rangle$ 泄漏：真正的 $\pi$ 门同时强烈改变 $|0\rangle,|1\rangle$ 振幅，三能级耦合、$\sqrt2$ 量级的矩阵元差异、动态相位与线路响应都参与，须解完整模型并实验校准。
+
+运行 [round71_checks.py](../../codes/systems/round71_checks.py) 的 `--case q3`，以中点复数积分独立核对解析振幅，再对照孤立两态的精确解，检查零失谐极限。计算基础参见 [MIT 原始两能级课程资料](https://ocw.mit.edu/courses/6-728-applied-quantum-and-statistical-physics-fall-2006/resources/twolevel04/)；弱非谐多级控制与 DRAG 的边界参见 [Motzoi 等原论文](https://doi.org/10.1103/PhysRevLett.103.110501)（2009，来源访问 2026-10-13）。图是本文公式生成的教学数据，不是实验频谱。
+
 ## 5. 自旋两级：先看磁矩符号，再贴 0 和 1
 
 自旋角动量与磁矩可写成

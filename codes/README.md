@@ -8,7 +8,8 @@
 | algorithms | 06–08、16–18 共6组原实验及6组新增检查 | `python3 codes/algorithms/experiments.py all` |
 | systems | 09–12、14、19 共12个系统程序 | 见该目录 README |
 | practice | 15章7组统计实验、5个合成音频、科学图 | `python3 codes/practice/experiments.py` |
-| vendor | 19个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
+| review | 交换复核的两组独立计算路径 | `python3 codes/review/cross_foundations.py` 与 `cross_systems.py` |
+| vendor | 26个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
 
 教学实验结果是精确小模型、合成计数或固定种子模拟；不是新采集的真机数据。程序中的断言和各目录的 `expected-results.json` / `results.json` 提供复算依据。统一运行报告保存在 `work/research/code-validation.json`。
 
@@ -23,3 +24,5 @@
 第15章新增后选择、零失败上界、时间预算与准概率四组固定样本：`python3 codes/practice/research_checks.py`，输出 `practice/research-results.json`。图由 `python3 codes/practice/research_figures.py` 生成，依赖仍见 `practice/requirements-figures.txt`。
 
 源码阅读练习的独立数学核对：`python3 codes/practice/source_reading_checks.py`。该程序不导入vendor文件；新版基础、算法和系统实验均已接入统一入口。历史round69报告保留，最新统一结果写入 `work/research/code-validation.json`。
+
+第71轮逐章细算：基础 `python3 codes/foundations/round71_checks.py --case all`，算法 `python3 codes/algorithms/round71_checks.py all`，系统 `python3 codes/systems/round71_checks.py --case all`。各组的round71说明与结果提供固定输入、单位、参数边界及详细答案；均接入统一入口。工业工作流独立模型为 `python3 codes/practice/workflow_checks.py`，结果见 `practice/workflow-results.json`；图生成命令 `python3 codes/practice/workflow_figures.py` 使用上述固定绘图依赖。它们不导入或执行vendor摘录。

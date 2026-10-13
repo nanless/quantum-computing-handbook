@@ -1,0 +1,532 @@
+{
+  "access_date": "2026-10-13",
+  "data_kind": "deterministic synthetic teaching calculations",
+  "tolerance": 1e-10,
+  "chapters": {
+    "06": {
+      "cases": [
+        {
+          "case": "partial",
+          "garbage_overlap": [
+            0.6,
+            0.0
+          ],
+          "p0": 0.7999999999999998,
+          "purity": 0.6799999999999997
+        },
+        {
+          "case": "identical",
+          "garbage_overlap": [
+            1.0,
+            0.0
+          ],
+          "p0": 0.9999999999999998,
+          "purity": 0.9999999999999996
+        },
+        {
+          "case": "orthogonal",
+          "garbage_overlap": [
+            0.0,
+            0.0
+          ],
+          "p0": 0.4999999999999999,
+          "purity": 0.4999999999999998
+        },
+        {
+          "case": "imaginary",
+          "garbage_overlap": [
+            0.0,
+            1.0
+          ],
+          "p0": 0.4999999999999999,
+          "purity": 0.9999999999999996
+        }
+      ],
+      "reset_keeps_reduced_state": true
+    },
+    "07": {
+      "enumerated": [
+        {
+          "k": 0,
+          "full_rank_sequences": 0,
+          "total": 1,
+          "probability": 0.0
+        },
+        {
+          "k": 1,
+          "full_rank_sequences": 0,
+          "total": 4,
+          "probability": 0.0
+        },
+        {
+          "k": 2,
+          "full_rank_sequences": 6,
+          "total": 16,
+          "probability": 0.375
+        },
+        {
+          "k": 3,
+          "full_rank_sequences": 42,
+          "total": 64,
+          "probability": 0.65625
+        },
+        {
+          "k": 4,
+          "full_rank_sequences": 210,
+          "total": 256,
+          "probability": 0.8203125
+        },
+        {
+          "k": 5,
+          "full_rank_sequences": 930,
+          "total": 1024,
+          "probability": 0.908203125
+        }
+      ],
+      "k9_success": 0.9941482543945312,
+      "k9_failure": 0.00585174560546875,
+      "union_failure_bound": 0.005859375
+    },
+    "08": {
+      "exact_bell": {
+        "plus": {
+          "mean_z1": 0.0,
+          "mean_z2": 0.0,
+          "mean_energy": 0.0,
+          "second_moment": 4.0,
+          "variance": 4.0,
+          "covariance": 1.0
+        },
+        "minus": {
+          "mean_z1": 0.0,
+          "mean_z2": 0.0,
+          "mean_energy": 0.0,
+          "second_moment": 0.0,
+          "variance": 0.0,
+          "covariance": 1.0
+        }
+      },
+      "stipulated_counts": [
+        {
+          "00": 60,
+          "11": 40
+        },
+        {
+          "00": 20,
+          "01": 40,
+          "10": 40,
+          "11": 0
+        }
+      ],
+      "paired_statistics": [
+        {
+          "mean_z1": 0.2,
+          "mean_z2": 0.2,
+          "mean_energy": 0.0,
+          "second_moment": 0.0,
+          "variance": 0.0,
+          "covariance": 0.96
+        },
+        {
+          "mean_z1": 0.2,
+          "mean_z2": 0.2,
+          "mean_energy": 0.0,
+          "second_moment": 3.2,
+          "variance": 3.2,
+          "covariance": -0.64
+        }
+      ],
+      "total_preparations": 100,
+      "independent_optimal_variance": 0.04,
+      "grouped_plus_variance": 0.04,
+      "grouped_minus_variance": 0
+    },
+    "13": {
+      "chain_table": {
+        "000": 0.375,
+        "001": 0.125,
+        "110": 0.125,
+        "111": 0.375
+      },
+      "chain": {
+        "entropies": {
+          "A": 1.0,
+          "B": 1.0,
+          "C": 1.0,
+          "AB": 1.0,
+          "AC": 1.811278124459133,
+          "BC": 1.811278124459133,
+          "ABC": 1.811278124459133
+        },
+        "MI": 0.18872187554086706,
+        "CMI": 0.0
+      },
+      "xor_table": {
+        "000": 0.25,
+        "011": 0.25,
+        "101": 0.25,
+        "110": 0.25
+      },
+      "xor": {
+        "entropies": {
+          "A": 1.0,
+          "B": 1.0,
+          "C": 1.0,
+          "AB": 2.0,
+          "AC": 2.0,
+          "BC": 2.0,
+          "ABC": 2.0
+        },
+        "MI": 0.0,
+        "CMI": 1.0
+      },
+      "chain_recovered_from_AB": true
+    },
+    "16": {
+      "cases": [
+        {
+          "x": -1,
+          "bare_walk_eigenphases": [
+            0,
+            3.141592653589793
+          ],
+          "corrected_eigenphases": [
+            3.141592653589793,
+            -3.141592653589793
+          ],
+          "hermitianized_signal_block": -1
+        },
+        {
+          "x": -0.5,
+          "bare_walk_eigenphases": [
+            0,
+            3.141592653589793
+          ],
+          "corrected_eigenphases": [
+            2.0943951023931957,
+            -2.0943951023931957
+          ],
+          "hermitianized_signal_block": -0.5
+        },
+        {
+          "x": 0,
+          "bare_walk_eigenphases": [
+            0,
+            3.141592653589793
+          ],
+          "corrected_eigenphases": [
+            1.5707963267948966,
+            -1.5707963267948966
+          ],
+          "hermitianized_signal_block": 0
+        },
+        {
+          "x": 0.5,
+          "bare_walk_eigenphases": [
+            0,
+            3.141592653589793
+          ],
+          "corrected_eigenphases": [
+            1.0471975511965976,
+            -1.0471975511965976
+          ],
+          "hermitianized_signal_block": 0.5
+        },
+        {
+          "x": 1,
+          "bare_walk_eigenphases": [
+            0,
+            3.141592653589793
+          ],
+          "corrected_eigenphases": [
+            0.0,
+            -0.0
+          ],
+          "hermitianized_signal_block": 1
+        }
+      ],
+      "extra_signal_qubits": 1,
+      "nonhermitian_counterexample_checked": true,
+      "QSP_signal_phase_basis_similarity_checked": true
+    },
+    "17": {
+      "J_rad_per_second": 6283185.307179586,
+      "sufficient_1e_minus3_time_difference_ns": 0.15915494309189535,
+      "cases": [
+        {
+          "t1_ns": 49.99999999999999,
+          "t2_ns": 49.99999999999999,
+          "residual_phase_rad": 0.0,
+          "operator_norm_error": 0.0,
+          "p_X_minus": 0.0
+        },
+        {
+          "t1_ns": 50.5,
+          "t2_ns": 49.5,
+          "residual_phase_rad": 0.0062831853071796005,
+          "operator_norm_error": 0.006283174971759162,
+          "p_X_minus": 3.947789809194029e-05
+        },
+        {
+          "t1_ns": 49.5,
+          "t2_ns": 50.5,
+          "residual_phase_rad": -0.0062831853071796005,
+          "operator_norm_error": 0.006283174971759162,
+          "p_X_minus": 3.947789809194029e-05
+        }
+      ]
+    },
+    "18": {
+      "hbar": 1,
+      "ordering": "q1,p1,q2,p2,...",
+      "cases": [
+        {
+          "case": "two_small",
+          "V": [
+            [
+              0.1,
+              0
+            ],
+            [
+              0,
+              0.1
+            ]
+          ],
+          "classical_eigenvalues": [
+            0.1,
+            0.1
+          ],
+          "determinant": 0.010000000000000002,
+          "quantum_check_eigenvalues": [
+            -0.4,
+            0.6
+          ],
+          "is_physical": false,
+          "hbar2_V": [
+            [
+              0.2,
+              0
+            ],
+            [
+              0,
+              0.2
+            ]
+          ]
+        },
+        {
+          "case": "squeezed",
+          "V": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "classical_eigenvalues": [
+            0.25,
+            1.0
+          ],
+          "determinant": 0.25,
+          "quantum_check_eigenvalues": [
+            0.0,
+            1.25
+          ],
+          "is_physical": true,
+          "hbar2_V": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "case": "correlated",
+          "V": [
+            [
+              0.5,
+              0.4
+            ],
+            [
+              0.4,
+              0.5
+            ]
+          ],
+          "classical_eigenvalues": [
+            0.09999999999999998,
+            0.9
+          ],
+          "determinant": 0.08999999999999997,
+          "quantum_check_eigenvalues": [
+            -0.1403124237432849,
+            1.140312423743285
+          ],
+          "is_physical": false,
+          "hbar2_V": [
+            [
+              1.0,
+              0.8
+            ],
+            [
+              0.8,
+              1.0
+            ]
+          ]
+        }
+      ]
+    },
+    "q4": {
+      "cases": [
+        {
+          "g": 2,
+          "e": 0.1,
+          "T_closed": 0.032780272651796886,
+          "T_matched": 0.032780272651796914,
+          "R_matched": 0.9672197273482032
+        },
+        {
+          "g": 2,
+          "e": 0.5,
+          "T_closed": 0.2107710939661305,
+          "T_matched": 0.2107710939661304,
+          "R_matched": 0.7892289060338692
+        },
+        {
+          "g": 2,
+          "e": 0.9,
+          "T_closed": 0.44103566882464207,
+          "T_matched": 0.4410356688246418,
+          "R_matched": 0.5589643311753582
+        },
+        {
+          "g": 2,
+          "e": 0.99999999,
+          "T_closed": 0.4999999941666666,
+          "T_matched": 0.4999999941666665,
+          "R_matched": 0.5000000058333334
+        },
+        {
+          "g": 2,
+          "e": 1,
+          "T_closed": 0.5,
+          "T_matched": 0.5000000000000001,
+          "R_matched": 0.5000000000000001
+        },
+        {
+          "g": 2,
+          "e": 1.00000001,
+          "T_closed": 0.5000000058333334,
+          "T_matched": 0.5000000058333331,
+          "R_matched": 0.4999999941666667
+        },
+        {
+          "g": 2,
+          "e": 1.5,
+          "T_closed": 0.7545875975374065,
+          "T_matched": 0.7545875975374067,
+          "R_matched": 0.24541240246259347
+        },
+        {
+          "g": 2,
+          "e": 2,
+          "T_closed": 0.9063284806027643,
+          "T_matched": 0.9063284806027646,
+          "R_matched": 0.09367151939723564
+        },
+        {
+          "g": 2,
+          "e": 3.4674011002723395,
+          "T_closed": 1.0,
+          "T_matched": 0.9999999999999996,
+          "R_matched": 1.2519984148073534e-32
+        },
+        {
+          "g": 2,
+          "e": 10.869604401089358,
+          "T_closed": 1.0,
+          "T_matched": 1.0,
+          "R_matched": 1.0086750528557042e-33
+        },
+        {
+          "g": 4,
+          "e": 0.1,
+          "T_closed": 0.0007284873724738169,
+          "T_matched": 0.000728487372473851,
+          "R_matched": 0.9992715126275267
+        },
+        {
+          "g": 4,
+          "e": 0.5,
+          "T_closed": 0.013876830629264458,
+          "T_matched": 0.01387683062926457,
+          "R_matched": 0.9861231693707353
+        },
+        {
+          "g": 4,
+          "e": 0.9,
+          "T_closed": 0.1192947037614342,
+          "T_matched": 0.11929470376143415,
+          "R_matched": 0.8807052962385659
+        },
+        {
+          "g": 4,
+          "e": 0.99999999,
+          "T_closed": 0.19999998986666684,
+          "T_matched": 0.19999998986666684,
+          "R_matched": 0.8000000101333332
+        },
+        {
+          "g": 4,
+          "e": 1,
+          "T_closed": 0.2,
+          "T_matched": 0.19999999999999998,
+          "R_matched": 0.7999999999999999
+        },
+        {
+          "g": 4,
+          "e": 1.00000001,
+          "T_closed": 0.20000001013333352,
+          "T_matched": 0.2000000101333335,
+          "R_matched": 0.7999999898666663
+        },
+        {
+          "g": 4,
+          "e": 1.5,
+          "T_closed": 0.9693340828363305,
+          "T_matched": 0.9693340828363306,
+          "R_matched": 0.030665917163669433
+        },
+        {
+          "g": 4,
+          "e": 2,
+          "T_closed": 0.9331894647837717,
+          "T_matched": 0.933189464783772,
+          "R_matched": 0.06681053521622832
+        },
+        {
+          "g": 4,
+          "e": 1.6168502750680849,
+          "T_closed": 1.0,
+          "T_matched": 0.9999999999999998,
+          "R_matched": 1.3341584656791523e-32
+        },
+        {
+          "g": 4,
+          "e": 3.4674011002723395,
+          "T_closed": 1.0,
+          "T_matched": 0.9999999999999996,
+          "R_matched": 1.738016004801419e-32
+        }
+      ],
+      "g4_top": 0.2,
+      "g4_first_resonance_e": 1.6168502750680849,
+      "units": "dimensionless stationary-scattering model, equal outer velocities"
+    }
+  }
+}

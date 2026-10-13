@@ -31,3 +31,5 @@ node tools/reader/check-qm-review.mjs
 构建程序会复制 `codes/`，并仅改写本书自编代码说明中指向教材的链接；vendor 文件逐字节保留。`reader/codes/run_all.py` 也能在复制后的阅读版布局下运行；生成的本地检查报告在 `reader/work/research/`。浏览器检查涵盖40页两种宽度、代码副本哈希以及音频元数据加载。音频不自动播放。
 
 如果没有 Playwright 对应浏览器，可用 `HANDBOOK_CHROMIUM` 指向已安装的 Chrome/Chromium；不要把本机绝对路径写进教材。浏览器执行权限与依赖存在性是环境条件，失败时应保留错误而非报告检查通过。
+
+第71轮的额外检查：`node tools/reader/check-round71.mjs` 核对24章独立练习标签、代码入口和26项目97文件的目录一致性；`node tools/reader/verify-round71-visuals.mjs` 生成24章×两宽度的新增内容截图、四张科学图的完整图像与上下文。后者只生成截图并检查基础溢出，人工目视范围须另写报告，不能将截图数量当成已逐屏读审。先完成构建，再运行浏览器检查；可沿用上文HANDBOOK_CHROMIUM环境参数。

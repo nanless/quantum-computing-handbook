@@ -44,6 +44,10 @@ try {
       }
       const result = await page.evaluate(() => {
         const failures = [];
+        const prose = document.createTreeWalker(document.querySelector('article'), NodeFilter.SHOW_TEXT);
+        for (let text = prose.nextNode(); text; text = prose.nextNode()) {
+          if (!text.parentElement.closest('pre,code,.katex') && text.textContent.includes('**')) failures.push('unrendered emphasis in prose: ' + text.textContent.slice(0,120));
+        }
         if (document.documentElement.scrollWidth > innerWidth + 2) {
           const offenders = [...document.querySelectorAll('article *')].filter(e => {
             if (e.getBoundingClientRect().right <= innerWidth + 2) return false;

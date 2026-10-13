@@ -1,0 +1,82 @@
+{
+  "06": {
+    "eigenvalues": [
+      0.8,
+      0.2
+    ],
+    "purity": 0.6800000000000002,
+    "P0": 0.8
+  },
+  "07": {
+    "full_rank_2": "3/8",
+    "failure_9": 0.00585174560546875
+  },
+  "08": {
+    "paired_minus_variance": 0,
+    "alternative_second_moment": 3.2,
+    "independent_variance_total100": 0.04
+  },
+  "13": {
+    "Markov_MI": 0.18872187554086717,
+    "Markov_CMI": 0.0,
+    "XOR_CMI": 1
+  },
+  "16": {
+    "bare_Q_squared": [
+      [
+        [
+          0.9999999999999999,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.9999999999999999,
+          0.0
+        ]
+      ]
+    ],
+    "correct_trace": 1.0,
+    "correct_det": 0.9999999999999999,
+    "correct_phase": 1.0471975511965976,
+    "QSP_walk_basis_similarity_max_error": 0.0
+  },
+  "17": {
+    "phase": 0.006283185307179587,
+    "p_minus": 3.947789809193986e-05,
+    "norm_error": 0.006283174971759127
+  },
+  "18": {
+    "min_eigenvalue": -0.1403124237432849,
+    "scaled_covariance": [
+      [
+        0.5,
+        0
+      ],
+      [
+        0,
+        2
+      ]
+    ]
+  },
+  "q4": {
+    "top_transmission": 0.2000000000000001,
+    "first_resonance_e": 1.6168502750680849
+  },
+  "workflow_MPF": {
+    "fourth_order_coefficient": "-1/64",
+    "variance_bound": 0.00030864197530864197
+  },
+  "workflow_QPT": {
+    "settings5": 248832,
+    "shots5": 248832000
+  }
+}

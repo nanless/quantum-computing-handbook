@@ -49,6 +49,33 @@ $$
 
 离散容错门集则需要近似综合。例如 Clifford+$T$ 表示中，逼近任意 $Z$ 旋转的 $T$ 数随目标精度增长；所以“一个任意旋转门”在资源估算中不能永远算作一步。
 
+### 2.1 S71-14：虚拟 Z 为何必须改变后面的脉冲相位
+
+**题目。** 用计算基 Pauli 约定定义赤道轴旋转 $R_\varphi(\theta)=\exp[-i\theta(\cos\varphi X+\sin\varphi Y)/2]$。线路先做 $R_z(\alpha)$，再做 $R_x(\theta)$。控制器暂不发出 Z 脉冲，而记录一个 Z 帧，令“逻辑态 $=R_z(\alpha)\times$ 物理态”。下一段赤道脉冲应使用 $+\alpha$ 还是 $-\alpha$？设输入 $|+\rangle$、$\alpha=\theta=\pi/2$，误用另一符号会怎样？
+
+**先把矩阵写全。** 由 Pauli 旋转，
+
+$$
+R_\varphi(\theta)=
+\begin{bmatrix}
+\cos(\theta/2)&-i e^{-i\varphi}\sin(\theta/2)\\
+-i e^{i\varphi}\sin(\theta/2)&\cos(\theta/2)
+\end{bmatrix}.
+$$
+
+左右乘 $R_z$ 对角矩阵，得到 $R_z(\alpha)R_x(\theta)R_z(-\alpha)=R_\alpha(\theta)$。但本题要求把**先执行的 Z** 移到未执行帧中，需反向改写：
+
+$$
+R_x(\theta)R_z(\alpha)
+=R_z(\alpha)R_{-\alpha}(\theta).
+$$
+
+因此物理脉冲用 $-\alpha$，帧仍保留 $\alpha$。从 $|+\rangle$ 出发，目标序列使 Bloch 向量先从 $+X$ 到 $+Y$，再绕 $+X$ 旋转 $\pi/2$ 到 $+Z$，所以测得 0 的概率为 1。正确帧实现的 $R_{-\pi/2}(\pi/2)$ 已把物理态送到 $|0\rangle$；保留的 Z 帧只加共同相位。若物理脉冲误用 $+\pi/2$，它把输入送到 $|1\rangle$，测得 0 的概率反而为零。
+
+“更新驱动相位”不是删掉 Z 门后照旧播放原波形。后续单比特门、涉及该位的某些双比特驱动与非 Z 测量基都要按同一帧约定解释。Z 测量与 Z 帧对易，不能因此推断 X/Y 测量也不受影响。控制器选择相反的主动/被动帧约定时，软件加减号会相反；必须从状态定义和完整矩阵核查。
+
+运行 [round71_checks.py](../codes/systems/round71_checks.py) 的 `--case 14`，逐矩阵元核对等式，并输出正确/错误相位下的 0 概率；另检验正、负、零角度。这个标准库实验没有绑定仪器波形。[McKay 等的虚拟 Z 原论文](https://arxiv.org/html/1612.00858v2)还分别讨论交叉共振与参量 iSWAP 的相位传播，说明双比特相位规则依具体相互作用而定（*PRA* 2017，访问 2026-10-13）。
+
 ## 3. 连接约束与布局
 
 逻辑线路可能要求任意两比特相互作用，物理芯片却只有连接图 $G=(V,E)$。布局把线路量子比特映射到物理顶点，路由再插入 SWAP 或使用原生搬运机制。
@@ -182,7 +209,7 @@ H_{\rm rot}=\frac{\hbar}{2}
 \left(\Delta Z+\Omega_x X+\Omega_y Y\right).
 $$
 
-$\Delta$ 是驱动与量子比特的失谐，$\Omega_x,\Omega_y$ 是同相与正交包络对应的驱动强度。共振且 $\Omega_y=0$ 时，矩形脉冲产生
+本节用计算基 $Z$，明确取 $\Delta=\omega_d-\omega_0$，单位为 rad/s；这与 Q3 的 $\Delta_{Q3}=\omega_0-\omega_d$ 相反，因为那里使用 $Z_E=-Z$。沿用 Q3 的驱动场相位 $\phi$ 时，$\Omega_x=\Omega\cos\phi$、$\Omega_y=-\Omega\sin\phi$，因为其 $Y_E=-Y$。因此两章 Hamiltonian 描述同一物理演化，不能跨符号直接抄正负号。这里 $\Omega_x,\Omega_y$ 均为有符号的角频率包络，不是 Hz 或仪器电压。共振且 $\Omega_y=0$ 时，矩形脉冲产生
 
 $$
 U(T)=R_x(\theta),\qquad \theta=\Omega_xT.
@@ -336,7 +363,7 @@ $$
 
 ### 实时译码有两个速度条件
 
-错误校正还要把测量结果转换为**探测事件（detector events，即相邻检查结果之间提示错误发生位置与时间的变化）**，再送入译码器，最后更新 **Pauli 帧（在经典控制器中跟踪待施加的 Pauli 修正）**或触发逻辑分支：
+错误校正还要把测量结果转换为**探测事件（detector events，即相邻检查结果之间提示错误发生位置与时间的变化）**，再送入译码器，最后更新 **Pauli 帧（在经典控制器中跟踪待施加的 Pauli 修正）** 或触发逻辑分支：
 
 ```mermaid
 flowchart LR

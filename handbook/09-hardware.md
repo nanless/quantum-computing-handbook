@@ -158,6 +158,41 @@ $$
 
 例如在低温、激发态近似只向基态弛豫的模型中，若 $T_1=100\,\mu\mathrm s$，一个已制备为 $|1\rangle$ 的比特空闲 $1\,\mu\mathrm s$ 后仍处于 $|1\rangle$ 的概率为 $e^{-1/100}\approx0.99005$，弛豫概率约 $0.995\%$。这只计算了这段**空闲**时间的能量弛豫；不能把它直接报成任意 $1\,\mu\mathrm s$ 门的错误率，因为门期间的驱动和其他噪声还会改变演化。
 
+### 5.1.1 S71-09：等五个弛豫时间，复位残差一定小于 1% 吗
+
+**题目与条件。** 初态为 $|1\rangle$。用恒定、马尔可夫的两能级模型描述空闲：向上跃迁率 $\Gamma_\uparrow=100\,\mathrm{s^{-1}}$，向下跃迁率 $\Gamma_\downarrow=9900\,\mathrm{s^{-1}}$，无泄漏。分别求等待 $500\,\mu\mathrm s$ 的激发概率、达到 2% 的最短等待，以及能否只靠等待达到 0.1%。这些是合成参数，不是硬件校准值。
+
+**先算流入和流出。** 当前激发占据为 $p_1(t)$；基态比例是 $1-p_1(t)$。每秒从基态流入激发态的概率是 $\Gamma_\uparrow(1-p_1)$，从激发态流出的概率是 $\Gamma_\downarrow p_1$，所以
+
+$$
+\frac{dp_1}{dt}=\Gamma_\uparrow-(\Gamma_\uparrow+\Gamma_\downarrow)p_1.
+$$
+
+令 $\Gamma_\Sigma=\Gamma_\uparrow+\Gamma_\downarrow$，稳态占据 $p_\infty=\Gamma_\uparrow/\Gamma_\Sigma$。把 $p_1-p_\infty$ 作为新变量，微分方程变成 $d(p_1-p_\infty)/dt=-\Gamma_\Sigma(p_1-p_\infty)$，因此
+
+$$
+p_1(t)=p_\infty+[p_1(0)-p_\infty]e^{-t/T_{\rm rel}},
+\qquad T_{\rm rel}=1/\Gamma_\Sigma.
+$$
+
+这里拟合占据差得到的弛豫时间是上下率之和的倒数；只有向上跃迁可忽略时，它才近似为 $1/\Gamma_\downarrow$。本题 $T_{\rm rel}=100\,\mu\mathrm s$、$p_\infty=0.01$，故五个时间常数后
+
+$$
+p_1(500\,\mu\mathrm s)=0.01+0.99e^{-5}\approx0.01667.
+$$
+
+低温单向模型的 $e^{-5}\approx0.00674$ 会漏掉热底限与回激发。欲达到 $p_* >p_\infty$，由指数式逐步解得
+
+$$
+t\ge T_{\rm rel}\ln\frac{p_1(0)-p_\infty}{p_*-p_\infty}.
+$$
+
+对 $p_*=0.02$，最短等待约为 $100\ln99=459.512\,\mu\mathrm s$。对 $p_*=0.001<p_\infty$，本题从激发态出发的单调衰减永远到不了目标；等更久会趋近 1%，不会趋近零。若从 $|0\rangle$ 出发，等待反而使激发占据增加到该底限。
+
+**程序与扩展题。** 运行 [round71_checks.py](../codes/systems/round71_checks.py) 的 `--case 09`，用速率方程分步积分独立核对解析值，并检查初始时刻、稳态和两率均零的边界。把向上率改成零，会回到 §5.1 的单向式；把初态改成 0，应得到升温而非进一步冷却。
+
+这一模型只算占据，不刻画相干、泄漏或主动复位。热平衡还需详细平衡条件；非平衡回激发不能自动解释成某个温度。[Jin 等的原始 transmon 热占据实验](https://arxiv.org/abs/1412.2772)区分热与残余激发；[IBM 官方噪声模型文档](https://quantum.cloud.ibm.com/docs/en/guides/build-noise-models)将平衡激发占据列为热弛豫参数（访问 2026-10-13）。在软件中把该参数默认设为零，是一个建模选择，不是设备测量。
+
 ### 5.2 SPAM、门错误、丢失与泄漏
 
 - **SPAM** 是状态制备与测量误差的合称。读出把 $|0\rangle$ 判成 $1$ 和把 $|1\rangle$ 判成 $0$ 的概率可能不对称，平均值会隐藏这一点。

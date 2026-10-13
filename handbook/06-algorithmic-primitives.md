@@ -507,6 +507,36 @@ $$
 
 此时对 $x$ 做 $H$ 会确定得到 $|1\rangle$。**在这条使用工作位的线路中**，正向计算、利用结果、逆向清理三步缺一不可；也不能把“复制计算基结果”误解成能复制任意未知量子态。
 
+### 工作位只泄漏一部分信息时，干涉会损失多少
+
+上面的 Bell 例是两种垃圾记录完全正交的极端。一般地，设输入位和工作寄存器的联合纯态为
+
+$$
+|\Psi\rangle=\frac{|0\rangle|g_0\rangle+|1\rangle|g_1\rangle}{\sqrt2},
+\qquad \langle g_j|g_j\rangle=1.
+$$
+
+工作记录不必是计算基串；它可以是一组辅助位、未读的测量器或环境状态。展开外积后对工作寄存器偏迹，用 $\operatorname{Tr}(|g_0\rangle\langle g_1|)=\langle g_1|g_0\rangle$，得到
+
+$$
+\rho_x=\frac12\begin{pmatrix}1&c\\c^*&1\end{pmatrix},
+\qquad c=\langle g_1|g_0\rangle.
+$$
+
+所以非对角元不是由“工作位数量”决定，而是乘了两条分支记录的内积。在输入位上做 $H$ 后测得 0，相当于测原来的 $|+\rangle$ 投影，概率为
+
+$$
+p_0=\langle+|\rho_x|+\rangle=\frac{1+\operatorname{Re}c}{2}.
+$$
+
+相同记录给 $c=1,p_0=1$，正交记录给 $c=0,p_0=1/2$。若 $c$ 是复数，一次 $X$ 基测量只看见实部；不能把一次测得 $1/2$ 就解释成必然完全失相干，例如 $c=i$ 仍有最大模长相干，只是相位转了四分之一圈。第 05 章的偏迹与第 13 章的混合度提供另一种核查。
+
+**练习 A71-06（含详解）。** 取 $|g_0\rangle=|0\rangle$、$|g_1\rangle=(3|0\rangle+4|1\rangle)/5$。计算输入位的密度矩阵、纯度 $\operatorname{Tr}\rho_x^2$ 和最后测得 0 的概率。如果不反计算，只把工作寄存器无条件复位为 $|0\rangle$，能恢复 $p_0=1$ 吗？
+
+**解答。** 内积 $c=3/5$，所以 $\rho_x=\left[\begin{smallmatrix}1/2&3/10\\3/10&1/2\end{smallmatrix}\right]$。平方后对角元各为 $1/4+9/100=34/100$，纯度为 $17/25=0.68$。测量概率为 $(1+3/5)/2=4/5$。无条件局部复位把联合态变为 $\rho_x\otimes|0\rangle\langle0|$，不改变输入位的边缘态，因此仍是 $4/5$。复位清除了工作位本身，却没有把已经转移给环境的分支信息相干地收回；已知正向计算的逆电路才实现本节的反计算步骤。
+
+运行 `python3 codes/algorithms/round71_checks.py 06`，从四维联合向量做实际偏迹，再与上述内积表达式核对；也检查相同、正交和纯虚内积三种边界。理论接口见 [IBM 的经典计算与反计算教程](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/quantum-algorithmic-foundations/simulating-classical-computations)（访问于 2026-10-13）。本例为解析模拟，不是工作位复位硬件实验。
+
 ## 9. 成功概率、重复与验证
 
 量子算法常是有界错误算法，例如成功概率至少为 $2/3$。独立重复并多数表决可把失败概率指数压低，但每次都要重新制备和运行。若答案易于经典验证，例如检查两个因子的乘积，成功结果可直接验算；采样任务或量子态输出则可能难以逐次验证。

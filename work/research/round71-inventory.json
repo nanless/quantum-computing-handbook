@@ -1,0 +1,202 @@
+{
+  "generatedAt": "2026-10-13T05:37:09.061Z",
+  "scope": "24 chapter labels and code links; six workflow exercises; source scope synchronization",
+  "chapters": [
+    {
+      "id": "00",
+      "label": "F71-00",
+      "file": "handbook/00-overview.md",
+      "sourceSha256": "acd76828b61730c33733234c2949c1fda642aec28dc51be286e82541129cff5a",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "01",
+      "label": "F71-01",
+      "file": "handbook/01-math.md",
+      "sourceSha256": "ea4b18ea34b7b2d66c0b6ec12c3c84b702c0d807e13ffded31c3acdb15c4705f",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "02",
+      "label": "F71-02",
+      "file": "handbook/02-single-qubit.md",
+      "sourceSha256": "c90a6b1303c02e846ea096fb66d7124ede6a1136ca913a45aeeeb99b53908926",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "03",
+      "label": "F71-03",
+      "file": "handbook/03-multiple-qubits.md",
+      "sourceSha256": "ce04aa32fc8099a785b3f843905175fa1d1cc106fb3300f5fcf02b11310dcccd",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "04",
+      "label": "F71-04",
+      "file": "handbook/04-circuits-protocols.md",
+      "sourceSha256": "1d1bda898c95ba89fa3d5d1f8cac3278420820dccac64e5e7cde5fbe5be198fb",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "05",
+      "label": "F71-05",
+      "file": "handbook/05-noise-channels.md",
+      "sourceSha256": "983b1b75367736e1856f6200512637cdb998acf0f9013f16ea2640fcad108148",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "q1",
+      "label": "F71-Q1",
+      "file": "handbook/quantum-mechanics/01-experiments-states.md",
+      "sourceSha256": "779569d9199e56b83706916a2da8622726e15a31ae4fe66027f6f01d736af99c",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "q2",
+      "label": "F71-Q2",
+      "file": "handbook/quantum-mechanics/02-observables-dynamics.md",
+      "sourceSha256": "21585f696d8168cc151ea396bb3ab2394fee38fd94de604b38f0652b6967fb80",
+      "script": "codes/foundations/round71_checks.py",
+      "scriptSha256": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22"
+    },
+    {
+      "id": "06",
+      "label": "A71-06",
+      "file": "handbook/06-algorithmic-primitives.md",
+      "sourceSha256": "89b9e1b014d5a268746d95531b64c96cec0695a49d0bc90bb4ecad5786ac2f71",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "07",
+      "label": "A71-07",
+      "file": "handbook/07-algorithms.md",
+      "sourceSha256": "3c3a09a6c2ef1f6c496d691ab11036972beec1f3af086b349bec95cf63b06021",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "08",
+      "label": "A71-08",
+      "file": "handbook/08-applications.md",
+      "sourceSha256": "d7694d07061853aab8027383476daa9c3c1c31999c64d9a3b485207df145d2b8",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "13",
+      "label": "A71-13",
+      "file": "handbook/13-quantum-information.md",
+      "sourceSha256": "72fb79db5fb622622d4921c33f52a6eac6dce11897c351f178969591fe748046",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "16",
+      "label": "A71-16",
+      "file": "handbook/16-advanced-algorithms-verification.md",
+      "sourceSha256": "b68d82d202b0a0d4223144dccb089283a8d01f4a7eb52f5c8f62c577096564bd",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "17",
+      "label": "A71-17",
+      "file": "handbook/17-computation-models.md",
+      "sourceSha256": "6fa6fb22b3d7968453bb1531d86b2c33b2948c26bb928f059bfe76d428f098da",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "18",
+      "label": "A71-18",
+      "file": "handbook/18-channels-capacities-complexity.md",
+      "sourceSha256": "f28b16c8c12972ab6dc160e3a9a456f1887a43b9f3859b686459639fc08d3904",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "q4",
+      "label": "A71-Q4",
+      "file": "handbook/quantum-mechanics/04-wavefunctions-models.md",
+      "sourceSha256": "46371428d15ab2b25ff09718beba5d9ad251f4ed0df401ff0d1cd29e3640ac54",
+      "script": "codes/algorithms/round71_checks.py",
+      "scriptSha256": "c20e5914e6b71cd827bc8c91bf60205225bd0501d211a1baa44c0d264d6d4514"
+    },
+    {
+      "id": "09",
+      "label": "S71-09",
+      "file": "handbook/09-hardware.md",
+      "sourceSha256": "1de47639a114aafcf59609864fa70f82e0f48a873e189007ca3a147b9e515c53",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "10",
+      "label": "S71-10",
+      "file": "handbook/10-error-correction.md",
+      "sourceSha256": "5cb596547098382b8e8fef5d8736b814cc538971890d43b14ce7edd563877f25",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "11",
+      "label": "S71-11",
+      "file": "handbook/11-resources-benchmarks.md",
+      "sourceSha256": "22da7381b3b88eb36371ec36ed717467ddd79e2eed3ea3eefdcd4133ee123bfb",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "12",
+      "label": "S71-12",
+      "file": "handbook/12-security-network-frontiers.md",
+      "sourceSha256": "968cdb65406bd552ac554b943e2fb17fd236f43de16f3d72e179ed809e08aa2f",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "14",
+      "label": "S71-14",
+      "file": "handbook/14-compilation-control.md",
+      "sourceSha256": "a8a2f4aab43dc6dcbd174ac30ab0243058156ae7f8526c7aad7e713ad9385c28",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "15",
+      "label": "S71-15",
+      "file": "handbook/15-practice-research.md",
+      "sourceSha256": "f0734c895beb3778e033b8b2124918ad08c297dc7bf24541bfadf391d2caffa5",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "19",
+      "label": "S71-19",
+      "file": "handbook/19-engineering-architecture.md",
+      "sourceSha256": "a73bbdd2012230471921a01fc67fda037127ffed19cd2ee305d66b4cb4da54af",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    },
+    {
+      "id": "q3",
+      "label": "S71-Q3",
+      "file": "handbook/quantum-mechanics/03-levels-control.md",
+      "sourceSha256": "e1e795a7429c5079cf43a8afcdbf121e8acd188728f3eaf16313adf52071f40a",
+      "script": "codes/systems/round71_checks.py",
+      "scriptSha256": "b054a8b9522e529286808f2ad3173a858b8364abdd42ec9b626b664c759510b9"
+    }
+  ],
+  "workflowExerciseGroups": 6,
+  "projects": 26,
+  "files": 97,
+  "errors": []
+}

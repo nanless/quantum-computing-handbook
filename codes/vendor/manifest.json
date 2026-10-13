@@ -401,6 +401,12 @@
           "bytes": 11871,
           "sha256": "254d471d60edfe1fc1fde63e25152b032c779bd24c0416a8971353e9612e9af7",
           "url": "https://raw.githubusercontent.com/Qiskit/qiskit/e9c25a42586aba7f513de65b020fc6360fac7c67/qiskit/transpiler/passes/routing/sabre_swap.py"
+        },
+        {
+          "path": "qiskit/quantum_info/operators/channel/kraus.py",
+          "bytes": 13260,
+          "sha256": "d987de8cfed33b48353427bfb0d0fb08d89aa18e363710a6d2c4cbe873da5b8e",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit/e9c25a42586aba7f513de65b020fc6360fac7c67/qiskit/quantum_info/operators/channel/kraus.py"
         }
       ],
       "missing_requested_paths": []
@@ -560,7 +566,274 @@
         }
       ],
       "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-addon-mpf",
+      "repository": "https://github.com/Qiskit/qiskit-addon-mpf",
+      "commit": "50f737bd39aff07df7656e77350bd689173b88ad",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "2d3cbd3a8eef6e589ff5d21ef76b8e86af3b9b95000da976b61cf9c374f4da4b",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 5701,
+          "sha256": "65cf90707756983730e1945dfa6530814d21632b083db8231c7951b418f29a1e",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/README.md"
+        },
+        {
+          "path": "qiskit_addon_mpf/static.py",
+          "bytes": 3890,
+          "sha256": "d60416ff974a6adb11214b1ab2a1f3bebaca55ca0c11c2d4d67708786b275312",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/qiskit_addon_mpf/static.py"
+        },
+        {
+          "path": "qiskit_addon_mpf/dynamic.py",
+          "bytes": 16729,
+          "sha256": "cc88c9aaba6b6ad7fa8f360a8a39b27ec640e07f673608dcfed537ddd1bab9d9",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/qiskit_addon_mpf/dynamic.py"
+        },
+        {
+          "path": "qiskit_addon_mpf/costs/lse.py",
+          "bytes": 2581,
+          "sha256": "2fea61b51ec21047b63552175b911f1e72cdbf79c2cbaf72c7023416626d6c40",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/qiskit_addon_mpf/costs/lse.py"
+        },
+        {
+          "path": "qiskit_addon_mpf/costs/exact.py",
+          "bytes": 2734,
+          "sha256": "2cfb4e743ae59fd1d3617221acdd14e71e8d411e05abd972b82d17c77c5df9b8",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-mpf/50f737bd39aff07df7656e77350bd689173b88ad/qiskit_addon_mpf/costs/exact.py"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13",
+      "retrieval_method": "git shallow clone; git show pinned commit; no upstream execution"
+    },
+    {
+      "name": "qiskit-addon-obp",
+      "repository": "https://github.com/Qiskit/qiskit-addon-obp",
+      "commit": "fb484eabd6ddec945bf5b1c19cea44a8cfc6a935",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "2d3cbd3a8eef6e589ff5d21ef76b8e86af3b9b95000da976b61cf9c374f4da4b",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-obp/fb484eabd6ddec945bf5b1c19cea44a8cfc6a935/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 7488,
+          "sha256": "7b3cc5fe500ffbcaad0c0b153cefea9e180b77249c72cd4632f32f9eda958a45",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-obp/fb484eabd6ddec945bf5b1c19cea44a8cfc6a935/README.md"
+        },
+        {
+          "path": "qiskit_addon_obp/backpropagation.py",
+          "bytes": 20725,
+          "sha256": "6a4e0d8eb8af8dff18236317a77292972ff4ce559faaacc79da9009c83279aa6",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-obp/fb484eabd6ddec945bf5b1c19cea44a8cfc6a935/qiskit_addon_obp/backpropagation.py"
+        },
+        {
+          "path": "qiskit_addon_obp/utils/truncating.py",
+          "bytes": 9029,
+          "sha256": "79b6f6d61e10d21493edc321ef4d7b06255d05f6f3f85ce229a246f4cb6a3741",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-obp/fb484eabd6ddec945bf5b1c19cea44a8cfc6a935/qiskit_addon_obp/utils/truncating.py"
+        },
+        {
+          "path": "qiskit_addon_obp/utils/metadata.py",
+          "bytes": 11179,
+          "sha256": "7320841638e244e9958788d7e4e2032f000dc302d62228863844f1f72228f2db",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-obp/fb484eabd6ddec945bf5b1c19cea44a8cfc6a935/qiskit_addon_obp/utils/metadata.py"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13",
+      "retrieval_method": "git shallow clone; git show pinned commit; no upstream execution"
+    },
+    {
+      "name": "qiskit-addon-sqd-hpc",
+      "repository": "https://github.com/Qiskit/qiskit-addon-sqd-hpc",
+      "commit": "69f003f8304c8094ff06ba2600d38a0c683422ff",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "4beb29078ef83650448bf0a8ae4eaee89722b5863aa6704c747b45d735dfc17c",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/LICENSE.txt"
+        },
+        {
+          "path": "THIRD_PARTY_NOTICES.md",
+          "bytes": 2197,
+          "sha256": "76b827b364b8df4b76d450ef8e038c190fc78576db9f61011a4c4b2be3f18705",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/THIRD_PARTY_NOTICES.md"
+        },
+        {
+          "path": "README.md",
+          "bytes": 5983,
+          "sha256": "5873d21f45d69411e6c2853d0a7e9f27e90cc9ea2d335475c1b2cb398fbd76c3",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/README.md"
+        },
+        {
+          "path": "include/qiskit/addon/sqd/subsampling.hpp",
+          "bytes": 8129,
+          "sha256": "a4a3377d7275c0336a9d1f7d97cb560d251158340b8e4d3c1c3b8841f3db5761",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/include/qiskit/addon/sqd/subsampling.hpp"
+        },
+        {
+          "path": "include/qiskit/addon/sqd/configuration_recovery.hpp",
+          "bytes": 22022,
+          "sha256": "f582933b0e22ae0f74383dbfd83fd14338cafaff1e2a75e96303030d40fc3dc8",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/include/qiskit/addon/sqd/configuration_recovery.hpp"
+        },
+        {
+          "path": "include/qiskit/addon/sqd/fermion.hpp",
+          "bytes": 4420,
+          "sha256": "81c7c482c42edf0fd16e51820c2ebf7a04b7f356c2df642103ca29ce2c96f144",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/include/qiskit/addon/sqd/fermion.hpp"
+        },
+        {
+          "path": "include/qiskit/addon/sqd/internal/parallel-rng.hpp",
+          "bytes": 19937,
+          "sha256": "ee01fd9b5c54d389065698c1e9e0f012cc577a3da96f15e8d860ec8622d35aa7",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-sqd-hpc/69f003f8304c8094ff06ba2600d38a0c683422ff/include/qiskit/addon/sqd/internal/parallel-rng.hpp"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13",
+      "retrieval_method": "git shallow clone; git show pinned commit; no upstream execution"
+    },
+    {
+      "name": "pauli-prop",
+      "repository": "https://github.com/Qiskit/pauli-prop",
+      "commit": "ad03d475994b387a5f4d4e60272d5dee70553d23",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/Qiskit/pauli-prop/ad03d475994b387a5f4d4e60272d5dee70553d23/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 8084,
+          "sha256": "7f760331bf114944989523e7986a4b986a7c7732f07b4b745f2dbb6b77ff5b83",
+          "url": "https://raw.githubusercontent.com/Qiskit/pauli-prop/ad03d475994b387a5f4d4e60272d5dee70553d23/README.md"
+        },
+        {
+          "path": "python/pauli_prop/propagation.py",
+          "bytes": 36588,
+          "sha256": "a01ec3e916d46e7ffd68a93c7871ea9d2f2d068f52a6a014419e3ff1109e581f",
+          "url": "https://raw.githubusercontent.com/Qiskit/pauli-prop/ad03d475994b387a5f4d4e60272d5dee70553d23/python/pauli_prop/propagation.py"
+        },
+        {
+          "path": "src/lib.rs",
+          "bytes": 38966,
+          "sha256": "f71715c703dfe95e6446c15eefdea79f5c79e538efa04c01db3fe19418d0a2b4",
+          "url": "https://raw.githubusercontent.com/Qiskit/pauli-prop/ad03d475994b387a5f4d4e60272d5dee70553d23/src/lib.rs"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13",
+      "retrieval_method": "git shallow clone; git show pinned commit; no upstream execution"
+    },
+    {
+      "name": "thewalrus",
+      "repository": "https://github.com/XanaduAI/thewalrus",
+      "commit": "54b1062e2b6759ddc733ca6bf636df580ff94968",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/XanaduAI/thewalrus/54b1062e2b6759ddc733ca6bf636df580ff94968/LICENSE"
+        },
+        {
+          "path": "thewalrus/quantum/gaussian_checks.py",
+          "bytes": 6991,
+          "sha256": "d0dd43904193c69f365a32488e1daeaf44fb043ca224ebb8e0171142dc0da18f",
+          "url": "https://raw.githubusercontent.com/XanaduAI/thewalrus/54b1062e2b6759ddc733ca6bf636df580ff94968/thewalrus/quantum/gaussian_checks.py"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13",
+      "retrieval_method": "git shallow clone; git show pinned commit; no upstream execution"
+    },
+    {
+      "name": "qiskit-experiments",
+      "repository": "https://github.com/qiskit-community/qiskit-experiments",
+      "commit": "186c5b7714280430c8c6adcf81342e3bfc9a225c",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "217ac15dbcda2782e004f5152886d847988c6367aaa0c4fc8c355363c21bd224",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-experiments/186c5b7714280430c8c6adcf81342e3bfc9a225c/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 2082,
+          "sha256": "06a7a09d92f98f5335ea54bc3c5edc75b643dffbbe424063ec13017a2dd23a84",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-experiments/186c5b7714280430c8c6adcf81342e3bfc9a225c/README.md"
+        },
+        {
+          "path": "qiskit_experiments/library/tomography/qpt_experiment.py",
+          "bytes": 9735,
+          "sha256": "e670cbca951c21a63133567ab258bf76781b2de69e36ba641fbde47c9e426b65",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-experiments/186c5b7714280430c8c6adcf81342e3bfc9a225c/qiskit_experiments/library/tomography/qpt_experiment.py"
+        },
+        {
+          "path": "qiskit_experiments/library/tomography/tomography_analysis.py",
+          "bytes": 19216,
+          "sha256": "5bfa14b445af2d5638d078ae31f93f9ec12f1dddbafc3d05d84c5205a9ade8b2",
+          "url": "https://raw.githubusercontent.com/qiskit-community/qiskit-experiments/186c5b7714280430c8c6adcf81342e3bfc9a225c/qiskit_experiments/library/tomography/tomography_analysis.py"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13"
+    },
+    {
+      "name": "pygsti",
+      "repository": "https://github.com/sandialabs/pyGSTi",
+      "commit": "6822f1435eda0a875cf7e96068e3d48f4bc3cfcc",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "url": "https://raw.githubusercontent.com/sandialabs/pyGSTi/6822f1435eda0a875cf7e96068e3d48f4bc3cfcc/LICENSE"
+        },
+        {
+          "path": "NOTICE",
+          "bytes": 252,
+          "sha256": "e95e9f838458911de1a445389f4b3801a03921b829e90b8506ad935efd51fab8",
+          "url": "https://raw.githubusercontent.com/sandialabs/pyGSTi/6822f1435eda0a875cf7e96068e3d48f4bc3cfcc/NOTICE"
+        },
+        {
+          "path": "README.md",
+          "bytes": 12150,
+          "sha256": "08625941377cba1ee4f3e0e401b2d450f68f5ad9a97dda15ecfbd3dd53c8aea1",
+          "url": "https://raw.githubusercontent.com/sandialabs/pyGSTi/6822f1435eda0a875cf7e96068e3d48f4bc3cfcc/README.md"
+        },
+        {
+          "path": "pygsti/modelmembers/instruments/instrument.py",
+          "bytes": 25231,
+          "sha256": "d8f12c16794a95eb33788e28064dc444ead4f0ad1a6b3f7e3cca03c39fe607bb",
+          "url": "https://raw.githubusercontent.com/sandialabs/pyGSTi/6822f1435eda0a875cf7e96068e3d48f4bc3cfcc/pygsti/modelmembers/instruments/instrument.py"
+        }
+      ],
+      "missing_requested_paths": [],
+      "retrieved_on": "2026-10-13"
     }
   ],
-  "extended_at_utc": "2026-09-26T15:14:28.420348+00:00"
+  "extended_at_utc": "2026-10-13T05:14:36.953001+00:00"
 }

@@ -35,7 +35,7 @@ $$
 
 风险仍需现在处理，原因是密码迁移往往持续多年，长期保密数据还面临“现在收集、将来解密”。组织应先做密码资产清单，找出协议、证书、硬件、安全模块和第三方依赖，再按数据保密寿命与迁移耗时排序，而不是等量子计算机出现后一次切换。
 
-### 2.2 截至 2026-09-24 的 NIST 状态
+### 2.2 截至 2026-10-13 重新核查的 NIST 状态
 
 NIST 于 2024-08-13 发布首批三项最终标准：
 
@@ -43,7 +43,9 @@ NIST 于 2024-08-13 发布首批三项最终标准：
 - **FIPS 204：ML-DSA**，数字签名；
 - **FIPS 205：SLH-DSA**，基于哈希的数字签名。
 
-**FIPS** 是美国国家标准与技术研究院发布的《联邦信息处理标准》系列，不是某种加密算法本身。这里尤其要分清两种任务。**密钥封装机制（KEM）**让双方在公开网络上建立同一把秘密密钥；它一般不直接拿公钥去加密整份文件。以 ML-KEM 的抽象消息流为例：
+**FIPS** 是美国国家标准与技术研究院发布的《联邦信息处理标准》系列，不是某种加密算法本身。这里尤其要分清两种任务。
+
+**密钥封装机制（KEM）** 让双方在公开网络上建立同一把秘密密钥；它一般不直接拿公钥去加密整份文件。以 ML-KEM 的抽象消息流为例：
 
 1. 接收方生成一对密钥，把**公钥**发给发送方，私钥留在自己手里。
 2. 发送方用这把公钥运行“封装”，得到一段可公开发送的**封装密文** $c$ 和自己保存的共享秘密 $K$。
@@ -51,7 +53,7 @@ NIST 于 2024-08-13 发布首批三项最终标准：
 
 这里的 $c$ 不是业务文件，$K$ 也不该直接暴露在网络上。若攻击者能把第一步的公钥偷换成自己的，光有 KEM 仍不足以证明“我确实在和预期的人通信”，因此还要认证公钥和会话。**数字签名（DSA）**解决的是另一件事：持私钥的人对消息签名，别人用**已确认属于该人的公钥**检验内容是否被改动、签名者是否持有对应私钥；若公钥身份本来就没核实，签名也不会自动证明现实身份。它不代替会话保密加密。NIST 的 [SP 800-227](https://csrc.nist.gov/pubs/sp/800/227/final)于 2025-09-18 最终发布，专门说明 KEM 的定义与安全使用。
 
-2025-03-11，NIST 选择 **HQC** 作为基于不同数学结构的备用密钥封装算法，并说明它不会替代 ML-KEM；当时的计划是约 2026 年形成标准草案、2027 年定稿。截至 2026-09-24，NIST 的标准化项目页仍把 HQC 列为正在标准化的额外 KEM，Selected Algorithms 页面标为“FIPS coming soon”，尚未列为已经发布的最终 FIPS。另一种已选中的签名方案 Falcon（拟标准名 FN-DSA）也仍在标准化。**选中算法、发布草案、发布最终标准**是三个不同阶段；原先预告的日期若过去了，也不能倒推标准已发布。迁移时间线和算法状态会变化，实施前必须查 NIST 正式标准、勘误和迁移项目，而不能照抄本章日期。
+2025-03-11，NIST 选择 **HQC** 作为基于不同数学结构的备用密钥封装算法，并说明它不会替代 ML-KEM；当时的计划是约 2026 年形成标准草案、2027 年定稿。截至 2026-10-13 重新打开的 [Selected Algorithms 官方页面](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization/selected-algorithms)（页面更新日期 2026-08-05），HQC 和 Falcon 两项仍标为“FIPS coming soon”，没有列为已发布最终 FIPS。Falcon 拟标准名为 FN-DSA。**选中算法、发布草案、发布最终标准**是三个不同阶段；原先预告的日期若过去了，也不能倒推标准已发布。迁移时间线和算法状态会变化，实施前必须查 NIST 正式标准、勘误和迁移项目，而不能照抄本章日期。
 
 标准化也不等于产品自动安全。要核查参数集、随机数、侧信道、密钥/签名长度、协议协商、降级攻击、证书链和混合迁移策略。NIST 关于淘汰量子脆弱算法的时间线曾以草案形式征求意见；若引用“2035”等年份，应明确文件版本和草案/定稿状态。
 
@@ -200,9 +202,9 @@ flowchart TB
 
 层名尚未像经典互联网那样完全统一；上图是分析框架，不是宣称已经存在唯一标准栈。IETF 的量子互联网研究组文件也明确属于信息性研究文档，而非已部署互联网标准。
 
-这里的**成功先兆（herald）**是由协议指定的探测器点击或测量记录宣布本次纠缠生成成功；它不读取纠缠所承载的未知量子信息。链路层交付的核心对象通常不是一个可无限排队的数据包，而是“两个指定存储槽共同持有的一对有寿命的纠缠”。因此最小服务记录至少需要：纠缠对标识、两端节点与存储槽、生成时间、目标态或 Bell 标签、保真度估计及方法、有效期/超时、成功先兆结果和失败原因。若没有这些元数据，上层无法判断某一对是否仍可用于交换或远程门。
+这里的 **成功先兆（herald）** 是由协议指定的探测器点击或测量记录宣布本次纠缠生成成功；它不读取纠缠所承载的未知量子信息。链路层交付的核心对象通常不是一个可无限排队的数据包，而是“两个指定存储槽共同持有的一对有寿命的纠缠”。因此最小服务记录至少需要：纠缠对标识、两端节点与存储槽、生成时间、目标态或 Bell 标签、保真度估计及方法、有效期/超时、成功先兆结果和失败原因。若没有这些元数据，上层无法判断某一对是否仍可用于交换或远程门。
 
-经典控制面不可省略。它负责通告探测结果、确认两端对应的是同一对、分配存储器、传播 Bell 测量结果、触发 **Pauli 帧（在经典控制器中记录待施加的 Pauli 修正）**更新，以及处理超时和重试。它不传送未知量子态本身，却决定用户何时能安全使用一对纠缠。经典消息仍受光速、排队、认证和处理延迟限制。
+经典控制面不可省略。它负责通告探测结果、确认两端对应的是同一对、分配存储器、传播 Bell 测量结果、触发 **Pauli 帧（在经典控制器中记录待施加的 Pauli 修正）** 更新，以及处理超时和重试。它不传送未知量子态本身，却决定用户何时能安全使用一对纠缠。经典消息仍受光速、排队、认证和处理延迟限制。
 
 ### 6.1 可复算例：两段链路何时同时就绪
 
@@ -407,6 +409,50 @@ $$
 
 最后一个等号来自四个 Bell 态构成正交完备基。因此不能把“按测量结果条件化后纠缠”理解成“未收到消息时就能读取一个远程信号”。这个协议不复制任何未知态；中间两个量子比特已被测量，原来的两对资源也被消耗。纠缠交换的原始方案见[Żukowski 等，1993](https://doi.org/10.1103/PhysRevLett.71.4287)。
 
+### 7.2 S71-12：每段重叠都是 90%，交换后是多少
+
+理想交换的四个条件态已经算清，现在给输入加入一个完整、可计算的噪声模型。这里使用与 $\Phi^+$ 的**重叠** $f=\langle\Phi^+|\rho|\Phi^+\rangle$，沿用第 15 章记法；根态保真度是 $\sqrt f$。
+
+**题目与假设。** 两段输入相互独立，各为 Bell 对角态：$\Phi^+$ 的概率 $f=0.9$，另外三种 Bell 态各为 $(1-f)/3$。中间 Bell 测量、经典记录和条件 Pauli 修正理想，没有额外等待或操作噪声。求交换后的目标重叠，并求 4 段、8 段串接后重叠。若只告诉“重叠 90%”，还足以给出唯一答案吗？
+
+**先给错误贴两个标签。** 定义
+
+$$
+|\beta_{xz}\rangle=(I\otimes X^xZ^z)|\Phi^+\rangle,
+\qquad x,z\in\{0,1\}.
+$$
+
+顺序 $00,01,10,11$ 分别对应 $\Phi^+,\Phi^-,\Psi^+,\Psi^-$，最后一个允许无关的全局相位。按 §7.1 修正中间测量标签后，两段输入的残余标签相加为 $(x_1\oplus x_2,z_1\oplus z_2)$：来自同一类型的两个 Pauli 错误会抵消，来自不同类型的则留下非零标签。也可把这四种输入分别代入 §7.1 的条件投影直接验证。
+
+记四项输入权重为 $w_a$ 与 $v_b$，$a,b$ 是两位标签，输出权重就是概率卷积
+
+$$
+w^{\rm out}_c=\sum_{a\oplus b=c}w_a v_b.
+$$
+
+目标标签 $c=00$ 要求两段标签相同。本题既有“两段都正确”，也有“两段恰好犯同一种错误”三项，因此
+
+$$
+f_{\rm out}=f_1f_2+\frac{(1-f_1)(1-f_2)}3
+=0.9^2+\frac{0.1^2}{3}=0.813333\ldots.
+$$
+
+结果不是 $0.9$，也不恰是 $0.9^2$。这里“错误相消”是指定 Bell 对角模型和理想交换的结果，不能用于任意器件失效。
+
+**多跳计算。** 将对称 Bell 混合写成 $\rho=v|\Phi^+\rangle\langle\Phi^+|+(1-v)I_4/4$，其中 $v=(4f-1)/3$，本题 $v=13/15$。两段交换后参数相乘；反复使用得到 $m$ 段的重叠
+
+$$
+f_m=\frac{1+3v^m}{4}.
+$$
+
+代入 $m=2,4,8$，依次为 $0.813333,0.673126,0.488714$。这是 $m$ 段、$m-1$ 次交换，不能把段数当成交换次数。8 段时 $\Phi^+$ 投影见证未越过 $1/2$；对这一特定对称 Bell 混合，$f\le1/2$ 也恰好进入可分离区，后者是该态族的结论，不能推广到任意低重叠态。
+
+**同一个重叠为何仍不够。** 若两段改成 $0.9|\Phi^+\rangle\langle\Phi^+|+0.1|\Phi^-\rangle\langle\Phi^-|$，初始重叠仍为 0.9，但同类相位错相消给 $0.9^2+0.1^2=0.82$。四项权重与错误相关性提供了单一重叠数字没有的信息。
+
+运行 [round71_checks.py](../codes/systems/round71_checks.py) 的 `--case 12`。程序从四比特张量振幅构造各 Bell 输入混合，对四种中间测量结果逐个条件投影、归一化和修正，与标签卷积独立交叉；每个中间结果概率均为 $1/4$。它也核对非均匀错误权重的反例与 1—8 段曲线。
+
+原始研究 [Iñesta 等](https://arxiv.org/html/2207.06533v3)附录 B 给出该对称模型的交换与多段关系（2023 年论文版本，访问 2026-10-13）。这里的教学计算不包含该文的策略优化，也没有计算端到端生成率：真实网络还要加入 §6 的等待/超时、交换失败、存储噪声和误报；不能直接把平均相干因子代替完整 Bell 对角权重。对一般态或相关输入，应使用更完整的密度矩阵模型。
+
 ## 8. 网络性能要看一组量
 
 | 指标 | 含义 | 容易遗漏的条件 |
@@ -511,7 +557,7 @@ $$
 - NIST, [Post-Quantum Cryptography](https://www.nist.gov/pqc)（含 2024 年三项最终标准入口）。
 - NIST, [NIST Selects HQC as Fifth Algorithm for Post-Quantum Encryption](https://www.nist.gov/news-events/news/2025/03/nist-selects-hqc-fifth-algorithm-post-quantum-encryption)（2025-03-11；明确为备用 KEM 选择及当时标准化计划）。
 - NIST, [FIPS 203](https://csrc.nist.gov/pubs/fips/203/final)、[FIPS 204](https://csrc.nist.gov/pubs/fips/204/final)、[FIPS 205](https://csrc.nist.gov/pubs/fips/205/final)（均 2024-08-13 最终发布）；[SP 800-227](https://csrc.nist.gov/pubs/sp/800/227/final)（2025-09-18 最终发布，KEM 的安全使用）。
-- NIST, [Post-Quantum Cryptography Standardization](https://csrc.nist.gov/Projects/Post-Quantum-Cryptography/Post_Quantum_Cryptography-Standardization) 与 [Selected Algorithms](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization/selected-algorithms)（访问于 2026-09-24；用于核对 HQC、FN-DSA 当前阶段）；[IR 8547 初始公开草案](https://csrc.nist.gov/pubs/ir/8547/ipd)（2024-11-12，引用迁移年份须标草案）。
+- NIST, [Post-Quantum Cryptography Standardization](https://csrc.nist.gov/Projects/Post-Quantum-Cryptography/Post_Quantum_Cryptography-Standardization) 与 [Selected Algorithms](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization/selected-algorithms)（重新访问于 2026-10-13；用于核对 HQC、FN-DSA 当前阶段）；[IR 8547 初始公开草案](https://csrc.nist.gov/pubs/ir/8547/ipd)（2024-11-12，引用迁移年份须标草案）。
 - NIST NCCoE, [Migration to Post-Quantum Cryptography](https://pages.nist.gov/nccoe-migration-post-quantum-cryptography/)（持续更新的迁移资料；使用时记录访问日期）。
 - C. H. Bennett and G. Brassard, [Quantum cryptography: Public key distribution and coin tossing](https://doi.org/10.1016/j.tcs.2014.05.025), 原会议论文 1984，重刊于 *Theoretical Computer Science* 560 (2014)。
 - P. W. Shor, [Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer](https://arxiv.org/abs/quant-ph/9508027), *SIAM Journal on Computing* 26, 1484–1509 (1997；扩展自 1994 年会议论文)；P. W. Shor and J. Preskill, [Simple Proof of Security of the BB84 Quantum Key Distribution Protocol](https://arxiv.org/abs/quant-ph/0003004), *Physical Review Letters* 85, 441–444 (2000)。

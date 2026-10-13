@@ -1,0 +1,455 @@
+{
+  "kind": "fixed synthetic teaching models",
+  "date": "2026-10-13",
+  "tolerance": 1e-10,
+  "random_seed": null,
+  "cases": {
+    "00": {
+      "bytes_per_complex": 16,
+      "rows": [
+        {
+          "qubits": 20,
+          "amplitudes": 1048576,
+          "statevector_bytes": 16777216,
+          "density_matrix_entries": 1099511627776,
+          "density_matrix_bytes": 17592186044416
+        },
+        {
+          "qubits": 30,
+          "amplitudes": 1073741824,
+          "statevector_bytes": 17179869184,
+          "density_matrix_entries": 1152921504606846976,
+          "density_matrix_bytes": 18446744073709551616
+        }
+      ],
+      "actual_large_allocation": false,
+      "n22_vs_n20_ratios": [
+        4,
+        16
+      ]
+    },
+    "01": {
+      "basis_matrix": [
+        [
+          0.7071067811865475,
+          0.7071067811865475
+        ],
+        [
+          [
+            0.0,
+            0.7071067811865475
+          ],
+          [
+            0.0,
+            -0.7071067811865475
+          ]
+        ]
+      ],
+      "passive_coordinates": [
+        [
+          0.7071067811865475,
+          0.0
+        ],
+        [
+          0.7071067811865475,
+          0.0
+        ]
+      ],
+      "z_in_new_basis": [
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.9999999999999998,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.9999999999999998,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      ],
+      "passive_z_expectation": 1,
+      "active_w_dagger_then_fixed_z_expectation": 0,
+      "transpose_on_y_plus_wrong_probabilities": [
+        0.0,
+        0.9999999999999996
+      ]
+    },
+    "02": {
+      "branches": [
+        {
+          "probability": 0.4999999999999999,
+          "conditional_amplitudes": [
+            0.8660254037844386,
+            0.5
+          ]
+        },
+        {
+          "probability": 0.4999999999999999,
+          "conditional_amplitudes": [
+            0.5,
+            0.8660254037844386
+          ]
+        }
+      ],
+      "nonselective_density_matrix": [
+        [
+          [
+            0.4999999999999998,
+            0.0
+          ],
+          [
+            0.4330127018922192,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.4330127018922192,
+            0.0
+          ],
+          [
+            0.4999999999999998,
+            0.0
+          ]
+        ]
+      ],
+      "purity": 0.8749999999999993,
+      "x_plus_probability": 0.9330127018922193,
+      "repeat_zero_given_first_zero": 0.6249999999999999
+    },
+    "03": {
+      "coefficients": [
+        [
+          0.5773502691896258,
+          [
+            0.0,
+            0.5773502691896258
+          ]
+        ],
+        [
+          0,
+          0.5773502691896258
+        ]
+      ],
+      "reduced_a": [
+        [
+          [
+            0.6666666666666669,
+            0.0
+          ],
+          [
+            0.0,
+            0.3333333333333334
+          ]
+        ],
+        [
+          [
+            0.0,
+            -0.3333333333333334
+          ],
+          [
+            0.3333333333333334,
+            0.0
+          ]
+        ]
+      ],
+      "reduced_b": [
+        [
+          [
+            0.3333333333333334,
+            0.0
+          ],
+          [
+            0.0,
+            -0.3333333333333334
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.3333333333333334
+          ],
+          [
+            0.6666666666666669,
+            0.0
+          ]
+        ]
+      ],
+      "schmidt_weights": [
+        0.872677996249965,
+        0.12732200375003502
+      ],
+      "schmidt_a": [
+        [
+          [
+            0.0,
+            0.8506508083520399
+          ],
+          0.5257311121191336
+        ],
+        [
+          [
+            0.0,
+            0.5257311121191336
+          ],
+          -0.85065080835204
+        ]
+      ],
+      "schmidt_b": [
+        [
+          [
+            0.0,
+            -0.5257311121191336
+          ],
+          [
+            0.8506508083520399,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            -0.8506508083520401
+          ],
+          [
+            -0.5257311121191338,
+            0.0
+          ]
+        ]
+      ],
+      "reconstructed_amplitudes": [
+        [
+          0.5773502691896257,
+          0.0
+        ],
+        [
+          0.0,
+          0.5773502691896256
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5773502691896257,
+          0.0
+        ]
+      ],
+      "entanglement_entropy_bits": 0.5500477595827573
+    },
+    "04": {
+      "tensor_order": "R Q A B",
+      "alice_result_order": "Q A",
+      "four_probabilities": [
+        0.2499999999999999,
+        0.2499999999999999,
+        0.2499999999999999,
+        0.2499999999999999
+      ],
+      "all_corrected_rb_match": true,
+      "rb_without_classical_result": [
+        [
+          [
+            0.2499999999999999,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.2499999999999999,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.2499999999999999,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.2499999999999999,
+            0.0
+          ]
+        ]
+      ],
+      "corrected_xx": 1,
+      "measure_reprepare_xx": 0,
+      "tested_input_families": [
+        "Bell",
+        "complex unequal Schmidt",
+        "product"
+      ]
+    },
+    "05": {
+      "flip_probability": 0.25,
+      "damping_probability": 0.36,
+      "flip_then_damp_excitation": 0.16000000000000003,
+      "damp_then_flip_excitation": 0.25,
+      "difference_matrix": [
+        [
+          [
+            0.08999999999999997,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -0.08999999999999997,
+            0.0
+          ]
+        ]
+      ],
+      "remote_cptp_leaves_local_density_matrix": true
+    },
+    "q1": {
+      "tensor_order": "path record",
+      "output_order": [
+        "0+",
+        "0-",
+        "1+",
+        "1-"
+      ],
+      "ideal_expected_counts_at_phi_zero_for_400_inputs": [
+        200,
+        0,
+        0,
+        200
+      ],
+      "rows": [
+        {
+          "phi_radians": 0,
+          "joint_probabilities": [
+            0.4999999999999998,
+            0.0,
+            0.0,
+            0.4999999999999998
+          ],
+          "detector_zero_given_plus": 0.9999999999999996,
+          "detector_zero_given_minus": 0.0,
+          "detector_zero_nonselective": 0.4999999999999998
+        },
+        {
+          "phi_radians": 1.0471975511965976,
+          "joint_probabilities": [
+            0.37499999999999994,
+            0.1249999999999999,
+            0.1249999999999999,
+            0.37499999999999994
+          ],
+          "detector_zero_given_plus": 0.7499999999999999,
+          "detector_zero_given_minus": 0.2499999999999998,
+          "detector_zero_nonselective": 0.49999999999999983
+        },
+        {
+          "phi_radians": 1.5707963267948966,
+          "joint_probabilities": [
+            0.2499999999999999,
+            0.2499999999999999,
+            0.2499999999999999,
+            0.2499999999999999
+          ],
+          "detector_zero_given_plus": 0.4999999999999998,
+          "detector_zero_given_minus": 0.4999999999999998,
+          "detector_zero_nonselective": 0.4999999999999998
+        },
+        {
+          "phi_radians": 3.141592653589793,
+          "joint_probabilities": [
+            1.874699728327321e-33,
+            0.4999999999999998,
+            0.4999999999999998,
+            1.874699728327321e-33
+          ],
+          "detector_zero_given_plus": 3.749399456654642e-33,
+          "detector_zero_given_minus": 0.9999999999999996,
+          "detector_zero_nonselective": 0.4999999999999998
+        }
+      ]
+    },
+    "q2": {
+      "x_z_means": [
+        0.7071067811865476,
+        0.7071067811865475
+      ],
+      "x_z_variances": [
+        0.4999999999999999,
+        0.5000000000000001
+      ],
+      "symmetric_covariance": -0.5,
+      "variance_product": 0.25,
+      "robertson_squared_bound": 0.0,
+      "schrodinger_squared_bound": 0.25,
+      "independent_diagonal_axis_means": [
+        0.9999999999999998,
+        0.0
+      ]
+    }
+  }
+}

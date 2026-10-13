@@ -33,6 +33,7 @@
 | $H(X)$ | 经典 Shannon 熵 |
 | $S(\rho)$ | von Neumann 熵 |
 | $I(A:B)$ | 量子互信息 |
+| $I(A:C\mid B)$ | 条件互信息，$S(AB)+S(BC)-S(B)-S(ABC)$；经典对角模型用$H$替换$S$，不等于普通互信息必然变小 |
 | $T(\rho,\sigma)$ | 迹距离，$\|\rho-\sigma\|_1/2$ |
 | $F(\rho,\sigma)$ | 本书采用的根保真度 |
 | $\chi$ | Holevo 量 |
@@ -45,6 +46,7 @@
 | $\mathcal N(\rho)$ | 二分态 $\rho$ 的负性；当 $\mathcal N$ 带信道自变量时也常表示信道，须由上下文区分 |
 | $\hat q,\hat p$ | 连续变量正交分量；第 18 章采用 $[\hat q,\hat p]=i$ |
 | $V$ | 连续变量态的协方差矩阵；第 18 章约定真空态 $V=I/2$ |
+| $\Omega$（连续变量） | 交错排序$(q_1,p_1,\ldots)$下的辛形式$\bigoplus_j\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$，使$[R_j,R_k]=i\Omega_{jk}$；不同于Rabi角频率、渐近下界和最大纠缠向量$|\Omega\rangle$ |
 
 ## 量子力学基础篇的物理符号
 
@@ -71,3 +73,22 @@
 - 具体 SDK 可能用小端序显示字符串。软件示例必须另行注明，不把显示习惯混入数学定义。
 
 实验可显式声明另一种寄存器排列，例如路由实验用 $|q_0q_1q_2\rangle$ 且 $q_0$ 在最高位。量子比特编号不是固有的二进制权重；每个例子必须列出寄存器顺序、基向量次序和软件显示规则，不能在一次计算中静默切换。
+
+## 跨章与软件核对：相同字母怎样辨认对象
+
+本书允许不同主题复用常用字母；对象的定义、维度与单位才决定公式的含义。比如门$H$是无量纲二维矩阵，Hamiltonian $\mathcal H$有能量单位，$H(X)$又是以bit计的经典熵。复制公式时连同附近定义一起复制，不能只凭字母选择计算程序。
+
+| 容易混用的对象 | 本书与程序核对规则 |
+|---|---|
+| $F$、$F^2$与Bell重叠 | 本书$F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$为根保真度；纯态重叠概率、Bell态重叠$\langle\Phi|\rho|\Phi\rangle$及有些软件的`fidelity`为平方口径；每次明确是否开根号 |
+| $\Omega$的多个用法 | Q3的Rabi角频率有rad/s单位；第18章的辛形式是无量纲矩阵；$\Omega(g)$是渐近下界，$|\Omega\rangle$是Choi定义中的未归一化纠缠向量；四个对象由自变量、ket和单位区分 |
+| CV坐标与物理位置/动量 | 第18章$[q,p]=i$，Q4$[x,p]=i\hbar$；传入默认$\hbar=2$的软件时需显式参数或一致缩放，真空方差由整个坐标约定决定 |
+| 多模排序 | 第18章采用$(q_1,p_1,\ldots,q_m,p_m)$；The Walrus采用$(q_1,\ldots,q_m,p_1,\ldots,p_m)$；以置换矩阵同时变换均值、协方差和辛形式，不能只重新排列一行 |
+| $\mathcal E^\dagger$与$\mathcal E^{-1}$ | 前者是迹内积的伴随，使$\operatorname{Tr}[O\mathcal E(\rho)]=\operatorname{Tr}[\mathcal E^\dagger(O)\rho]$；不代表逆噪声，保迹信道的伴随保恒等算符 |
+| $\mathcal B\circ\mathcal A$与门$VU$ | 都从右向左作用，即先$\mathcal A$或$U$；SDK `compose`/`front`另查定义，用非交换小例核验 |
+| POVM、工具与条件态 | $E_m$规定概率；$\mathcal I_m$是结果$m$对应的完全正、迹不增映射；$\rho_m=\mathcal I_m(\rho)/p_m$只在$p_m>0$时定义，不能丢掉$p_m$再等权平均 |
+| 协方差与方差 | $\operatorname{Var}(aX+bY)=a^2\operatorname{Var}X+b^2\operatorname{Var}Y+2ab\operatorname{Cov}(X,Y)$；同批测量必须保留联合记录，量子算符的对称协方差则另按章节定义 |
+| $\Gamma$与$\gamma$ | 软件实践中的$\Gamma=\sum_j|c_j|$是无量纲重构系数；第05章$\gamma\in[0,1]$是指定阻尼概率，连续时间耗散率则应有时间倒数单位 |
+| shots、设置与有效样本 | shots是执行/读数次数，设置是不同制备和测量组合；独立性或漂移决定能否直接使用二项式方差，复制日志不会增加有效信息 |
+
+这些检查连接[逐章第三组练习](../labs/README.md)与[源码约定对照](software-practice.md)。一般公式的条件由对应章节证明，小规模输出一致只是实现核查。

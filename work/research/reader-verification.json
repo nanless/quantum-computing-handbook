@@ -1,124 +1,124 @@
 {
-  "generatedAt": "2026-09-26T15:35:52.794Z",
+  "generatedAt": "2026-10-13T05:42:37.302Z",
   "pages": [
     {
       "file": "reader/00-overview.html",
       "width": 1440,
-      "formulas": 61,
+      "formulas": 76,
       "images": 1
     },
     {
       "file": "reader/01-math.html",
       "width": 1440,
-      "formulas": 676,
+      "formulas": 704,
       "images": 2
     },
     {
       "file": "reader/02-single-qubit.html",
       "width": 1440,
-      "formulas": 445,
+      "formulas": 471,
       "images": 2
     },
     {
       "file": "reader/03-multiple-qubits.html",
       "width": 1440,
-      "formulas": 473,
+      "formulas": 507,
       "images": 1
     },
     {
       "file": "reader/04-circuits-protocols.html",
       "width": 1440,
-      "formulas": 349,
+      "formulas": 393,
       "images": 2
     },
     {
       "file": "reader/05-noise-channels.html",
       "width": 1440,
-      "formulas": 244,
+      "formulas": 271,
       "images": 0
     },
     {
       "file": "reader/06-algorithmic-primitives.html",
       "width": 1440,
-      "formulas": 528,
+      "formulas": 552,
       "images": 0
     },
     {
       "file": "reader/07-algorithms.html",
       "width": 1440,
-      "formulas": 653,
+      "formulas": 687,
       "images": 2
     },
     {
       "file": "reader/08-applications.html",
       "width": 1440,
-      "formulas": 433,
+      "formulas": 469,
       "images": 1
     },
     {
       "file": "reader/09-hardware.html",
       "width": 1440,
-      "formulas": 169,
+      "formulas": 194,
       "images": 2
     },
     {
       "file": "reader/10-error-correction.html",
       "width": 1440,
-      "formulas": 287,
+      "formulas": 310,
       "images": 2
     },
     {
       "file": "reader/11-resources-benchmarks.html",
       "width": 1440,
-      "formulas": 145,
+      "formulas": 172,
       "images": 1
     },
     {
       "file": "reader/12-security-network-frontiers.html",
       "width": 1440,
-      "formulas": 320,
+      "formulas": 353,
       "images": 4
     },
     {
       "file": "reader/13-quantum-information.html",
       "width": 1440,
-      "formulas": 259,
+      "formulas": 307,
       "images": 0
     },
     {
       "file": "reader/14-compilation-control.html",
       "width": 1440,
-      "formulas": 143,
+      "formulas": 174,
       "images": 3
     },
     {
       "file": "reader/15-practice-research.html",
       "width": 1440,
-      "formulas": 148,
+      "formulas": 171,
       "images": 1
     },
     {
       "file": "reader/16-advanced-algorithms-verification.html",
       "width": 1440,
-      "formulas": 437,
+      "formulas": 498,
       "images": 4
     },
     {
       "file": "reader/17-computation-models.html",
       "width": 1440,
-      "formulas": 206,
+      "formulas": 238,
       "images": 4
     },
     {
       "file": "reader/18-channels-capacities-complexity.html",
       "width": 1440,
-      "formulas": 515,
+      "formulas": 552,
       "images": 4
     },
     {
       "file": "reader/19-engineering-architecture.html",
       "width": 1440,
-      "formulas": 139,
+      "formulas": 159,
       "images": 2
     },
     {
@@ -148,13 +148,13 @@
     {
       "file": "reader/appendices/glossary.html",
       "width": 1440,
-      "formulas": 79,
+      "formulas": 87,
       "images": 0
     },
     {
       "file": "reader/appendices/notation.html",
       "width": 1440,
-      "formulas": 102,
+      "formulas": 144,
       "images": 0
     },
     {
@@ -166,14 +166,14 @@
     {
       "file": "reader/appendices/references.html",
       "width": 1440,
-      "formulas": 0,
+      "formulas": 1,
       "images": 0
     },
     {
       "file": "reader/appendices/software-practice.html",
       "width": 1440,
-      "formulas": 25,
-      "images": 0
+      "formulas": 159,
+      "images": 1
     },
     {
       "file": "reader/labs/index.html",
@@ -214,26 +214,26 @@
     {
       "file": "reader/quantum-mechanics/01-experiments-states.html",
       "width": 1440,
-      "formulas": 264,
-      "images": 1
+      "formulas": 302,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/02-observables-dynamics.html",
       "width": 1440,
-      "formulas": 292,
+      "formulas": 319,
       "images": 0
     },
     {
       "file": "reader/quantum-mechanics/03-levels-control.html",
       "width": 1440,
-      "formulas": 247,
-      "images": 1
+      "formulas": 283,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/04-wavefunctions-models.html",
       "width": 1440,
-      "formulas": 207,
-      "images": 1
+      "formulas": 254,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/index.html",
@@ -244,121 +244,121 @@
     {
       "file": "reader/00-overview.html",
       "width": 390,
-      "formulas": 61,
+      "formulas": 76,
       "images": 1
     },
     {
       "file": "reader/01-math.html",
       "width": 390,
-      "formulas": 676,
+      "formulas": 704,
       "images": 2
     },
     {
       "file": "reader/02-single-qubit.html",
       "width": 390,
-      "formulas": 445,
+      "formulas": 471,
       "images": 2
     },
     {
       "file": "reader/03-multiple-qubits.html",
       "width": 390,
-      "formulas": 473,
+      "formulas": 507,
       "images": 1
     },
     {
       "file": "reader/04-circuits-protocols.html",
       "width": 390,
-      "formulas": 349,
+      "formulas": 393,
       "images": 2
     },
     {
       "file": "reader/05-noise-channels.html",
       "width": 390,
-      "formulas": 244,
+      "formulas": 271,
       "images": 0
     },
     {
       "file": "reader/06-algorithmic-primitives.html",
       "width": 390,
-      "formulas": 528,
+      "formulas": 552,
       "images": 0
     },
     {
       "file": "reader/07-algorithms.html",
       "width": 390,
-      "formulas": 653,
+      "formulas": 687,
       "images": 2
     },
     {
       "file": "reader/08-applications.html",
       "width": 390,
-      "formulas": 433,
+      "formulas": 469,
       "images": 1
     },
     {
       "file": "reader/09-hardware.html",
       "width": 390,
-      "formulas": 169,
+      "formulas": 194,
       "images": 2
     },
     {
       "file": "reader/10-error-correction.html",
       "width": 390,
-      "formulas": 287,
+      "formulas": 310,
       "images": 2
     },
     {
       "file": "reader/11-resources-benchmarks.html",
       "width": 390,
-      "formulas": 145,
+      "formulas": 172,
       "images": 1
     },
     {
       "file": "reader/12-security-network-frontiers.html",
       "width": 390,
-      "formulas": 320,
+      "formulas": 353,
       "images": 4
     },
     {
       "file": "reader/13-quantum-information.html",
       "width": 390,
-      "formulas": 259,
+      "formulas": 307,
       "images": 0
     },
     {
       "file": "reader/14-compilation-control.html",
       "width": 390,
-      "formulas": 143,
+      "formulas": 174,
       "images": 3
     },
     {
       "file": "reader/15-practice-research.html",
       "width": 390,
-      "formulas": 148,
+      "formulas": 171,
       "images": 1
     },
     {
       "file": "reader/16-advanced-algorithms-verification.html",
       "width": 390,
-      "formulas": 437,
+      "formulas": 498,
       "images": 4
     },
     {
       "file": "reader/17-computation-models.html",
       "width": 390,
-      "formulas": 206,
+      "formulas": 238,
       "images": 4
     },
     {
       "file": "reader/18-channels-capacities-complexity.html",
       "width": 390,
-      "formulas": 515,
+      "formulas": 552,
       "images": 4
     },
     {
       "file": "reader/19-engineering-architecture.html",
       "width": 390,
-      "formulas": 139,
+      "formulas": 159,
       "images": 2
     },
     {
@@ -388,13 +388,13 @@
     {
       "file": "reader/appendices/glossary.html",
       "width": 390,
-      "formulas": 79,
+      "formulas": 87,
       "images": 0
     },
     {
       "file": "reader/appendices/notation.html",
       "width": 390,
-      "formulas": 102,
+      "formulas": 144,
       "images": 0
     },
     {
@@ -406,14 +406,14 @@
     {
       "file": "reader/appendices/references.html",
       "width": 390,
-      "formulas": 0,
+      "formulas": 1,
       "images": 0
     },
     {
       "file": "reader/appendices/software-practice.html",
       "width": 390,
-      "formulas": 25,
-      "images": 0
+      "formulas": 159,
+      "images": 1
     },
     {
       "file": "reader/labs/index.html",
@@ -454,26 +454,26 @@
     {
       "file": "reader/quantum-mechanics/01-experiments-states.html",
       "width": 390,
-      "formulas": 264,
-      "images": 1
+      "formulas": 302,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/02-observables-dynamics.html",
       "width": 390,
-      "formulas": 292,
+      "formulas": 319,
       "images": 0
     },
     {
       "file": "reader/quantum-mechanics/03-levels-control.html",
       "width": 390,
-      "formulas": 247,
-      "images": 1
+      "formulas": 283,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/04-wavefunctions-models.html",
       "width": 390,
-      "formulas": 207,
-      "images": 1
+      "formulas": 254,
+      "images": 2
     },
     {
       "file": "reader/quantum-mechanics/index.html",
@@ -706,11 +706,27 @@
       "textOutsideViewBox": []
     },
     {
+      "file": "round71-barrier-transmission.svg",
+      "textOutsideViewBox": []
+    },
+    {
+      "file": "round71-foundations-eraser.svg",
+      "textOutsideViewBox": []
+    },
+    {
+      "file": "round71-systems-spectrum.svg",
+      "textOutsideViewBox": []
+    },
+    {
       "file": "surface-code-events.svg",
       "textOutsideViewBox": []
     },
     {
       "file": "teleportation-map.svg",
+      "textOutsideViewBox": []
+    },
+    {
+      "file": "workflow-mpf-budget.svg",
       "textOutsideViewBox": []
     }
   ]

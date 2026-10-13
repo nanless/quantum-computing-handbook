@@ -319,6 +319,65 @@ $$\rho_A=\sum_{j=1}^{r}\lambda_j|u_j\rangle\langle u_j|.$$
 
 一般定理可由系数矩阵的奇异值分解证明；第一次阅读不要求掌握这个证明，先把上面的偏迹和两个具体态算熟即可。
 
+### F71-03｜从含复系数的态实际构造 Schmidt 分解
+
+“适当换基后只剩成对的项”可以怎样算？取基序 $00,01,10,11$ 中的
+
+$$
+|\chi\rangle=\frac{|00\rangle+i|01\rangle+|11\rangle}{\sqrt3},
+\qquad C=\frac1{\sqrt3}\begin{bmatrix}1&i\\0&1\end{bmatrix}.
+$$
+
+矩阵 $C$ 的**行标是 A、列标是 B**，它是一张系数表，不是作用在单比特上的门；三项模平方各为 $1/3$，总和为 1。对纯态的一般系数表 $C_{ab}$，偏迹逐格给
+
+$$
+(\rho_A)_{a,c}=\sum_bC_{ab}C_{cb}^*,
+\qquad (\rho_B)_{b,d}=\sum_aC_{ab}C_{ad}^*.
+$$
+
+所以
+
+$$
+\rho_A=CC^\dagger=\frac13\begin{bmatrix}2&i\\-i&1\end{bmatrix},
+\qquad \rho_B=C^TC^*=\frac13\begin{bmatrix}1&-i\\i&2\end{bmatrix}.
+$$
+
+例如 $(\rho_B)_{0,1}=(1)(-i)/3+(0)(1)/3=-i/3$。右侧是 $C^TC^*$，不是直接写成 $C^\dagger C$；二者互为复共轭、谱相同，但坐标中的相位一般不同。只比较本征值会漏掉这个错误。
+
+**第一步：算 Schmidt 权重。** 两矩阵的迹都是 1，行列式都是 $(2-1)/9=1/9$。特征方程为 $\lambda^2-\lambda+1/9=0$，故
+
+$$
+\lambda_\pm=\frac{3\pm\sqrt5}{6}
+\approx0.872678,\ 0.127322.
+$$
+
+权重都正，Schmidt 秩为 2，态纠缠；也可交叉检查 $ad-bc=1/3\ne0$。这里 Schmidt **振幅**为 $\sqrt{\lambda_\pm}$，不应把 $\lambda_\pm$ 再直接放到 ket 前面。
+
+**第二步：选 A 侧本征向量。** 令 $t_\pm=3\lambda_\pm-2=(-1\pm\sqrt5)/2$，则
+
+$$
+|u_\pm\rangle=\frac{1}{\sqrt{1+t_\pm^2}}
+\begin{bmatrix}i\\t_\pm\end{bmatrix}.
+$$
+
+用 $\rho_A$ 乘它，上格为 $i(2+t_\pm)/3=i\lambda_\pm$，下格为 $(1+t_\pm)/3=\lambda_\pm t_\pm$；后一式用 $t_\pm^2+t_\pm-1=0$。又有 $t_+t_-=-1$，所以两向量的内积为 $[1+t_+t_-]/\sqrt{(1+t_+^2)(1+t_-^2)}=0$。
+
+**第三步：求与它配对的 B 态。** 对联合 ket 左侧作用 $\langle u_j|$：
+
+$$
+\sqrt{\lambda_j}|v_j\rangle
+=(\langle u_j|\otimes I)|\chi\rangle=C^T u_j^*,
+\qquad
+|v_\pm\rangle=\frac{1}{\sqrt{3\lambda_\pm(1+t_\pm^2)}}
+\begin{bmatrix}-i\\1+t_\pm\end{bmatrix}.
+$$
+
+星号对坐标逐项共轭，来自 bra；不是可随意删掉的装饰。该未归一化向量的长度平方是 $\langle u_j|\rho_A|u_j\rangle=\lambda_j$，所以除以 $\sqrt{\lambda_j}$ 后长度为 1。不同 $j$ 的内积也为零，因为交叉式是 $\langle v_k|v_j\rangle=\langle u_k|\rho_A|u_j\rangle^*/\sqrt{\lambda_j\lambda_k}=0$。
+
+**第四步：还原每一格。** $\sum_j|u_j\rangle\langle u_j|=I$，所以 $\sum_j\sqrt{\lambda_j}|u_j\rangle|v_j\rangle=|\chi\rangle$。要独立验证，不只核对概率表：乘开两条张量积，应依次还原 $(1,i,0,1)^T/\sqrt3$。运行 `python3 codes/foundations/round71_checks.py --case 03`，代码从偏迹与本征方程计算两侧向量，并检查复振幅及正交性；[固定结果](../codes/foundations/round71-README.md)给出每个向量的实虚分量。
+
+**进一步练习与答案。** 本态的纯态纠缠熵是多少？用下一节的定义代入两权重，得 $-\lambda_+\log_2\lambda_+-\lambda_-\log_2\lambda_-\approx0.550048$ bit。这比 Bell 态的 1 bit 小；B 侧矩阵的相位不同并不改变共同 Schmidt 权重。一般分解与 SVD 的关系见 [Watrous 数学预备的 Schmidt 分解](https://cs.uwaterloo.ca/~watrous/TQI/TQI.double.1.pdf)（作者教材，第 31 页，访问 2026-10-13）。这里的非简并权重固定了本征方向；若权重简并，可在对应子空间内配对换基，分解不唯一。
+
 ### 用熵比较这两个纯态
 
 一个常用的**二分纯态纠缠量**是任一边约化态的熵。它衡量这些 Schmidt 权重是否均匀，这里取以 2 为底的对数、单位为 bit：
@@ -335,7 +394,11 @@ S=-\frac34\log_2\frac34-\frac14\log_2\frac14
 \approx0.811\ \text{bit}.
 $$
 
-把 $\log_2(1/4)=-2$ 先代进去，第二项贡献 $1/2$；第一项约为 $0.311$，总和约 $0.811$。它大于零，说明该纯态纠缠；又小于 Bell 态的 1 bit，说明两项权重不均匀时纠缠量较低。**这个判法只适用于二分纯态。**第 6 节的经典混合态局部熵也有 1 bit，却完全可以不纠缠。
+把 $\log_2(1/4)=-2$ 先代进去，第二项贡献 $1/2$；第一项约为 $0.311$，总和约 $0.811$。它大于零，说明该纯态纠缠；又小于 Bell 态的 1 bit，说明两项权重不均匀时纠缠量较低。
+
+**这个判法只适用于二分纯态。**
+
+第 6 节的经典混合态局部熵也有 1 bit，却完全可以不纠缠。
 
 ## 6. 经典关联和量子纠缠的区别
 

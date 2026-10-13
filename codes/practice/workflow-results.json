@@ -1,0 +1,108 @@
+{
+  "scope": "independent authored ideal/synthetic models; no vendor execution",
+  "MPF": {
+    "steps": [
+      2,
+      4
+    ],
+    "weights": [
+      "-1/3",
+      "4/3"
+    ],
+    "synthetic_values": [
+      0.281875,
+      0.2576171875
+    ],
+    "synthetic_combined": 0.24953125,
+    "gamma": 1.6666666666666667,
+    "shots": [
+      1800,
+      7200
+    ],
+    "variance_upper_bound": 0.00030864197530864197,
+    "nearby_gamma": 4.555555555555555,
+    "ideal_hamiltonian": {
+      "time": 0.7,
+      "target": 0.30110690055213657,
+      "individual": [
+        0.35368081646218236,
+        0.3141599796425097
+      ],
+      "combined": 0.3009863673692854
+    }
+  },
+  "OBP_NOISE": {
+    "theta_rad": 0.5235987755982988,
+    "Z_on_plus": -0.4999999999999999,
+    "truncated_Z_on_plus": 0.0,
+    "discarded_l1_bound": 0.49999999999999994,
+    "phase_flip_probability": 0.1,
+    "noisy_X_on_zero": 0.39999999999999997,
+    "ideal_X_on_zero": 0.49999999999999994
+  },
+  "SQD": {
+    "raw_labels": [
+      "001",
+      "010",
+      "001"
+    ],
+    "distinct_dimension": 2,
+    "full_ground_energy": -1.4142135623730951,
+    "ritz_energy": -0.9999999999999998,
+    "ritz_residual_norm": 0.7071067811865475,
+    "duplicate_counterexample": {
+      "true_ground": -1,
+      "naive_eigenvalue": -1.414213562373095,
+      "physical_rayleigh_quotient": -0.9428090415820632
+    }
+  },
+  "RNG": {
+    "base_label": 71,
+    "draws_by_stable_task_id": {
+      "0": [
+        123,
+        8,
+        25
+      ],
+      "1": [
+        217,
+        117,
+        232
+      ],
+      "2": [
+        186,
+        176,
+        29
+      ],
+      "3": [
+        5,
+        148,
+        140
+      ],
+      "4": [
+        222,
+        255,
+        139
+      ],
+      "5": [
+        0,
+        94,
+        118
+      ]
+    },
+    "reverse_schedule_matches": true
+  },
+  "TOMO": {
+    "full_product_pauli_QPT_settings": {
+      "1": 12,
+      "2": 144,
+      "5": 248832,
+      "10": 61917364224
+    },
+    "shots_per_setting": 1000,
+    "five_qubit_total_shots": 248832000,
+    "same_zero_input": true,
+    "plus_input_amplitude_damping_offdiagonal": 0.4183300132670378,
+    "plus_input_complete_dephasing_offdiagonal": 0.0
+  }
+}
