@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "algorithm": "official Random123 Philox4x64-10; C++17 adapter, not std::philox_engine",
+  "thread_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "serial_parallel_bitwise_equal": true,
+  "configuration_count": 4000,
+  "work_id_word": 0,
+  "draw_counter_word": 3,
+  "upstream_tests": 51,
+  "upstream_assertions": 36669,
+  "source_commits": {
+    "sqd": "69f003f8304c8094ff06ba2600d38a0c683422ff",
+    "random123": "9545ff6413f258be2f04c1d319d99aaef7521150"
+  },
+  "philox_sha256": "149b526012209419ba7310ec6014cd28c6e60053a4d4f48c08cbfadb4a7d6c06",
+  "ordinary_engine_equal": false,
+  "scope": "single-machine OpenMP deterministic recovery; not MPI/multinode benchmarking"
+}

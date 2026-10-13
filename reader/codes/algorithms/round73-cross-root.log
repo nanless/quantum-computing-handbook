@@ -1,0 +1,100 @@
+{
+  "status": "passed",
+  "scope": "independent Hamiltonian via X/Y/Z bit action and eigh, not root kron/expm; output and convergence checks",
+  "orders": [
+    {
+      "p": 0.15749013123685915,
+      "cubic": 0.06629421413383985,
+      "errors": [
+        6.10610333282435e-05,
+        1.5257638315036513e-05,
+        3.813933749844337e-06
+      ],
+      "ratios": [
+        4.001997692399577,
+        4.000499042664085
+      ]
+    },
+    {
+      "p": 0.4144907717943757,
+      "cubic": 5.551115123125783e-17,
+      "errors": [
+        1.4323330932652684e-07,
+        8.947922788635445e-09,
+        5.592542027718467e-10
+      ],
+      "ratios": [
+        16.007436888977654,
+        15.999741699367863
+      ]
+    }
+  ],
+  "records": [
+    {
+      "time": 0.4,
+      "gram_condition": 25793658272087.797,
+      "checks": [
+        {
+          "dt": 0.05,
+          "direct_error": 1.3204389979705613e-06,
+          "min_eigenvalue": -4.95368405569689e-07,
+          "coefficient_delta": 2.8216314309162804,
+          "projected_gradient_norm": 9.276589179386458e-12,
+          "gamma": 1.9321623767605451
+        },
+        {
+          "dt": 0.025,
+          "direct_error": 1.3204318330560857e-06,
+          "min_eigenvalue": -4.953635775373213e-07,
+          "coefficient_delta": 2.82163260747672,
+          "projected_gradient_norm": 1.0331146019668996e-12,
+          "gamma": 1.9321563681369853
+        }
+      ]
+    },
+    {
+      "time": 0.8,
+      "gram_condition": 18326872153.67004,
+      "checks": [
+        {
+          "dt": 0.05,
+          "direct_error": 2.0595305822532846e-07,
+          "min_eigenvalue": -1.2367707743269584e-07,
+          "coefficient_delta": 0.0038601353470451016,
+          "projected_gradient_norm": 1.323986358955988e-10,
+          "gamma": 5.589845003673041
+        },
+        {
+          "dt": 0.025,
+          "direct_error": 2.0568964518472123e-07,
+          "min_eigenvalue": -1.235416442113299e-07,
+          "coefficient_delta": 0.0038487426973912164,
+          "projected_gradient_norm": 8.543667976713038e-12,
+          "gamma": 5.589867788972349
+        }
+      ]
+    },
+    {
+      "time": 1.2,
+      "gram_condition": 263656961.25427794,
+      "checks": [
+        {
+          "dt": 0.05,
+          "direct_error": 3.3800317798880315e-06,
+          "min_eigenvalue": -1.547272241013506e-06,
+          "coefficient_delta": 8.734437919599713e-07,
+          "projected_gradient_norm": 5.360127015184768e-10,
+          "gamma": 5.5541751273641164
+        },
+        {
+          "dt": 0.025,
+          "direct_error": 3.38001231391759e-06,
+          "min_eigenvalue": -1.5471191451290894e-06,
+          "coefficient_delta": 5.437559895682398e-07,
+          "projected_gradient_norm": 3.3477815518434715e-11,
+          "gamma": 5.554174838134618
+        }
+      ]
+    }
+  ]
+}

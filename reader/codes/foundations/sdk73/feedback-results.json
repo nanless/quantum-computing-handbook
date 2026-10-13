@@ -1,0 +1,107 @@
+{
+  "python": "3.11.15 (main, Mar 25 2026, 02:58:47) [Clang 22.1.1 ]",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "script_sha256": "e780adc6011630aa3aaf495e76a3d358427c502a8042607683af2315bf81ade0",
+  "packages": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "qiskit": "2.5.2",
+    "qiskit-aer": "0.17.2",
+    "qiskit-experiments": "0.14.2",
+    "qutip": "5.3.1",
+    "cvxpy": "1.9.3",
+    "scs": "3.3.1",
+    "clarabel": "0.11.1"
+  },
+  "cases": {
+    "feedback": {
+      "status": "passed",
+      "result": {
+        "model": "ideal resource and gates, only two independent asymmetric Alice readout flips",
+        "shots": 16384,
+        "seed": 735,
+        "reported_alice_counts_c1c0": {
+          "01": 4035,
+          "00": 5188,
+          "10": 4018,
+          "11": 3143
+        },
+        "input_density": [
+          [
+            [
+              0.7499999999999999,
+              0.0
+            ],
+            [
+              0.0,
+              -0.4330127018922193
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.4330127018922193
+            ],
+            [
+              0.25,
+              0.0
+            ]
+          ]
+        ],
+        "bob_density": [
+          [
+            [
+              0.6640930175781249,
+              -1.165714237823446e-33
+            ],
+            [
+              2.3511040811851967e-16,
+              -0.18151435770236435
+            ]
+          ],
+          [
+            [
+              2.234755635550365e-16,
+              0.18151435770236435
+            ],
+            [
+              0.335906982421875,
+              -1.165714237823446e-33
+            ]
+          ]
+        ],
+        "analytic_density": [
+          [
+            [
+              0.6625,
+              0.0
+            ],
+            [
+              0.0,
+              -0.18294786654946266
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.18294786654946266
+            ],
+            [
+              0.3374999999999999,
+              0.0
+            ]
+          ]
+        ],
+        "average_flip_probability": 0.175,
+        "pauli_error_weights_I_X_Z_ZX": [
+          0.6806249999999999,
+          0.14437499999999998,
+          0.14437499999999998,
+          0.030624999999999996
+        ],
+        "max_matrix_error": 0.0015930175781249112,
+        "boundary": "post-processing Alice counts cannot undo physical gates already triggered by wrong records"
+      }
+    }
+  }
+}

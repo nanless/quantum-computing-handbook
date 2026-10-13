@@ -1,0 +1,240 @@
+{
+  "status": "passed",
+  "qec": [
+    {
+      "file": "x-d3-p0.001.npz",
+      "shots": 10000,
+      "rescued": 7,
+      "regressed": 11,
+      "paired_p": 0.480682373046875,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d3-p0.003.npz",
+      "shots": 10000,
+      "rescued": 65,
+      "regressed": 40,
+      "paired_p": 0.01874091540825805,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d3-p0.006.npz",
+      "shots": 10000,
+      "rescued": 181,
+      "regressed": 123,
+      "paired_p": 0.0010455770805240623,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d5-p0.001.npz",
+      "shots": 10000,
+      "rescued": 1,
+      "regressed": 1,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d5-p0.003.npz",
+      "shots": 10000,
+      "rescued": 32,
+      "regressed": 13,
+      "paired_p": 0.00660882284228137,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d5-p0.006.npz",
+      "shots": 10000,
+      "rescued": 165,
+      "regressed": 88,
+      "paired_p": 1.4822808065877073e-06,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d7-p0.001.npz",
+      "shots": 10000,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d7-p0.003.npz",
+      "shots": 10000,
+      "rescued": 10,
+      "regressed": 4,
+      "paired_p": 0.1795654296875,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d7-p0.006.npz",
+      "shots": 10000,
+      "rescued": 160,
+      "regressed": 47,
+      "paired_p": 1.2996577613713636e-15,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d3-p0.001.npz",
+      "shots": 10000,
+      "rescued": 8,
+      "regressed": 25,
+      "paired_p": 0.004551384132355452,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d3-p0.003.npz",
+      "shots": 10000,
+      "rescued": 35,
+      "regressed": 76,
+      "paired_p": 0.00012465624490632683,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d3-p0.006.npz",
+      "shots": 10000,
+      "rescued": 146,
+      "regressed": 166,
+      "paired_p": 0.2820582345640965,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d5-p0.001.npz",
+      "shots": 10000,
+      "rescued": 0,
+      "regressed": 1,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d5-p0.003.npz",
+      "shots": 10000,
+      "rescued": 17,
+      "regressed": 8,
+      "paired_p": 0.10775214433670044,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d5-p0.006.npz",
+      "shots": 10000,
+      "rescued": 160,
+      "regressed": 78,
+      "paired_p": 1.1487739582912858e-07,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d7-p0.001.npz",
+      "shots": 10000,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d7-p0.003.npz",
+      "shots": 10000,
+      "rescued": 11,
+      "regressed": 2,
+      "paired_p": 0.0224609375,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d7-p0.006.npz",
+      "shots": 10000,
+      "rescued": 118,
+      "regressed": 38,
+      "paired_p": 9.738534504771363e-11,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "x-d3-p0.npz",
+      "shots": 1000,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    },
+    {
+      "file": "z-d3-p0.npz",
+      "shots": 1000,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_p": 1.0,
+      "decoder_replayed": true,
+      "binomial_tail_CI_inversion": true
+    }
+  ],
+  "complete_shots": 182000,
+  "control": [
+    {
+      "name": "optimized",
+      "Haar_quadrature_overlap": 0.9999999983963739,
+      "basis_leakage": [
+        6.251216813109367e-10,
+        6.153934472557247e-10
+      ],
+      "unitarity_error": 1.7541523789077473e-14
+    },
+    {
+      "name": "one_ns_discrete_filter",
+      "Haar_quadrature_overlap": 0.9809241231593513,
+      "basis_leakage": [
+        0.0095319726751382,
+        0.005173323175314647
+      ],
+      "unitarity_error": 9.992007221626409e-15
+    }
+  ],
+  "network": [
+    {
+      "group": "ideal",
+      "trials": 400,
+      "swapped": 108,
+      "matrix_and_expiry_rechecked": true
+    },
+    {
+      "group": "lossy",
+      "trials": 400,
+      "swapped": 93,
+      "matrix_and_expiry_rechecked": true
+    },
+    {
+      "group": "finite_cutoff",
+      "trials": 40,
+      "swapped": 9,
+      "matrix_and_expiry_rechecked": true
+    },
+    {
+      "group": "short_cutoff",
+      "trials": 40,
+      "swapped": 0,
+      "matrix_and_expiry_rechecked": true
+    },
+    {
+      "group": "mixed_input",
+      "trials": 40,
+      "swapped": 13,
+      "matrix_and_expiry_rechecked": true
+    }
+  ],
+  "unguarded_metadata_mismatch_confirmed": true,
+  "scope": "independent archive rerun and alternate mathematics; network events not resampled, no latency retiming"
+}

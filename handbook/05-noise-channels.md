@@ -494,6 +494,55 @@ $$
 
 本轮每设置 16384 次的完整拟合与精确信道 J 的 Frobenius 距离为 $0.0279380$，输出偏迹最大误差为 $1.12\times10^{-15}$，本次恰通过 CP、TP 两检查；不能倒推拟合选项保证了 TP。另有每设置 32 次的压力例，拟合仍 CP、总迹仍为 2，却不 TP，输出偏迹最大逐格偏差 $0.04658984$；这提供了事后正性修正不自动保迹的实际反例。[官方拟合选项](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.TomographyAnalysis.html)说明正性重缩放与拟合器选择（0.14.2，访问 2026-10-13）；[F72-05 完整参数、原计数和诊断](../codes/foundations/round72-README.md)实际检查两项。线性逆与事后修正不等于带 CP/TP 约束的最大似然拟合，理想测量模拟也不包含真实制备与读出校准。
 
+### F73-05｜真正约束CP与TP，Gaussian拟合与计数最大似然分开
+
+F72的事后正性修正没有强制TP。本轮把信道换成先 $R_y(\pi/5)$、再广义阻尼 $\gamma=.36,r=.10$，生成十二设置的训练计数（各128次）及新留出计数（各512次）。参考制备、基变换和读出都理想；它没有把本例与F73-02的SPAM模型混为同一数据集。
+
+**第一步：把每个设置写成一个关于J的概率。** 沿用“输入、输出”的未归一化Choi矩阵；输入密度矩阵为 $\rho_s$、输出测量效果为 $M_{b,y}$，则
+
+$$
+p_{s,b,y}(J)=\operatorname{Tr}[(\rho_s^T\otimes M_{b,y})J].
+$$
+
+转置只作用于输入坐标，不是共轭转置。用 $J=\sum_{a,c}|a\rangle\langle c|\otimes\mathcal E(|a\rangle\langle c|)$ 展开：$\operatorname{Tr}(\rho_s^T|a\rangle\langle c|)=(\rho_s)_{ac}$，求和恰还原 $\operatorname{Tr}[M_{b,y}\mathcal E(\rho_s)]$。四种输入乘三种基、每基两种结果，共24个概率；每一设置的两个概率和为1。
+
+**第二步：明确拟合问题。** Gaussian加权最小二乘选择Hermitian的 $4\times4$ 未知矩阵J，最小化
+
+$$
+L_{\rm G}(J)=\sum_{s,b,y}w_{s,b,y}^2
+\left[p_{s,b,y}(J)-\frac{k_{s,b,y}}{N_{s,b}}\right]^2,
+\qquad J\succeq0,\quad \operatorname{Tr}_{\rm out}J=I_2.
+$$
+
+正半定是CP约束，整个偏迹矩阵等于I是TP约束，不能只固定总迹。SDK用每结果先验计数 $1/2$ 构造 $\bar p=(k+1/2)/(N+1)$、方差 $\bar p(1-\bar p)/(N+2)$，再取权重 $w=1/\sqrt{\mathrm{variance}}$；所有权重同乘一个正数不改变精确最优解。先验这里只用于权重，目标频率仍是 $k/N$。[官方Gaussian拟合定义](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.fitters.cvxpy_gaussian_lstsq.html)（0.14.2，访问2026-10-13）把它写作Gaussian似然优化；这不等于原始多项计数模型的最大似然。
+
+过程最大似然的理论路线可参阅[Fiurášek与Hradil原始论文](https://doi.org/10.1103/PhysRevA.63.020101)（2001）；本书下面独立构造小系统的凸问题，而未声称复现其全部算法。
+
+真正的**多项计数最大似然**另最小化
+
+$$
+L_{\rm count}(J)=-\sum_{s,b,y}k_{s,b,y}\ln p_{s,b,y}(J),
+\qquad J\succeq0,\quad \operatorname{Tr}_{\rm out}J=I_2.
+$$
+
+本轮自编CVXPY驱动实际优化这一凸目标。程序对全部24个概率加 $p\ge10^{-10}$ 的数值域下界，保留该限制；它近似开放的对数域，不能省略后宣称已精确求解含零概率的任意边界情形。本例所有结果计数非零，最优概率远离这个下界。两个目标可以很接近，名称仍不应互换。
+
+**第三步：连“TP选项为真”也要独立验算。** 本次直接运行0.14.2的默认TP约束，metadata标TP为真，实际输出偏迹却含非对角 $\pm.0009131135i$，超过数值舍入。[固定源码中的约束函数](https://github.com/qiskit-community/qiskit-experiments/blob/0.14.2/qiskit_experiments/library/tomography/fitters/cvxpy_utils.py)在Hermitian选项下提前返回，只限制偏迹的实部；Hermitian并不要求非对角元素全为实数。
+
+**练习：用手算反例说明缺了哪一个条件。** 取
+
+$$
+J_*=\frac12I_4+\epsilon(Y\otimes I_2),\qquad \epsilon=.1.
+$$
+
+它是Hermitian，谱为 $.4,.4,.6,.6$，总迹为2。输出偏迹为 $I_2+2\epsilon Y$：实部为I，非对角却是 $\mp.2i$，不是I。这说明只约束实部仍可能接受CP且总迹正确的非TP过程；它不是可执行的确定性信道。运行标准库F73-05可逐格核验这个反例。
+
+本书没有改动上游包，而使用同一官方拟合器的完整偏迹参数 `partial_trace=np.array([I])`，一个条件分量要有外层长度1；该分支同时约束实、虚部。另以Hermitian变量逐格写四个复偏迹等式，独立构建全部概率与权重。两路Gaussian结果最大逐格差 $1.03\times10^{-9}$，完整偏迹误差约 $1.93\times10^{-12}$。首次错误结果、排查日志及[TP反例记录](../codes/foundations/sdk73/sdk-tp-counterexample.json)保留；本书防护通过不表示上游该版本已经修复。
+
+**第四步：比较训练与留出，而不只看合法谱。** 原始线性重构最小本征值为 $-.03705736$；完整约束Gaussian谱约为 $(0,.03946983,.30338864,1.65714153)$，计数MLE也通过CP和完整TP。训练负对数似然分别为890.0205094、890.0204230，后者较低，符合它优化的目标；留出负对数似然分别为3692.9883429、3692.9605892，而精确信道为3665.8177433。一次留出更接近不等于所有新数据都保证更好。Gaussian/MLE距精确J的Frobenius误差分别为 $.20105766,.20129248$，MLE在这个另一距离上反而稍大；“最佳”必须说清目标。
+
+完整SDK、独立矩阵构造、原始计数、锁定依赖及实际命令见[F73运行说明](../codes/foundations/round73-README.md)。CVXPY约束对象见[官方复数及半正定约束说明](https://www.cvxpy.org/tutorial/constraints/index.html)（1.9.3，访问2026-10-13）。本例补齐小系统完整约束拟合及真实计数目标，没有实现联合SPAM辨识、高维扩展、漂移稳健估计或生产设备过程认证。
+
 ## 9. 误差缓解不等于错误校正
 
 误差缓解通过零噪声外推、概率误差抵消、对称性筛选等办法改善期望值估计，通常需要更多采样或关于噪声的知识，但不把任意长计算稳定地存进逻辑子空间。错误校正则主动提取错误综合征并纠正，目标是在资源增加时压低逻辑错误率。

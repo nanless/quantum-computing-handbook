@@ -1,0 +1,437 @@
+{
+  "generatedAt": "2026-10-13T09:06:12.786Z",
+  "chapterContexts": [
+    {
+      "file": "00-overview.html",
+      "width": 1440,
+      "label": "F73-00",
+      "screenshot": "work/rendered/round73-00-1440.png"
+    },
+    {
+      "file": "01-math.html",
+      "width": 1440,
+      "label": "F73-01",
+      "screenshot": "work/rendered/round73-01-1440.png"
+    },
+    {
+      "file": "02-single-qubit.html",
+      "width": 1440,
+      "label": "F73-02",
+      "screenshot": "work/rendered/round73-02-1440.png"
+    },
+    {
+      "file": "03-multiple-qubits.html",
+      "width": 1440,
+      "label": "F73-03",
+      "screenshot": "work/rendered/round73-03-1440.png"
+    },
+    {
+      "file": "04-circuits-protocols.html",
+      "width": 1440,
+      "label": "F73-04",
+      "screenshot": "work/rendered/round73-04-1440.png"
+    },
+    {
+      "file": "05-noise-channels.html",
+      "width": 1440,
+      "label": "F73-05",
+      "screenshot": "work/rendered/round73-05-1440.png"
+    },
+    {
+      "file": "quantum-mechanics/01-experiments-states.html",
+      "width": 1440,
+      "label": "F73-Q1",
+      "screenshot": "work/rendered/round73-q1-1440.png"
+    },
+    {
+      "file": "quantum-mechanics/02-observables-dynamics.html",
+      "width": 1440,
+      "label": "F73-Q2",
+      "screenshot": "work/rendered/round73-q2-1440.png"
+    },
+    {
+      "file": "06-algorithmic-primitives.html",
+      "width": 1440,
+      "label": "A73-06",
+      "screenshot": "work/rendered/round73-06-1440.png"
+    },
+    {
+      "file": "07-algorithms.html",
+      "width": 1440,
+      "label": "A73-07",
+      "screenshot": "work/rendered/round73-07-1440.png"
+    },
+    {
+      "file": "08-applications.html",
+      "width": 1440,
+      "label": "A73-08",
+      "screenshot": "work/rendered/round73-08-1440.png"
+    },
+    {
+      "file": "13-quantum-information.html",
+      "width": 1440,
+      "label": "A73-13",
+      "screenshot": "work/rendered/round73-13-1440.png"
+    },
+    {
+      "file": "16-advanced-algorithms-verification.html",
+      "width": 1440,
+      "label": "A73-16",
+      "screenshot": "work/rendered/round73-16-1440.png"
+    },
+    {
+      "file": "17-computation-models.html",
+      "width": 1440,
+      "label": "A73-17",
+      "screenshot": "work/rendered/round73-17-1440.png"
+    },
+    {
+      "file": "18-channels-capacities-complexity.html",
+      "width": 1440,
+      "label": "A73-18",
+      "screenshot": "work/rendered/round73-18-1440.png"
+    },
+    {
+      "file": "quantum-mechanics/04-wavefunctions-models.html",
+      "width": 1440,
+      "label": "A73-Q4",
+      "screenshot": "work/rendered/round73-q4-1440.png"
+    },
+    {
+      "file": "09-hardware.html",
+      "width": 1440,
+      "label": "S73-09",
+      "screenshot": "work/rendered/round73-09-1440.png"
+    },
+    {
+      "file": "10-error-correction.html",
+      "width": 1440,
+      "label": "S73-10",
+      "screenshot": "work/rendered/round73-10-1440.png"
+    },
+    {
+      "file": "11-resources-benchmarks.html",
+      "width": 1440,
+      "label": "S73-11",
+      "screenshot": "work/rendered/round73-11-1440.png"
+    },
+    {
+      "file": "12-security-network-frontiers.html",
+      "width": 1440,
+      "label": "S73-12",
+      "screenshot": "work/rendered/round73-12-1440.png"
+    },
+    {
+      "file": "14-compilation-control.html",
+      "width": 1440,
+      "label": "S73-14",
+      "screenshot": "work/rendered/round73-14-1440.png"
+    },
+    {
+      "file": "15-practice-research.html",
+      "width": 1440,
+      "label": "S73-15",
+      "screenshot": "work/rendered/round73-15-1440.png"
+    },
+    {
+      "file": "19-engineering-architecture.html",
+      "width": 1440,
+      "label": "S73-19",
+      "screenshot": "work/rendered/round73-19-1440.png"
+    },
+    {
+      "file": "quantum-mechanics/03-levels-control.html",
+      "width": 1440,
+      "label": "S73-Q3",
+      "screenshot": "work/rendered/round73-q3-1440.png"
+    },
+    {
+      "file": "00-overview.html",
+      "width": 390,
+      "label": "F73-00",
+      "screenshot": "work/rendered/round73-00-390.png"
+    },
+    {
+      "file": "01-math.html",
+      "width": 390,
+      "label": "F73-01",
+      "screenshot": "work/rendered/round73-01-390.png"
+    },
+    {
+      "file": "02-single-qubit.html",
+      "width": 390,
+      "label": "F73-02",
+      "screenshot": "work/rendered/round73-02-390.png"
+    },
+    {
+      "file": "03-multiple-qubits.html",
+      "width": 390,
+      "label": "F73-03",
+      "screenshot": "work/rendered/round73-03-390.png"
+    },
+    {
+      "file": "04-circuits-protocols.html",
+      "width": 390,
+      "label": "F73-04",
+      "screenshot": "work/rendered/round73-04-390.png"
+    },
+    {
+      "file": "05-noise-channels.html",
+      "width": 390,
+      "label": "F73-05",
+      "screenshot": "work/rendered/round73-05-390.png"
+    },
+    {
+      "file": "quantum-mechanics/01-experiments-states.html",
+      "width": 390,
+      "label": "F73-Q1",
+      "screenshot": "work/rendered/round73-q1-390.png"
+    },
+    {
+      "file": "quantum-mechanics/02-observables-dynamics.html",
+      "width": 390,
+      "label": "F73-Q2",
+      "screenshot": "work/rendered/round73-q2-390.png"
+    },
+    {
+      "file": "06-algorithmic-primitives.html",
+      "width": 390,
+      "label": "A73-06",
+      "screenshot": "work/rendered/round73-06-390.png"
+    },
+    {
+      "file": "07-algorithms.html",
+      "width": 390,
+      "label": "A73-07",
+      "screenshot": "work/rendered/round73-07-390.png"
+    },
+    {
+      "file": "08-applications.html",
+      "width": 390,
+      "label": "A73-08",
+      "screenshot": "work/rendered/round73-08-390.png"
+    },
+    {
+      "file": "13-quantum-information.html",
+      "width": 390,
+      "label": "A73-13",
+      "screenshot": "work/rendered/round73-13-390.png"
+    },
+    {
+      "file": "16-advanced-algorithms-verification.html",
+      "width": 390,
+      "label": "A73-16",
+      "screenshot": "work/rendered/round73-16-390.png"
+    },
+    {
+      "file": "17-computation-models.html",
+      "width": 390,
+      "label": "A73-17",
+      "screenshot": "work/rendered/round73-17-390.png"
+    },
+    {
+      "file": "18-channels-capacities-complexity.html",
+      "width": 390,
+      "label": "A73-18",
+      "screenshot": "work/rendered/round73-18-390.png"
+    },
+    {
+      "file": "quantum-mechanics/04-wavefunctions-models.html",
+      "width": 390,
+      "label": "A73-Q4",
+      "screenshot": "work/rendered/round73-q4-390.png"
+    },
+    {
+      "file": "09-hardware.html",
+      "width": 390,
+      "label": "S73-09",
+      "screenshot": "work/rendered/round73-09-390.png"
+    },
+    {
+      "file": "10-error-correction.html",
+      "width": 390,
+      "label": "S73-10",
+      "screenshot": "work/rendered/round73-10-390.png"
+    },
+    {
+      "file": "11-resources-benchmarks.html",
+      "width": 390,
+      "label": "S73-11",
+      "screenshot": "work/rendered/round73-11-390.png"
+    },
+    {
+      "file": "12-security-network-frontiers.html",
+      "width": 390,
+      "label": "S73-12",
+      "screenshot": "work/rendered/round73-12-390.png"
+    },
+    {
+      "file": "14-compilation-control.html",
+      "width": 390,
+      "label": "S73-14",
+      "screenshot": "work/rendered/round73-14-390.png"
+    },
+    {
+      "file": "15-practice-research.html",
+      "width": 390,
+      "label": "S73-15",
+      "screenshot": "work/rendered/round73-15-390.png"
+    },
+    {
+      "file": "19-engineering-architecture.html",
+      "width": 390,
+      "label": "S73-19",
+      "screenshot": "work/rendered/round73-19-390.png"
+    },
+    {
+      "file": "quantum-mechanics/03-levels-control.html",
+      "width": 390,
+      "label": "S73-Q3",
+      "screenshot": "work/rendered/round73-q3-390.png"
+    }
+  ],
+  "figures": [
+    {
+      "asset": "round73-foundations-dynamics.svg",
+      "context": "quantum-mechanics/02-observables-dynamics.html",
+      "width": 1440,
+      "screenshot": "work/rendered/round73-context-round73-foundations-dynamics-1440.png"
+    },
+    {
+      "asset": "round73-algorithms.svg",
+      "context": "16-advanced-algorithms-verification.html",
+      "width": 1440,
+      "screenshot": "work/rendered/round73-context-round73-algorithms-1440.png"
+    },
+    {
+      "asset": "round73-systems-qec.svg",
+      "context": "10-error-correction.html",
+      "width": 1440,
+      "screenshot": "work/rendered/round73-context-round73-systems-qec-1440.png"
+    },
+    {
+      "asset": "round73-systems-control.svg",
+      "context": "14-compilation-control.html",
+      "width": 1440,
+      "screenshot": "work/rendered/round73-context-round73-systems-control-1440.png"
+    },
+    {
+      "asset": "round73-workflows.svg",
+      "context": "labs/sdk-validation.html",
+      "width": 1440,
+      "screenshot": "work/rendered/round73-context-round73-workflows-1440.png"
+    },
+    {
+      "asset": "round73-foundations-dynamics.svg",
+      "context": "quantum-mechanics/02-observables-dynamics.html",
+      "width": 390,
+      "screenshot": "work/rendered/round73-context-round73-foundations-dynamics-390.png"
+    },
+    {
+      "asset": "round73-foundations-dynamics.svg",
+      "context": "quantum-mechanics/02-observables-dynamics.html",
+      "width": 390,
+      "mobilePan": {
+        "available": true,
+        "scrollLeft": 890,
+        "maximum": 890
+      },
+      "screenshot": "work/rendered/round73-context-round73-foundations-dynamics-390-right.png"
+    },
+    {
+      "asset": "round73-algorithms.svg",
+      "context": "16-advanced-algorithms-verification.html",
+      "width": 390,
+      "screenshot": "work/rendered/round73-context-round73-algorithms-390.png"
+    },
+    {
+      "asset": "round73-algorithms.svg",
+      "context": "16-advanced-algorithms-verification.html",
+      "width": 390,
+      "mobilePan": {
+        "available": true,
+        "scrollLeft": 1005,
+        "maximum": 1005
+      },
+      "screenshot": "work/rendered/round73-context-round73-algorithms-390-right.png"
+    },
+    {
+      "asset": "round73-systems-qec.svg",
+      "context": "10-error-correction.html",
+      "width": 390,
+      "screenshot": "work/rendered/round73-context-round73-systems-qec-390.png"
+    },
+    {
+      "asset": "round73-systems-qec.svg",
+      "context": "10-error-correction.html",
+      "width": 390,
+      "mobilePan": {
+        "available": true,
+        "scrollLeft": 780,
+        "maximum": 780
+      },
+      "screenshot": "work/rendered/round73-context-round73-systems-qec-390-right.png"
+    },
+    {
+      "asset": "round73-systems-control.svg",
+      "context": "14-compilation-control.html",
+      "width": 390,
+      "screenshot": "work/rendered/round73-context-round73-systems-control-390.png"
+    },
+    {
+      "asset": "round73-systems-control.svg",
+      "context": "14-compilation-control.html",
+      "width": 390,
+      "mobilePan": {
+        "available": true,
+        "scrollLeft": 780,
+        "maximum": 780
+      },
+      "screenshot": "work/rendered/round73-context-round73-systems-control-390-right.png"
+    },
+    {
+      "asset": "round73-workflows.svg",
+      "context": "labs/sdk-validation.html",
+      "width": 390,
+      "screenshot": "work/rendered/round73-context-round73-workflows-390.png"
+    },
+    {
+      "asset": "round73-workflows.svg",
+      "context": "labs/sdk-validation.html",
+      "width": 390,
+      "mobilePan": {
+        "available": true,
+        "scrollLeft": 832,
+        "maximum": 832
+      },
+      "screenshot": "work/rendered/round73-context-round73-workflows-390-right.png"
+    },
+    {
+      "asset": "round73-foundations-dynamics.svg",
+      "original": true,
+      "screenshot": "work/rendered/round73-full-round73-foundations-dynamics.png"
+    },
+    {
+      "asset": "round73-algorithms.svg",
+      "original": true,
+      "screenshot": "work/rendered/round73-full-round73-algorithms.png"
+    },
+    {
+      "asset": "round73-systems-qec.svg",
+      "original": true,
+      "screenshot": "work/rendered/round73-full-round73-systems-qec.png"
+    },
+    {
+      "asset": "round73-systems-control.svg",
+      "original": true,
+      "screenshot": "work/rendered/round73-full-round73-systems-control.png"
+    },
+    {
+      "asset": "round73-workflows.svg",
+      "original": true,
+      "screenshot": "work/rendered/round73-full-round73-workflows.png"
+    }
+  ],
+  "errors": [],
+  "manualInspection": "separate human/model image review; generation alone is not manual acceptance"
+}

@@ -1,0 +1,23 @@
+{
+  "python": "3.11.15 (main, Mar 25 2026, 02:58:47) [Clang 22.1.1 ]",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "script_sha256": "7c8b196ca917266c2a8cbc74d291b358897054368490fe6808e3f2b28745899a",
+  "packages": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "qiskit": "2.5.2",
+    "qiskit-aer": "0.17.2",
+    "qiskit-experiments": "0.14.2",
+    "qutip": "5.3.1",
+    "cvxpy": "1.9.3",
+    "scs": "3.3.1",
+    "clarabel": "0.11.1"
+  },
+  "cases": {
+    "qpt": {
+      "status": "failed",
+      "error": "",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk73/validate_sdks.py\", line 223, in main\n    try:report['cases'][name]={'status':'passed','result':pack(fn())};print(name,'passed',flush=True)\n                                                               ^^^^\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk73/validate_sdks.py\", line 118, in qpt\n    assert problem.status=='optimal';own=J.value.copy()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "status": "passed",
+  "python": "3.11.15",
+  "pygsti_version": "0.10.2",
+  "estimate_key": "GateSetTomography",
+  "parameterization": "CPTPLND",
+  "objective": "logl",
+  "lengths": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "circuit_counts": [
+    92,
+    168,
+    285,
+    448
+  ],
+  "unique_settings": 448,
+  "shots_per_setting": 4096,
+  "total_shots": 1835008,
+  "seed": 73019,
+  "negative_log_likelihood": {
+    "ideal": 1169606.5223897053,
+    "fitted": 908103.54333503,
+    "true": 908119.2605861675
+  },
+  "score_details": {
+    "ideal": {
+      "clipped_negative_log_score": 1169606.5223897053,
+      "floor": 1e-12,
+      "positive_count_zero_probability_violations": 122,
+      "minimum_probability": -1.1102230246251565e-16,
+      "true_negative_log_likelihood": "infinite"
+    },
+    "fitted": {
+      "clipped_negative_log_score": 908103.54333503,
+      "floor": 1e-12,
+      "positive_count_zero_probability_violations": 0,
+      "minimum_probability": 0.003915509670094575,
+      "true_negative_log_likelihood": 908103.54333503
+    },
+    "true": {
+      "clipped_negative_log_score": 908119.2605861675,
+      "floor": 1e-12,
+      "positive_count_zero_probability_violations": 0,
+      "minimum_probability": 0.0040000000000000036,
+      "true_negative_log_likelihood": 908119.2605861675
+    }
+  },
+  "prediction_seed": 73191,
+  "prediction_reference": "untrained circuits, exact population probabilities; no held-out finite counts",
+  "unseen_predictions": [
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|---\n",
+      "length": 17,
+      "dense_reference": 0.49999999999999983,
+      "fitted": 0.49936662008554344,
+      "ideal_target": 0.5000000000000002,
+      "error": 0.000633379914456389
+    },
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|---\n",
+      "length": 17,
+      "dense_reference": 0.49999999999999956,
+      "fitted": 0.5026129850811838,
+      "ideal_target": 0.4999999999999999,
+      "error": 0.002612985081184238
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|---\n",
+      "length": 17,
+      "dense_reference": 0.5000000000000001,
+      "fitted": 0.5014210426722778,
+      "ideal_target": 0.49999999999999967,
+      "error": 0.001421042672277717
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|---\n",
+      "length": 17,
+      "dense_reference": 0.5000000000000001,
+      "fitted": 0.5012804570241144,
+      "ideal_target": 0.5,
+      "error": 0.0012804570241142788
+    },
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|---\n",
+      "length": 23,
+      "dense_reference": 0.04767930313887281,
+      "fitted": 0.04805819356621566,
+      "ideal_target": -2.220446049250313e-16,
+      "error": 0.0003788904273428484
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|---\n",
+      "length": 23,
+      "dense_reference": 0.5,
+      "fitted": 0.5022527389730527,
+      "ideal_target": 0.5000000000000007,
+      "error": 0.0022527389730526703
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|---\n",
+      "length": 23,
+      "dense_reference": 0.5000000000000001,
+      "fitted": 0.4997119028185284,
+      "ideal_target": 0.4999999999999999,
+      "error": 0.0002880971814717137
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|---\n",
+      "length": 23,
+      "dense_reference": 0.49999999999999956,
+      "fitted": 0.5024014971135343,
+      "ideal_target": 0.4999999999999989,
+      "error": 0.0024014971135347674
+    },
+    {
+      "circuit": "Qubit 0 ---|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|---\n",
+      "length": 31,
+      "dense_reference": 0.5000000000000001,
+      "fitted": 0.5011339943826807,
+      "ideal_target": 0.500000000000001,
+      "error": 0.001133994382680581
+    },
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|---\n",
+      "length": 31,
+      "dense_reference": 0.4999999999999998,
+      "fitted": 0.5011882179421606,
+      "ideal_target": 0.5000000000000002,
+      "error": 0.0011882179421608408
+    },
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|---\n",
+      "length": 31,
+      "dense_reference": 0.9380474611960883,
+      "fitted": 0.9398823565925387,
+      "ideal_target": 1.0,
+      "error": 0.001834895396450431
+    },
+    {
+      "circuit": "Qubit 0 ---|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gypi2|-|Gypi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gxpi2|-|Gypi2|-|Gxpi2|-|Gypi2|---\n",
+      "length": 31,
+      "dense_reference": 0.9380474611960883,
+      "fitted": 0.9392504357530888,
+      "ideal_target": 1.0,
+      "error": 0.001202974557000469
+    }
+  ],
+  "model": {
+    "rho": [
+      0.7071067811865476,
+      0.0,
+      0.0,
+      0.7014499269370552
+    ],
+    "effects": {
+      "0": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "1": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        -0.7071067811865476
+      ]
+    },
+    "true_operations": {
+      "[]": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0146536357569526e-17
+        ],
+        [
+          0.0,
+          0.996,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.996,
+          0.0
+        ],
+        [
+          1.0105950212139248e-17,
+          0.0,
+          0.0,
+          0.996
+        ]
+      ],
+      "Gxpi2:0": [
+        [
+          1.0,
+          0.0,
+          -6.835808657661923e-17,
+          7.850462293418876e-17
+        ],
+        [
+          0.0,
+          0.996,
+          0.0,
+          0.0
+        ],
+        [
+          -7.8190604442452e-17,
+          0.0,
+          9.438440884755879e-17,
+          -0.996
+        ],
+        [
+          -6.808465423031275e-17,
+          0.0,
+          0.996,
+          1.1057821325266558e-16
+        ]
+      ],
+      "Gypi2:0": [
+        [
+          1.0,
+          6.835808657661923e-17,
+          0.0,
+          7.850462293418876e-17
+        ],
+        [
+          7.8190604442452e-17,
+          9.438440884755879e-17,
+          0.0,
+          0.996
+        ],
+        [
+          0.0,
+          0.0,
+          0.996,
+          0.0
+        ],
+        [
+          -6.808465423031275e-17,
+          -0.996,
+          0.0,
+          1.1057821325266558e-16
+        ]
+      ]
+    },
+    "fitted_rho": [
+      0.7071067811865476,
+      0.008953706803564988,
+      0.005041752529609164,
+      0.7016304706231149
+    ],
+    "fitted_effects": {
+      "0": [
+        0.7071672560430562,
+        0.004405863047433904,
+        0.0059928218831973735,
+        0.7068850139553857
+      ],
+      "1": [
+        0.707046306330039,
+        -0.004405863047433904,
+        -0.0059928218831973735,
+        -0.7068850139553857
+      ]
+    },
+    "fitted_operations": {
+      "[]": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0002091730897578689,
+          0.9958956749392072,
+          0.00042963504407759,
+          -4.537249289573645e-07
+        ],
+        [
+          0.00027448661768819524,
+          -0.000558704095839362,
+          0.9959251429854092,
+          0.0011666782626133226
+        ],
+        [
+          0.0003415837065255217,
+          0.0007445156948596622,
+          -0.00027595723377552873,
+          0.9962750695094107
+        ]
+      ],
+      "Gxpi2:0": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -2.03553703973051e-06,
+          0.9958340660477261,
+          0.016329651814482565,
+          -0.005134378844867927
+        ],
+        [
+          -7.970998560401837e-05,
+          -0.007386937244087934,
+          -0.0017221066106540839,
+          -0.9953840148142361
+        ],
+        [
+          -4.049621590315595e-05,
+          -0.011992319380986695,
+          0.9967827963644648,
+          0.00046067603873023444
+        ]
+      ],
+      "Gypi2:0": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0002397861438187724,
+          -0.0005062037922127782,
+          0.00042761463585969854,
+          0.9964268092125517
+        ],
+        [
+          0.00027032857624870307,
+          -0.008852042382590181,
+          0.9959257987635967,
+          -0.002754343149190296
+        ],
+        [
+          0.0005527771710542485,
+          -0.9957341055511032,
+          -0.010500519629263383,
+          0.0019781770098932228
+        ]
+      ]
+    }
+  },
+  "elapsed_seconds": 0.8397766249254346,
+  "scope": "finite-shot local Markov model, simultaneous SPAM/gates, constrained long-sequence likelihood; not every GST variant or device experiment"
+}

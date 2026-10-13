@@ -1,0 +1,19 @@
+-- Found OpenMP_C: -Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include (found version "5.1")
+-- Found OpenMP_CXX: -Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include (found version "5.1")
+-- Found OpenMP: TRUE (found version "5.1")
+-- Configuring done (0.4s)
+CMake Error at CMakeLists.txt:12 (target_link_libraries):
+  Target "parallel_recovery" links to:
+
+    OpenMP::OpenMP_CXX
+
+  but the target was not found.  Possible reasons include:
+
+    * There is a typo in the target name.
+    * A find_package call is missing for an IMPORTED target.
+    * An ALIAS target is missing.
+
+
+
+-- Generating done (0.0s)
+CMake Generate step failed.  Build files cannot be regenerated correctly.

@@ -1,0 +1,27 @@
+{
+  "ideal": {
+    "trials": 400,
+    "swapped": 108,
+    "generated_links": 399
+  },
+  "lossy": {
+    "trials": 400,
+    "swapped": 93,
+    "generated_links": 366
+  },
+  "finite_cutoff": {
+    "trials": 40,
+    "swapped": 9,
+    "generated_links": 43
+  },
+  "short_cutoff": {
+    "trials": 40,
+    "swapped": 0,
+    "generated_links": 0
+  },
+  "mixed_input": {
+    "trials": 40,
+    "swapped": 13,
+    "generated_links": 43
+  }
+}

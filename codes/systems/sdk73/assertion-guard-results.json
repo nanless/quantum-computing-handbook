@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "script": "qec_grid.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    },
+    {
+      "script": "grape_three.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    },
+    {
+      "script": "sequence_entanglement.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    },
+    {
+      "script": "verify_saved_results.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    },
+    {
+      "script": "plot_results.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    },
+    {
+      "script": "round73_checks.py",
+      "exit_code": 1,
+      "stderr": "RuntimeError: Validation requires assertions; do not run with -O"
+    }
+  ]
+}

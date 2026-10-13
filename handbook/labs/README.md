@@ -155,3 +155,36 @@ python3 codes/run_all.py
 | [Q4](../quantum-mechanics/04-wavefunctions-models.md) | Fock截断如何改变对易子 | [基础诊断q4](../../codes/foundations/diagnostic_lab.py) |
 
 此外，[源码阅读练习S04–S08](../appendices/software-practice.md)把多项式基、LCU归一化、阴影快照、控制约束和重构顺序连接到固定的上游文件。四组数值题有[独立复算代码](../../codes/practice/source_reading_checks.py)，工程讨论题保留其无法单靠程序断言验收的边界。
+
+## 第五组逐章练习：第73轮补缺口与深度核验
+
+三组完整读审并交换复核24篇。每篇的新题有明确条件、分步解答、代码与样本；原251题保留。完整SDK安装在独立环境中，默认入口只执行标准库复算。[五组上层集成题](sdk-validation.md#9-第73轮补缺口先把未实现拆成可验收任务)另给动态MPF、SLC、PNA、GST和Philox计算。
+
+| 篇章与新题 | 重点 | 独立复算 |
+|---|---|---|
+| [F73-00](../00-overview.md) | F73-00｜校准与留出验证也要计入一次任务 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-01](../01-math.md) | F73-01｜逆矩阵怎样还原读出，为什么也会放大误差 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-02](../02-single-qubit.md) | F73-02｜读出补偿：把偏差和校准的不确定度一起带回来 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-03](../03-multiple-qubits.md) | F73-03｜两端都有读出偏差，纠缠见证怎样换算 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-04](../04-circuits-protocols.md) | F73-04｜消息全到了，读错一位仍会做错校正 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-05](../05-noise-channels.md) | F73-05｜真正约束CP与TP，Gaussian拟合与计数最大似然分开 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-Q1](../quantum-mechanics/01-experiments-states.md) | F73-Q1｜漏检与错报不同：纯态也会得到浅条纹 | [foundations](../../codes/foundations/round73_checks.py) |
+| [F73-Q2](../quantum-mechanics/02-observables-dynamics.md) | F73-Q2｜脉冲随时间变化：分别检查时序误差、积分误差与轨迹涨落 | [foundations](../../codes/foundations/round73_checks.py) |
+| [A73-06](../06-algorithmic-primitives.md) | 练习 A73-06：相位没有正负号，谱值的符号要靠承诺解码 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-07](../07-algorithms.md) | 完整电路练习 A73-07：负谱与非网格 HHL，要把垃圾概率单独算 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-08](../08-applications.md) | 练习 A73-08：粒子数罚项多大，才真正排除真空答案 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-13](../13-quantum-information.md) | 练习 A73-13：相同计算基计数，不能判断反计算后的输出仍是纯态 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-16](../16-advanced-algorithms-verification.md) | 完整离散搜索练习 A73-16a：给标记点换硬币，才从行走变成搜索 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-17](../17-computation-models.md) | 完整前馈练习 A73-17：两个测量步，四种结果都要纠正 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-18](../18-channels-capacities-complexity.md) | 练习 A73-18：只有能量上限时，Fock 尾界应当多保守 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [A73-Q4](../quantum-mechanics/04-wavefunctions-models.md) | 练习 A73-Q4：截断后再驱动，并不等于先驱动再投影 | [algorithms](../../codes/algorithms/round73_checks.py) |
+| [S73-09](../09-hardware.md) | 5.6 S73-09：同一个 Y 故障，为什么会同时进入两张检查图 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-10](../10-error-correction.md) | 7.4 S73-10：双基、固定轮数和相关匹配，逐个缺口真正补上 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-11](../11-resources-benchmarks.md) | 7.3 S73-11：换译码器要逐条配对，计时也要留下分布 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-12](../12-security-network-frontiers.md) | 7.3 S73-12：真的先兆两段 Bell 对，再执行交换和过期事件 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-14](../14-compilation-control.md) | 6.2 S73-14：把泄漏放进优化目标后，怎样验收计算子空间 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-15](../15-practice-research.md) | 15.2 S73-15：SDK有成功先兆，也要用数学反例检查后态 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-19](../19-engineering-architecture.md) | 10.3 S73-19：有了真实时长样本，仍要把“服务”与“反馈”分开 | [systems](../../codes/systems/round73_checks.py) |
+| [S73-Q3](../quantum-mechanics/03-levels-control.md) | 6.4 S73-Q3：三维门酉，不表示它的二维限制也酉 | [systems](../../codes/systems/round73_checks.py) |
+
+基础完整流程见[基础SDK](../../codes/foundations/sdk73/README.md)，算法见[算法SDK](../../codes/algorithms/sdk73/README.md)，系统见[系统SDK](../../codes/systems/sdk73/README.md)，集成见[上层工作流](../../codes/sdk/round73/README.md)。标签A73-16含多个子题，各题独立说明口径；覆盖篇章不表示穷尽全部算法。

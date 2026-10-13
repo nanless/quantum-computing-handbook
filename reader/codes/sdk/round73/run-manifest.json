@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "python": "3.11.15",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "records": [
+    {
+      "script": "dynamic_mpf.py",
+      "command": [
+        "/tmp/quantum-round73-workflow-sdk/bin/python",
+        "-u",
+        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/dynamic_mpf.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 2.705811958061531,
+      "script_sha256": "8536074a689cca4effe4b390a0b8385f340ac0fd97003c12d992a6080fbe2d5a",
+      "log": "dynamic_mpf-validated.log",
+      "log_sha256": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e",
+      "result": "dynamic-mpf-results.json",
+      "result_sha256": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e"
+    },
+    {
+      "script": "long_gst.py",
+      "command": [
+        "/tmp/quantum-round73-workflow-sdk/bin/python",
+        "-u",
+        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/long_gst.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 1.6513063750462607,
+      "script_sha256": "ba5de6a23b8732bcd13093483c09a401e1cef8e04079568325bc7bcad6292a32",
+      "log": "long_gst-validated.log",
+      "log_sha256": "8550c17562b60861817dd9dda650598774aca7e0931d2be8aae7f064868695f3",
+      "result": "gst-long-results.json",
+      "result_sha256": "386be383224db54a0e4d572581f61c72b65bbf4e67611f7c7f1ed8f0a6cf6aa4"
+    },
+    {
+      "script": "pna_workflow.py",
+      "command": [
+        "/tmp/quantum-round73-workflow-sdk/bin/python",
+        "-u",
+        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/pna_workflow.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6366105830529705,
+      "script_sha256": "09d2728574fb2878bc8b37647c864c7aa5adf9ed44325bbdd9bd0afb321f916d",
+      "log": "pna_workflow-validated.log",
+      "log_sha256": "10fd55152bcc2668e62285cdd0adb816b10b3d226682ae537e94e48a5dc18bdc",
+      "result": "pna-results.json",
+      "result_sha256": "34ac713a70aefc5b14b73ccd20033ee073c5e4750455cefbdfc77fb4c9ac8cea"
+    },
+    {
+      "script": "slc_workflow.py",
+      "command": [
+        "/tmp/quantum-round73-workflow-sdk/bin/python",
+        "-u",
+        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/slc_workflow.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 5.624479999998584,
+      "script_sha256": "133c7c1c200d3d8438d70622452e7f09999ecd7019efa6cef9205de49ab84e8d",
+      "log": "slc_workflow-validated.log",
+      "log_sha256": "306031867efebb314c60d861bc366109015b34c382fea74ce80f78c23bb94efa",
+      "result": "slc-results.json",
+      "result_sha256": "be7e77d47a44099c6a1d6e0241c99252583fa0350f36362409b92c009a88bc72"
+    }
+  ],
+  "installed_source_hashes": {
+    "quimb/tensor/tn1d/tebd.py": {
+      "installed_path": "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/quimb/tensor/tn1d/tebd.py",
+      "sha256": "87b50f0066ed049f709ec0f6b503e4de604ba16d0a1a6587894363a4293ca649"
+    },
+    "qiskit_addon_slc/bounds/local_scales.py": {
+      "installed_path": "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/qiskit_addon_slc/bounds/local_scales.py",
+      "sha256": "310f45fea182780689f0929c91779594cdf1b041928079e19ca4f51bc4379288"
+    },
+    "qiskit_mitigation/pec.py": {
+      "installed_path": "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/qiskit_mitigation/pec.py",
+      "sha256": "5866e02e8a03273e19535cceb1b2fd1a5994c0120d9473a2c995594d3665ea5b"
+    },
+    "qiskit_mitigation/utils/expectation_values.py": {
+      "installed_path": "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/qiskit_mitigation/utils/expectation_values.py",
+      "sha256": "964026106c9a048d45e5743b29b89c939b29ad6e414a43c7827de4a7dfcaf9f6"
+    }
+  },
+  "versions": {
+    "qiskit": "2.5.2",
+    "qiskit-aer": "0.17.2",
+    "qiskit-addon-mpf": "0.3.0",
+    "quimb": "1.15.0",
+    "qiskit-addon-slc": "0.1.0",
+    "qiskit-addon-pna": "0.2.0",
+    "qiskit-mitigation": "0.1.1",
+    "samplomatic": "0.21.0",
+    "pauli-prop": "0.1.0",
+    "pygsti": "0.10.2",
+    "cvxpy": "1.9.3",
+    "matplotlib": "3.11.2"
+  }
+}

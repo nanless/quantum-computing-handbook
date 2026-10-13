@@ -455,6 +455,18 @@ $$P_0(t)=A e^{-(t/T_2^*)^n}\cos(2\pi\Delta f t+\phi)+B,$$
 
 **扩展答案。** SDK 运行中若遇版本问题，保留具体错误、修复和重跑。此次 qutip-qtrl 的通用 `L-BFGS-B` 路径向 SciPy 1.17.1 传递了不识别的 `maxfev` 选项；改用库明确支持的专用 `FMIN_L_BFGS_B` 路径后完整重跑，没有该警告，目标与独立传播仍一致。SeQUeNCe 的 master Python 要求与 0.8.5 发布包要求不同，则分别写明，不静默改成一个“最新版”。来源为 [qutip-qtrl 0.2.0 源码](https://raw.githubusercontent.com/qutip/qutip-qtrl/v0.2.0/src/qutip_qtrl/pulseoptim.py)和 [SeQUeNCe 官方项目](https://github.com/sequence-toolbox/SeQUeNCe)（访问 2026-10-13）；具体日志保留在本轮审校报告中。
 
+### 15.2 S73-15：SDK有成功先兆，也要用数学反例检查后态
+
+**题目。** 程序声称在密度矩阵模式判断 $\Psi^+=(|01\rangle+|10\rangle)/\sqrt2$。候选比较对象却是 $C=|\Phi^+\rangle\langle\Psi^+|$。它能是目标态的密度矩阵吗？
+
+**逐步答案。** 两个Bell态正交，所以 $\operatorname{Tr}C=\langle\Psi^+|\Phi^+\rangle=0$，而密度矩阵的迹应为1。又有 $C^\dagger=|\Psi^+\rangle\langle\Phi^+|\ne C$，它甚至不是Hermitian。正确对象是 $\rho_+=|\Psi^+\rangle\langle\Psi^+|$，按 $00,01,10,11$ 基序只有中间 $2\times2$ 块为全部1/2，其迹为1、正性成立。这一步不需要联网或大型模拟。
+
+第 12 章新协议实跑恰好发现 SeQUeNCe 0.8.5 在这处分支用了前一种对象。验收因真实Bell重叠与元数据不符而失败；只检查“ENTANGLED”和 `fidelity=1` 会漏掉它。先保存固定种子的未防护反例，再添加本书进程内的窄范围判定防护，最后从零重新运行全部协议。原包与历史第三方快照不修改，最终输出注明防护；本书消息广播路由和中间位偏迹的初始错误也保存原日志，没有把修订后的通过倒记成初次无错误。
+
+**可执行练习。** 标准库运行 [round73_checks.py](../codes/systems/round73_checks.py) 的 `--case 15`，独立检查迹与Hermitian条件；SDK运行 [verify_saved_results.py](../codes/systems/sdk73/verify_saved_results.py)，重新译码全部182000条归档检测样本，并用另一种指数算法复算三维控制波形，不重采样或优化。新的源文件、输入、日志、哈希与[环境锁](../codes/systems/sdk73/requirements-lock.txt)形成闭环。旧72轮结果仍保留原运行范围；新证据不是只刷新旧报告日期。
+
+依据[0.8.5固定BSM源码](https://github.com/sequence-toolbox/SeQUeNCe/blob/v0.8.5/sequence/components/bsm.py)（访问2026-10-13）。数学反例说明一个具体判定错误；没有据此宣布整库不能用，也没有认为修复这一处便验证了所有协议、安全证明和真实器件。
+
 ## 16. 自检
 
 1. 为什么应先做态矢量模拟，再做 shots 模拟？

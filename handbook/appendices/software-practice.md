@@ -1,8 +1,8 @@
 # 算法、工业实践与开源代码对照
 
-核验日期：原条目为2026-09-26；第11–16节研究及第72轮完整SDK验证为2026-10-13，旧条目保留各自核验日。本页把全书已有主题连接到可运行教学实验、真实开源实现和产业证据。它覆盖本书主要算法族及工程环节，不声称穷尽整个量子计算领域。具体数学条件仍以对应章节为准；“有库实现”“可在真机运行”“已获得商业收益”“证明量子加速”是四个不同问题。
+核验日期：原条目为2026-09-26；第11–16节研究及第72/73轮完整SDK验证为2026-10-13，旧条目保留各自核验日。本页把全书已有主题连接到可运行教学实验、真实开源实现和产业证据。它覆盖本书主要算法族及工程环节，不声称穷尽整个量子计算领域。具体数学条件仍以对应章节为准；“有库实现”“可在真机运行”“已获得商业收益”“证明量子加速”是四个不同问题。
 
-本地保存了 26 个项目的 97 份文件（源码、许可证、声明及部分原项目说明），固定到 40 位提交哈希；见[完整源码索引](../../codes/vendor/README.md)与[机器可读校验清单](../../codes/vendor/manifest.json)。这些是未改写的源码摘录，便于对照阅读；完整安装还需要原仓库的其余模块、依赖及构建步骤。教学代码与第三方摘录分别存放。第72轮另安装并实际运行全部26项目的完整发行包或完整C/C++提交；逐项目的版本、任务、原始样本、失败复现与验收边界见[完整SDK实验册](../labs/sdk-validation.md)。这不等于执行所有上游功能或证明工业优势。
+本地保存了 31 个项目的 122 份文件（源码、许可证、声明及部分原项目说明），固定到 40 位提交哈希；见[完整源码索引](../../codes/vendor/README.md)与[机器可读校验清单](../../codes/vendor/manifest.json)。这些是未改写的源码摘录，便于对照阅读；完整安装还需要原仓库的其余模块、依赖及构建步骤。教学代码与第三方摘录分别存放。第72轮另安装并实际运行全部26项目的完整发行包或完整C/C++提交；第73轮再补完整SLC、PNA、Samplomatic、mitigation与Random123及既有SDK上层流程；旧26项目97份摘录保持原字节。逐项目的版本、任务、原始样本、失败复现与验收边界见[完整SDK实验册](../labs/sdk-validation.md)。这不等于执行所有上游功能或证明工业优势。
 
 ## 1. 怎样读算法对照表
 
@@ -23,8 +23,8 @@
 | 乘积公式 Hamiltonian 模拟，07、16 | 局域项、总时间与精度 → 近似演化 | OpenFermion 映射与 `simulate_trotter.py` 固定源码；第72轮已安装完整包并执行费米子映射，未遍历全部Trotter实现 | 非对易误差、时间步、分解后门数 |
 | LCU / block-encoding / qubitization，16 | 加权算子访问 → 嵌入块与演化 | Qualtran `LinearCombination` 与 `QubitizationWalkOperator` 源码，另有QFT/加法 | 归一化因子、选择/制备 oracle、后选择与辅助位 |
 | QSP / QSVT，16 | 块编码与可实现多项式 → 奇异值变换 | PennyLane `qsvt.py`、pyqsp相位求解与响应源码；[非厄米反例](../labs/algorithms.md) | 奇偶约束、相位约定；不能把奇异值变换一概写成矩阵多项式 |
-| HHL / 量子线性系统，07、16 | 矩阵访问、右端态 → 解态或少量可观测量 | 07章A72-07完整非对角HHL，Cirq实际QPE→倒数旋转→反计算→后选择 | 条件数、稀疏/块访问、态制备、精度与结果读出 |
-| 量子行走，16 | 图或 Markov 链访问 → 搜索/谱信息 | 16章A72-16a完整quimb一般小图行走；图搜索和qubitization仍须区分 | 建立成本、更新成本、谱隙、标记比例 |
+| HHL / 量子线性系统，07、16 | 矩阵访问、右端态 → 解态或少量可观测量 | 07章A72-07及A73-07：Cirq完整负谱/离网格QPE→有符号倒数→反计算→双条件统计 | 条件数、稀疏/块访问、态制备、精度与结果读出 |
+| 量子行走，16 | 图或 Markov 链访问 → 搜索/谱信息 | 16章A72-16a一般图行走及A73-16a完整SKW超立方搜索；仍非一般MNRS | 建立成本、更新成本、谱隙、标记比例 |
 | 容错算术与资源分解，11、16 | 高级子程序 → 分解与逻辑资源 | [Qualtran](https://github.com/quantumlib/Qualtran)，本地加法/QFT 源码 | 逻辑门数不等于物理位数；路由、工厂和等待需再估算 |
 
 Qualtran 官方说明其仍是实验预览，接口和个别算法可能变化；固定提交有助复查，不意味着库结果已经被独立证明。更多原始算法论文见[参考资料](references.md)及各章文献。
@@ -112,7 +112,7 @@ PQC 的工程目标是替换受未来量子攻击威胁的经典密码。liboqs 
 
 ## 7. 明确没有交付的部分
 
-第72轮已经实际运行完整小实例HHL、一般图行走、两比特经典阴影、受约束GRAPE与Gaussian光子概率，详细输入输出见[SDK实验册](../labs/sdk-validation.md)。任意规模隐藏子群、拓扑量子计算、分布式容错、完整shading/PNA、动态MPF与生产部署仍未实现；本轮小实例与完整软件安装都不能替代这些系统的复现。未收集闭源生产代码、私有设备固件、付费后端数据及未经授权的录音。用户可以从表中看到这些差距，不会把一份有限代码目录误认为全领域完整实现。
+第72轮已经实际运行完整小实例HHL、一般图行走、两比特经典阴影、受约束GRAPE与Gaussian光子概率，详细输入输出见[SDK实验册](../labs/sdk-validation.md)。第73轮追加负谱HHL、SKW、选择位QSVT、两步MBQC、动态MPF、完整shading/PNA及长GST；任意规模隐藏子群、拓扑量子计算、分布式容错、硬件noise learning与生产部署仍未实现；本轮小实例与完整软件安装都不能替代这些系统的复现。未收集闭源生产代码、私有设备固件、付费后端数据及未经授权的录音。用户可以从表中看到这些差距，不会把一份有限代码目录误认为全领域完整实现。
 
 ## 8. 新增源码怎样逐步读：从数学对象走到实现
 
@@ -186,10 +186,10 @@ GRAPE利用离散控制变量的梯度；CRAB用有限基函数参数化脉冲�
 
 | 方法/环节 | 要理解的核心变化 | 必须补做的验证 | 本轮状态 |
 |---|---|---|---|
-| Multi-product formulas | 用多个演化近似的带权组合控制误差 | 总shots、负权重方差、近似误差与同预算单一乘积公式比较 | 第72轮完整SDK已实际运行静态约束解/合成线路；动态TN未运行 |
+| Multi-product formulas | 用多个演化近似的带权组合控制误差 | 总shots、负权重方差、近似误差与同预算单一乘积公式比较 | 第72轮静态约束解；第73轮完整动态MPO/TEBD实跑，四阶参考需显式防护，病态系数单列 |
 | Operator backpropagation | 把一部分线路作用转移到待测可观测量 | 可观测量项数增长、截断偏差、测量分组和经典开销 | 第72轮完整SDK正常路径已运行；一项预算发现0.3.0缺陷，保留复现/防护 |
-| SQD for HPC | 使样本子空间对角化适配经典HPC流程 | 子空间/节点规模、内存、通信、收敛和同Hamiltonian基线 | 完整Python SQD投影求解及C++HPC测试/三阶段驱动已运行；多节点未复现 |
-| Shaded lightcones / Pauli propagation | 利用目标可观测量相关结构缩减噪声处理工作 | 被忽略项的误差、噪声模型标定、与完整PEC的预算比较 | 完整Rust wheel传播/截断已运行；完整shading工作流未运行 |
+| SQD for HPC | 使样本子空间对角化适配经典HPC流程 | 子空间/节点规模、内存、通信、收敛和同Hamiltonian基线 | 完整Python SQD与C++驱动；第73轮官方Philox单机OpenMP/serial对照，多节点未复现 |
+| Shaded lightcones / Pauli propagation | 利用目标可观测量相关结构缩减噪声处理工作 | 被忽略项的误差、噪声模型标定、与完整PEC的预算比较 | 第73轮完整SLC界/选择、Samplomatic逆噪声采样、Aer与PEC后处理已运行；合成noise model |
 
 这些方法可能改变误差与成本的分配，不取消读入、经典预处理、校准、通信、采样和验证。一个可审查的工业实验应保存相同业务输入下的经典与量子混合两条完整流程，先设可行性和误差门槛，再画质量随端到端时间/成本变化的曲线。公开证据若只有论文图或供应商案例，就明确写这一层，不能补造客户生产日志。
 
@@ -198,10 +198,10 @@ GRAPE利用离散控制变量的梯度；CRAB用有限基函数参数化脉冲�
 | 材料层 | 当前可交付 | 仍不能据此宣称 |
 |---|---|---|
 | 章节解释与自编小模型 | 全书对应章节、就地详解、固定样本和断言 | 已实现任意规模的全部算法 |
-| 第三方固定源码 | 26项目97文件，来源/许可/commit/哈希 | 是完整SDK或已通过所有上游测试 |
-| 完整SDK本地任务 | 26项目完整安装/构建，HHL、行走、CV及各表列任务实际执行 | 任意规模全部算法、全部上游测试或生产验证 |
+| 第三方固定源码 | 31项目122文件，来源/许可/commit/哈希 | 是完整SDK或已通过所有上游测试 |
+| 完整SDK本地任务 | 第72/73轮合计31项目完整安装/构建，明示CPU任务及原计数实际执行 | 任意规模全部算法、全部上游测试或生产验证 |
 | 工业证据 | 原论文、官方工作流和限定场景 | 闭源生产代码、私有日志或普遍商业优势 |
-| 新增方法观察 | 四类官方工作流入口与第11–16节明示的源码/核算状态 | 动态TN、完整shading等上层工作流都已运行，或已经证明普适优越性 |
+| 新增方法观察 | 四类官方工作流入口与第11–16节明示的源码/核算状态 | 所有规模/所有变体的上层工作流已运行，或已经证明普适优越性 |
 
 下载范围围绕教材主题与许可明确的代表性实现，不无差别复制整个生态或不明来源合集。下一次扩展应先选可验证的问题和最小实例，再补完整环境与测试；新的模型或更大源码目录都不应代替这一验证步骤。
 
@@ -260,7 +260,7 @@ $$
 
 图按该理想模型的精确偏差，加上$1/N$或$(5/3)^2/N$的方差上界绘制；横轴是总独立shots，纵轴是无量纲均方误差上界，两轴为对数。它不是实测误差曲线，也没有计入深线路更长的执行时间、门噪声、漂移或校准。负权重降低理想偏差，但在预算不足时，本例的保守上界仍可能更大。[图生成器](../../codes/practice/workflow_figures.py)
 
-源码从[static.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/static.py)的约束矩阵读起，再看[LSE](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/lse.py)和[优化约束](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/exact.py)。[dynamic.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/dynamic.py)另包含依时间变化的构造，不能把本题的固定系数说成全部动态MPF的实现。第71轮仅核验固定字节与独立模型；第72轮实际执行cvxpy/CLARABEL静态解及分解后的Suzuki电路，见R72-MPF。动态MPF张量网络后端仍未执行。
+源码从[static.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/static.py)的约束矩阵读起，再看[LSE](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/lse.py)和[优化约束](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/exact.py)。[dynamic.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/dynamic.py)另包含依时间变化的构造，不能把本题的固定系数说成全部动态MPF的实现。第71轮仅核验固定字节与独立模型；第72轮实际执行cvxpy/CLARABEL静态解及分解后的Suzuki电路，见R72-MPF。第73轮已实际运行动态MPO后端，参考系数与病态Gram问题见R73-MPF；原失败保存。
 
 ## 12. 可观测量反向传播：线路缩短后到底要测什么
 
@@ -311,7 +311,7 @@ $$
 
 本地[Python入口](../../codes/vendor/pauli-prop/python/pauli_prop/propagation.py)负责线路、Pauli和方向约定，[Rust核心](../../codes/vendor/pauli-prop/src/lib.rs)包含传播、项合并与截断。官方文档说明它可用于理想/含噪传播，以及OBP等上层方法；截断让对象保持稀疏，但需要报告近似误差。[Pauli propagation官方说明](https://quantum.cloud.ibm.com/docs/en/addons/pauli-prop)
 
-本轮保存的是传播引擎，**没有**保存完整shaded-lightcone或PNA工作流，第72轮另安装完整官方wheel并实际调用其Rust扩展传播；没有从源编译Rust扩展。噪声模型应从标定或受控实验取得；本题的$p=0.1$是明示教学参数。传播引擎存在不等于这些参数已经在工业设备上验证。
+第71轮保存传播引擎，第72轮实际调用完整Rust wheel；第73轮另保存SLC/PNA等代表性源码并完整安装发行包，实际界计算、逆噪声生成、采样与执行见R73-SLC/PNA；没有从源编译Rust扩展。噪声模型应从标定或受控实验取得；本题的$p=0.1$是明示教学参数。传播引擎存在不等于这些参数已经在工业设备上验证。
 
 ## 14. SQD与HPC：去重、投影和随机流分别负责什么
 
@@ -363,10 +363,16 @@ $$
 | 保真度 | 本书$F$是根保真度；Walrus `fidelity`的docstring采用纯态重叠模平方 | 对齐$F$与$F^2$再比较；纯态内积模为0.8时两者是0.8与0.64 |
 | 信道组合 | $\mathcal B\circ\mathcal A$表示先$\mathcal A$再$\mathcal B$；SDK `compose(front=...)`指定对象顺序 | 在非交换信道上画出输入→输出链，用Kraus乘积核查，不只读方法名 |
 
-仪器模型另可阅读[pyGSTi Instrument](../../codes/vendor/pygsti/pygsti/modelmembers/instruments/instrument.py)：它把结果标签与相应操作放在同一对象内，而不只保存一个POVM概率表。保留各分支的完全正映射、发生概率与合并后的保迹性质，才能描述动态测量和反馈。该文件的存在不意味着本书已经运行门集层析拟合，或已经证明某设备测量满足QND。依据为[pyGSTi官方源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)（Apache-2.0，原NOTICE保留，访问2026-10-13）。
+仪器模型另可阅读[pyGSTi Instrument](../../codes/vendor/pygsti/pygsti/modelmembers/instruments/instrument.py)：它把结果标签与相应操作放在同一对象内，而不只保存一个POVM概率表。保留各分支的完全正映射、发生概率与合并后的保迹性质，才能描述动态测量和反馈。该文件的存在本身不构成运行证据；第72轮另运行LGST，第73轮实际CPTPLND长序列拟合见R73-GST，仍不证明某设备测量满足QND。依据为[pyGSTi官方源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)（Apache-2.0，原NOTICE保留，访问2026-10-13）。
 
 前两行可直接阅读[gaussian_checks.py](../../codes/vendor/thewalrus/thewalrus/quantum/gaussian_checks.py)中的定义、参数和平方说明；第71轮未安装The Walrus；第72轮实际运行完整包并以独立概率公式核对，显式hbar与排序见18章A72-18。相应正文新增物理性算例见[第18章](../18-channels-capacities-complexity.md)。
 
 第三行的固定源码为[kraus.py](../../codes/vendor/qiskit/qiskit/quantum_info/operators/channel/kraus.py)，本书非交换诊断见[第05章](../05-noise-channels.md)。若先施加Kraus集合$\{A_j\}$，再施加$\{B_k\}$，组合集合是$\{B_kA_j\}$；这可从$\mathcal B(\mathcal A(\rho))$逐项展开得到。源码阅读与小模型核算不能替代完整SDK版本的集成测试。
 
-新增来源覆盖了原第9节四类后续研究项中的MPF、OBP与SQD-HPC，以及Pauli传播引擎。完整shaded-lightcone/PNA、任意规模HHL、全部工业工作流、私有设备控制代码和真机优势复现仍不在本轮交付内；覆盖表应据此更新，不能因为源码数量增加就删除这些缺口。
+新增来源覆盖了原第9节四类后续研究项中的MPF、OBP与SQD-HPC，以及Pauli传播引擎。第73轮已补完整shaded-lightcone/PNA及动态MPF的明示本地任务；任意规模HHL、全部工业工作流、私有设备控制代码和真机优势复现仍不在交付内；覆盖表应据此更新，不能因为源码数量增加就删除这些缺口。
+
+## 17. 第73轮工业流程的实际接续
+
+完整实现的细算移入[SDK实验册第9–14节](../labs/sdk-validation.md)，把上层工作流与已有理论连接。动态MPF用独立16维指数核验MPO重叠，SLC在噪声预算下选择生成元，PNA实际生成并测量逆噪声可观测量，GST同时估计SPAM与门，SQD-HPC以官方Philox按工作项定位随机流。每一项均保留模型、成本、失败与独立参考。
+
+工业迁移需要在上述部件前后补真实noise learning、编译/校准快照、强经典基线、设备作业时间与成本。本轮把相关接口、源码与数学边界讲清并执行本地任务，没有这些设备生产数据时就保留这个缺口。新归档5项目包括原许可证与固定提交；源码摘录、完整发行包运行、官方研究演示和生产收益仍逐项区分。

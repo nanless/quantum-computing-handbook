@@ -37,3 +37,5 @@ node tools/reader/check-qm-review.mjs
 第72轮新增 `node tools/reader/check-round72.mjs` 和 `node tools/reader/verify-round72-visuals.mjs`，检查逐章新标签、26个完整项目运行证据与四张新科学图。41页宽/窄布局由总验证器自动检查；截图生成与人工目视抽查分别记录。
 
 浏览器检查先保存结果，再关闭本次检查创建的浏览器。某些已安装Chrome版本退出后仍留有传输句柄，检查工具对此增加10秒收尾上限；超时写明确提示并按已经完成的检查状态退出，不改变失败状态或终止用户浏览器。
+
+第73轮新增入口：`node tools/reader/check-round73.mjs`检查24篇新题与最新证据；`node tools/reader/verify-round73-visuals.mjs`生成新题上下文与科学图截图。生成截图不等于人工验收，实际看图范围记录于本轮报告。

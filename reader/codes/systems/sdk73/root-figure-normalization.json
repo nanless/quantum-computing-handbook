@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/tmp/quantum-round72-systems-sdk/bin/python",
+    "codes/systems/sdk73/plot_results.py"
+  ],
+  "returncode": 0,
+  "generator_sha256": "aa5ad57eafcde7556d632f3101791fcdadc653d3d98b9f575470619b778b77e8",
+  "png_before": {
+    "round73-systems-qec-preview.png": "3b1b0411cdae2a2c077d4d29d3d99f36b513c61dd570acae99afd6420b3c47c1",
+    "round73-systems-control-preview.png": "648c98da882f5b536b816ade1b9c05fada7d8d0cabbe8296da4bcb7b875a21ea"
+  },
+  "png_after": {
+    "round73-systems-qec-preview.png": "3b1b0411cdae2a2c077d4d29d3d99f36b513c61dd570acae99afd6420b3c47c1",
+    "round73-systems-control-preview.png": "648c98da882f5b536b816ade1b9c05fada7d8d0cabbe8296da4bcb7b875a21ea"
+  },
+  "pixel_file_identical": true,
+  "scope": "normalize authored SVG line endings; original numeric results and rendered PNG unchanged"
+}

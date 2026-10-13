@@ -1,0 +1,5 @@
+stim==1.16.0
+pymatching==2.4.0
+qutip==5.2.3
+qutip-qtrl==0.2.0
+sequence==0.8.5

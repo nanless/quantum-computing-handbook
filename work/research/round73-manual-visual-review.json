@@ -1,0 +1,37 @@
+{
+  "scope": "manual image review, separate from 82 automatic page-width checks and 68 generated visual screenshots",
+  "full_figures": [
+    {
+      "asset": "round73-foundations-dynamics.svg",
+      "inspection": "complete figure viewed; labels, axes, legends and explanatory boundaries checked"
+    },
+    {
+      "asset": "round73-algorithms.svg",
+      "inspection": "complete figure viewed; labels, axes, legends and explanatory boundaries checked"
+    },
+    {
+      "asset": "round73-systems-qec.svg",
+      "inspection": "complete figure viewed; labels, axes, legends and explanatory boundaries checked"
+    },
+    {
+      "asset": "round73-systems-control.svg",
+      "inspection": "complete figure viewed; labels, axes, legends and explanatory boundaries checked"
+    },
+    {
+      "asset": "round73-workflows.svg",
+      "inspection": "complete figure viewed; labels, axes, legends and explanatory boundaries checked"
+    }
+  ],
+  "context_screenshots": [
+    "round73-context-round73-workflows-390.png",
+    "round73-context-round73-workflows-390-right.png",
+    "round73-context-round73-algorithms-390-right.png",
+    "round73-context-round73-foundations-dynamics-1440.png"
+  ],
+  "findings": [
+    "scientific phone images intentionally scroll horizontally; actual right-edge pan succeeded for all five",
+    "no legend/title overlap in inspected full figures",
+    "same-source prototype issues fixed by authors before integration; formula escape and shared GRAPE notation fixed by root"
+  ],
+  "not_claimed": "full-screen manual inspection of every long chapter"
+}

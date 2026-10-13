@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-13",
+  "installed_files_not_modified": true,
+  "process_local_sequence_density_adapter": true,
+  "files": [
+    {
+      "package": "sequence",
+      "version": "0.8.5",
+      "installed_file": "bsm.py",
+      "sha256": "f8cd67d5157209e29b6af60370f3d311625a249e488e09ac75c84c6d8dd125ec",
+      "primary_source": "https://github.com/sequence-toolbox/SeQUeNCe/blob/v0.8.5/sequence/components/bsm.py"
+    },
+    {
+      "package": "sequence",
+      "version": "0.8.5",
+      "installed_file": "swapping.py",
+      "sha256": "e182755a24a1190cdb1dad39a505d224fcf8d59d43f1255d957b37d78344fbb9",
+      "primary_source": "https://github.com/sequence-toolbox/SeQUeNCe/blob/v0.8.5/sequence/entanglement_management/swapping.py"
+    },
+    {
+      "package": "pymatching",
+      "version": "2.4.0",
+      "installed_file": "matching.py",
+      "sha256": "737b4b5344dbfdeef46d4354059bba24d3d0b0c056bb9082f2c31ce333071899",
+      "primary_source": "https://github.com/oscarhiggott/PyMatching/blob/v2.4.0/src/pymatching/matching.py"
+    },
+    {
+      "package": "qutip-qtrl",
+      "version": "0.2.0",
+      "installed_file": "pulseoptim.py",
+      "sha256": "71afbb0a58c00dc66304e84171db1fc16aaa9530dd2300a5e503d7f72bdfe20d",
+      "primary_source": "https://github.com/qutip/qutip-qtrl/blob/v0.2.0/src/qutip_qtrl/pulseoptim.py"
+    }
+  ]
+}

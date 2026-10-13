@@ -1,0 +1,10 @@
+{
+  "input": "sdk73/all-results.json",
+  "input_sha256": "5643245449b366b386a1bd39792f772da20818dbedc02f9ec36c2acf5ef338e9",
+  "generator_sha256": "769ad1a701dca3daca1b58d68625d52651919e0ff7b4d7517e6d1078a0de74f4",
+  "outputs": [
+    "handbook/assets/round73-foundations-dynamics.svg",
+    "handbook/assets/round73-foundations-dynamics.png"
+  ],
+  "kind": "scientific data plot, synthetic CPU SDK experiment"
+}

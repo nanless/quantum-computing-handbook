@@ -1,5 +1,5 @@
 {
-  "date_utc": "2026-10-13T07:30:24.757577+00:00",
+  "date_utc": "2026-10-13T08:59:01.606332+00:00",
   "python": "3.9.6",
   "checks": [
     {
@@ -99,6 +99,30 @@
       "stderr": ""
     },
     {
+      "command": "python3 codes/foundations/round73_checks.py --case all",
+      "returncode": 0,
+      "stdout": "00 passed\n01 passed\n02 passed\n03 passed\n04 passed\n05 passed\nq1 passed\nq2 passed\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/algorithms/round73_checks.py all",
+      "returncode": 0,
+      "stdout": "round73 algorithms: 06, 07, 08, 13, 16, 17, 18, q4 passed\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/systems/round73_checks.py --case all",
+      "returncode": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"cases\": {\n    \"09\": {\n      \"bit\": 0.03,\n      \"phase\": 0.03,\n      \"joint\": 0.02,\n      \"independent_joint\": 0.0009,\n      \"phase_given_bit\": 0.6666666666666667\n    },\n    \"10\": {\n      \"grid_points\": 18,\n      \"complete_grid_shots\": 180000,\n      \"control_shots\": 2000,\n      \"rates\": 36\n    },\n    \"11\": {\n      \"rescued\": 160,\n      \"regressed\": 47,\n      \"paired_failure_difference\": -0.0113,\n      \"exact_p\": 1.2996577613713636e-15,\n      \"zero_failure_simultaneous_upper\": 0.0007269754644569915\n    },\n    \"12\": {\n      \"ideal\": {\n        \"trials\": 400,\n        \"end_to_end_successes\": 108\n      },\n      \"lossy\": {\n        \"trials\": 400,\n        \"end_to_end_successes\": 93\n      },\n      \"finite_cutoff\": {\n        \"trials\": 40,\n        \"end_to_end_successes\": 9\n      },\n      \"short_cutoff\": {\n        \"trials\": 40,\n        \"end_to_end_successes\": 0\n      },\n      \"mixed_input\": {\n        \"trials\": 40,\n        \"end_to_end_successes\": 13\n      },\n      \"lossy_expectation\": {\n        \"single_photon_transmission\": 0.954992586021436,\n        \"link_success\": 0.45600541967795494,\n        \"two_link_success\": 0.20794094277566783\n      }\n    },\n    \"14\": {\n      \"optimized\": {\n        \"leakage\": [\n          6.251216812177794e-10,\n          6.15393447262812e-10\n        ],\n        \"survival\": 0.9999999993797434,\n        \"unconditional_overlap\": 0.9999999983963624,\n        \"six_state_overlap\": 0.9999999983963627\n      },\n      \"one_ns_discrete_filter\": {\n        \"leakage\": [\n          0.009531972675138225,\n          0.005173323175314595\n        ],\n        \"survival\": 0.9926473520747731,\n        \"unconditional_overlap\": 0.9809241231593456,\n        \"six_state_overlap\": 0.9809241231593456\n      }\n    },\n    \"15\": {\n      \"wrong_cross_trace\": 0,\n      \"correct_projector_trace\": 1,\n      \"wrong_cross_is_hermitian\": false\n    },\n    \"19\": {\n      \"rows\": [\n        {\n          \"arrival\": 0,\n          \"service\": 0.8,\n          \"response\": 0.8\n        },\n        {\n          \"arrival\": 1,\n          \"service\": 0.8,\n          \"response\": 0.8\n        },\n        {\n          \"arrival\": 2,\n          \"service\": 4,\n          \"response\": 4\n        },\n        {\n          \"arrival\": 3,\n          \"service\": 0.8,\n          \"response\": 3.8\n        },\n        {\n          \"arrival\": 4,\n          \"service\": 0.8,\n          \"response\": 3.5999999999999996\n        }\n      ],\n      \"p99_observed_service_not_a_deadline_bound\": true\n    },\n    \"q3\": {\n      \"average_survival\": 0.9999999993797434,\n      \"average_leakage\": 6.202566238400209e-10\n    }\n  },\n  \"scope\": \"stdlib archive and mathematical checks; not SDK rerun\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 codes/sdk/round73/check_saved.py",
+      "returncode": 0,
+      "stdout": "{\n  \"mpf\": {\n    \"times\": 3,\n    \"references\": 6,\n    \"scope\": \"objective and order checks; saved coefficients are ill-conditioned, not certified optimal\"\n  },\n  \"gst\": {\n    \"settings\": 448,\n    \"untrained_circuits\": 12,\n    \"scope\": \"saved Liouville contraction/counts; physicality independently checked by foundation cross review\"\n  },\n  \"pna\": {\n    \"shots\": 20000,\n    \"estimate\": 0.7290791490930908,\n    \"standard_error\": 0.00501952807556797\n  },\n  \"slc\": {\n    \"randomizations\": 3072,\n    \"shots\": 196608,\n    \"scope\": \"independent signed count/cluster variance; bounds remain synthetic model conditions\"\n  },\n  \"hpc\": {\n    \"parallel_thread_counts\": [\n      1,\n      2,\n      4,\n      8\n    ],\n    \"serial_identical\": true\n  }\n}\n",
+      "stderr": ""
+    },
+    {
       "command": "python3 codes/review/cross_foundations.py",
       "returncode": 0,
       "stdout": "{\n  \"00\": {\n    \"ket22_over20\": 4,\n    \"rho22_over20\": 16\n  },\n  \"01\": {\n    \"passive_mean\": 1,\n    \"active_fixed_Z_mean\": 0\n  },\n  \"02\": {\n    \"purity\": 0.8749999999999993,\n    \"repeat0_given0\": 0.625\n  },\n  \"03\": {\n    \"weights\": [\n      0.872677996249965,\n      0.12732200375003502\n    ],\n    \"entropy\": 0.5500477595827573,\n    \"spectral_projector_reconstruction\": true\n  },\n  \"04\": {\n    \"inputs\": 3,\n    \"direct_Bell_branches_checked\": 12\n  },\n  \"05\": {\n    \"p_gamma\": 0.09,\n    \"four_matrix_units_checked\": true\n  },\n  \"q1\": {\n    \"POVM_density_probabilities\": [\n      [\n        0.49999999999999967,\n        0.0,\n        0.0,\n        0.49999999999999967\n      ],\n      [\n        0.37499999999999983,\n        0.12499999999999989,\n        0.12499999999999989,\n        0.37499999999999983\n      ],\n      [\n        0.24999999999999986,\n        0.2499999999999998,\n        0.2499999999999998,\n        0.24999999999999986\n      ],\n      [\n        0.0,\n        0.49999999999999967,\n        0.49999999999999967,\n        0.0\n      ]\n    ]\n  },\n  \"q2\": {\n    \"Bloch_states_checked\": 4,\n    \"bound_slack_equals_1_minus_Bloch_norm_squared\": true\n  }\n}\n",
@@ -173,14 +197,14 @@
     {
       "command": "python3 codes/snapshot_sources.py --verify",
       "returncode": 0,
-      "stdout": "{\n  \"projects\": 26,\n  \"verified_files\": 97\n}\n",
+      "stdout": "{\n  \"projects\": 31,\n  \"verified_files\": 122\n}\n",
       "stderr": ""
     },
     {
       "command": "python3 codes/tests/test_snapshot_sources.py",
       "returncode": 0,
       "stdout": "",
-      "stderr": "test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_missing_source_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests) ... ok\ntest_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.020s\n\nOK\n"
+      "stderr": "test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok\ntest_missing_source_does_not_publish (__main__.SnapshotPublicationTests) ... ok\ntest_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests) ... ok\ntest_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.021s\n\nOK\n"
     }
   ],
   "verified_audio": [

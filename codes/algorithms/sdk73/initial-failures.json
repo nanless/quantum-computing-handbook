@@ -1,0 +1,7 @@
+{
+  "stage": "first local run",
+  "status": "failed",
+  "task": "hhl",
+  "reason": "Author predicted t6 root fidelity > .995, but independently calculated actual value was .99444844; corrected regression acceptance .99 and reported actual fidelity, not altered data. Hard-cutoff error and garbage nonmonotonicity kept in chapter.",
+  "evidence": "run-initial.log"
+}

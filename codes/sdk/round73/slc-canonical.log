@@ -1,0 +1,19 @@
+Optimal spacetime partitioning not implemented!Just partitioning list of noisy boxes.
+Traceback (most recent call last):
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/slc_workflow.py", line 68, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/slc_workflow.py", line 64, in main
+    template,samplex=build(boxed)
+                     ^^^^^^^^^^^^
+  File "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/samplomatic/builders/build.py", line 115, in build
+    return dag_to_circuit(template_state.template), pre_samplex.finalize().finalize()
+                                                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/samplomatic/pre_samplex/pre_samplex.py", line 1298, in finalize
+    self.add_propagate_node(
+  File "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/samplomatic/pre_samplex/pre_samplex.py", line 1686, in add_propagate_node
+    propagate_group = _match_propagate_group(op_name, mode, frozenset(incoming))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/quantum-round73-workflow-sdk/lib/python3.11/site-packages/samplomatic/pre_samplex/pre_samplex.py", line 227, in _match_propagate_group
+    raise SamplexBuildError(
+samplomatic.exceptions.SamplexBuildError: Encountered unsupported rx propagation with mode InstructionMode.PROPAGATE and incoming virtual gates frozenset({<VirtualType.PAULI: 'pauli'>}).

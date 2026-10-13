@@ -1,0 +1,31 @@
+{
+  "mpf": {
+    "times": 3,
+    "references": 6,
+    "scope": "objective and order checks; saved coefficients are ill-conditioned, not certified optimal"
+  },
+  "gst": {
+    "settings": 448,
+    "untrained_circuits": 12,
+    "scope": "saved Liouville contraction/counts; physicality independently checked by foundation cross review"
+  },
+  "pna": {
+    "shots": 20000,
+    "estimate": 0.7290791490930908,
+    "standard_error": 0.00501952807556797
+  },
+  "slc": {
+    "randomizations": 3072,
+    "shots": 196608,
+    "scope": "independent signed count/cluster variance; bounds remain synthetic model conditions"
+  },
+  "hpc": {
+    "parallel_thread_counts": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "serial_identical": true
+  }
+}

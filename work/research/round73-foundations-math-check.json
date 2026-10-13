@@ -1,0 +1,62 @@
+{
+  "scope": "Eight whole Markdown chapters, math rendering and residual control characters; browser checks separate",
+  "chapters": [
+    {
+      "file": "handbook/00-overview.md",
+      "lines": 249,
+      "math": 83,
+      "newLabel": "F73-00",
+      "markedHtmlLength": 13914
+    },
+    {
+      "file": "handbook/01-math.md",
+      "lines": 934,
+      "math": 750,
+      "newLabel": "F73-01",
+      "markedHtmlLength": 37819
+    },
+    {
+      "file": "handbook/02-single-qubit.md",
+      "lines": 637,
+      "math": 517,
+      "newLabel": "F73-02",
+      "markedHtmlLength": 28252
+    },
+    {
+      "file": "handbook/03-multiple-qubits.md",
+      "lines": 684,
+      "math": 543,
+      "newLabel": "F73-03",
+      "markedHtmlLength": 29540
+    },
+    {
+      "file": "handbook/04-circuits-protocols.md",
+      "lines": 473,
+      "math": 432,
+      "newLabel": "F73-04",
+      "markedHtmlLength": 24393
+    },
+    {
+      "file": "handbook/05-noise-channels.md",
+      "lines": 608,
+      "math": 323,
+      "newLabel": "F73-05",
+      "markedHtmlLength": 23790
+    },
+    {
+      "file": "handbook/quantum-mechanics/01-experiments-states.md",
+      "lines": 659,
+      "math": 330,
+      "newLabel": "F73-Q1",
+      "markedHtmlLength": 24528
+    },
+    {
+      "file": "handbook/quantum-mechanics/02-observables-dynamics.md",
+      "lines": 787,
+      "math": 390,
+      "newLabel": "F73-Q2",
+      "markedHtmlLength": 26544
+    }
+  ],
+  "errors": []
+}

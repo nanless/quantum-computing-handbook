@@ -1,0 +1,41 @@
+Finished! 3 / 3 generators propagated.                               Finished! 3 / 3 generators propagated.                               {
+  "status": "passed",
+  "versions": {
+    "qiskit-addon-pna": "0.2.0",
+    "qiskit-aer": "0.17.2",
+    "pauli-prop": "0.1.0"
+  },
+  "basis": "q1 q0, q0 control",
+  "noise_location": "beforeCX; exactly one noise layer",
+  "generators": [
+    "XI",
+    "IZ",
+    "XX"
+  ],
+  "rates": [
+    0.015,
+    0.008,
+    0.011
+  ],
+  "ideal": 0.7302794655302256,
+  "noisy": 0.717787965292618,
+  "mitigated": 0.7302794655302256,
+  "sdk_estimator": [
+    0.7302794655302256,
+    0.7177879652926179,
+    0.7302794655302256
+  ],
+  "mitigating_terms": 2,
+  "coefficients": {
+    "XX": 1.0163700453269513,
+    "XZ": 0.0011906658703448654
+  },
+  "coefficient_l1": 1.0175607111972962,
+  "operator_spectral_norm": 1.016370742752429,
+  "observable_dense_error": 4.440892098500626e-16,
+  "miscalibration_factor": 1.25,
+  "miscalibrated_value": 0.7334368428647946,
+  "miscalibration_bias": 0.0031573773345690004,
+  "elapsed_seconds": 0.38410558307077736,
+  "scope": "full PNA pipeline exact local model; no hardware noise learning, no finite-shot variance yet"
+}

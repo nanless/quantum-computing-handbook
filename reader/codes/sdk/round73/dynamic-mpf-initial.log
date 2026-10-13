@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/dynamic_mpf.py", line 50, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/dynamic_mpf.py", line 36, in main
+    assert errM<2e-10 and errL<3e-7,(errM,errL)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (1.7763568394002505e-15, 8.048682005323826e-07)

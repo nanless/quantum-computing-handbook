@@ -515,6 +515,33 @@ $$
 
 **扩展与边界。** 这个 RWA 三能级模型还没有真实传递函数、弛豫、退相位、第四能级或器件标定，并非真实 transmon 的工业测试。它已足够反驳“二级优化误差自动约束器件泄漏”。可进一步在三维目标中规定计算子空间的目标作用与非计算态相位，加入泄漏惩罚、鲁棒参数和带宽约束后重新优化；这些属于新的实验设计，本轮未声称已实现受所有约束的最优门。[Motzoi 等 DRAG 原论文](https://doi.org/10.1103/PhysRevLett.103.110501)与 [qutip-qtrl 控制说明](https://qutip.readthedocs.io/projects/qutip-qtrl/en/latest/guide/guide-control.html)提供方法入口（访问 2026-10-13）。
 
+### 6.4 S73-Q3：三维门酉，不表示它的二维限制也酉
+
+第14章已经真正把这套三能级RWA模型纳入GRAPE优化。这里先解释验收的最小恒等式，避免把泄漏隐藏在后选择里。按 $|0\rangle,|1\rangle,|2\rangle$ 顺序，把全三维酉的前两列写成
+
+$$
+U_3\begin{pmatrix}I_2\\0\end{pmatrix}
+=\begin{pmatrix}M\\\boldsymbol\lambda\end{pmatrix},
+\qquad M\in\mathbb C^{2\times2},\quad
+\boldsymbol\lambda=(U_{20},U_{21})\in\mathbb C^{1\times2}.
+$$
+
+全三维列正交归一意味着
+
+$$
+M^\dagger M+\boldsymbol\lambda^\dagger\boldsymbol\lambda=I_2.
+$$
+
+这不是近似式。对输入 $|\psi\rangle=c_0|0\rangle+c_1|1\rangle$，泄漏振幅是 $\lambda_0c_0+\lambda_1c_1$；先相加再取模平方。因此只知道两种基输入的泄漏 $|\lambda_j|^2$，不能把任意叠加输入泄漏简单加权成 $|c_0|^2L_0+|c_1|^2L_1$，交叉相位也参与。
+
+**练习一与答案。** 取一个合成泄漏行 $\boldsymbol\lambda=(0.1,0.1)$。输入 $|+\rangle$ 的泄漏为 $|(0.1+0.1)/\sqrt2|^2=0.02$，输入 $|-\rangle$ 则为0；两个基输入均为0.01。它们的朴素概率加权都为0.01，恰好漏掉相干的交叉项。这一行可与 $M=\sqrt{I_2-\boldsymbol\lambda^\dagger\boldsymbol\lambda}$ 组成两条正交归一列，再补第三列成为三维酉；故不是违反酉性的反例。
+
+**练习二与答案。** 对两个基输入等权平均，交叉项不出现，平均存活率为 $\bar s=\operatorname{Tr}(M^\dagger M)/2$，平均泄漏正好 $(L_0+L_1)/2$。本轮优化实跑 $L_0=6.2512\times10^{-10},L_1=6.1539\times10^{-10}$，均很小；同一波形经明示1 ns离散滤波后变成0.0095320和0.0051733，平均约0.00735265。真实模型若有第五级或耗散，还需扩展，不把这份三维纯酉输出当作器件门测试。
+
+如果只保留计算空间结果，输出为 $M|\psi\rangle/\|M|\psi\rangle\|$，接受概率为 $\|M|\psi\rangle\|^2$；归一化分母依赖输入，不能把这个条件规则无条件称为一个二维酉。第14章 S73-14 的平均目标重叠明确不丢弃泄漏，并以六输入复算。
+
+[三维完整SDK优化](../../codes/systems/sdk73/grape_three.py)、[80槽波形](../../codes/systems/sdk73/grape-three-amplitudes.csv)与[标准库独立传播](../../codes/systems/round73_checks.py)的 `--case q3` 保持相同失谐方向、rad/ns单位、基序与右先时间序。方法背景见[弱非谐泄漏原论文](https://doi.org/10.1103/PhysRevLett.103.110501)（2009，访问2026-10-13）；这里采用三维GRAPE，不把它冒称已运行DRAG或所有约束下的鲁棒优化。
+
 ## 7. 退相干可以从系统—环境纠缠看见
 
 设系统初态为 $\alpha|0\rangle+\beta|1\rangle$，环境初态为 $|E\rangle$。联合酉演化可能把它变成

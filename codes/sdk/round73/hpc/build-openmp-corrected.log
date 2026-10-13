@@ -1,0 +1,13 @@
+[ 50%] Building CXX object CMakeFiles/parallel_recovery.dir/parallel_recovery.cpp.o
+[100%] Linking CXX executable parallel_recovery
+[100%] Built target parallel_recovery
+[ 44%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_subsampling.cpp.o
+[ 44%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_configuration_recovery.cpp.o
+[ 44%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_postselection.cpp.o
+[ 44%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/doctest_main.cpp.o
+[ 55%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_rng_substitutability.cpp.o
+[ 66%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_sample_without_replacement.cpp.o
+[ 77%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_headers_odr.cpp.o
+[ 88%] Building CXX object upstream/CMakeFiles/sqd_tests.dir/test/test_fermion.cpp.o
+[100%] Linking CXX executable sqd_tests
+[100%] Built target sqd_tests

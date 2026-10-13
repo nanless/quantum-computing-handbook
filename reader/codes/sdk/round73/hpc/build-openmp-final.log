@@ -1,0 +1,8 @@
+[ 50%] Building CXX object CMakeFiles/parallel_recovery.dir/parallel_recovery.cpp.o
+[100%] Linking CXX executable parallel_recovery
+ld: library 'OpenMP::OpenMP_CXX' not found
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+make[3]: *** [parallel_recovery] Error 1
+make[2]: *** [CMakeFiles/parallel_recovery.dir/all] Error 2
+make[1]: *** [CMakeFiles/parallel_recovery.dir/rule] Error 2
+make: *** [parallel_recovery] Error 2

@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "cases": {
+    "09": {
+      "bit": 0.03,
+      "phase": 0.03,
+      "joint": 0.02,
+      "independent_joint": 0.0009,
+      "phase_given_bit": 0.6666666666666667
+    },
+    "10": {
+      "grid_points": 18,
+      "complete_grid_shots": 180000,
+      "control_shots": 2000,
+      "rates": 36
+    },
+    "11": {
+      "rescued": 160,
+      "regressed": 47,
+      "paired_failure_difference": -0.0113,
+      "exact_p": 1.2996577613713636e-15,
+      "zero_failure_simultaneous_upper": 0.0007269754644569915
+    },
+    "12": {
+      "ideal": {
+        "trials": 400,
+        "end_to_end_successes": 108
+      },
+      "lossy": {
+        "trials": 400,
+        "end_to_end_successes": 93
+      },
+      "finite_cutoff": {
+        "trials": 40,
+        "end_to_end_successes": 9
+      },
+      "short_cutoff": {
+        "trials": 40,
+        "end_to_end_successes": 0
+      },
+      "mixed_input": {
+        "trials": 40,
+        "end_to_end_successes": 13
+      },
+      "lossy_expectation": {
+        "single_photon_transmission": 0.954992586021436,
+        "link_success": 0.45600541967795494,
+        "two_link_success": 0.20794094277566783
+      }
+    },
+    "14": {
+      "optimized": {
+        "leakage": [
+          6.251216812177794e-10,
+          6.15393447262812e-10
+        ],
+        "survival": 0.9999999993797434,
+        "unconditional_overlap": 0.9999999983963624,
+        "six_state_overlap": 0.9999999983963627
+      },
+      "one_ns_discrete_filter": {
+        "leakage": [
+          0.009531972675138225,
+          0.005173323175314595
+        ],
+        "survival": 0.9926473520747731,
+        "unconditional_overlap": 0.9809241231593456,
+        "six_state_overlap": 0.9809241231593456
+      }
+    },
+    "15": {
+      "wrong_cross_trace": 0,
+      "correct_projector_trace": 1,
+      "wrong_cross_is_hermitian": false
+    },
+    "19": {
+      "rows": [
+        {
+          "arrival": 0,
+          "service": 0.8,
+          "response": 0.8
+        },
+        {
+          "arrival": 1,
+          "service": 0.8,
+          "response": 0.8
+        },
+        {
+          "arrival": 2,
+          "service": 4,
+          "response": 4
+        },
+        {
+          "arrival": 3,
+          "service": 0.8,
+          "response": 3.8
+        },
+        {
+          "arrival": 4,
+          "service": 0.8,
+          "response": 3.5999999999999996
+        }
+      ],
+      "p99_observed_service_not_a_deadline_bound": true
+    },
+    "q3": {
+      "average_survival": 0.9999999993797434,
+      "average_leakage": 6.202566238400209e-10
+    }
+  },
+  "scope": "stdlib archive and mathematical checks; not SDK rerun"
+}

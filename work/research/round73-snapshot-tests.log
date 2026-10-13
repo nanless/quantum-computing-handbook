@@ -1,0 +1,11 @@
+test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok
+test_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests) ... ok
+test_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests) ... ok
+test_missing_source_does_not_publish (__main__.SnapshotPublicationTests) ... ok
+test_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests) ... ok
+test_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.023s
+
+OK

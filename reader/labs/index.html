@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实验、练习、代码与声音 · 量子计算手册</title><link rel="stylesheet" href="../assets/katex/katex.min.css"><link rel="stylesheet" href="../assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="../index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">入门与数学</div><a href="../00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="../01-math.html">01｜够用而不跳步的数学工具</a><div class="nav-label">量子态、测量与电路</div><a href="../quantum-mechanics/index.html">物理篇导读与先修说明</a><a href="../quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="../02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="../quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="../03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="../04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="../05-noise-channels.html">05｜混态、噪声与量子信道</a><div class="nav-label">算法与应用</div><a href="../06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="../07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="../08-applications.html">08｜应用、变分算法与证据边界</a><div class="nav-label">硬件、容错与网络</div><a href="../quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="../09-hardware.html">09｜从物理量子比特到控制栈</a><a href="../10-error-correction.html">10｜量子错误校正与容错计算</a><a href="../11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="../12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><div class="nav-label">信息、控制与实践</div><a href="../13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="../14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="../15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><div class="nav-label">高级算法与系统工程</div><a href="../16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="../17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="../18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="../19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">波函数与模型 · 进阶选读</div><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">实验、代码与音频</div><a aria-current="page" href="../labs/index.html">实验、练习、代码与声音</a><a href="../labs/algorithms.html">算法实验：把输出概率、成本和证明边界一起核对</a><a href="../labs/audio.html">声音实验：相位、抵消与退相干的教学映射</a><a href="../labs/foundations.html">基础实验册｜从复振幅到可核查的数值结果</a><a href="../labs/practice.html">实验：有限样本、外推代价与多重比较</a><a href="../labs/sdk-validation.html">完整 SDK 实验册：从安装包到可核验输出</a><a href="../labs/systems.html">系统实验册：六个跨层问题的手算、代码与研究入口</a><div class="nav-label">附录</div><a href="../appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="../appendices/notation.html">符号表</a><a href="../appendices/glossary.html">术语表</a><a href="../appendices/exercises.html">练习答案与推导提示</a><a href="../appendices/references.html">参考资料与证据等级</a><a href="../appendices/software-practice.html">算法、工业实践与开源代码对照</a><a href="../appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第四组逐章练习完整sdk与独立复算">第四组逐章练习：完整SDK与独立复算</a><a class="toc-level-2" href="#第三组逐章练习从解释断点到独立核算">第三组逐章练习：从解释断点到独立核算</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a></nav></details><article><h1 id="实验练习代码与声音">实验、练习、代码与声音</h1>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实验、练习、代码与声音 · 量子计算手册</title><link rel="stylesheet" href="../assets/katex/katex.min.css"><link rel="stylesheet" href="../assets/reader.css"></head><body><a class="skip" href="#content">跳到正文</a><header><a class="brand" href="../index.html"><span class="mark">ψ</span>量子计算手册</a><span class="edition">从直觉到研究入口</span><button type="button" onclick="window.print()">打印本章</button></header><div class="layout"><aside class="chapters"><details open><summary>全书目录</summary><input type="search" id="nav-search" aria-label="查找章节" placeholder="查找章节…"><nav><div class="nav-label">入门与数学</div><a href="../00-overview.html">00｜全景：量子计算是什么，又不是什么</a><a href="../01-math.html">01｜够用而不跳步的数学工具</a><div class="nav-label">量子态、测量与电路</div><a href="../quantum-mechanics/index.html">物理篇导读与先修说明</a><a href="../quantum-mechanics/01-experiments-states.html">Q1｜从实验认识量子态</a><a href="../02-single-qubit.html">02｜单量子比特：状态、相位与测量</a><a href="../quantum-mechanics/02-observables-dynamics.html">Q2｜可观测量与量子态的时间演化</a><a href="../03-multiple-qubits.html">03｜多量子比特、纠缠与约化态</a><a href="../04-circuits-protocols.html">04｜量子门、电路与三种基础协议</a><a href="../05-noise-channels.html">05｜混态、噪声与量子信道</a><div class="nav-label">算法与应用</div><a href="../06-algorithmic-primitives.html">06｜量子算法的共同骨架</a><a href="../07-algorithms.html">07｜代表性量子算法：从隐藏周期到量子模拟</a><a href="../08-applications.html">08｜应用、变分算法与证据边界</a><div class="nav-label">硬件、容错与网络</div><a href="../quantum-mechanics/03-levels-control.html">Q3｜从能级到物理量子比特</a><a href="../09-hardware.html">09｜从物理量子比特到控制栈</a><a href="../10-error-correction.html">10｜量子错误校正与容错计算</a><a href="../11-resources-benchmarks.html">11｜资源估算与基准：怎样比较才公平</a><a href="../12-security-network-frontiers.html">12｜密码、量子网络与研究前沿</a><div class="nav-label">信息、控制与实践</div><a href="../13-quantum-information.html">13｜量子信息量度：熵、距离与可提取信息</a><a href="../14-compilation-control.html">14｜从算法电路到物理执行：编译、调度与控制</a><a href="../15-practice-research.html">15｜实践路线：手算、模拟、真机实验与论文复核</a><div class="nav-label">高级算法与系统工程</div><a href="../16-advanced-algorithms-verification.html">16｜高级算法与验证：从下界证明到可信输出</a><a href="../17-computation-models.html">17｜量子计算模型：门、测量、绝热、退火与模拟</a><a href="../18-channels-capacities-complexity.html">18｜从量子态到通信任务：信道、容量与验证复杂度</a><a href="../19-engineering-architecture.html">19｜可维护量子系统工程</a><div class="nav-label">波函数与模型 · 进阶选读</div><a href="../quantum-mechanics/04-wavefunctions-models.html">Q4｜波函数、势阱、谐振子与隧穿</a><div class="nav-label">实验、代码与音频</div><a aria-current="page" href="../labs/index.html">实验、练习、代码与声音</a><a href="../labs/algorithms.html">算法实验：把输出概率、成本和证明边界一起核对</a><a href="../labs/audio.html">声音实验：相位、抵消与退相干的教学映射</a><a href="../labs/foundations.html">基础实验册｜从复振幅到可核查的数值结果</a><a href="../labs/practice.html">实验：有限样本、外推代价与多重比较</a><a href="../labs/sdk-validation.html">完整 SDK 实验册：从安装包到可核验输出</a><a href="../labs/systems.html">系统实验册：六个跨层问题的手算、代码与研究入口</a><div class="nav-label">附录</div><a href="../appendices/prerequisites.html">入门先修：自测与补习路线</a><a href="../appendices/notation.html">符号表</a><a href="../appendices/glossary.html">术语表</a><a href="../appendices/exercises.html">练习答案与推导提示</a><a href="../appendices/references.html">参考资料与证据等级</a><a href="../appendices/software-practice.html">算法、工业实践与开源代码对照</a><a href="../appendices/audit-log.html">审校记录</a></nav></details></aside><main id="content"><div class="eyebrow">QUANTUM COMPUTING · 学习手册</div><details class="inline-contents"><summary>本页导航 · 展开查找小节</summary><nav aria-label="本页章节"><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第四组逐章练习完整sdk与独立复算">第四组逐章练习：完整SDK与独立复算</a><a class="toc-level-2" href="#第三组逐章练习从解释断点到独立核算">第三组逐章练习：从解释断点到独立核算</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a><a class="toc-level-2" href="#第五组逐章练习第73轮补缺口与深度核验">第五组逐章练习：第73轮补缺口与深度核验</a></nav></details><article><h1 id="实验练习代码与声音">实验、练习、代码与声音</h1>
 <p>这里把全书 24 篇正文连接到可运行的小实验。先读题目、写预测，再运行程序；每题都有计算过程、答案和模型边界。既有的 <a href="../appendices/exercises.html">251 道自检及答案</a>保持原编号，新增实验使用独立标签。</p>
 <h2 id="怎样开始">怎样开始</h2>
 <ol>
@@ -543,4 +543,136 @@
 </tr>
 </tbody></table></div>
 <p>此外，<a href="../appendices/software-practice.html">源码阅读练习S04–S08</a>把多项式基、LCU归一化、阴影快照、控制约束和重构顺序连接到固定的上游文件。四组数值题有<a href="../codes/practice/source_reading_checks.py">独立复算代码</a>，工程讨论题保留其无法单靠程序断言验收的边界。</p>
-</article><div class="page-turn"></div><footer>2026-10-13 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第四组逐章练习完整sdk与独立复算">第四组逐章练习：完整SDK与独立复算</a><a class="toc-level-2" href="#第三组逐章练习从解释断点到独立核算">第三组逐章练习：从解释断点到独立核算</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>
+<h2 id="第五组逐章练习第73轮补缺口与深度核验">第五组逐章练习：第73轮补缺口与深度核验</h2>
+<p>三组完整读审并交换复核24篇。每篇的新题有明确条件、分步解答、代码与样本；原251题保留。完整SDK安装在独立环境中，默认入口只执行标准库复算。<a href="sdk-validation.html#9-第73轮补缺口先把未实现拆成可验收任务">五组上层集成题</a>另给动态MPF、SLC、PNA、GST和Philox计算。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>篇章与新题</th>
+<th>重点</th>
+<th>独立复算</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="../00-overview.html">F73-00</a></td>
+<td>F73-00｜校准与留出验证也要计入一次任务</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../01-math.html">F73-01</a></td>
+<td>F73-01｜逆矩阵怎样还原读出，为什么也会放大误差</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../02-single-qubit.html">F73-02</a></td>
+<td>F73-02｜读出补偿：把偏差和校准的不确定度一起带回来</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../03-multiple-qubits.html">F73-03</a></td>
+<td>F73-03｜两端都有读出偏差，纠缠见证怎样换算</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../04-circuits-protocols.html">F73-04</a></td>
+<td>F73-04｜消息全到了，读错一位仍会做错校正</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../05-noise-channels.html">F73-05</a></td>
+<td>F73-05｜真正约束CP与TP，Gaussian拟合与计数最大似然分开</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/01-experiments-states.html">F73-Q1</a></td>
+<td>F73-Q1｜漏检与错报不同：纯态也会得到浅条纹</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/02-observables-dynamics.html">F73-Q2</a></td>
+<td>F73-Q2｜脉冲随时间变化：分别检查时序误差、积分误差与轨迹涨落</td>
+<td><a href="../codes/foundations/round73_checks.py">foundations</a></td>
+</tr>
+<tr>
+<td><a href="../06-algorithmic-primitives.html">A73-06</a></td>
+<td>练习 A73-06：相位没有正负号，谱值的符号要靠承诺解码</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../07-algorithms.html">A73-07</a></td>
+<td>完整电路练习 A73-07：负谱与非网格 HHL，要把垃圾概率单独算</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../08-applications.html">A73-08</a></td>
+<td>练习 A73-08：粒子数罚项多大，才真正排除真空答案</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../13-quantum-information.html">A73-13</a></td>
+<td>练习 A73-13：相同计算基计数，不能判断反计算后的输出仍是纯态</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../16-advanced-algorithms-verification.html">A73-16</a></td>
+<td>完整离散搜索练习 A73-16a：给标记点换硬币，才从行走变成搜索</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../17-computation-models.html">A73-17</a></td>
+<td>完整前馈练习 A73-17：两个测量步，四种结果都要纠正</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../18-channels-capacities-complexity.html">A73-18</a></td>
+<td>练习 A73-18：只有能量上限时，Fock 尾界应当多保守</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/04-wavefunctions-models.html">A73-Q4</a></td>
+<td>练习 A73-Q4：截断后再驱动，并不等于先驱动再投影</td>
+<td><a href="../codes/algorithms/round73_checks.py">algorithms</a></td>
+</tr>
+<tr>
+<td><a href="../09-hardware.html">S73-09</a></td>
+<td>5.6 S73-09：同一个 Y 故障，为什么会同时进入两张检查图</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../10-error-correction.html">S73-10</a></td>
+<td>7.4 S73-10：双基、固定轮数和相关匹配，逐个缺口真正补上</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../11-resources-benchmarks.html">S73-11</a></td>
+<td>7.3 S73-11：换译码器要逐条配对，计时也要留下分布</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../12-security-network-frontiers.html">S73-12</a></td>
+<td>7.3 S73-12：真的先兆两段 Bell 对，再执行交换和过期事件</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../14-compilation-control.html">S73-14</a></td>
+<td>6.2 S73-14：把泄漏放进优化目标后，怎样验收计算子空间</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../15-practice-research.html">S73-15</a></td>
+<td>15.2 S73-15：SDK有成功先兆，也要用数学反例检查后态</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../19-engineering-architecture.html">S73-19</a></td>
+<td>10.3 S73-19：有了真实时长样本，仍要把“服务”与“反馈”分开</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+<tr>
+<td><a href="../quantum-mechanics/03-levels-control.html">S73-Q3</a></td>
+<td>6.4 S73-Q3：三维门酉，不表示它的二维限制也酉</td>
+<td><a href="../codes/systems/round73_checks.py">systems</a></td>
+</tr>
+</tbody></table></div>
+<p>基础完整流程见<a href="../codes/foundations/sdk73/README.md">基础SDK</a>，算法见<a href="../codes/algorithms/sdk73/README.md">算法SDK</a>，系统见<a href="../codes/systems/sdk73/README.md">系统SDK</a>，集成见<a href="../codes/sdk/round73/README.md">上层工作流</a>。标签A73-16含多个子题，各题独立说明口径；覆盖篇章不表示穷尽全部算法。</p>
+</article><div class="page-turn"></div><footer>2026-10-13 版 · 公式、图表和字体均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main><aside class="contents"><strong>本页内容</strong><nav><a class="toc-level-2" href="#怎样开始">怎样开始</a><a class="toc-level-2" href="#逐章实验映射">逐章实验映射</a><a class="toc-level-2" href="#运行方式与结果">运行方式与结果</a><a class="toc-level-2" href="#如何把练习改成自己的研究">如何把练习改成自己的研究</a><a class="toc-level-2" href="#第四组逐章练习完整sdk与独立复算">第四组逐章练习：完整SDK与独立复算</a><a class="toc-level-2" href="#第三组逐章练习从解释断点到独立核算">第三组逐章练习：从解释断点到独立核算</a><a class="toc-level-2" href="#第二组逐章练习检验容易遗漏的条件">第二组逐章练习：检验容易遗漏的条件</a><a class="toc-level-2" href="#第五组逐章练习第73轮补缺口与深度核验">第五组逐章练习：第73轮补缺口与深度核验</a></nav><a class="top" href="#content">↑ 返回顶部</a></aside></div><script>document.getElementById('nav-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.chapters nav a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))});document.querySelectorAll('.inline-contents a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.inline-contents').open=false}));</script></body></html>

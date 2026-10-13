@@ -1,0 +1,67 @@
+{
+  "scope": "commands actually executed this round; installed toolchain metadata collected separately",
+  "commands": [
+    {
+      "argv": [
+        "cmake",
+        "-S",
+        "codes/sdk/round73/hpc",
+        "-B",
+        "/tmp/quantum-round73-hpc-parallel",
+        "-DSQD_SOURCE=/tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc",
+        "-DRANDOM123_SOURCE=/tmp/quantum-round73-upstreams/random123",
+        "-DSQD_ENABLE_OPENMP=ON",
+        "-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include",
+        "-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include",
+        "-DOpenMP_CXX_LIB_NAMES=omp",
+        "-DOpenMP_C_LIB_NAMES=omp",
+        "-DOpenMP_omp_LIBRARY=/opt/homebrew/opt/libomp/lib/libomp.dylib"
+      ],
+      "returncode": 0,
+      "log": "configure-openmp-corrected.log"
+    },
+    {
+      "argv": [
+        "cmake",
+        "--build",
+        "/tmp/quantum-round73-hpc-parallel",
+        "--target",
+        "parallel_recovery",
+        "sqd_tests",
+        "-j",
+        "4"
+      ],
+      "returncode": 0,
+      "log": "build-openmp-corrected.log"
+    },
+    {
+      "argv": [
+        "/tmp/quantum-round73-hpc-parallel/upstream/sqd_tests"
+      ],
+      "environment": {
+        "OMP_NUM_THREADS": "4"
+      },
+      "returncode": 0,
+      "log": "upstream-openmp-tests.log"
+    }
+  ],
+  "toolchain": {
+    "clang": {
+      "command": [
+        "c++",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n"
+    },
+    "cmake": {
+      "command": [
+        "cmake",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "cmake version 4.3.2\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n"
+    }
+  },
+  "source_clean": true
+}

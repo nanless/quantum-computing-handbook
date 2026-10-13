@@ -10,6 +10,8 @@ COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experim
  ['systems/round71_checks.py','--case','all'],
  ['foundations/round72_stdlib.py','--case','all'],['algorithms/round72_checks.py','all'],
  ['systems/round72_checks.py','--case','all'],
+ ['foundations/round73_checks.py','--case','all'],['algorithms/round73_checks.py','all'],
+ ['systems/round73_checks.py','--case','all'],['sdk/round73/check_saved.py'],
  ['review/cross_foundations.py'],['review/cross_systems.py'],
  ['systems/calibration_uncertainty.py'],['systems/coherent_repetition.py'],
  ['systems/correlated_shots.py'],['systems/network_cutoff.py'],

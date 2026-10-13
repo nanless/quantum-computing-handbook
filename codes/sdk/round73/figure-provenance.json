@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "dynamic-mpf-results.json": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e",
+    "slc-results.json": "be7e77d47a44099c6a1d6e0241c99252583fa0350f36362409b92c009a88bc72",
+    "pna-results.json": "34ac713a70aefc5b14b73ccd20033ee073c5e4750455cefbdfc77fb4c9ac8cea",
+    "gst-long-results.json": "386be383224db54a0e4d572581f61c72b65bbf4e67611f7c7f1ed8f0a6cf6aa4"
+  },
+  "generator_sha256": "4018c423bbc36ab3c0a78fdf688b238018856315c62aca1aacb25c4fdb648265",
+  "svg_sha256": "191da759d5906ac2b96ed2cacae2f83c4141e76f6f88fee18dbfd08487bcb09a",
+  "scope": "saved actual SDK data; SVG produced by scientific plotting, not external raster generation"
+}

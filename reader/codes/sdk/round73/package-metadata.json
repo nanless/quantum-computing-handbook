@@ -1,0 +1,159 @@
+{
+  "access_date": "2026-10-13",
+  "records": [
+    {
+      "name": "qiskit",
+      "version": "2.5.2",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "numpy<3,>=2.0",
+        "scipy>=1.14",
+        "rustworkx>=0.15.0",
+        "dill>=0.3",
+        "stevedore>=3.0.0",
+        "typing-extensions"
+      ],
+      "url": "https://pypi.org/pypi/qiskit/2.5.2/json"
+    },
+    {
+      "name": "qiskit-aer",
+      "version": "0.17.2",
+      "requires_python": ">=3.7",
+      "dependencies": [
+        "qiskit>=1.1.0",
+        "numpy>=1.16.3",
+        "scipy>=1.0",
+        "psutil>=5",
+        "python-dateutil>=2.8.0"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-aer/0.17.2/json"
+    },
+    {
+      "name": "qiskit-addon-mpf",
+      "version": "0.3.0",
+      "requires_python": ">=3.9",
+      "dependencies": [
+        "cvxpy>=1.6",
+        "numpy>=1.23",
+        "qiskit<3,>=1.2"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-addon-mpf/0.3.0/json"
+    },
+    {
+      "name": "qiskit-addon-slc",
+      "version": "0.1.0",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "matplotlib<4,>=3.10.5",
+        "pauli-prop~=0.1.0",
+        "pyscf<3,>=2.10",
+        "qiskit<3,>=2.2",
+        "rustworkx",
+        "samplomatic>=0.10.1"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-addon-slc/0.1.0/json"
+    },
+    {
+      "name": "qiskit-addon-pna",
+      "version": "0.2.0",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "numpy>=1.26",
+        "pauli-prop",
+        "qiskit-aer>=0.17",
+        "qiskit<3,>=2.1.2",
+        "samplomatic>=0.12"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-addon-pna/0.2.0/json"
+    },
+    {
+      "name": "qiskit-mitigation",
+      "version": "0.1.1",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "numpy>=1.26",
+        "qiskit<3,>=2.3.0",
+        "samplomatic>=0.21",
+        "scipy>=1.10"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-mitigation/0.1.1/json"
+    },
+    {
+      "name": "samplomatic",
+      "version": "0.21.0",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "qiskit>=2.3.0",
+        "numpy>=1.26",
+        "rustworkx>=0.16.0",
+        "pybase64>=1.4.0",
+        "orjson>=3.9.0"
+      ],
+      "url": "https://pypi.org/pypi/samplomatic/0.21.0/json"
+    },
+    {
+      "name": "qiskit-quimb",
+      "version": "0.0.10",
+      "requires_python": ">=3.9",
+      "dependencies": [
+        "qiskit",
+        "quimb>=1.11"
+      ],
+      "url": "https://pypi.org/pypi/qiskit-quimb/0.0.10/json"
+    },
+    {
+      "name": "quimb",
+      "version": "1.15.0",
+      "requires_python": ">=3.11",
+      "dependencies": [
+        "autoray>=0.8",
+        "cotengra>=0.7.1",
+        "cytoolz>=0.8.0",
+        "numba>=0.39",
+        "numpy>=1.17",
+        "psutil>=4.3.1",
+        "scipy>=1.16.0",
+        "tqdm>=4"
+      ],
+      "url": "https://pypi.org/pypi/quimb/1.15.0/json"
+    },
+    {
+      "name": "pygsti",
+      "version": "0.10.2",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "numpy>=1.15.0",
+        "scipy",
+        "stim",
+        "plotly>=3.8.0",
+        "pandas",
+        "matplotlib",
+        "networkx",
+        "typing_extensions",
+        "tqdm>=4.42.0"
+      ],
+      "url": "https://pypi.org/pypi/pygsti/0.10.2/json"
+    },
+    {
+      "name": "physics-tenpy",
+      "version": "1.1.1",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "numpy",
+        "scipy"
+      ],
+      "url": "https://pypi.org/pypi/physics-tenpy/1.1.1/json"
+    },
+    {
+      "name": "pauli-prop",
+      "version": "0.2.1",
+      "requires_python": ">=3.10",
+      "dependencies": [
+        "qiskit<3,>=2.1.2",
+        "numpy>=1.26",
+        "qiskit-aer>=0.17.1"
+      ],
+      "url": "https://pypi.org/pypi/pauli-prop/0.2.1/json"
+    }
+  ]
+}

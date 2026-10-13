@@ -525,6 +525,53 @@ $$
 
 这验证的是本次两维修正规则和实现对应，不能把径向公式推广到高维，也不能把合法拟合态当作“误差已经消失”。[官方层析示例](https://qiskit-community.github.io/qiskit-experiments/manuals/verification/state_tomography.html)区分原始本征值与正性修正（访问 2026-10-13）。[F72-02 的完整计数、矩阵及代码](../codes/foundations/round72-README.md)实际执行了测量生成、模拟、拟合和独立复算；仍假设测量基可信，没有真实器件的制备及读出偏差。
 
+### F73-02｜读出补偿：把偏差和校准的不确定度一起带回来
+
+上一轮理想层析没有读出错判。本例实际使用Aer的经典读出噪声和Experiments的 `LocalReadoutError` 完成两设置校准，再以校准后的Pauli测量模型拟合三设置QST。仍制备 $(\sqrt3|0\rangle+i|1\rangle)/2$，理想Bloch坐标为 $(0,\sqrt3/2,1/2)$；模型中基变换门与制备可信，读出错误独立、稳定。
+
+令 $\alpha=P(\mathrm{report} 1\mid0)$、$\beta=P(\mathrm{report} 0\mid1)$，生成值为 $.12,.23$。对任一Pauli轴，理想均值 $r=p_0-p_1$、报告均值 $m=q_0-q_1$。将 $p_0=(1+r)/2,p_1=(1-r)/2$ 代入 $q_0=(1-\alpha)p_0+\beta p_1$，得到
+
+$$
+m=(\beta-\alpha)+(1-\alpha-\beta)r,\qquad
+\hat r=\frac{\hat m-(\hat\beta-\hat\alpha)}{1-\hat\alpha-\hat\beta}.
+$$
+
+不对称读出既把坐标缩短，又整体偏移；只除以一个“读出保真度”会漏掉偏置。
+
+**实际计数到实际校准。** 真0/真1校准各16384次，校准矩阵为
+
+$$
+\hat A=\begin{bmatrix}
+.8802490234375&.23077392578125\\
+.1197509765625&.76922607421875
+\end{bmatrix}.
+$$
+
+三基各8192次的报告坐标为 $(.10986328125,.660888671875,.4306640625)$。逐轴代入上式得到 $(-.00178555,.84663096,.49215299)$；与完整SDK带噪测量基拟合的矩阵最大逐格差小于 $5\times10^{-16}$。对精确目标的Frobenius误差从未补偿的 $.1716952$ 降到 $.0148477$，补偿结果的谱为 $.01035683,.98964317$。全部校准/层析原计数和完整拟合矩阵见[F73记录](../codes/foundations/sdk73/all-results.json)。这里报告的是固定种子的一次合成样本；尚有误差，不能写成已经还原了真实态。
+
+**练习：校准用了很多shots，能否忽略它的误差？** 即使只看Z轴，答案也要算。记 $d=1-\alpha-\beta$，补偿函数对三输入的导数为
+
+$$
+\frac{\partial r}{\partial m}=\frac1d,\qquad
+\frac{\partial r}{\partial\alpha}=\frac{r-1}{d},\qquad
+\frac{\partial r}{\partial\beta}=\frac{r+1}{d}.
+$$
+
+在目标样本和两份校准样本相互独立时，一阶误差传播给
+
+$$
+\operatorname{Var}(\hat r)\approx
+\frac{1-m^2}{N d^2}
++\frac{(r-1)^2\alpha(1-\alpha)}{N_0d^2}
++\frac{(r+1)^2\beta(1-\beta)}{N_1d^2}.
+$$
+
+取 $r=.5,m=.435,N=8192,N_0=N_1=16384$，前项约 $.0002342522$，两校准项合计 $.0000613783$，总标准误约 $.01719391$。这是以生成参数做的一阶近似，不是精确置信区间。若三轴复用同一校准，校准导数乘积还产生轴间协方差；代码保存完整 $3\times3$ 近似协方差，不把三轴所有误差误当独立。
+
+**制备与测量同时未知怎么办？** SPAM是state preparation and measurement，即制备及测量误差。两列校准所测的是“按0/1指令制备后仪器报告什么”。若实际制备也由矩阵B混合，观测到的是AB；完美制备配有错读出，与完美读出配同样错制备，都可给同一计数。只靠这两列不能唯一拆开A和B。因此本例只在可信参考制备的假设下补偿读出，没有声称完整识别SPAM；联合门集层析见第19章。
+
+[官方读出说明](https://qiskit-community.github.io/qiskit-experiments/manuals/measurement/readout_mitigation.html)与[带读出模型的层析接口](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.MitigatedStateTomography.html)说明这条工作流（0.14.2，访问2026-10-13）。`sdk73/validate_sdks.py --case readout` 实际执行完整安装包；`round73_checks.py --case 02` 不依赖SDK，独立复算导数和方差。真实器件的基变换误差、相关读出和校准漂移仍需另验。
+
 ## 9. 常见误区
 
 - Bloch 球表面不是“经典概率球”；经度代表相位信息。

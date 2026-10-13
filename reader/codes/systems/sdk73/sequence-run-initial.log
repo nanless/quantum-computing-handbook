@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 104, in <module>
+    ideal=[trial(730120+10*i) for i in range(400)]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 104, in <listcomp>
+    ideal=[trial(730120+10*i) for i in range(400)]
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 81, in trial
+    tl.stop_time=250000000; tl.run()
+                            ^^^^^^^^
+  File "/tmp/quantum-round72-systems-sdk/lib/python3.11/site-packages/sequence/kernel/timeline.py", line 122, in run
+    event.process.run()
+  File "/tmp/quantum-round72-systems-sdk/lib/python3.11/site-packages/sequence/kernel/process.py", line 35, in run
+    return getattr(self.owner, self.activation)(*self.activation_args, **self.activation_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 37, in receive_message
+    raise RuntimeError('Unrouted protocol message '+str(msg.receiver))
+RuntimeError: Unrouted protocol message None

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-13T07:53:23.692Z",
+  "generatedAt": "2026-10-13T09:05:42.060Z",
   "pages": [
     {
       "source": "handbook/00-overview.md",
       "output": "reader/00-overview.html",
-      "sourceSha256": "9c2ff2a116e3ce8da60cedadc13d74a7503f7e92bf11fbd92438150c0bd32e34",
-      "outputSha256": "3c68b169b51ac5d6d9dfb3d646c37636347b517d7fbe820694df7f4b92b6696b",
+      "sourceSha256": "1b18dde751274a10541617043e525e02d1e11f39e1d9c98179ed3a75066d664b",
+      "outputSha256": "217fe4950dde3dc349588c3426cf0df302ce74097b673feebf2f34c28f04a4aa",
       "mathSourceDigest": "fda56c4e1afeb0d28480e471d975bef5dea3c0441f44c2c6b803cced08abe966",
       "headingIds": [
         "00全景量子计算是什么又不是什么",
@@ -23,6 +23,7 @@
         "5-量子计算不会做什么",
         "6-四个常见里程碑",
         "7-一个从头到尾的最小实验产生随机比特",
+        "f73-00校准与留出验证也要计入一次任务",
         "8-常见误区",
         "9-自检",
         "新增诊断练习1000-行记录是否等于-1000-次独立实验",
@@ -30,15 +31,15 @@
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 20,
+      "headings": 21,
       "formulas": 83
     },
     {
       "source": "handbook/01-math.md",
       "output": "reader/01-math.html",
-      "sourceSha256": "12284878a8c494908321e6d0c993c9adf6ff2603bb34ff5e313dc1094ec625cb",
-      "outputSha256": "1300096cead100462b259a70f1c8cef23abd540647cb00b0675de5afb4daf651",
-      "mathSourceDigest": "ffb779d755a66d24b415ed193adc27f5845e245e8925ab85010e9aac86a2d61e",
+      "sourceSha256": "7f4d6902f51fc879c3191d53bba614ff5ee650fb79bdf9a3a160020182eef345",
+      "outputSha256": "9db8145ede4d794993501c061cf41ac0885956ccb6a132dfb803bf84a33051a4",
+      "mathSourceDigest": "3bfb434d02db556f946fa3b35250478fd182420c9f3ea115728f051be14e143c",
       "headingIds": [
         "01够用而不跳步的数学工具",
         "1-复数相位从这里进入",
@@ -60,6 +61,7 @@
         "6-迹密度矩阵与正半定用到时回看",
         "进阶回看正半定为什么不能只看对角线",
         "f72-01矩阵的指数先变本征值不逐格按计算器",
+        "f73-01逆矩阵怎样还原读出为什么也会放大误差",
         "7-张量积组合系统的语言",
         "完整算例",
         "算例只对第一个比特作用",
@@ -79,15 +81,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 37,
-      "formulas": 729
+      "headings": 38,
+      "formulas": 750
     },
     {
       "source": "handbook/02-single-qubit.md",
       "output": "reader/02-single-qubit.html",
-      "sourceSha256": "0566413c3a160d44fed819711ea9856a1fe7b63cf5acb2c9e576c9d08984422b",
-      "outputSha256": "16d472af1b31c12aea82b5498562f23b6f03851bedd8f53d5c5a83dfc7343bdc",
-      "mathSourceDigest": "939a1f5e16ec787501c94f8702911d33a3cf2500e2ac9b35b9c6d9de32eb01a6",
+      "sourceSha256": "1360d30ed136763a4073a3eb085fa4c8669c1e3cf3f8dde2161f76eb5a02305f",
+      "outputSha256": "1a1874d64bf6f3bc3dc917697c475cf240acaa37085dec0fb8b94b207100fbf5",
+      "mathSourceDigest": "47b13f7d8b70105858d1c9ee161b29342df7dad3043e7f64c87adaa2e952283e",
       "headingIds": [
         "02单量子比特状态相位与测量",
         "1-量子态不是一个隐藏的经典位",
@@ -111,6 +113,7 @@
         "f71-02把前面的非投影概率模型补成一次完整测量",
         "8-采样误差不是设备噪声",
         "f72-02完整层析运行怎样从计数追到拟合后的态",
+        "f73-02读出补偿把偏差和校准的不确定度一起带回来",
         "9-常见误区",
         "10-自检",
         "新增诊断练习三组合法计数为何拼出一个不合法的态",
@@ -118,15 +121,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 27,
-      "formulas": 492
+      "headings": 28,
+      "formulas": 517
     },
     {
       "source": "handbook/03-multiple-qubits.md",
       "output": "reader/03-multiple-qubits.html",
-      "sourceSha256": "7764f3e670c48f729c2ee5faad6d1c5c93699283df3b03a56b8e6a140a9862cf",
-      "outputSha256": "eb0f23222f872fe9fbe4ad604f14cee659a17ee39223025460718ae13b42da1f",
-      "mathSourceDigest": "f2557ea92c886927a0af9fa77ad7c1edac4f25c7bee3e5dbca82b66584eb8864",
+      "sourceSha256": "368087585da15aa51266b03068cd20229c39c9f43c76a5f6405735e67f936da2",
+      "outputSha256": "cdcd8f82f5fc3dc4c13866a23f2b84d51812b9c4c5e689c44de647dcfbc1839d",
+      "mathSourceDigest": "40680df13f845275cdd68f6a3408215cd238721a249bfaad14e8edcec73c4b49",
       "headingIds": [
         "03多量子比特纠缠与约化态",
         "1-从两个比特的四种结果到联合态",
@@ -150,6 +153,7 @@
         "6-经典关联和量子纠缠的区别",
         "从两组计数得到一个可检验的纠缠判据",
         "f72-03远端阻尼不传信但联合纠缠还能剩多少",
+        "f73-03两端都有读出偏差纠缠见证怎样换算",
         "7-bell-不等式说明什么",
         "8-单配性进阶回看",
         "9-常见误区",
@@ -159,15 +163,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 29,
-      "formulas": 526
+      "headings": 30,
+      "formulas": 543
     },
     {
       "source": "handbook/04-circuits-protocols.md",
       "output": "reader/04-circuits-protocols.html",
-      "sourceSha256": "df9705665a9176f8a503f8754a27c9a1bdefd0010f80b28b0cbaedae105fff6c",
-      "outputSha256": "826e563441492a5af5a6b85776bdcb074499ab379e389078ad59d7ac5695d3fb",
-      "mathSourceDigest": "3255b5fab6d3be5ca6b98b2f7fd0240ecec9639c24f6d850c1f24237b70b3ce9",
+      "sourceSha256": "83596cb678c4f715d9f1345fa4df1c23600452918c07a45c472f05f8c7442bac",
+      "outputSha256": "5f43303edd42cef916ea53431be1e9675ebdd48320e93f99f24cc00196cf08ce",
+      "mathSourceDigest": "f5c1828287ce6a6d4d8218865f4d7d7588aba397ad5a9b034a9448a3eab512ef",
       "headingIds": [
         "04量子门电路与三种基础协议",
         "1-电路怎样读",
@@ -178,6 +182,7 @@
         "6-量子隐形传态",
         "f71-04传态要保留联合关联不能只还原一个局部概率表",
         "f72-04少发一位经典消息传态会怎样失败",
+        "f73-04消息全到了读错一位仍会做错校正",
         "7-超密编码",
         "8-相位回踢",
         "9-通用性与近似",
@@ -188,15 +193,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 17,
-      "formulas": 414
+      "headings": 18,
+      "formulas": 432
     },
     {
       "source": "handbook/05-noise-channels.md",
       "output": "reader/05-noise-channels.html",
-      "sourceSha256": "7589811705cdb7bdda32c6296c16e95c3537af147bf0dafa82c3059f523558a3",
-      "outputSha256": "51d7046d0a35cfee873e5df2e7142e9145ac56a71687c0b816dec82ba0bf7826",
-      "mathSourceDigest": "c59b63657f45a73a41a4da34582a790fb0b4e613724aad47038b6e77c028bc90",
+      "sourceSha256": "1a60bc86e44556c48f6956a302d9324d4b8b14d0e1aa8956b5c0284cd5216fac",
+      "outputSha256": "41b45729530af71d733cc17355e230af6add41db5ca50658ba2d1650c3c0c4e8",
+      "mathSourceDigest": "060a678662be97a53d3c1e50cfabc211c8e6ea456014933ee13737404d1bcab6",
       "headingIds": [
         "05混态噪声与量子信道",
         "1-为什么态矢量不够",
@@ -220,6 +225,7 @@
         "7-噪声为何不总是独立同分布",
         "8-过程表征与误差指标",
         "f72-05过程层析正性与保迹必须分别验收",
+        "f73-05真正约束cp与tpgaussian拟合与计数最大似然分开",
         "9-误差缓解不等于错误校正",
         "10-自检",
         "新增诊断练习有限温度弛豫为何也能把基态激发起来",
@@ -227,15 +233,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 27,
-      "formulas": 296
+      "headings": 28,
+      "formulas": 323
     },
     {
       "source": "handbook/06-algorithmic-primitives.md",
       "output": "reader/06-algorithmic-primitives.html",
-      "sourceSha256": "2e8940f2ede8190995de2e5e4b188e587db4dfb35b9500b08be5abccee9597c3",
-      "outputSha256": "a7e7be1be7a37d23765126d9d7eb29df20cced9f9ebcc6412bb0e11d6fc92b24",
-      "mathSourceDigest": "0ad05ca74fd2915aafaa998b28000301e17fdd8377ab697ca854f9a8995d299b",
+      "sourceSha256": "e9b08fd1ba9b5cc2e90ede37e91b1171bf77c9ddf30e139d51e736a0c3bff899",
+      "outputSha256": "ac6eb15d6cd3c59b74cd1ed8b742fe6076b097dd92d8cfd3c8c806cba6b66b41",
+      "mathSourceDigest": "cad7860cc2a0d93bc53631b96863a5d3f1cf86cd85db3ed0f1dd8ede685f1d86",
       "headingIds": [
         "06量子算法的共同骨架",
         "1-从经典函数到可逆-oracle",
@@ -257,6 +263,7 @@
         "进阶回看非网格相位的概率分布",
         "更多手算例子",
         "受控幂不是免费操作",
+        "练习-a73-06相位没有正负号谱值的符号要靠承诺解码",
         "7-哈密顿量模拟逼近演化而非打印波函数",
         "先算对易的情形",
         "不对易时分片才是近似",
@@ -274,15 +281,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 35,
-      "formulas": 569
+      "headings": 36,
+      "formulas": 592
     },
     {
       "source": "handbook/07-algorithms.md",
       "output": "reader/07-algorithms.html",
-      "sourceSha256": "5bea1c3a39be59913a9508877f6027e3658b89501b01be5ce41fae3fe70065f7",
-      "outputSha256": "89103e160b82032259215397d04508b552c4dc2b6a362f8f6a3a7e7471c960c4",
-      "mathSourceDigest": "40dfa419111c561a9a68f7e3667b9e665326d42f40b510d85b6222faf5a232dc",
+      "sourceSha256": "768612cb6ed3546009626f42acc81150d897c341be6248f69b4821980379947e",
+      "outputSha256": "d77c4a636dbef28a1f4f748f3ea4eaa2236ea27cbed7838828bbe188c254b8dd",
+      "mathSourceDigest": "61fed90f28b77f587a4caec23dec3c6dd73d774370f80d9e221c3f3b938c7004",
       "headingIds": [
         "07代表性量子算法从隐藏周期到量子模拟",
         "1-simon-算法指数级查询优势的原型",
@@ -307,6 +314,7 @@
         "5-hhl-与量子线性系统算法",
         "二维手算输出是解态不是解向量清单",
         "完整电路练习-a72-07非对角-hhl从相位写入到条件读出",
+        "完整电路练习-a73-07负谱与非网格-hhl要把垃圾概率单独算",
         "simon-的实际函数电路也要核验承诺",
         "6-量子幅度估计",
         "两位相位估计的手算",
@@ -321,15 +329,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 35,
-      "formulas": 735
+      "headings": 36,
+      "formulas": 784
     },
     {
       "source": "handbook/08-applications.md",
       "output": "reader/08-applications.html",
-      "sourceSha256": "85cc35ce1b60bf15d462995643316c66676a003bd05d6bbb8f51a8b4847707c5",
-      "outputSha256": "d6418eeb6e86d77c8a9246dd69c4e3ee96b9ac0a553c022626334d22c9d66c31",
-      "mathSourceDigest": "bff0c63d5b37005e61ba9fcf603724cbba5b7a4b145101a80089a6bc11e33e92",
+      "sourceSha256": "edbc96a3acdd9289708c6da5eec6e9099f07b2c704a6f783abc0214cf7db67e3",
+      "outputSha256": "359f01c37cd84f0c6678ba348f1b9e32c6abbefdd9cb60daf39183ee6c61c795",
+      "mathSourceDigest": "d002a24e5bf647276dcad5867070b75181d793724e0e8c236005931235916d39",
       "headingIds": [
         "08应用变分算法与证据边界",
         "阅读前先固定究竟要交付什么",
@@ -357,6 +365,7 @@
         "8-化学与材料",
         "一个能量差的误差预算",
         "开源化学接口练习-a72-08先固定粒子数再比较能量",
+        "练习-a73-08粒子数罚项多大才真正排除真空答案",
         "9-何谓可信的实用量子优势",
         "10-错误缓解的证据边界",
         "实操扩展把近似误差条变成有限样本保证",
@@ -368,15 +377,15 @@
         "参考起点"
       ],
       "diagrams": 1,
-      "headings": 35,
-      "formulas": 488
+      "headings": 36,
+      "formulas": 506
     },
     {
       "source": "handbook/09-hardware.md",
       "output": "reader/09-hardware.html",
-      "sourceSha256": "0c4633b53c22b593b0a740db7ba4760551fdb7ce98f6bf3cc444dcfa51d8e254",
-      "outputSha256": "4d843a05969e5a835fe2c167ce8a2baa42bd893095f2fca9f7376399ea472194",
-      "mathSourceDigest": "c0a9adb9e18c48bf87476949a91ad4c04e208bbedd8a9bf005caf0a8df98dd23",
+      "sourceSha256": "3e34bdc3835ccfc7c6312961258bb1a21c229f9628d0449e7705753a0137d7cd",
+      "outputSha256": "cddd39ecfb3114663035a7decb58fd6655fbdb880b9bcb0390c1d81570e21a53",
+      "mathSourceDigest": "f352a6392014684ced4b9596ffcf8bf8c312d93ef40e2b38d0a5840741ee3137",
       "headingIds": [
         "09从物理量子比特到控制栈",
         "1-先把量子计算机拆成一整套系统",
@@ -399,6 +408,7 @@
         "53-练习与实验一个丢失告警究竟有多可信",
         "54-练习与实验标定本身有误差怎样一起算",
         "55-s72-09把门错误-01填进模拟器前先对齐定义",
+        "56-s73-09同一个-y-故障为什么会同时进入两张检查图",
         "6-软件控制与云平台",
         "从一个远距-cnot-算到物理门",
         "反馈是一条有时限的数据通路",
@@ -409,15 +419,15 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 29,
-      "formulas": 215
+      "headings": 30,
+      "formulas": 229
     },
     {
       "source": "handbook/10-error-correction.md",
       "output": "reader/10-error-correction.html",
-      "sourceSha256": "3c00414a3df5e4f5d7f1f6a20cffe5913925bcb6ee4dc73085eb5ef23e38c221",
-      "outputSha256": "2282f33b02e8810da0a703f878570952c72644f5cc721409fcc5bccbfa3ef242",
-      "mathSourceDigest": "0dd93fb32d088905d1dc8c4806a6e9ece98dd9d595d0d02fed514ebc91e8b263",
+      "sourceSha256": "7247722e0cd3af6ee4591cde2e866e4f3174ae69a6873b4a1767dd62f02fb301",
+      "outputSha256": "717a1b7bc34b7dbe7f33fe69b65fa21dc2f00063f30f9843f1aed01c0e835171",
+      "mathSourceDigest": "14da1d9db515713ef3ebbc9fd7cc9219536039dd605634c8a63d3ee4742cc8f0",
       "headingIds": [
         "10量子错误校正与容错计算",
         "1-不可克隆为何不妨碍纠错",
@@ -436,6 +446,7 @@
         "71-为什么要比较相邻两轮而不是只看一轮综合征",
         "72-练习与实验最少翻转为什么未必最可信",
         "73-s72-10真正跑完电路检测事件译码逻辑判错",
+        "74-s73-10双基固定轮数和相关匹配逐个缺口真正补上",
         "8-阈值何时增加冗余才真正有用",
         "一个明确标注为示意的缩放例子",
         "9-容错纠错码之外还需要什么",
@@ -449,15 +460,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 28,
-      "formulas": 326
+      "headings": 29,
+      "formulas": 332
     },
     {
       "source": "handbook/11-resources-benchmarks.md",
       "output": "reader/11-resources-benchmarks.html",
-      "sourceSha256": "702f7c47487705a8ede26d8dc136eee8269bf2fd4cc3f294876b0fdd14616ebf",
-      "outputSha256": "a2ea387893b6a40952b10b3b701374322c8030f7857151b2bfb28f4d24800690",
-      "mathSourceDigest": "8038bbba6174d932551e16fa1e94bc466085dcb740f047793c9def278f5fff52",
+      "sourceSha256": "b2f0c58615851ccbe0001cc26bc692e9ef90908b5df918a1e45c74fcfae03ad9",
+      "outputSha256": "2789adb709efbf5ad2292875e8aaa6e6e8a58de22a33667e95ffc5dcbc824065",
+      "mathSourceDigest": "de51afaa7529a715e56e7aed54cf49f4d21eb27087725bd021ca3b2e66c39b9c",
       "headingIds": [
         "11资源估算与基准怎样比较才公平",
         "1-基准不是一个排行榜数字",
@@ -475,6 +486,7 @@
         "从总失败预算反推码距一遍可以复算的示意账",
         "71-s71-11最终读错不等于中途一次也没错",
         "72-s72-11完整存储的计数怎样换成可审查的证据",
+        "73-s73-11换译码器要逐条配对计时也要留下分布",
         "8-端到端资源估算",
         "练习与实验t-count-相同魔法态等待仍不同",
         "81-可靠性不是一次校准后的峰值",
@@ -487,15 +499,15 @@
         "参考资料"
       ],
       "diagrams": 1,
-      "headings": 26,
-      "formulas": 179
+      "headings": 27,
+      "formulas": 187
     },
     {
       "source": "handbook/12-security-network-frontiers.md",
       "output": "reader/12-security-network-frontiers.html",
-      "sourceSha256": "f2128b7cb1f547988acacb6637e00ec1309b44d2d7f73aed29470d5b3a91c96e",
-      "outputSha256": "070576b441576a555f364e27615bfe865ad66fcc592356c73075ee7af9b034b8",
-      "mathSourceDigest": "9c92790be8c5f0b97e4cfe6bed366e6fcabc36e8484e017a0ac40661ed549adf",
+      "sourceSha256": "ca36fbf1a867e03c7a24bbcbc86f07c199ae3370fc84760f2f093be7be31e142",
+      "outputSha256": "907baf1ced6dbd12bff086a4a5618def8b33a69b0622165f928f903b983b984f",
+      "mathSourceDigest": "105b00051cd047b2f7412d32ded0d108da537734718c991f3ee5fbfdc24030f2",
       "headingIds": [
         "12密码量子网络与研究前沿",
         "1-先分清三个经常混在一起的主题",
@@ -518,6 +530,7 @@
         "7-纠缠交换与中继器",
         "71-四个量子比特怎样变成一对远程纠缠",
         "72-s71-12每段重叠都是-90交换后是多少",
+        "73-s73-12真的先兆两段-bell-对再执行交换和过期事件",
         "8-网络性能要看一组量",
         "9-分布式量子计算",
         "10-截至-2026-09-24网络实验已经证明到哪一步",
@@ -528,15 +541,15 @@
         "参考资料"
       ],
       "diagrams": 2,
-      "headings": 29,
-      "formulas": 362
+      "headings": 30,
+      "formulas": 377
     },
     {
       "source": "handbook/13-quantum-information.md",
       "output": "reader/13-quantum-information.html",
-      "sourceSha256": "7edb8fbdee81115f44b70e2d1c0b0814a007b08f1b8aa4b2749c437c275c2ca0",
-      "outputSha256": "c013f1df4bd9523922b4d255f84263a8927b6a80d2293f448781259259b0fd61",
-      "mathSourceDigest": "40bd908808358ed668e0f653a2f1d6dd4c457c5bfde0df1f7a7830e2a1cf5f5f",
+      "sourceSha256": "b09a6f3a6c680cc9104f15853fd46f58d4e32e2ca750c2f93b6a26adcc5d9451",
+      "outputSha256": "d83df8e35ee54ec5290a7fc26dc453dc3eba583a64c7c65b8c772956152b544d",
+      "mathSourceDigest": "288f64ef7131f170e095abd9c54ac8b5baab838e0603b93a7fd2ad916ab9a72d",
       "headingIds": [
         "13量子信息量度熵距离与可提取信息",
         "1-从经典熵开始",
@@ -557,6 +570,7 @@
         "把无歧义判别的测量写出来",
         "7-保真度状态有多相似",
         "算例-1",
+        "练习-a73-13相同计算基计数不能判断反计算后的输出仍是纯态",
         "8-信道不会增加可区分性",
         "9-holevo-信息一组量子态能承载多少可访问经典信息",
         "正交编码",
@@ -572,15 +586,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 32,
-      "formulas": 336
+      "headings": 33,
+      "formulas": 356
     },
     {
       "source": "handbook/14-compilation-control.md",
       "output": "reader/14-compilation-control.html",
-      "sourceSha256": "be83ab500aa15ca66754e53185a2d0a455f2d1b3e3134552b425c52b30a92c3c",
-      "outputSha256": "7d428016ba60a00ac94286aed1fb0d8d487616c0008a810bb2c6dfef482474c0",
-      "mathSourceDigest": "3da9f29ac03c9380d7be14fb12b608a98c622ffce99bad7ccb89bf9006bcdff8",
+      "sourceSha256": "d4151084822c574bc863a8e8aae02b1ab4d48efd2d9c5ccc452a9037e78003fb",
+      "outputSha256": "0dd45cd5cf87a26f2405760fdd7db77a03e19d3b71fc3b61505b1c295eeff28c",
+      "mathSourceDigest": "296f981b41a8b0127fb44e5b7de21447148564b7bdac9295ec1a3ebb6d189820",
       "headingIds": [
         "14从算法电路到物理执行编译调度与控制",
         "1-从算法到实验的表示层不要混在一起",
@@ -597,6 +611,7 @@
         "旋转坐标系中的最小受驱模型",
         "可复算例从-rabi-频率得到门时长",
         "61-s72-14grape-不只是一个库名梯度和目标是什么",
+        "62-s73-14把泄漏放进优化目标后怎样验收计算子空间",
         "7-rabiramsey-与门校准",
         "软件边界历史脉冲教程须与当前版本区分",
         "8-门表征与层析",
@@ -614,15 +629,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 30,
-      "formulas": 211
+      "headings": 31,
+      "formulas": 236
     },
     {
       "source": "handbook/15-practice-research.md",
       "output": "reader/15-practice-research.html",
-      "sourceSha256": "b0db1db8bd7354114af27a059fce13b29f6033c0a745dd164462f0217fdae815",
-      "outputSha256": "cd626bcbeb1be67296cb4de3508ac91974d64f2f77e82b99555c2fbeb5c84daa",
-      "mathSourceDigest": "8372b7cde19b148adb1f053fe9dccaee8a24ef97c5d90e3740a10ce5f7db96a8",
+      "sourceSha256": "aaa4c1795fcb07be5cc6b56e8400c3a86a761d8fa05a29f80ad0e3174dfeb7d3",
+      "outputSha256": "86dc12f11ce7a55da5fa03d2c1b2393723d2a56e83f53a3c6c526aaf66c2536f",
+      "mathSourceDigest": "9d00a5099926b2499872d1fc5d48132ef16d82ee6da9bdad596881c6a38821c9",
       "headingIds": [
         "15实践路线手算模拟真机实验与论文复核",
         "1-四级验证阶梯",
@@ -661,19 +676,20 @@
         "14-版本和时间敏感性",
         "15-配套实验从计算到可审查的结果",
         "151-s72-15完整-sdk-的通过需要留下哪条证据链",
+        "152-s73-15sdk有成功先兆也要用数学反例检查后态",
         "16-自检",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 39,
-      "formulas": 172
+      "headings": 40,
+      "formulas": 179
     },
     {
       "source": "handbook/16-advanced-algorithms-verification.md",
       "output": "reader/16-advanced-algorithms-verification.html",
-      "sourceSha256": "2138bf6d5c61071d6cc3cbbb295e102931381530408c336b5b9a3612f26296de",
-      "outputSha256": "21e94973fb6e030fb636ecba70a0bd778d201092696b2d89207c7a00eb354699",
-      "mathSourceDigest": "d0a21a8f9b1ce7c22ac2f4b1a332d4291be0054d7f4c5e0ed473481b907eb6cf",
+      "sourceSha256": "24ea2f386fdaec041e939239f5023a19c82b2bd34c42626afc70620fb2acebe0",
+      "outputSha256": "d1a8fc5cdbfd15989e2b62c44170f92085085c6817b6e6046c450f1e8b3a90d5",
+      "mathSourceDigest": "318db200ab3b73f38234b178f0ced609538e9c1f472685e5d896969cae46821c",
       "headingIds": [
         "16高级算法与验证从下界证明到可信输出",
         "1-读算法论文前先填六个空",
@@ -693,6 +709,7 @@
         "4-量子行走利用搜索空间的邻接结构",
         "41-带硬币自由度的离散时间量子行走coined-walk",
         "完整图实验-a72-16a任意小图的连续时间行走",
+        "完整离散搜索练习-a73-16a给标记点换硬币才从行走变成搜索",
         "42-结构化搜索的成本",
         "43-element-distinctness-为什么优于对所有数对做-grover",
         "5-现代-hamiltonian-算法栈",
@@ -705,6 +722,7 @@
         "手算矩阵多项式不是逐元素运算",
         "手算两次信号调用怎样产生-t_2x",
         "相位合成练习-a72-16bpyqsp-的目标在虚部不是整个左上元",
+        "完整负谱矩阵练习-a73-16b真正的-qsvt-线路还要提取对的块",
         "56-这条算法栈不自动消除输入和输出瓶颈",
         "6-算法级精度预算从应用误差反推资源",
         "61-误差来源不能各自用满总预算",
@@ -730,15 +748,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 53,
-      "formulas": 584
+      "headings": 55,
+      "formulas": 639
     },
     {
       "source": "handbook/17-computation-models.md",
       "output": "reader/17-computation-models.html",
-      "sourceSha256": "54f8f2ca9db405442afe8c9af971dc35fa422f2a3eaa3d4da62802d6269fe432",
-      "outputSha256": "507e6f785f6d30bfeb12d72f9fdde9fdb6e40de2be4feac5ee07bdd587ca85cc",
-      "mathSourceDigest": "b6c8e14f4d39ee0b801611c2150fea6024967893d0aa2b8b0abb069237496d13",
+      "sourceSha256": "881f8f093c4b2fcbeb1262043901e6fddf1993e4a5d6cfb544340f1939e97662",
+      "outputSha256": "7735b5728bf6a5a2355dc3f35a7a7db19ce14bb2523e9315be9b5b57dda6b21a",
+      "mathSourceDigest": "c98a3696bd0b19315c4d0c5764bc11c676833305466c55c4016609d20fa29612",
       "headingIds": [
         "17量子计算模型门测量绝热退火与模拟",
         "1-一张计算模型地图",
@@ -746,6 +764,7 @@
         "3-测量型量子计算测量也能推进计算",
         "31-最小簇态手算一次测量实现-h",
         "32-为什么需要适应性前馈",
+        "完整前馈练习-a73-17两个测量步四种结果都要纠正",
         "4-闭系统绝热计算沿着基态路径演化",
         "41-二能级手算",
         "42-与门模型的关系",
@@ -767,15 +786,15 @@
         "参考起点"
       ],
       "diagrams": 3,
-      "headings": 25,
-      "formulas": 253
+      "headings": 26,
+      "formulas": 279
     },
     {
       "source": "handbook/18-channels-capacities-complexity.md",
       "output": "reader/18-channels-capacities-complexity.html",
-      "sourceSha256": "f7154b9ad421b246cadbcee2b326b1cccf92e2213c4745029deed3d27023a092",
-      "outputSha256": "00b00afb99b822eeaae7f89213b9748d8bb30e195c0389d2a608d7fd43bd988e",
-      "mathSourceDigest": "7263fe138adab88350b4033af604e173ee956aac601c45400b7e85671f8c0a40",
+      "sourceSha256": "e3c00bd51914ea9fc9d7be174f62151ddd9d4175f524675df9303d75a4f47c36",
+      "outputSha256": "2b189112cbc28241c7ed7311ca8c3a1e33021642d08df0e7492c2bd3ed2fa597",
+      "mathSourceDigest": "d4c470bd629fc1189076103fc4791294671e2e953eeeacc17657ae48e299a1cc",
       "headingIds": [
         "18从量子态到通信任务信道容量与验证复杂度",
         "1-纯化混态可以来自更大系统的纯态",
@@ -806,6 +825,7 @@
         "协方差矩阵有正特征值还不一定对应量子态",
         "81-手算压缩真空不是两个方向都更准",
         "完整-gaussian-sdk-练习-a72-18协方差到光子数概率",
+        "练习-a73-18只有能量上限时fock-尾界应当多保守",
         "9-一张研究阅读清单",
         "10-常见误区",
         "实操扩展从擦除事件构造降解映射",
@@ -815,15 +835,15 @@
         "参考起点"
       ],
       "diagrams": 4,
-      "headings": 36,
-      "formulas": 572
+      "headings": 37,
+      "formulas": 586
     },
     {
       "source": "handbook/19-engineering-architecture.md",
       "output": "reader/19-engineering-architecture.html",
-      "sourceSha256": "dce9990bae6e5a139315991d4698becd8a2d93d7d935d1ef18868ced8bd551fb",
-      "outputSha256": "98edcd8114a016c334e6e19d4fe5bd6f0e3d2e92197cf48a3c3c1871882bc618",
-      "mathSourceDigest": "cfc6f5bd2be21de6f6451d69fbf1e58e310f39cfdee976e05a3a410b54bfd286",
+      "sourceSha256": "9f2b57029f2d535419e440def576a63ee0ca791c87bef7325eefe9ee05b1e635",
+      "outputSha256": "7b691e0a8952d228eea3d197622eae56a4476deef30e9f89a5b751b0cc0574ed",
+      "mathSourceDigest": "f4345e798607c67aa2648c0216c542f2b9c1ef22f2413a1928d9d58f5655dbd2",
       "headingIds": [
         "19可维护量子系统工程",
         "1-本章要回答什么",
@@ -855,6 +875,7 @@
         "可复算例-6位置标签带来的距离收益",
         "101-三类容错架构的资源交换",
         "102-s72-19平均服务比到达更快为什么仍会错过反馈",
+        "103-s73-19有了真实时长样本仍要把服务与反馈分开",
         "11-标准成熟度与供应链",
         "111-标准状态不能混写",
         "112-供应链按依赖审计不按厂商排名",
@@ -869,14 +890,14 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 42,
-      "formulas": 169
+      "headings": 43,
+      "formulas": 174
     },
     {
       "source": "handbook/README.md",
       "output": "reader/index.html",
-      "sourceSha256": "123aeddc44972bf12b1c71a7c67727b4e04269a914ebcff6ad9cc0bce54cf8cf",
-      "outputSha256": "b80adc02b0239770b2c4a01fc1e865d9baf22bfaa0d639719f38a6dbaaed615a",
+      "sourceSha256": "ff5bf4fbcc6d862b13b57e3aa5d616b6effe257d785a0afedb1d9cfbca4bf6bf",
+      "outputSha256": "66b9306a5fb471b3ef70425ebd716ea69c947aa50bdd8b47be7ccdca0979a1f7",
       "mathSourceDigest": "cba32710c691cd0afd7d4823c5c03162bb60eb04b2d10a941e28b0d2d5596bcb",
       "headingIds": [
         "量子计算从直觉到研究入口",
@@ -913,8 +934,8 @@
     {
       "source": "handbook/appendices/audit-log.md",
       "output": "reader/appendices/audit-log.html",
-      "sourceSha256": "a24d952630c461e995621520cce061bf77c4e6dd8bded478c8902134e6299785",
-      "outputSha256": "4cdb61775447c433b0a22034d3d176cb3cdae817e63693dc4a35e3becd278fdc",
+      "sourceSha256": "19efeb4af9534be7f0f8874d1c73300d8625acaf9c9dcdac3f22ebd137badecb",
+      "outputSha256": "d115955665423388ea7fd294a94edb8ab203eaf80be00c8cdf671807a5db45a1",
       "mathSourceDigest": "8e61237a943abe6d5cd82d98673966cdaca2d9aa10264e782ac134958816c4d0",
       "headingIds": [
         "审校记录",
@@ -952,10 +973,11 @@
         "第-69-轮逐章实验源码与声音整合2026-09-26",
         "第70轮逐章诊断算法源码与工业研究扩充2026-09-26",
         "第71轮逐章展开与全书和谐性复核2026-10-13",
-        "第72轮24篇再审完整sdk实跑与数学前置2026-10-13"
+        "第72轮24篇再审完整sdk实跑与数学前置2026-10-13",
+        "第73轮sdk补缺口逐章深审与原失败保留2026-10-13"
       ],
       "diagrams": 0,
-      "headings": 36,
+      "headings": 37,
       "formulas": 17
     },
     {
@@ -1016,9 +1038,9 @@
     {
       "source": "handbook/appendices/notation.md",
       "output": "reader/appendices/notation.html",
-      "sourceSha256": "3aa8885566e724fe0348879e83d10cdacfcbe06ce70442cc5565dde4bd34386e",
-      "outputSha256": "3de179fa90c83ef58566e42433b4e7cfc67ecc5e975b6a0f1eb5783225a382b7",
-      "mathSourceDigest": "dd1daaa5dbefdef86e79388ebad5d5857fcdfce13643ef5eb668e47356ae653a",
+      "sourceSha256": "db8ce02b1dea53f1c3bfc1ae8bb60b9047a613a90b0337d066e1a6fed897683b",
+      "outputSha256": "86891bcccbff1837f0db469217ad1149e4928d6a161b629820a1251bbeb58b42",
+      "mathSourceDigest": "7203997287e3520ae4145087b92609d694c98dd15389040a621de7e321162861",
       "headingIds": [
         "符号表",
         "量子力学基础篇的物理符号",
@@ -1027,7 +1049,7 @@
       ],
       "diagrams": 0,
       "headings": 4,
-      "formulas": 175
+      "formulas": 193
     },
     {
       "source": "handbook/appendices/prerequisites.md",
@@ -1082,8 +1104,8 @@
     {
       "source": "handbook/appendices/software-practice.md",
       "output": "reader/appendices/software-practice.html",
-      "sourceSha256": "6a550a80787c20408b8f8ddba9364b13930b85e8c9c07aa57a224083a1977f5a",
-      "outputSha256": "4445510e7df1560d8a754f84b99410e586848d138f994703cd9ae2ab6e068a61",
+      "sourceSha256": "a3615bcddb0833e2edd4ee1f8d0248d2ca3ff45cf08535ab35484035b1f908e0",
+      "outputSha256": "46ce1840cd6e16a644b94b963ae2c05b2c7ed200628bc194222e162b7849c62a",
       "mathSourceDigest": "12abb4554e4190141331eb90f75e293d52c52b454ae6cbd0709fe54206e7e63c",
       "headingIds": [
         "算法工业实践与开源代码对照",
@@ -1121,17 +1143,18 @@
         "141-样本数量不等于子空间维数",
         "142-固定seed还不一定固定并行结果",
         "15-过程层析输入覆盖条件记录与设置数量",
-        "16-把软件约定带回全书公式"
+        "16-把软件约定带回全书公式",
+        "17-第73轮工业流程的实际接续"
       ],
       "diagrams": 0,
-      "headings": 36,
+      "headings": 37,
       "formulas": 159
     },
     {
       "source": "handbook/labs/README.md",
       "output": "reader/labs/index.html",
-      "sourceSha256": "09851641bec03c72fa5eae9b9e466fa1e58809afe861fc1405da51833baab425",
-      "outputSha256": "ffec7680c3adf7a5356b85c3d7acf49df2e64660a7ec757fbcdd320cd3d1efbb",
+      "sourceSha256": "7b03663dee9439a827ec6a2eb15cea292684230b3ffe2313db6cc611bf740ce6",
+      "outputSha256": "981fd470f9a577a3165b8f49b3b521ac46400524b6752cef40ba9df1d4c6dcb7",
       "mathSourceDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "headingIds": [
         "实验练习代码与声音",
@@ -1141,10 +1164,11 @@
         "如何把练习改成自己的研究",
         "第四组逐章练习完整sdk与独立复算",
         "第三组逐章练习从解释断点到独立核算",
-        "第二组逐章练习检验容易遗漏的条件"
+        "第二组逐章练习检验容易遗漏的条件",
+        "第五组逐章练习第73轮补缺口与深度核验"
       ],
       "diagrams": 0,
-      "headings": 8,
+      "headings": 9,
       "formulas": 0
     },
     {
@@ -1253,9 +1277,9 @@
     {
       "source": "handbook/labs/sdk-validation.md",
       "output": "reader/labs/sdk-validation.html",
-      "sourceSha256": "787a6c4765c598ac77b4286dbe14aae4c2d9068118a6400768f20747a33fc364",
-      "outputSha256": "91488b68eafef6d306a2039039344a1e17f15c451f8e4c687c4047ab7f1a6ca0",
-      "mathSourceDigest": "240d8bd01cc8c2ebcc40105247dd1ee48a034d5d8017bd97a488496880a6c56d",
+      "sourceSha256": "a8685dc63dad0207548a645f019495da69136ae446af809a7efc8e4f75fd12ca",
+      "outputSha256": "6524312b0d4440dd06669ac8de8badcf50dec76b6dc697e66496378bd834627a",
+      "mathSourceDigest": "81c886b61d9cb97802e33b4626eb1ced6a50beae37fcde8121353db57e9454ea",
       "headingIds": [
         "完整-sdk-实验册从安装包到可核验输出",
         "1-26个完整项目分别运行了什么",
@@ -1265,11 +1289,17 @@
         "5-练习r72-mpf真正合成近似电路再比较偏差",
         "6-练习r72-gst为何要比较预测概率而不是逐格比较门矩阵",
         "7-练习r72-hpc无放回子采样不等于无限扩展子空间",
-        "8-怎样把工业实践继续做实"
+        "8-怎样把工业实践继续做实",
+        "9-第73轮补缺口先把未实现拆成可验收任务",
+        "10-练习r73-mpf动态权重与参考演化都要独立查",
+        "11-练习r73-slc只缓解会影响目标的噪声",
+        "12-练习r73-pna把逆噪声放进可观测量",
+        "13-练习r73-gst更长序列spam与gauge",
+        "14-练习r73-hpc按工作项定位philox随机流"
       ],
       "diagrams": 0,
-      "headings": 9,
-      "formulas": 74
+      "headings": 15,
+      "formulas": 150
     },
     {
       "source": "handbook/labs/systems.md",
@@ -1296,9 +1326,9 @@
     {
       "source": "handbook/quantum-mechanics/01-experiments-states.md",
       "output": "reader/quantum-mechanics/01-experiments-states.html",
-      "sourceSha256": "ec8c86d554568d591e98fc6237f5c1421b52d7b80f9874cd221f05de0ea70659",
-      "outputSha256": "b3f707f0ab9ba1a4166b1264985a5f535cea1158f115f88207b56cc9ce81631a",
-      "mathSourceDigest": "2c5b648a9cae280dbf11cc27325d1a1ef5ce20143d25d38b2a0d5aba452d8bb0",
+      "sourceSha256": "5d5043acebbe9a7a717000ad931800eb131805271b1eaf891e203e4fee33ead8",
+      "outputSha256": "3721cdf075d58ff020c98a10e076d0c374484a20020bfbda06003119524d3701",
+      "mathSourceDigest": "9b14d886db10869e7480a7fc6da89807d9d2bbb3fb5eab6396603469c5fbcb3c",
       "headingIds": [
         "q1从实验认识量子态",
         "1-状态首先是一套可检验的预测",
@@ -1310,6 +1340,7 @@
         "23-进阶回看部分路径记录怎样削弱干涉",
         "f71-q1量子擦除分组条纹为什么不等于整体条纹恢复",
         "f72-q1只数被探测到的粒子会把概率改变多少",
+        "f73-q1漏检与错报不同纯态也会得到浅条纹",
         "3-全局相位与相对相位",
         "4-sterngerlach顺序筛选揭示互补基",
         "41-同方向连续筛选",
@@ -1323,15 +1354,15 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 21,
-      "formulas": 320
+      "headings": 22,
+      "formulas": 330
     },
     {
       "source": "handbook/quantum-mechanics/02-observables-dynamics.md",
       "output": "reader/quantum-mechanics/02-observables-dynamics.html",
-      "sourceSha256": "fabaed4e8489f707d5f0d5281af886369db63f46bb2ff5480b92c8ce52518688",
-      "outputSha256": "b68a7654d33f2b4d173302b55b561af245af1ed08f0b9cf39e7fea2ebecff2dd",
-      "mathSourceDigest": "4e015f97c1ddb5ea7df3714e881ed3754448ea2cbdfdbc58c2bf0a5c70231724",
+      "sourceSha256": "862b88e1833a78da2f395b8e2cef8dca2b2f799401ffe87f8548b49f90e1102a",
+      "outputSha256": "c05c7867be39c140eb9f1bd704fe0317fd1c7d12329e3629bf61f16c509147f0",
+      "mathSourceDigest": "965ff093e882f0e8d7b3d7fd4baca6a1aa2dec84cdd4be2a59b170a3d5e2370f",
       "headingIds": [
         "q2可观测量与量子态的时间演化",
         "1-从物理量到厄米算符",
@@ -1355,6 +1386,7 @@
         "9-时变-hamiltonian不对易时操作顺序不能丢",
         "两段-xz-操作反例",
         "f72-q2把开放演化接到求解器平均态与一条随机轨迹",
+        "f73-q2脉冲随时间变化分别检查时序误差积分误差与轨迹涨落",
         "10-常见误区与检查顺序",
         "11-自检",
         "新增诊断练习同一个简并读数测量后为什么可能不同",
@@ -1362,15 +1394,15 @@
         "参考资料"
       ],
       "diagrams": 0,
-      "headings": 27,
-      "formulas": 352
+      "headings": 28,
+      "formulas": 390
     },
     {
       "source": "handbook/quantum-mechanics/03-levels-control.md",
       "output": "reader/quantum-mechanics/03-levels-control.html",
-      "sourceSha256": "8b36121b7a7329112097f6712abeea62274e99ddbfcc33f89d8a660d55b415d5",
-      "outputSha256": "ccd055b5d73d048f4d970bd5c97e318f9eab4378b114ab2152a713f678afb801",
-      "mathSourceDigest": "b9143d0d467f0f22a3fb3755f0eac1d5531bcabee86d0117694db7edc7a871bc",
+      "sourceSha256": "b281c6479d577750748941cce767830cc56674adbabe1c0fea0bc2d843dc1d47",
+      "outputSha256": "fa36f4f3e179847c547661e5afe20a7419f5e8ca6b87a6bd1437396edc449f53",
+      "mathSourceDigest": "f7a91455491a1cc28888f3be250e9d5c09a144317cf6e45d7a769263c06d0d21",
       "headingIds": [
         "q3从能级到物理量子比特",
         "1-同一个能隙的三种写法",
@@ -1387,6 +1419,7 @@
         "62-不多也不少的那个二分之一",
         "算例失谐会同时改变振荡幅度和速度",
         "63-s72-q3二能级优化得很好放回三能级会怎样",
+        "64-s73-q3三维门酉不表示它的二维限制也酉",
         "7-退相干可以从系统环境纠缠看见",
         "8-同样是量子比特不同平台选的两个态不同",
         "9-常见误区",
@@ -1396,15 +1429,15 @@
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 22,
-      "formulas": 301
+      "headings": 23,
+      "formulas": 318
     },
     {
       "source": "handbook/quantum-mechanics/04-wavefunctions-models.md",
       "output": "reader/quantum-mechanics/04-wavefunctions-models.html",
-      "sourceSha256": "b6ff4b6b3260196ee8d1e86e5a838075c4b13c453282e4afd7ef851b7da61762",
-      "outputSha256": "8556ad56090c7c1c12824f14e569e920cf9b8907c4776e569b3045e87935a652",
-      "mathSourceDigest": "16d8ea2fe54e16ead55df0c0461647e3df708fcdf5c7d117292e84689a97e715",
+      "sourceSha256": "3b3cc96b50945ae3c614c5df5f33228b552409655ba7b7bb0bf7de129f6fa443",
+      "outputSha256": "40d5d7e05a877166d5ee53bdfb2638bcaf1601bf0504c792c7385a832e00acad",
+      "mathSourceDigest": "c3a253d223e5f80090588225a72ba57be1deb58e8f75dc0ea2ccc19b9f41a587",
       "headingIds": [
         "q4波函数势阱谐振子与隧穿",
         "读公式前用三个算式找回微积分的手感",
@@ -1427,12 +1460,13 @@
         "11-自检",
         "新增诊断练习计算机里的升降算符为什么不严格满足原对易关系",
         "练习-a72-q4截止误差不能只看最高一层要算漏掉的总概率",
+        "练习-a73-q4截断后再驱动并不等于先驱动再投影",
         "配套数值实验与展开答案",
         "参考起点"
       ],
       "diagrams": 0,
-      "headings": 23,
-      "formulas": 298
+      "headings": 24,
+      "formulas": 310
     },
     {
       "source": "handbook/quantum-mechanics/README.md",
@@ -1455,12 +1489,12 @@
   "mathErrors": [],
   "diagramErrors": [],
   "diagrams": 20,
-  "formulas": 11158,
+  "formulas": 11722,
   "codeCopies": [
     {
       "source": "codes/README.md",
       "output": "reader/codes/README.md",
-      "outputSha256": "88917eeded89e89394d2d2540ab6df4ff897b79067bb8dae533ece07c7d82a1c"
+      "outputSha256": "a293d0fab4d348f20a18ab31fe5059c2ea65cc4a1b9dc2b0e81f2bad76aefe87"
     },
     {
       "source": "codes/algorithms/README.md",
@@ -1533,6 +1567,51 @@
       "outputSha256": "e7d8ba146817bc67aa0ab31a07fe3b4001d139c6ad7e11a7e01bf2baaf19dfa5"
     },
     {
+      "source": "codes/algorithms/round73-cross-root-results.json",
+      "output": "reader/codes/algorithms/round73-cross-root-results.json",
+      "outputSha256": "e44a5ff3501b3818022307b7611a446acf41519777dc46a778fe7e0f56a2766f"
+    },
+    {
+      "source": "codes/algorithms/round73-cross-root.log",
+      "output": "reader/codes/algorithms/round73-cross-root.log",
+      "outputSha256": "e44a5ff3501b3818022307b7611a446acf41519777dc46a778fe7e0f56a2766f"
+    },
+    {
+      "source": "codes/algorithms/round73-cross-systems-results.json",
+      "output": "reader/codes/algorithms/round73-cross-systems-results.json",
+      "outputSha256": "992b368ee6dab31299847e995edcadc31b03b497fa47a6015e5b2835284b4405"
+    },
+    {
+      "source": "codes/algorithms/round73-cross-systems.log",
+      "output": "reader/codes/algorithms/round73-cross-systems.log",
+      "outputSha256": "caeaa33eb048d95461f891dc69c3e0f87df28fafe1419ded51c373934a938e23"
+    },
+    {
+      "source": "codes/algorithms/round73-results.json",
+      "output": "reader/codes/algorithms/round73-results.json",
+      "outputSha256": "ea77153538c62ba71d1431806ebeb12ba52c1d3e14bb84dc5106f5af48a2611e"
+    },
+    {
+      "source": "codes/algorithms/round73_checks.py",
+      "output": "reader/codes/algorithms/round73_checks.py",
+      "outputSha256": "8ca5b4e87f4d1189c4c902fdc880ffe522c4b687838c4bb1b4644360305a40ab"
+    },
+    {
+      "source": "codes/algorithms/round73_cross_root.py",
+      "output": "reader/codes/algorithms/round73_cross_root.py",
+      "outputSha256": "41e647f5a8528757d2c21c8e4131c8073187e31eace516d1d06dbda2128c6860"
+    },
+    {
+      "source": "codes/algorithms/round73_cross_systems.py",
+      "output": "reader/codes/algorithms/round73_cross_systems.py",
+      "outputSha256": "9bd5ae08da14e102d20ec267ad5a66f99b383d6b71e4bbb943e42e3e8949c9b0"
+    },
+    {
+      "source": "codes/algorithms/round73_figures.py",
+      "output": "reader/codes/algorithms/round73_figures.py",
+      "outputSha256": "5b09255f0cab5a47d5f285e7c4528ef037499b87633a11d2e9183bfcb4b6f966"
+    },
+    {
       "source": "codes/algorithms/sdk/README.md",
       "output": "reader/codes/algorithms/sdk/README.md",
       "outputSha256": "48f6a631a7efddf77294d6fa577a910a5436dbabc877a61f3df0cdd33481cd7d"
@@ -1578,6 +1657,151 @@
       "outputSha256": "b484860b89bceea0da24b7881566671aa9585c53e158f5248d904ff9ab6dc997"
     },
     {
+      "source": "codes/algorithms/sdk73/README.md",
+      "output": "reader/codes/algorithms/sdk73/README.md",
+      "outputSha256": "d3eaa76c42a2b40987e262246627edd701f608544fd7aa637f6c749b1f646a66"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-four-dimension-t5-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-four-dimension-t5-circuit.txt",
+      "outputSha256": "abe91235cec59c8a7cd25a0b70937e9e468f3670720fff9dfcd216d6ff577082"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-four-dimension-t5.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-four-dimension-t5.npz",
+      "outputSha256": "b2dfd9957fe834c3d8cdba50a7232dc2c2e26a667968801c7c8cda21483cfce0"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-grid-t3-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-grid-t3-circuit.txt",
+      "outputSha256": "94bb801e10885c726c054e72ca085319b555e0d93b28294754937f06f8e11085"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-grid-t3-samples.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-grid-t3-samples.npz",
+      "outputSha256": "ae3aeacf40cbe4b54fa9dcc87178f715294fdcb9f9e3cf778926063c13c4e8c9"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-grid-t3.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-grid-t3.npz",
+      "outputSha256": "894f0f0725fe137d590c8bb8e76f6f9e1cecf8967b6f9fe7a9b01f1f69f62a22"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t3-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t3-circuit.txt",
+      "outputSha256": "1bca6a44207e7c1d71ab45786a3dfb4b71285b47b28fb5d0d97b1b0f6691d2ba"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t3.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t3.npz",
+      "outputSha256": "6243ca7487202f3b8bc12412b5388e4c2160bf218f41e2101cd6fcf63f45f53f"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t4-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t4-circuit.txt",
+      "outputSha256": "83c33a1e38a65cc63ac27cdaf2065cf3b616754185d508fb8e269050bb4b16fe"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t4-samples.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t4-samples.npz",
+      "outputSha256": "377b223ddbcaf7210c67283cbacf194878ad353935af3cacb870114aef7de15a"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t4.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t4.npz",
+      "outputSha256": "911793395d8ac171db0390ae07f7682bea0c73696ae05d83bd118fd94319e9b7"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t5-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t5-circuit.txt",
+      "outputSha256": "6d258f6dec79f12c5fac1e4d8726c3c3cb18849bcbfc800a375c3ecd15efb64b"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t5.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t5.npz",
+      "outputSha256": "740beeccf7d87486ea354279a27f6ba90da52460be698c0db99bfda9acad40d9"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t6-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t6-circuit.txt",
+      "outputSha256": "46ca0d4bbbb86955e9a80f0d99df0aa87e7f9eed0bae0e7106f3cd6a39ddee1b"
+    },
+    {
+      "source": "codes/algorithms/sdk73/hhl-signed-offgrid-t6.npz",
+      "output": "reader/codes/algorithms/sdk73/hhl-signed-offgrid-t6.npz",
+      "outputSha256": "a93ba7fb55c01f9a21022b28a51c93a9f78cc04431b26d94d2cb2653862c272d"
+    },
+    {
+      "source": "codes/algorithms/sdk73/initial-failures.json",
+      "output": "reader/codes/algorithms/sdk73/initial-failures.json",
+      "outputSha256": "e4de9d0564352c06623b91a65b166a28d99be681a3bba5eaa64aad5be09f37b7"
+    },
+    {
+      "source": "codes/algorithms/sdk73/mbqc-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/mbqc-circuit.txt",
+      "outputSha256": "731ddb3b297d12448e14130a23e9e57d6ac383e95ceecfe027f27434f5982279"
+    },
+    {
+      "source": "codes/algorithms/sdk73/mbqc-samples.npz",
+      "output": "reader/codes/algorithms/sdk73/mbqc-samples.npz",
+      "outputSha256": "4d9e1def302c93c39f6ddf31b24148d62af78be3546332b4aa2e7c2e1213ca32"
+    },
+    {
+      "source": "codes/algorithms/sdk73/pip-check.log",
+      "output": "reader/codes/algorithms/sdk73/pip-check.log",
+      "outputSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "source": "codes/algorithms/sdk73/qsvt-matrices.npz",
+      "output": "reader/codes/algorithms/sdk73/qsvt-matrices.npz",
+      "outputSha256": "a55d9963235e90e92fcbb74fdf9b9300aa82872740c2daed50fa4e3aa735a38b"
+    },
+    {
+      "source": "codes/algorithms/sdk73/requirements-lock.txt",
+      "output": "reader/codes/algorithms/sdk73/requirements-lock.txt",
+      "outputSha256": "640c574e947191e8bd23b0a284b3cdda075fd2bd0e862f6a006b4cb40fc99f4b"
+    },
+    {
+      "source": "codes/algorithms/sdk73/requirements.txt",
+      "output": "reader/codes/algorithms/sdk73/requirements.txt",
+      "outputSha256": "380fe8607cf401d14359c2edb730018049afc4d5f5528530a21babe1731a59d0"
+    },
+    {
+      "source": "codes/algorithms/sdk73/results-all.json",
+      "output": "reader/codes/algorithms/sdk73/results-all.json",
+      "outputSha256": "21aaf6917e0b45e1a85eceda0fc4ee39aefa0001d76ef4930eca38a81b2a20d5"
+    },
+    {
+      "source": "codes/algorithms/sdk73/run-final-root.log",
+      "output": "reader/codes/algorithms/sdk73/run-final-root.log",
+      "outputSha256": "481bc99227ad7e38cd6b042144d9d2d961111cd90188ddceab6b502cc71c8d82"
+    },
+    {
+      "source": "codes/algorithms/sdk73/run-initial.log",
+      "output": "reader/codes/algorithms/sdk73/run-initial.log",
+      "outputSha256": "e89246f33bd7bc23feb63c3b0f4ebf9ddce466c8f6b2f6018b88f223280c84a1"
+    },
+    {
+      "source": "codes/algorithms/sdk73/run.log",
+      "output": "reader/codes/algorithms/sdk73/run.log",
+      "outputSha256": "481bc99227ad7e38cd6b042144d9d2d961111cd90188ddceab6b502cc71c8d82"
+    },
+    {
+      "source": "codes/algorithms/sdk73/validate_algorithms.py",
+      "output": "reader/codes/algorithms/sdk73/validate_algorithms.py",
+      "outputSha256": "506d930b541782ddffc9d8bb41663376e3942e545da1170cee4333af4a2b233a"
+    },
+    {
+      "source": "codes/algorithms/sdk73/walk-circuit.txt",
+      "output": "reader/codes/algorithms/sdk73/walk-circuit.txt",
+      "outputSha256": "5c9c96ad52d6b6a38b424e4ede1db350afd5d25bc6a7e0f0b4e111a20eb1c2cb"
+    },
+    {
+      "source": "codes/algorithms/sdk73/walk-states-samples.npz",
+      "output": "reader/codes/algorithms/sdk73/walk-states-samples.npz",
+      "outputSha256": "ed2f6c31f3b2d972d1dea86e5bc3076be808ef9d85f3a71956656f48a3920ea2"
+    },
+    {
       "source": "codes/foundations/README.md",
       "output": "reader/codes/foundations/README.md",
       "outputSha256": "62d4d3d211b0accbc990dd212d25068a9b6061806db5d11cac207d722e288695"
@@ -1616,6 +1840,11 @@
       "source": "codes/foundations/generate_round72_figure.py",
       "output": "reader/codes/foundations/generate_round72_figure.py",
       "outputSha256": "12d2f706d5810d5c55d1e17da09b902b7f0f8e515c4251514658ba8dbd39c9df"
+    },
+    {
+      "source": "codes/foundations/generate_round73_figure.py",
+      "output": "reader/codes/foundations/generate_round73_figure.py",
+      "outputSha256": "769ad1a701dca3daca1b58d68625d52651919e0ff7b4d7517e6d1078a0de74f4"
     },
     {
       "source": "codes/foundations/round71-README.md",
@@ -1661,6 +1890,51 @@
       "source": "codes/foundations/round72_stdlib.py",
       "output": "reader/codes/foundations/round72_stdlib.py",
       "outputSha256": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2"
+    },
+    {
+      "source": "codes/foundations/round73-README.md",
+      "output": "reader/codes/foundations/round73-README.md",
+      "outputSha256": "336b0bc48c352ff22765ed776a32a6c3de4e2e707d088e65ead009c038120c09"
+    },
+    {
+      "source": "codes/foundations/round73-all-results.json",
+      "output": "reader/codes/foundations/round73-all-results.json",
+      "outputSha256": "cc62eebb3ad94d3249f2c335d2a702969d0861c55f20a3981c0ab6df3e801dc4"
+    },
+    {
+      "source": "codes/foundations/round73-cross-gst-results.json",
+      "output": "reader/codes/foundations/round73-cross-gst-results.json",
+      "outputSha256": "e157940c006967105102b9ac2b5da6edcaa784de08f191fce3aba9d4e6c6d3a8"
+    },
+    {
+      "source": "codes/foundations/round73-cross-gst.log",
+      "output": "reader/codes/foundations/round73-cross-gst.log",
+      "outputSha256": "e157940c006967105102b9ac2b5da6edcaa784de08f191fce3aba9d4e6c6d3a8"
+    },
+    {
+      "source": "codes/foundations/round73-figure-provenance.json",
+      "output": "reader/codes/foundations/round73-figure-provenance.json",
+      "outputSha256": "8633167da0fd1a2fc31d867e730cc60efa8863f4f5a1b1c2dae3f820b40d4e43"
+    },
+    {
+      "source": "codes/foundations/round73-initial-failure.log",
+      "output": "reader/codes/foundations/round73-initial-failure.log",
+      "outputSha256": "f9535953f74548779ebc5a9c702cba044b7d25ebf6d57466512efbf9ddd02732"
+    },
+    {
+      "source": "codes/foundations/round73-run.log",
+      "output": "reader/codes/foundations/round73-run.log",
+      "outputSha256": "6a5b3cc3d0543228dae3edd291def50ce7af151b815b1c60e638e8f7b6c2d50e"
+    },
+    {
+      "source": "codes/foundations/round73_checks.py",
+      "output": "reader/codes/foundations/round73_checks.py",
+      "outputSha256": "a6b2abdf51a3196621f154c98d57f8ff7a4d7e8ebb76d2b072ec56f03a502de7"
+    },
+    {
+      "source": "codes/foundations/round73_cross_gst.py",
+      "output": "reader/codes/foundations/round73_cross_gst.py",
+      "outputSha256": "0a77023ff04219c196f626679802bf6b5da4f6265d95b5547b86d319b3dd9a3e"
     },
     {
       "source": "codes/foundations/sdk/all-results.json",
@@ -1721,6 +1995,151 @@
       "source": "codes/foundations/sdk/validate_sdks.py",
       "output": "reader/codes/foundations/sdk/validate_sdks.py",
       "outputSha256": "df32ad582f5af10768443d5339cb21d89fed44c7ca232233d4d706e1d13f434c"
+    },
+    {
+      "source": "codes/foundations/sdk73/README.md",
+      "output": "reader/codes/foundations/sdk73/README.md",
+      "outputSha256": "5fa7dde6fe29f3213d5f5c7199a56642d15ff1c4675f1487fe87b448e6678092"
+    },
+    {
+      "source": "codes/foundations/sdk73/all-results.json",
+      "output": "reader/codes/foundations/sdk73/all-results.json",
+      "outputSha256": "5643245449b366b386a1bd39792f772da20818dbedc02f9ec36c2acf5ef338e9"
+    },
+    {
+      "source": "codes/foundations/sdk73/base-round72-lock.txt",
+      "output": "reader/codes/foundations/sdk73/base-round72-lock.txt",
+      "outputSha256": "320bdc4311933c7b33bc7fb6901e6702e884823893dd82e4914611b222133156"
+    },
+    {
+      "source": "codes/foundations/sdk73/feedback-results.json",
+      "output": "reader/codes/foundations/sdk73/feedback-results.json",
+      "outputSha256": "9b0bc0059b1ed2ebf1cc4ee5f71d03231b19a627e4b2789d846a2f475b0de715"
+    },
+    {
+      "source": "codes/foundations/sdk73/feedback-run.log",
+      "output": "reader/codes/foundations/sdk73/feedback-run.log",
+      "outputSha256": "f1c59cc44ab4572e7089390184c120b8d845c689880ed41a3b2c5d0e6aeefd0f"
+    },
+    {
+      "source": "codes/foundations/sdk73/initial-failures.json",
+      "output": "reader/codes/foundations/sdk73/initial-failures.json",
+      "outputSha256": "def7c9eaa8708cd445ed6a958ebff8026221c80c04d62f629332d1b638f4e417"
+    },
+    {
+      "source": "codes/foundations/sdk73/install.log",
+      "output": "reader/codes/foundations/sdk73/install.log",
+      "outputSha256": "c0aa17c9e4f413affd65ca886dd870dc5f9d23bf94fe4764ac4cc42f6659a970"
+    },
+    {
+      "source": "codes/foundations/sdk73/installed-source-hashes.json",
+      "output": "reader/codes/foundations/sdk73/installed-source-hashes.json",
+      "outputSha256": "81b8581bff7638750d6957c78982ee1896261aef52d724f1759735368bb36096"
+    },
+    {
+      "source": "codes/foundations/sdk73/official-release-metadata.json",
+      "output": "reader/codes/foundations/sdk73/official-release-metadata.json",
+      "outputSha256": "a36241fafbdc1f1108981264c4a04ab3cb73ea4becad6cd41c1d166ec523fcef"
+    },
+    {
+      "source": "codes/foundations/sdk73/pip-check.log",
+      "output": "reader/codes/foundations/sdk73/pip-check.log",
+      "outputSha256": "a836e0c88c0d40f93caac10f95dd98a13f219dd276f17d859f76ff7b6a9dfe6c"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-design-diagnostic.npz",
+      "output": "reader/codes/foundations/sdk73/qpt-design-diagnostic.npz",
+      "outputSha256": "c46f180fea91e41d86299bb9f5baefbd1c37aa3fdf6510c921bd44091b4b3652"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-diagnostic.log",
+      "output": "reader/codes/foundations/sdk73/qpt-diagnostic.log",
+      "outputSha256": "fd91ac75c6d0334534b070893348506baae6fada78c956569e9dad43dceeda3e"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-fourth-failure.json",
+      "output": "reader/codes/foundations/sdk73/qpt-fourth-failure.json",
+      "outputSha256": "c0d079f865ff1dbfc9b82df3a95d5c55b947ba8305c99e772c85e634a940bf98"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-full-constraint.log",
+      "output": "reader/codes/foundations/sdk73/qpt-full-constraint.log",
+      "outputSha256": "d0aa315eff98cb43443df882298c039755b354b8b7fa1a2180a3c432905e10eb"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-full-constraint2.log",
+      "output": "reader/codes/foundations/sdk73/qpt-full-constraint2.log",
+      "outputSha256": "45394ba08e8aa9011829c85c9ed68ca008cf337328fc2e32fb7eb274b7ddda21"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-partial-trace-shape-failure.json",
+      "output": "reader/codes/foundations/sdk73/qpt-partial-trace-shape-failure.json",
+      "outputSha256": "35fbfcee3f320b8d97e0bda0f52547016067de17d9eef023dc541e93bf00de79"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-repair.log",
+      "output": "reader/codes/foundations/sdk73/qpt-repair.log",
+      "outputSha256": "ab049d06a64e80757b3135647c5df84dbc1f4064464faadf965d22c79a8ee57d"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-repair2.log",
+      "output": "reader/codes/foundations/sdk73/qpt-repair2.log",
+      "outputSha256": "214dfad37862bebe5334d183d2b9bf815871a83e9e7d24e35bedef3c0a8229e6"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-repair3.log",
+      "output": "reader/codes/foundations/sdk73/qpt-repair3.log",
+      "outputSha256": "333ef5aba34eb4486608a2ed272a4ff2fb74dbe7d03f21d569f8dc20ff34a0a2"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-results.json",
+      "output": "reader/codes/foundations/sdk73/qpt-results.json",
+      "outputSha256": "eb32e79422e7d689728473118be02d1a0c9e8a45c15366b36e34d24491e55eff"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-second-failure.json",
+      "output": "reader/codes/foundations/sdk73/qpt-second-failure.json",
+      "outputSha256": "e28c7bbb5d3d169e6f8ac259adfa08bc101a6139e1a9999babe27a8071721289"
+    },
+    {
+      "source": "codes/foundations/sdk73/qpt-third-failure.json",
+      "output": "reader/codes/foundations/sdk73/qpt-third-failure.json",
+      "outputSha256": "bc43ddcf5fef723dfc2dc9c82fdb9409c509a883008212a57f920ed8a8e4bb1c"
+    },
+    {
+      "source": "codes/foundations/sdk73/requirements-lock.txt",
+      "output": "reader/codes/foundations/sdk73/requirements-lock.txt",
+      "outputSha256": "6cfa0e4fb59c8e56a98e8fc620dc6300a9515e7062a6839b2c4c88d2faf17a1f"
+    },
+    {
+      "source": "codes/foundations/sdk73/requirements.txt",
+      "output": "reader/codes/foundations/sdk73/requirements.txt",
+      "outputSha256": "dc8ca2c72a85dbe69cdaca688226933bba38b4904df9f20450d2e6cf7f4f2850"
+    },
+    {
+      "source": "codes/foundations/sdk73/run-initial.log",
+      "output": "reader/codes/foundations/sdk73/run-initial.log",
+      "outputSha256": "315a496a5f37222261b28d5a8be2d08c7f3bb8eb18d9b1802e7ba3e17549c72c"
+    },
+    {
+      "source": "codes/foundations/sdk73/run.log",
+      "output": "reader/codes/foundations/sdk73/run.log",
+      "outputSha256": "8839a47739b4c5ffe58875e07a1225370f3e232a78ad5c292efe684d8dc6e8a3"
+    },
+    {
+      "source": "codes/foundations/sdk73/sdk-tp-counterexample.json",
+      "output": "reader/codes/foundations/sdk73/sdk-tp-counterexample.json",
+      "outputSha256": "e13c0ed721e6414eede5dc5eb7172e8cea12912ef9ba2267597e3daaa8f78b29"
+    },
+    {
+      "source": "codes/foundations/sdk73/trajectory-observables.npz",
+      "output": "reader/codes/foundations/sdk73/trajectory-observables.npz",
+      "outputSha256": "86562db7904c91bfbd4d91522e2e9f539ccd4459fa3ee683c17cc2934948dc2a"
+    },
+    {
+      "source": "codes/foundations/sdk73/validate_sdks.py",
+      "output": "reader/codes/foundations/sdk73/validate_sdks.py",
+      "outputSha256": "b444ab40f563b64166caf96a9a87f4bc41e7dc63fb129f2d89eb20c504ab968c"
     },
     {
       "source": "codes/practice/experiments.py",
@@ -1810,12 +2229,12 @@
     {
       "source": "codes/run_all.py",
       "output": "reader/codes/run_all.py",
-      "outputSha256": "aad6ad82e8e9631ed830f30e7de119228e9de6b3e306505b99d485df34d8be10"
+      "outputSha256": "297494a7a67b35d0d0144864a5ca0be403ac28c8442b1e307d2e70733327a3ba"
     },
     {
       "source": "codes/sdk/README.md",
       "output": "reader/codes/sdk/README.md",
-      "outputSha256": "48026f3208a05b6605f3106ae1ef969a631b68e0fcabf060ea3fd1107eec56a1"
+      "outputSha256": "b3d8b2365bb75eda8d0f8fe1b4ed45a299e4a707340348b94b622cad75a335ea"
     },
     {
       "source": "codes/sdk/hpc/CMakeLists.txt",
@@ -1871,6 +2290,306 @@
       "source": "codes/sdk/hpc/validate_hpc.cpp",
       "output": "reader/codes/sdk/hpc/validate_hpc.cpp",
       "outputSha256": "01d491ebb6cfd850d2cc80f8dc046aca912cba1f43d9cbd3d581cddb5e2005b4"
+    },
+    {
+      "source": "codes/sdk/round73/README.md",
+      "output": "reader/codes/sdk/round73/README.md",
+      "outputSha256": "9eb0c561d09aab392a73770c24049983c18c6a2a0dafcf83c895a46e392fcfe7"
+    },
+    {
+      "source": "codes/sdk/round73/check_saved.py",
+      "output": "reader/codes/sdk/round73/check_saved.py",
+      "outputSha256": "706c5b63edd6f7d15b3f620168a808605788f6ddc0bab5c46f4b6c42103678c1"
+    },
+    {
+      "source": "codes/sdk/round73/dynamic-mpf-initial.log",
+      "output": "reader/codes/sdk/round73/dynamic-mpf-initial.log",
+      "outputSha256": "652275590465888b156b3e2ab50d7000ecaac552e7cf1d80655f3b631dd3c69a"
+    },
+    {
+      "source": "codes/sdk/round73/dynamic-mpf-results.json",
+      "output": "reader/codes/sdk/round73/dynamic-mpf-results.json",
+      "outputSha256": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e"
+    },
+    {
+      "source": "codes/sdk/round73/dynamic-mpf-run.log",
+      "output": "reader/codes/sdk/round73/dynamic-mpf-run.log",
+      "outputSha256": "b948ad285e162c813438217560c48aa2f1ad1fabc83d2f86d77682bcdbbc693a"
+    },
+    {
+      "source": "codes/sdk/round73/dynamic_mpf-validated.log",
+      "output": "reader/codes/sdk/round73/dynamic_mpf-validated.log",
+      "outputSha256": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e"
+    },
+    {
+      "source": "codes/sdk/round73/dynamic_mpf.py",
+      "output": "reader/codes/sdk/round73/dynamic_mpf.py",
+      "outputSha256": "8536074a689cca4effe4b390a0b8385f340ac0fd97003c12d992a6080fbe2d5a"
+    },
+    {
+      "source": "codes/sdk/round73/figure-provenance.json",
+      "output": "reader/codes/sdk/round73/figure-provenance.json",
+      "outputSha256": "32de30ddab10d77fa23b2c9536a4ebd5958b15028a9bd847815cfc5f2ad6e270"
+    },
+    {
+      "source": "codes/sdk/round73/figures.py",
+      "output": "reader/codes/sdk/round73/figures.py",
+      "outputSha256": "4018c423bbc36ab3c0a78fdf688b238018856315c62aca1aacb25c4fdb648265"
+    },
+    {
+      "source": "codes/sdk/round73/gst-long-counts.json",
+      "output": "reader/codes/sdk/round73/gst-long-counts.json",
+      "outputSha256": "b6c53d3f45029b368a45a29fdf0749f36f61c572f038a79e46a8d72e78f747d9"
+    },
+    {
+      "source": "codes/sdk/round73/gst-long-final.log",
+      "output": "reader/codes/sdk/round73/gst-long-final.log",
+      "outputSha256": "5fbb5646adb8fd0ab7008780ff1166f4b49878214d70d41cdcb2ea507faeed1a"
+    },
+    {
+      "source": "codes/sdk/round73/gst-long-initial.log",
+      "output": "reader/codes/sdk/round73/gst-long-initial.log",
+      "outputSha256": "792209d169496b5731b92f4032ca0671b60b8b3a49d3fe0f10f699aeab5cd005"
+    },
+    {
+      "source": "codes/sdk/round73/gst-long-results.json",
+      "output": "reader/codes/sdk/round73/gst-long-results.json",
+      "outputSha256": "386be383224db54a0e4d572581f61c72b65bbf4e67611f7c7f1ed8f0a6cf6aa4"
+    },
+    {
+      "source": "codes/sdk/round73/gst-long-run.log",
+      "output": "reader/codes/sdk/round73/gst-long-run.log",
+      "outputSha256": "61e230738ac02155fe5f107a22902b930c65b56ede045a5434c91650101bb154"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/CMakeLists.txt",
+      "output": "reader/codes/sdk/round73/hpc/CMakeLists.txt",
+      "outputSha256": "a186bfc4d2838907e89d53743ef0e2258a72759b26a5170336274cdc400cf935"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/build-manifest.json",
+      "output": "reader/codes/sdk/round73/hpc/build-manifest.json",
+      "outputSha256": "43ad88947be17eab7a3eba2c4c572fc2c3129ee39d4630ec92aa454af2aff374"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/build-openmp-corrected.log",
+      "output": "reader/codes/sdk/round73/hpc/build-openmp-corrected.log",
+      "outputSha256": "384e28a2a27a7badf3b26e2a396bf83144de36a2581743131f5f318efcc98547"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/build-openmp-final.log",
+      "output": "reader/codes/sdk/round73/hpc/build-openmp-final.log",
+      "outputSha256": "adb314681347ba9326bdca841d1510e0dbb8bd3d48fc73f6fcb96c58cb6532df"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/build-openmp.log",
+      "output": "reader/codes/sdk/round73/hpc/build-openmp.log",
+      "outputSha256": "78c2e5419d691152bc08c7984860348bf72304cbfcbe71b5fa7caa552ce8e1b4"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/build-serial.log",
+      "output": "reader/codes/sdk/round73/hpc/build-serial.log",
+      "outputSha256": "bad8d43f6128ab0d11027ab2b545a9ea116f5ef5c81bf5d41562c17cc64a64e8"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/configure-openmp-corrected.log",
+      "output": "reader/codes/sdk/round73/hpc/configure-openmp-corrected.log",
+      "outputSha256": "cf0a1b09d8057b6e55aab6d77e52c19e45ee70b66b99f352014b2e7b00caa7f7"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/configure-openmp-final.log",
+      "output": "reader/codes/sdk/round73/hpc/configure-openmp-final.log",
+      "outputSha256": "ad6a5c689de8fe708031b28aa1047f0a3049a7e3cd77b9015a50f66eac5bc0ec"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/configure-openmp.log",
+      "output": "reader/codes/sdk/round73/hpc/configure-openmp.log",
+      "outputSha256": "6139ed13a6cc5e3a0ef47ebe5a1fbbf3b13c0762bcbb6928119c506d402391db"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/configure-serial.log",
+      "output": "reader/codes/sdk/round73/hpc/configure-serial.log",
+      "outputSha256": "1c2128ffebfafb1877976a878c724905845c94d9392cddb15c9a0dde04024b07"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/parallel_recovery.cpp",
+      "output": "reader/codes/sdk/round73/hpc/parallel_recovery.cpp",
+      "outputSha256": "663b2c754ca5540712cd6b07f4ce2ba36c88cb89615dd25d5ed7a19c73d6d23a"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/philox-serial.txt",
+      "output": "reader/codes/sdk/round73/hpc/philox-serial.txt",
+      "outputSha256": "94539de75c04a6d4a9b2fea18ef33bda8acab32f672ce2251d9555c1217a9edb"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/philox-threads1.txt",
+      "output": "reader/codes/sdk/round73/hpc/philox-threads1.txt",
+      "outputSha256": "94539de75c04a6d4a9b2fea18ef33bda8acab32f672ce2251d9555c1217a9edb"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/philox-threads2.txt",
+      "output": "reader/codes/sdk/round73/hpc/philox-threads2.txt",
+      "outputSha256": "7bf7c1fce60194b9babb9f6681be2ba61d079d3788972dfbd294ca47991871bb"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/philox-threads4.txt",
+      "output": "reader/codes/sdk/round73/hpc/philox-threads4.txt",
+      "outputSha256": "d48a132847520c24a38541116dc1f1fe9036fcb9b4d41ec74df3c407f34601e8"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/philox-threads8.txt",
+      "output": "reader/codes/sdk/round73/hpc/philox-threads8.txt",
+      "outputSha256": "cb5f90907dd6c652fb2ed36a06d118551e48eac1b83189d9e1cab43f4ee37089"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/results.json",
+      "output": "reader/codes/sdk/round73/hpc/results.json",
+      "outputSha256": "960ba3ff4e36ca970f97694e8224d60e75d87db7e5a870d6cdcb6db3aafccffa"
+    },
+    {
+      "source": "codes/sdk/round73/hpc/upstream-openmp-tests.log",
+      "output": "reader/codes/sdk/round73/hpc/upstream-openmp-tests.log",
+      "outputSha256": "09c8652f1491704f2a2c995e3a91f4ab62ee7d4e29e7c33d5e4d6351ab9d1622"
+    },
+    {
+      "source": "codes/sdk/round73/install.log",
+      "output": "reader/codes/sdk/round73/install.log",
+      "outputSha256": "6f65e6d022389523e7241dfdbe6f6e40f145015fdfb5f79f45426174324d2b39"
+    },
+    {
+      "source": "codes/sdk/round73/long_gst-validated.log",
+      "output": "reader/codes/sdk/round73/long_gst-validated.log",
+      "outputSha256": "8550c17562b60861817dd9dda650598774aca7e0931d2be8aae7f064868695f3"
+    },
+    {
+      "source": "codes/sdk/round73/long_gst.py",
+      "output": "reader/codes/sdk/round73/long_gst.py",
+      "outputSha256": "ba5de6a23b8732bcd13093483c09a401e1cef8e04079568325bc7bcad6292a32"
+    },
+    {
+      "source": "codes/sdk/round73/package-metadata.json",
+      "output": "reader/codes/sdk/round73/package-metadata.json",
+      "outputSha256": "e5463e1451ad02cfd9079ef0878fcf4d7523e421d9e47c4e6ad380552c04f265"
+    },
+    {
+      "source": "codes/sdk/round73/pip-check.log",
+      "output": "reader/codes/sdk/round73/pip-check.log",
+      "outputSha256": "51389641b6f7046f8320f0b5faca6519af52da62614bec62a9749986bbef8fb6"
+    },
+    {
+      "source": "codes/sdk/round73/pna-final.log",
+      "output": "reader/codes/sdk/round73/pna-final.log",
+      "outputSha256": "738458d3a98b78d38656a6c81f035a177d05d5b670bc433e08b3999b4797d693"
+    },
+    {
+      "source": "codes/sdk/round73/pna-initial.log",
+      "output": "reader/codes/sdk/round73/pna-initial.log",
+      "outputSha256": "f390b4541dba2607aa59817187187799e663942da9352a13b85e0aba69c389b0"
+    },
+    {
+      "source": "codes/sdk/round73/pna-observable.json",
+      "output": "reader/codes/sdk/round73/pna-observable.json",
+      "outputSha256": "bd306c2685a736de72014041ce22b32053a2d57059ec8abbd94c0fc70c27453c"
+    },
+    {
+      "source": "codes/sdk/round73/pna-results.json",
+      "output": "reader/codes/sdk/round73/pna-results.json",
+      "outputSha256": "34ac713a70aefc5b14b73ccd20033ee073c5e4750455cefbdfc77fb4c9ac8cea"
+    },
+    {
+      "source": "codes/sdk/round73/pna_workflow-validated.log",
+      "output": "reader/codes/sdk/round73/pna_workflow-validated.log",
+      "outputSha256": "10fd55152bcc2668e62285cdd0adb816b10b3d226682ae537e94e48a5dc18bdc"
+    },
+    {
+      "source": "codes/sdk/round73/pna_workflow.py",
+      "output": "reader/codes/sdk/round73/pna_workflow.py",
+      "outputSha256": "09d2728574fb2878bc8b37647c864c7aa5adf9ed44325bbdd9bd0afb321f916d"
+    },
+    {
+      "source": "codes/sdk/round73/requirements-lock.txt",
+      "output": "reader/codes/sdk/round73/requirements-lock.txt",
+      "outputSha256": "3e1c111c08f46677d618760ee2dac3d95e78807e6caf0661af83ae7dda4769c1"
+    },
+    {
+      "source": "codes/sdk/round73/requirements.txt",
+      "output": "reader/codes/sdk/round73/requirements.txt",
+      "outputSha256": "9220077ceab49a6611266a30a5469e74c1f611299a3a6e8235279eb6df446bf8"
+    },
+    {
+      "source": "codes/sdk/round73/run-all.log",
+      "output": "reader/codes/sdk/round73/run-all.log",
+      "outputSha256": "4ab8d89783bac2ef398a9a84868f4073b684ba16514f07d9804c845a2fd53e7f"
+    },
+    {
+      "source": "codes/sdk/round73/run-manifest.json",
+      "output": "reader/codes/sdk/round73/run-manifest.json",
+      "outputSha256": "4eae4cd34403d9b8323d3e6749fc202b7ea64ffe0926c116111aa4c3f6d15d7e"
+    },
+    {
+      "source": "codes/sdk/round73/run_workflows.py",
+      "output": "reader/codes/sdk/round73/run_workflows.py",
+      "outputSha256": "b798718cde3209c4ea2cbe05baa1e53c5189076fa6ff62d0c21f60facecdfd68"
+    },
+    {
+      "source": "codes/sdk/round73/saved-checks.json",
+      "output": "reader/codes/sdk/round73/saved-checks.json",
+      "outputSha256": "ce230d74783c4ed05d028d74cfcf4b36e404b5982bc1f2a93903c0557227c0ac"
+    },
+    {
+      "source": "codes/sdk/round73/saved-checks.log",
+      "output": "reader/codes/sdk/round73/saved-checks.log",
+      "outputSha256": "1ca72424508dca91d87701cd0347d20614cdfa47fe50e5cd6ab54ddbeb23b5ea"
+    },
+    {
+      "source": "codes/sdk/round73/slc-built.log",
+      "output": "reader/codes/sdk/round73/slc-built.log",
+      "outputSha256": "560c780a73508f6fe807f248b9928b38ae8a60185bafa39d7a3037ff2315cc84"
+    },
+    {
+      "source": "codes/sdk/round73/slc-canonical.log",
+      "output": "reader/codes/sdk/round73/slc-canonical.log",
+      "outputSha256": "cd7afe0c3c2608828b901f1092de7ed0d68b26dab735a6b34cd65d04de93e89c"
+    },
+    {
+      "source": "codes/sdk/round73/slc-final.log",
+      "output": "reader/codes/sdk/round73/slc-final.log",
+      "outputSha256": "448329a67100fd30e1949af552c46312c736ef495076c1040fddc9b76dc6af33"
+    },
+    {
+      "source": "codes/sdk/round73/slc-initial.log",
+      "output": "reader/codes/sdk/round73/slc-initial.log",
+      "outputSha256": "269a48a7b2cc0975bcdee1b6057b30a6bc73ba273f7b29baf1c7c35e90ef796f"
+    },
+    {
+      "source": "codes/sdk/round73/slc-native.log",
+      "output": "reader/codes/sdk/round73/slc-native.log",
+      "outputSha256": "ba65ec94eddda743d4342f86a38b9d0146d2a35cd7631a0a25bfc977b84af93b"
+    },
+    {
+      "source": "codes/sdk/round73/slc-pec.log",
+      "output": "reader/codes/sdk/round73/slc-pec.log",
+      "outputSha256": "abdf58bd35f5e8f66b8fbeeeb4b605ca4467c9c125872ffdbec44648f06f125f"
+    },
+    {
+      "source": "codes/sdk/round73/slc-randomizations-counts.json",
+      "output": "reader/codes/sdk/round73/slc-randomizations-counts.json",
+      "outputSha256": "bb49611790a81e80de262f4db0bdf453b1a879fc4563d2d2cf9d22a560c16b45"
+    },
+    {
+      "source": "codes/sdk/round73/slc-results.json",
+      "output": "reader/codes/sdk/round73/slc-results.json",
+      "outputSha256": "be7e77d47a44099c6a1d6e0241c99252583fa0350f36362409b92c009a88bc72"
+    },
+    {
+      "source": "codes/sdk/round73/slc_workflow-validated.log",
+      "output": "reader/codes/sdk/round73/slc_workflow-validated.log",
+      "outputSha256": "306031867efebb314c60d861bc366109015b34c382fea74ce80f78c23bb94efa"
+    },
+    {
+      "source": "codes/sdk/round73/slc_workflow.py",
+      "output": "reader/codes/sdk/round73/slc_workflow.py",
+      "outputSha256": "133c7c1c200d3d8438d70622452e7f09999ecd7019efa6cef9205de49ab84e8d"
     },
     {
       "source": "codes/sdk/workflows/README.md",
@@ -1955,7 +2674,7 @@
     {
       "source": "codes/snapshot_sources.py",
       "output": "reader/codes/snapshot_sources.py",
-      "outputSha256": "e16501d58d5644a7036789d97e0ed14d067b2ed7340e85f9ca95b949410a43c2"
+      "outputSha256": "54950e17d5e22910ff0081559e4352233a6d258d870eb4869e346e63efb4468d"
     },
     {
       "source": "codes/systems/README.md",
@@ -2056,6 +2775,16 @@
       "source": "codes/systems/round72_checks.py",
       "output": "reader/codes/systems/round72_checks.py",
       "outputSha256": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467"
+    },
+    {
+      "source": "codes/systems/round73-results.json",
+      "output": "reader/codes/systems/round73-results.json",
+      "outputSha256": "ccaa5ef6dbee0fd533ab1b685740c94b3c4b899f57f59ab71a3f27a4eab6051e"
+    },
+    {
+      "source": "codes/systems/round73_checks.py",
+      "output": "reader/codes/systems/round73_checks.py",
+      "outputSha256": "774df733acd0a93e628f428213fc2a4c50ffb26bb80bf8493a364b382fbb6064"
     },
     {
       "source": "codes/systems/routing_mapping.py",
@@ -2243,6 +2972,481 @@
       "outputSha256": "e28aa829d6ba297aabc0bd288e76bbfa76fb5fb58e7045d43a1a39e9a390e11a"
     },
     {
+      "source": "codes/systems/sdk73/README.md",
+      "output": "reader/codes/systems/sdk73/README.md",
+      "outputSha256": "8c47ffea254009eba5f885ec013ae3767ba894838513ea2bd739bb74d8091e39"
+    },
+    {
+      "source": "codes/systems/sdk73/assertion-guard-results.json",
+      "output": "reader/codes/systems/sdk73/assertion-guard-results.json",
+      "outputSha256": "acc6d5a1ae4e3541975491f1723e4f4eeb7cf5f049133e346c6d936d2775fccf"
+    },
+    {
+      "source": "codes/systems/sdk73/crossreview-algorithms-final.log",
+      "output": "reader/codes/systems/sdk73/crossreview-algorithms-final.log",
+      "outputSha256": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725"
+    },
+    {
+      "source": "codes/systems/sdk73/crossreview-algorithms-results.json",
+      "output": "reader/codes/systems/sdk73/crossreview-algorithms-results.json",
+      "outputSha256": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725"
+    },
+    {
+      "source": "codes/systems/sdk73/crossreview-algorithms.log",
+      "output": "reader/codes/systems/sdk73/crossreview-algorithms.log",
+      "outputSha256": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725"
+    },
+    {
+      "source": "codes/systems/sdk73/crossreview_algorithms.py",
+      "output": "reader/codes/systems/sdk73/crossreview_algorithms.py",
+      "outputSha256": "4fd3c1a27c2bff4f87210d26f26be587e3a2bca65bd14ff55c2aab9d10637703"
+    },
+    {
+      "source": "codes/systems/sdk73/execution-manifest.json",
+      "output": "reader/codes/systems/sdk73/execution-manifest.json",
+      "outputSha256": "381225d47a85f5c3de4d172f43acc5d4002b17974b9b81882b161d48ab22ad7d"
+    },
+    {
+      "source": "codes/systems/sdk73/grape-run.log",
+      "output": "reader/codes/systems/sdk73/grape-run.log",
+      "outputSha256": "ea97f3a2fb216deddf05705248aa8a02fd400fa8973e6c9ca49b449a8d35894b"
+    },
+    {
+      "source": "codes/systems/sdk73/grape-three-amplitudes.csv",
+      "output": "reader/codes/systems/sdk73/grape-three-amplitudes.csv",
+      "outputSha256": "ffb304419ad8f6c005f0ee539958306ccf043e53ddf9f230a4dc4921b38de435"
+    },
+    {
+      "source": "codes/systems/sdk73/grape-three-results.json",
+      "output": "reader/codes/systems/sdk73/grape-three-results.json",
+      "outputSha256": "ea97f3a2fb216deddf05705248aa8a02fd400fa8973e6c9ca49b449a8d35894b"
+    },
+    {
+      "source": "codes/systems/sdk73/grape_three.py",
+      "output": "reader/codes/systems/sdk73/grape_three.py",
+      "outputSha256": "2afaf4e7e5e960e63a57e0a533c1135fb82dcc912c0cc5a196fc078e5f1206f8"
+    },
+    {
+      "source": "codes/systems/sdk73/installed-source-evidence.json",
+      "output": "reader/codes/systems/sdk73/installed-source-evidence.json",
+      "outputSha256": "feaa81c8fc09580b54942076e44cc686e89eab827f70f422caf91f7cdff64c68"
+    },
+    {
+      "source": "codes/systems/sdk73/pip-check.log",
+      "output": "reader/codes/systems/sdk73/pip-check.log",
+      "outputSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "source": "codes/systems/sdk73/plot-run.log",
+      "output": "reader/codes/systems/sdk73/plot-run.log",
+      "outputSha256": "9e6db8009a09072852cb18b918d16611f231144787e28937ce1e9b4fdfdf8824"
+    },
+    {
+      "source": "codes/systems/sdk73/plot_results.py",
+      "output": "reader/codes/systems/sdk73/plot_results.py",
+      "outputSha256": "aa5ad57eafcde7556d632f3101791fcdadc653d3d98b9f575470619b778b77e8"
+    },
+    {
+      "source": "codes/systems/sdk73/qec-grid-results.json",
+      "output": "reader/codes/systems/sdk73/qec-grid-results.json",
+      "outputSha256": "87354f99ec58bca95abb19c92b66adbebc053bcbe75233eed8bdab86cccfdf30"
+    },
+    {
+      "source": "codes/systems/sdk73/qec-run.log",
+      "output": "reader/codes/systems/sdk73/qec-run.log",
+      "outputSha256": "2706faebf391f7148fef62c71ff7859e4c136d95f917cbc259b0e94c8ec8574b"
+    },
+    {
+      "source": "codes/systems/sdk73/qec_grid.py",
+      "output": "reader/codes/systems/sdk73/qec_grid.py",
+      "outputSha256": "5a3f0e6d8b601e1eef44c02b386136613c2a8f1c56aa3507419341d8d8540713"
+    },
+    {
+      "source": "codes/systems/sdk73/requirements-lock.txt",
+      "output": "reader/codes/systems/sdk73/requirements-lock.txt",
+      "outputSha256": "5316ab9e66eaac8374a98a7d9f5452e3d903f928f56370ae4e96ebf03d4a63aa"
+    },
+    {
+      "source": "codes/systems/sdk73/requirements.txt",
+      "output": "reader/codes/systems/sdk73/requirements.txt",
+      "outputSha256": "3995e021c43d2401b7e4664d584b7de4683d50aa96c8c3d563ec4020881199d6"
+    },
+    {
+      "source": "codes/systems/sdk73/root-figure-normalization.json",
+      "output": "reader/codes/systems/sdk73/root-figure-normalization.json",
+      "outputSha256": "9d85e9187dc846f4b27d5c42ac2b30671e70161eeca3b2362b24801a8500626b"
+    },
+    {
+      "source": "codes/systems/sdk73/root-figure-normalization.log",
+      "output": "reader/codes/systems/sdk73/root-figure-normalization.log",
+      "outputSha256": "9e6db8009a09072852cb18b918d16611f231144787e28937ce1e9b4fdfdf8824"
+    },
+    {
+      "source": "codes/systems/sdk73/round73-systems-control-preview.png",
+      "output": "reader/codes/systems/sdk73/round73-systems-control-preview.png",
+      "outputSha256": "648c98da882f5b536b816ade1b9c05fada7d8d0cabbe8296da4bcb7b875a21ea"
+    },
+    {
+      "source": "codes/systems/sdk73/round73-systems-qec-preview.png",
+      "output": "reader/codes/systems/sdk73/round73-systems-qec-preview.png",
+      "outputSha256": "3b1b0411cdae2a2c077d4d29d3d99f36b513c61dd570acae99afd6420b3c47c1"
+    },
+    {
+      "source": "codes/systems/sdk73/saved-results-verification.json",
+      "output": "reader/codes/systems/sdk73/saved-results-verification.json",
+      "outputSha256": "ffb10c56f6267a0f6e8c2c81dfa4d2bc51854e3d19271b0cb4eda045f86624a9"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-entanglement-results.json",
+      "output": "reader/codes/systems/sdk73/sequence-entanglement-results.json",
+      "outputSha256": "02b3f4e05f8c0451279a88d6709e89cbee2d02b018e1bc3ddf449ea94c987a72"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-run-initial.log",
+      "output": "reader/codes/systems/sdk73/sequence-run-initial.log",
+      "outputSha256": "4096c80bba268cc71043e7367bc98d5f1b3bb2b904ad6b222e61fe047b08e0d9"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-run-second.log",
+      "output": "reader/codes/systems/sdk73/sequence-run-second.log",
+      "outputSha256": "118d5458471c56dd258cb14b3f2afcc4c01721778ea9cfb3266d483c2872123a"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-run-third.log",
+      "output": "reader/codes/systems/sdk73/sequence-run-third.log",
+      "outputSha256": "85995c078e9af00a83287ceb209f742e5a149ffbf04bd315895488137d677353"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-run.log",
+      "output": "reader/codes/systems/sdk73/sequence-run.log",
+      "outputSha256": "b21030171622585b9c8eb5730b5a4cf617972a0918727f98bdfbe5b9a12ff362"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence-unguarded-counterexample.json",
+      "output": "reader/codes/systems/sdk73/sequence-unguarded-counterexample.json",
+      "outputSha256": "316a626fce3f69297f77d1535fbdd01f3f65e5ee3b6c7b71fd507d89c021a950"
+    },
+    {
+      "source": "codes/systems/sdk73/sequence_entanglement.py",
+      "output": "reader/codes/systems/sdk73/sequence_entanglement.py",
+      "outputSha256": "709181f5e45b6607b053db77d0f2302ec74990fcb32be116b4b267d97f43dfd6"
+    },
+    {
+      "source": "codes/systems/sdk73/stdlib-run.log",
+      "output": "reader/codes/systems/sdk73/stdlib-run.log",
+      "outputSha256": "ccaa5ef6dbee0fd533ab1b685740c94b3c4b899f57f59ab71a3f27a4eab6051e"
+    },
+    {
+      "source": "codes/systems/sdk73/verify-run.log",
+      "output": "reader/codes/systems/sdk73/verify-run.log",
+      "outputSha256": "ffb10c56f6267a0f6e8c2c81dfa4d2bc51854e3d19271b0cb4eda045f86624a9"
+    },
+    {
+      "source": "codes/systems/sdk73/verify_saved_results.py",
+      "output": "reader/codes/systems/sdk73/verify_saved_results.py",
+      "outputSha256": "e95fd3e28b1acda0d7571caae01fc7fb6dbed6cd7481cc5f3a1e269271698a99"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.001.dem",
+      "outputSha256": "f15332254e874905c10afaec7d313c9be79c6866e693aacdf445556b3b3949c3"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.001.npz",
+      "outputSha256": "cc7bb6311343a6d783754b8138ed7c760c963a9611bbd544b685f70a7189b8d4"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.001.stim",
+      "outputSha256": "529bbd21a86fb32a3743676b49fc189923cf67328049a361de9defb1826cbc68"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.003.dem",
+      "outputSha256": "bf13aaf1737886d2e4756265e3801c3cf9de1b00a49fb2e3e466a87be7d80560"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.003.npz",
+      "outputSha256": "3cbe09175fdf344f1c9eac59d6875194f854382d4c55374396a5c4e51221778e"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.003.stim",
+      "outputSha256": "652eba9a7f82ab623d5fe0f147fae7fced5489605367281bd7eb9c0afcc369ef"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.006.dem",
+      "outputSha256": "38f6c7d0fb6fa565f13689ebb3cf6012543b1401b7f3908164f952a445c72095"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.006.npz",
+      "outputSha256": "69ed9327d8e788988f9b19b39d602d1ad607073a24fda068781a552225239400"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.006.stim",
+      "outputSha256": "62544c0bd36ff7348608034726318fc2da3584be5b48c959f42be0c7ba2af848"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.dem",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.dem",
+      "outputSha256": "678ffc7f00bce88a836806b6849f36639cdfc73e089259ef573495c623d617db"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.npz",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.npz",
+      "outputSha256": "882cf0f325a6f59ca1dbd9bbe027d9984e2c13a7a6ca087d422cf5d59c864a9f"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d3-p0.stim",
+      "output": "reader/codes/systems/sdk73/x-d3-p0.stim",
+      "outputSha256": "7b9dd00b93f922754fe8139e4ddb0e453730dcca3500a33b60bab7e776366b5c"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.001.dem",
+      "outputSha256": "dcc51f3a2cdbece254cf26092ea88059429133f5dd5634919da3123eb6719f6b"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.001.npz",
+      "outputSha256": "8ad9aefb5bca72e88806cf07db352e814631aa8f41e14bcf9964d89199f849cd"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.001.stim",
+      "outputSha256": "05941b189f99a1263d6fdce6e7f232dcba947465ce3aff274ac278b943cb150f"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.003.dem",
+      "outputSha256": "db692f4bd6377b953de812e32de0bd0a2e5d892c50472f165366fb0381d01cf5"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.003.npz",
+      "outputSha256": "ed93c5696c9c670ef9402190d989d2abeb13f89e46dc073dd37244fe7881d9a5"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.003.stim",
+      "outputSha256": "93c63b0b49e954bb5049136ec7d1760d2ba4eb13b47efe5d7a31fec0094e64ba"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.006.dem",
+      "outputSha256": "544eed6dd3a968a31ccc670ed988cdabadc8ea47516d60117176de4f2ad80200"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.006.npz",
+      "outputSha256": "f2f3cff715fe618393c42f4de96518b6c8944f303a01aae1207d062cc5154519"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d5-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/x-d5-p0.006.stim",
+      "outputSha256": "076fbbea4adcb239905c1909578d26553f884ebd9125680b86cf613e1f8f1d3d"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.001.dem",
+      "outputSha256": "e0887b5d9cb0e8faa68e77ea7c4163447d4d2f2f1fb2bae2bfdb04c6632a8c53"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.001.npz",
+      "outputSha256": "b3cf4584367a4876cc6d8708f6276b8585212fdab9295343836b8112603b17ed"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.001.stim",
+      "outputSha256": "378879e0ca7737bcfc8e4faf890e3382926cb8d964f45b317526d3ae3e9e191a"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.003.dem",
+      "outputSha256": "a54c663636720c3a26000f45845647a9eee25f0ad65e637c88000867e721029d"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.003.npz",
+      "outputSha256": "2c71ce8d5f3744b2b54d26cb6e148e37eb71707ab46dc98a752e4aa90bee03dd"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.003.stim",
+      "outputSha256": "66ce5c3636fa476f5de11f78e06a5cff58de742e2b1baf6268c57aefb0ecfc32"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.006.dem",
+      "outputSha256": "e40efdf099e458ed3eba1ef7d3764c5ac3a53dd8670635d3f7de03c2726f71e7"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.006.npz",
+      "outputSha256": "56ee492998dfe632a40206c90f07c785f96c59ebefb5040314a6508e58066569"
+    },
+    {
+      "source": "codes/systems/sdk73/x-d7-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/x-d7-p0.006.stim",
+      "outputSha256": "1073ab38d11481901ab29dab112f6dfc44b03992f171e1833531b67d62b50e1c"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.001.dem",
+      "outputSha256": "dda5d52ecc28e2c210257dcb437582a9fe53c88b40d3f3f790fa0db37465a60c"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.001.npz",
+      "outputSha256": "290ec7c66dedd4bb7f26185f91b2167e54560f7d61b3bbd5576f835b2e718086"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.001.stim",
+      "outputSha256": "4da4e7b3a9c3af7fd8862cb06790640219d055312c94db5a6b2bf26fe9144823"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.003.dem",
+      "outputSha256": "97eb4df0c64c5b1d7ce43c87a49a24f65d2e23531f0757e84ed33cd2bad70a22"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.003.npz",
+      "outputSha256": "5cd38a05dc2c6743f3c7b9d1329747bc8d5312ccd08cad07b34faeecd0d03547"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.003.stim",
+      "outputSha256": "3a24d3a395172b2af3967e76cc353e0f6667381b09cc5a6070e1d703c0a0bdd2"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.006.dem",
+      "outputSha256": "50ef0210c642dfd02b039cd9f126aa2e26645874a5c709240a1b59f1cecc2ea1"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.006.npz",
+      "outputSha256": "0abd3e3294db40788891bc6d862df72f1b9fdab452cd99809b042e089306fde9"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.006.stim",
+      "outputSha256": "e4a22946aa9753f853fdc7feb153109697a7c9dded605e3fabcc1ebbce35798e"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.dem",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.dem",
+      "outputSha256": "a8ef3d7b8fd34787fa94a8745b9cc1430cd10a03eca5e767ce1c2b6329b752ba"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.npz",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.npz",
+      "outputSha256": "556d2bee81c5a10f2bfd2280fa505c9a378fc04b0bfc377551732baccfea9d1b"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d3-p0.stim",
+      "output": "reader/codes/systems/sdk73/z-d3-p0.stim",
+      "outputSha256": "832b1ccd0aa1fb0eaad0a562401cd47fdc7207dbe901325308f4b77b0209445f"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.001.dem",
+      "outputSha256": "e88597abdcbba1e451194cbdb543f32721892039ae3e5500f5d509c595339552"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.001.npz",
+      "outputSha256": "3d553f5098c2db8158a8ed717358ca56528aa79965c33ec576ac539d57745c63"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.001.stim",
+      "outputSha256": "3027504a1c1f19df6abd9232193c85f3bc434b1763fb67ddf1defde2d9451df8"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.003.dem",
+      "outputSha256": "fbdd365a2ba2db719dad8d721feb48bf8563af3d04721e8a2a8b58ab7c9769d6"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.003.npz",
+      "outputSha256": "bc8b718b53f640aa64ec44d02a718255fc309fffd06959da3f736a33e5a1cd00"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.003.stim",
+      "outputSha256": "6b014936956b270d37cad526163edf8cebb8e9195a960d7c7e1af9a299bd96c7"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.006.dem",
+      "outputSha256": "110f999f705379d5e71e88b1337df88a31235f012f256058f4703c06af75d0dd"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.006.npz",
+      "outputSha256": "ee8d6f515f05317c2d1e6265e859885582233bc42155dedd0a8b83884fd8c59a"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d5-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/z-d5-p0.006.stim",
+      "outputSha256": "fb85f010a81e7613ae6bae08423982b6af6a0a931ce85755cc006da546a341f3"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.001.dem",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.001.dem",
+      "outputSha256": "24647091caa37870edec8d7255bd2c4bcd89505b983a76abc87b8de99912cc6a"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.001.npz",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.001.npz",
+      "outputSha256": "6b33a773d229502123f8ec8978afdbe72dc91c27781b5f04262949960c70ee74"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.001.stim",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.001.stim",
+      "outputSha256": "30d1940101d70e05a63f0d2f877756ffaeaba7e8e17e94cd2ea40fce04b99583"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.003.dem",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.003.dem",
+      "outputSha256": "a060a7875ae571cd0bc3f0f7f56368b9127ecb3539c4cf1a08d96f5d4c59c5fa"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.003.npz",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.003.npz",
+      "outputSha256": "6246b52142ed9ae1a000c133061d8da7607e5f9f4f27f87dee1cd33e5afcf5eb"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.003.stim",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.003.stim",
+      "outputSha256": "9e15bb3186f080df7c8dc21886013d6e58a3bbef39918b1011ba50e4559daacc"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.006.dem",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.006.dem",
+      "outputSha256": "9fa61397ef77834d0156471d3bd180898840c39222c02a2e8fe29ba082b15562"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.006.npz",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.006.npz",
+      "outputSha256": "0de082affe2c14a7e7b685403ca1c7f107f6e73a83f7af92b57f0f3b66beff34"
+    },
+    {
+      "source": "codes/systems/sdk73/z-d7-p0.006.stim",
+      "output": "reader/codes/systems/sdk73/z-d7-p0.006.stim",
+      "outputSha256": "81b6f72af88b37da7f81965d02ac4a416865ba7c82375bc6e1c94f6fb52dd08f"
+    },
+    {
       "source": "codes/systems/service_timeline.py",
       "output": "reader/codes/systems/service_timeline.py",
       "outputSha256": "31db1ec32e572e5775ef2fcdffbf3e90042512fdf5d6b42f27a5c2a2345a50d2"
@@ -2260,7 +3464,7 @@
     {
       "source": "codes/vendor/README.md",
       "output": "reader/codes/vendor/README.md",
-      "outputSha256": "1e7466f5af8efa5742f1ab788d2c41513ee2cf9655362974cdb369f2555c5264"
+      "outputSha256": "31c8e195801ac62f79f027ff7586a3033384562c6ee03b2baad1c0078da15bca"
     },
     {
       "source": "codes/vendor/cirq/AUTHORS",
@@ -2310,7 +3514,7 @@
     {
       "source": "codes/vendor/manifest.json",
       "output": "reader/codes/vendor/manifest.json",
-      "outputSha256": "aed988a57e4cd96d371028b5cb82dfe375356ec23f7fdcf357e85f3121576d50"
+      "outputSha256": "c10394d4377da074bf8f2a74db527e5f158b3c1567982680911981965f6fc190"
     },
     {
       "source": "codes/vendor/mitiq/LICENSE",
@@ -2538,6 +3742,51 @@
       "outputSha256": "79b6f6d61e10d21493edc321ef4d7b06255d05f6f3f85ce229a246f4cb6a3741"
     },
     {
+      "source": "codes/vendor/qiskit-addon-pna/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit-addon-pna/LICENSE.txt",
+      "outputSha256": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-pna/README.md",
+      "output": "reader/codes/vendor/qiskit-addon-pna/README.md",
+      "outputSha256": "55b7cd4d37210887cc6d687ada7b3205ebd4bc93c06d1033de1e185487ffb427"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-pna/qiskit_addon_pna/pna.py",
+      "output": "reader/codes/vendor/qiskit-addon-pna/qiskit_addon_pna/pna.py",
+      "outputSha256": "751f07ed6c2e0953b228459be1b90afaf09e6cc4d16b509ccda4c2d34b932408"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit-addon-slc/LICENSE.txt",
+      "outputSha256": "8edfefbd37b180e1b329cdc9c987638cc539cc85d43e49ff328c472a21d9ab8d"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/README.md",
+      "output": "reader/codes/vendor/qiskit-addon-slc/README.md",
+      "outputSha256": "3ba1141076c5c528fe279f10b4b62b4889521dd2334f30cf26eb82bb77aa5d46"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/backward.py",
+      "output": "reader/codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/backward.py",
+      "outputSha256": "19d218b7fb98661c7e21edeedaee02bce9de5d91d3379b8039ae510557b72b40"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/commutator_bounds.py",
+      "output": "reader/codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/commutator_bounds.py",
+      "outputSha256": "5c4f05603f530a58f7724a716721f05c506b79fab9c50a2972215791f536dfa8"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/forward.py",
+      "output": "reader/codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/forward.py",
+      "outputSha256": "9eee201c42d7750525fbf3017edbab67923f44621da13ea5f21ef01ce082d62a"
+    },
+    {
+      "source": "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/local_scales.py",
+      "output": "reader/codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/local_scales.py",
+      "outputSha256": "5f4b132f24aca07f80e9379cccd3fb48969c17784500812392bebbe182c527e1"
+    },
+    {
       "source": "codes/vendor/qiskit-addon-sqd/LICENSE.txt",
       "output": "reader/codes/vendor/qiskit-addon-sqd/LICENSE.txt",
       "outputSha256": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65"
@@ -2643,6 +3892,31 @@
       "outputSha256": "5bfa14b445af2d5638d078ae31f93f9ec12f1dddbafc3d05d84c5205a9ade8b2"
     },
     {
+      "source": "codes/vendor/qiskit-mitigation/LICENSE.txt",
+      "output": "reader/codes/vendor/qiskit-mitigation/LICENSE.txt",
+      "outputSha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "codes/vendor/qiskit-mitigation/README.md",
+      "output": "reader/codes/vendor/qiskit-mitigation/README.md",
+      "outputSha256": "a7938bf65dc3c204833c32da33b14029d256f53cb4b2bdc41dd8bd9b8ac0138d"
+    },
+    {
+      "source": "codes/vendor/qiskit-mitigation/qiskit_mitigation/mitigation_task.py",
+      "output": "reader/codes/vendor/qiskit-mitigation/qiskit_mitigation/mitigation_task.py",
+      "outputSha256": "78006f47c165bbc7a9e05e2daca2a3fe152c5764412e850df2f0917db490d762"
+    },
+    {
+      "source": "codes/vendor/qiskit-mitigation/qiskit_mitigation/noise.py",
+      "output": "reader/codes/vendor/qiskit-mitigation/qiskit_mitigation/noise.py",
+      "outputSha256": "b161688bd3c4a7cd9ff3c1a92489d5a085008d310caf8d19c405a2ec2dd0ca63"
+    },
+    {
+      "source": "codes/vendor/qiskit-mitigation/qiskit_mitigation/pec.py",
+      "output": "reader/codes/vendor/qiskit-mitigation/qiskit_mitigation/pec.py",
+      "outputSha256": "5866e02e8a03273e19535cceb1b2fd1a5994c0120d9473a2c995594d3665ea5b"
+    },
+    {
       "source": "codes/vendor/qualtran/LICENSE",
       "output": "reader/codes/vendor/qualtran/LICENSE",
       "outputSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
@@ -2711,6 +3985,61 @@
       "source": "codes/vendor/qutip-qtrl/src/qutip_qtrl/pulseoptim.py",
       "output": "reader/codes/vendor/qutip-qtrl/src/qutip_qtrl/pulseoptim.py",
       "outputSha256": "71afbb0a58c00dc66304e84171db1fc16aaa9530dd2300a5e503d7f72bdfe20d"
+    },
+    {
+      "source": "codes/vendor/random123/LICENSE",
+      "output": "reader/codes/vendor/random123/LICENSE",
+      "outputSha256": "5fd0885ab205878bd90c19144677286252eb9b988c1545a3a910edfe1e27b6df"
+    },
+    {
+      "source": "codes/vendor/random123/README.md",
+      "output": "reader/codes/vendor/random123/README.md",
+      "outputSha256": "fda4d741d3667e59ec107e1c2feba9adecbfdee99d4210dcf457ea0c3d60d589"
+    },
+    {
+      "source": "codes/vendor/random123/include/Random123/philox.h",
+      "output": "reader/codes/vendor/random123/include/Random123/philox.h",
+      "outputSha256": "6c2ef219a855885499a73b338d5f41dafe079618b2dae2f60ea86ee785d771e2"
+    },
+    {
+      "source": "codes/vendor/random123/include/Random123/u01fixedpt.h",
+      "output": "reader/codes/vendor/random123/include/Random123/u01fixedpt.h",
+      "outputSha256": "55e07e08c7f93a94680e06b5238e80f109fb58ddadb2cfd09fdaa740f9fb553a"
+    },
+    {
+      "source": "codes/vendor/random123/include/Random123/uniform.hpp",
+      "output": "reader/codes/vendor/random123/include/Random123/uniform.hpp",
+      "outputSha256": "921805e7617674e60ed8afa9ca04fb6d807d129aa6ef8ea1aa12b0d46f2e1848"
+    },
+    {
+      "source": "codes/vendor/samplomatic/LICENSE.txt",
+      "output": "reader/codes/vendor/samplomatic/LICENSE.txt",
+      "outputSha256": "4beb29078ef83650448bf0a8ae4eaee89722b5863aa6704c747b45d735dfc17c"
+    },
+    {
+      "source": "codes/vendor/samplomatic/README.md",
+      "output": "reader/codes/vendor/samplomatic/README.md",
+      "outputSha256": "6d9c4b3810bc27dcf3fc387891e5f1e87c484eba0f3354b9f5a49c7c2e3527d6"
+    },
+    {
+      "source": "codes/vendor/samplomatic/samplomatic/builders/build.py",
+      "output": "reader/codes/vendor/samplomatic/samplomatic/builders/build.py",
+      "outputSha256": "19740ac5bdf550a79899d4c4214de86c1f9452e7617c9f560fc2fe2d6302a0c6"
+    },
+    {
+      "source": "codes/vendor/samplomatic/samplomatic/samplex/nodes/inject_noise_node.py",
+      "output": "reader/codes/vendor/samplomatic/samplomatic/samplex/nodes/inject_noise_node.py",
+      "outputSha256": "6f0d57652a9bd715baa190bf7aebd2e82324961578a2e7b4d9fbc0f716eea8df"
+    },
+    {
+      "source": "codes/vendor/samplomatic/samplomatic/samplex/samplex.py",
+      "output": "reader/codes/vendor/samplomatic/samplomatic/samplex/samplex.py",
+      "outputSha256": "e65fccf804b6159049f382c26e296d26aaf3c16ce384c0c5ff230b4a10dcd65b"
+    },
+    {
+      "source": "codes/vendor/samplomatic/samplomatic/transpiler/generate_boxing_pass_manager.py",
+      "output": "reader/codes/vendor/samplomatic/samplomatic/transpiler/generate_boxing_pass_manager.py",
+      "outputSha256": "9402c2865a8f9b75e70e2f30442f586b4798735ba998ef68ed11cbe88e9e9f85"
     },
     {
       "source": "codes/vendor/sequence/LICENSE",
@@ -2797,10 +4126,16 @@
     "handbook/assets/round72-foundations-trajectories.svg": "89483a058e84f68427f0e756404d3b9ae0ab30b65030d0ac338672bcc40c55f7",
     "handbook/assets/round72-systems-control.svg": "92f9d6807af21711bcde3a2c19d287e2a6b3a43c12eb5ef4c276d6b1b78233f1",
     "handbook/assets/round72-systems-qec.svg": "52d37a17d888126482e30682ae9941f872bc31b8e165a5458c0b7fb230685ca0",
+    "handbook/assets/round73-algorithms.svg": "8b9c6a49f233ffce2e86414e7fb704464139c272ab1289287ce184096a75335d",
+    "handbook/assets/round73-foundations-dynamics.png": "cccfadb2fa01a830a8d460d130a02741811bb0b3d023a3c27891c68511c6b712",
+    "handbook/assets/round73-foundations-dynamics.svg": "6f1c3da53c593c27b87018a955ec349982f0e6f3487c8bc346e6c42a66ba9c05",
+    "handbook/assets/round73-systems-control.svg": "c121094c077507862457b1787a3db2cac042bcb3270b4cdb05024fc79da67e17",
+    "handbook/assets/round73-systems-qec.svg": "a11d2e213bcf89421fa4bde498ed5c5b51c3a4f06df45448993241b8f9f98a1c",
+    "handbook/assets/round73-workflows.svg": "191da759d5906ac2b96ed2cacae2f83c4141e76f6f88fee18dbfd08487bcb09a",
     "handbook/assets/surface-code-events.svg": "db3bbd91aebbdb466ee33e845d543e463e122f55e4e7c52603141037e904f5d9",
     "handbook/assets/teleportation-map.svg": "e7f1835dfe3540ad45a659483a5ee805909554745ddcde01760814180d81339b",
     "handbook/assets/workflow-mpf-budget.svg": "4c0141bdc033501b3af6156d97a66aa8ec954ea429681698eaa6d31fd45de81a",
-    "codes/README.md": "88917eeded89e89394d2d2540ab6df4ff897b79067bb8dae533ece07c7d82a1c",
+    "codes/README.md": "a293d0fab4d348f20a18ab31fe5059c2ea65cc4a1b9dc2b0e81f2bad76aefe87",
     "codes/algorithms/README.md": "6edda066720e8470d4d267bce5e2d765a4a828a4e2fa3b4cf671e178289822bf",
     "codes/algorithms/expected-results.json": "ab0251a9f35f07121fcf20306b1d7a4b2e55302a734ea56d02963ad279c7ff07",
     "codes/algorithms/experiments.py": "1903e22794348dbbb58038fcdf1d876dace95a96ad5c97216057c22cc204057f",
@@ -2815,6 +4150,15 @@
     "codes/algorithms/round72-results.json": "ecb865f0acabd5d7b9b83a067ba7a7b71866891f51da821386e2a55cf0953a8d",
     "codes/algorithms/round72_checks.py": "cbc95f66a5874d5f9ce9a0d760bb606702874ccb1f4ee9b2f1db64d00ae63d9d",
     "codes/algorithms/round72_figures.py": "e7d8ba146817bc67aa0ab31a07fe3b4001d139c6ad7e11a7e01bf2baaf19dfa5",
+    "codes/algorithms/round73-cross-root-results.json": "e44a5ff3501b3818022307b7611a446acf41519777dc46a778fe7e0f56a2766f",
+    "codes/algorithms/round73-cross-root.log": "e44a5ff3501b3818022307b7611a446acf41519777dc46a778fe7e0f56a2766f",
+    "codes/algorithms/round73-cross-systems-results.json": "992b368ee6dab31299847e995edcadc31b03b497fa47a6015e5b2835284b4405",
+    "codes/algorithms/round73-cross-systems.log": "caeaa33eb048d95461f891dc69c3e0f87df28fafe1419ded51c373934a938e23",
+    "codes/algorithms/round73-results.json": "ea77153538c62ba71d1431806ebeb12ba52c1d3e14bb84dc5106f5af48a2611e",
+    "codes/algorithms/round73_checks.py": "8ca5b4e87f4d1189c4c902fdc880ffe522c4b687838c4bb1b4644360305a40ab",
+    "codes/algorithms/round73_cross_root.py": "41e647f5a8528757d2c21c8e4131c8073187e31eace516d1d06dbda2128c6860",
+    "codes/algorithms/round73_cross_systems.py": "9bd5ae08da14e102d20ec267ad5a66f99b383d6b71e4bbb943e42e3e8949c9b0",
+    "codes/algorithms/round73_figures.py": "5b09255f0cab5a47d5f285e7c4528ef037499b87633a11d2e9183bfcb4b6f966",
     "codes/algorithms/sdk/README.md": "48f6a631a7efddf77294d6fa577a910a5436dbabc877a61f3df0cdd33481cd7d",
     "codes/algorithms/sdk/hhl-circuit.txt": "1e43fd435fbcb07188fa4ac978e61e378c4bdcbd82159513ef36c5012ca709af",
     "codes/algorithms/sdk/install.log": "e8be80a7ead8fe63c602b0cdda33f6bcb03685fd1b56091aaadda4fbf3b06878",
@@ -2824,6 +4168,35 @@
     "codes/algorithms/sdk/round72_sdk.py": "5f51a6ea74ea516582e20e2f9f442acf9b47dc0d8259a1805efc88f3b303c646",
     "codes/algorithms/sdk/run.log": "0f882394a46c0f1392c28bf89a27bdd5ee24370c536acfab665de6b7598e80df",
     "codes/algorithms/sdk/shadow-samples.npz": "b484860b89bceea0da24b7881566671aa9585c53e158f5248d904ff9ab6dc997",
+    "codes/algorithms/sdk73/README.md": "d3eaa76c42a2b40987e262246627edd701f608544fd7aa637f6c749b1f646a66",
+    "codes/algorithms/sdk73/hhl-four-dimension-t5-circuit.txt": "abe91235cec59c8a7cd25a0b70937e9e468f3670720fff9dfcd216d6ff577082",
+    "codes/algorithms/sdk73/hhl-four-dimension-t5.npz": "b2dfd9957fe834c3d8cdba50a7232dc2c2e26a667968801c7c8cda21483cfce0",
+    "codes/algorithms/sdk73/hhl-signed-grid-t3-circuit.txt": "94bb801e10885c726c054e72ca085319b555e0d93b28294754937f06f8e11085",
+    "codes/algorithms/sdk73/hhl-signed-grid-t3-samples.npz": "ae3aeacf40cbe4b54fa9dcc87178f715294fdcb9f9e3cf778926063c13c4e8c9",
+    "codes/algorithms/sdk73/hhl-signed-grid-t3.npz": "894f0f0725fe137d590c8bb8e76f6f9e1cecf8967b6f9fe7a9b01f1f69f62a22",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t3-circuit.txt": "1bca6a44207e7c1d71ab45786a3dfb4b71285b47b28fb5d0d97b1b0f6691d2ba",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t3.npz": "6243ca7487202f3b8bc12412b5388e4c2160bf218f41e2101cd6fcf63f45f53f",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t4-circuit.txt": "83c33a1e38a65cc63ac27cdaf2065cf3b616754185d508fb8e269050bb4b16fe",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t4-samples.npz": "377b223ddbcaf7210c67283cbacf194878ad353935af3cacb870114aef7de15a",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t4.npz": "911793395d8ac171db0390ae07f7682bea0c73696ae05d83bd118fd94319e9b7",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t5-circuit.txt": "6d258f6dec79f12c5fac1e4d8726c3c3cb18849bcbfc800a375c3ecd15efb64b",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t5.npz": "740beeccf7d87486ea354279a27f6ba90da52460be698c0db99bfda9acad40d9",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t6-circuit.txt": "46ca0d4bbbb86955e9a80f0d99df0aa87e7f9eed0bae0e7106f3cd6a39ddee1b",
+    "codes/algorithms/sdk73/hhl-signed-offgrid-t6.npz": "a93ba7fb55c01f9a21022b28a51c93a9f78cc04431b26d94d2cb2653862c272d",
+    "codes/algorithms/sdk73/initial-failures.json": "e4de9d0564352c06623b91a65b166a28d99be681a3bba5eaa64aad5be09f37b7",
+    "codes/algorithms/sdk73/mbqc-circuit.txt": "731ddb3b297d12448e14130a23e9e57d6ac383e95ceecfe027f27434f5982279",
+    "codes/algorithms/sdk73/mbqc-samples.npz": "4d9e1def302c93c39f6ddf31b24148d62af78be3546332b4aa2e7c2e1213ca32",
+    "codes/algorithms/sdk73/pip-check.log": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "codes/algorithms/sdk73/qsvt-matrices.npz": "a55d9963235e90e92fcbb74fdf9b9300aa82872740c2daed50fa4e3aa735a38b",
+    "codes/algorithms/sdk73/requirements-lock.txt": "640c574e947191e8bd23b0a284b3cdda075fd2bd0e862f6a006b4cb40fc99f4b",
+    "codes/algorithms/sdk73/requirements.txt": "380fe8607cf401d14359c2edb730018049afc4d5f5528530a21babe1731a59d0",
+    "codes/algorithms/sdk73/results-all.json": "21aaf6917e0b45e1a85eceda0fc4ee39aefa0001d76ef4930eca38a81b2a20d5",
+    "codes/algorithms/sdk73/run-final-root.log": "481bc99227ad7e38cd6b042144d9d2d961111cd90188ddceab6b502cc71c8d82",
+    "codes/algorithms/sdk73/run-initial.log": "e89246f33bd7bc23feb63c3b0f4ebf9ddce466c8f6b2f6018b88f223280c84a1",
+    "codes/algorithms/sdk73/run.log": "481bc99227ad7e38cd6b042144d9d2d961111cd90188ddceab6b502cc71c8d82",
+    "codes/algorithms/sdk73/validate_algorithms.py": "506d930b541782ddffc9d8bb41663376e3942e545da1170cee4333af4a2b233a",
+    "codes/algorithms/sdk73/walk-circuit.txt": "5c9c96ad52d6b6a38b424e4ede1db350afd5d25bc6a7e0f0b4e111a20eb1c2cb",
+    "codes/algorithms/sdk73/walk-states-samples.npz": "ed2f6c31f3b2d972d1dea86e5bc3076be808ef9d85f3a71956656f48a3920ea2",
     "codes/foundations/README.md": "71cc55c8e581ba8475a11c2bb05efe512606189cbfcc276e7dab3935fe5a310f",
     "codes/foundations/diagnostic-results.json": "8fbd02c393c383d5e041e590fd2fc4c2eb50b724ac9acf2e77949dc5fd7ba1e4",
     "codes/foundations/diagnostic_lab.py": "d490581e9e1808a67b465fd757ee6d7616a9652976507e2083af75cfb36658d2",
@@ -2832,6 +4205,7 @@
     "codes/foundations/generate_diagnostic_figure.py": "2c977df2c3d4c78c313cffc4cc700f6108d34bc0fe5027db5e64d9d2c8ee2794",
     "codes/foundations/generate_round71_eraser.py": "4b7d6b5687358ac687c885aa47bb1021e14b65e80f5e355800f5a3e59e05fcf7",
     "codes/foundations/generate_round72_figure.py": "12d2f706d5810d5c55d1e17da09b902b7f0f8e515c4251514658ba8dbd39c9df",
+    "codes/foundations/generate_round73_figure.py": "769ad1a701dca3daca1b58d68625d52651919e0ff7b4d7517e6d1078a0de74f4",
     "codes/foundations/round71-README.md": "f24060815486844f155080829ce1d01762042c5ffaad58602c5e3b1b15e0810d",
     "codes/foundations/round71-results.json": "e5eff32c14f85c50d40367f50b88e3943a9dff422f7d8d14018673065b9e4f45",
     "codes/foundations/round71_checks.py": "59091e5ee921986d09fef25e234bebe3f1545c4322df9a86f8d62c1ab4744b22",
@@ -2841,6 +4215,15 @@
     "codes/foundations/round72_checks.py": "afb7132782ad9a41981a54b7a450cde52c55cb121b49776c255146c43506b088",
     "codes/foundations/round72_cross_algorithms.py": "de44cb9c98e0436e6d451ff09e3bce64569d900762ae6390ce49636106be16b3",
     "codes/foundations/round72_stdlib.py": "edaa3f47f1f2a27a315b9cf0c4fbe6552adb9fb717f6dec29ce360ee2cae4fa2",
+    "codes/foundations/round73-README.md": "336b0bc48c352ff22765ed776a32a6c3de4e2e707d088e65ead009c038120c09",
+    "codes/foundations/round73-all-results.json": "cc62eebb3ad94d3249f2c335d2a702969d0861c55f20a3981c0ab6df3e801dc4",
+    "codes/foundations/round73-cross-gst-results.json": "e157940c006967105102b9ac2b5da6edcaa784de08f191fce3aba9d4e6c6d3a8",
+    "codes/foundations/round73-cross-gst.log": "e157940c006967105102b9ac2b5da6edcaa784de08f191fce3aba9d4e6c6d3a8",
+    "codes/foundations/round73-figure-provenance.json": "8633167da0fd1a2fc31d867e730cc60efa8863f4f5a1b1c2dae3f820b40d4e43",
+    "codes/foundations/round73-initial-failure.log": "f9535953f74548779ebc5a9c702cba044b7d25ebf6d57466512efbf9ddd02732",
+    "codes/foundations/round73-run.log": "6a5b3cc3d0543228dae3edd291def50ce7af151b815b1c60e638e8f7b6c2d50e",
+    "codes/foundations/round73_checks.py": "a6b2abdf51a3196621f154c98d57f8ff7a4d7e8ebb76d2b072ec56f03a502de7",
+    "codes/foundations/round73_cross_gst.py": "0a77023ff04219c196f626679802bf6b5da4f6265d95b5547b86d319b3dd9a3e",
     "codes/foundations/sdk/all-results.json": "2bbabe8f11d051a2e67da00a0dc85c2e4d41e9280d2f6ed49deef56799aa8ec0",
     "codes/foundations/sdk/chapter-run.log": "6a5b3cc3d0543228dae3edd291def50ce7af151b815b1c60e638e8f7b6c2d50e",
     "codes/foundations/sdk/initial-failure-results.json": "9bb3ede18287f319d63c2f81b79e5946453a08ceb5c159d3922ebbd9ade222db",
@@ -2853,6 +4236,35 @@
     "codes/foundations/sdk/run.log": "1ea90e1073e8f370089fce0727289fcea7996bbb0be599d56bfc497852ffbf2e",
     "codes/foundations/sdk/source-checks.json": "071dc1a00c08bbb390ec1986ea1e4f4ed86591e2004a28b4f82cb17489d46605",
     "codes/foundations/sdk/validate_sdks.py": "df32ad582f5af10768443d5339cb21d89fed44c7ca232233d4d706e1d13f434c",
+    "codes/foundations/sdk73/README.md": "5fa7dde6fe29f3213d5f5c7199a56642d15ff1c4675f1487fe87b448e6678092",
+    "codes/foundations/sdk73/all-results.json": "5643245449b366b386a1bd39792f772da20818dbedc02f9ec36c2acf5ef338e9",
+    "codes/foundations/sdk73/base-round72-lock.txt": "320bdc4311933c7b33bc7fb6901e6702e884823893dd82e4914611b222133156",
+    "codes/foundations/sdk73/feedback-results.json": "9b0bc0059b1ed2ebf1cc4ee5f71d03231b19a627e4b2789d846a2f475b0de715",
+    "codes/foundations/sdk73/feedback-run.log": "f1c59cc44ab4572e7089390184c120b8d845c689880ed41a3b2c5d0e6aeefd0f",
+    "codes/foundations/sdk73/initial-failures.json": "def7c9eaa8708cd445ed6a958ebff8026221c80c04d62f629332d1b638f4e417",
+    "codes/foundations/sdk73/install.log": "c0aa17c9e4f413affd65ca886dd870dc5f9d23bf94fe4764ac4cc42f6659a970",
+    "codes/foundations/sdk73/installed-source-hashes.json": "81b8581bff7638750d6957c78982ee1896261aef52d724f1759735368bb36096",
+    "codes/foundations/sdk73/official-release-metadata.json": "a36241fafbdc1f1108981264c4a04ab3cb73ea4becad6cd41c1d166ec523fcef",
+    "codes/foundations/sdk73/pip-check.log": "a836e0c88c0d40f93caac10f95dd98a13f219dd276f17d859f76ff7b6a9dfe6c",
+    "codes/foundations/sdk73/qpt-design-diagnostic.npz": "c46f180fea91e41d86299bb9f5baefbd1c37aa3fdf6510c921bd44091b4b3652",
+    "codes/foundations/sdk73/qpt-diagnostic.log": "fd91ac75c6d0334534b070893348506baae6fada78c956569e9dad43dceeda3e",
+    "codes/foundations/sdk73/qpt-fourth-failure.json": "c0d079f865ff1dbfc9b82df3a95d5c55b947ba8305c99e772c85e634a940bf98",
+    "codes/foundations/sdk73/qpt-full-constraint.log": "d0aa315eff98cb43443df882298c039755b354b8b7fa1a2180a3c432905e10eb",
+    "codes/foundations/sdk73/qpt-full-constraint2.log": "45394ba08e8aa9011829c85c9ed68ca008cf337328fc2e32fb7eb274b7ddda21",
+    "codes/foundations/sdk73/qpt-partial-trace-shape-failure.json": "35fbfcee3f320b8d97e0bda0f52547016067de17d9eef023dc541e93bf00de79",
+    "codes/foundations/sdk73/qpt-repair.log": "ab049d06a64e80757b3135647c5df84dbc1f4064464faadf965d22c79a8ee57d",
+    "codes/foundations/sdk73/qpt-repair2.log": "214dfad37862bebe5334d183d2b9bf815871a83e9e7d24e35bedef3c0a8229e6",
+    "codes/foundations/sdk73/qpt-repair3.log": "333ef5aba34eb4486608a2ed272a4ff2fb74dbe7d03f21d569f8dc20ff34a0a2",
+    "codes/foundations/sdk73/qpt-results.json": "eb32e79422e7d689728473118be02d1a0c9e8a45c15366b36e34d24491e55eff",
+    "codes/foundations/sdk73/qpt-second-failure.json": "e28c7bbb5d3d169e6f8ac259adfa08bc101a6139e1a9999babe27a8071721289",
+    "codes/foundations/sdk73/qpt-third-failure.json": "bc43ddcf5fef723dfc2dc9c82fdb9409c509a883008212a57f920ed8a8e4bb1c",
+    "codes/foundations/sdk73/requirements-lock.txt": "6cfa0e4fb59c8e56a98e8fc620dc6300a9515e7062a6839b2c4c88d2faf17a1f",
+    "codes/foundations/sdk73/requirements.txt": "dc8ca2c72a85dbe69cdaca688226933bba38b4904df9f20450d2e6cf7f4f2850",
+    "codes/foundations/sdk73/run-initial.log": "315a496a5f37222261b28d5a8be2d08c7f3bb8eb18d9b1802e7ba3e17549c72c",
+    "codes/foundations/sdk73/run.log": "8839a47739b4c5ffe58875e07a1225370f3e232a78ad5c292efe684d8dc6e8a3",
+    "codes/foundations/sdk73/sdk-tp-counterexample.json": "e13c0ed721e6414eede5dc5eb7172e8cea12912ef9ba2267597e3daaa8f78b29",
+    "codes/foundations/sdk73/trajectory-observables.npz": "86562db7904c91bfbd4d91522e2e9f539ccd4459fa3ee683c17cc2934948dc2a",
+    "codes/foundations/sdk73/validate_sdks.py": "b444ab40f563b64166caf96a9a87f4bc41e7dc63fb129f2d89eb20c504ab968c",
     "codes/practice/experiments.py": "6f5ccfadf6fcbcb94e63202e2138c28e950a3f3dc86c2f19106566a6b9c52a60",
     "codes/practice/figure-data.csv": "cd45c17d4d21e57eaa0ae12deaef1c75d3dbc3bef8c790f67436e78d33436c42",
     "codes/practice/generate_audio.py": "0f4af19469239c83d5a903323c3eff5eb7cbd1c209ec07481113a4f9c77151ee",
@@ -2870,8 +4282,8 @@
     "codes/review/README.md": "3c56f6515eaac760b487a8c961c9cfe969fb809306a871bf3889abcd5eef597e",
     "codes/review/cross_foundations.py": "98ed33a1145d886360d0194937954e3c664830f74f5d7c632a5dcab2e7868258",
     "codes/review/cross_systems.py": "9289f1a4915b2f3b6b8029d4e5785faba814986fa84dd0995c6b6a73a06895e6",
-    "codes/run_all.py": "aad6ad82e8e9631ed830f30e7de119228e9de6b3e306505b99d485df34d8be10",
-    "codes/sdk/README.md": "cb7e088b94ddd1b901f58c21502f82c3997c4b8628d52c8dbd6d0abda5f877b7",
+    "codes/run_all.py": "297494a7a67b35d0d0144864a5ca0be403ac28c8442b1e307d2e70733327a3ba",
+    "codes/sdk/README.md": "d205b99539800287956217138705a7059ec0c894504f0bc2f09f119d44367db1",
     "codes/sdk/hpc/CMakeLists.txt": "cb5554cd9ea070f58b09dcabfdfaaa54858c0c2396b4480a4679462d95e4a6ea",
     "codes/sdk/hpc/README.md": "0882325637e0d5ab15ca55ba64fd50bc854a5384b7995f77f513c037c97c7588",
     "codes/sdk/hpc/build.log": "f37e905427df5cdbf2af6adb59019e3c0c8736ab5a15a5a33aee0bc50e4eb02a",
@@ -2883,6 +4295,66 @@
     "codes/sdk/hpc/upstream-configure.log": "ad52a2f76cc3841b94fa32044fae54e1b99c162f77d46680d025e1fc5ba5f4af",
     "codes/sdk/hpc/upstream-tests.log": "9e0144c5ee45804010d81b910c1c1ffcd72658f32fc18d14aa95b3bbde9b2c42",
     "codes/sdk/hpc/validate_hpc.cpp": "01d491ebb6cfd850d2cc80f8dc046aca912cba1f43d9cbd3d581cddb5e2005b4",
+    "codes/sdk/round73/README.md": "77945051de5410a15b169f67d80a1d40313356cbde2e22bdfea198c7941c1ce8",
+    "codes/sdk/round73/check_saved.py": "706c5b63edd6f7d15b3f620168a808605788f6ddc0bab5c46f4b6c42103678c1",
+    "codes/sdk/round73/dynamic-mpf-initial.log": "652275590465888b156b3e2ab50d7000ecaac552e7cf1d80655f3b631dd3c69a",
+    "codes/sdk/round73/dynamic-mpf-results.json": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e",
+    "codes/sdk/round73/dynamic-mpf-run.log": "b948ad285e162c813438217560c48aa2f1ad1fabc83d2f86d77682bcdbbc693a",
+    "codes/sdk/round73/dynamic_mpf-validated.log": "99922223078936d8e57c73a66b0383381aa77dcedbb101bbc01d28750e99e42e",
+    "codes/sdk/round73/dynamic_mpf.py": "8536074a689cca4effe4b390a0b8385f340ac0fd97003c12d992a6080fbe2d5a",
+    "codes/sdk/round73/figure-provenance.json": "32de30ddab10d77fa23b2c9536a4ebd5958b15028a9bd847815cfc5f2ad6e270",
+    "codes/sdk/round73/figures.py": "4018c423bbc36ab3c0a78fdf688b238018856315c62aca1aacb25c4fdb648265",
+    "codes/sdk/round73/gst-long-counts.json": "b6c53d3f45029b368a45a29fdf0749f36f61c572f038a79e46a8d72e78f747d9",
+    "codes/sdk/round73/gst-long-final.log": "5fbb5646adb8fd0ab7008780ff1166f4b49878214d70d41cdcb2ea507faeed1a",
+    "codes/sdk/round73/gst-long-initial.log": "792209d169496b5731b92f4032ca0671b60b8b3a49d3fe0f10f699aeab5cd005",
+    "codes/sdk/round73/gst-long-results.json": "386be383224db54a0e4d572581f61c72b65bbf4e67611f7c7f1ed8f0a6cf6aa4",
+    "codes/sdk/round73/gst-long-run.log": "61e230738ac02155fe5f107a22902b930c65b56ede045a5434c91650101bb154",
+    "codes/sdk/round73/hpc/CMakeLists.txt": "a186bfc4d2838907e89d53743ef0e2258a72759b26a5170336274cdc400cf935",
+    "codes/sdk/round73/hpc/build-manifest.json": "43ad88947be17eab7a3eba2c4c572fc2c3129ee39d4630ec92aa454af2aff374",
+    "codes/sdk/round73/hpc/build-openmp-corrected.log": "384e28a2a27a7badf3b26e2a396bf83144de36a2581743131f5f318efcc98547",
+    "codes/sdk/round73/hpc/build-openmp-final.log": "adb314681347ba9326bdca841d1510e0dbb8bd3d48fc73f6fcb96c58cb6532df",
+    "codes/sdk/round73/hpc/build-openmp.log": "78c2e5419d691152bc08c7984860348bf72304cbfcbe71b5fa7caa552ce8e1b4",
+    "codes/sdk/round73/hpc/build-serial.log": "bad8d43f6128ab0d11027ab2b545a9ea116f5ef5c81bf5d41562c17cc64a64e8",
+    "codes/sdk/round73/hpc/configure-openmp-corrected.log": "cf0a1b09d8057b6e55aab6d77e52c19e45ee70b66b99f352014b2e7b00caa7f7",
+    "codes/sdk/round73/hpc/configure-openmp-final.log": "ad6a5c689de8fe708031b28aa1047f0a3049a7e3cd77b9015a50f66eac5bc0ec",
+    "codes/sdk/round73/hpc/configure-openmp.log": "6139ed13a6cc5e3a0ef47ebe5a1fbbf3b13c0762bcbb6928119c506d402391db",
+    "codes/sdk/round73/hpc/configure-serial.log": "1c2128ffebfafb1877976a878c724905845c94d9392cddb15c9a0dde04024b07",
+    "codes/sdk/round73/hpc/parallel_recovery.cpp": "663b2c754ca5540712cd6b07f4ce2ba36c88cb89615dd25d5ed7a19c73d6d23a",
+    "codes/sdk/round73/hpc/philox-serial.txt": "94539de75c04a6d4a9b2fea18ef33bda8acab32f672ce2251d9555c1217a9edb",
+    "codes/sdk/round73/hpc/philox-threads1.txt": "94539de75c04a6d4a9b2fea18ef33bda8acab32f672ce2251d9555c1217a9edb",
+    "codes/sdk/round73/hpc/philox-threads2.txt": "7bf7c1fce60194b9babb9f6681be2ba61d079d3788972dfbd294ca47991871bb",
+    "codes/sdk/round73/hpc/philox-threads4.txt": "d48a132847520c24a38541116dc1f1fe9036fcb9b4d41ec74df3c407f34601e8",
+    "codes/sdk/round73/hpc/philox-threads8.txt": "cb5f90907dd6c652fb2ed36a06d118551e48eac1b83189d9e1cab43f4ee37089",
+    "codes/sdk/round73/hpc/results.json": "960ba3ff4e36ca970f97694e8224d60e75d87db7e5a870d6cdcb6db3aafccffa",
+    "codes/sdk/round73/hpc/upstream-openmp-tests.log": "09c8652f1491704f2a2c995e3a91f4ab62ee7d4e29e7c33d5e4d6351ab9d1622",
+    "codes/sdk/round73/install.log": "6f65e6d022389523e7241dfdbe6f6e40f145015fdfb5f79f45426174324d2b39",
+    "codes/sdk/round73/long_gst-validated.log": "8550c17562b60861817dd9dda650598774aca7e0931d2be8aae7f064868695f3",
+    "codes/sdk/round73/long_gst.py": "ba5de6a23b8732bcd13093483c09a401e1cef8e04079568325bc7bcad6292a32",
+    "codes/sdk/round73/package-metadata.json": "e5463e1451ad02cfd9079ef0878fcf4d7523e421d9e47c4e6ad380552c04f265",
+    "codes/sdk/round73/pip-check.log": "51389641b6f7046f8320f0b5faca6519af52da62614bec62a9749986bbef8fb6",
+    "codes/sdk/round73/pna-final.log": "738458d3a98b78d38656a6c81f035a177d05d5b670bc433e08b3999b4797d693",
+    "codes/sdk/round73/pna-initial.log": "f390b4541dba2607aa59817187187799e663942da9352a13b85e0aba69c389b0",
+    "codes/sdk/round73/pna-observable.json": "bd306c2685a736de72014041ce22b32053a2d57059ec8abbd94c0fc70c27453c",
+    "codes/sdk/round73/pna-results.json": "34ac713a70aefc5b14b73ccd20033ee073c5e4750455cefbdfc77fb4c9ac8cea",
+    "codes/sdk/round73/pna_workflow-validated.log": "10fd55152bcc2668e62285cdd0adb816b10b3d226682ae537e94e48a5dc18bdc",
+    "codes/sdk/round73/pna_workflow.py": "09d2728574fb2878bc8b37647c864c7aa5adf9ed44325bbdd9bd0afb321f916d",
+    "codes/sdk/round73/requirements-lock.txt": "3e1c111c08f46677d618760ee2dac3d95e78807e6caf0661af83ae7dda4769c1",
+    "codes/sdk/round73/requirements.txt": "9220077ceab49a6611266a30a5469e74c1f611299a3a6e8235279eb6df446bf8",
+    "codes/sdk/round73/run-all.log": "4ab8d89783bac2ef398a9a84868f4073b684ba16514f07d9804c845a2fd53e7f",
+    "codes/sdk/round73/run-manifest.json": "4eae4cd34403d9b8323d3e6749fc202b7ea64ffe0926c116111aa4c3f6d15d7e",
+    "codes/sdk/round73/run_workflows.py": "b798718cde3209c4ea2cbe05baa1e53c5189076fa6ff62d0c21f60facecdfd68",
+    "codes/sdk/round73/saved-checks.json": "ce230d74783c4ed05d028d74cfcf4b36e404b5982bc1f2a93903c0557227c0ac",
+    "codes/sdk/round73/saved-checks.log": "1ca72424508dca91d87701cd0347d20614cdfa47fe50e5cd6ab54ddbeb23b5ea",
+    "codes/sdk/round73/slc-built.log": "560c780a73508f6fe807f248b9928b38ae8a60185bafa39d7a3037ff2315cc84",
+    "codes/sdk/round73/slc-canonical.log": "cd7afe0c3c2608828b901f1092de7ed0d68b26dab735a6b34cd65d04de93e89c",
+    "codes/sdk/round73/slc-final.log": "448329a67100fd30e1949af552c46312c736ef495076c1040fddc9b76dc6af33",
+    "codes/sdk/round73/slc-initial.log": "269a48a7b2cc0975bcdee1b6057b30a6bc73ba273f7b29baf1c7c35e90ef796f",
+    "codes/sdk/round73/slc-native.log": "ba65ec94eddda743d4342f86a38b9d0146d2a35cd7631a0a25bfc977b84af93b",
+    "codes/sdk/round73/slc-pec.log": "abdf58bd35f5e8f66b8fbeeeb4b605ca4467c9c125872ffdbec44648f06f125f",
+    "codes/sdk/round73/slc-randomizations-counts.json": "bb49611790a81e80de262f4db0bdf453b1a879fc4563d2d2cf9d22a560c16b45",
+    "codes/sdk/round73/slc-results.json": "be7e77d47a44099c6a1d6e0241c99252583fa0350f36362409b92c009a88bc72",
+    "codes/sdk/round73/slc_workflow-validated.log": "306031867efebb314c60d861bc366109015b34c382fea74ce80f78c23bb94efa",
+    "codes/sdk/round73/slc_workflow.py": "133c7c1c200d3d8438d70622452e7f09999ecd7019efa6cef9205de49ab84e8d",
     "codes/sdk/workflows/README.md": "f27a80402457aea0af969dfe3a43b5b6ce91a9df732b2d0ad2f9f26d23c07176",
     "codes/sdk/workflows/before-independent-review-results.json": "ca22ff67899513c40719fe1c2eab2aa659823926e29cd2e8763531b280c6fade",
     "codes/sdk/workflows/before-independent-review-run.log": "f1c0b8dc23ca2bbdbf1be4c5dc11a0825e670f0b377f216493110ddf2d64d4c2",
@@ -2899,7 +4371,7 @@
     "codes/sdk/workflows/run-initial.log": "ad86675b48990fbabbdf3440c4a3d6d0fd0e4cab02c749c0aae128367d1e864b",
     "codes/sdk/workflows/run.log": "56910cc99aabcf0c1a539a0f651dcfbb58b1f5c9012bcbbeef9acda3b102a0cd",
     "codes/sdk/workflows/validate_workflows.py": "cf94d7198fba29eb06b74432d233a15b5b9bfedf81ce50c913eaad6748621ed4",
-    "codes/snapshot_sources.py": "e16501d58d5644a7036789d97e0ed14d067b2ed7340e85f9ca95b949410a43c2",
+    "codes/snapshot_sources.py": "54950e17d5e22910ff0081559e4352233a6d258d870eb4869e346e63efb4468d",
     "codes/systems/README.md": "79b403b0608ae866a6cbbbde6c71f610b5c73ad5e6d5be149596812cda4b2fa2",
     "codes/systems/calibration_dependencies.py": "54ed30c8e56c551fd0209f3e2c3c323e818271d2702e61e8e14930d851ff9035",
     "codes/systems/calibration_uncertainty.py": "5e80de7eed6524f4d988b480ea83a5abbe520f77548c378d8cab69bd1d44fc77",
@@ -2920,6 +4392,8 @@
     "codes/systems/round72-README.md": "415823e50a504450b4d39f45c20fa18d4b7060ee605d7fe905742e42b19b4d4a",
     "codes/systems/round72-results.json": "cf43c726672f6f683059c939f6994a472badb650ebb9996241556468b8133dcb",
     "codes/systems/round72_checks.py": "93a8cfa21053f606e1af235d029d7961a86f753f50d3f9ee2438da0ee6db6467",
+    "codes/systems/round73-results.json": "ccaa5ef6dbee0fd533ab1b685740c94b3c4b899f57f59ab71a3f27a4eab6051e",
+    "codes/systems/round73_checks.py": "774df733acd0a93e628f428213fc2a4c50ffb26bb80bf8493a364b382fbb6064",
     "codes/systems/routing_mapping.py": "d1bccf72be23ec351f5e38d20cb29deab5d092f2d74aba0f15b8ea0681f83a38",
     "codes/systems/sdk/README.md": "31f3215bdd754c4039a5f0cf15df103a5f571a8e9af25c93016eeca3d320fef5",
     "codes/systems/sdk/assertion-guard-results.json": "309e4fc849f9c4e9261824d239607437c4b2f56c48d97906b9c06250e475f7ed",
@@ -2957,10 +4431,105 @@
     "codes/systems/sdk/systems-calculations.json": "4440ed12fe188c20e6afc379fa827c6ecb1e90a1f6a68e5070f5342e762639a9",
     "codes/systems/sdk/systems_calculations.py": "7362acb6c0964c0f23523663227bbeab07fa80dda463312c0465fc7ed1ae2311",
     "codes/systems/sdk/verify_saved_results.py": "e28aa829d6ba297aabc0bd288e76bbfa76fb5fb58e7045d43a1a39e9a390e11a",
+    "codes/systems/sdk73/README.md": "8c47ffea254009eba5f885ec013ae3767ba894838513ea2bd739bb74d8091e39",
+    "codes/systems/sdk73/assertion-guard-results.json": "acc6d5a1ae4e3541975491f1723e4f4eeb7cf5f049133e346c6d936d2775fccf",
+    "codes/systems/sdk73/crossreview-algorithms-final.log": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725",
+    "codes/systems/sdk73/crossreview-algorithms-results.json": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725",
+    "codes/systems/sdk73/crossreview-algorithms.log": "2e4bc22bf4ad177f28a54d527ddad0310e479c87a494cf93e9be70ebdb025725",
+    "codes/systems/sdk73/crossreview_algorithms.py": "4fd3c1a27c2bff4f87210d26f26be587e3a2bca65bd14ff55c2aab9d10637703",
+    "codes/systems/sdk73/execution-manifest.json": "381225d47a85f5c3de4d172f43acc5d4002b17974b9b81882b161d48ab22ad7d",
+    "codes/systems/sdk73/grape-run.log": "ea97f3a2fb216deddf05705248aa8a02fd400fa8973e6c9ca49b449a8d35894b",
+    "codes/systems/sdk73/grape-three-amplitudes.csv": "ffb304419ad8f6c005f0ee539958306ccf043e53ddf9f230a4dc4921b38de435",
+    "codes/systems/sdk73/grape-three-results.json": "ea97f3a2fb216deddf05705248aa8a02fd400fa8973e6c9ca49b449a8d35894b",
+    "codes/systems/sdk73/grape_three.py": "2afaf4e7e5e960e63a57e0a533c1135fb82dcc912c0cc5a196fc078e5f1206f8",
+    "codes/systems/sdk73/installed-source-evidence.json": "feaa81c8fc09580b54942076e44cc686e89eab827f70f422caf91f7cdff64c68",
+    "codes/systems/sdk73/pip-check.log": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "codes/systems/sdk73/plot-run.log": "9e6db8009a09072852cb18b918d16611f231144787e28937ce1e9b4fdfdf8824",
+    "codes/systems/sdk73/plot_results.py": "aa5ad57eafcde7556d632f3101791fcdadc653d3d98b9f575470619b778b77e8",
+    "codes/systems/sdk73/qec-grid-results.json": "87354f99ec58bca95abb19c92b66adbebc053bcbe75233eed8bdab86cccfdf30",
+    "codes/systems/sdk73/qec-run.log": "2706faebf391f7148fef62c71ff7859e4c136d95f917cbc259b0e94c8ec8574b",
+    "codes/systems/sdk73/qec_grid.py": "5a3f0e6d8b601e1eef44c02b386136613c2a8f1c56aa3507419341d8d8540713",
+    "codes/systems/sdk73/requirements-lock.txt": "5316ab9e66eaac8374a98a7d9f5452e3d903f928f56370ae4e96ebf03d4a63aa",
+    "codes/systems/sdk73/requirements.txt": "3995e021c43d2401b7e4664d584b7de4683d50aa96c8c3d563ec4020881199d6",
+    "codes/systems/sdk73/root-figure-normalization.json": "9d85e9187dc846f4b27d5c42ac2b30671e70161eeca3b2362b24801a8500626b",
+    "codes/systems/sdk73/root-figure-normalization.log": "9e6db8009a09072852cb18b918d16611f231144787e28937ce1e9b4fdfdf8824",
+    "codes/systems/sdk73/round73-systems-control-preview.png": "648c98da882f5b536b816ade1b9c05fada7d8d0cabbe8296da4bcb7b875a21ea",
+    "codes/systems/sdk73/round73-systems-qec-preview.png": "3b1b0411cdae2a2c077d4d29d3d99f36b513c61dd570acae99afd6420b3c47c1",
+    "codes/systems/sdk73/saved-results-verification.json": "ffb10c56f6267a0f6e8c2c81dfa4d2bc51854e3d19271b0cb4eda045f86624a9",
+    "codes/systems/sdk73/sequence-entanglement-results.json": "02b3f4e05f8c0451279a88d6709e89cbee2d02b018e1bc3ddf449ea94c987a72",
+    "codes/systems/sdk73/sequence-run-initial.log": "4096c80bba268cc71043e7367bc98d5f1b3bb2b904ad6b222e61fe047b08e0d9",
+    "codes/systems/sdk73/sequence-run-second.log": "118d5458471c56dd258cb14b3f2afcc4c01721778ea9cfb3266d483c2872123a",
+    "codes/systems/sdk73/sequence-run-third.log": "85995c078e9af00a83287ceb209f742e5a149ffbf04bd315895488137d677353",
+    "codes/systems/sdk73/sequence-run.log": "b21030171622585b9c8eb5730b5a4cf617972a0918727f98bdfbe5b9a12ff362",
+    "codes/systems/sdk73/sequence-unguarded-counterexample.json": "316a626fce3f69297f77d1535fbdd01f3f65e5ee3b6c7b71fd507d89c021a950",
+    "codes/systems/sdk73/sequence_entanglement.py": "709181f5e45b6607b053db77d0f2302ec74990fcb32be116b4b267d97f43dfd6",
+    "codes/systems/sdk73/stdlib-run.log": "ccaa5ef6dbee0fd533ab1b685740c94b3c4b899f57f59ab71a3f27a4eab6051e",
+    "codes/systems/sdk73/verify-run.log": "ffb10c56f6267a0f6e8c2c81dfa4d2bc51854e3d19271b0cb4eda045f86624a9",
+    "codes/systems/sdk73/verify_saved_results.py": "e95fd3e28b1acda0d7571caae01fc7fb6dbed6cd7481cc5f3a1e269271698a99",
+    "codes/systems/sdk73/x-d3-p0.001.dem": "f15332254e874905c10afaec7d313c9be79c6866e693aacdf445556b3b3949c3",
+    "codes/systems/sdk73/x-d3-p0.001.npz": "cc7bb6311343a6d783754b8138ed7c760c963a9611bbd544b685f70a7189b8d4",
+    "codes/systems/sdk73/x-d3-p0.001.stim": "529bbd21a86fb32a3743676b49fc189923cf67328049a361de9defb1826cbc68",
+    "codes/systems/sdk73/x-d3-p0.003.dem": "bf13aaf1737886d2e4756265e3801c3cf9de1b00a49fb2e3e466a87be7d80560",
+    "codes/systems/sdk73/x-d3-p0.003.npz": "3cbe09175fdf344f1c9eac59d6875194f854382d4c55374396a5c4e51221778e",
+    "codes/systems/sdk73/x-d3-p0.003.stim": "652eba9a7f82ab623d5fe0f147fae7fced5489605367281bd7eb9c0afcc369ef",
+    "codes/systems/sdk73/x-d3-p0.006.dem": "38f6c7d0fb6fa565f13689ebb3cf6012543b1401b7f3908164f952a445c72095",
+    "codes/systems/sdk73/x-d3-p0.006.npz": "69ed9327d8e788988f9b19b39d602d1ad607073a24fda068781a552225239400",
+    "codes/systems/sdk73/x-d3-p0.006.stim": "62544c0bd36ff7348608034726318fc2da3584be5b48c959f42be0c7ba2af848",
+    "codes/systems/sdk73/x-d3-p0.dem": "678ffc7f00bce88a836806b6849f36639cdfc73e089259ef573495c623d617db",
+    "codes/systems/sdk73/x-d3-p0.npz": "882cf0f325a6f59ca1dbd9bbe027d9984e2c13a7a6ca087d422cf5d59c864a9f",
+    "codes/systems/sdk73/x-d3-p0.stim": "7b9dd00b93f922754fe8139e4ddb0e453730dcca3500a33b60bab7e776366b5c",
+    "codes/systems/sdk73/x-d5-p0.001.dem": "dcc51f3a2cdbece254cf26092ea88059429133f5dd5634919da3123eb6719f6b",
+    "codes/systems/sdk73/x-d5-p0.001.npz": "8ad9aefb5bca72e88806cf07db352e814631aa8f41e14bcf9964d89199f849cd",
+    "codes/systems/sdk73/x-d5-p0.001.stim": "05941b189f99a1263d6fdce6e7f232dcba947465ce3aff274ac278b943cb150f",
+    "codes/systems/sdk73/x-d5-p0.003.dem": "db692f4bd6377b953de812e32de0bd0a2e5d892c50472f165366fb0381d01cf5",
+    "codes/systems/sdk73/x-d5-p0.003.npz": "ed93c5696c9c670ef9402190d989d2abeb13f89e46dc073dd37244fe7881d9a5",
+    "codes/systems/sdk73/x-d5-p0.003.stim": "93c63b0b49e954bb5049136ec7d1760d2ba4eb13b47efe5d7a31fec0094e64ba",
+    "codes/systems/sdk73/x-d5-p0.006.dem": "544eed6dd3a968a31ccc670ed988cdabadc8ea47516d60117176de4f2ad80200",
+    "codes/systems/sdk73/x-d5-p0.006.npz": "f2f3cff715fe618393c42f4de96518b6c8944f303a01aae1207d062cc5154519",
+    "codes/systems/sdk73/x-d5-p0.006.stim": "076fbbea4adcb239905c1909578d26553f884ebd9125680b86cf613e1f8f1d3d",
+    "codes/systems/sdk73/x-d7-p0.001.dem": "e0887b5d9cb0e8faa68e77ea7c4163447d4d2f2f1fb2bae2bfdb04c6632a8c53",
+    "codes/systems/sdk73/x-d7-p0.001.npz": "b3cf4584367a4876cc6d8708f6276b8585212fdab9295343836b8112603b17ed",
+    "codes/systems/sdk73/x-d7-p0.001.stim": "378879e0ca7737bcfc8e4faf890e3382926cb8d964f45b317526d3ae3e9e191a",
+    "codes/systems/sdk73/x-d7-p0.003.dem": "a54c663636720c3a26000f45845647a9eee25f0ad65e637c88000867e721029d",
+    "codes/systems/sdk73/x-d7-p0.003.npz": "2c71ce8d5f3744b2b54d26cb6e148e37eb71707ab46dc98a752e4aa90bee03dd",
+    "codes/systems/sdk73/x-d7-p0.003.stim": "66ce5c3636fa476f5de11f78e06a5cff58de742e2b1baf6268c57aefb0ecfc32",
+    "codes/systems/sdk73/x-d7-p0.006.dem": "e40efdf099e458ed3eba1ef7d3764c5ac3a53dd8670635d3f7de03c2726f71e7",
+    "codes/systems/sdk73/x-d7-p0.006.npz": "56ee492998dfe632a40206c90f07c785f96c59ebefb5040314a6508e58066569",
+    "codes/systems/sdk73/x-d7-p0.006.stim": "1073ab38d11481901ab29dab112f6dfc44b03992f171e1833531b67d62b50e1c",
+    "codes/systems/sdk73/z-d3-p0.001.dem": "dda5d52ecc28e2c210257dcb437582a9fe53c88b40d3f3f790fa0db37465a60c",
+    "codes/systems/sdk73/z-d3-p0.001.npz": "290ec7c66dedd4bb7f26185f91b2167e54560f7d61b3bbd5576f835b2e718086",
+    "codes/systems/sdk73/z-d3-p0.001.stim": "4da4e7b3a9c3af7fd8862cb06790640219d055312c94db5a6b2bf26fe9144823",
+    "codes/systems/sdk73/z-d3-p0.003.dem": "97eb4df0c64c5b1d7ce43c87a49a24f65d2e23531f0757e84ed33cd2bad70a22",
+    "codes/systems/sdk73/z-d3-p0.003.npz": "5cd38a05dc2c6743f3c7b9d1329747bc8d5312ccd08cad07b34faeecd0d03547",
+    "codes/systems/sdk73/z-d3-p0.003.stim": "3a24d3a395172b2af3967e76cc353e0f6667381b09cc5a6070e1d703c0a0bdd2",
+    "codes/systems/sdk73/z-d3-p0.006.dem": "50ef0210c642dfd02b039cd9f126aa2e26645874a5c709240a1b59f1cecc2ea1",
+    "codes/systems/sdk73/z-d3-p0.006.npz": "0abd3e3294db40788891bc6d862df72f1b9fdab452cd99809b042e089306fde9",
+    "codes/systems/sdk73/z-d3-p0.006.stim": "e4a22946aa9753f853fdc7feb153109697a7c9dded605e3fabcc1ebbce35798e",
+    "codes/systems/sdk73/z-d3-p0.dem": "a8ef3d7b8fd34787fa94a8745b9cc1430cd10a03eca5e767ce1c2b6329b752ba",
+    "codes/systems/sdk73/z-d3-p0.npz": "556d2bee81c5a10f2bfd2280fa505c9a378fc04b0bfc377551732baccfea9d1b",
+    "codes/systems/sdk73/z-d3-p0.stim": "832b1ccd0aa1fb0eaad0a562401cd47fdc7207dbe901325308f4b77b0209445f",
+    "codes/systems/sdk73/z-d5-p0.001.dem": "e88597abdcbba1e451194cbdb543f32721892039ae3e5500f5d509c595339552",
+    "codes/systems/sdk73/z-d5-p0.001.npz": "3d553f5098c2db8158a8ed717358ca56528aa79965c33ec576ac539d57745c63",
+    "codes/systems/sdk73/z-d5-p0.001.stim": "3027504a1c1f19df6abd9232193c85f3bc434b1763fb67ddf1defde2d9451df8",
+    "codes/systems/sdk73/z-d5-p0.003.dem": "fbdd365a2ba2db719dad8d721feb48bf8563af3d04721e8a2a8b58ab7c9769d6",
+    "codes/systems/sdk73/z-d5-p0.003.npz": "bc8b718b53f640aa64ec44d02a718255fc309fffd06959da3f736a33e5a1cd00",
+    "codes/systems/sdk73/z-d5-p0.003.stim": "6b014936956b270d37cad526163edf8cebb8e9195a960d7c7e1af9a299bd96c7",
+    "codes/systems/sdk73/z-d5-p0.006.dem": "110f999f705379d5e71e88b1337df88a31235f012f256058f4703c06af75d0dd",
+    "codes/systems/sdk73/z-d5-p0.006.npz": "ee8d6f515f05317c2d1e6265e859885582233bc42155dedd0a8b83884fd8c59a",
+    "codes/systems/sdk73/z-d5-p0.006.stim": "fb85f010a81e7613ae6bae08423982b6af6a0a931ce85755cc006da546a341f3",
+    "codes/systems/sdk73/z-d7-p0.001.dem": "24647091caa37870edec8d7255bd2c4bcd89505b983a76abc87b8de99912cc6a",
+    "codes/systems/sdk73/z-d7-p0.001.npz": "6b33a773d229502123f8ec8978afdbe72dc91c27781b5f04262949960c70ee74",
+    "codes/systems/sdk73/z-d7-p0.001.stim": "30d1940101d70e05a63f0d2f877756ffaeaba7e8e17e94cd2ea40fce04b99583",
+    "codes/systems/sdk73/z-d7-p0.003.dem": "a060a7875ae571cd0bc3f0f7f56368b9127ecb3539c4cf1a08d96f5d4c59c5fa",
+    "codes/systems/sdk73/z-d7-p0.003.npz": "6246b52142ed9ae1a000c133061d8da7607e5f9f4f27f87dee1cd33e5afcf5eb",
+    "codes/systems/sdk73/z-d7-p0.003.stim": "9e15bb3186f080df7c8dc21886013d6e58a3bbef39918b1011ba50e4559daacc",
+    "codes/systems/sdk73/z-d7-p0.006.dem": "9fa61397ef77834d0156471d3bd180898840c39222c02a2e8fe29ba082b15562",
+    "codes/systems/sdk73/z-d7-p0.006.npz": "0de082affe2c14a7e7b685403ca1c7f107f6e73a83f7af92b57f0f3b66beff34",
+    "codes/systems/sdk73/z-d7-p0.006.stim": "81b6f72af88b37da7f81965d02ac4a416865ba7c82375bc6e1c94f6fb52dd08f",
     "codes/systems/service_timeline.py": "31db1ec32e572e5775ef2fcdffbf3e90042512fdf5d6b42f27a5c2a2345a50d2",
     "codes/systems/weighted_decoder.py": "2102d23ec93ded9a2b55a85ebcdc45b33a493e122853af86d1ef4eab30bf4f5d",
     "codes/tests/test_snapshot_sources.py": "a03069df25a0e2412f45a90ff3f7f93b35f7ec4f66739874dba3de72612fbf45",
-    "codes/vendor/README.md": "1e7466f5af8efa5742f1ab788d2c41513ee2cf9655362974cdb369f2555c5264",
+    "codes/vendor/README.md": "31c8e195801ac62f79f027ff7586a3033384562c6ee03b2baad1c0078da15bca",
     "codes/vendor/cirq/AUTHORS": "172885d2068d2082c4ffdabb1c30ad28eb13970370bb4aac4db3805c5ebb17d0",
     "codes/vendor/cirq/LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
     "codes/vendor/cirq/examples/grover.py": "d4f37944b99a58758dceee122b8a9178b724080f315fcbfbf97821e6a1ae573d",
@@ -2970,7 +4539,7 @@
     "codes/vendor/dimod/dimod/reference/samplers/exact_solver.py": "770b3c8d4b6c4a4f2041cf445a0e13c20391c49455b6a72531be6deed74e659c",
     "codes/vendor/liboqs/LICENSE.txt": "12f2f1491b92248ad4d1c1042cdc72bc3391b1237c2829b031c0a44408d2cf77",
     "codes/vendor/liboqs/tests/example_kem.c": "070bec2175035505dce374ec9670c11fcdd05c22e2033caf0acf901548306fc3",
-    "codes/vendor/manifest.json": "aed988a57e4cd96d371028b5cb82dfe375356ec23f7fdcf357e85f3121576d50",
+    "codes/vendor/manifest.json": "c10394d4377da074bf8f2a74db527e5f158b3c1567982680911981965f6fc190",
     "codes/vendor/mitiq/LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
     "codes/vendor/mitiq/mitiq/zne/inference.py": "9b29a39b73317caf9c3c111aa5875854e74bb1abaa29a5895308434e565b7320",
     "codes/vendor/mitiq/mitiq/zne/scaling/folding.py": "5636dfe12db1a5afdca28e66d4f769c5a59039b510adaac8a1237e62120b5f64",
@@ -3016,6 +4585,15 @@
     "codes/vendor/qiskit-addon-obp/qiskit_addon_obp/backpropagation.py": "6a4e0d8eb8af8dff18236317a77292972ff4ce559faaacc79da9009c83279aa6",
     "codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/metadata.py": "7320841638e244e9958788d7e4e2032f000dc302d62228863844f1f72228f2db",
     "codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/truncating.py": "79b6f6d61e10d21493edc321ef4d7b06255d05f6f3f85ce229a246f4cb6a3741",
+    "codes/vendor/qiskit-addon-pna/LICENSE.txt": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65",
+    "codes/vendor/qiskit-addon-pna/README.md": "55b7cd4d37210887cc6d687ada7b3205ebd4bc93c06d1033de1e185487ffb427",
+    "codes/vendor/qiskit-addon-pna/qiskit_addon_pna/pna.py": "751f07ed6c2e0953b228459be1b90afaf09e6cc4d16b509ccda4c2d34b932408",
+    "codes/vendor/qiskit-addon-slc/LICENSE.txt": "8edfefbd37b180e1b329cdc9c987638cc539cc85d43e49ff328c472a21d9ab8d",
+    "codes/vendor/qiskit-addon-slc/README.md": "3ba1141076c5c528fe279f10b4b62b4889521dd2334f30cf26eb82bb77aa5d46",
+    "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/backward.py": "19d218b7fb98661c7e21edeedaee02bce9de5d91d3379b8039ae510557b72b40",
+    "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/commutator_bounds.py": "5c4f05603f530a58f7724a716721f05c506b79fab9c50a2972215791f536dfa8",
+    "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/forward.py": "9eee201c42d7750525fbf3017edbab67923f44621da13ea5f21ef01ce082d62a",
+    "codes/vendor/qiskit-addon-slc/qiskit_addon_slc/bounds/local_scales.py": "5f4b132f24aca07f80e9379cccd3fb48969c17784500812392bebbe182c527e1",
     "codes/vendor/qiskit-addon-sqd/LICENSE.txt": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65",
     "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/configuration_recovery.py": "7ed342f51af2497018e36308538571eb985744f521c82532e69950e510c59db7",
     "codes/vendor/qiskit-addon-sqd/qiskit_addon_sqd/fermion.py": "ccaf066ee4ea6efd7caafe4af3801c4fc53893f5f9b76da232f4c5119010acb6",
@@ -3037,6 +4615,11 @@
     "codes/vendor/qiskit-experiments/README.md": "06a7a09d92f98f5335ea54bc3c5edc75b643dffbbe424063ec13017a2dd23a84",
     "codes/vendor/qiskit-experiments/qiskit_experiments/library/tomography/qpt_experiment.py": "e670cbca951c21a63133567ab258bf76781b2de69e36ba641fbde47c9e426b65",
     "codes/vendor/qiskit-experiments/qiskit_experiments/library/tomography/tomography_analysis.py": "5bfa14b445af2d5638d078ae31f93f9ec12f1dddbafc3d05d84c5205a9ade8b2",
+    "codes/vendor/qiskit-mitigation/LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "codes/vendor/qiskit-mitigation/README.md": "a7938bf65dc3c204833c32da33b14029d256f53cb4b2bdc41dd8bd9b8ac0138d",
+    "codes/vendor/qiskit-mitigation/qiskit_mitigation/mitigation_task.py": "78006f47c165bbc7a9e05e2daca2a3fe152c5764412e850df2f0917db490d762",
+    "codes/vendor/qiskit-mitigation/qiskit_mitigation/noise.py": "b161688bd3c4a7cd9ff3c1a92489d5a085008d310caf8d19c405a2ec2dd0ca63",
+    "codes/vendor/qiskit-mitigation/qiskit_mitigation/pec.py": "5866e02e8a03273e19535cceb1b2fd1a5994c0120d9473a2c995594d3665ea5b",
     "codes/vendor/qualtran/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
     "codes/vendor/qualtran/qualtran/bloqs/arithmetic/addition.py": "27931d31d3b525b2a34013671bcbd7bfed4c47c5fe5b722276464db97387ece6",
     "codes/vendor/qualtran/qualtran/bloqs/block_encoding/linear_combination.py": "d297f482774325d0f42cecf5c34bb1afedeb1d9801b98bbd2fc30983a399d399",
@@ -3051,6 +4634,17 @@
     "codes/vendor/qutip-qtrl/LICENSE": "3e4668094b637cdc9b99a81c943fbceb3982c1c0f01f2cbb39a870e6b565b236",
     "codes/vendor/qutip-qtrl/src/qutip_qtrl/grape.py": "40898772468e014448afd71d2d85585ebf62f9cf5fe1a0ee6d0bd3d9ec008b0a",
     "codes/vendor/qutip-qtrl/src/qutip_qtrl/pulseoptim.py": "71afbb0a58c00dc66304e84171db1fc16aaa9530dd2300a5e503d7f72bdfe20d",
+    "codes/vendor/random123/LICENSE": "5fd0885ab205878bd90c19144677286252eb9b988c1545a3a910edfe1e27b6df",
+    "codes/vendor/random123/README.md": "fda4d741d3667e59ec107e1c2feba9adecbfdee99d4210dcf457ea0c3d60d589",
+    "codes/vendor/random123/include/Random123/philox.h": "6c2ef219a855885499a73b338d5f41dafe079618b2dae2f60ea86ee785d771e2",
+    "codes/vendor/random123/include/Random123/u01fixedpt.h": "55e07e08c7f93a94680e06b5238e80f109fb58ddadb2cfd09fdaa740f9fb553a",
+    "codes/vendor/random123/include/Random123/uniform.hpp": "921805e7617674e60ed8afa9ca04fb6d807d129aa6ef8ea1aa12b0d46f2e1848",
+    "codes/vendor/samplomatic/LICENSE.txt": "4beb29078ef83650448bf0a8ae4eaee89722b5863aa6704c747b45d735dfc17c",
+    "codes/vendor/samplomatic/README.md": "6d9c4b3810bc27dcf3fc387891e5f1e87c484eba0f3354b9f5a49c7c2e3527d6",
+    "codes/vendor/samplomatic/samplomatic/builders/build.py": "19740ac5bdf550a79899d4c4214de86c1f9452e7617c9f560fc2fe2d6302a0c6",
+    "codes/vendor/samplomatic/samplomatic/samplex/nodes/inject_noise_node.py": "6f0d57652a9bd715baa190bf7aebd2e82324961578a2e7b4d9fbc0f716eea8df",
+    "codes/vendor/samplomatic/samplomatic/samplex/samplex.py": "e65fccf804b6159049f382c26e296d26aaf3c16ce384c0c5ff230b4a10dcd65b",
+    "codes/vendor/samplomatic/samplomatic/transpiler/generate_boxing_pass_manager.py": "9402c2865a8f9b75e70e2f30442f586b4798735ba998ef68ed11cbe88e9e9f85",
     "codes/vendor/sequence/LICENSE": "f387e59c226fe1d4d7ac0acc9424c187eb8ceb569f46231a1c0c4b799782e05f",
     "codes/vendor/sequence/sequence/entanglement_management/entanglement_protocol.py": "cbf62a1c92593ee69f622c08d08d120a961a54da49ca1258722a93f4c7c6d12e",
     "codes/vendor/sequence/sequence/entanglement_management/teleportation.py": "146e7204d58608cdec8bd2a84649edace9a15938833314fb33d0f17ed3f801de",

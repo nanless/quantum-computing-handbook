@@ -1,3 +1,6 @@
 # Preserve third-party snapshots byte for byte, including their whitespace.
 codes/vendor/** -text -whitespace
 reader/codes/vendor/** -text -whitespace
+# Raw SDK diagnostics retain progress padding and original final blank lines.
+codes/**/*.log -whitespace
+reader/codes/**/*.log -whitespace

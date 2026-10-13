@@ -299,6 +299,32 @@ $$
 
 来源：[Khaneja 等 GRAPE 原论文](https://doi.org/10.1016/j.jmr.2004.11.004)（2005）与 [qutip-qtrl 官方控制说明](https://qutip.readthedocs.io/projects/qutip-qtrl/en/latest/guide/guide-control.html)（访问 2026-10-13）。本次已完成模型优化和矩阵验证，没有加载仪器，也没有宣称含泄漏器件达到上表保真度。
 
+### 6.2 S73-14：把泄漏放进优化目标后，怎样验收计算子空间
+
+S72的波形只优化二级模型。本轮直接运行完整 qutip-qtrl 的 **三能级GRAPE**：沿用Q3的升降算符、失谐5 MHz、非谐性−200 MHz、40 ns与80槽，每路幅度界仍为±0.12 rad/ns。三维目标规定为计算空间上的 $-iX$，以及第三能级上的恒等；全局相位不影响目标。优化器最小化 $1-g_3$，其中 $g_3=|\operatorname{Tr}(U_{\rm tar,3}^\dagger U_3)|/3$，不是把二级分母2沿用到三维。
+
+**实际链条。** 固定种子73014、受界L-BFGS-B，16迭代到 $1-g_3\approx9.57\times10^{-10}$。从保存CSV独立以SciPy整矩阵指数连乘，和SDK最终矩阵最大差约 $8.10\times10^{-14}$；另用标准库缩放平方与49项Taylor指数复算。优化的全三维门保持酉，但评价计算态仍应使用自己的指标。
+
+令 $M=P_{\rm comp}U_3P_{\rm comp}$ 的二维限制矩阵，$V=-iX$ 为二维目标。输入纯计算态 $|\psi\rangle$ 的**不后选择目标重叠**为 $|\langle\psi|V^\dagger M|\psi\rangle|^2$；泄漏分支贡献0，而不是删除它后重新归一化。对所有Bloch方向作均匀平均，令 $A=V^\dagger M$，得到
+
+$$
+\bar f_{\rm comp}=\frac{\operatorname{Tr}(M^\dagger M)+|\operatorname{Tr}(V^\dagger M)|^2}{2(2+1)}.
+$$
+
+**分母从哪里来？** 两份同一纯态的均匀平均为 $(I+\mathsf S)/[d(d+1)]$，$\mathsf S$交换两份系统，$d=2$。于是 $\operatorname{Tr}[(A\otimes A^\dagger)I]=|\operatorname{Tr}A|^2$，而 $\operatorname{Tr}[(A\otimes A^\dagger)\mathsf S]=\operatorname{Tr}(AA^\dagger)$；加起来除6。$V$酉使后者等于 $\operatorname{Tr}(M^\dagger M)$。若有泄漏，$M$一般不是酉，这个不后选择平均也不是套用保迹二维信道的 $(2g^2+1)/3$。
+
+| 同一个三能级模型 | 输入0泄漏 | 输入1泄漏 | 不后选择的计算态平均目标重叠 |
+|---|---:|---:|---:|
+| S72二级波形放回三维 | 0.0132566 | 0.0236287 | 0.9802120 |
+| 本轮三维优化波形 | $6.2512\times10^{-10}$ | $6.1539\times10^{-10}$ | 0.9999999984 |
+| 本轮波形通过1 ns采样滤波 | 0.0095320 | 0.0051733 | 0.9809241 |
+
+![实际三能级GRAPE两路波形与一纳秒离散滤波，右图同一模型的输入0/1末态泄漏对照；纵轴对数、柱纹与标签区别输入，两级优化、三维优化及滤后波形均完整保存](assets/round73-systems-control.svg)
+
+**练习与答案。** 平均存活率 $\bar s=\operatorname{Tr}(M^\dagger M)/2$，所以平均泄漏为 $1-\bar s=(L_0+L_1)/2$。滤波后约0.00735265，尽管原优化泄漏只有约 $6.20\times10^{-10}$。每路幅度限制没有包含带宽；相邻槽跳变约0.2153 rad/ns。本轮还扫描失谐3—7 MHz和非谐性−220至−180 MHz，保留所有变差点；扫描是敏感性评估，没有把它称为已优化的鲁棒目标。
+
+[完整优化入口](../codes/systems/sdk73/grape_three.py)、[波形](../codes/systems/sdk73/grape-three-amplitudes.csv)及[结果](../codes/systems/sdk73/grape-three-results.json)可实际重跑。标准库 `round73_checks.py --case 14` 另用六个Bloch轴纯态的有限二阶设计平均核对上式。这没有加载设备、未限制斜率或真实传递函数，也没有声称是DRAG算法。方法依据[GRAPE原论文](https://doi.org/10.1016/j.jmr.2004.11.004)和[完整控制库指南](https://qutip.readthedocs.io/projects/qutip-qtrl/en/latest/guide/guide-control.html)（访问2026-10-13）；[原尺寸图](assets/round73-systems-control.svg)由[同份归档生成](../codes/systems/sdk73/plot_results.py)。
+
 ## 7. Rabi、Ramsey 与门校准
 
 以两能级近似为例：

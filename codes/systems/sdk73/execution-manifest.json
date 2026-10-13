@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-13",
+  "actual_python": "/tmp/quantum-round72-systems-sdk/bin/python",
+  "scope": "actual tool executions; initial failure logs retained separately",
+  "records": [
+    {
+      "command": "python codes/systems/sdk73/qec_grid.py",
+      "exit_code": 0,
+      "log": "qec-run.log",
+      "source_sha256": "5a3f0e6d8b601e1eef44c02b386136613c2a8f1c56aa3507419341d8d8540713",
+      "log_sha256": "2706faebf391f7148fef62c71ff7859e4c136d95f917cbc259b0e94c8ec8574b"
+    },
+    {
+      "command": "python codes/systems/sdk73/grape_three.py",
+      "exit_code": 0,
+      "log": "grape-run.log",
+      "source_sha256": "2afaf4e7e5e960e63a57e0a533c1135fb82dcc912c0cc5a196fc078e5f1206f8",
+      "log_sha256": "ea97f3a2fb216deddf05705248aa8a02fd400fa8973e6c9ca49b449a8d35894b"
+    },
+    {
+      "command": "python codes/systems/sdk73/sequence_entanglement.py",
+      "exit_code": 0,
+      "log": "sequence-run.log",
+      "source_sha256": "709181f5e45b6607b053db77d0f2302ec74990fcb32be116b4b267d97f43dfd6",
+      "log_sha256": "b21030171622585b9c8eb5730b5a4cf617972a0918727f98bdfbe5b9a12ff362"
+    },
+    {
+      "command": "python codes/systems/sdk73/verify_saved_results.py",
+      "exit_code": 0,
+      "log": "verify-run.log",
+      "source_sha256": "e95fd3e28b1acda0d7571caae01fc7fb6dbed6cd7481cc5f3a1e269271698a99",
+      "log_sha256": "ffb10c56f6267a0f6e8c2c81dfa4d2bc51854e3d19271b0cb4eda045f86624a9"
+    },
+    {
+      "command": "python codes/systems/sdk73/plot_results.py",
+      "exit_code": 0,
+      "log": "plot-run.log",
+      "source_sha256": "d5e1708f143d9356754127bbee6b1fd2750cdb42b3944ffcb2e58b55993e6510",
+      "log_sha256": "9e6db8009a09072852cb18b918d16611f231144787e28937ce1e9b4fdfdf8824"
+    },
+    {
+      "command": "python3 codes/systems/round73_checks.py --case all",
+      "exit_code": 0,
+      "log": "stdlib-run.log"
+    }
+  ]
+}

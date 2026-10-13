@@ -1,0 +1,1293 @@
+{
+  "python": "3.11.15 (main, Mar 25 2026, 02:58:47) [Clang 22.1.1 ]",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "seed": 73007,
+  "cases": {
+    "hhl": {
+      "status": "passed",
+      "elapsed_seconds": 1.4922401905059814,
+      "cirq": "1.7.0",
+      "cases": [
+        {
+          "name": "signed-grid",
+          "phase_bits": 3,
+          "dimension": 2,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.03647450843757887,
+                -1.4265847744427305
+              ],
+              [
+                -1.4265847744427305,
+                0.9635254915624213
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.7745966692414834,
+              0.0
+            ],
+            "imag": [
+              0.0,
+              0.6324555320336759
+            ]
+          },
+          "eigenvalues": [
+            -1.0000000000000002,
+            2.0
+          ],
+          "ideal_success": 0.16204406864453025,
+          "flag_success": 0.16204406864453025,
+          "phase_zero_and_flag_success": 0.16204406864453025,
+          "garbage_probability": 0.0,
+          "garbage_given_flag": 0.0,
+          "mixed_root_fidelity": 1.0,
+          "mixed_squared_fidelity": 1.0,
+          "mixed_purity": 0.9999999999999999,
+          "clean_root_fidelity": 1.0,
+          "clean_direction_residual": 1.36013376580753e-16,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.528824690511655,
+                0.3261242744257769
+              ],
+              [
+                0.3261242744257769,
+                0.47117530948834485
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.3779048753948113
+              ],
+              [
+                -0.3779048753948113,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              -0.46351337809354665,
+              -0.6862725830600738
+            ],
+            "imag": [
+              -0.5603392176529891,
+              -0.014326591653253702
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.4999999999999998,
+            0.2499999999999999
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.2499999999999999,
+            0.06249999999999997
+          ],
+          "independent_max_amplitude_error": 3.486841698522171e-16,
+          "logical_operations": 22,
+          "qpe_base_controlled_U_calls_if_repeated": 7,
+          "forward_and_inverse_base_U_calls_if_repeated": 14,
+          "shots": 20000,
+          "flag_count": 3252,
+          "clean_count": 3252,
+          "garbage_count": 0
+        },
+        {
+          "name": "signed-offgrid",
+          "phase_bits": 3,
+          "dimension": 2,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.07467110956258921,
+                -1.6167960777017611
+              ],
+              [
+                -1.616796077701761,
+                1.1253288904374106
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.7745966692414834,
+              0.0
+            ],
+            "imag": [
+              0.0,
+              0.6324555320336759
+            ]
+          },
+          "eigenvalues": [
+            -1.0999999999999999,
+            2.3
+          ],
+          "ideal_success": 0.13185954059995383,
+          "flag_success": 0.15990832194480165,
+          "phase_zero_and_flag_success": 0.14718469779661236,
+          "garbage_probability": 0.012723624148189283,
+          "garbage_given_flag": 0.07956824256201822,
+          "mixed_root_fidelity": 0.9699712058770464,
+          "mixed_squared_fidelity": 0.9408441402305716,
+          "mixed_purity": 0.889675482806233,
+          "clean_root_fidelity": 0.9996421204335515,
+          "clean_direction_residual": 0.04915309684517779,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.5384701354304884,
+                0.3126503961216417
+              ],
+              [
+                0.3126503961216417,
+                0.4615298645695118
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.3092046569637282
+              ],
+              [
+                -0.3092046569637282,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              -0.49140040700650867,
+              -0.6737715020315317
+            ],
+            "imag": [
+              -0.550132127735284,
+              -0.0437292245238848
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.48583756437286424,
+            0.2159279347606696
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.24374303282821896,
+            0.06502844191435417
+          ],
+          "independent_max_amplitude_error": 3.2597444810144026e-16,
+          "logical_operations": 22,
+          "qpe_base_controlled_U_calls_if_repeated": 7,
+          "forward_and_inverse_base_U_calls_if_repeated": 14
+        },
+        {
+          "name": "signed-offgrid",
+          "phase_bits": 4,
+          "dimension": 2,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.07467110956258921,
+                -1.6167960777017611
+              ],
+              [
+                -1.616796077701761,
+                1.1253288904374106
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.7745966692414834,
+              0.0
+            ],
+            "imag": [
+              0.0,
+              0.6324555320336759
+            ]
+          },
+          "eigenvalues": [
+            -1.0999999999999999,
+            2.3
+          ],
+          "ideal_success": 0.13185954059995383,
+          "flag_success": 0.16553879810590438,
+          "phase_zero_and_flag_success": 0.1415086513058322,
+          "garbage_probability": 0.024030146800072177,
+          "garbage_given_flag": 0.1451632310674308,
+          "mixed_root_fidelity": 0.9705900883742273,
+          "mixed_squared_fidelity": 0.9420451196502905,
+          "mixed_purity": 0.893406631363497,
+          "clean_root_fidelity": 0.9992212865902821,
+          "clean_direction_residual": 0.07249792162494433,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.5434095290436577,
+                0.32275025812490127
+              ],
+              [
+                0.32275025812490127,
+                0.45659047095634264
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.30108337607756724
+              ],
+              [
+                -0.30108337607756724,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              -0.49935345236472445,
+              -0.6698861722583093
+            ],
+            "imag": [
+              -0.546959769259671,
+              -0.052284382371307475
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.478868949790259,
+            0.20526407285504128
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.2557963854716607,
+            0.0633898317546111
+          ],
+          "independent_max_amplitude_error": 4.3859696707041383e-16,
+          "logical_operations": 34,
+          "qpe_base_controlled_U_calls_if_repeated": 15,
+          "forward_and_inverse_base_U_calls_if_repeated": 30,
+          "shots": 20000,
+          "flag_count": 3215,
+          "clean_count": 2751,
+          "garbage_count": 464
+        },
+        {
+          "name": "signed-offgrid",
+          "phase_bits": 5,
+          "dimension": 2,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.07467110956258921,
+                -1.6167960777017611
+              ],
+              [
+                -1.616796077701761,
+                1.1253288904374106
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.7745966692414834,
+              0.0
+            ],
+            "imag": [
+              0.0,
+              0.6324555320336759
+            ]
+          },
+          "eigenvalues": [
+            -1.0999999999999999,
+            2.3
+          ],
+          "ideal_success": 0.13185954059995383,
+          "flag_success": 0.14725283556304283,
+          "phase_zero_and_flag_success": 0.1299668284581344,
+          "garbage_probability": 0.017286007104908435,
+          "garbage_given_flag": 0.11738997784873106,
+          "mixed_root_fidelity": 0.9864290296068132,
+          "mixed_squared_fidelity": 0.9730422304510392,
+          "mixed_purity": 0.9493003589161568,
+          "clean_root_fidelity": 0.9999715323161088,
+          "clean_direction_residual": 0.01386418262096808,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.5433293021575862,
+                0.33940588254047566
+              ],
+              [
+                0.33940588254047566,
+                0.45667069784241376
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.3279884112732276
+              ],
+              [
+                -0.3279884112732276,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              -0.4695492172593782,
+              -0.6837098378566926
+            ],
+            "imag": [
+              -0.5582467449566394,
+              -0.020614604880932023
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.44972775363159284,
+            0.21944174078792686
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.2319269577490281,
+            0.05142295233171845
+          ],
+          "independent_max_amplitude_error": 6.993802909798478e-16,
+          "logical_operations": 52,
+          "qpe_base_controlled_U_calls_if_repeated": 31,
+          "forward_and_inverse_base_U_calls_if_repeated": 62
+        },
+        {
+          "name": "signed-offgrid",
+          "phase_bits": 6,
+          "dimension": 2,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.07467110956258921,
+                -1.6167960777017611
+              ],
+              [
+                -1.616796077701761,
+                1.1253288904374106
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.7745966692414834,
+              0.0
+            ],
+            "imag": [
+              0.0,
+              0.6324555320336759
+            ]
+          },
+          "eigenvalues": [
+            -1.0999999999999999,
+            2.3
+          ],
+          "ideal_success": 0.13185954059995383,
+          "flag_success": 0.13084989115821236,
+          "phase_zero_and_flag_success": 0.1263458386268311,
+          "garbage_probability": 0.004504052531381253,
+          "garbage_given_flag": 0.03442152294903589,
+          "mixed_root_fidelity": 0.9944484396697888,
+          "mixed_squared_fidelity": 0.9889276991616776,
+          "mixed_purity": 0.9782370064410166,
+          "clean_root_fidelity": 0.9999700351546752,
+          "clean_direction_residual": 0.014224075883936507,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.5310990902048324,
+                0.32462499706683073
+              ],
+              [
+                0.32462499706683073,
+                0.4689009097951676
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.3643761258484153
+              ],
+              [
+                -0.3643761258484153,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              -0.46942282181930667,
+              -0.683764293222946
+            ],
+            "imag": [
+              -0.5582912075769987,
+              -0.020482509874067342
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.44337874802335414,
+            0.21645562235901725
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.20169571595798863,
+            0.050670174584627525
+          ],
+          "independent_max_amplitude_error": 1.572049841238585e-15,
+          "logical_operations": 84,
+          "qpe_base_controlled_U_calls_if_repeated": 63,
+          "forward_and_inverse_base_U_calls_if_repeated": 126
+        },
+        {
+          "name": "four-dimension",
+          "phase_bits": 5,
+          "dimension": 4,
+          "basis_order": "phase (MSB first), system (MSB first), flag",
+          "scale": 4.0,
+          "cutoff": 0.5,
+          "C": 0.5,
+          "A": {
+            "real": [
+              [
+                0.1936677773906474,
+                -0.4041990194254403,
+                -1.2863728757031314,
+                0.1188820645368941
+              ],
+              [
+                -0.4041990194254403,
+                0.4563322226093527,
+                0.11888206453689432,
+                -1.3636271242968683
+              ],
+              [
+                -1.2863728757031314,
+                0.1188820645368941,
+                0.1936677773906474,
+                -0.4041990194254403
+              ],
+              [
+                0.11888206453689432,
+                -1.3636271242968683,
+                -0.4041990194254403,
+                0.4563322226093527
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          "b": {
+            "real": [
+              0.5,
+              0.0,
+              -0.5,
+              0.5
+            ],
+            "imag": [
+              0.0,
+              0.5,
+              0.0,
+              0.0
+            ]
+          },
+          "eigenvalues": [
+            -1.2999999999999994,
+            -0.6999999999999995,
+            1.0999999999999994,
+            2.1999999999999997
+          ],
+          "ideal_success": 0.16225144591602897,
+          "flag_success": 0.15938235834731665,
+          "phase_zero_and_flag_success": 0.14672653728747825,
+          "garbage_probability": 0.012655821059838396,
+          "garbage_given_flag": 0.07940540716720712,
+          "mixed_root_fidelity": 0.976119582613557,
+          "mixed_squared_fidelity": 0.9528094395616648,
+          "mixed_purity": 0.9119722212657841,
+          "clean_root_fidelity": 0.9991481377686973,
+          "clean_direction_residual": 0.0374305179130528,
+          "rho_given_flag": {
+            "real": [
+              [
+                0.27620220013466046,
+                -0.2196854090033555,
+                -0.15626512932117875,
+                -0.2367604115942525
+              ],
+              [
+                -0.2196854090033555,
+                0.20121357810643736,
+                0.12194705940870555,
+                0.21074797395524775
+              ],
+              [
+                -0.15626512932117875,
+                0.12194705940870555,
+                0.12265690928768813,
+                0.08819763352894208
+              ],
+              [
+                -0.2367604115942525,
+                0.21074797395524775,
+                0.08819763352894208,
+                0.3999273124712137
+              ]
+            ],
+            "imag": [
+              [
+                0.0,
+                0.01732879581818676,
+                -0.051360431188155226,
+                0.21660959376705285
+              ],
+              [
+                -0.01732879581818676,
+                0.0,
+                0.05217536914644373,
+                -0.16937238337812976
+              ],
+              [
+                0.051360431188155226,
+                -0.05217536914644373,
+                0.0,
+                -0.18176302043879528
+              ],
+              [
+                -0.21660959376705285,
+                0.16937238337812976,
+                0.18176302043879528,
+                0.0
+              ]
+            ]
+          },
+          "clean_amplitudes": {
+            "real": [
+              0.49409978019626494,
+              -0.42199405779765875,
+              -0.33269255249536756,
+              -0.3123363842616646
+            ],
+            "imag": [
+              0.15134574969424253,
+              -0.1710521125740747,
+              0.010061478006653544,
+              -0.5632783294852476
+            ]
+          },
+          "filter_mean_per_eigenvalue": [
+            -0.3923742923317223,
+            -0.652408796237831,
+            0.449459994643919,
+            0.22184450293806504
+          ],
+          "filter_second_moment_per_eigenvalue": [
+            0.16198721517657094,
+            0.45459138977478053,
+            0.2319269577490282,
+            0.05263587818282348
+          ],
+          "independent_max_amplitude_error": 6.579886408580703e-16,
+          "logical_operations": 52,
+          "qpe_base_controlled_U_calls_if_repeated": 31,
+          "forward_and_inverse_base_U_calls_if_repeated": 62
+        }
+      ],
+      "rejected": [
+        "singular",
+        "non-Hermitian",
+        "phase-alias-boundary",
+        "invalid-phase-size-0",
+        "invalid-phase-size--1",
+        "invalid-phase-size-1.5",
+        "invalid-phase-size-True"
+      ],
+      "scope": "Finite small Hermitian power-of-two dense matrix teaching interface, hard reciprocal cutoff; not full HHL filter/error theorem or sparse efficient implementation"
+    },
+    "walk": {
+      "status": "passed",
+      "elapsed_seconds": 0.0892038345336914,
+      "cirq": "1.7.0",
+      "N": 16,
+      "hypercube_dimension": 4,
+      "marked_vertex": 0,
+      "basis_order": "coin label (MSB first), position x (MSB first)",
+      "rows": [
+        {
+          "steps": 0,
+          "marked_probability": 0.0625,
+          "position_probabilities": [
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625,
+            0.0625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.0625,
+          "independent_amplitude_error": 0.0
+        },
+        {
+          "steps": 1,
+          "marked_probability": 0.06249999999999998,
+          "position_probabilities": [
+            0.06249999999999998,
+            0.06249999999999997,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998,
+            0.06249999999999998
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.125,
+          "independent_amplitude_error": 2.7755575615628914e-17
+        },
+        {
+          "steps": 2,
+          "marked_probability": 0.25,
+          "position_probabilities": [
+            0.25,
+            0.0625,
+            0.0625,
+            0.03125,
+            0.0625,
+            0.03125,
+            0.03125,
+            0.0625,
+            0.0625,
+            0.03125,
+            0.03125,
+            0.0625,
+            0.03125,
+            0.0625,
+            0.0625,
+            0.0625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.171875,
+          "independent_amplitude_error": 1.387778780781445e-17
+        },
+        {
+          "steps": 3,
+          "marked_probability": 0.25,
+          "position_probabilities": [
+            0.25,
+            0.109375,
+            0.109375,
+            0.03125,
+            0.109375,
+            0.03125,
+            0.03125,
+            0.015625,
+            0.109375,
+            0.03125,
+            0.03125,
+            0.015625,
+            0.03125,
+            0.015625,
+            0.015625,
+            0.0625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.21875,
+          "independent_amplitude_error": 1.387778780781445e-17
+        },
+        {
+          "steps": 4,
+          "marked_probability": 0.3906249999999999,
+          "position_probabilities": [
+            0.3906249999999999,
+            0.109375,
+            0.109375,
+            0.015625,
+            0.109375,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.109375,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.259765625,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 5,
+          "marked_probability": 0.3906249999999999,
+          "position_probabilities": [
+            0.3906249999999999,
+            0.10937499999999997,
+            0.10937499999999997,
+            0.015625,
+            0.10937499999999997,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.10937499999999997,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625,
+            0.015625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.30078125,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 6,
+          "marked_probability": 0.24999999999999994,
+          "position_probabilities": [
+            0.24999999999999994,
+            0.10937499999999997,
+            0.10937499999999997,
+            0.0390625,
+            0.10937499999999997,
+            0.0390625,
+            0.0390625,
+            0.015625,
+            0.10937499999999997,
+            0.0390625,
+            0.0390625,
+            0.015625,
+            0.0390625,
+            0.015625,
+            0.015625,
+            0.015625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.33740234375,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 7,
+          "marked_probability": 0.24999999999999994,
+          "position_probabilities": [
+            0.24999999999999994,
+            0.07421875,
+            0.07421875,
+            0.0390625,
+            0.07421874999999997,
+            0.0390625,
+            0.0390625,
+            0.05078125,
+            0.07421874999999997,
+            0.0390625,
+            0.0390625,
+            0.05078125,
+            0.0390625,
+            0.05078125,
+            0.05078125,
+            0.015625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.3740234375,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 8,
+          "marked_probability": 0.0039062499999999965,
+          "position_probabilities": [
+            0.0039062499999999965,
+            0.07421875,
+            0.07421875,
+            0.06640624999999999,
+            0.07421874999999997,
+            0.06640624999999999,
+            0.06640624999999999,
+            0.05078125,
+            0.07421874999999997,
+            0.06640624999999999,
+            0.06640624999999999,
+            0.05078125,
+            0.06640624999999999,
+            0.05078125,
+            0.05078125,
+            0.09765624999999997
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.40679931640625,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 9,
+          "marked_probability": 0.0039062499999999965,
+          "position_probabilities": [
+            0.0039062499999999965,
+            0.02734375,
+            0.027343749999999993,
+            0.06640624999999999,
+            0.02734375,
+            0.06640624999999999,
+            0.06640624999999999,
+            0.09765624999999997,
+            0.02734375,
+            0.06640624999999999,
+            0.06640624999999999,
+            0.09765624999999997,
+            0.06640624999999999,
+            0.09765624999999997,
+            0.09765624999999997,
+            0.09765624999999997
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.4395751953125,
+          "independent_amplitude_error": 2.7755575615628914e-17
+        },
+        {
+          "steps": 10,
+          "marked_probability": 0.0625,
+          "position_probabilities": [
+            0.0625,
+            0.02734375,
+            0.027343749999999993,
+            0.056640624999999986,
+            0.02734375,
+            0.056640624999999986,
+            0.05664062499999998,
+            0.09765624999999997,
+            0.02734375,
+            0.056640624999999986,
+            0.05664062499999998,
+            0.09765624999999997,
+            0.056640624999999986,
+            0.09765624999999997,
+            0.09765624999999997,
+            0.09765624999999997
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.4689178466796875,
+          "independent_amplitude_error": 2.7755575615628914e-17
+        },
+        {
+          "steps": 11,
+          "marked_probability": 0.0625,
+          "position_probabilities": [
+            0.0625,
+            0.08886718749999997,
+            0.08886718749999997,
+            0.056640624999999986,
+            0.08886718749999997,
+            0.056640624999999986,
+            0.05664062499999998,
+            0.03613281249999999,
+            0.08886718749999997,
+            0.056640624999999986,
+            0.05664062499999998,
+            0.03613281249999999,
+            0.056640624999999986,
+            0.036132812499999986,
+            0.036132812499999986,
+            0.09765624999999997
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.498260498046875,
+          "independent_amplitude_error": 2.7755575615628914e-17
+        },
+        {
+          "steps": 12,
+          "marked_probability": 0.3525390625000001,
+          "position_probabilities": [
+            0.3525390625000001,
+            0.08886718750000003,
+            0.08886718750000004,
+            0.024414062500000007,
+            0.08886718750000004,
+            0.024414062500000007,
+            0.024414062500000007,
+            0.036132812500000014,
+            0.08886718750000004,
+            0.024414062500000007,
+            0.024414062500000007,
+            0.036132812500000014,
+            0.024414062500000003,
+            0.036132812500000014,
+            0.036132812500000014,
+            0.0009765625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.5245304107666016,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 13,
+          "marked_probability": 0.3525390625000001,
+          "position_probabilities": [
+            0.3525390625000001,
+            0.12402343750000004,
+            0.12402343750000003,
+            0.024414062500000007,
+            0.12402343750000003,
+            0.024414062500000007,
+            0.024414062500000007,
+            0.0009765625,
+            0.12402343750000003,
+            0.024414062500000007,
+            0.024414062500000007,
+            0.0009765625,
+            0.024414062500000003,
+            0.0009765624999999996,
+            0.0009765625,
+            0.0009765625
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.5508003234863281,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 14,
+          "marked_probability": 0.39062500000000017,
+          "position_probabilities": [
+            0.39062500000000017,
+            0.12402343750000004,
+            0.12402343750000003,
+            0.01806640625,
+            0.12402343750000003,
+            0.018066406250000003,
+            0.01806640625,
+            0.0009765625,
+            0.12402343750000003,
+            0.018066406250000003,
+            0.01806640625,
+            0.0009765625,
+            0.01806640624999999,
+            0.0009765624999999996,
+            0.0009765625,
+            0.0009765624999999998
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.5743193626403809,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 15,
+          "marked_probability": 0.39062500000000017,
+          "position_probabilities": [
+            0.39062500000000017,
+            0.09838867187500004,
+            0.09838867187500004,
+            0.01806640625,
+            0.09838867187500004,
+            0.018066406250000003,
+            0.01806640625,
+            0.026611328125,
+            0.09838867187500004,
+            0.018066406250000003,
+            0.01806640625,
+            0.026611328125,
+            0.01806640624999999,
+            0.026611328124999993,
+            0.026611328124999993,
+            0.0009765624999999998
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.5978384017944336,
+          "independent_amplitude_error": 5.551115123125783e-17
+        },
+        {
+          "steps": 16,
+          "marked_probability": 0.12915039062500003,
+          "position_probabilities": [
+            0.12915039062500003,
+            0.09838867187500004,
+            0.09838867187500004,
+            0.047119140625000014,
+            0.09838867187500004,
+            0.047119140625000014,
+            0.047119140625000014,
+            0.026611328125,
+            0.09838867187500004,
+            0.047119140625000014,
+            0.047119140625000014,
+            0.026611328125,
+            0.047119140625000014,
+            0.026611328124999993,
+            0.026611328124999993,
+            0.08813476562500001
+          ],
+          "classical_uniform_marginal": 0.0625,
+          "classical_first_hit_by_step": 0.618894636631012,
+          "independent_amplitude_error": 5.551115123125783e-17
+        }
+      ],
+      "selected_steps": 4,
+      "selection_rule": "precomputed earliest maximum within 0..8, before sampling; no measured-count selection",
+      "shots": 20000,
+      "histogram": [
+        7618,
+        2177,
+        2223,
+        330,
+        2320,
+        302,
+        348,
+        298,
+        2139,
+        321,
+        337,
+        354,
+        280,
+        333,
+        310,
+        310
+      ],
+      "marked_count": 7618,
+      "boundary": "SKW coined hypercube search, not CTQW or full MNRS; dense coin toy, exact simulations and one finite-shot regression, not scalable advantage evidence"
+    },
+    "qsvt": {
+      "status": "passed",
+      "elapsed_seconds": 1.0927000045776367,
+      "pennylane": "0.45.1",
+      "eigenvalues": [
+        -0.5242640687119285,
+        0.3242640687119285
+      ],
+      "polynomial_power_coefficients": [
+        0.0,
+        -0.3,
+        0.0,
+        0.8
+      ],
+      "target": {
+        "real": [
+          [
+            -0.053599999999999995,
+            -0.039599999999999996
+          ],
+          [
+            -0.039599999999999996,
+            0.025599999999999984
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "unextracted_block": {
+        "real": [
+          [
+            -0.0535999999999463,
+            -0.039599999999960334
+          ],
+          [
+            -0.03959999999996028,
+            0.025599999999974143
+          ]
+        ],
+        "imag": [
+          [
+            -0.5414238501453357,
+            -0.6223124654470851
+          ],
+          [
+            -0.6223124654470851,
+            0.7032010807488345
+          ]
+        ]
+      },
+      "full_matrix_unitarity_error": 4.440892098500626e-16,
+      "real_block_error": 5.3693161028434133e-14,
+      "extracted_success_probability": 0.004441119999991096,
+      "extracted_state": {
+        "real": [
+          -0.8043008647956755,
+          -0.594222280707252
+        ],
+        "imag": [
+          -1.2971278831667524e-17,
+          1.4863058947808891e-16
+        ]
+      },
+      "qsvt_operation": "QSVT(array([[ 0.2,  0.3],\n       [ 0.3, -0.4]]), np.float64(-2.356194490192345), np.float64(1.5707963267948966), np.float64(1.2589132284153062), np.float64(0.5736824861793173), wires=[0, 1])",
+      "qsvt_angles": [
+        -2.356194490192345,
+        1.5707963267948966,
+        1.2589132284153062,
+        0.5736824861793173
+      ],
+      "signal_state": {
+        "real": [
+          -0.0535999999999463,
+          -0.03959999999996028,
+          -0.4838937606125827,
+          -0.2103193721064851
+        ],
+        "imag": [
+          -0.5414238501453357,
+          -0.6223124654470851,
+          0.18855444697597856,
+          -0.0347289580251024
+        ]
+      },
+      "boundary": "Actual QSVT signal synthesis and real-part selector circuit for real Hermitian 2x2; selector uses tiny dense compiled matrices, not general efficient conjugation or fault-tolerant gate synthesis"
+    },
+    "mbqc": {
+      "status": "passed",
+      "elapsed_seconds": 5.001784086227417,
+      "cirq": "1.7.0",
+      "alpha": 0.7853981633974483,
+      "beta": 1.0471975511965976,
+      "input": {
+        "real": [
+          0.5773502691896258,
+          0.0
+        ],
+        "imag": [
+          0.0,
+          0.816496580927726
+        ]
+      },
+      "target": {
+        "real": [
+          0.08476752651335767,
+          0.16012685872790117
+        ],
+        "imag": [
+          0.34757157323443605,
+          0.9199825308352767
+        ]
+      },
+      "shots": 20000,
+      "branch_counts": [
+        5012,
+        5083,
+        4999,
+        4906
+      ],
+      "verification_failures": 0,
+      "boundary": "Real conditional midcircuit classical feedback in local ideal simulator; verifier has known target inverse, not blind delegated universal verification or physical feedforward latency measurement"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+00 passed
+01 passed
+02 passed
+03 passed
+Traceback (most recent call last):
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/round73_checks.py", line 120, in <module>
+    if __name__=='__main__':main()
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/round73_checks.py", line 118, in main
+    if a.case in ('all',key):result['cases'][key]=packed(fn());print(key,'passed')
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/round73_checks.py", line 58, in case04
+    ks=[scale(math.sqrt((1-e)**2),I),scale(math.sqrt(e*(1-e)),X),scale(math.sqrt(e*(1-e)),Z),scale(e,mm(Z,X))]
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/foundations_lab.py", line 62, in scale
+    return [[x * v for v in row] for row in a]
+TypeError: 'float' object is not iterable

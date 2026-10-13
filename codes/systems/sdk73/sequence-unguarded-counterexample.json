@@ -1,0 +1,362 @@
+{
+  "seed": 730190,
+  "attenuation_db_per_m": 0,
+  "coherence_s": -1,
+  "raw_fidelity": 1,
+  "generated_end_updates": 4,
+  "swapped": true,
+  "swap_start_ps": 200000000,
+  "true_bell_overlap": 0.0,
+  "metadata_fidelity": 1.0,
+  "memory_before_expiry": {
+    "A": {
+      "node_id": "C",
+      "memo_id": "C.m0"
+    },
+    "C": {
+      "node_id": "A",
+      "memo_id": "A.m0"
+    }
+  },
+  "memory_after_window": {
+    "A": {
+      "node_id": "C",
+      "memo_id": "C.m0"
+    },
+    "C": {
+      "node_id": "A",
+      "memo_id": "A.m0"
+    }
+  },
+  "updates": [
+    {
+      "t_ps": 41000010,
+      "node": "A",
+      "memory": "A.m0",
+      "state": "ENTANGLED",
+      "protocol": "BarretKokA",
+      "bsm_res": [
+        1,
+        1
+      ],
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "B",
+        "memo_id": "B.m0"
+      }
+    },
+    {
+      "t_ps": 205000000,
+      "node": "A",
+      "memory": "A.m0",
+      "state": "ENTANGLED",
+      "protocol": "EntanglementSwappingB",
+      "bsm_res": null,
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "C",
+        "memo_id": "C.m0"
+      }
+    },
+    {
+      "t_ps": 41000010,
+      "node": "B",
+      "memory": "B.m1",
+      "state": "ENTANGLED",
+      "protocol": "BarretKokA",
+      "bsm_res": [
+        0,
+        1
+      ],
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "C",
+        "memo_id": "C.m0"
+      }
+    },
+    {
+      "t_ps": 41000010,
+      "node": "B",
+      "memory": "B.m0",
+      "state": "ENTANGLED",
+      "protocol": "BarretKokA",
+      "bsm_res": [
+        1,
+        1
+      ],
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "A",
+        "memo_id": "A.m0"
+      }
+    },
+    {
+      "t_ps": 200000000,
+      "node": "B",
+      "memory": "B.m0",
+      "state": "RAW",
+      "protocol": "EntanglementSwappingA",
+      "bsm_res": null,
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "A",
+        "memo_id": "A.m0"
+      }
+    },
+    {
+      "t_ps": 200000000,
+      "node": "B",
+      "memory": "B.m1",
+      "state": "RAW",
+      "protocol": "EntanglementSwappingA",
+      "bsm_res": null,
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "C",
+        "memo_id": "C.m0"
+      }
+    },
+    {
+      "t_ps": 41000010,
+      "node": "C",
+      "memory": "C.m0",
+      "state": "ENTANGLED",
+      "protocol": "BarretKokA",
+      "bsm_res": [
+        0,
+        1
+      ],
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "B",
+        "memo_id": "B.m1"
+      }
+    },
+    {
+      "t_ps": 205000000,
+      "node": "C",
+      "memory": "C.m0",
+      "state": "ENTANGLED",
+      "protocol": "EntanglementSwappingB",
+      "bsm_res": null,
+      "fidelity": 1.0,
+      "remote": {
+        "node_id": "A",
+        "memo_id": "A.m0"
+      }
+    }
+  ],
+  "messages": [
+    {
+      "t_ps": 5000000,
+      "src": "B",
+      "receiver": "egA.m0",
+      "type": "GenerationMsgType.NEGOTIATE",
+      "meas_res": null
+    },
+    {
+      "t_ps": 20000000,
+      "src": "L",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 25000010,
+      "src": "B",
+      "receiver": "egA.m0",
+      "type": "GenerationMsgType.NEGOTIATE",
+      "meas_res": null
+    },
+    {
+      "t_ps": 41000000,
+      "src": "L",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 205000000,
+      "src": "B",
+      "receiver": "swap-a",
+      "type": "SwappingMsgType.SWAP_RES",
+      "meas_res": []
+    },
+    {
+      "t_ps": 5000000,
+      "src": "C",
+      "receiver": "egB.m1",
+      "type": "GenerationMsgType.NEGOTIATE",
+      "meas_res": null
+    },
+    {
+      "t_ps": 10000000,
+      "src": "A",
+      "receiver": "egB.m0",
+      "type": "GenerationMsgType.NEGOTIATE_ACK",
+      "meas_res": null
+    },
+    {
+      "t_ps": 20000000,
+      "src": "L",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 20000000,
+      "src": "R",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 25000010,
+      "src": "C",
+      "receiver": "egB.m1",
+      "type": "GenerationMsgType.NEGOTIATE",
+      "meas_res": null
+    },
+    {
+      "t_ps": 30000010,
+      "src": "A",
+      "receiver": "egB.m0",
+      "type": "GenerationMsgType.NEGOTIATE_ACK",
+      "meas_res": null
+    },
+    {
+      "t_ps": 41000000,
+      "src": "L",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 41000000,
+      "src": "R",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 10000000,
+      "src": "B",
+      "receiver": "egC.m0",
+      "type": "GenerationMsgType.NEGOTIATE_ACK",
+      "meas_res": null
+    },
+    {
+      "t_ps": 20000000,
+      "src": "R",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 30000010,
+      "src": "B",
+      "receiver": "egC.m0",
+      "type": "GenerationMsgType.NEGOTIATE_ACK",
+      "meas_res": null
+    },
+    {
+      "t_ps": 41000000,
+      "src": "R",
+      "receiver": null,
+      "type": "GenerationMsgType.MEAS_RES",
+      "meas_res": null
+    },
+    {
+      "t_ps": 205000000,
+      "src": "B",
+      "receiver": "swap-c",
+      "type": "SwappingMsgType.SWAP_RES",
+      "meas_res": [
+        0,
+        0
+      ]
+    }
+  ],
+  "expirations": [],
+  "matrix": [
+    [
+      [
+        0.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.5,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.5,
+        0.0
+      ]
+    ]
+  ],
+  "state_keys": [
+    1,
+    2,
+    3,
+    0
+  ],
+  "executed_events": 43
+}

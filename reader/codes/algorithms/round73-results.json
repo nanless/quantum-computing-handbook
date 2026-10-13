@@ -1,0 +1,314 @@
+{
+  "06": {
+    "labels": [
+      0.0,
+      1.0,
+      2.0,
+      3.0,
+      -4.0,
+      -3.0,
+      -2.0,
+      -1.0
+    ],
+    "negative_one_label": 7,
+    "Nyquist_boundary_aliases": [
+      4,
+      -4
+    ]
+  },
+  "07": {
+    "C": 0.5,
+    "cutoff": 0.5,
+    "scale": 4,
+    "rows": [
+      {
+        "phase_bits": 3,
+        "flag_success": 0.1599083219448018,
+        "clean_success": 0.1471846977966125,
+        "garbage_given_flag": 0.07956824256201833
+      },
+      {
+        "phase_bits": 4,
+        "flag_success": 0.16553879810590458,
+        "clean_success": 0.1415086513058324,
+        "garbage_given_flag": 0.14516323106743068
+      },
+      {
+        "phase_bits": 5,
+        "flag_success": 0.14725283556304333,
+        "clean_success": 0.12996682845813495,
+        "garbage_given_flag": 0.11738997784873029
+      },
+      {
+        "phase_bits": 6,
+        "flag_success": 0.13084989115821247,
+        "clean_success": 0.12634583862683094,
+        "garbage_given_flag": 0.034421522949038
+      }
+    ],
+    "variance_identity": "garbage per eigenbranch = E[r^2]-(E[r])^2"
+  },
+  "08": {
+    "sector_ground_threshold": 0.7928932188134524,
+    "rows": [
+      {
+        "lambda": 0.5,
+        "sector_energies": [
+          0.5,
+          0.7928932188134524,
+          2.2071067811865475,
+          3.5
+        ],
+        "ground": 0.5,
+        "one_particle_is_only_ground_sector": false
+      },
+      {
+        "lambda": 0.7928932188134524,
+        "sector_energies": [
+          0.7928932188134524,
+          0.7928932188134524,
+          2.2071067811865475,
+          3.7928932188134525
+        ],
+        "ground": 0.7928932188134524,
+        "one_particle_is_only_ground_sector": false
+      },
+      {
+        "lambda": 1.0,
+        "sector_energies": [
+          1.0,
+          0.7928932188134524,
+          2.2071067811865475,
+          4.0
+        ],
+        "ground": 0.7928932188134524,
+        "one_particle_is_only_ground_sector": true
+      }
+    ],
+    "pauli_penalty": "lambda*(I+Z0Z1)/2"
+  },
+  "13": {
+    "rho": [
+      [
+        0.6,
+        0.29393876913398137
+      ],
+      [
+        0.29393876913398137,
+        0.4
+      ]
+    ],
+    "purity": 0.6928000000000001,
+    "root_fidelity": 0.8988882021697693,
+    "squared_fidelity": 0.808,
+    "same_computational_probabilities": [
+      0.6,
+      0.4
+    ]
+  },
+  "16": {
+    "A": [
+      [
+        0.2,
+        0.3
+      ],
+      [
+        0.3,
+        -0.4
+      ]
+    ],
+    "P_A": [
+      [
+        -0.053599999999999995,
+        -0.039599999999999996
+      ],
+      [
+        -0.039599999999999996,
+        0.025599999999999984
+      ]
+    ],
+    "selected_probability": 0.004441119999999999,
+    "mean_retries": 225.16842598263506,
+    "walk_step4": 0.390625,
+    "walk_step8": 0.00390625
+  },
+  "17": {
+    "alpha": 0.7853981633974483,
+    "beta": 1.0471975511965976,
+    "target": {
+      "real": [
+        0.08476752651335771,
+        0.16012685872790117
+      ],
+      "imag": [
+        0.3475715732344361,
+        0.9199825308352766
+      ]
+    },
+    "branches": [
+      {
+        "m0": 0,
+        "m1": 0,
+        "physical_second_angle": 1.0471975511965976,
+        "probability": 0.24999999999999994,
+        "root_fidelity_after_X_then_Z": 0.9999999999999997
+      },
+      {
+        "m0": 0,
+        "m1": 1,
+        "physical_second_angle": 1.0471975511965976,
+        "probability": 0.24999999999999994,
+        "root_fidelity_after_X_then_Z": 0.9999999999999997
+      },
+      {
+        "m0": 1,
+        "m1": 0,
+        "physical_second_angle": -1.0471975511965976,
+        "probability": 0.25,
+        "root_fidelity_after_X_then_Z": 0.9999999999999998
+      },
+      {
+        "m0": 1,
+        "m1": 1,
+        "physical_second_angle": -1.0471975511965976,
+        "probability": 0.25,
+        "root_fidelity_after_X_then_Z": 0.9999999999999998
+      }
+    ]
+  },
+  "18": {
+    "mean_photon_number": 0.125,
+    "cutoff_dimension": 20,
+    "Markov_tail_bound": 0.00625,
+    "same_energy_nonGaussian_tail": 0.00125,
+    "counterexample_distribution": {
+      "0": 0.99875,
+      "100": 0.00125
+    },
+    "squeezed_gaussian_tail_round72": 5.3298e-11
+  },
+  "q4": {
+    "alpha": 1,
+    "construction": "finite generator exponential compared with projection of known infinite coherent state",
+    "rows": [
+      {
+        "dimension": 4,
+        "finite_generator_state": {
+          "real": [
+            0.6060589372864117,
+            0.6100856984268889,
+            0.4124250518988612,
+            0.30065525386472475
+          ],
+          "imag": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "infinite_projected_state": [
+          0.6065306597126334,
+          0.6065306597126334,
+          0.4288819424803534,
+          0.24761510494160166
+        ],
+        "mass": 0.9810118431238463,
+        "root_fidelity_to_normalized_projection": 0.9984825522470744,
+        "trace_distance_to_normalized_projection": 0.05506898272320245,
+        "raw_low_level_amplitude_difference": 0.055650224327540104
+      },
+      {
+        "dimension": 8,
+        "finite_generator_state": {
+          "real": [
+            0.6065306581944313,
+            0.6065306832799601,
+            0.42888170040673684,
+            0.2476169965111815,
+            0.12379568326739715,
+            0.05542986255754151,
+            0.022337785019171823,
+            0.009517536804739159
+          ],
+          "imag": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "infinite_projected_state": [
+          0.6065306597126334,
+          0.6065306597126334,
+          0.4288819424803534,
+          0.24761510494160166,
+          0.12380755247080083,
+          0.055368420690516534,
+          0.022604063092587355,
+          0.008543532794657104
+        ],
+        "mass": 0.9999897508033253,
+        "root_fidelity_to_normalized_projection": 0.999999488256787,
+        "trace_distance_to_normalized_projection": 0.0010116749300804954,
+        "raw_low_level_amplitude_difference": 0.0010116854462942522
+      },
+      {
+        "dimension": 12,
+        "finite_generator_state": {
+          "real": [
+            0.6065306597126328,
+            0.6065306597126475,
+            0.42888194248012634,
+            0.24761510494442307,
+            0.12380755244184245,
+            0.055368420943539554,
+            0.02260406117630047,
+            0.008543545520888257,
+            0.0030205203105107075,
+            0.0010072541237072378,
+            0.00031659226690389827,
+            0.00010348577400606463
+          ],
+          "imag": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "infinite_projected_state": [
+          0.6065306597126334,
+          0.6065306597126334,
+          0.4288819424803534,
+          0.24761510494160166,
+          0.12380755247080083,
+          0.055368420690516534,
+          0.022604063092587355,
+          0.008543532794657104,
+          0.003020594987195847,
+          0.0010068649957319488,
+          0.00031839866828086723,
+          9.600081058513362e-05
+        ],
+        "mass": 0.9999999991683892,
+        "root_fidelity_to_normalized_projection": 0.9999999999702773,
+        "trace_distance_to_normalized_projection": 7.710080255180196e-06,
+        "raw_low_level_amplitude_difference": 7.710053581514765e-06
+      }
+    ],
+    "series_80_100_agreement_boundary": "floating point convergence check, not interval arithmetic proof"
+  }
+}

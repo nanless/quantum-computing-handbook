@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk73/validate_sdks.py", line 249, in main
+    try:report['cases'][name]={'status':'passed','result':pack(fn())};print(name,'passed',flush=True)
+                                                               ^^^^
+  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk73/validate_sdks.py", line 145, in qpt
+    assert np.max(abs(sdk-own))<2e-5,(np.max(abs(sdk-own)),meta)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (np.float64(0.0006202716108785873), {'fitter': 'cvxpy_gaussian_lstsq', 'input_dims': (np.int64(2),), 'output_dims': (np.int64(2),), 'cvxpy_solver': 'SCS', 'cvxpy_status': ['optimal'], 'psd_constraint': True, 'trace_preserving': True, 'fitter_time': 0.012125015258789062})
+

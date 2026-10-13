@@ -1080,6 +1080,24 @@ $$
 
 The Walrus 是 Gaussian 概率和 hafnian 计算工具；“可以更新 Gaussian 协方差”不表示任意光子数探测都属于 Gaussian 测量。光子数分辨测量本身是非 Gaussian，Gaussian boson sampling 的输出概率涉及 hafnian，小规模算得出来并不证明大规模可高效采样，也不构成工业优势实验。官方 [快速接口表](https://the-walrus.readthedocs.io/en/stable/quick_guide.html)与[Gaussian 物理性实现](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)核查于 2026-10-13。
 
+### 练习 A73-18：只有能量上限时，Fock 尾界应当多保守
+
+A72用已知Gaussian协方差算出整套光子数概率。若工程输入只给平均光子数上限 $\bar n\le\nu$，没有Gaussian态承诺，则不能沿用压缩真空的极小尾数。令 $p_n$ 为光子数分布，截止维数 $d$ 保留0至 $d-1$，漏掉质量 $\tau_d=\sum_{n\ge d}p_n$。由于尾内每个 $n\ge d$，有
+
+$$
+\bar n=\sum_nnp_n\ge\sum_{n\ge d}np_n
+\ge d\sum_{n\ge d}p_n=d\tau_d,
+\qquad \tau_d\le\frac\nu d.
+$$
+
+这是直接从正性和平均能量推出的Markov界，对所有具有该有限均值的态成立；光子数测量的概率只用密度矩阵对角项，态本身不必对角。它不是精确尾概率，也不是保证截断Hamiltonian动力学正确的定理。
+
+**题目。** $\nu=1/8,d=20$ 时可保证什么？为什么不能仅凭这个均值宣称A72的 $5.3298\times10^{-11}$ 尾概率？
+
+**答案。** 普遍界只有 $\tau_{20}\le1/160=0.00625$。构造非Gaussian混态 $(1-1/800)|0\rangle\langle0|+(1/800)|100\rangle\langle100|$，均值仍是 $100/800=1/8$，但20层外质量为0.00125，远大于压缩真空的尾。两态具有相同平均能量，不是相同完整协方差；压缩真空的两个方向方差并不与这份各向同性混态相同。反例只证明**能量这一个标量**不足以确定分布。
+
+若已知无限纯态并采用其归一化投影，Q4的公式给迹距离 $T=\sqrt{\tau_d}\le\sqrt{\nu/d}$；要求这个充分上界不超过0.01，便需 $d\ge1250$。它比对已知Gaussian态直接算尾保守得多，因为可用承诺少得多。混态、非选择投影、条件投影及截断动态必须各自确定比较对象，不能无条件照搬纯态等式。`python3 codes/algorithms/round73_checks.py 18` 复算尾界和反例的全部概率、均值；能量约定与Gaussian范围见 [Weedbrook 等原始综述](https://arxiv.org/abs/1110.3234)（2012期刊版，核查2026-10-13）。此题补足有限能量工业截断的保守账本，没有实现有限能量GKP容错或大型GBS采样。
+
 ## 9. 一张研究阅读清单
 
 遇到量子信道、通信或验证论文时，依次填写：

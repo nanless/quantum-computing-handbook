@@ -1,0 +1,22 @@
+[
+  {
+    "path": "qiskit_experiments/library/tomography/fitters/cvxpy_lstsq.py",
+    "sha256": "f632f3bb3ccbad07c01e13ff1911ac8938fc2a315f92ab04541707040b9272f7"
+  },
+  {
+    "path": "qiskit_experiments/library/tomography/fitters/lstsq_utils.py",
+    "sha256": "9116011d5a51cd98c6cbfd7711c2c818f9a08e95f4516ad2eee6619d885575e0"
+  },
+  {
+    "path": "qiskit_experiments/library/tomography/mit_tomography_analysis.py",
+    "sha256": "759a3a71970579de9bf74b24f8ff5ffcb73645b3979a37db9c3049818afa970f"
+  },
+  {
+    "path": "qutip/solver/mcsolve.py",
+    "sha256": "68c1810dc3f8d48e5edf6a7b5eaea47c40442be0ee5e431469e607cfb217b7bf"
+  },
+  {
+    "path": "qiskit_experiments/library/tomography/fitters/cvxpy_utils.py",
+    "sha256": "bc88be2fbe1793e06915e994e8dcccc4bd69fe844d5739f306dd48400bc12908"
+  }
+]

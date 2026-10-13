@@ -1,0 +1,818 @@
+{
+  "date": "2026-10-13",
+  "status": "passed",
+  "python": "3.11.15",
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "versions": {
+    "stim": "1.16.0",
+    "pymatching": "2.4.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "family_intervals": "Bonferroni alpha=.05/36 for 18 grid points times 2 decoders; controls excluded",
+  "latency_scope": "1000 sequential full seven-round shots after 10 warm-ups; Python call and native decode only, future rounds known",
+  "controls": [
+    {
+      "basis": "x",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0,
+      "seed": 730100,
+      "shots": 1000,
+      "detectors": 56,
+      "ordinary_failures": 0,
+      "correlated_failures": 0,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        0,
+        0.0036820838968656708
+      ],
+      "correlated_ci95": [
+        0,
+        0.0036820838968656708
+      ],
+      "ordinary_simultaneous_ci": [
+        0,
+        0.007246018490501766
+      ],
+      "correlated_simultaneous_ci": [
+        0,
+        0.007246018490501766
+      ],
+      "ordinary_batch_ns": 82959,
+      "correlated_batch_ns": 47459,
+      "service_ns_quantiles": {
+        "0.5": 1375.0,
+        "0.95": 1459.0,
+        "0.99": 1709.0,
+        "1": 10417.0
+      },
+      "raw_sha256": "882cf0f325a6f59ca1dbd9bbe027d9984e2c13a7a6ca087d422cf5d59c864a9f",
+      "file": "x-d3-p0.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0,
+      "seed": 730101,
+      "shots": 1000,
+      "detectors": 56,
+      "ordinary_failures": 0,
+      "correlated_failures": 0,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        0,
+        0.0036820838968656708
+      ],
+      "correlated_ci95": [
+        0,
+        0.0036820838968656708
+      ],
+      "ordinary_simultaneous_ci": [
+        0,
+        0.007246018490501766
+      ],
+      "correlated_simultaneous_ci": [
+        0,
+        0.007246018490501766
+      ],
+      "ordinary_batch_ns": 30917,
+      "correlated_batch_ns": 34833,
+      "service_ns_quantiles": {
+        "0.5": 1333.0,
+        "0.95": 1375.0,
+        "0.99": 1625.0,
+        "1": 2792.0
+      },
+      "raw_sha256": "556d2bee81c5a10f2bfd2280fa505c9a378fc04b0bfc377551732baccfea9d1b",
+      "file": "z-d3-p0.npz"
+    }
+  ],
+  "cases": [
+    {
+      "basis": "x",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 730000,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 29,
+      "correlated_failures": 33,
+      "rescued": 7,
+      "regressed": 11,
+      "paired_exact_two_sided_p": 0.480682373046875,
+      "ordinary_ci95": [
+        0.0019430094045457555,
+        0.004162248997048417
+      ],
+      "correlated_ci95": [
+        0.002272623888000028,
+        0.004631333724350862
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0014796607706062672,
+        0.005056766881794558
+      ],
+      "correlated_simultaneous_ci": [
+        0.001765607166836539,
+        0.005568819367552265
+      ],
+      "ordinary_batch_ns": 973166,
+      "correlated_batch_ns": 2473083,
+      "service_ns_quantiles": {
+        "0.5": 1458.0,
+        "0.95": 2916.0,
+        "0.99": 4500.0,
+        "1": 21834.0
+      },
+      "raw_sha256": "cc7bb6311343a6d783754b8138ed7c760c963a9611bbd544b685f70a7189b8d4",
+      "file": "x-d3-p0.001.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 730001,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 180,
+      "correlated_failures": 155,
+      "rescued": 65,
+      "regressed": 40,
+      "paired_exact_two_sided_p": 0.018740915408258077,
+      "ordinary_ci95": [
+        0.015485312370209373,
+        0.020800682463035194
+      ],
+      "correlated_ci95": [
+        0.013170746823619676,
+        0.018117262571592872
+      ],
+      "ordinary_simultaneous_ci": [
+        0.014043175974101046,
+        0.02265664986298272
+      ],
+      "correlated_simultaneous_ci": [
+        0.011845821954605588,
+        0.01985843748719016
+      ],
+      "ordinary_batch_ns": 2462625,
+      "correlated_batch_ns": 6749042,
+      "service_ns_quantiles": {
+        "0.5": 1833.0,
+        "0.95": 3583.0,
+        "0.99": 4875.0,
+        "1": 18791.0
+      },
+      "raw_sha256": "3cbe09175fdf344f1c9eac59d6875194f854382d4c55374396a5c4e51221778e",
+      "file": "x-d3-p0.003.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 730002,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 597,
+      "correlated_failures": 539,
+      "rescued": 181,
+      "regressed": 123,
+      "paired_exact_two_sided_p": 0.0010455770805240675,
+      "ordinary_ci95": [
+        0.05513501757011424,
+        0.06452343783467973
+      ],
+      "correlated_ci95": [
+        0.049554453405258436,
+        0.05850758576511598
+      ],
+      "ordinary_simultaneous_ci": [
+        0.05239155075149471,
+        0.06764341246792674
+      ],
+      "correlated_simultaneous_ci": [
+        0.0469506788027828,
+        0.06149292955707554
+      ],
+      "ordinary_batch_ns": 4971583,
+      "correlated_batch_ns": 13911542,
+      "service_ns_quantiles": {
+        "0.5": 2708.0,
+        "0.95": 5542.0,
+        "0.99": 7958.0,
+        "1": 14083.0
+      },
+      "raw_sha256": "69ed9327d8e788988f9b19b39d602d1ad607073a24fda068781a552225239400",
+      "file": "x-d3-p0.006.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 730100,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 2,
+      "correlated_failures": 2,
+      "rescued": 1,
+      "regressed": 1,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        2.422184564042985e-05,
+        0.0007222800577237158
+      ],
+      "correlated_ci95": [
+        2.422184564042985e-05,
+        0.0007222800577237158
+      ],
+      "ordinary_simultaneous_ci": [
+        3.7740643235507847e-06,
+        0.001165717325930179
+      ],
+      "correlated_simultaneous_ci": [
+        3.7740643235507847e-06,
+        0.001165717325930179
+      ],
+      "ordinary_batch_ns": 3467042,
+      "correlated_batch_ns": 9761458,
+      "service_ns_quantiles": {
+        "0.5": 2042.0,
+        "0.95": 4041.0,
+        "0.99": 6292.0,
+        "1": 9417.0
+      },
+      "raw_sha256": "8ad9aefb5bca72e88806cf07db352e814631aa8f41e14bcf9964d89199f849cd",
+      "file": "x-d5-p0.001.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 730101,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 52,
+      "correlated_failures": 33,
+      "rescued": 32,
+      "regressed": 13,
+      "paired_exact_two_sided_p": 0.006608822842281368,
+      "ordinary_ci95": [
+        0.0038859748593059037,
+        0.006813583823648726
+      ],
+      "correlated_ci95": [
+        0.002272623888000028,
+        0.004631333724350862
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0032001300738357143,
+        0.007927026119684676
+      ],
+      "correlated_simultaneous_ci": [
+        0.001765607166836539,
+        0.005568819367552265
+      ],
+      "ordinary_batch_ns": 10669292,
+      "correlated_batch_ns": 28711792,
+      "service_ns_quantiles": {
+        "0.5": 3792.0,
+        "0.95": 8750.0,
+        "0.99": 13125.0,
+        "1": 28333.0
+      },
+      "raw_sha256": "ed93c5696c9c670ef9402190d989d2abeb13f89e46dc073dd37244fe7881d9a5",
+      "file": "x-d5-p0.003.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 730102,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 372,
+      "correlated_failures": 295,
+      "rescued": 165,
+      "regressed": 88,
+      "paired_exact_two_sided_p": 1.4822808065876975e-06,
+      "ordinary_ci95": [
+        0.033576068427328,
+        0.04109654497237532
+      ],
+      "correlated_ci95": [
+        0.026271287512146756,
+        0.03300642897506711
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0314309895946719,
+        0.04363790506705686
+      ],
+      "correlated_simultaneous_ci": [
+        0.024376981367303745,
+        0.03530392063624928
+      ],
+      "ordinary_batch_ns": 24182667,
+      "correlated_batch_ns": 62480209,
+      "service_ns_quantiles": {
+        "0.5": 6708.0,
+        "0.95": 14375.0,
+        "0.99": 19084.0,
+        "1": 32459.0
+      },
+      "raw_sha256": "f2f3cff715fe618393c42f4de96518b6c8944f303a01aae1207d062cc5154519",
+      "file": "x-d5-p0.006.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 730200,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 0,
+      "correlated_failures": 0,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        0,
+        0.0003688199146187622
+      ],
+      "correlated_ci95": [
+        0,
+        0.0003688199146187622
+      ],
+      "ordinary_simultaneous_ci": [
+        0,
+        0.0007269754644569498
+      ],
+      "correlated_simultaneous_ci": [
+        0,
+        0.0007269754644569498
+      ],
+      "ordinary_batch_ns": 6960209,
+      "correlated_batch_ns": 19689041,
+      "service_ns_quantiles": {
+        "0.5": 3250.0,
+        "0.95": 6375.0,
+        "0.99": 10209.0,
+        "1": 24042.0
+      },
+      "raw_sha256": "b3cf4584367a4876cc6d8708f6276b8585212fdab9295343836b8112603b17ed",
+      "file": "x-d7-p0.001.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 730201,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 20,
+      "correlated_failures": 14,
+      "rescued": 10,
+      "regressed": 4,
+      "paired_exact_two_sided_p": 0.1795654296875,
+      "ordinary_ci95": [
+        0.0012220666213229457,
+        0.0030871559892162925
+      ],
+      "correlated_ci95": [
+        0.0007655977311793716,
+        0.0023478475639107195
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0008690970355321656,
+        0.003873054892089881
+      ],
+      "correlated_simultaneous_ci": [
+        0.0004999310793108979,
+        0.0030477515191374665
+      ],
+      "ordinary_batch_ns": 22353541,
+      "correlated_batch_ns": 63202084,
+      "service_ns_quantiles": {
+        "0.5": 7375.0,
+        "0.95": 15375.0,
+        "0.99": 19750.0,
+        "1": 32750.0
+      },
+      "raw_sha256": "2c71ce8d5f3744b2b54d26cb6e148e37eb71707ab46dc98a752e4aa90bee03dd",
+      "file": "x-d7-p0.003.npz"
+    },
+    {
+      "basis": "x",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 730202,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 237,
+      "correlated_failures": 124,
+      "rescued": 160,
+      "regressed": 47,
+      "paired_exact_two_sided_p": 1.2996577613713612e-15,
+      "ordinary_ci95": [
+        0.02080799695048497,
+        0.026873750880021714
+      ],
+      "correlated_ci95": [
+        0.010323961178173913,
+        0.01476676581711152
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0191270713225983,
+        0.028963159273688293
+      ],
+      "correlated_simultaneous_ci": [
+        0.009158910590710279,
+        0.016351168025133426
+      ],
+      "ordinary_batch_ns": 56296583,
+      "correlated_batch_ns": 144593042,
+      "service_ns_quantiles": {
+        "0.5": 14917.0,
+        "0.95": 29708.0,
+        "0.99": 38500.0,
+        "1": 59125.0
+      },
+      "raw_sha256": "56ee492998dfe632a40206c90f07c785f96c59ebefb5040314a6508e58066569",
+      "file": "x-d7-p0.006.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 731000,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 24,
+      "correlated_failures": 41,
+      "rescued": 8,
+      "regressed": 25,
+      "paired_exact_two_sided_p": 0.004551384132355452,
+      "ordinary_ci95": [
+        0.001538311886055485,
+        0.003568918548018528
+      ],
+      "correlated_ci95": [
+        0.00294378909492414,
+        0.005558044736677886
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0011338625669299637,
+        0.004405480550153594
+      ],
+      "correlated_simultaneous_ci": [
+        0.002356562234961742,
+        0.006574454834306919
+      ],
+      "ordinary_batch_ns": 897875,
+      "correlated_batch_ns": 2549208,
+      "service_ns_quantiles": {
+        "0.5": 1416.0,
+        "0.95": 2541.0,
+        "0.99": 3833.0,
+        "1": 11667.0
+      },
+      "raw_sha256": "290ec7c66dedd4bb7f26185f91b2167e54560f7d61b3bbd5576f835b2e718086",
+      "file": "z-d3-p0.001.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 731001,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 136,
+      "correlated_failures": 177,
+      "rescued": 35,
+      "regressed": 76,
+      "paired_exact_two_sided_p": 0.0001246562449063268,
+      "ordinary_ci95": [
+        0.011422417867170067,
+        0.0160672207401182
+      ],
+      "correlated_ci95": [
+        0.015206817888047118,
+        0.020479412447810187
+      ],
+      "ordinary_simultaneous_ci": [
+        0.010193282117323194,
+        0.017714490894281155
+      ],
+      "correlated_simultaneous_ci": [
+        0.013778280137458009,
+        0.022322068518121206
+      ],
+      "ordinary_batch_ns": 2323375,
+      "correlated_batch_ns": 6561459,
+      "service_ns_quantiles": {
+        "0.5": 1959.0,
+        "0.95": 4042.0,
+        "0.99": 5458.0,
+        "1": 19500.0
+      },
+      "raw_sha256": "5cd38a05dc2c6743f3c7b9d1329747bc8d5312ccd08cad07b34faeecd0d03547",
+      "file": "z-d3-p0.003.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 3,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 731002,
+      "shots": 10000,
+      "detectors": 56,
+      "ordinary_failures": 491,
+      "correlated_failures": 511,
+      "rescued": 146,
+      "regressed": 166,
+      "paired_exact_two_sided_p": 0.2820582345640967,
+      "ordinary_ci95": [
+        0.04494681925724408,
+        0.05351821347433199
+      ],
+      "correlated_ci95": [
+        0.04686539012190469,
+        0.055598391826375784
+      ],
+      "ordinary_simultaneous_ci": [
+        0.04246542434758243,
+        0.05638538147398597
+      ],
+      "correlated_simultaneous_ci": [
+        0.04433220052234973,
+        0.05851560099869936
+      ],
+      "ordinary_batch_ns": 5006167,
+      "correlated_batch_ns": 13506000,
+      "service_ns_quantiles": {
+        "0.5": 2542.0,
+        "0.95": 5500.0,
+        "0.99": 7667.0,
+        "1": 12958.0
+      },
+      "raw_sha256": "0abd3e3294db40788891bc6d862df72f1b9fdab452cd99809b042e089306fde9",
+      "file": "z-d3-p0.006.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 731100,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 0,
+      "correlated_failures": 1,
+      "rescued": 0,
+      "regressed": 1,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        0,
+        0.0003688199146187622
+      ],
+      "correlated_ci95": [
+        2.5317775934746866e-06,
+        0.0005570369979470473
+      ],
+      "ordinary_simultaneous_ci": [
+        0,
+        0.0007269754644569498
+      ],
+      "correlated_simultaneous_ci": [
+        6.946856585490782e-08,
+        0.0009632549207251423
+      ],
+      "ordinary_batch_ns": 3320333,
+      "correlated_batch_ns": 9108625,
+      "service_ns_quantiles": {
+        "0.5": 2084.0,
+        "0.95": 4750.0,
+        "0.99": 7625.0,
+        "1": 17084.0
+      },
+      "raw_sha256": "3d553f5098c2db8158a8ed717358ca56528aa79965c33ec576ac539d57745c63",
+      "file": "z-d5-p0.001.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 731101,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 31,
+      "correlated_failures": 22,
+      "rescued": 17,
+      "regressed": 8,
+      "paired_exact_two_sided_p": 0.10775214433670044,
+      "ordinary_ci95": [
+        0.0021072418389258213,
+        0.004397341107644159
+      ],
+      "correlated_ci95": [
+        0.0013792259112550328,
+        0.0033289428799972982
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0016217181238234947,
+        0.005313678406960589
+      ],
+      "correlated_simultaneous_ci": [
+        0.0009999627160024028,
+        0.0041407199883621406
+      ],
+      "ordinary_batch_ns": 10654083,
+      "correlated_batch_ns": 29781333,
+      "service_ns_quantiles": {
+        "0.5": 3792.0,
+        "0.95": 8958.0,
+        "0.99": 13167.0,
+        "1": 36042.0
+      },
+      "raw_sha256": "bc8b718b53f640aa64ec44d02a718255fc309fffd06959da3f736a33e5a1cd00",
+      "file": "z-d5-p0.003.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 5,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 731102,
+      "shots": 10000,
+      "detectors": 168,
+      "ordinary_failures": 360,
+      "correlated_failures": 278,
+      "rescued": 160,
+      "regressed": 78,
+      "paired_exact_two_sided_p": 1.1487739582912975e-07,
+      "ordinary_ci95": [
+        0.03243446594316946,
+        0.03983892946131855
+      ],
+      "correlated_ci95": [
+        0.02466594980212806,
+        0.031212926983350934
+      ],
+      "ordinary_simultaneous_ci": [
+        0.030326461681794432,
+        0.04234428400759236
+      ],
+      "correlated_simultaneous_ci": [
+        0.022831659038923702,
+        0.03345194504537125
+      ],
+      "ordinary_batch_ns": 24319208,
+      "correlated_batch_ns": 64194208,
+      "service_ns_quantiles": {
+        "0.5": 6958.0,
+        "0.95": 14708.0,
+        "0.99": 18583.0,
+        "1": 34125.0
+      },
+      "raw_sha256": "ee8d6f515f05317c2d1e6265e859885582233bc42155dedd0a8b83884fd8c59a",
+      "file": "z-d5-p0.006.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.001,
+      "seed": 731200,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 0,
+      "correlated_failures": 0,
+      "rescued": 0,
+      "regressed": 0,
+      "paired_exact_two_sided_p": 1.0,
+      "ordinary_ci95": [
+        0,
+        0.0003688199146187622
+      ],
+      "correlated_ci95": [
+        0,
+        0.0003688199146187622
+      ],
+      "ordinary_simultaneous_ci": [
+        0,
+        0.0007269754644569498
+      ],
+      "correlated_simultaneous_ci": [
+        0,
+        0.0007269754644569498
+      ],
+      "ordinary_batch_ns": 6958750,
+      "correlated_batch_ns": 20392708,
+      "service_ns_quantiles": {
+        "0.5": 3250.0,
+        "0.95": 6208.0,
+        "0.99": 8666.0,
+        "1": 15583.0
+      },
+      "raw_sha256": "6b33a773d229502123f8ec8978afdbe72dc91c27781b5f04262949960c70ee74",
+      "file": "z-d7-p0.001.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.003,
+      "seed": 731201,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 14,
+      "correlated_failures": 5,
+      "rescued": 11,
+      "regressed": 2,
+      "paired_exact_two_sided_p": 0.0224609375,
+      "ordinary_ci95": [
+        0.0007655977311793716,
+        0.0023478475639107195
+      ],
+      "correlated_ci95": [
+        0.00016236793419884248,
+        0.0011664442090665891
+      ],
+      "ordinary_simultaneous_ci": [
+        0.0004999310793108979,
+        0.0030477515191374665
+      ],
+      "correlated_simultaneous_ci": [
+        6.809258866222966e-05,
+        0.001694980106830023
+      ],
+      "ordinary_batch_ns": 22362208,
+      "correlated_batch_ns": 62081958,
+      "service_ns_quantiles": {
+        "0.5": 7291.0,
+        "0.95": 14625.0,
+        "0.99": 20542.0,
+        "1": 47917.0
+      },
+      "raw_sha256": "6246b52142ed9ae1a000c133061d8da7607e5f9f4f27f87dee1cd33e5afcf5eb",
+      "file": "z-d7-p0.003.npz"
+    },
+    {
+      "basis": "z",
+      "distance": 7,
+      "rounds": 7,
+      "noise_each": 0.006,
+      "seed": 731202,
+      "shots": 10000,
+      "detectors": 336,
+      "ordinary_failures": 181,
+      "correlated_failures": 101,
+      "rescued": 118,
+      "regressed": 38,
+      "paired_exact_two_sided_p": 9.738534504771362e-11,
+      "ordinary_ci95": [
+        0.015578185843864882,
+        0.020907730821816545
+      ],
+      "correlated_ci95": [
+        0.00823393370804867,
+        0.012259062079689832
+      ],
+      "ordinary_simultaneous_ci": [
+        0.014131542821989725,
+        0.022768109235539034
+      ],
+      "correlated_simultaneous_ci": [
+        0.00720126650165845,
+        0.013713494556899155
+      ],
+      "ordinary_batch_ns": 55157500,
+      "correlated_batch_ns": 143877875,
+      "service_ns_quantiles": {
+        "0.5": 15208.0,
+        "0.95": 29416.0,
+        "0.99": 42667.0,
+        "1": 52125.0
+      },
+      "raw_sha256": "0de082affe2c14a7e7b685403ca1c7f107f6e73a83f7af92b57f0f3b66beff34",
+      "file": "z-d7-p0.006.npz"
+    }
+  ]
+}

@@ -33,6 +33,11 @@ PROJECTS = {
  'thewalrus': ('XanaduAI/thewalrus', ['thewalrus/quantum/gaussian_checks.py']),
  'qiskit-experiments': ('qiskit-community/qiskit-experiments', ['qiskit_experiments/library/tomography/qpt_experiment.py','qiskit_experiments/library/tomography/tomography_analysis.py']),
  'pygsti': ('sandialabs/pyGSTi', ['pygsti/modelmembers/instruments/instrument.py']),
+ 'qiskit-addon-slc': ('Qiskit/qiskit-addon-slc', ['README.md','qiskit_addon_slc/bounds/forward.py','qiskit_addon_slc/bounds/backward.py','qiskit_addon_slc/bounds/local_scales.py','qiskit_addon_slc/bounds/commutator_bounds.py']),
+ 'qiskit-addon-pna': ('Qiskit/qiskit-addon-pna', ['README.md','qiskit_addon_pna/pna.py']),
+ 'qiskit-mitigation': ('Qiskit/qiskit-mitigation', ['README.md','qiskit_mitigation/pec.py','qiskit_mitigation/noise.py','qiskit_mitigation/mitigation_task.py']),
+ 'samplomatic': ('Qiskit/samplomatic', ['README.md','samplomatic/builders/build.py','samplomatic/transpiler/generate_boxing_pass_manager.py','samplomatic/samplex/nodes/inject_noise_node.py','samplomatic/samplex/samplex.py']),
+ 'random123': ('DEShawResearch/random123', ['README.md','include/Random123/philox.h','include/Random123/uniform.hpp','include/Random123/u01fixedpt.h']),
 }
 def command(args):
  return subprocess.check_output(args, stderr=subprocess.PIPE, timeout=90)
@@ -93,7 +98,7 @@ def replace_snapshot(staging):
 def refresh_readme(data):
  rows=['# Third-party source snapshots', '',
   'Unmodified excerpts, not installable packages. Retain all original license files.',
-  'See manifest.json for exact source URLs and SHA-256. No upstream runtime tests performed.', '',
+  'See manifest.json for exact source URLs and SHA-256. Snapshot verification checks bytes only; full-package runtime evidence is tracked separately in ../sdk/README.md.', '',
   '| Repository | Commit | Local files |','|---|---|---|']
  for p in data['projects']:
   files=' · '.join('['+f['path']+']('+p['name']+'/'+f['path']+')' for f in p['files'])

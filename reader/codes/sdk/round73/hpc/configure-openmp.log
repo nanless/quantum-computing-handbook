@@ -1,0 +1,21 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The C compiler identification is AppleClang 21.0.0.21000334
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+CMake Error at /opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:290 (message):
+  Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES)
+Call Stack (most recent call first):
+  /opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:654 (_FPHSA_FAILURE_MESSAGE)
+  /opt/homebrew/share/cmake/Modules/FindOpenMP.cmake:734 (find_package_handle_standard_args)
+  /tmp/quantum-round71-upstreams/qiskit-addon-sqd-hpc/CMakeLists.txt:32 (find_package)
+
+
+-- Configuring incomplete, errors occurred!

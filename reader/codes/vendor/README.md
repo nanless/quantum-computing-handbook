@@ -1,6 +1,6 @@
 # 第三方源码固定快照
 
-扩充核验于2026-10-13，共26个项目、97份源码/许可证/声明/原项目说明；原19项目保持既有固定提交。未修改的代表性摘录，不是完整可安装包；未运行上游测试，也未连接真机。
+扩充核验于2026-10-13，共31个项目、122份源码/许可证/声明/原项目说明；原19项目保持既有固定提交。未修改的代表性摘录，不是完整可安装包；本目录不执行摘录；完整项目的本地SDK运行另见[实验说明](../sdk/README.md)，未连接真机。
 
 [机器可读清单](manifest.json)记录完整commit、原始URL、字节数和SHA-256。运行 `python3 codes/snapshot_sources.py --verify` 离线核验；`--fetch` 恢复固定版本；`--refresh` 才重新选择HEAD。
 
@@ -35,6 +35,12 @@
 | [qiskit-experiments](https://github.com/qiskit-community/qiskit-experiments) | [186c5b771428](https://github.com/qiskit-community/qiskit-experiments/tree/186c5b7714280430c8c6adcf81342e3bfc9a225c) | Apache-2.0；保留原声明 | [LICENSE.txt](qiskit-experiments/LICENSE.txt) · [README.md](qiskit-experiments/README.md) · [qiskit_experiments/library/tomography/qpt_experiment.py](qiskit-experiments/qiskit_experiments/library/tomography/qpt_experiment.py) · [qiskit_experiments/library/tomography/tomography_analysis.py](qiskit-experiments/qiskit_experiments/library/tomography/tomography_analysis.py) |
 | [pygsti](https://github.com/sandialabs/pyGSTi) | [6822f1435eda](https://github.com/sandialabs/pyGSTi/tree/6822f1435eda0a875cf7e96068e3d48f4bc3cfcc) | Apache-2.0；保留原声明 | [LICENSE](pygsti/LICENSE) · [NOTICE](pygsti/NOTICE) · [README.md](pygsti/README.md) · [pygsti/modelmembers/instruments/instrument.py](pygsti/pygsti/modelmembers/instruments/instrument.py) |
 
+| [qiskit-addon-slc](https://github.com/Qiskit/qiskit-addon-slc) | [d5ccf669fef8](https://github.com/Qiskit/qiskit-addon-slc/tree/d5ccf669fef81908cb4b8d87f74c59042fd91fd9) | Apache-2.0；保留原声明 | [LICENSE.txt](qiskit-addon-slc/LICENSE.txt) · [README.md](qiskit-addon-slc/README.md) · [qiskit_addon_slc/bounds/forward.py](qiskit-addon-slc/qiskit_addon_slc/bounds/forward.py) · [qiskit_addon_slc/bounds/backward.py](qiskit-addon-slc/qiskit_addon_slc/bounds/backward.py) · [qiskit_addon_slc/bounds/local_scales.py](qiskit-addon-slc/qiskit_addon_slc/bounds/local_scales.py) · [qiskit_addon_slc/bounds/commutator_bounds.py](qiskit-addon-slc/qiskit_addon_slc/bounds/commutator_bounds.py) |
+| [qiskit-addon-pna](https://github.com/Qiskit/qiskit-addon-pna) | [9fc9b7fb9c63](https://github.com/Qiskit/qiskit-addon-pna/tree/9fc9b7fb9c6342fa1e10a7f02b8f8f83d5209fe2) | Apache-2.0；保留原声明 | [LICENSE.txt](qiskit-addon-pna/LICENSE.txt) · [README.md](qiskit-addon-pna/README.md) · [qiskit_addon_pna/pna.py](qiskit-addon-pna/qiskit_addon_pna/pna.py) |
+| [qiskit-mitigation](https://github.com/Qiskit/qiskit-mitigation) | [2908a901b2a6](https://github.com/Qiskit/qiskit-mitigation/tree/2908a901b2a679def49b5c3fda3879940514235f) | Apache-2.0；保留原声明 | [LICENSE.txt](qiskit-mitigation/LICENSE.txt) · [README.md](qiskit-mitigation/README.md) · [qiskit_mitigation/pec.py](qiskit-mitigation/qiskit_mitigation/pec.py) · [qiskit_mitigation/noise.py](qiskit-mitigation/qiskit_mitigation/noise.py) · [qiskit_mitigation/mitigation_task.py](qiskit-mitigation/qiskit_mitigation/mitigation_task.py) |
+| [samplomatic](https://github.com/Qiskit/samplomatic) | [56dac5e88351](https://github.com/Qiskit/samplomatic/tree/56dac5e883519ae085ac2e78f25b1572536912bd) | Apache-2.0；保留原声明 | [LICENSE.txt](samplomatic/LICENSE.txt) · [README.md](samplomatic/README.md) · [samplomatic/builders/build.py](samplomatic/samplomatic/builders/build.py) · [samplomatic/transpiler/generate_boxing_pass_manager.py](samplomatic/samplomatic/transpiler/generate_boxing_pass_manager.py) · [samplomatic/samplex/nodes/inject_noise_node.py](samplomatic/samplomatic/samplex/nodes/inject_noise_node.py) · [samplomatic/samplex/samplex.py](samplomatic/samplomatic/samplex/samplex.py) |
+| [random123](https://github.com/DEShawResearch/random123) | [9545ff6413f2](https://github.com/DEShawResearch/random123/tree/9545ff6413f258be2f04c1d319d99aaef7521150) | BSD-3-Clause；保留原D. E. Shaw声明 | [LICENSE](random123/LICENSE) · [README.md](random123/README.md) · [include/Random123/philox.h](random123/include/Random123/philox.h) · [include/Random123/uniform.hpp](random123/include/Random123/uniform.hpp) · [include/Random123/u01fixedpt.h](random123/include/Random123/u01fixedpt.h) |
+
 ## 阅读和运行边界
 
 算法入口、数据形状和局限见[代码总说明](../README.md)中的教材入口。这些文件仍依赖原仓库其他模块；不要把vendor加入PYTHONPATH冒充完整安装。需要运行时，从官方仓库取得完整固定提交，在独立环境依该版本安装说明操作，并记录语言和依赖版本。
@@ -44,3 +50,5 @@ Mitiq本快照保留GPL第3版文本；pyqsp为MIT；QuTiP、qutip-qtrl、SeQUeN
 源码哈希匹配只证明本地字节与清单一致，不证明作者身份、供应链安全、算法正确或工业优势。教学程序的执行结果另见最新代码报告；本目录不参与执行。
 
 第71轮新增项目分别连接静态/动态多乘积公式、可观测量反向传播及截断预算、C++子空间样本处理与并行随机数、Rust/ Python Pauli传播、Gaussian协方差合法性。SQD-HPC的THIRD_PARTY_NOTICES.md逐字保留；摘录未包含其内嵌MIT哈希表实现，声明仍供完整项目许可核查。各项目README保留原文，便于按固定提交获取完整环境；这不意味着已执行上游安装或测试。
+
+第73轮仅新增以上五项目，旧26项目97份文件和commit逐字保留。新项目根许可证/NOTICE清单与完整克隆核对，代表性模块和原README均保持原字节；kind字段仍标记不可安装摘录。SLC/PNA、PEC/boxing和Philox的实际运行范围见[第73轮工作流](../sdk/round73/README.md)，源码归档本身不表示验证完整包的每一个功能。

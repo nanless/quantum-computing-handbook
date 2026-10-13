@@ -1,0 +1,206 @@
+{
+  "status": "passed",
+  "method": "refresh_project for five NEW names only; copytree old snapshot; verify entire staging; atomic replace_snapshot; verify published",
+  "preserved_projects": 26,
+  "preserved_files": 97,
+  "preserved_manifest_entries_exact": true,
+  "projects": 31,
+  "files": 122,
+  "additions": [
+    {
+      "name": "qiskit-addon-slc",
+      "repository": "https://github.com/Qiskit/qiskit-addon-slc",
+      "commit": "d5ccf669fef81908cb4b8d87f74c59042fd91fd9",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "8edfefbd37b180e1b329cdc9c987638cc539cc85d43e49ff328c472a21d9ab8d",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 7478,
+          "sha256": "3ba1141076c5c528fe279f10b4b62b4889521dd2334f30cf26eb82bb77aa5d46",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/README.md"
+        },
+        {
+          "path": "qiskit_addon_slc/bounds/forward.py",
+          "bytes": 13922,
+          "sha256": "9eee201c42d7750525fbf3017edbab67923f44621da13ea5f21ef01ce082d62a",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/qiskit_addon_slc/bounds/forward.py"
+        },
+        {
+          "path": "qiskit_addon_slc/bounds/backward.py",
+          "bytes": 6628,
+          "sha256": "19d218b7fb98661c7e21edeedaee02bce9de5d91d3379b8039ae510557b72b40",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/qiskit_addon_slc/bounds/backward.py"
+        },
+        {
+          "path": "qiskit_addon_slc/bounds/local_scales.py",
+          "bytes": 10032,
+          "sha256": "5f4b132f24aca07f80e9379cccd3fb48969c17784500812392bebbe182c527e1",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/qiskit_addon_slc/bounds/local_scales.py"
+        },
+        {
+          "path": "qiskit_addon_slc/bounds/commutator_bounds.py",
+          "bytes": 14677,
+          "sha256": "5c4f05603f530a58f7724a716721f05c506b79fab9c50a2972215791f536dfa8",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-slc/d5ccf669fef81908cb4b8d87f74c59042fd91fd9/qiskit_addon_slc/bounds/commutator_bounds.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-addon-pna",
+      "repository": "https://github.com/Qiskit/qiskit-addon-pna",
+      "commit": "9fc9b7fb9c6342fa1e10a7f02b8f8f83d5209fe2",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "97d4cf5d1c1cb97be51eed5ad985ea1a95f9184a8df90a389133d3b1852a3a65",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-pna/9fc9b7fb9c6342fa1e10a7f02b8f8f83d5209fe2/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 7679,
+          "sha256": "55b7cd4d37210887cc6d687ada7b3205ebd4bc93c06d1033de1e185487ffb427",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-pna/9fc9b7fb9c6342fa1e10a7f02b8f8f83d5209fe2/README.md"
+        },
+        {
+          "path": "qiskit_addon_pna/pna.py",
+          "bytes": 29350,
+          "sha256": "751f07ed6c2e0953b228459be1b90afaf09e6cc4d16b509ccda4c2d34b932408",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-addon-pna/9fc9b7fb9c6342fa1e10a7f02b8f8f83d5209fe2/qiskit_addon_pna/pna.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "qiskit-mitigation",
+      "repository": "https://github.com/Qiskit/qiskit-mitigation",
+      "commit": "2908a901b2a679def49b5c3fda3879940514235f",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-mitigation/2908a901b2a679def49b5c3fda3879940514235f/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 3173,
+          "sha256": "a7938bf65dc3c204833c32da33b14029d256f53cb4b2bdc41dd8bd9b8ac0138d",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-mitigation/2908a901b2a679def49b5c3fda3879940514235f/README.md"
+        },
+        {
+          "path": "qiskit_mitigation/pec.py",
+          "bytes": 34015,
+          "sha256": "5866e02e8a03273e19535cceb1b2fd1a5994c0120d9473a2c995594d3665ea5b",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-mitigation/2908a901b2a679def49b5c3fda3879940514235f/qiskit_mitigation/pec.py"
+        },
+        {
+          "path": "qiskit_mitigation/noise.py",
+          "bytes": 8178,
+          "sha256": "b161688bd3c4a7cd9ff3c1a92489d5a085008d310caf8d19c405a2ec2dd0ca63",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-mitigation/2908a901b2a679def49b5c3fda3879940514235f/qiskit_mitigation/noise.py"
+        },
+        {
+          "path": "qiskit_mitigation/mitigation_task.py",
+          "bytes": 47130,
+          "sha256": "78006f47c165bbc7a9e05e2daca2a3fe152c5764412e850df2f0917db490d762",
+          "url": "https://raw.githubusercontent.com/Qiskit/qiskit-mitigation/2908a901b2a679def49b5c3fda3879940514235f/qiskit_mitigation/mitigation_task.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "samplomatic",
+      "repository": "https://github.com/Qiskit/samplomatic",
+      "commit": "56dac5e883519ae085ac2e78f25b1572536912bd",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11416,
+          "sha256": "4beb29078ef83650448bf0a8ae4eaee89722b5863aa6704c747b45d735dfc17c",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/LICENSE.txt"
+        },
+        {
+          "path": "README.md",
+          "bytes": 4982,
+          "sha256": "6d9c4b3810bc27dcf3fc387891e5f1e87c484eba0f3354b9f5a49c7c2e3527d6",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/README.md"
+        },
+        {
+          "path": "samplomatic/builders/build.py",
+          "bytes": 4372,
+          "sha256": "19740ac5bdf550a79899d4c4214de86c1f9452e7617c9f560fc2fe2d6302a0c6",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/samplomatic/builders/build.py"
+        },
+        {
+          "path": "samplomatic/transpiler/generate_boxing_pass_manager.py",
+          "bytes": 15326,
+          "sha256": "9402c2865a8f9b75e70e2f30442f586b4798735ba998ef68ed11cbe88e9e9f85",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/samplomatic/transpiler/generate_boxing_pass_manager.py"
+        },
+        {
+          "path": "samplomatic/samplex/nodes/inject_noise_node.py",
+          "bytes": 4117,
+          "sha256": "6f0d57652a9bd715baa190bf7aebd2e82324961578a2e7b4d9fbc0f716eea8df",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/samplomatic/samplex/nodes/inject_noise_node.py"
+        },
+        {
+          "path": "samplomatic/samplex/samplex.py",
+          "bytes": 24219,
+          "sha256": "e65fccf804b6159049f382c26e296d26aaf3c16ce384c0c5ff230b4a10dcd65b",
+          "url": "https://raw.githubusercontent.com/Qiskit/samplomatic/56dac5e883519ae085ac2e78f25b1572536912bd/samplomatic/samplex/samplex.py"
+        }
+      ],
+      "missing_requested_paths": []
+    },
+    {
+      "name": "random123",
+      "repository": "https://github.com/DEShawResearch/random123",
+      "commit": "9545ff6413f258be2f04c1d319d99aaef7521150",
+      "kind": "unmodified-source-excerpts-not-installable-package",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1520,
+          "sha256": "5fd0885ab205878bd90c19144677286252eb9b988c1545a3a910edfe1e27b6df",
+          "url": "https://raw.githubusercontent.com/DEShawResearch/random123/9545ff6413f258be2f04c1d319d99aaef7521150/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "bytes": 19819,
+          "sha256": "fda4d741d3667e59ec107e1c2feba9adecbfdee99d4210dcf457ea0c3d60d589",
+          "url": "https://raw.githubusercontent.com/DEShawResearch/random123/9545ff6413f258be2f04c1d319d99aaef7521150/README.md"
+        },
+        {
+          "path": "include/Random123/philox.h",
+          "bytes": 22028,
+          "sha256": "6c2ef219a855885499a73b338d5f41dafe079618b2dae2f60ea86ee785d771e2",
+          "url": "https://raw.githubusercontent.com/DEShawResearch/random123/9545ff6413f258be2f04c1d319d99aaef7521150/include/Random123/philox.h"
+        },
+        {
+          "path": "include/Random123/uniform.hpp",
+          "bytes": 11442,
+          "sha256": "921805e7617674e60ed8afa9ca04fb6d807d129aa6ef8ea1aa12b0d46f2e1848",
+          "url": "https://raw.githubusercontent.com/DEShawResearch/random123/9545ff6413f258be2f04c1d319d99aaef7521150/include/Random123/uniform.hpp"
+        },
+        {
+          "path": "include/Random123/u01fixedpt.h",
+          "bytes": 7927,
+          "sha256": "55e07e08c7f93a94680e06b5238e80f109fb58ddadb2cfd09fdaa740f9fb553a",
+          "url": "https://raw.githubusercontent.com/DEShawResearch/random123/9545ff6413f258be2f04c1d319d99aaef7521150/include/Random123/u01fixedpt.h"
+        }
+      ],
+      "missing_requested_paths": []
+    }
+  ]
+}

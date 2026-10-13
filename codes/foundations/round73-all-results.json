@@ -1,0 +1,366 @@
+{
+  "scope": "synthetic mathematical checks, standard library only",
+  "cases": {
+    "00": {
+      "readout_calibration_shots": 32768,
+      "qst_shots": 24576,
+      "qpt_training_shots": 1536,
+      "qpt_holdout_shots": 6144,
+      "total_preparations": 65024,
+      "settings": [
+        2,
+        3,
+        12,
+        12
+      ]
+    },
+    "01": {
+      "assignment_columns": [
+        [
+          0.88,
+          0.23
+        ],
+        [
+          0.12,
+          0.77
+        ]
+      ],
+      "inverse": [
+        [
+          1.1846153846153846,
+          -0.35384615384615387
+        ],
+        [
+          -0.1846153846153846,
+          1.3538461538461537
+        ]
+      ],
+      "ideal_probability": [
+        0.75,
+        0.25
+      ],
+      "reported_probability": [
+        0.7175,
+        0.2825
+      ],
+      "recovered": [
+        0.7500000000000001,
+        0.24999999999999994
+      ],
+      "input_frequency_perturbation": [
+        0.01,
+        -0.01
+      ],
+      "corrected_perturbation": [
+        0.015384615384615385,
+        -0.015384615384615384
+      ],
+      "signed_estimate": [
+        1.0307692307692309,
+        -0.03076923076923077
+      ]
+    },
+    "02": {
+      "ideal_z": 0.5,
+      "reported_z": 0.43500000000000005,
+      "measurement_variance": 0.00023425220737795853,
+      "calibration_delta_variance": 6.137825328217455e-05,
+      "total_delta_standard_error": 0.01719390766114943,
+      "boundary": "first-order expansion, ideal stable calibration preparations"
+    },
+    "03": {
+      "bell_reported_joint": [
+        [
+          0.41364999999999996,
+          0.14135
+        ],
+        [
+          0.14135,
+          0.30365
+        ]
+      ],
+      "reported_correlation": 0.4346,
+      "reported_witness_sum": 0.8692,
+      "corrected_correlation": 1.0,
+      "boundary": "independent classical readout errors; not device-independent Bell certification"
+    },
+    "04": {
+      "average_record_flip_probability": 0.175,
+      "pauli_error_weights": [
+        0.6806249999999999,
+        0.14437499999999998,
+        0.14437499999999998,
+        0.030624999999999996
+      ],
+      "output_density": [
+        [
+          [
+            0.6625,
+            0.0
+          ],
+          [
+            0.0,
+            -0.18294786654946266
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.18294786654946266
+          ],
+          [
+            0.3374999999999999,
+            0.0
+          ]
+        ]
+      ],
+      "output_bloch": [
+        0.0,
+        0.3658957330989253,
+        0.32500000000000007
+      ],
+      "boundary": "ideal resources and gates; record flips already drove physical corrections"
+    },
+    "05": {
+      "hermitian_real_tp_counterexample": [
+        [
+          0.5,
+          0.0,
+          [
+            0.0,
+            -0.1
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          0.0,
+          0.5,
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.1
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.1
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          0.5,
+          0.0
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.1
+          ],
+          0.0,
+          0.5
+        ]
+      ],
+      "counterexample_full_partial_trace": [
+        [
+          1.0,
+          [
+            0.0,
+            -0.2
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.2
+          ],
+          1.0
+        ]
+      ],
+      "analytic_rotated_damping_choi": [
+        [
+          [
+            0.902885438199983,
+            0.0
+          ],
+          [
+            0.23511410091698925,
+            0.0
+          ],
+          [
+            -0.18809128073359135,
+            0.0
+          ],
+          [
+            0.723606797749979,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.23511410091698925,
+            0.0
+          ],
+          [
+            0.09711456180001682,
+            0.0
+          ],
+          [
+            -0.07639320225002103,
+            0.0
+          ],
+          [
+            0.1880912807335914,
+            0.0
+          ]
+        ],
+        [
+          [
+            -0.18809128073359135,
+            0.0
+          ],
+          [
+            -0.07639320225002103,
+            0.0
+          ],
+          [
+            0.3851145618000168,
+            0.0
+          ],
+          [
+            -0.23511410091698925,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.723606797749979,
+            0.0
+          ],
+          [
+            0.1880912807335914,
+            0.0
+          ],
+          [
+            -0.23511410091698925,
+            0.0
+          ],
+          [
+            0.6148854381999833,
+            0.0
+          ]
+        ]
+      ],
+      "output_partial_trace": [
+        [
+          [
+            0.9999999999999998,
+            0.0
+          ],
+          [
+            5.551115123125783e-17,
+            0.0
+          ]
+        ],
+        [
+          [
+            5.551115123125783e-17,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      ],
+      "y_plus_probability": 0.8999999999999997,
+      "choi_born_probability": 0.8999999999999998,
+      "binomial_mle_p": 0.3,
+      "jeffreys_posterior_mean": 0.3181818181818182,
+      "nll_at_mle": 6.108643020548936,
+      "nll_at_posterior_mean": 6.1163426787017485
+    },
+    "q1": {
+      "phase_samples": [
+        {
+          "phase_rad": 0,
+          "ideal_zero": 1.0,
+          "reported_zero": 0.88,
+          "corrected_zero": 1.0
+        },
+        {
+          "phase_rad": 1.5707963267948966,
+          "ideal_zero": 0.5,
+          "reported_zero": 0.555,
+          "corrected_zero": 0.5000000000000001
+        },
+        {
+          "phase_rad": 3.141592653589793,
+          "ideal_zero": 0.0,
+          "reported_zero": 0.23,
+          "corrected_zero": 0.0
+        }
+      ],
+      "reported_max": 0.88,
+      "reported_min": 0.23,
+      "reported_visibility": 0.5855855855855856,
+      "ideal_visibility": 1,
+      "boundary": "binary misassignment without loss, not the efficiency model of F72-Q1"
+    },
+    "q2": {
+      "time_unit": "us",
+      "final_time": 3,
+      "reference_2400_steps": [
+        -0.2386119148583989,
+        -0.42299552003821855,
+        0.7697434198834228
+      ],
+      "rk4_convergence": [
+        {
+          "steps": 150,
+          "final_bloch": [
+            -0.23861191559447212,
+            -0.4229955207651614,
+            0.76974342077562
+          ],
+          "max_difference_from_2400": 8.921972050046634e-10
+        },
+        {
+          "steps": 300,
+          "final_bloch": [
+            -0.23861191490222064,
+            -0.4229955200852777,
+            0.7697434199383227
+          ],
+          "max_difference_from_2400": 5.489997345620168e-11
+        },
+        {
+          "steps": 600,
+          "final_bloch": [
+            -0.23861191486105945,
+            -0.42299552004120056,
+            0.769743419886813
+          ],
+          "max_difference_from_2400": 3.3902880502978405e-12
+        }
+      ],
+      "initial_derivative": [
+        -0.7,
+        -0.2,
+        0.40000001160259846
+      ],
+      "boundary": "finite-input convergence; no statistical sampling or package calls"
+    }
+  }
+}

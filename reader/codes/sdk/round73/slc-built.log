@@ -1,0 +1,824 @@
+Optimal spacetime partitioning not implemented!Just partitioning list of noisy boxes.
+SAMPLEX_INPUTS TensorInterface(<
+  - 'pauli_lindblad_maps.rbebA' <PauliLindbladMap>: A PauliLindblad map acting on 2 qubits,
+      with 'num_terms_rbebA' terms.
+  - 'pauli_lindblad_maps.rf55A' <PauliLindbladMap>: A PauliLindblad map acting on 2 qubits,
+      with 'num_terms_rf55A' terms.
+
+  - 'local_scales.m0' <float64['num_terms_rf55A']>: (Optional) An array of factors by which
+      to scale individual rates of a Pauli Lindblad map, where the order should match the
+      corresponding list of terms.
+  - 'local_scales.m1' <float64['num_terms_rbebA']>: (Optional) An array of factors by which
+      to scale individual rates of a Pauli Lindblad map, where the order should match the
+      corresponding list of terms.
+  - 'local_scales.m2' <float64['num_terms_rf55A']>: (Optional) An array of factors by which
+      to scale individual rates of a Pauli Lindblad map, where the order should match the
+      corresponding list of terms.
+  - 'local_scales.m3' <float64['num_terms_rbebA']>: (Optional) An array of factors by which
+      to scale individual rates of a Pauli Lindblad map, where the order should match the
+      corresponding list of terms.
+  - 'noise_scales.m0' <float64[]>: (Optional) A scalar factor by which to scale rates of a
+      Pauli Lindblad map.
+  - 'noise_scales.m1' <float64[]>: (Optional) A scalar factor by which to scale rates of a
+      Pauli Lindblad map.
+  - 'noise_scales.m2' <float64[]>: (Optional) A scalar factor by which to scale rates of a
+      Pauli Lindblad map.
+  - 'noise_scales.m3' <float64[]>: (Optional) A scalar factor by which to scale rates of a
+      Pauli Lindblad map.>)
+SAMPLEX_OUTPUTS SamplexOutput(<
+  - 'parameter_values' <float32['num_randomizations', 33]>: Parameter values valid for an
+      associated template circuit.
+  - 'pauli_signs' <bool['num_randomizations', 4]>: Signs from sampled Pauli Lindblad maps,
+      where boolean values represent the parity of the number of non-trivial factors in the sampled
+      error that arise from negative rates. In other words, in order to implement basic PEC, the
+      sign used to correct expectation values should be ``(-1)**bool_value``. The order matches the
+      iteration order of boxes in the original circuit with noise injection annotations.
+>)
+{
+  "status": "passed",
+  "versions": {
+    "qiskit-addon-slc": "0.1.0",
+    "samplomatic": "0.21.0",
+    "pauli-prop": "0.1.0"
+  },
+  "num_qubits": 3,
+  "initial": "000",
+  "observable": "IZI",
+  "noise_site": "after",
+  "unique_noise_models": 2,
+  "unique_error_terms": 30,
+  "ideal": 0.9113999866291025,
+  "noisy": 0.6631841166456693,
+  "bounds": {
+    "forward": {
+      "m3": [
+        2.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "m2": [
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0
+      ],
+      "m1": [
+        2.0,
+        1.932779956269027,
+        0.5141611037843097,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        1.932779956269027,
+        1.932779956269027,
+        1.932779956269027,
+        0.5141611037843097,
+        0.5141611037843097,
+        0.5141611037843097
+      ],
+      "m0": [
+        1.9999999999999998,
+        1.9327799562690267,
+        0.5141611037843096,
+        2.0,
+        1.932779956269027,
+        0.5141611037843097,
+        6.296657499955249e-17,
+        0.5141611037843096,
+        1.9327799562690267,
+        0.5141611037843098,
+        0.9937602756874724,
+        2.0,
+        1.932779956269027,
+        2.0,
+        0.993760275687472
+      ]
+    },
+    "backward": {
+      "m0": [
+        2.0,
+        2.0,
+        0.43645924616173876,
+        2.0,
+        1.9541175942351294,
+        0.6098533442236611,
+        2.0,
+        1.9541175942351297,
+        1.9977306510990507,
+        1.951794898661211,
+        2.0,
+        2.0,
+        2.0,
+        1.951794898661211,
+        0.43645924616173876
+      ],
+      "m1": [
+        2.0,
+        2.0,
+        0.6098533442236611,
+        2.0,
+        1.9563271095611021,
+        0.7380415583536519,
+        2.0,
+        1.9563271095611021,
+        1.9978387854117745,
+        1.9541175942351294,
+        2.0,
+        2.0,
+        2.0,
+        1.951794898661211,
+        0.43645924616173876
+      ],
+      "m2": [
+        2.0,
+        2.0,
+        0.665032563800336,
+        2.0,
+        1.940326790369332,
+        0.8230432901675921,
+        2.0,
+        1.940326790369332,
+        1.9958357420439872,
+        1.9360341842656665,
+        1.9978807128498306,
+        1.9998500972731157,
+        2.0,
+        1.939128355085975,
+        0.7821140095678787
+      ],
+      "m3": [
+        2.0,
+        1.958022281420315,
+        0.8230432901675921,
+        2.0,
+        1.8258990420092536,
+        1.1587324399524785,
+        2.0,
+        1.9635614279372966,
+        1.9742179837427365,
+        1.940326790369332,
+        1.9903047640326483,
+        1.963991476144496,
+        1.9970583554797385,
+        1.7962038944424952,
+        1.0703142861096446
+      ]
+    },
+    "merged": {
+      "m0": [
+        1.9999999999999998,
+        1.9327799562690267,
+        0.5141611037843096,
+        2.0,
+        1.932779956269027,
+        0.5141611037843097,
+        6.296657499955249e-17,
+        0.5141611037843096,
+        1.9327799562690267,
+        0.5141611037843098,
+        0.9937602756874724,
+        2.0,
+        1.932779956269027,
+        2.0,
+        0.993760275687472
+      ],
+      "m1": [
+        2.0,
+        1.932779956269027,
+        0.5141611037843097,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        1.932779956269027,
+        1.932779956269027,
+        1.932779956269027,
+        0.5141611037843097,
+        0.5141611037843097,
+        0.5141611037843097
+      ],
+      "m2": [
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0,
+        2.0,
+        2.0,
+        0.0
+      ],
+      "m3": [
+        2.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "noise_models": {
+    "rf55A": {
+      "paulis": [
+        [
+          "X",
+          [
+            0
+          ]
+        ],
+        [
+          "Y",
+          [
+            0
+          ]
+        ],
+        [
+          "Z",
+          [
+            0
+          ]
+        ],
+        [
+          "X",
+          [
+            1
+          ]
+        ],
+        [
+          "Y",
+          [
+            1
+          ]
+        ],
+        [
+          "Z",
+          [
+            1
+          ]
+        ],
+        [
+          "XX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "XY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "XZ",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YZ",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZZ",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "rates": [
+        0.004586757395421885,
+        0.0025103564200193015,
+        0.005558469142433125,
+        0.002803297010883546,
+        0.00750866520614391,
+        0.0027902421398618717,
+        0.004827117622569944,
+        0.003694057574602594,
+        0.00672310786205281,
+        0.004024954019754352,
+        0.007545723878172076,
+        0.0027792975191323244,
+        0.005766977681981539,
+        0.0077540061420232256,
+        0.0023447872018565736
+      ]
+    },
+    "rbebA": {
+      "paulis": [
+        [
+          "X",
+          [
+            0
+          ]
+        ],
+        [
+          "Y",
+          [
+            0
+          ]
+        ],
+        [
+          "Z",
+          [
+            0
+          ]
+        ],
+        [
+          "X",
+          [
+            1
+          ]
+        ],
+        [
+          "Y",
+          [
+            1
+          ]
+        ],
+        [
+          "Z",
+          [
+            1
+          ]
+        ],
+        [
+          "XX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "XY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "XZ",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "YZ",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZX",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZY",
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          "ZZ",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "rates": [
+        0.0026614478202054677,
+        0.002276514680895237,
+        0.007954899327825445,
+        0.007341807257146504,
+        0.004273575435884133,
+        0.003690389633877223,
+        0.005314660982792569,
+        0.005496855745524672,
+        0.007618450007414988,
+        0.0038985621746367794,
+        0.00580751066979559,
+        0.004229668280345774,
+        0.006843591866915703,
+        0.0033287954804052983,
+        0.0026751088196175624
+      ]
+    }
+  },
+  "records": [
+    {
+      "bias_tolerance": 0.0,
+      "mask": {
+        "m0": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "m1": [
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "m2": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m3": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cost_gamma_squared": 2.277095980105352,
+      "bias_bound": 0.0,
+      "exact_residual_value": 0.9113999866291019,
+      "observed_bias": 5.551115123125783e-16,
+      "mitigated_occurrences": 42
+    },
+    {
+      "bias_tolerance": 0.01,
+      "mask": {
+        "m0": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "m1": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "m2": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m3": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cost_gamma_squared": 2.146217463494352,
+      "bias_bound": 0.0075524729831845105,
+      "exact_residual_value": 0.9113999866291022,
+      "observed_bias": 3.3306690738754696e-16,
+      "mitigated_occurrences": 40
+    },
+    {
+      "bias_tolerance": 0.03,
+      "mask": {
+        "m0": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m1": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "m2": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m3": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cost_gamma_squared": 1.888642695196333,
+      "bias_bound": 0.02862340135548863,
+      "exact_residual_value": 0.9113999866291015,
+      "observed_bias": 9.992007221626409e-16,
+      "mitigated_occurrences": 32
+    },
+    {
+      "bias_tolerance": 0.06,
+      "mask": {
+        "m0": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m1": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "m2": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "m3": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cost_gamma_squared": 1.784130761212023,
+      "bias_bound": 0.05593488853547829,
+      "exact_residual_value": 0.8858240295045002,
+      "observed_bias": 0.025575957124602255,
+      "mitigated_occurrences": 30
+    }
+  ],
+  "all_zero_mask_regression": "index -1 is out of bounds for axis 0 with size 0",
+  "mask_convention": "installed0.1.0 returns0/1 selection; sampling cancellation needs negative selection, not raw mask",
+  "elapsed_seconds": 0.05715329200029373,
+  "scope": "bounds/model selection/residual dense evaluation; sampling stage to be added separately"
+}

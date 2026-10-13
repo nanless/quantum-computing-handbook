@@ -1,0 +1,11 @@
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-addon-mpf[dynamic]==0.3.0
+qiskit-addon-slc==0.1.0
+qiskit-addon-pna==0.2.0
+qiskit-mitigation==0.1.1
+samplomatic==0.21.0
+qiskit-quimb==0.0.10
+quimb==1.15.0
+pygsti==0.10.2
+physics-tenpy==1.1.1
