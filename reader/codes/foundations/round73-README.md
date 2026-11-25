@@ -75,7 +75,7 @@ readout校准/目标种子730/731，QPT训练/留出732/733，QuTiP根种子734�
 
 本书调用同SDK的partial_trace=np.array([I])路径，外层长度1表示一个条件分量；它同时施加实虚条件。独立CVXPY以Hermitian变量直接加四个复数块迹条件，再比较完整J，误差约1.02e-9。没有改或声称修复上游包。
 
-初次0.00062差异、CLARABEL的optimal_inaccurate、第一次partial_trace遗漏条件外层的shape失败均原样保留在[初次失败](sdk73/initial-failures.json)、qpt-*-failure.json及对应qpt-*.log。排查证明设计矩阵、频率与权重相符，差异来自默认TP约束少了虚部；之后修正完整约束才达成严格验收，未用放宽容差掩盖它。最终独立构造和SDK都使用SCS，独立性来自不同概率设计与完整约束实现，不声称做了两种独立优化引擎的最终认证。
+初次0.00062差异、CLARABEL的optimal_inaccurate与首次排查记录均原样保留在[初次失败](sdk73/initial-failures.json)与[TP反例JSON](sdk73/sdk-tp-counterexample.json)（重复的中间调试日志已于 V4 仓库卫生清理中移除）。排查证明设计矩阵、频率与权重相符，差异来自默认TP约束少了虚部；之后修正完整约束才达成严格验收，未用放宽容差掩盖它。最终独立构造和SDK都使用SCS，独立性来自不同概率设计与完整约束实现，不声称做了两种独立优化引擎的最终认证。
 
 Gaussian最小二乘是Gaussian近似模型的优化，真正计数MLE使用-k log p；两者分别报告。第05章给训练和留出数字，并指出MLE并未在所有矩阵距离上更好。本次有数值概率下界1e-10、理想可信SPAM、单比特过程，尚未完成置信区域、联合门集MLE、漂移稳健拟合或高维扩展。
 
@@ -85,6 +85,6 @@ Gaussian最小二乘是Gaussian近似模型的优化，真正计数MLE使用-k l
 
     /tmp/quantum-round73-foundations-sdk/bin/python codes/foundations/generate_round73_figure.py
 
-图保留[SVG](../../handbook/assets/round73-foundations-dynamics.svg)、[PNG](../../handbook/assets/round73-foundations-dynamics.png)、[生成输入哈希](round73-figure-provenance.json)。已实际查看完整PNG；第一次图中log横轴次刻度标签与指定主标签重叠，禁用次标签后重新生成、再看图。公式、图、样本均采用μs、rad/μs、1/μs；宽度0.35μs明确是Gaussian指数参数。
+原图生成输入哈希保留在[生成输入哈希](round73-figure-provenance.json)；正文 Q2 已全面升级采用亮暗双主题矢量图 [v3-q2-lindblad-trajectories.svg](../../handbook/assets/v3-q2-lindblad-trajectories.svg)，早期 Matplotlib 导出的旧版 `round73-foundations-dynamics.{svg,png}` 已于 V4 清理中退役移除。公式、图、样本均采用μs、rad/μs、1/μs；宽度0.35μs明确是Gaussian指数参数。
 
 逐点一倍SE不能当整曲线同时置信带。同一轨迹在不同时间点相关；有21条发生两次跃迁，驱动下不能使用“至多跃迁一次”的旧Bernoulli模型。工业上进一步还须校准设备波形、泄漏、非Markov模型和反馈延迟，本轮未实现这些项。

@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">CHSH 合作博弈规则、最优测量角与赢率上限对比</title>
+  <desc id="desc">左面板展示 CHSH 合作博弈流程（裁判向隔绝的 Alice、Bob 发随机比特 x, y，赢条件 a ⊕ b = x·y）及量子最优策略的四组 Bloch x–z 测量轴（Alice 取 0 与 π/2，Bob 取 +π/4 与 −π/4）。右面板以精确柱状图对比随机猜 50.00%（S=0）、经典局域隐变量上限 75.00%（S=2）与共享 Bell 态量子策略 cos²(π/8) ≈ 85.36%（Tsirelson 界 S = 2√2）。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:12.5px;font-weight:400;fill:#3e566d}
+.smb{font-size:12.5px;font-weight:600;fill:#19324d}
+.xs{font-size:11.5px;font-weight:500;fill:#3e566d}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.wire{stroke:#19324d;stroke-width:2.0;fill:none}
+.cwire{stroke:#4a637a;stroke-width:1.5;fill:none}
+.ctrl{fill:#13263a}
+.targ{fill:#ffffff;stroke:#13263a;stroke-width:2.0}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.5}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.mirror{stroke:#19324d;stroke-width:3.2;stroke-linecap:round}
+.bs-glass{fill:#bae6fd;fill-opacity:.58;stroke:#1b6ca8;stroke-width:1.6}
+.det-body{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12.5px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis,.wire{stroke:#cde0f2}
+  .axis-fill,.ctrl{fill:#cde0f2}
+  .cwire{stroke:#9bb6ce}
+  .targ{fill:#16222e;stroke:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .mirror{stroke:#cde0f2}
+  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
+  .det-body{fill:#163d31;stroke:#5dd1a8}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">CHSH 合作博弈：最优测量角与经典 75% 及量子 85.36% 上限</text>
+  <text class="subtitle" x="34" y="79">左：禁止通信的 Alice/Bob 共享 Bell 态 |Φ⁺⟩ 与四组 Bloch x–z 测量轴；右：随机、经典上限与量子 Tsirelson 界精确对比</text>
+  <rect class="panel" x="28" y="96" width="504" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 518 Q 531 97 531 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="531" y2="134"/>
+  <text class="sec" x="44" y="120">CHSH 博弈规则与最优测量角（Bloch x–z 平面）</text>
+  <rect class="panel" x="548" y="96" width="424" height="456" rx="14"/>
+  <path class="phead" d="M 562 97 H 958 Q 971 97 971 110 V 134 H 549 V 110 Q 549 97 562 97 Z"/>
+  <line class="grid" x1="549" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="564" y="120">无通信条件下的赢率上限精确对比</text>
+  <rect class="pill" x="210" y="146" width="140" height="36" rx="9"/>
+  <text class="smb" x="280" y="162" text-anchor="middle">裁判 (Referee)</text>
+  <text class="xs" x="280" y="176" text-anchor="middle">均匀随机发 x, y ∈ {0,1}</text>
+  <line class="axis" stroke-width="1.6" x1="210" y1="168" x2="148" y2="198"/>
+  <polygon class="axis-fill" points="148,198 152.84,191.93 155.76,197.98"/>
+  <text class="smb c1-txt" x="166" y="176" text-anchor="end">输入 x</text>
+  <line class="axis" stroke-width="1.6" x1="350" y1="168" x2="412" y2="198"/>
+  <polygon class="axis-fill" points="412,198 404.24,197.98 407.16,191.93"/>
+  <text class="smb c3-txt" x="394" y="176" text-anchor="start">输入 y</text>
+  <rect class="c1-soft" x="42" y="200" width="168" height="86" rx="10"/>
+  <text class="lblb c1-txt" x="126" y="220" text-anchor="middle">Alice（输出 a）</text>
+  <text class="xs" x="54" y="242">x = 0：测 A₀ = Z (0)</text>
+  <text class="xs" x="54" y="261">x = 1：测 A₁ = X (π/2)</text>
+  <text class="xs c1-txt" x="54" y="278">本征值 ±1 对应 a ∈ {0,1}</text>
+  <rect class="c3-soft" x="350" y="200" width="168" height="86" rx="10"/>
+  <text class="lblb c3-txt" x="434" y="220" text-anchor="middle">Bob（输出 b）</text>
+  <text class="xs" x="362" y="242">y = 0：B₀=(Z+X)/√2 (+π/4)</text>
+  <text class="xs" x="362" y="261">y = 1：B₁=(Z−X)/√2 (−π/4)</text>
+  <text class="xs c3-txt" x="362" y="278">本征值 ±1 对应 b ∈ {0,1}</text>
+  <line class="c2" stroke-width="1.8" stroke-dasharray="5 4" x1="280" y1="194" x2="280" y2="254"/>
+  <rect class="c2-soft" x="235" y="210" width="90" height="24" rx="12"/>
+  <text class="xs c2-txt" x="280" y="226" text-anchor="middle">✕ 禁止通信</text>
+  <line class="c4" stroke-width="2.0" stroke-dasharray="4 3" x1="210" y1="272" x2="350" y2="272"/>
+  <rect class="c4-soft" x="232" y="260" width="96" height="24" rx="12"/>
+  <text class="xs c4-txt" x="280" y="276" text-anchor="middle">共享 |Φ⁺⟩</text>
+  <rect class="note" x="42" y="296" width="476" height="30" rx="8"/>
+  <text class="smb" x="280" y="315" text-anchor="middle">赢条件：a ⊕ b = x · y（仅 (1,1) 要异号 a ≠ b，其余三组要同号 a = b）</text>
+  <circle class="unit-circle" cx="148" cy="452" r="62"/>
+  <line class="grid" x1="78" y1="452" x2="222" y2="452"/>
+  <line class="grid" x1="148" y1="522" x2="148" y2="378"/>
+  <path class="c4" stroke-width="1.6" d="M 148 422 L 149.68 422.05 L 151.36 422.19 L 153.03 422.42 L 154.68 422.75 L 156.31 423.17 L 157.91 423.68 L 159.48 424.28 L 161.02 424.97 L 162.51 425.74 L 163.96 426.6 L 165.36 427.53 L 166.7 428.55 L 167.99 429.63 L 169.21 430.79"/>
+  <path class="c4" stroke-width="1.6" d="M 148 422 L 146.32 422.05 L 144.64 422.19 L 142.97 422.42 L 141.32 422.75 L 139.69 423.17 L 138.09 423.68 L 136.52 424.28 L 134.98 424.97 L 133.49 425.74 L 132.04 426.6 L 130.64 427.53 L 129.3 428.55 L 128.01 429.63 L 126.79 430.79"/>
+  <text class="xs c4-txt" x="158" y="414">π/4</text>
+  <text class="xs c4-txt" x="138" y="414" text-anchor="end">π/4</text>
+  <line class="c1" stroke-width="2.6" x1="148" y1="452" x2="148" y2="390"/>
+  <polygon class="c1-fill" points="148,390 151.6,397.5 144.4,397.5"/>
+  <circle class="c1-fill" cx="148" cy="390" r="4.0"/>
+  <line class="c1" stroke-width="2.6" x1="148" y1="452" x2="210" y2="452"/>
+  <polygon class="c1-fill" points="210,452 202.5,455.6 202.5,448.4"/>
+  <circle class="c1-fill" cx="210" cy="452" r="4.0"/>
+  <line class="c3" stroke-width="2.5" stroke-dasharray="6 3" x1="148" y1="452" x2="191.84" y2="408.16"/>
+  <polygon class="c3-fill" points="191.84,408.16 189.08,416.01 183.99,410.92"/>
+  <polygon class="c3-fill" points="191.84,403.36 196.64,408.16 191.84,412.96 187.04,408.16"/>
+  <line class="c3" stroke-width="2.5" stroke-dasharray="9 3 2 3" x1="148" y1="452" x2="104.16" y2="408.16"/>
+  <polygon class="c3-fill" points="104.16,408.16 112.01,410.92 106.92,416.01"/>
+  <rect class="c3-fill" x="99.96" y="403.96" width="8.4" height="8.4" rx="1.2"/>
+  <text class="smb c1-txt" x="148" y="378" text-anchor="middle">A₀ (0)</text>
+  <text class="smb c1-txt" x="220" y="456">A₁ (π/2)</text>
+  <text class="smb c3-txt" x="199.84" y="404.16">B₀ (+π/4)</text>
+  <text class="smb c3-txt" x="96.16" y="404.16" text-anchor="end">B₁ (−π/4)</text>
+  <text class="xs" x="148" y="536" text-anchor="middle">Bloch x–z 测量角 (rad)</text>
+  <rect class="subpanel" x="288" y="340" width="230" height="198" rx="10"/>
+  <text class="smb" x="302" y="362">四组相关 E(x,y) = cos(Δθ)</text>
+  <line class="grid" x1="296" y1="370" x2="510" y2="370"/>
+  <text class="xs" x="302" y="392">(0,0) 同号</text>
+  <text class="xs" x="378" y="392">Δθ = π/4</text>
+  <text class="smb c3-txt" x="506" y="392" text-anchor="end">+1/√2</text>
+  <text class="xs" x="302" y="416">(0,1) 同号</text>
+  <text class="xs" x="378" y="416">Δθ = π/4</text>
+  <text class="smb c3-txt" x="506" y="416" text-anchor="end">+1/√2</text>
+  <text class="xs" x="302" y="440">(1,0) 同号</text>
+  <text class="xs" x="378" y="440">Δθ = π/4</text>
+  <text class="smb c3-txt" x="506" y="440" text-anchor="end">+1/√2</text>
+  <text class="xs" x="302" y="464">(1,1) 异号</text>
+  <text class="xs" x="378" y="464">Δθ = 3π/4</text>
+  <text class="smb c2-txt" x="506" y="464" text-anchor="end">−1/√2</text>
+  <line class="grid" x1="296" y1="478" x2="510" y2="478"/>
+  <text class="smb c1-txt" x="302" y="499">S = 3/√2 − (−1/√2) = 2√2</text>
+  <text class="xs" x="302" y="518">四组赢率均等：cos²(π/8) ≈ 85.36%</text>
+  <line class="grid" x1="612" y1="428" x2="948" y2="428"/>
+  <text class="sm" x="604" y="432" text-anchor="end">0%</text>
+  <line class="grid" x1="612" y1="364.5" x2="948" y2="364.5"/>
+  <text class="sm" x="604" y="368.5" text-anchor="end">25%</text>
+  <line class="grid" x1="612" y1="301" x2="948" y2="301"/>
+  <text class="sm" x="604" y="305" text-anchor="end">50%</text>
+  <line class="grid" x1="612" y1="237.5" x2="948" y2="237.5"/>
+  <text class="sm" x="604" y="241.5" text-anchor="end">75%</text>
+  <line class="grid" x1="612" y1="174" x2="948" y2="174"/>
+  <text class="sm" x="604" y="178" text-anchor="end">100%</text>
+  <line class="axis" x1="612" y1="428" x2="954" y2="428"/>
+  <line class="axis" x1="612" y1="428" x2="612" y2="162"/>
+  <polygon class="axis-fill" points="612,162 615.36,169 608.64,169"/>
+  <text class="sm" x="568" y="301" text-anchor="middle" transform="rotate(-90 568 301)">博弈平均赢率 p<tspan dy="3" font-size="75%">win</tspan><tspan dy="-3">&#8203;</tspan> (%)</text>
+  <line class="c2" stroke-width="1.4" stroke-dasharray="6 4" x1="612" y1="237.5" x2="948" y2="237.5"/>
+  <line class="c1" stroke-width="1.4" stroke-dasharray="6 4" x1="612" y1="211.2" x2="948" y2="211.2"/>
+  <rect class="bar-neutral" x="636" y="301" width="68" height="127" rx="6"/>
+  <rect fill="url(#hatch-neutral)" x="636" y="301" width="68" height="127" rx="6"/>
+  <text class="smb" x="670" y="292" text-anchor="middle">50.00%</text>
+  <rect class="pill-bg" x="642" y="317" width="56" height="22" rx="6"/>
+  <text class="xs" x="670" y="332" text-anchor="middle">S = 0</text>
+  <text class="smb" x="670" y="448" text-anchor="middle">随机猜测</text>
+  <text class="xs" x="670" y="464" text-anchor="middle">p = 1/2</text>
+  <rect class="c2-soft" x="746" y="237.5" width="68" height="190.5" rx="6"/>
+  <rect fill="url(#hatch-red)" x="746" y="237.5" width="68" height="190.5" rx="6"/>
+  <text class="smb c2-txt" x="780" y="228.5" text-anchor="middle">75.00%</text>
+  <rect class="pill-bg" x="752" y="253.5" width="56" height="22" rx="6"/>
+  <text class="xs" x="780" y="268.5" text-anchor="middle">S ≤ 2</text>
+  <text class="smb" x="780" y="448" text-anchor="middle">经典上限</text>
+  <text class="xs" x="780" y="464" text-anchor="middle">CHSH (3/4)</text>
+  <rect class="c1-soft" x="856" y="211.2" width="68" height="216.8" rx="6"/>
+  <rect fill="url(#hatch-blue)" x="856" y="211.2" width="68" height="216.8" rx="6"/>
+  <text class="smb c1-txt" x="890" y="202.2" text-anchor="middle">85.36%</text>
+  <rect class="pill-bg" x="862" y="227.2" width="56" height="22" rx="6"/>
+  <text class="xs" x="890" y="242.2" text-anchor="middle">S = 2√2</text>
+  <text class="smb" x="890" y="448" text-anchor="middle">量子纠缠</text>
+  <text class="xs" x="890" y="464" text-anchor="middle">cos²(π/8)</text>
+  <line class="c3" stroke-width="1.9" x1="834" y1="213.2" x2="834" y2="235.5"/>
+  <polygon class="c3-fill" points="834,212.2 836.64,217.7 831.36,217.7"/>
+  <polygon class="c3-fill" points="834,236.5 831.36,231 836.64,231"/>
+  <line class="guide" x1="834" y1="211.2" x2="834" y2="184"/>
+  <rect class="c3-soft" x="764" y="160" width="140" height="24" rx="12"/>
+  <text class="xs c3-txt" x="834" y="176" text-anchor="middle">高出 10.36 个百分点</text>
+  <rect class="note" x="564" y="482" width="392" height="56" rx="10"/>
+  <text class="smb" x="578" y="503">赢率换算：p<tspan dy="3" font-size="75%">win</tspan><tspan dy="-3">&#8203;</tspan> = 1/2 + S/8（S = E₀₀ + E₀₁ + E₁₀ − E₁₁）</text>
+  <text class="xs" x="578" y="523">局域隐变量上限 |S| ≤ 2 (75%)；量子 Tsirelson 界 |S| ≤ 2√2 (85.36%)</text>
+</svg>

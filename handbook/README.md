@@ -4,7 +4,7 @@
 >
 > 版本：2026-11-25。时效性硬件指标、开源生态与标准进展均标明对应日期与证据类型，引用前建议对照一手资料核验。
 
-[打开离线排版阅读版](../reader/index.html)：包含完整的预渲染公式排版、可检索的五篇 26 章目录、页内导航以及双主题流程图与科学插图。在手机上可展开“本页导航”快速跳转到小节，复杂图表可点击打开原尺寸查看。整套 `reader/` 目录可完整复制到其他电脑后离线阅读；仓库同时提供零安装离线交互量子实验台（`reader/lab/quantum-lab.html`）以及面向打印与移动阅读的合订本 PDF（`dist/quantum-computing-handbook.pdf`）和原生 MathML 3 EPUB 3 电子书（`dist/quantum-computing-handbook.epub`）。外部参考文献链接仍需联网打开。
+[打开离线排版阅读版](../reader/index.html)：包含完整的预渲染公式排版、离线全书检索（`Cmd/Ctrl+K`）、初学主线一键折叠进阶选读、五篇 26 章目录与全介质亮/暗双主题科学插图。在手机上可展开“本页导航”快速跳转到小节，复杂图表可点击打开原尺寸查看。整套 `reader/` 目录可完整复制到其他电脑后离线阅读；仓库同时提供 **6 模块零安装离线交互量子实验台**（`reader/lab/quantum-lab.html`）以及面向打印与移动阅读的合订本 PDF（`dist/quantum-computing-handbook.pdf`）和原生 MathML 3 EPUB 3 电子书（`dist/quantum-computing-handbook.epub`）。外部参考文献链接仍需联网打开。
 
 ## 这本书想帮你弄懂什么
 
@@ -106,22 +106,22 @@ flowchart TB
 | 章节 | 核心问题 | 建议先修 |
 |---|---|---|
 | [12｜量子密码、后量子安全与量子网络](12-security-network-frontiers.md) | Shor、NIST 后量子标准（ML-KEM/HQC/IR 8547）、BB84/E91/TF-QKD/DI-QKD、PLOB 界与三代量子中继是什么关系？ | 04、07、10 |
-| [20｜量子传感与量子精密测量：从 Fisher 信息到海森堡极限](20-quantum-sensing-metrology.md) | CFI/QFI、SQL 与海森堡极限、Huelga 退相位坍塌、自旋与光学压缩（LIGO O4）、AC 锁相与 HNLS 纠错传感怎么算？ | 03、05、Q3、13；光学压缩另需 18 §9 |
+| [20｜量子传感与量子精密测量：从 Fisher 信息到海森堡极限](20-quantum-sensing-metrology.md) | CFI/QFI、SQL 与海森堡极限、Huelga 退相位坍塌、原子钟阿兰偏差与 $^{229}\mathrm{Th}$ 核钟、冷原子重力仪、量子照明、自旋与光学压缩（LIGO O4）及 HNLS 纠错传感怎么算？ | 03、05、Q3、13（光学压缩已内置正交分量微卡片） |
 
 ### 第五篇｜信息理论、高级算法、模拟边界与计算模型
 
 | 章节 | 核心问题 | 建议先修 |
 |---|---|---|
-| [13｜量子信息量度：熵、距离与可提取信息](13-quantum-information.md) | 熵、负条件熵与状态合并、数据处理不等式、迹距离、Helstrom 判别与 Holevo 界怎样计算？ | 03、05 |
-| [16｜高级算法与验证：从查询下界、统一框架到可信输出](16-advanced-algorithms-verification.md) | 查询下界、量子行走、LCU→QSVT→GQSP 统一框架、经典阴影与可扩展验证如何衔接？ | 06–08、13 |
-| [21｜稳定子形式、经典模拟引擎与量子优势边界](21-stabilizer-classical-simulation.md) | 稳定子辛表、魔术度与稳定子秩、匹配门、MPS 逐键 SVD 与含噪 Pauli 传播如何划定量子优势铁壁？ | 03–05、10、15 |
-| [17｜量子计算模型：门、测量、绝热、退火、拓扑与模拟](17-computation-models.md) | 门模型、MBQC、FBQC、绝热、退火端到端 TTS、拓扑任意子编织与模拟模拟器如何在同一标尺比较？ | 04、07、09、14 |
-| [Q4｜波函数、势阱、谐振子、隧穿与原子能级](quantum-mechanics/04-wavefunctions-models.md) | 高斯波包展宽、方势阱、谐振子、WKB 双势阱劈裂、原子超精细钟态与网格/Fock 截断陷阱怎样算？ | Q2 + 一元微积分（进阶选读） |
-| [18｜量子信道、通信容量、复杂度与连续变量](18-channels-capacities-complexity.md) | Choi 矩阵、钻石范数、四类通信容量、纠缠负性、`QIP`/`MIP*=RE`、Wigner 负性与 GKP 网格码怎样入门？ | 03、05、07、13；第 9 节另需 Q4 |
+| [13｜量子信息量度：熵、距离与可提取信息](13-quantum-information.md) | 熵、负条件熵与状态合并、数据处理不等式、迹距离、Helstrom 判别、剩余哈希引理与量子热力学资源论怎样计算？ | 03、05 |
+| [16｜高级算法与验证：从查询下界、统一框架到可信输出](16-advanced-algorithms-verification.md) | 查询下界、量子行走、LCU→显式 $4\times 4$ QSVT→GQSP 统一框架、经典阴影与可扩展验证如何衔接？ | 06–08、13 |
+| [21｜稳定子形式、经典模拟引擎与量子优势边界](21-stabilizer-classical-simulation.md) | 稳定子辛表、魔术度与稳定子秩、匹配门、MPS/2D PEPS/BP-TN 与含噪 Pauli 传播如何划定经典可模拟与量子加速边界？ | 03–05、10、15 |
+| [17｜量子计算模型：门、测量、绝热、退火、拓扑与模拟](17-computation-models.md) | 门模型、MBQC、FBQC、绝热、退火端到端 TTS、拓扑任意子编织、ETH/MBL/PXP 多体疤痕与模拟模拟器如何在同一标尺比较？ | 04、07、09、14 |
+| [Q4｜波函数、势阱、谐振子、隧穿与原子能级](quantum-mechanics/04-wavefunctions-models.md) | 高斯波包展宽、方势阱、谐振子、WKB 双势阱劈裂、原子超精细钟态（含 $^{87}\mathrm{Sr}$）与网格/Fock 截断边界怎样算？ | Q2 + 一元微积分（支持双入口跳读） |
+| [18｜量子信道、通信容量、复杂度与连续变量](18-channels-capacities-complexity.md) | Choi 矩阵、钻石范数、四类通信容量、纠缠负性、`QIP`/`MIP*=RE`、Wigner 负性、CV-MBQC 光量子集群态与 GKP 网格码怎样入门？ | 03、05、07、13；第 9 节另需 Q4 |
 
 ### 附录与量子力学基础篇导读
 
-[量子力学基础篇导读（Q1–Q4）](quantum-mechanics/README.md) · [先修自测](appendices/prerequisites.md) · [符号表与速查](appendices/notation.md) · [术语表](appendices/glossary.md) · [练习与答案](appendices/exercises.md) · [算法、工业实践与开源代码对照](appendices/software-practice.md) · [参考资料与证据等级](appendices/references.md) · [审校记录](appendices/audit-log.md)
+[量子力学基础篇导读（Q1–Q4）](quantum-mechanics/README.md) · [先修自测](appendices/prerequisites.md) · [符号表与速查](appendices/notation.md) · [术语表](appendices/glossary.md) · [练习与答案](appendices/exercises.md) · [算法、工业实践与开源代码对照](appendices/software-practice.md) · [参考资料与证据等级](appendices/references.md) · [版本演进与公开勘误](appendices/audit-log.md)
 
 ## 从具体问题找到可手算的例子
 
@@ -131,7 +131,7 @@ flowchart TB
 |---|---|
 | 双缝里悄悄记录了路径却没人偷看，为什么条纹依然消失？ | [Q1 第 6 节](quantum-mechanics/01-experiments-states.md#6-进阶深潜部分路径记录englert-互补关系与延迟选择量子擦除)：部分路径标记、Englert 互补关系与延迟选择擦除 |
 | 不确定关系到底约束什么？量子门怎样由哈密顿量生出来？ | [Q2](quantum-mechanics/02-observables-dynamics.md)：Pauli 算例、Robertson/Schrödinger 界、三绘景与 Magnus 展开 |
-| 10 MHz 的驱动为什么不是 10 ns 翻完？失谐符号为什么常打架？ | [Q3 第 6.2 节](quantum-mechanics/03-levels-control.md#62-彻底消除跨章失谐符号坑计算基与能量基的等价对照表)：角频率、旋转坐标系、Rabi 振荡与计算基/能量基换算 |
+| 10 MHz 的驱动为什么不是 10 ns 翻完？失谐符号为什么常打架？ | [Q3 第 6.2 节](quantum-mechanics/03-levels-control.md#62-计算基与能量基的失谐符号等价对照表)：角频率、旋转坐标系、Rabi 振荡与计算基/能量基换算 |
 | 势阱能级为什么离散？对称双势阱劈裂和超精细钟态怎么算？ | [Q4](quantum-mechanics/04-wavefunctions-models.md)：硬壁边界条件、升降算符、WKB 劈裂与原子能级铭牌 |
 | 复数振幅怎样归一化？为什么正半定不能只看对角线非负？ | [第 01 章](01-math.md)：$[1,1+i]^T$ 归一化、$2\times 2$ 谱分解与正半定反例 |
 | 同样的 50/50 测量概率，为什么代表两个完全不同的量子态？ | [第 02 章](02-single-qubit.md)：$HZH$ 如何把相对相位差变成确定输出 |
@@ -148,8 +148,8 @@ flowchart TB
 
 除了正文推导，全书还配套了可直接离线运行的验证生态：
 
-- **动手实验册与 36 个标准库脚本**：[逐章实验总览](labs/README.md)、[基础实验册](labs/foundations.md)、[算法实验册](labs/algorithms.md)、[系统与传感实验册](labs/systems.md)与[统计实践实验册](labs/practice.md)，每组实验均提供手算步骤、答案和零云依赖的本地 Python 标准库脚本（含第 20 章量子传感与第 21 章三大经典模拟迷你引擎）；
-- **声音教学样本与离线交互实验台**：[五个合成声音样本](labs/audio.md)把相位差和干涉对比度直观映射到经典声波，帮助你用耳朵听出抵消与退相干的区别；离线交互实验台位于 `reader/lab/quantum-lab.html`（源码 `tools/reader/quantum-lab.html`），可在浏览器本地交互操作 MZI 干涉仪、3D Bloch 门沙箱与 Ramsey 音频对比；
+- **动手实验册与 38 个标准库脚本**：[逐章实验总览](labs/README.md)、[基础实验册](labs/foundations.md)、[算法实验册](labs/algorithms.md)、[系统与传感实验册](labs/systems.md)与[统计实践实验册](labs/practice.md)，每组实验均提供手算步骤、答案和零云依赖的本地 Python 标准库脚本（含第 20 章量子传感、第 21 章三大经典模拟迷你引擎及 V4 量子微分方程/显式 $4\times 4$ QSVT/BCa Bootstrap/ZNE 预算验证套件）；
+- **声音教学样本与 6 模块离线交互实验台**：[五个合成声音样本](labs/audio.md)把相位差和干涉对比度直观映射到经典声波，帮助你用耳朵听出抵消与退相干的区别；离线交互实验台位于 `reader/lab/quantum-lab.html`（源码 `tools/reader/quantum-lab.html`），可在浏览器本地交互操作 MZI 干涉仪、3D Bloch 球面真弧门沙箱、Ramsey 音频对比、Bell/CHSH 千局非局域博弈、Grover 半拍振幅放大与过冲沙盒，以及 $d=3$ 旋转表面码症状解码沙箱；
 - **开源代码与工业工作流**：[算法、工业实践与开源代码对照](appendices/software-practice.md)与[完整 SDK 实验册](labs/sdk-validation.md)把书中的数学模型连接到 31 个代表性开源项目、122 份固定提交源码摘录以及隔离环境本地运行核验记录。
 
 ## 统一约定
@@ -175,4 +175,4 @@ flowchart TB
 4. **账本算全了吗？** 比较时间或成本时，有没有把数据装载、编译路由、纠错开销、重复采样与经典后处理算进去？
 5. **证据处在哪个层级？** 这项声明出自同行评审期刊、尚未审稿的预印本，还是公司路线图与新闻稿？
 
-只要其中两项含糊不清，就值得先打个问号，翻到原始论文或本书对应章节核对口径。全书的历次修订、交叉复核与已知边界汇总在[审校记录](appendices/audit-log.md)。
+只要其中两项含糊不清，就值得先打个问号，翻到原始论文或本书对应章节核对口径。全书的版本演进、验证范围与公开勘误汇总在[版本演进与公开勘误](appendices/audit-log.md)。

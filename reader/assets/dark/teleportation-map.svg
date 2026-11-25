@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 630" role="img" aria-labelledby="title desc">
+  <title id="title">量子隐形传态的三步和四种校正</title>
+  <desc id="desc">Alice 与 Bob 预先共享一对 Bell 量子比特。Alice 将未知输入 Q 与自己的 A 做 CNOT，对 Q 做 Hadamard，再测 Q 和 A，得到四种等概率结果之一。她用普通通信发送两位结果，Bob 按 00、01、10、11 分别做 I、X、Z、ZX 校正，才得到输入态。消息未到时，Bob 本地态为 I 除以二。</desc>
+  <style>
+    .bg{fill:#f7faf6}.card{fill:#fffefa;stroke:#c6d7cc;stroke-width:2}.card2{fill:#e7f2eb;stroke:#a8cbb5;stroke-width:2}.ink{fill:#1e4238}.muted{fill:#567064}.accent{fill:#25664c}.accent2{fill:#9a5a35}.pill{fill:#e6f1e9}.rule{stroke:#c6d7cc;stroke-width:1.5}.arrow{stroke:#47785c;stroke-width:3;fill:none;marker-end:url(#arrowhead)}.arrowhead{fill:#47785c}.head{font:600 26px 'PingFang SC',system-ui,sans-serif}.label{font:600 20px 'PingFang SC',system-ui,sans-serif}.body{font:18px 'PingFang SC',system-ui,sans-serif}.small{font:16px 'PingFang SC',system-ui,sans-serif}.math{font:22px 'Cambria Math','Times New Roman',serif}.mono{font:600 21px 'SFMono-Regular',Consolas,monospace}
+    
+.bg{fill:#152620}.card{fill:#1c3027;stroke:#668c73}.card2{fill:#274638;stroke:#82aa8a}.ink{fill:#ebf6ed}.muted{fill:#bed0c2}.accent{fill:#a8e0bb}.accent2{fill:#efbb92}.pill{fill:#315443}.rule{stroke:#668c73}.arrow{stroke:#9ed6b0}.arrowhead{fill:#9ed6b0}
+
+  </style>
+  <defs><marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrowhead" d="M0 0L10 5L0 10Z"/></marker></defs>
+  <rect class="bg" width="1120" height="630" rx="22"/>
+  <text class="head ink" x="38" y="47">传态：先建立关联，再用经典消息选校正</text>
+  <text class="small muted" x="38" y="78">三比特始终按 Q、A、B 排列；图中四行是互斥的测量结果，不是四个同时得到的副本。</text>
+  <rect class="card" x="38" y="112" width="300" height="204" rx="15"/>
+  <rect class="pill" x="55" y="129" width="34" height="31" rx="7"/><text class="label accent" x="72" y="152" text-anchor="middle">1</text>
+  <text class="label ink" x="103" y="152">预先准备</text>
+  <text class="body muted" x="55" y="189">Alice 持有未知输入 Q 和 A</text>
+  <text class="body muted" x="55" y="222">Bob 持有 B</text>
+  <text class="math ink" x="55" y="267">Q: α|0⟩ + β|1⟩</text>
+  <text class="math ink" x="55" y="297">AB: (|00⟩ + |11⟩) / √2</text>
+  <path class="arrow" d="M346 213H392"/>
+  <rect class="card" x="410" y="112" width="300" height="204" rx="15"/>
+  <rect class="pill" x="427" y="129" width="34" height="31" rx="7"/><text class="label accent" x="444" y="152" text-anchor="middle">2</text>
+  <text class="label ink" x="475" y="152">Alice 操作并测量</text>
+  <text class="math ink" x="430" y="192">CNOT: Q → A</text>
+  <text class="math ink" x="430" y="229">H: 只作用于 Q</text>
+  <text class="body muted" x="430" y="271">测 Q、A，得到两个经典位</text>
+  <text class="small accent2" x="430" y="298">00 / 01 / 10 / 11 各占 1/4</text>
+  <path class="arrow" d="M718 213H764"/>
+  <rect class="card" x="782" y="112" width="300" height="204" rx="15"/>
+  <rect class="pill" x="799" y="129" width="34" height="31" rx="7"/><text class="label accent" x="816" y="152" text-anchor="middle">3</text>
+  <text class="label ink" x="847" y="152">普通通信与校正</text>
+  <text class="body muted" x="800" y="189">Alice 把结果发送给 Bob</text>
+  <text class="body muted" x="800" y="222">Bob 才知道该用哪个门</text>
+  <text class="math ink" x="800" y="270">I、X、Z 或 ZX</text>
+  <text class="body accent" x="800" y="299">校正后：Bob 得到原态</text>
+  <rect class="card2" x="38" y="341" width="1044" height="214" rx="15"/>
+  <text class="label ink" x="57" y="376">收到哪条消息，就选哪一行</text>
+  <text class="small muted" x="60" y="410">Alice 的结果</text>
+  <text class="small muted" x="312" y="410">Bob 校正前</text>
+  <text class="small muted" x="606" y="410">Bob 施加</text>
+  <text class="small muted" x="840" y="410">Bob 校正后</text>
+  <path class="rule" d="M57 419H1063"/>
+  <text class="mono ink" x="72" y="447">00</text><text class="math ink" x="327" y="447">ψ</text><text class="math ink" x="622" y="447">I</text><text class="math ink" x="857" y="447">ψ</text>
+  <text class="mono ink" x="72" y="478">01</text><text class="math ink" x="327" y="478">Xψ</text><text class="math ink" x="622" y="478">X</text><text class="math ink" x="857" y="478">ψ</text>
+  <text class="mono ink" x="72" y="509">10</text><text class="math ink" x="327" y="509">Zψ</text><text class="math ink" x="622" y="509">Z</text><text class="math ink" x="857" y="509">ψ</text>
+  <text class="mono ink" x="72" y="540">11</text><text class="math ink" x="327" y="540">XZψ</text><text class="math ink" x="622" y="540">ZX</text><text class="math ink" x="857" y="540">ψ</text>
+  <text class="small muted" x="38" y="599">经典消息到达前，Bob 只看到 I/2；“校正前的四行”是依 Alice 结果而定的条件态。</text>
+</svg>

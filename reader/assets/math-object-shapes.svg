@@ -2,9 +2,9 @@
   <title id="math-shapes-title">从 ket 到 bra：内积得到一个数，外积得到一个矩阵</title>
   <desc id="math-shapes-desc">例子使用归一化列向量 v 等于一除根号二乘以列向量 1、i。共轭转置后，bra 等于一除根号二乘以行向量 1、负 i。bra 乘 ket 为一乘一标量 1；ket 乘 bra 为二乘二矩阵，元素依次为 1、负 i、i、1，再整体除以 2。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f7fafc}.card{fill:#fff;stroke:#c6d6e2;stroke-width:2}.scal{fill:#eaf7f5;stroke:#3aa69e;stroke-width:2.5}.mat{fill:#f3effd;stroke:#8f77c6;stroke-width:2.5;stroke-dasharray:10 6}.ink{fill:#17324a}.sub{fill:#466278}.arrow{stroke:#5b7284;stroke-width:3;fill:none}.head{fill:#5b7284}.bracket{stroke:#17324a;stroke-width:3;fill:none}.title{font:700 30px system-ui,sans-serif}.section{font:650 26px system-ui,sans-serif}.math{font:500 31px system-ui,sans-serif}.small{font:400 20px system-ui,sans-serif}.mid{font:500 22px system-ui,sans-serif}
-    @media(prefers-color-scheme:dark){.bg{fill:#101b25}.card{fill:#192b39;stroke:#4d6578}.scal{fill:#173a3a;stroke:#69d2c7}.mat{fill:#302944;stroke:#c5b1f3}.ink{fill:#eef7ff}.sub{fill:#c4d7e6}.arrow{stroke:#b7cad8}.head{fill:#b7cad8}.bracket{stroke:#eef7ff}}
+    
   </style>
   <rect class="bg" width="1220" height="750" rx="26"/>
   <text class="title ink" x="45" y="57">先看形状，再做乘法</text>

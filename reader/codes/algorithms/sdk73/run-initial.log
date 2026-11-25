@@ -1,8 +1,8 @@
 Traceback (most recent call last):
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/algorithms/sdk73/validate_algorithms.py", line 189, in main
+  File "<REPO_ROOT>/codes/algorithms/sdk73/validate_algorithms.py", line 189, in main
     try: data=fn(); records[name]={'status':'passed','elapsed_seconds':time.time()-start,**data}
               ^^^^
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/algorithms/sdk73/validate_algorithms.py", line 98, in hhl_case
+  File "<REPO_ROOT>/codes/algorithms/sdk73/validate_algorithms.py", line 98, in hhl_case
     assert rows[4]['mixed_root_fidelity']>.995 and rows[4]['garbage_given_flag']<rows[1]['garbage_given_flag']
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError

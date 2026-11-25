@@ -40,7 +40,14 @@ const q2Answer = answerSections.find(s=>s.startsWith('量子力学 Q2\n'));
 const q3Answer = answerSections.find(s=>s.startsWith('量子力学 Q3\n'));
 const q4Answer = answerSections.find(s=>s.startsWith('量子力学 Q4\n'));
 assert.ok(!q1.includes('\\chi')&&!q1Answer.includes('\\chi'));
-assert.ok(q1.includes('\\theta_{\\rm g}')&&q1Answer.includes('\\theta_{\\rm g}'));
+assert.ok(
+  q1.includes('\\theta_{\\mathrm{g}}') && q1Answer.includes('\\theta_{\\mathrm{g}}'),
+  'Q1 prose and answers must use \\theta_{\\mathrm{g}}',
+);
+assert.ok(
+  !q1.includes('\\theta_{\\rm g}') && !q1Answer.includes('\\theta_{\\rm g}'),
+  'Legacy \\theta_{\\rm g} must not regress in Q1 prose or answers',
+);
 assert.ok(q1.includes('完全可区分')&&q1.includes('0.6')&&q1Answer.includes('0.8'));
 assert.ok(q1.includes('#4-局部操作不能单独揭示整个纠缠态'));
 const foundationMathChecks = [
@@ -67,5 +74,8 @@ const report = {generatedAt:new Date().toISOString(),reviewer:'primary agent',ch
   questions:counts.reduce((s,c)=>s+c.questions,0),answers:counts.reduce((s,c)=>s+c.answers,0),
   foundationArchivesAligned,foundationMathChecks:foundationMathChecks.length,
   globalPhaseProbabilityChecks:phaseChecks,counts,status:'passed'};
-await fs.writeFile(path.join(root,'work/research/qm-question-inventory.json'),JSON.stringify(report,null,2));
+const noWrite = process.argv.includes('--no-write') || process.argv.includes('--check-only');
+if (!noWrite) {
+  await fs.writeFile(path.join(root,'work/research/qm-question-inventory.json'),JSON.stringify(report,null,2));
+}
 console.log(JSON.stringify({...report,counts:undefined},null,2));

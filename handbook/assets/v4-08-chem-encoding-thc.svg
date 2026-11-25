@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">量子化学费米子编码与双因子化 THC 压缩结构</title>
+  <desc id="desc">左面板对比 N=8 轨道下 Jordan-Wigner 链式 O(N) 与 Bravyi-Kitaev Fenwick 树形 O(log₂ N) 的费米算符 Pauli 权重；右面板展示容错量子化学哈密顿量由朴素 O(N⁴) 经双因子化 DF 压缩至张量超收缩 THC（Õ(N) Toffoli 复杂度）的层级结构。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#ffffff;stroke:#d4cfc3;stroke-width:1.35}
+.subpanel{fill:#f5f2ea;stroke:#d8d3c6;stroke-width:1.15}
+.phead{fill:#edf3ef}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12.5px;font-weight:400;fill:#4a5f59}
+.sec{font-size:13.8px;font-weight:700;fill:#14453d}
+.lbl{font-size:12.5px;font-weight:500;fill:#1f3832}
+.lblb{font-size:12.5px;font-weight:700;fill:#122b25}
+.sm{font-size:12px;font-weight:400;fill:#435852}
+.smb{font-size:12px;font-weight:600;fill:#1b332d}
+.xs{font-size:11.5px;font-weight:500;fill:#485e58}
+.xsb{font-size:11.5px;font-weight:700;fill:#19312b}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:700;fill:#122b25}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#122b25}
+.axis{stroke:#243d37;stroke-width:1.6;fill:none}
+.axis-fill{fill:#243d37}
+.wire{stroke:#243d37;stroke-width:1.8;fill:none}
+.cwire{stroke:#5a706a;stroke-width:1.35;fill:none}
+.ctrl{fill:#14453d}
+.targ{fill:#ffffff;stroke:#14453d;stroke-width:1.9}
+.grid{stroke:#e3ded2;stroke-width:1;fill:none}
+.guide{stroke:#7e928c;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#687f78;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1f5a92;fill:none}
+.c1-fill{fill:#1f5a92}
+.c1-txt{fill:#174775}
+.c1-soft{fill:#e6f0fa;stroke:#1f5a92;stroke-width:1.4}
+.c2{stroke:#b3542d;fill:none}
+.c2-fill{fill:#b3542d}
+.c2-txt{fill:#96411e}
+.c2-soft{fill:#fbeae3;stroke:#b3542d;stroke-width:1.4}
+.c3{stroke:#14453d;fill:none}
+.c3-fill{fill:#14453d}
+.c3-txt{fill:#14453d}
+.c3-soft{fill:#e3f2ec;stroke:#14453d;stroke-width:1.4}
+.c4{stroke:#b07016;fill:none}
+.c4-fill{fill:#b07016}
+.c4-txt{fill:#8a550c}
+.c4-soft{fill:#fcf2db;stroke:#b07016;stroke-width:1.4}
+.c5{stroke:#644696;fill:none}
+.c5-fill{fill:#644696}
+.c5-txt{fill:#4e347a}
+.c5-soft{fill:#f0eaf9;stroke:#644696;stroke-width:1.4}
+.note{fill:#fdf6e6;stroke:#c89232;stroke-width:1.25}
+.pill{fill:#f4f0e6;stroke:#b7b0a2;stroke-width:1.15}
+.pill-bg{fill:#FAF8F3;fill-opacity:.95;stroke:#b7b0a2;stroke-width:1.1}
+.area1{fill:#1f5a92;fill-opacity:.13}
+.area2{fill:#b3542d;fill-opacity:.14}
+.area3{fill:#14453d;fill-opacity:.13}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.cc-r{fill:#b3542d;fill-opacity:.23;stroke:#b3542d;stroke-width:1.5}
+.cc-g{fill:#1c7a5e;fill-opacity:.22;stroke:#14453d;stroke-width:1.5}
+.cc-b{fill:#1f5a92;fill-opacity:.22;stroke:#1f5a92;stroke-width:1.5}
+.qnode{fill:#ffffff;stroke:#14453d;stroke-width:1.6}
+.qnode-err{fill:#b3542d;stroke:#ffffff;stroke-width:1.8}
+.qnode-hi{fill:#14453d;stroke:#ffffff;stroke-width:1.6}
+@media (prefers-color-scheme: dark) {
+  .bg{fill:#111917}
+  .panel{fill:#182420;stroke:#2f443d}
+  .subpanel{fill:#1d2b26;stroke:#354d45}
+  .phead{fill:#1c2b26}
+  .title,.sec,.lblb,.math-txt,.gate-txt{fill:#edf6f2}
+  .subtitle,.sm,.xs{fill:#a4bdb5}
+  .lbl,.smb,.xsb{fill:#d9ebe5}
+  .axis,.wire{stroke:#cde2db}
+  .axis-fill,.ctrl{fill:#d9ebe5}
+  .cwire{stroke:#8ea9a0}
+  .targ{fill:#182420;stroke:#d9ebe5}
+  .grid{stroke:#283b35}
+  .guide,.unit-circle{stroke:#708c83}
+  .c1{stroke:#74bdf5}
+  .c1-fill{fill:#74bdf5}
+  .c1-txt{fill:#96d0fa}
+  .c1-soft{fill:#17354d;stroke:#74bdf5}
+  .c2{stroke:#eb8863}
+  .c2-fill{fill:#eb8863}
+  .c2-txt{fill:#f5a789}
+  .c2-soft{fill:#47251a;stroke:#eb8863}
+  .c3{stroke:#5ed1ad}
+  .c3-fill{fill:#5ed1ad}
+  .c3-txt{fill:#84e3c5}
+  .c3-soft{fill:#163b31;stroke:#5ed1ad}
+  .c4{stroke:#f0bf5e}
+  .c4-fill{fill:#f0bf5e}
+  .c4-txt{fill:#f5cf84}
+  .c4-soft{fill:#3b2e14;stroke:#f0bf5e}
+  .c5{stroke:#b89ef2}
+  .c5-fill{fill:#b89ef2}
+  .c5-txt{fill:#cebbf7}
+  .c5-soft{fill:#2c2145;stroke:#b89ef2}
+  .note{fill:#2e2514;stroke:#d19c3d}
+  .pill{fill:#1f2e29;stroke:#476158}
+  .pill-bg{fill:#182420;fill-opacity:.95;stroke:#476158}
+  .area1{fill:#74bdf5;fill-opacity:.18}
+  .area2{fill:#eb8863;fill-opacity:.19}
+  .area3{fill:#5ed1ad;fill-opacity:.17}
+  .badge-txt{fill:#111917}
+  .cc-r{fill:#eb8863;fill-opacity:.28;stroke:#eb8863}
+  .cc-g{fill:#5ed1ad;fill-opacity:.25;stroke:#5ed1ad}
+  .cc-b{fill:#74bdf5;fill-opacity:.26;stroke:#74bdf5}
+  .qnode{fill:#182420;stroke:#d9ebe5}
+  .qnode-err{fill:#eb8863;stroke:#111917}
+  .qnode-hi{fill:#5ed1ad;stroke:#111917}
+}
+  </style>
+  <rect class="bg" width="960" height="460" rx="16"/>
+  <text class="title" x="22" y="34">量子化学费米子映射权重与双因子化 / THC 块编码压缩</text>
+  <text class="subtitle" x="22" y="54">左：Jordan–Wigner 链式 O(N) vs Bravyi–Kitaev Fenwick 树 O(log₂ N)；右：四指标积分由 O(N⁴) 压至 THC 的 Õ(N)</text>
+  <rect class="panel" x="20.0" y="68.0" width="444.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 32.0 69.0 H 452.0 Q 463.0 69.0 463.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
+  <line class="grid" x1="21.0" y1="99.0" x2="463.0" y2="99.0"/>
+  <text class="sec" x="33.0" y="89.5">1. 费米子映射权重：JW O(N) vs BK O(log₂ N)</text>
+  <rect class="subpanel" x="34" y="108" width="416" height="86" rx="9"/>
+  <text class="xsb c2-txt" x="46" y="126">Jordan–Wigner 链式（a₇† 权重 = N = 8）：串联全部前缀 Z</text>
+  <line class="c2" stroke-width="2.2" x1="60" y1="154" x2="410" y2="154"/>
+  <rect class="c2-soft" x="44" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="60" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="60" y="184" text-anchor="middle">q₀</text>
+  <rect class="c2-soft" x="94" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="110" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="110" y="184" text-anchor="middle">q₁</text>
+  <rect class="c2-soft" x="144" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="160" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="160" y="184" text-anchor="middle">q₂</text>
+  <rect class="c2-soft" x="194" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="210" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="210" y="184" text-anchor="middle">q₃</text>
+  <rect class="c2-soft" x="244" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="260" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="260" y="184" text-anchor="middle">q₄</text>
+  <rect class="c2-soft" x="294" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="310" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="310" y="184" text-anchor="middle">q₅</text>
+  <rect class="c2-soft" x="344" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c2-txt" x="360" y="158" text-anchor="middle">Z</text>
+  <text class="xs" x="360" y="184" text-anchor="middle">q₆</text>
+  <rect class="c3-soft" x="394" y="141" width="32" height="26" rx="5"/>
+  <text class="xsb c3-txt" x="410" y="158" text-anchor="middle">X,Y</text>
+  <text class="xs" x="410" y="184" text-anchor="middle">q₇</text>
+  <rect class="subpanel" x="34" y="202" width="416" height="140" rx="9"/>
+  <text class="xsb c3-txt" x="46" y="220">Bravyi–Kitaev Fenwick 树（a₇† 权重 = 4，仅涉 {q₃, q₅, q₆, q₇}）</text>
+  <line class="cwire" stroke-width="1.2" stroke-dasharray="3 3" x1="60" y1="318" x2="110" y2="294"/>
+  <line class="cwire" stroke-width="1.2" stroke-dasharray="3 3" x1="110" y1="294" x2="210" y2="270"/>
+  <line class="cwire" stroke-width="1.2" stroke-dasharray="3 3" x1="160" y1="318" x2="210" y2="270"/>
+  <line class="cwire" stroke-width="1.2" stroke-dasharray="3 3" x1="260" y1="318" x2="310" y2="294"/>
+  <line class="c1" stroke-width="2.1" x1="210" y1="270" x2="410" y2="246"/>
+  <line class="c1" stroke-width="2.1" x1="310" y1="294" x2="410" y2="246"/>
+  <line class="c1" stroke-width="2.1" x1="360" y1="318" x2="410" y2="246"/>
+  <rect class="pill" x="44" y="307" width="32" height="22" rx="5"/>
+  <text class="xs" x="60" y="322" text-anchor="middle">0:I</text>
+  <rect class="pill" x="94" y="283" width="32" height="22" rx="5"/>
+  <text class="xs" x="110" y="298" text-anchor="middle">1:I</text>
+  <rect class="pill" x="144" y="307" width="32" height="22" rx="5"/>
+  <text class="xs" x="160" y="322" text-anchor="middle">2:I</text>
+  <rect class="c1-soft" x="194" y="259" width="32" height="22" rx="5"/>
+  <text class="xsb c1-txt" x="210" y="274" text-anchor="middle">3:Z</text>
+  <rect class="pill" x="244" y="307" width="32" height="22" rx="5"/>
+  <text class="xs" x="260" y="322" text-anchor="middle">4:I</text>
+  <rect class="c1-soft" x="294" y="283" width="32" height="22" rx="5"/>
+  <text class="xsb c1-txt" x="310" y="298" text-anchor="middle">5:Z</text>
+  <rect class="c1-soft" x="344" y="307" width="32" height="22" rx="5"/>
+  <text class="xsb c1-txt" x="360" y="322" text-anchor="middle">6:Z</text>
+  <rect class="c3-soft" x="391" y="235" width="38" height="22" rx="5"/>
+  <text class="xsb c3-txt" x="410" y="250" text-anchor="middle">7:XY</text>
+  <rect class="pill-bg" x="44" y="227" width="144" height="44" rx="7"/>
+  <text class="xsb c1-txt" x="52" y="245">P(7) = q₃ ⊕ q₅ ⊕ q₆</text>
+  <text class="xs" x="52" y="263">跳过 q₀–q₂, q₄（省半）</text>
+  <rect class="c2-soft" x="34" y="350" width="134" height="44" rx="7"/>
+  <text class="xsb c2-txt" x="101" y="367" text-anchor="middle">JW 映射</text>
+  <text class="xs" x="101" y="385" text-anchor="middle">占据局域 · 宇称 O(N)</text>
+  <rect class="c4-soft" x="175" y="350" width="134" height="44" rx="7"/>
+  <text class="xsb c4-txt" x="242" y="367" text-anchor="middle">Parity 映射</text>
+  <text class="xs" x="242" y="385" text-anchor="middle">宇称局域 · 占据 O(N)</text>
+  <rect class="c3-soft" x="316" y="350" width="134" height="44" rx="7"/>
+  <text class="xsb c3-txt" x="383" y="367" text-anchor="middle">BK 映射</text>
+  <text class="xs" x="383" y="385" text-anchor="middle">双者均衡 O(log₂ N)</text>
+  <rect class="note" x="34.0" y="404.0" width="416.0" height="30.0" rx="8"/>
+  <text class="xsb" x="242.0" y="423.2" text-anchor="middle">BK 树形折中显著缩短泡利串长度，降低单步演化与测量电路深度</text>
+  <rect class="panel" x="478.0" y="68.0" width="462.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 490.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 479.0 V 80.0 Q 479.0 69.0 490.0 69.0 Z"/>
+  <line class="grid" x1="479.0" y1="99.0" x2="939.0" y2="99.0"/>
+  <text class="sec" x="491.0" y="89.5">2. 容错化学哈密顿量压缩：O(N⁴) → DF → THC Õ(N)</text>
+  <rect class="c2-soft" x="492" y="108" width="434" height="76" rx="9"/>
+  <line class="c2" stroke-width="1.7" x1="514" y1="126" x2="540" y2="140"/>
+  <line class="c2" stroke-width="1.7" x1="514" y1="166" x2="540" y2="152"/>
+  <line class="c2" stroke-width="1.7" x1="618" y1="126" x2="592" y2="140"/>
+  <line class="c2" stroke-width="1.7" x1="618" y1="166" x2="592" y2="152"/>
+  <rect class="pill-bg" x="536" y="132" width="60" height="28" rx="6"/>
+  <text class="xsb c2-txt" x="566" y="150" text-anchor="middle">h_pqrs</text>
+  <text class="xs c2-txt" x="506" y="128">p</text>
+  <text class="xs c2-txt" x="506" y="172">q</text>
+  <text class="xs c2-txt" x="622" y="128">r</text>
+  <text class="xs c2-txt" x="622" y="172">s</text>
+  <text class="smb c2-txt" x="646" y="128">① 朴素稀疏四指标积分（Sparse）</text>
+  <text class="xs" x="646" y="149">独立项数：O(N⁴)   |   1-范数 λ：O(N²–N³)</text>
+  <text class="xsb c2-txt" x="646" y="170">块编码：Õ(N²–N⁴) Toffoli（基线对照）</text>
+  <line class="c1" stroke-width="1.90" x1="566.00" y1="185.00" x2="566.00" y2="205.15"/>
+  <polygon class="c1-fill" points="566.00,209.00 562.70,202.00 569.30,202.00"/>
+  <text class="xsb c1-txt" x="580" y="202">Cholesky 分解 + 轨道酉旋转 U^(ℓ)（O(N) Givens 门）</text>
+  <rect class="c1-soft" x="492" y="211" width="434" height="78" rx="9"/>
+  <line class="c1" stroke-width="2.0" x1="546" y1="248" x2="586" y2="248"/>
+  <rect class="pill-bg" x="504" y="234" width="44" height="28" rx="6"/>
+  <text class="xsb c1-txt" x="526" y="252" text-anchor="middle">L_pq</text>
+  <rect class="pill-bg" x="584" y="234" width="44" height="28" rx="6"/>
+  <text class="xsb c1-txt" x="606" y="252" text-anchor="middle">L_rs</text>
+  <text class="xsb c1-txt" x="566" y="241" text-anchor="middle">ℓ</text>
+  <text class="xs c1-txt" x="566" y="278" text-anchor="middle">L_DF = O(N)</text>
+  <text class="smb c1-txt" x="646" y="231">② 双因子化（DF / 正则化 RC-DF）</text>
+  <text class="xs" x="646" y="252">参数：O(N²–N³)   |   1-范数 λ：O(N^1.5)</text>
+  <text class="xsb c1-txt" x="646" y="273">块编码：Õ(N^1.5–N²) Toffoli（P450 主力）</text>
+  <line class="c3" stroke-width="1.90" x1="566.00" y1="290.00" x2="566.00" y2="310.15"/>
+  <polygon class="c3-fill" points="566.00,314.00 562.70,307.00 569.30,307.00"/>
+  <text class="xsb c3-txt" x="580" y="307">引入 M_THC = O(N) 非正交辅助格点 + 一元迭代 QROM</text>
+  <rect class="c3-soft" x="492" y="316" width="434" height="78" rx="9"/>
+  <line class="c3" stroke-width="1.9" x1="538" y1="353" x2="594" y2="353"/>
+  <rect class="pill-bg" x="502" y="340" width="38" height="26" rx="5"/>
+  <text class="xsb c3-txt" x="521" y="357" text-anchor="middle">χ_μ</text>
+  <rect class="c3-fill" x="548" y="339" width="36" height="28" rx="6"/>
+  <text class="badge-txt" x="566" y="357" text-anchor="middle">ζ_μν</text>
+  <rect class="pill-bg" x="592" y="340" width="38" height="26" rx="5"/>
+  <text class="xsb c3-txt" x="611" y="357" text-anchor="middle">χ_ν</text>
+  <text class="xs c3-txt" x="566" y="383" text-anchor="middle">双指标核 ζ_μν</text>
+  <text class="smb c3-txt" x="646" y="336">③ 张量超收缩（THC，渐近最优）</text>
+  <text class="xs" x="646" y="357">参数：O(N²)     |     1-范数 λ：O(N–N^1.5)</text>
+  <text class="xsb c3-txt" x="646" y="378">块编码：Õ(N) Toffoli（FeMoco ≈ 3.2×10¹⁰）</text>
+  <rect class="note" x="492.0" y="404.0" width="434.0" height="30.0" rx="8"/>
+  <text class="xsb" x="709.0" y="423.2" text-anchor="middle">总容错 QPE 代价 ∝ λ · Cost_BE / ε；DF/THC 将开销压低数个数量级</text>
+</svg>

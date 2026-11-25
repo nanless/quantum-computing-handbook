@@ -635,7 +635,7 @@
     "tomography": {
       "status": "failed",
       "error": "",
-      "traceback": "Traceback (most recent call last):\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk/validate_sdks.py\", line 218, in main\n    try:report['cases'][name]={'status':'passed','result':pack(fn())};print(name,'passed',flush=True)\n                                                               ^^^^\n  File \"/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/foundations/sdk/validate_sdks.py\", line 134, in tomography\n    assert np.max(abs(direct-fit))<.003  # PSD rescaling may move the linear inverse slightly.\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+      "traceback": "Traceback (most recent call last):\n  File \"<REPO_ROOT>/codes/foundations/sdk/validate_sdks.py\", line 218, in main\n    try:report['cases'][name]={'status':'passed','result':pack(fn())};print(name,'passed',flush=True)\n                                                               ^^^^\n  File \"<REPO_ROOT>/codes/foundations/sdk/validate_sdks.py\", line 134, in tomography\n    assert np.max(abs(direct-fit))<.003  # PSD rescaling may move the linear inverse slightly.\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
     },
     "qutip": {
       "status": "passed",

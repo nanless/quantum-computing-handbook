@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">奇异值分解几何椭圆与读出条件数噪声放大</title>
+  <desc id="desc">左面板在等比例平面绘制单位圆经实剪切矩阵 A = [[1,1],[0,1]] = WΣV† 的变换：先按右奇异基 V† 对齐，再沿主轴按黄金分割奇异值 σ₁ = φ ≈ 1.618 与 σ₂ = φ⁻¹ ≈ 0.618 拉伸压扁，最后经 W 旋成倾斜椭圆（κ₂ ≈ 2.618）。右面板对比对称读出矩阵 A(0.05)（κ₂ ≈ 1.11）与糟糕读出 A(0.45)（κ₂ = 10）的压缩椭圆，展示 1% 观测扰动 δq 反演放大倍数。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.0}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.c5{stroke:#6b4ea8;fill:none}
+.c5-fill{fill:#6b4ea8}
+.c5-txt{fill:#51358a}
+.c5-soft{fill:#efe9fb;stroke:#6b4ea8;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.14}
+.area3{fill:#1e7a5c;fill-opacity:.15}
+.area4{fill:#b57614;fill-opacity:.13}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.4}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.hm-pos1{fill:#1b6ca8;stroke:#ffffff;stroke-width:1.4}
+.hm-pos2{fill:#2d82bf;stroke:#ffffff;stroke-width:1.4}
+.hm-pos3{fill:#f3b562;stroke:#ffffff;stroke-width:1.4}
+.hm-neg3{fill:#d96b57;stroke:#ffffff;stroke-width:1.4}
+.hm-zero{fill:#edf2f7;stroke:#cbd5e1;stroke-width:1.1}
+.hm-hi{fill:none;stroke:#b57614;stroke-width:2.0;stroke-dasharray:4 2}
+.hm-inv{fill:#ffffff;font-size:10.5px;font-weight:700}
+.hm-dark{fill:#13263a;font-size:10.5px;font-weight:700}
+.hm-muted{fill:#64748b;font-size:10.5px;font-weight:500}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .c5{stroke:#b79ef5}
+  .c5-fill{fill:#b79ef5}
+  .c5-txt{fill:#cbb8fa}
+  .c5-soft{fill:#2d2147;stroke:#b79ef5}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.17}
+  .area2{fill:#f28872;fill-opacity:.18}
+  .area3{fill:#5dd1a8;fill-opacity:.18}
+  .area4{fill:#f0ba5a;fill-opacity:.17}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .badge-txt{fill:#0f1720}
+  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
+  .hm-pos2{fill:#3a92cc;stroke:#16222e}
+  .hm-pos3{fill:#b87a24;stroke:#16222e}
+  .hm-neg3{fill:#b84b3a;stroke:#16222e}
+  .hm-zero{fill:#213243;stroke:#354c61}
+  .hm-hi{stroke:#f0ba5a}
+  .hm-inv{fill:#ffffff}
+  .hm-dark{fill:#eef6ff}
+  .hm-muted{fill:#8fa9c2}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">奇异值分解（SVD）几何椭圆与条件数噪声放大</text>
+  <text class="subtitle" x="34" y="76">左：A = WΣV† 把单位圆经旋转—拉伸—再旋转映为倾斜椭圆；右：条件数 κ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = σ<tspan dy="3" font-size="74%">max</tspan><tspan dy="-3">&#8203;</tspan>/σ<tspan dy="3" font-size="74%">min</tspan><tspan dy="-3">&#8203;</tspan> 决定反演对观测扰动 δq 的放大倍率</text>
+  <rect class="panel" x="28" y="94" width="472" height="458" rx="14"/>
+  <path class="phead" d="M 42 95 H 486 Q 499 95 499 108 V 130 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="130" x2="499" y2="130"/>
+  <text class="sec" x="44" y="117">剪切阵 A = [[1,1],[0,1]] 的 SVD 几何分解（等比例）</text>
+  <rect class="panel" x="516" y="94" width="456" height="458" rx="14"/>
+  <path class="phead" d="M 530 95 H 958 Q 971 95 971 108 V 130 H 517 V 108 Q 517 95 530 95 Z"/>
+  <line class="grid" x1="517" y1="130" x2="971" y2="130"/>
+  <text class="sec" x="532" y="117">条件数 κ₂ 对照：读出矩阵压缩椭圆与扰动放大</text>
+  <line class="grid" x1="110" y1="154" x2="110" y2="432"/>
+  <line class="grid" x1="184" y1="154" x2="184" y2="432"/>
+  <line class="grid" x1="56" y1="368" x2="474" y2="368"/>
+  <line class="grid" x1="332" y1="154" x2="332" y2="432"/>
+  <line class="grid" x1="56" y1="220" x2="474" y2="220"/>
+  <line class="grid" x1="406" y1="154" x2="406" y2="432"/>
+  <line class="axis" x1="56" y1="294" x2="474" y2="294"/>
+  <polygon class="axis-fill" points="474,294 467,297.22 467,290.78"/>
+  <line class="axis" x1="258" y1="432" x2="258" y2="152"/>
+  <polygon class="axis-fill" points="258,152 261.22,159 254.78,159"/>
+  <text class="xs" x="472" y="310" text-anchor="end">x₁ (无量纲)</text>
+  <text class="xs" x="266" y="160">x₂ (无量纲)</text>
+  <path class="area1" d="M 332 294 L 335.16 290.77 L 338.17 287.55 L 341.03 284.34 L 343.73 281.15 L 346.26 277.98 L 348.63 274.85 L 350.83 271.75 L 352.85 268.69 L 354.69 265.68 L 356.34 262.73 L 357.81 259.83 L 359.09 257 L 360.17 254.24 L 361.06 251.56 L 361.76 248.95 L 362.25 246.43 L 362.55 244.01 L 362.65 241.67 L 362.55 239.44 L 362.25 237.31 L 361.76 235.29 L 361.06 233.38 L 360.17 231.59 L 359.09 229.91 L 357.81 228.36 L 356.34 226.93 L 354.69 225.63 L 352.85 224.46 L 350.83 223.42 L 348.63 222.52 L 346.26 221.75 L 343.73 221.12 L 341.03 220.63 L 338.17 220.28 L 335.16 220.07 L 332 220 L 328.7 220.07 L 325.27 220.28 L 321.71 220.63 L 318.03 221.12 L 314.23 221.75 L 310.33 222.52 L 306.32 223.42 L 302.23 224.46 L 298.05 225.63 L 293.79 226.93 L 289.47 228.36 L 285.09 229.91 L 280.65 231.59 L 276.17 233.38 L 271.66 235.29 L 267.12 237.31 L 262.56 239.44 L 258 241.67 L 253.44 244.01 L 248.88 246.43 L 244.34 248.95 L 239.83 251.56 L 235.35 254.24 L 230.91 257 L 226.53 259.83 L 222.21 262.73 L 217.95 265.68 L 213.77 268.69 L 209.68 271.75 L 205.67 274.85 L 201.77 277.98 L 197.97 281.15 L 194.29 284.34 L 190.73 287.55 L 187.3 290.77 L 184 294 L 180.84 297.23 L 177.83 300.45 L 174.97 303.66 L 172.27 306.85 L 169.74 310.02 L 167.37 313.15 L 165.17 316.25 L 163.15 319.31 L 161.31 322.32 L 159.66 325.27 L 158.19 328.17 L 156.91 331 L 155.83 333.76 L 154.94 336.44 L 154.24 339.05 L 153.75 341.57 L 153.45 343.99 L 153.35 346.33 L 153.45 348.56 L 153.75 350.69 L 154.24 352.71 L 154.94 354.62 L 155.83 356.41 L 156.91 358.09 L 158.19 359.64 L 159.66 361.07 L 161.31 362.37 L 163.15 363.54 L 165.17 364.58 L 167.37 365.48 L 169.74 366.25 L 172.27 366.88 L 174.97 367.37 L 177.83 367.72 L 180.84 367.93 L 184 368 L 187.3 367.93 L 190.73 367.72 L 194.29 367.37 L 197.97 366.88 L 201.77 366.25 L 205.67 365.48 L 209.68 364.58 L 213.77 363.54 L 217.95 362.37 L 222.21 361.07 L 226.53 359.64 L 230.91 358.09 L 235.35 356.41 L 239.83 354.62 L 244.34 352.71 L 248.88 350.69 L 253.44 348.56 L 258 346.33 L 262.56 343.99 L 267.12 341.57 L 271.66 339.05 L 276.17 336.44 L 280.65 333.76 L 285.09 331 L 289.47 328.17 L 293.79 325.27 L 298.05 322.32 L 302.23 319.31 L 306.32 316.25 L 310.33 313.15 L 314.23 310.02 L 318.03 306.85 L 321.71 303.66 L 325.27 300.45 L 328.7 297.23 L 332 294 Z"/>
+  <circle class="unit-circle" cx="258" cy="294" r="74"/>
+  <path class="c1" stroke-width="2.6" d="M 332 294 L 335.16 290.77 L 338.17 287.55 L 341.03 284.34 L 343.73 281.15 L 346.26 277.98 L 348.63 274.85 L 350.83 271.75 L 352.85 268.69 L 354.69 265.68 L 356.34 262.73 L 357.81 259.83 L 359.09 257 L 360.17 254.24 L 361.06 251.56 L 361.76 248.95 L 362.25 246.43 L 362.55 244.01 L 362.65 241.67 L 362.55 239.44 L 362.25 237.31 L 361.76 235.29 L 361.06 233.38 L 360.17 231.59 L 359.09 229.91 L 357.81 228.36 L 356.34 226.93 L 354.69 225.63 L 352.85 224.46 L 350.83 223.42 L 348.63 222.52 L 346.26 221.75 L 343.73 221.12 L 341.03 220.63 L 338.17 220.28 L 335.16 220.07 L 332 220 L 328.7 220.07 L 325.27 220.28 L 321.71 220.63 L 318.03 221.12 L 314.23 221.75 L 310.33 222.52 L 306.32 223.42 L 302.23 224.46 L 298.05 225.63 L 293.79 226.93 L 289.47 228.36 L 285.09 229.91 L 280.65 231.59 L 276.17 233.38 L 271.66 235.29 L 267.12 237.31 L 262.56 239.44 L 258 241.67 L 253.44 244.01 L 248.88 246.43 L 244.34 248.95 L 239.83 251.56 L 235.35 254.24 L 230.91 257 L 226.53 259.83 L 222.21 262.73 L 217.95 265.68 L 213.77 268.69 L 209.68 271.75 L 205.67 274.85 L 201.77 277.98 L 197.97 281.15 L 194.29 284.34 L 190.73 287.55 L 187.3 290.77 L 184 294 L 180.84 297.23 L 177.83 300.45 L 174.97 303.66 L 172.27 306.85 L 169.74 310.02 L 167.37 313.15 L 165.17 316.25 L 163.15 319.31 L 161.31 322.32 L 159.66 325.27 L 158.19 328.17 L 156.91 331 L 155.83 333.76 L 154.94 336.44 L 154.24 339.05 L 153.75 341.57 L 153.45 343.99 L 153.35 346.33 L 153.45 348.56 L 153.75 350.69 L 154.24 352.71 L 154.94 354.62 L 155.83 356.41 L 156.91 358.09 L 158.19 359.64 L 159.66 361.07 L 161.31 362.37 L 163.15 363.54 L 165.17 364.58 L 167.37 365.48 L 169.74 366.25 L 172.27 366.88 L 174.97 367.37 L 177.83 367.72 L 180.84 367.93 L 184 368 L 187.3 367.93 L 190.73 367.72 L 194.29 367.37 L 197.97 366.88 L 201.77 366.25 L 205.67 365.48 L 209.68 364.58 L 213.77 363.54 L 217.95 362.37 L 222.21 361.07 L 226.53 359.64 L 230.91 358.09 L 235.35 356.41 L 239.83 354.62 L 244.34 352.71 L 248.88 350.69 L 253.44 348.56 L 258 346.33 L 262.56 343.99 L 267.12 341.57 L 271.66 339.05 L 276.17 336.44 L 280.65 333.76 L 285.09 331 L 289.47 328.17 L 293.79 325.27 L 298.05 322.32 L 302.23 319.31 L 306.32 316.25 L 310.33 313.15 L 314.23 310.02 L 318.03 306.85 L 321.71 303.66 L 325.27 300.45 L 328.7 297.23 L 332 294 Z"/>
+  <line class="c3" stroke-width="1.9" stroke-dasharray="5 3" x1="258" y1="294" x2="296.9" y2="231.05"/>
+  <polygon class="c3-fill" points="296.9,231.05 296.03,238.15 290.94,235.01"/>
+  <text class="xsb c3-txt" x="294.9" y="216.05" text-anchor="end">|v<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <line class="c3" stroke-width="1.9" stroke-dasharray="5 3" x1="258" y1="294" x2="195.05" y2="255.1"/>
+  <polygon class="c3-fill" points="195.05,255.1 202.15,255.97 199.01,261.06"/>
+  <text class="xsb c3-txt" x="187.05" y="247.1" text-anchor="end">|v<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <line class="c1" stroke-width="3.0" x1="258" y1="294" x2="359.85" y2="231.05"/>
+  <polygon class="c1-fill" points="359.85,231.05 354.98,238.39 351.11,232.13"/>
+  <line class="c2" stroke-width="2.8" x1="258" y1="294" x2="233.96" y2="255.1"/>
+  <polygon class="c2-fill" points="233.96,255.1 240.83,259.66 234.96,263.29"/>
+  <rect class="pill-bg" x="348" y="164" width="136" height="44" rx="7"/>
+  <text class="xsb c1-txt" x="416" y="180" text-anchor="middle">长半轴 σ<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan>|w<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <text class="xs c1-txt" x="416" y="200" text-anchor="middle">σ<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan> = φ ≈ 1.618</text>
+  <line class="guide" x1="382" y1="208" x2="355.85" y2="227.05"/>
+  <rect class="pill-bg" x="46" y="164" width="136" height="44" rx="7"/>
+  <text class="xsb c2-txt" x="114" y="180" text-anchor="middle">短半轴 σ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan>|w<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <text class="xs c2-txt" x="114" y="200" text-anchor="middle">σ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = φ<tspan dy="-4.5" font-size="74%">−1</tspan><tspan dy="4.5">&#8203;</tspan> ≈ 0.618</text>
+  <line class="guide" x1="162" y1="208" x2="230.96" y2="253.1"/>
+  <text class="xs" x="150" y="388" text-anchor="end">单位圆 ‖v‖ = 1</text>
+  <text class="xs c1-txt" x="372" y="392">像椭圆 A·S¹</text>
+  <rect class="subpanel" x="42" y="446" width="444" height="48" rx="9"/>
+  <rect class="c3-soft" x="52" y="453" width="92" height="34" rx="6"/>
+  <text class="xsb c3-txt" x="98" y="467" text-anchor="middle">① V† 旋转</text>
+  <text class="xs" x="98" y="481" text-anchor="middle">对齐奇异基</text>
+  <rect class="c1-soft" x="170" y="453" width="146" height="34" rx="6"/>
+  <text class="xsb c1-txt" x="243" y="467" text-anchor="middle">② Σ 拉伸压扁</text>
+  <text class="xs" x="243" y="481" text-anchor="middle">σ₁≈1.618, σ₂≈0.618</text>
+  <rect class="c2-soft" x="342" y="453" width="134" height="34" rx="6"/>
+  <text class="xsb c2-txt" x="409" y="467" text-anchor="middle">③ W 旋转输出</text>
+  <text class="xs" x="409" y="481" text-anchor="middle">映成倾斜椭圆</text>
+  <line class="axis" stroke-width="1.5" x1="146" y1="470" x2="167" y2="470"/>
+  <polygon class="axis-fill" points="168,470 162.5,472.53 162.5,467.47"/>
+  <line class="axis" stroke-width="1.5" x1="318" y1="470" x2="339" y2="470"/>
+  <polygon class="axis-fill" points="340,470 334.5,472.53 334.5,467.47"/>
+  <rect class="note" x="42" y="504" width="444" height="34" rx="8"/>
+  <text class="xs" x="264" y="525" text-anchor="middle">剪切阵条件数 κ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan>(A) = σ<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan>/σ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = φ<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> ≈ 2.618（矩阵非正规，但 SVD 始终存在）</text>
+  <line class="axis" stroke-width="1.4" x1="628" y1="266" x2="862" y2="266"/>
+  <polygon class="axis-fill" points="862,266 855.5,268.99 855.5,263.01"/>
+  <line class="axis" stroke-width="1.4" x1="744" y1="376" x2="744" y2="154"/>
+  <polygon class="axis-fill" points="744,154 746.99,160.5 741.01,160.5"/>
+  <text class="xs" x="862" y="281" text-anchor="end">q<tspan dy="3" font-size="74%">0</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs" x="752" y="160">q<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <circle class="unit-circle" cx="744" cy="266" r="90"/>
+  <path class="area3" d="M 829.5 261.5 L 829.62 257.03 L 829.5 252.59 L 829.15 248.18 L 828.57 243.82 L 827.75 239.52 L 826.71 235.3 L 825.43 231.16 L 823.94 227.11 L 822.22 223.17 L 820.3 219.35 L 818.16 215.66 L 815.82 212.1 L 813.28 208.7 L 810.55 205.45 L 807.64 202.36 L 804.55 199.45 L 801.3 196.72 L 797.9 194.18 L 794.34 191.84 L 790.65 189.7 L 786.83 187.78 L 782.89 186.06 L 778.84 184.57 L 774.7 183.29 L 770.48 182.25 L 766.18 181.43 L 761.82 180.85 L 757.41 180.5 L 752.97 180.38 L 748.5 180.5 L 744.02 180.85 L 739.54 181.44 L 735.07 182.26 L 730.63 183.3 L 726.22 184.58 L 721.86 186.08 L 717.56 187.79 L 713.33 189.72 L 709.19 191.86 L 705.15 194.2 L 701.21 196.74 L 697.38 199.47 L 693.69 202.39 L 690.13 205.47 L 686.72 208.72 L 683.47 212.13 L 680.39 215.69 L 677.47 219.38 L 674.74 223.21 L 672.2 227.15 L 669.86 231.19 L 667.72 235.33 L 665.79 239.56 L 664.08 243.86 L 662.58 248.22 L 661.3 252.63 L 660.26 257.07 L 659.44 261.54 L 658.85 266.02 L 658.5 270.5 L 658.38 274.97 L 658.5 279.41 L 658.85 283.82 L 659.43 288.18 L 660.25 292.48 L 661.29 296.7 L 662.57 300.84 L 664.06 304.89 L 665.78 308.83 L 667.7 312.65 L 669.84 316.34 L 672.18 319.9 L 674.72 323.3 L 677.45 326.55 L 680.36 329.64 L 683.45 332.55 L 686.7 335.28 L 690.1 337.82 L 693.66 340.16 L 697.35 342.3 L 701.17 344.22 L 705.11 345.94 L 709.16 347.43 L 713.3 348.71 L 717.52 349.75 L 721.82 350.57 L 726.18 351.15 L 730.59 351.5 L 735.03 351.62 L 739.5 351.5 L 743.98 351.15 L 748.46 350.56 L 752.93 349.74 L 757.37 348.7 L 761.78 347.42 L 766.14 345.92 L 770.44 344.21 L 774.67 342.28 L 778.81 340.14 L 782.85 337.8 L 786.79 335.26 L 790.62 332.53 L 794.31 329.61 L 797.87 326.53 L 801.28 323.28 L 804.53 319.87 L 807.61 316.31 L 810.53 312.62 L 813.26 308.79 L 815.8 304.85 L 818.14 300.81 L 820.28 296.67 L 822.21 292.44 L 823.92 288.14 L 825.42 283.78 L 826.7 279.37 L 827.74 274.93 L 828.56 270.46 L 829.15 265.98 L 829.5 261.5 Z"/>
+  <path class="c3" stroke-width="2.3" d="M 829.5 261.5 L 829.62 257.03 L 829.5 252.59 L 829.15 248.18 L 828.57 243.82 L 827.75 239.52 L 826.71 235.3 L 825.43 231.16 L 823.94 227.11 L 822.22 223.17 L 820.3 219.35 L 818.16 215.66 L 815.82 212.1 L 813.28 208.7 L 810.55 205.45 L 807.64 202.36 L 804.55 199.45 L 801.3 196.72 L 797.9 194.18 L 794.34 191.84 L 790.65 189.7 L 786.83 187.78 L 782.89 186.06 L 778.84 184.57 L 774.7 183.29 L 770.48 182.25 L 766.18 181.43 L 761.82 180.85 L 757.41 180.5 L 752.97 180.38 L 748.5 180.5 L 744.02 180.85 L 739.54 181.44 L 735.07 182.26 L 730.63 183.3 L 726.22 184.58 L 721.86 186.08 L 717.56 187.79 L 713.33 189.72 L 709.19 191.86 L 705.15 194.2 L 701.21 196.74 L 697.38 199.47 L 693.69 202.39 L 690.13 205.47 L 686.72 208.72 L 683.47 212.13 L 680.39 215.69 L 677.47 219.38 L 674.74 223.21 L 672.2 227.15 L 669.86 231.19 L 667.72 235.33 L 665.79 239.56 L 664.08 243.86 L 662.58 248.22 L 661.3 252.63 L 660.26 257.07 L 659.44 261.54 L 658.85 266.02 L 658.5 270.5 L 658.38 274.97 L 658.5 279.41 L 658.85 283.82 L 659.43 288.18 L 660.25 292.48 L 661.29 296.7 L 662.57 300.84 L 664.06 304.89 L 665.78 308.83 L 667.7 312.65 L 669.84 316.34 L 672.18 319.9 L 674.72 323.3 L 677.45 326.55 L 680.36 329.64 L 683.45 332.55 L 686.7 335.28 L 690.1 337.82 L 693.66 340.16 L 697.35 342.3 L 701.17 344.22 L 705.11 345.94 L 709.16 347.43 L 713.3 348.71 L 717.52 349.75 L 721.82 350.57 L 726.18 351.15 L 730.59 351.5 L 735.03 351.62 L 739.5 351.5 L 743.98 351.15 L 748.46 350.56 L 752.93 349.74 L 757.37 348.7 L 761.78 347.42 L 766.14 345.92 L 770.44 344.21 L 774.67 342.28 L 778.81 340.14 L 782.85 337.8 L 786.79 335.26 L 790.62 332.53 L 794.31 329.61 L 797.87 326.53 L 801.28 323.28 L 804.53 319.87 L 807.61 316.31 L 810.53 312.62 L 813.26 308.79 L 815.8 304.85 L 818.14 300.81 L 820.28 296.67 L 822.21 292.44 L 823.92 288.14 L 825.42 283.78 L 826.7 279.37 L 827.74 274.93 L 828.56 270.46 L 829.15 265.98 L 829.5 261.5 Z"/>
+  <path class="area2" d="M 793.5 225.5 L 795.55 222.96 L 797.46 220.55 L 799.23 218.26 L 800.84 216.09 L 802.3 214.07 L 803.59 212.19 L 804.73 210.45 L 805.69 208.87 L 806.49 207.44 L 807.12 206.18 L 807.57 205.07 L 807.85 204.14 L 807.96 203.37 L 807.89 202.78 L 807.64 202.36 L 807.22 202.11 L 806.63 202.04 L 805.86 202.15 L 804.93 202.43 L 803.82 202.88 L 802.56 203.51 L 801.13 204.31 L 799.55 205.27 L 797.81 206.41 L 795.93 207.7 L 793.91 209.16 L 791.74 210.77 L 789.45 212.54 L 787.04 214.45 L 784.5 216.5 L 781.85 218.69 L 779.1 221 L 776.26 223.45 L 773.32 226 L 770.31 228.67 L 767.22 231.44 L 764.07 234.3 L 760.87 237.25 L 757.61 240.28 L 754.32 243.38 L 751.01 246.54 L 747.67 249.76 L 744.32 253.02 L 740.98 256.31 L 737.64 259.64 L 734.31 262.98 L 731.02 266.32 L 727.76 269.67 L 724.54 273.01 L 721.38 276.32 L 718.28 279.61 L 715.25 282.87 L 712.3 286.07 L 709.44 289.22 L 706.67 292.31 L 704 295.32 L 701.45 298.26 L 699 301.1 L 696.69 303.85 L 694.5 306.5 L 692.45 309.04 L 690.54 311.45 L 688.77 313.74 L 687.16 315.91 L 685.7 317.93 L 684.41 319.81 L 683.27 321.55 L 682.31 323.13 L 681.51 324.56 L 680.88 325.82 L 680.43 326.93 L 680.15 327.86 L 680.04 328.63 L 680.11 329.22 L 680.36 329.64 L 680.78 329.89 L 681.37 329.96 L 682.14 329.85 L 683.07 329.57 L 684.18 329.12 L 685.44 328.49 L 686.87 327.69 L 688.45 326.73 L 690.19 325.59 L 692.07 324.3 L 694.09 322.84 L 696.26 321.23 L 698.55 319.46 L 700.96 317.55 L 703.5 315.5 L 706.15 313.31 L 708.9 311 L 711.74 308.55 L 714.68 306 L 717.69 303.33 L 720.78 300.56 L 723.93 297.7 L 727.13 294.75 L 730.39 291.72 L 733.68 288.62 L 736.99 285.46 L 740.33 282.24 L 743.68 278.98 L 747.02 275.69 L 750.36 272.36 L 753.69 269.02 L 756.98 265.68 L 760.24 262.33 L 763.46 258.99 L 766.62 255.68 L 769.72 252.39 L 772.75 249.13 L 775.7 245.93 L 778.56 242.78 L 781.33 239.69 L 784 236.68 L 786.55 233.74 L 789 230.9 L 791.31 228.15 L 793.5 225.5 Z"/>
+  <path class="c2" stroke-width="2.6" stroke-dasharray="7 3" d="M 793.5 225.5 L 795.55 222.96 L 797.46 220.55 L 799.23 218.26 L 800.84 216.09 L 802.3 214.07 L 803.59 212.19 L 804.73 210.45 L 805.69 208.87 L 806.49 207.44 L 807.12 206.18 L 807.57 205.07 L 807.85 204.14 L 807.96 203.37 L 807.89 202.78 L 807.64 202.36 L 807.22 202.11 L 806.63 202.04 L 805.86 202.15 L 804.93 202.43 L 803.82 202.88 L 802.56 203.51 L 801.13 204.31 L 799.55 205.27 L 797.81 206.41 L 795.93 207.7 L 793.91 209.16 L 791.74 210.77 L 789.45 212.54 L 787.04 214.45 L 784.5 216.5 L 781.85 218.69 L 779.1 221 L 776.26 223.45 L 773.32 226 L 770.31 228.67 L 767.22 231.44 L 764.07 234.3 L 760.87 237.25 L 757.61 240.28 L 754.32 243.38 L 751.01 246.54 L 747.67 249.76 L 744.32 253.02 L 740.98 256.31 L 737.64 259.64 L 734.31 262.98 L 731.02 266.32 L 727.76 269.67 L 724.54 273.01 L 721.38 276.32 L 718.28 279.61 L 715.25 282.87 L 712.3 286.07 L 709.44 289.22 L 706.67 292.31 L 704 295.32 L 701.45 298.26 L 699 301.1 L 696.69 303.85 L 694.5 306.5 L 692.45 309.04 L 690.54 311.45 L 688.77 313.74 L 687.16 315.91 L 685.7 317.93 L 684.41 319.81 L 683.27 321.55 L 682.31 323.13 L 681.51 324.56 L 680.88 325.82 L 680.43 326.93 L 680.15 327.86 L 680.04 328.63 L 680.11 329.22 L 680.36 329.64 L 680.78 329.89 L 681.37 329.96 L 682.14 329.85 L 683.07 329.57 L 684.18 329.12 L 685.44 328.49 L 686.87 327.69 L 688.45 326.73 L 690.19 325.59 L 692.07 324.3 L 694.09 322.84 L 696.26 321.23 L 698.55 319.46 L 700.96 317.55 L 703.5 315.5 L 706.15 313.31 L 708.9 311 L 711.74 308.55 L 714.68 306 L 717.69 303.33 L 720.78 300.56 L 723.93 297.7 L 727.13 294.75 L 730.39 291.72 L 733.68 288.62 L 736.99 285.46 L 740.33 282.24 L 743.68 278.98 L 747.02 275.69 L 750.36 272.36 L 753.69 269.02 L 756.98 265.68 L 760.24 262.33 L 763.46 258.99 L 766.62 255.68 L 769.72 252.39 L 772.75 249.13 L 775.7 245.93 L 778.56 242.78 L 781.33 239.69 L 784 236.68 L 786.55 233.74 L 789 230.9 L 791.31 228.15 L 793.5 225.5 Z"/>
+  <line class="c2" stroke-width="2.6" x1="744" y1="266" x2="807.64" y2="329.64"/>
+  <polygon class="c2-fill" points="807.64,329.64 799.9,326.78 804.78,321.9"/>
+  <circle class="c4-fill" cx="750.36" cy="272.36" r="4.0"/>
+  <rect class="pill-bg" x="528" y="152" width="126" height="40" rx="7"/>
+  <text class="xsb c3-txt" x="591" y="168" text-anchor="middle">优质读出 A(0.05)</text>
+  <text class="xs c3-txt" x="591" y="184" text-anchor="middle">σ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = 0.90 · κ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> ≈ 1.11</text>
+  <rect class="pill-bg" x="832" y="152" width="128" height="40" rx="7"/>
+  <text class="xsb c2-txt" x="896" y="168" text-anchor="middle">糟糕读出 A(0.45)</text>
+  <text class="xs c2-txt" x="896" y="184" text-anchor="middle">σ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = 0.10 · κ<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = 10</text>
+  <rect class="pill-bg" x="816" y="330" width="144" height="38" rx="7"/>
+  <text class="xsb c2-txt" x="888" y="346" text-anchor="middle">短轴扰动 δq → A⁻¹δq</text>
+  <text class="xs" x="888" y="361" text-anchor="middle">微小抖动被拉长 10×</text>
+  <rect class="subpanel" x="530" y="388" width="428" height="150" rx="10"/>
+  <text class="smb" x="544" y="408">1% 观测扰动 δq 经 A<tspan dy="-4.5" font-size="74%">−1</tspan><tspan dy="4.5">&#8203;</tspan> 反演后的最坏相对误差上界</text>
+  <text class="xs" x="688" y="436" text-anchor="end">酉门 U (κ₂ = 1.00)</text>
+  <rect class="c1-fill" x="696" y="423" width="14.4" height="18" rx="4"/>
+  <text class="xsb c1-txt" x="716.4" y="436">1.0%</text>
+  <text class="xs" x="688" y="464" text-anchor="end">优质 A(0.05) (κ₂ = 1.11)</text>
+  <rect class="c3-fill" x="696" y="451" width="15.98" height="18" rx="4"/>
+  <text class="xsb c3-txt" x="717.98" y="464">1.1%</text>
+  <text class="xs" x="688" y="492" text-anchor="end">剪切阵 A (κ₂ = 2.62)</text>
+  <rect class="c4-fill" x="696" y="479" width="37.73" height="18" rx="4"/>
+  <text class="xsb c4-txt" x="739.73" y="492">2.6%</text>
+  <text class="xs" x="688" y="520" text-anchor="end">糟糕 A(0.45) (κ₂ = 10.0)</text>
+  <rect class="c2-fill" x="696" y="507" width="144" height="18" rx="4"/>
+  <rect fill="url(#hatch-red)" x="696" y="507" width="144" height="18" rx="4" opacity="0.35"/>
+  <text class="xsb c2-txt" x="846" y="520">10.0% (可致负概率)</text>
+</svg>

@@ -1,0 +1,313 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">三大经典量子模拟引擎：数据结构、压缩机理与失效边界</title>
+  <desc id="desc">三列并排对比现代经典量子模拟的三大支柱引擎及其精确标度边界：（1）稳定子表（CHP/Stim）：2n×(2n+1) 二元辛表，纯 Clifford 空间 O(n²)，非 Clifford T 门触发 2^(0.396t) 精确秩与 2^(0.228t) 近似展度指数壁垒；（2）MPS/2D PEPS 张量网络：1D 链 O(nχ²) 受面积律保护，深层 2D 体积律 χ~2^S 与环路树宽触发指数壁垒；（3）含噪海森堡 Pauli 传播（SPD）：借高权重截断与 (1−p)^w 噪声指数阻尼实现百比特 NISQ 模拟，低噪声深层大角门失效。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#111917}
+  .panel{fill:#172320;stroke:#314842}
+  .subpanel{fill:#1C2B27;stroke:#3A544D}
+  .phead{fill:#1F312C}
+  .title,.sec,.lblb,.math-txt{fill:#d9ebe5}
+  .subtitle,.sm{fill:#9FBAB2}
+  .lbl,.smb,.mono{fill:#CFE3DC}
+  .axis{stroke:#C4DCD4}
+  .axis-fill{fill:#C4DCD4}
+  .grid{stroke:#283C36}
+  .guide{stroke:#6F8F86}
+  .c1{stroke:#5DD1A8}
+  .c1-fill{fill:#5DD1A8}
+  .c1-txt{fill:#84E2C0}
+  .c1-soft{fill:#153B30;stroke:#5DD1A8}
+  .c2{stroke:#F28872}
+  .c2-fill{fill:#F28872}
+  .c2-txt{fill:#F8AA99}
+  .c2-soft{fill:#48241E;stroke:#F28872}
+  .c3{stroke:#6BC2F5}
+  .c3-fill{fill:#6BC2F5}
+  .c3-txt{fill:#92D4FA}
+  .c3-soft{fill:#173A52;stroke:#6BC2F5}
+  .c4{stroke:#F0BA5A}
+  .c4-fill{fill:#F0BA5A}
+  .c4-txt{fill:#F6CE86}
+  .c4-soft{fill:#3C2F14;stroke:#F0BA5A}
+  .c5{stroke:#B99CF5}
+  .c5-fill{fill:#B99CF5}
+  .c5-txt{fill:#D0BAFA}
+  .c5-soft{fill:#2D2147;stroke:#B99CF5}
+  .note{fill:#312814;stroke:#D6A240}
+  .pill{fill:#1E302B;stroke:#4B6B62}
+  .pill-bg{fill:#172320;fill-opacity:.94;stroke:#4B6B62}
+  .area1{fill:#5DD1A8;fill-opacity:.18}
+  .area2{fill:#F28872;fill-opacity:.17}
+  .area3{fill:#6BC2F5;fill-opacity:.17}
+  .area4{fill:#F0BA5A;fill-opacity:.17}
+  .bar-neutral{fill:#263833;stroke:#87A69D}
+  .badge-txt{fill:#111917}
+  .hatch-stroke1{stroke:#5DD1A8;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#F28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#6BC2F5;stroke-opacity:.45}
+
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">三大经典量子模拟引擎：数据结构、压缩机理与能力边界</text>
+  <text class="subtitle" x="22.0" y="52.0">对照稳定子表（T 门魔术度壁垒）、MPS/2D PEPS（纠缠键维与树宽壁垒）及含噪 Pauli 传播（权重截断与指数阻尼）</text>
+  <rect class="panel" x="20.0" y="64.0" width="298.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="296.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="317.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">1. 稳定子表（CHP / Stim）</text>
+  <rect class="subpanel" x="32.0" y="100.0" width="274.0" height="100.0" rx="7.0"/>
+  <text class="smb" x="169.0" y="116.0" text-anchor="middle">2n × (2n+1) 二元辛表（空间 O(n²)）</text>
+  <rect class="c3-soft" x="44.0" y="124.0" width="98.0" height="26.0" rx="4.0"/>
+  <text class="sm c3-txt" x="93.0" y="141.0" text-anchor="middle">去稳定子 X</text>
+  <rect class="c3-soft" x="144.0" y="124.0" width="98.0" height="26.0" rx="4.0"/>
+  <text class="sm c3-txt" x="193.0" y="141.0" text-anchor="middle">去稳定子 Z</text>
+  <rect class="pill" x="244.0" y="124.0" width="48.0" height="26.0" rx="4.0"/>
+  <text class="sm" x="268.0" y="141.0" text-anchor="middle">相位 r</text>
+  <rect class="c1-soft" x="44.0" y="152.0" width="98.0" height="26.0" rx="4.0"/>
+  <text class="sm c1-txt" x="93.0" y="169.0" text-anchor="middle">稳定子 X</text>
+  <rect class="c1-soft" x="144.0" y="152.0" width="98.0" height="26.0" rx="4.0"/>
+  <text class="sm c1-txt" x="193.0" y="169.0" text-anchor="middle">稳定子 Z</text>
+  <rect class="pill" x="244.0" y="152.0" width="48.0" height="26.0" rx="4.0"/>
+  <text class="sm" x="268.0" y="169.0" text-anchor="middle">相位 r</text>
+  <text class="sm" x="169.0" y="194.0" text-anchor="middle">Clifford 门 {H,S,CNOT} 更新仅 O(n)</text>
+  <line class="grid" x1="68.0" y1="222.0" x2="68.0" y2="316.0"/>
+  <line class="axis" x1="68.0" y1="316.0" x2="68.0" y2="320.0"/>
+  <text class="sm" x="68.0" y="332.0" text-anchor="middle">0</text>
+  <line class="grid" x1="146.7" y1="222.0" x2="146.7" y2="316.0"/>
+  <line class="axis" x1="146.7" y1="316.0" x2="146.7" y2="320.0"/>
+  <text class="sm" x="146.7" y="332.0" text-anchor="middle">20</text>
+  <line class="grid" x1="225.3" y1="222.0" x2="225.3" y2="316.0"/>
+  <line class="axis" x1="225.3" y1="316.0" x2="225.3" y2="320.0"/>
+  <text class="sm" x="225.3" y="332.0" text-anchor="middle">40</text>
+  <line class="grid" x1="304.0" y1="222.0" x2="304.0" y2="316.0"/>
+  <line class="axis" x1="304.0" y1="316.0" x2="304.0" y2="320.0"/>
+  <text class="sm" x="304.0" y="332.0" text-anchor="middle">60</text>
+  <line class="grid" x1="68.0" y1="316.0" x2="304.0" y2="316.0"/>
+  <line class="axis" x1="64.0" y1="316.0" x2="68.0" y2="316.0"/>
+  <text class="sm" x="61.0" y="320.0" text-anchor="end">10⁰</text>
+  <line class="grid" x1="68.0" y1="278.4" x2="304.0" y2="278.4"/>
+  <line class="axis" x1="64.0" y1="278.4" x2="68.0" y2="278.4"/>
+  <text class="sm" x="61.0" y="282.4" text-anchor="end">10³</text>
+  <line class="grid" x1="68.0" y1="240.8" x2="304.0" y2="240.8"/>
+  <line class="axis" x1="64.0" y1="240.8" x2="68.0" y2="240.8"/>
+  <text class="sm" x="61.0" y="244.8" text-anchor="end">10⁶</text>
+  <text class="smb" x="186.0" y="345.0" text-anchor="middle">非 Clifford T 门数 t（对数开销）</text>
+  <line class="guide" x1="68.0" y1="240.8" x2="304.0" y2="240.8"/>
+  <line class="axis" x1="68.0" y1="222.0" x2="68.0" y2="316.0"/>
+  <line class="axis" x1="68.0" y1="316.0" x2="304.0" y2="316.0"/>
+  <polyline class="c2" points="68.00,316.00 75.87,313.01 83.73,310.02 91.60,307.03 99.47,304.04 107.33,301.05 115.20,298.06 123.07,295.07 130.93,292.08 138.80,289.09 146.67,286.10 154.53,283.11 162.40,280.12 170.27,277.12 178.13,274.13 186.00,271.14 193.87,268.15 201.73,265.16 209.60,262.17 217.47,259.18 225.33,256.19 233.20,253.20 241.07,250.21 248.93,247.22 256.80,244.23 264.67,241.24 272.53,238.25 280.40,235.26 288.27,232.27 296.13,229.28 304.00,226.29" stroke-width="2.2"/>
+  <polyline class="c1" points="68.00,316.00 75.87,314.28 83.73,312.56 91.60,310.84 99.47,309.12 107.33,307.40 115.20,305.68 123.07,303.96 130.93,302.24 138.80,300.52 146.67,298.80 154.53,297.08 162.40,295.35 170.27,293.63 178.13,291.91 186.00,290.19 193.87,288.47 201.73,286.75 209.60,285.03 217.47,283.31 225.33,281.59 233.20,279.87 241.07,278.15 248.93,276.43 256.80,274.71 264.67,272.99 272.53,271.27 280.40,269.55 288.27,267.83 296.13,266.11 304.00,264.39" stroke-width="2.0" stroke-dasharray="5 3"/>
+  <text class="sm c2-txt" x="74.0" y="234.0">— 精确秩 2^(0.396t)</text>
+  <text class="sm c1-txt" x="74.0" y="252.0">-- 展度采样 2^(0.228t)</text>
+  <rect class="c1-soft" x="32.0" y="354.0" width="274.0" height="70.0" rx="7.0"/>
+  <text class="smb c1-txt" x="42.0" y="373.0">优势：支持体积律纠缠与百万比特 QEC</text>
+  <text class="sm" x="42.0" y="393.0">壁垒：非 Clifford T 门数 t 指数爆发</text>
+  <text class="sm" x="42.0" y="413.0">工具：Stim · 扩展稳定子 O(2^αt·poly)</text>
+  <rect class="panel" x="331.0" y="64.0" width="298.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="332.0" y="65.0" width="296.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="332.0" y1="93.0" x2="628.0" y2="93.0"/>
+  <text class="sec" x="343.0" y="84.0">2. MPS / 2D PEPS 张量网络</text>
+  <rect class="subpanel" x="343.0" y="100.0" width="274.0" height="100.0" rx="7.0"/>
+  <text class="smb c3-txt" x="416.0" y="116.0" text-anchor="middle">1D MPS 链（键维 χ）</text>
+  <line class="c3" x1="362.0" y1="146.0" x2="470.0" y2="146.0" stroke-width="2.8"/>
+  <line class="axis" x1="362.0" y1="146.0" x2="362.0" y2="174.0" stroke-width="1.4"/>
+  <circle class="c3-soft" cx="362.0" cy="146.0" r="10.0"/>
+  <line class="axis" x1="398.0" y1="146.0" x2="398.0" y2="174.0" stroke-width="1.4"/>
+  <circle class="c3-soft" cx="398.0" cy="146.0" r="10.0"/>
+  <line class="axis" x1="434.0" y1="146.0" x2="434.0" y2="174.0" stroke-width="1.4"/>
+  <circle class="c3-soft" cx="434.0" cy="146.0" r="10.0"/>
+  <line class="axis" x1="470.0" y1="146.0" x2="470.0" y2="174.0" stroke-width="1.4"/>
+  <circle class="c3-soft" cx="470.0" cy="146.0" r="10.0"/>
+  <text class="sm" x="416.0" y="193.0" text-anchor="middle">空间 O(nχ²) · 门 O(χ³)</text>
+  <text class="smb c2-txt" x="556.0" y="116.0" text-anchor="middle">2D PEPS 格点</text>
+  <line class="c2" x1="526.0" y1="132.0" x2="586.0" y2="132.0" stroke-width="1.5"/>
+  <line class="c2" x1="526.0" y1="152.0" x2="586.0" y2="152.0" stroke-width="1.5"/>
+  <line class="c2" x1="526.0" y1="172.0" x2="586.0" y2="172.0" stroke-width="1.5"/>
+  <line class="c2" x1="526.0" y1="132.0" x2="526.0" y2="172.0" stroke-width="1.5"/>
+  <line class="c2" x1="556.0" y1="132.0" x2="556.0" y2="172.0" stroke-width="1.5"/>
+  <line class="c2" x1="586.0" y1="132.0" x2="586.0" y2="172.0" stroke-width="1.5"/>
+  <rect class="c2" x="526.0" y="132.0" width="30.0" height="20.0" rx="2.0" stroke-width="2.2" stroke-dasharray="3 2"/>
+  <circle class="c2-soft" cx="526.0" cy="132.0" r="4.5"/>
+  <circle class="c2-soft" cx="526.0" cy="152.0" r="4.5"/>
+  <circle class="c2-soft" cx="526.0" cy="172.0" r="4.5"/>
+  <circle class="c2-soft" cx="556.0" cy="132.0" r="4.5"/>
+  <circle class="c2-soft" cx="556.0" cy="152.0" r="4.5"/>
+  <circle class="c2-soft" cx="556.0" cy="172.0" r="4.5"/>
+  <circle class="c2-soft" cx="586.0" cy="132.0" r="4.5"/>
+  <circle class="c2-soft" cx="586.0" cy="152.0" r="4.5"/>
+  <circle class="c2-soft" cx="586.0" cy="172.0" r="4.5"/>
+  <text class="sm c2-txt" x="556.0" y="193.0" text-anchor="middle">环路树宽 tw 指数墙</text>
+  <line class="grid" x1="379.0" y1="222.0" x2="379.0" y2="316.0"/>
+  <line class="axis" x1="379.0" y1="316.0" x2="379.0" y2="320.0"/>
+  <text class="sm" x="379.0" y="332.0" text-anchor="middle">0</text>
+  <line class="grid" x1="438.0" y1="222.0" x2="438.0" y2="316.0"/>
+  <line class="axis" x1="438.0" y1="316.0" x2="438.0" y2="320.0"/>
+  <text class="sm" x="438.0" y="332.0" text-anchor="middle">4</text>
+  <line class="grid" x1="497.0" y1="222.0" x2="497.0" y2="316.0"/>
+  <line class="axis" x1="497.0" y1="316.0" x2="497.0" y2="320.0"/>
+  <text class="sm" x="497.0" y="332.0" text-anchor="middle">8</text>
+  <line class="grid" x1="556.0" y1="222.0" x2="556.0" y2="316.0"/>
+  <line class="axis" x1="556.0" y1="316.0" x2="556.0" y2="320.0"/>
+  <text class="sm" x="556.0" y="332.0" text-anchor="middle">12</text>
+  <line class="grid" x1="615.0" y1="222.0" x2="615.0" y2="316.0"/>
+  <line class="axis" x1="615.0" y1="316.0" x2="615.0" y2="320.0"/>
+  <text class="sm" x="615.0" y="332.0" text-anchor="middle">16</text>
+  <line class="grid" x1="379.0" y1="316.0" x2="615.0" y2="316.0"/>
+  <line class="axis" x1="375.0" y1="316.0" x2="379.0" y2="316.0"/>
+  <text class="sm" x="372.0" y="320.0" text-anchor="end">1</text>
+  <line class="grid" x1="379.0" y1="269.0" x2="615.0" y2="269.0"/>
+  <line class="axis" x1="375.0" y1="269.0" x2="379.0" y2="269.0"/>
+  <text class="sm" x="372.0" y="273.0" text-anchor="end">2⁸</text>
+  <line class="grid" x1="379.0" y1="222.0" x2="615.0" y2="222.0"/>
+  <line class="axis" x1="375.0" y1="222.0" x2="379.0" y2="222.0"/>
+  <text class="sm" x="372.0" y="226.0" text-anchor="end">2¹⁶</text>
+  <text class="smb" x="497.0" y="345.0" text-anchor="middle">二分纠缠熵 S_cut (bit) → 键维 χ</text>
+  <line class="guide" x1="379.0" y1="257.2" x2="615.0" y2="257.2"/>
+  <line class="axis" x1="379.0" y1="222.0" x2="379.0" y2="316.0"/>
+  <line class="axis" x1="379.0" y1="316.0" x2="615.0" y2="316.0"/>
+  <polyline class="c2" points="379.00,316.00 393.75,310.12 408.50,304.25 423.25,298.38 438.00,292.50 452.75,286.62 467.50,280.75 482.25,274.88 497.00,269.00 511.75,263.12 526.50,257.25 541.25,251.38 556.00,245.50 570.75,239.62 585.50,233.75 600.25,227.88 615.00,222.00" stroke-width="2.2"/>
+  <polyline class="c4" points="379.00,316.00 393.75,312.77 408.50,309.54 423.25,306.31 438.00,303.07 452.75,299.84 467.50,296.61 482.25,293.38 497.00,290.15 511.75,286.92 526.50,283.69 541.25,280.46 556.00,277.23 570.75,273.99 585.50,270.76 600.25,267.53 615.00,264.30" stroke-width="2.0" stroke-dasharray="5 3"/>
+  <polyline class="c3" points="379.00,316.00 393.75,310.12 408.50,304.25 423.25,298.38 438.00,292.50 452.75,292.50 467.50,292.50 482.25,292.50 497.00,292.50 511.75,292.50 526.50,292.50 541.25,292.50 556.00,292.50 570.75,292.50 585.50,292.50 600.25,292.50 615.00,292.50" stroke-width="2.2"/>
+  <text class="sm c2-txt" x="385.0" y="234.0">— 体积律 χ = 2^S</text>
+  <text class="sm c4-txt" x="385.0" y="251.0">-- BP-TN 弱环路</text>
+  <text class="sm c3-txt" x="612.0" y="309.0" text-anchor="end">— 1D 面积律</text>
+  <rect class="c3-soft" x="343.0" y="354.0" width="274.0" height="70.0" rx="7.0"/>
+  <text class="smb c3-txt" x="353.0" y="373.0">优势：任意连续旋转 / T 门，低纠缠态</text>
+  <text class="sm" x="353.0" y="393.0">壁垒：深层体积律 χ ~ 2^S 与 2D 强环路</text>
+  <text class="sm" x="353.0" y="413.0">工具：ITensor · quimb · BP-TN</text>
+  <rect class="panel" x="642.0" y="64.0" width="298.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="643.0" y="65.0" width="296.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="643.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="654.0" y="84.0">3. 含噪 Pauli 传播（SPD）</text>
+  <rect class="subpanel" x="654.0" y="100.0" width="274.0" height="100.0" rx="7.0"/>
+  <text class="smb" x="791.0" y="116.0" text-anchor="middle">海森堡反向算符树（截断 + 噪声阻尼）</text>
+  <rect class="c5-soft" x="663.0" y="142.0" width="34.0" height="26.0" rx="5.0"/>
+  <text class="lblb c5-txt" x="680.0" y="159.0" text-anchor="middle">O</text>
+  <line class="axis" x1="697.0" y1="155.0" x2="720.0" y2="155.0" stroke-width="1.4" marker-end="url(#arr-ink)"/>
+  <rect class="c1-soft" x="723.0" y="142.0" width="42.0" height="26.0" rx="5.0"/>
+  <text class="lblb c1-txt" x="744.0" y="159.0" text-anchor="middle">P</text>
+  <line class="c1" x1="765.0" y1="150.0" x2="798.0" y2="137.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
+  <line class="c2" x1="765.0" y1="160.0" x2="798.0" y2="173.0" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arr-c2)"/>
+  <rect class="c1-soft" x="801.0" y="124.0" width="118.0" height="24.0" rx="5.0"/>
+  <text class="sm c1-txt" x="860.0" y="140.0" text-anchor="middle">低权重 w≤w_max 保留</text>
+  <rect class="c2-soft" x="801.0" y="160.0" width="118.0" height="24.0" rx="5.0" stroke-dasharray="4 2"/>
+  <text class="sm c2-txt" x="860.0" y="176.0" text-anchor="middle">高权重 (1−p)^w 剪枝</text>
+  <text class="sm" x="791.0" y="196.0" text-anchor="middle">非 Clifford 门分支由高权重阻尼压死</text>
+  <line class="grid" x1="690.0" y1="222.0" x2="690.0" y2="316.0"/>
+  <line class="axis" x1="690.0" y1="316.0" x2="690.0" y2="320.0"/>
+  <text class="sm" x="690.0" y="332.0" text-anchor="middle">0</text>
+  <line class="grid" x1="749.0" y1="222.0" x2="749.0" y2="316.0"/>
+  <line class="axis" x1="749.0" y1="316.0" x2="749.0" y2="320.0"/>
+  <text class="sm" x="749.0" y="332.0" text-anchor="middle">5</text>
+  <line class="grid" x1="808.0" y1="222.0" x2="808.0" y2="316.0"/>
+  <line class="axis" x1="808.0" y1="316.0" x2="808.0" y2="320.0"/>
+  <text class="sm" x="808.0" y="332.0" text-anchor="middle">10</text>
+  <line class="grid" x1="867.0" y1="222.0" x2="867.0" y2="316.0"/>
+  <line class="axis" x1="867.0" y1="316.0" x2="867.0" y2="320.0"/>
+  <text class="sm" x="867.0" y="332.0" text-anchor="middle">15</text>
+  <line class="grid" x1="926.0" y1="222.0" x2="926.0" y2="316.0"/>
+  <line class="axis" x1="926.0" y1="316.0" x2="926.0" y2="320.0"/>
+  <text class="sm" x="926.0" y="332.0" text-anchor="middle">20</text>
+  <line class="grid" x1="690.0" y1="316.0" x2="926.0" y2="316.0"/>
+  <line class="axis" x1="686.0" y1="316.0" x2="690.0" y2="316.0"/>
+  <text class="sm" x="683.0" y="320.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="690.0" y1="269.0" x2="926.0" y2="269.0"/>
+  <line class="axis" x1="686.0" y1="269.0" x2="690.0" y2="269.0"/>
+  <text class="sm" x="683.0" y="273.0" text-anchor="end">0.5</text>
+  <line class="grid" x1="690.0" y1="222.0" x2="926.0" y2="222.0"/>
+  <line class="axis" x1="686.0" y1="222.0" x2="690.0" y2="222.0"/>
+  <text class="sm" x="683.0" y="226.0" text-anchor="end">1.0</text>
+  <text class="smb" x="808.0" y="345.0" text-anchor="middle">Pauli 串权重 w → 阻尼因子 (1−p)^w</text>
+  <line class="guide" x1="831.6" y1="222.0" x2="831.6" y2="316.0"/>
+  <line class="axis" x1="690.0" y1="222.0" x2="690.0" y2="316.0"/>
+  <line class="axis" x1="690.0" y1="316.0" x2="926.0" y2="316.0"/>
+  <polyline class="c2" points="690.00,222.00 701.80,222.94 713.60,223.87 725.40,224.79 737.20,225.70 749.00,226.61 760.80,227.50 772.60,228.39 784.40,229.26 796.20,230.13 808.00,230.99 819.80,231.84 831.60,232.68 843.40,233.51 855.20,234.34 867.00,235.15 878.80,235.96 890.60,236.76 902.40,237.56 914.20,238.34 926.00,239.12" stroke-width="2.2"/>
+  <polyline class="c4" points="690.00,222.00 701.80,229.52 713.60,236.44 725.40,242.80 737.20,248.66 749.00,254.05 760.80,259.00 772.60,263.56 784.40,267.76 796.20,271.62 808.00,275.17 819.80,278.43 831.60,281.44 843.40,284.20 855.20,286.75 867.00,289.09 878.80,291.24 890.60,293.22 902.40,295.04 914.20,296.72 926.00,298.26" stroke-width="2.0" stroke-dasharray="5 3"/>
+  <polyline class="c1" points="690.00,222.00 701.80,240.80 713.60,255.84 725.40,267.87 737.20,277.50 749.00,285.20 760.80,291.36 772.60,296.29 784.40,300.23 796.20,303.38 808.00,305.91 819.80,307.93 831.60,309.54 843.40,310.83 855.20,311.87 867.00,312.69 878.80,313.35 890.60,313.88 902.40,314.31 914.20,314.65 926.00,314.92" stroke-width="2.2"/>
+  <text class="sm" x="827.6" y="249.0" text-anchor="end">w_max</text>
+  <text class="sm c2-txt" x="923.0" y="255.0" text-anchor="end">p=0.01（低噪）</text>
+  <text class="sm c4-txt" x="923.0" y="286.0" text-anchor="end">p=0.08</text>
+  <text class="sm c1-txt" x="768.0" y="290.0">p=0.20</text>
+  <rect class="c4-soft" x="654.0" y="354.0" width="274.0" height="70.0" rx="7.0"/>
+  <text class="smb c4-txt" x="664.0" y="373.0">优势：百比特浅/含噪 NISQ 局域期望</text>
+  <text class="sm" x="664.0" y="393.0">壁垒：低噪声 + 深层大角非 Clifford</text>
+  <text class="sm" x="664.0" y="413.0">工具：SPD · PauliPropagation.jl</text>
+  <text class="sm" x="22.0" y="450.0">标度与数据口径：第 21 章 §1–§6；稳定子秩指数 α=0.396（Qassim–Pashayan–Gosset 2021）与展度 0.228（Bravyi–Gosset 2016）；Pauli 阻尼 (1−p)^w。</text>
+</svg>

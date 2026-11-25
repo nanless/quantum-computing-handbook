@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">复振幅干涉叠加与经典态矢量内存指数标度</title>
+  <desc id="desc">左面板对照经典非负概率相加（1/2 + 1/2 = 1，恒增不消）与 H|+⟩ 门中两条路径复振幅的同向相长（|1/2 + 1/2|² = 1）和反向相消（|1/2 − 1/2|² = 0）；右面板在对数纵轴上绘出 n = 10 至 50 时稠密态矢量内存 M_ket = 16·2^n B 与稠密密度矩阵内存 M_ρ = 16·4^n B，并标出笔记本 16 GiB (n=30) 与超算 10 PB (10¹⁶ B，n=49 对应 8 PiB ≈ 9.0 PB) 两条容量红线。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.0}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.c5{stroke:#6b4ea8;fill:none}
+.c5-fill{fill:#6b4ea8}
+.c5-txt{fill:#51358a}
+.c5-soft{fill:#efe9fb;stroke:#6b4ea8;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.14}
+.area3{fill:#1e7a5c;fill-opacity:.15}
+.area4{fill:#b57614;fill-opacity:.13}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.4}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.hm-pos1{fill:#1b6ca8;stroke:#ffffff;stroke-width:1.4}
+.hm-pos2{fill:#2d82bf;stroke:#ffffff;stroke-width:1.4}
+.hm-pos3{fill:#f3b562;stroke:#ffffff;stroke-width:1.4}
+.hm-neg3{fill:#d96b57;stroke:#ffffff;stroke-width:1.4}
+.hm-zero{fill:#edf2f7;stroke:#cbd5e1;stroke-width:1.1}
+.hm-hi{fill:none;stroke:#b57614;stroke-width:2.0;stroke-dasharray:4 2}
+.hm-inv{fill:#ffffff;font-size:10.5px;font-weight:700}
+.hm-dark{fill:#13263a;font-size:10.5px;font-weight:700}
+.hm-muted{fill:#64748b;font-size:10.5px;font-weight:500}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .c5{stroke:#b79ef5}
+  .c5-fill{fill:#b79ef5}
+  .c5-txt{fill:#cbb8fa}
+  .c5-soft{fill:#2d2147;stroke:#b79ef5}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.17}
+  .area2{fill:#f28872;fill-opacity:.18}
+  .area3{fill:#5dd1a8;fill-opacity:.18}
+  .area4{fill:#f0ba5a;fill-opacity:.17}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .badge-txt{fill:#0f1720}
+  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
+  .hm-pos2{fill:#3a92cc;stroke:#16222e}
+  .hm-pos3{fill:#b87a24;stroke:#16222e}
+  .hm-neg3{fill:#b84b3a;stroke:#16222e}
+  .hm-zero{fill:#213243;stroke:#354c61}
+  .hm-hi{stroke:#f0ba5a}
+  .hm-inv{fill:#ffffff}
+  .hm-dark{fill:#eef6ff}
+  .hm-muted{fill:#8fa9c2}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">复振幅干涉叠加与经典态矢量内存指数标度</text>
+  <text class="subtitle" x="34" y="76">左：经典非负概率恒增不消 vs 量子复振幅同向相长、反向抵消；右：稠密态矢量与密度矩阵随比特数 n 对数飙升</text>
+  <rect class="panel" x="28" y="94" width="452" height="458" rx="14"/>
+  <path class="phead" d="M 42 95 H 466 Q 479 95 479 108 V 130 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="130" x2="479" y2="130"/>
+  <text class="sec" x="44" y="117">复振幅干涉：相长增强 vs 反向抵消</text>
+  <rect class="panel" x="496" y="94" width="476" height="458" rx="14"/>
+  <path class="phead" d="M 510 95 H 958 Q 971 95 971 108 V 130 H 497 V 108 Q 497 95 510 95 Z"/>
+  <line class="grid" x1="497" y1="130" x2="971" y2="130"/>
+  <text class="sec" x="512" y="117">经典稠密模拟内存（16 字节/双精度复数）</text>
+  <rect class="c4-soft" x="42" y="144" width="424" height="108" rx="11"/>
+  <rect class="c4-fill" x="54" y="155" width="70" height="21" rx="10"/>
+  <text class="badge-txt" x="89" y="169" text-anchor="middle">经典概率</text>
+  <text class="lblb c4-txt" x="134" y="170">非负相加：p<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan> + p<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan> = 1/2 + 1/2 = 1</text>
+  <rect class="c4-fill" fill-opacity="0.72" x="58" y="191" width="84" height="22" rx="4"/>
+  <text class="badge-txt" x="100" y="206" text-anchor="middle">1/2</text>
+  <text class="lblb" x="154" y="207" text-anchor="middle">+</text>
+  <rect class="c4-fill" fill-opacity="0.72" x="166" y="191" width="84" height="22" rx="4"/>
+  <text class="badge-txt" x="208" y="206" text-anchor="middle">1/2</text>
+  <text class="lblb" x="263" y="207" text-anchor="middle">=</text>
+  <rect class="c4-fill" x="278" y="191" width="168" height="22" rx="4"/>
+  <text class="badge-txt" x="362" y="206" text-anchor="middle">P = 1（恒增不消）</text>
+  <text class="sm" x="58" y="238">经典概率恒满足 p ≥ 0，多条互斥路径只能越加越大</text>
+  <rect class="c1-soft" x="42" y="264" width="424" height="110" rx="11"/>
+  <rect class="c1-fill" x="54" y="275" width="70" height="21" rx="10"/>
+  <text class="badge-txt" x="89" y="289" text-anchor="middle">相长干涉</text>
+  <text class="lblb c1-txt" x="134" y="290">H|+⟩ → |0⟩：两路径同向相加 (Δφ = 0)</text>
+  <line class="c1" stroke-width="3.0" x1="58" y1="324" x2="112" y2="324"/>
+  <polygon class="c1-fill" points="116,324 108.5,327.45 108.5,320.55"/>
+  <text class="xs c1-txt" x="86" y="313" text-anchor="middle">+1/2</text>
+  <text class="lblb" x="130" y="329" text-anchor="middle">+</text>
+  <line class="c1" stroke-width="3.0" x1="144" y1="324" x2="198" y2="324"/>
+  <polygon class="c1-fill" points="202,324 194.5,327.45 194.5,320.55"/>
+  <text class="xs c1-txt" x="172" y="313" text-anchor="middle">+1/2</text>
+  <text class="lblb" x="216" y="329" text-anchor="middle">=</text>
+  <line class="c1" stroke-width="3.4" x1="230" y1="324" x2="322" y2="324"/>
+  <polygon class="c1-fill" points="328,324 319.5,327.91 319.5,320.09"/>
+  <text class="xsb c1-txt" x="278" y="313" text-anchor="middle">合振幅 +1</text>
+  <rect class="pill-bg" x="342" y="309" width="112" height="28" rx="8"/>
+  <text class="smb c1-txt" x="398" y="327" text-anchor="middle">P(0) = |1|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 1</text>
+  <text class="sm" x="58" y="361">单步各含 1/√2 因子 ⇒ |1/2 + 1/2|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 1（概率全部集中到 |0⟩）</text>
+  <rect class="c2-soft" x="42" y="386" width="424" height="110" rx="11"/>
+  <rect class="c2-fill" x="54" y="397" width="70" height="21" rx="10"/>
+  <text class="badge-txt" x="89" y="411" text-anchor="middle">相消干涉</text>
+  <text class="lblb c2-txt" x="134" y="412">H|+⟩ → |1⟩：两路径反向抵消 (Δφ = π)</text>
+  <line class="c1" stroke-width="3.0" x1="58" y1="446" x2="112" y2="446"/>
+  <polygon class="c1-fill" points="116,446 108.5,449.45 108.5,442.55"/>
+  <text class="xs c1-txt" x="86" y="435" text-anchor="middle">+1/2</text>
+  <text class="lblb" x="130" y="451" text-anchor="middle">+</text>
+  <line class="c2" stroke-width="3.0" stroke-dasharray="6 3" x1="202" y1="446" x2="148" y2="446"/>
+  <polygon class="c2-fill" points="144,446 151.5,442.55 151.5,449.45"/>
+  <text class="xs c2-txt" x="174" y="435" text-anchor="middle">−1/2</text>
+  <text class="lblb" x="216" y="451" text-anchor="middle">=</text>
+  <circle class="c2-fill" cx="278" cy="446" r="5.5"/>
+  <text class="xsb c2-txt" x="278" y="433" text-anchor="middle">合振幅 0</text>
+  <rect class="pill-bg" x="342" y="431" width="112" height="28" rx="8"/>
+  <text class="smb c2-txt" x="398" y="449" text-anchor="middle">P(1) = |0|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 0</text>
+  <text class="sm" x="58" y="483">反向复振幅精确抵消 ⇒ |1/2 − 1/2|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 0（量子加速根基）</text>
+  <rect class="note" x="42" y="508" width="424" height="32" rx="8"/>
+  <text class="xs" x="254" y="528" text-anchor="middle">合并公式：| (1/√2)·(1/√2 ± 1/√2) |<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = |1/2 ± 1/2|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> ∈ {0, 1}</text>
+  <line class="grid" x1="574" y1="456" x2="948" y2="456"/>
+  <text class="sm" x="566" y="460" text-anchor="end">10<tspan dy="-4.5" font-size="74%">4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="574" y1="381.5" x2="948" y2="381.5"/>
+  <text class="sm" x="566" y="385.5" text-anchor="end">10<tspan dy="-4.5" font-size="74%">8</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="574" y1="307" x2="948" y2="307"/>
+  <text class="sm" x="566" y="311" text-anchor="end">10<tspan dy="-4.5" font-size="74%">12</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="574" y1="232.5" x2="948" y2="232.5"/>
+  <text class="sm" x="566" y="236.5" text-anchor="end">10<tspan dy="-4.5" font-size="74%">16</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="574" y1="158" x2="948" y2="158"/>
+  <text class="sm" x="566" y="162" text-anchor="end">10<tspan dy="-4.5" font-size="74%">20</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="574" y1="158" x2="574" y2="456"/>
+  <text class="sm" x="574" y="473" text-anchor="middle">10</text>
+  <line class="grid" x1="667.5" y1="158" x2="667.5" y2="456"/>
+  <text class="sm" x="667.5" y="473" text-anchor="middle">20</text>
+  <line class="grid" x1="761" y1="158" x2="761" y2="456"/>
+  <text class="sm" x="761" y="473" text-anchor="middle">30</text>
+  <line class="grid" x1="854.5" y1="158" x2="854.5" y2="456"/>
+  <text class="sm" x="854.5" y="473" text-anchor="middle">40</text>
+  <line class="grid" x1="948" y1="158" x2="948" y2="456"/>
+  <text class="sm" x="948" y="473" text-anchor="middle">50</text>
+  <line class="axis" x1="574" y1="456" x2="956" y2="456"/>
+  <polygon class="axis-fill" points="956,456 949,459.22 949,452.78"/>
+  <line class="axis" x1="574" y1="456" x2="574" y2="148"/>
+  <polygon class="axis-fill" points="574,148 577.22,155 570.78,155"/>
+  <text class="sm" x="761" y="494" text-anchor="middle">量子比特数 n (个)</text>
+  <text class="sm" x="518" y="307" text-anchor="middle" transform="rotate(-90 518 307)">经典稠密存储内存 (字节 B, 对数刻度)</text>
+  <line class="c3" stroke-width="1.6" stroke-dasharray="6 4" x1="574" y1="339.87" x2="948" y2="339.87"/>
+  <line class="c4" stroke-width="1.6" stroke-dasharray="6 4" x1="574" y1="232.5" x2="948" y2="232.5"/>
+  <path class="c1" stroke-width="2.8" d="M 574 452.01 L 583.35 446.4 L 592.7 440.79 L 602.05 435.19 L 611.4 429.58 L 620.75 423.97 L 630.1 418.37 L 639.45 412.76 L 648.8 407.15 L 658.15 401.55 L 667.5 395.94 L 676.85 390.33 L 686.2 384.73 L 695.55 379.12 L 704.9 373.51 L 714.25 367.91 L 723.6 362.3 L 732.95 356.69 L 742.3 351.09 L 751.65 345.48 L 761 339.87 L 770.35 334.27 L 779.7 328.66 L 789.05 323.05 L 798.4 317.45 L 807.75 311.84 L 817.1 306.23 L 826.45 300.63 L 835.8 295.02 L 845.15 289.41 L 854.5 283.81 L 863.85 278.2 L 873.2 272.59 L 882.55 266.99 L 891.9 261.38 L 901.25 255.77 L 910.6 250.17 L 919.95 244.56 L 929.3 238.95 L 938.65 233.35 L 948 227.74"/>
+  <path class="c2" stroke-width="2.5" stroke-dasharray="8 4" d="M 574 395.94 L 578.96 389.99 L 583.92 384.04 L 588.88 378.09 L 593.84 372.15 L 598.8 366.2 L 603.76 360.25 L 608.72 354.3 L 613.68 348.35 L 618.64 342.4 L 623.6 336.45 L 628.56 330.51 L 633.52 324.56 L 638.48 318.61 L 643.44 312.66 L 648.4 306.71 L 653.36 300.76 L 658.32 294.82 L 663.28 288.87 L 668.24 282.92 L 673.2 276.97 L 678.16 271.02 L 683.12 265.07 L 688.08 259.12 L 693.04 253.18 L 698 247.23 L 702.96 241.28 L 707.92 235.33 L 712.88 229.38 L 717.84 223.43 L 722.8 217.48 L 727.76 211.54 L 732.72 205.59 L 737.68 199.64 L 742.64 193.69 L 747.6 187.74 L 752.56 181.79 L 757.52 175.85 L 762.48 169.9 L 767.44 163.95 L 772.4 158"/>
+  <circle class="c1-fill" cx="574" cy="452.01" r="4.5"/>
+  <circle class="c1-fill" cx="667.5" cy="395.94" r="4.5"/>
+  <circle class="c1-fill" cx="761" cy="339.87" r="4.5"/>
+  <circle class="c1-fill" cx="854.5" cy="283.81" r="4.5"/>
+  <circle class="c1-fill" cx="938.65" cy="233.35" r="4.5"/>
+  <polygon class="c2-fill" points="574,391.14 578.8,395.94 574,400.74 569.2,395.94"/>
+  <polygon class="c2-fill" points="620.75,335.07 625.55,339.87 620.75,344.67 615.95,339.87"/>
+  <polygon class="c2-fill" points="667.5,279.01 672.3,283.81 667.5,288.61 662.7,283.81"/>
+  <polygon class="c2-fill" points="714.25,222.94 719.05,227.74 714.25,232.54 709.45,227.74"/>
+  <polygon class="c2-fill" points="761,166.87 765.8,171.67 761,176.47 756.2,171.67"/>
+  <line class="guide" x1="761" y1="344.87" x2="761" y2="456"/>
+  <line class="guide" x1="938.65" y1="238.35" x2="938.65" y2="456"/>
+  <rect class="pill-bg" x="582" y="156" width="150" height="58" rx="8"/>
+  <line class="c1" stroke-width="2.6" x1="592" y1="175" x2="616" y2="175"/>
+  <circle class="c1-fill" cx="604" cy="175" r="3.5"/>
+  <text class="xs c1-txt" x="622" y="179">态矢量 16·2<tspan dy="-4.5" font-size="74%">n</tspan><tspan dy="4.5">&#8203;</tspan> B</text>
+  <line class="c2" stroke-width="2.4" stroke-dasharray="6 3" x1="592" y1="199" x2="616" y2="199"/>
+  <polygon class="c2-fill" points="604,195 608,199 604,203 600,199"/>
+  <text class="xs c2-txt" x="622" y="203">密度矩阵 16·4<tspan dy="-4.5" font-size="74%">n</tspan><tspan dy="4.5">&#8203;</tspan> B</text>
+  <rect class="c4-soft" x="760" y="182" width="180" height="36" rx="7"/>
+  <text class="xsb c4-txt" x="850" y="197" text-anchor="middle">超算红线 10 PB (10¹⁶ B)</text>
+  <text class="xs c4-txt" x="850" y="212" text-anchor="middle">n = 49 (8 PiB ≈ 9.0 PB)</text>
+  <line class="c4" stroke-width="1.3" x1="934" y1="218" x2="936.65" y2="229.35"/>
+  <rect class="c3-soft" x="772" y="352" width="168" height="36" rx="7"/>
+  <text class="xsb c3-txt" x="856" y="367" text-anchor="middle">笔记本红线 16 GiB</text>
+  <text class="xs c3-txt" x="856" y="382" text-anchor="middle">态矢量 n = 30 · 密度阵 n = 15</text>
+  <line class="c3" stroke-width="1.3" x1="772" y1="364" x2="766" y2="342.87"/>
+  <rect class="pill-bg" x="614" y="246" width="112" height="24" rx="6"/>
+  <text class="xs c2-txt" x="670" y="262" text-anchor="middle">斜率翻倍 (4×/比特)</text>
+  <rect class="note" x="510" y="508" width="448" height="32" rx="8"/>
+  <text class="xs" x="734" y="528" text-anchor="middle">注：纯 Clifford 与低纠缠线路可用稳定子或张量网络高效模拟，无需稠密数组</text>
+</svg>

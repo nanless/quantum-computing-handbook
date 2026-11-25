@@ -1,0 +1,664 @@
+<div class="course" id="course-home" tabindex="-1">
+  <header class="course-header">
+    <div class="course-header-inner course-width">
+      <a class="course-brand" href="#course-home">
+        <span class="course-mark" aria-hidden="true">⟨ψ|</span>
+        <span class="course-brand-text">量子计算手册</span>
+      </a>
+      <nav class="course-nav" aria-label="课程主导航">
+        <a href="#course-pillars">六大支柱</a>
+        <a href="#course-cases">互动案例与声化</a>
+        <a href="lab/quantum-lab.html">6 模块实验台</a>
+        <a href="#course-path">学习路线</a>
+        <a href="#course-engineering">工程与验证</a>
+        <a href="#main-content">全书目录</a>
+        <a href="#course-downloads">电子书与离线包</a>
+        <a href="https://github.com/nanless/quantum-computing-handbook" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="course-header-tools">
+        <button type="button" class="course-tool-btn course-search-trigger" data-open-search aria-label="全书离线检索 (Cmd+K)" title="全书离线检索 (Cmd/Ctrl+K)">
+          <span aria-hidden="true">🔍</span>
+          <span class="course-tool-label">全书检索</span>
+          <kbd class="course-kbd">⌘K</kbd>
+        </button>
+        <button type="button" id="theme-toggle" class="course-tool-btn" aria-pressed="false" aria-label="切换为暗色模式" title="切换为暗色模式 (t)">
+          <span class="theme-icon" aria-hidden="true">☾</span>
+          <span class="theme-label course-tool-label">暗色</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="course-resume-wrap course-width" id="course-resume-bar" hidden>
+    <div class="course-resume-card">
+      <span class="course-resume-dot" aria-hidden="true"></span>
+      <span class="course-resume-label">继续上次阅读：</span>
+      <a class="course-resume-link" id="course-resume-link" href="00-overview.html">第 00 章</a>
+      <span class="course-resume-pct" id="course-resume-pct"></span>
+      <button type="button" class="course-resume-close" id="course-resume-close" aria-label="关闭继续阅读提示">✕</button>
+    </div>
+  </div>
+
+  <section class="course-hero course-width" aria-labelledby="course-title">
+    <div class="course-intro">
+      <p class="course-kicker">开源系统教程 · 零跳步数学推导 × 纯标准库复算 × 硬件容错闭环</p>
+      <h1 id="course-title">量子计算手册<br><span>从干涉到容错</span></h1>
+      <p class="course-deck">量子加速并不来自“同时试完所有答案”的口号，而来自让正确路径的复振幅<strong>相长叠加</strong>、错误路径<strong>相消归零</strong>。全书从二维列向量手算出发，贯通核心算法、物理脉冲、表面码纠错、后量子密码、精密传感与经典模拟铁壁。</p>
+      <div class="course-actions">
+        <a class="course-cta" href="00-overview.html">从第 00 章开始 <span aria-hidden="true">→</span></a>
+        <a class="course-secondary" href="01-math.html">第 01 章 · 数学基础</a>
+        <a class="course-secondary course-secondary-accent" href="lab/quantum-lab.html">▶ 6 模块互动实验台</a>
+        <a class="course-quiet" href="#course-audio-board">听量子干涉声化 <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="course-stats" aria-label="全书规模与交付概览">
+        <div><strong>26 章 + 7 附录</strong><span>五篇教学序 · 271 题两级题答</span></div>
+        <div><strong>50,900+ 数学公式</strong><span>KaTeX 零跳步推导 · 一键复制 TeX</span></div>
+        <div><strong>92 张科学矢量图</strong><span>亮暗原生双主题高清矢量</span></div>
+        <div><strong>38 个标准库脚本</strong><span>零依赖复算 + 31 开源项目对照</span></div>
+      </div>
+      <p class="course-note">100% 离线自包含（支持 <code>file://</code> 本地双击与 GitHub Pages）· 按 <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> 秒搜全书 1,300+ 节与 151 条核心术语</p>
+    </div>
+
+    <figure class="course-demo" id="qch-hero-sim" data-mode="phi0">
+      <div class="course-demo-heading">
+        <span>单比特量子干涉工作台 · H · P(φ) · H |0⟩</span>
+        <span id="course-demo-eq">|ψ_out⟩ = |0⟩ · V = 1.00</span>
+      </div>
+      <svg class="course-plot" viewBox="0 0 860 476" role="img" aria-labelledby="course-plot-title course-plot-desc">
+        <title id="course-plot-title">Mach-Zehnder 单量子比特干涉仪、相位矢量与退相干实时原理图</title>
+        <desc id="course-plot-desc">左上方展示输入态 |0⟩ 经第一块分束器 H 分裂为上下两条路径，下路经相位板 P(φ) 并可选装路径探测器，随后在第二块 H 门汇合；左下方展示双路径复振幅矢量与相干度；右侧实时显示探测器 D0 与 D1 的输出概率柱及状态方程。</desc>
+        <defs>
+          <pattern id="course-dots" width="18" height="18" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" class="ch-svg-dot"/>
+          </pattern>
+        </defs>
+        <rect x="1" y="1" width="858" height="474" rx="10" class="ch-svg-frame"/>
+        <rect x="2" y="2" width="856" height="472" rx="9" fill="url(#course-dots)"/>
+
+        <!-- Top flow ribbon -->
+        <rect x="16" y="14" width="828" height="32" rx="6" class="ch-svg-ribbon"/>
+        <g class="ch-svg-ribbon-txt" font-size="12" font-weight="700">
+          <text x="28" y="34.5" class="ch-txt-accent">01 · H 门等幅分束 (|0⟩+|1⟩)/√2</text>
+          <text x="242" y="34.5" class="ch-txt-quiet">──▶</text>
+          <text x="278" y="34.5" class="ch-txt-terra">02 · 相对相位 P(φ) 或路径探测</text>
+          <text x="498" y="34.5" class="ch-txt-quiet">──▶</text>
+          <text x="534" y="34.5" class="ch-txt-blue">03 · 二次 H 汇合：相长 / 相消 / 退相干</text>
+        </g>
+
+        <!-- Panel 1: Interferometer Schematic -->
+        <rect x="16" y="56" width="516" height="206" rx="8" class="ch-svg-card"/>
+        <text x="30" y="77" class="ch-txt-heading" font-size="12" font-weight="700">马赫–曾德尔干涉光路（双路径复振幅演化）</text>
+
+        <!-- Input |0> -->
+        <rect x="28" y="140" width="44" height="32" rx="6" class="ch-box-accent"/>
+        <text x="50" y="160.5" text-anchor="middle" class="ch-txt-on-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="700">|0⟩</text>
+        <line x1="72" y1="156" x2="108" y2="156" class="ch-wire-accent"/>
+
+        <!-- BS1 (H) -->
+        <rect x="108" y="102" width="40" height="108" rx="7" class="ch-box-blue"/>
+        <line x1="114" y1="202" x2="142" y2="110" class="ch-bs-diag"/>
+        <text x="128" y="162" text-anchor="middle" class="ch-txt-blue" font-family="Georgia,serif" font-size="18" font-weight="700">H</text>
+        <text x="128" y="95" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">BS₁</text>
+
+        <!-- Upper & Lower Arms -->
+        <path class="ch-wire-accent" d="M148 124 L176 106 L378 106 L406 124" fill="none"/>
+        <path class="ch-wire-terra" d="M148 188 L176 206 L378 206 L406 188" fill="none"/>
+        <text x="276" y="96" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">上支路 |0⟩ · 振幅 +1/√2</text>
+        <text x="276" y="236" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700" id="course-lower-label">下支路 |1⟩ · 相位 e^(i·0) = +1</text>
+
+        <!-- Animated wavepackets (respect prefers-reduced-motion) -->
+        <circle class="course-pkt course-pkt-up" cx="176" cy="106" r="5.5"/>
+        <circle class="course-pkt course-pkt-dn" cx="176" cy="206" r="5.5"/>
+
+        <!-- Phase shifter P(phi) -->
+        <rect x="242" y="188" width="68" height="34" rx="6" class="ch-box-terra"/>
+        <text x="276" y="209.5" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" id="course-phase-pill">P(0°)</text>
+
+        <!-- Which-Path Detector (highlights in decohere mode) -->
+        <g class="course-which-path" id="course-which-path">
+          <rect x="210" y="135" width="132" height="36" rx="7" class="ch-box-warn"/>
+          <text x="276" y="150" text-anchor="middle" class="ch-txt-amber" font-size="11" font-weight="700">👁 路径探测器已开启</text>
+          <text x="276" y="164" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">ρ₀₁ → 0 · 退相干</text>
+          <line x1="276" y1="106" x2="276" y2="135" class="ch-wire-warn"/>
+          <line x1="276" y1="171" x2="276" y2="188" class="ch-wire-warn"/>
+        </g>
+
+        <!-- BS2 (H) -->
+        <rect x="406" y="102" width="40" height="108" rx="7" class="ch-box-blue"/>
+        <line x1="412" y1="202" x2="440" y2="110" class="ch-bs-diag"/>
+        <text x="426" y="162" text-anchor="middle" class="ch-txt-blue" font-family="Georgia,serif" font-size="18" font-weight="700">H</text>
+        <text x="426" y="95" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">BS₂</text>
+
+        <!-- Output beams -->
+        <line id="course-out-wire0" x1="446" y1="126" x2="516" y2="126" class="ch-wire-accent" stroke-width="3.6"/>
+        <line id="course-out-wire1" x1="446" y1="186" x2="516" y2="186" class="ch-wire-terra" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <text x="482" y="118" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">D₀ |0⟩</text>
+        <text x="482" y="204" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">D₁ |1⟩</text>
+
+        <!-- Panel 2: Bloch Equator / Phase Phasor Dial -->
+        <rect x="16" y="272" width="516" height="188" rx="8" class="ch-svg-card"/>
+        <text x="30" y="294" class="ch-txt-heading" font-size="12" font-weight="700">Bloch 赤道相位盘（相对相位与相干长度 |r_xy|）</text>
+        <text x="302" y="294" class="ch-txt-heading" font-size="12" font-weight="700">复振幅矢量合成（D₀ 端）</text>
+
+        <!-- Left dial: Bloch equator (translated +14px vertically so |+i> clears heading >=14px while keeping home.js local coords intact) -->
+        <g transform="translate(0, 14)">
+          <circle cx="136" cy="362" r="52" class="ch-dial-bg"/>
+          <line x1="78" y1="362" x2="194" y2="362" class="ch-svg-gridline"/>
+          <line x1="136" y1="308" x2="136" y2="416" class="ch-svg-gridline"/>
+          <text x="198" y="366" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">|+⟩</text>
+          <text x="72" y="366" text-anchor="end" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">|−⟩</text>
+          <text x="136" y="305" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">|+i⟩</text>
+          <path id="course-bloch-arc" d="M 158 362 A 22 22 0 0 0 158 362" fill="none" class="ch-arc-terra"/>
+          <line id="course-bloch-vec" x1="136" y1="362" x2="188" y2="362" class="ch-vec-accent"/>
+          <circle id="course-bloch-dot" cx="188" cy="362" r="5.5" class="ch-dot-accent"/>
+        </g>
+        <text id="course-bloch-r" x="136" y="450" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">|r_xy| = 1.00</text>
+
+        <!-- Right dial: Amplitude sum at D0 -->
+        <g transform="translate(0, 14)">
+          <circle cx="384" cy="362" r="52" class="ch-dial-bg"/>
+          <line x1="326" y1="362" x2="442" y2="362" class="ch-svg-gridline"/>
+          <line x1="384" y1="308" x2="384" y2="416" class="ch-svg-gridline"/>
+          <line x1="384" y1="362" x2="410" y2="362" class="ch-vec-accent" stroke-width="2.2"/>
+          <line id="course-sum-leg2" x1="410" y1="362" x2="436" y2="362" class="ch-vec-terra" stroke-width="2.2"/>
+          <line id="course-sum-res" x1="384" y1="362" x2="436" y2="362" class="ch-vec-blue" stroke-width="3.2"/>
+          <circle id="course-sum-dot" cx="436" cy="362" r="4.5" class="ch-dot-blue"/>
+        </g>
+        <text id="course-sum-caption" x="384" y="450" text-anchor="middle" class="ch-txt-blue" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">(1 + e^(i·0))/2 = 1.00</text>
+
+        <!-- Panel 3: Output Detector Bars & Formula Box -->
+        <rect x="544" y="56" width="300" height="404" rx="8" class="ch-svg-card"/>
+        <text x="560" y="77" class="ch-txt-heading" font-size="12" font-weight="700">探测器统计概率 · Born 规则</text>
+        <text x="560" y="96" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.8">P(0) = (1 + V·cos φ) / 2</text>
+
+        <!-- Bar Chart Grid -->
+        <line x1="566" y1="128" x2="826" y2="128" class="ch-svg-gridline" stroke-dasharray="3 3"/>
+        <line x1="566" y1="196" x2="826" y2="196" class="ch-svg-gridline" stroke-dasharray="3 3"/>
+        <line x1="566" y1="264" x2="826" y2="264" class="ch-svg-axis"/>
+        <text x="562" y="132" text-anchor="end" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9.5">100%</text>
+        <text x="562" y="200" text-anchor="end" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9.5">50%</text>
+        <text x="562" y="268" text-anchor="end" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9.5">0%</text>
+
+        <!-- D0 Bar -->
+        <rect x="606" y="128" width="68" height="136" rx="5" class="ch-bar-track"/>
+        <rect id="course-bar-d0" x="606" y="128" width="68" height="136" rx="5" class="ch-bar-accent"/>
+        <text id="course-bar-val0" x="640" y="121" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="800">100%</text>
+        <text x="640" y="284" text-anchor="middle" class="ch-txt-heading" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700">D₀ · |0⟩</text>
+
+        <!-- D1 Bar -->
+        <rect x="720" y="128" width="68" height="136" rx="5" class="ch-bar-track"/>
+        <rect id="course-bar-d1" x="720" y="262" width="68" height="2" rx="5" class="ch-bar-terra"/>
+        <text id="course-bar-val1" x="754" y="255" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="800">0%</text>
+        <text x="754" y="284" text-anchor="middle" class="ch-txt-heading" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700">D₁ · |1⟩</text>
+
+        <!-- Formula readout box -->
+        <rect x="560" y="310" width="268" height="132" rx="7" class="ch-svg-ribbon"/>
+        <text x="574" y="334" class="ch-txt-heading" font-size="11.5" font-weight="700">当前输出态与物理机制</text>
+        <text id="course-box-line1" x="574" y="362" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="700">● D₀ 同相相长：1/2 + 1/2 = 1</text>
+        <text id="course-box-line2" x="574" y="388" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="700">● D₁ 反相相消：1/2 − 1/2 = 0</text>
+        <text id="course-box-line3" x="574" y="416" class="ch-txt-quiet" font-size="11">对应第 00、02 章与 Q1 双缝干涉推导</text>
+      </svg>
+
+      <figcaption>
+        <div class="course-switch" role="group" aria-label="切换量子干涉工作模式">
+          <button type="button" data-course-mode="phi0" data-phase="0" aria-pressed="true">φ=0° 相长 |0⟩</button>
+          <button type="button" data-course-mode="phi90" data-phase="90" aria-pressed="false">φ=90° 叠加 50-50</button>
+          <button type="button" data-course-mode="phi180" data-phase="180" aria-pressed="false">φ=180° 相消 |1⟩</button>
+          <button type="button" data-course-mode="decohere" data-phase="decohere" aria-pressed="false" title="加路径测量（退相干→干涉消失）">路径测量（退相干）</button>
+          <button type="button" class="course-replay-btn" data-course-replay aria-label="重播干涉波包动画">↻ 重播波包</button>
+        </div>
+        <div class="course-arrival-bar">
+          <span class="course-arrival-probs">P(D₀) = <strong id="qch-hero-p0">100%</strong> · P(D₁) = <strong id="qch-hero-p1">0%</strong></span>
+          <p class="course-arrival" id="qch-hero-note" aria-live="polite">当前模式：φ = 0° 相长干涉，两路径同相汇合，全部概率进入 D₀，D₁ 严格相消为零。</p>
+        </div>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- SIX PILLARS -->
+  <section class="course-pillars course-width" id="course-pillars" aria-labelledby="course-pillars-title">
+    <p class="course-kicker">全书知识架构 · 26 章 5 大教学篇</p>
+    <h2 id="course-pillars-title">一套量子计算体系，贯通哪六大核心支柱？</h2>
+    <p class="course-section-intro">从两维列向量到百万比特容错资源账本，把数学语言、量子算法、硬件控制、纠错解码、后量子安全与经典模拟铁壁放进同一条逻辑主线，每章均附可复算小例与失效边界。</p>
+    <div class="course-pillar-grid">
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>01 · 第 01–05 章 + Q1–Q2</span><strong>态、相位与开放信道</strong></div>
+        <h3>复线性代数、纠缠与噪声</h3>
+        <p>吃透左共轭内积、Bloch 球旋转、偏迹、Schmidt 分解、CHSH 非局域博弈与 CPTP 信道，用密度矩阵彻底分清纯态干涉与退相干混态。</p>
+        <a href="02-single-qubit.html">进入第 02 章 · 单量子比特 →</a>
+      </article>
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>02 · 第 06–08 章 + 16 章</span><strong>原语、变分与 QSVT</strong></div>
+        <h3>量子算法与加速边界</h3>
+        <p>串讲相位回踢、Grover 放大、QFT/QPE、Shor 周期提取、哈密顿量模拟、VQE 贫瘠高原、去量子化检验以及 LCU → QSVT → GQSP 统一框架。</p>
+        <a href="06-algorithmic-primitives.html">进入第 06 章 · 算法原语 →</a>
+      </article>
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>03 · Q3 + 第 09、14 章</span><strong>六大载体与九层编译</strong></div>
+        <h3>物理硬件与脉冲编译</h3>
+        <p>对比超导、离子阱、中性原子、光子、硅自旋与拓扑平台，贯通 Rabi/Ramsey 驱动、Weyl 室 KAK 分解、ZX 演算、DRAG 脉冲与动态解耦。</p>
+        <a href="09-hardware.html">进入第 09 章 · 主流硬件平台 →</a>
+      </article>
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>04 · 第 10、11、19 章</span><strong>纠错、解码与整机 SLA</strong></div>
+        <h3>表面码容错与系统工程</h3>
+        <p>从五比特完美码、d=3 旋转表面码与晶格手术，到 qLDPC、魔法态培育、实时解码尾延迟、制冷热预算与九步应用级容错资源账本。</p>
+        <a href="10-error-correction.html">进入第 10 章 · 量子纠错 →</a>
+      </article>
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>05 · 第 12、20 章</span><strong>密码、网络与传感极限</strong></div>
+        <h3>后量子安全与精密测量</h3>
+        <p>辨析 NIST 后量子标准（ML-KEM / HQC）与 BB84/E91/三代量子中继；零跳步推导 QFI、SQL 与海森堡极限、Huelga 退相位坍塌与光学压缩。</p>
+        <a href="20-quantum-sensing-metrology.html">进入第 20 章 · 量子传感 →</a>
+      </article>
+      <article class="course-pillar-card">
+        <div class="course-pillar-meta"><span>06 · 第 13、17、18、21 章</span><strong>熵界与经典模拟铁壁</strong></div>
+        <h3>量子信息与模拟边界</h3>
+        <p>以数据处理不等式串联四类信道容量与复杂度类；手算稳定子辛表、MPS 逐键 SVD 与含噪 Pauli 传播四关判据，独立核查“量子优势”声明。</p>
+        <a href="21-stabilizer-classical-simulation.html">进入第 21 章 · 经典模拟边界 →</a>
+      </article>
+    </div>
+
+    <div class="course-frontier-bar" aria-label="前沿专题速达">
+      <span>前沿专题直通：</span>
+      <a href="10-error-correction.html">颜色码与 XZZX</a>
+      <a href="09-hardware.html">中性原子分区与 AFT</a>
+      <a href="12-security-network-frontiers.html">可认证随机性与盲计算</a>
+      <a href="20-quantum-sensing-metrology.html">量子传感与核钟</a>
+      <a href="21-stabilizer-classical-simulation.html">PEPS 与 Pauli 传播边界</a>
+      <a href="17-computation-models.html">CV-MBQC 光量子集群态</a>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE CASES + SYNCHRONIZED AUDIO -->
+  <section class="course-cases course-width" id="course-cases" aria-labelledby="course-cases-title">
+    <p class="course-kicker">直觉预览 × 真实机制 × 同步量子声化</p>
+    <h2 id="course-cases-title">亲手切换非局域博弈与表面码解码，再听清退相干与静音的差别</h2>
+    <p class="course-section-intro">下面两张互动展卡直接对应全书最核心的两个分水岭——第 03 章的 Bell/CHSH 非局域性检验与第 10 章的 d=3 表面码纠错界；随后可用同一时间轴试听五段确定性教学合成声波。</p>
+
+    <div class="course-case-grid">
+      <!-- Case 1: Bell & CHSH -->
+      <article class="course-case course-case-chsh">
+        <p class="course-case-tag">第 03 章核心机制 · Bell 态与 CHSH 非局域博弈</p>
+        <h3>量子纠缠为什么能把双人合作胜率从 75% 推到 85.36%？</h3>
+        <p>Alice 与 Bob 收到随机比特 x, y ∈ {0,1}，互不通信但需让输出满足 a ⊕ b = x·y。任意经典局域隐变量策略在 4 种提问中至多赢 3 种（75%）；共享 Bell 态 |Φ⁺⟩ 按 22.5° 夹角旋转测量轴，4 种提问的胜率同时达到 cos²(π/8) ≈ 85.36%。</p>
+        <figure class="course-case-diagram course-chsh-widget" data-chsh="quantum">
+          <div class="course-case-switch" role="group" aria-label="切换 CHSH 策略">
+            <button type="button" data-course-chsh="classic" aria-pressed="false">经典局域上限 75% (S=2)</button>
+            <button type="button" data-course-chsh="quantum" aria-pressed="true">量子最优角 85.36% (S=2√2)</button>
+          </div>
+          <svg viewBox="0 0 500 286" role="img" aria-labelledby="course-chsh-title course-chsh-desc">
+            <title id="course-chsh-title">CHSH 合作博弈经典局域上限与量子最优选角对比图</title>
+            <desc id="course-chsh-desc">展示 Alice 与 Bob 的测量轴夹角以及四种输入 (0,0)、(0,1)、(1,0)、(1,1) 的单局胜率柱状图，对比经典 75% 与量子 85.36%。</desc>
+            <rect class="ch-case-bg" x="10" y="10" width="480" height="266" rx="9"/>
+            <!-- Left: Angle wheel -->
+            <circle cx="118" cy="144" r="72" class="ch-dial-bg"/>
+            <line x1="40" y1="144" x2="196" y2="144" class="ch-svg-gridline"/>
+            <line x1="118" y1="66" x2="118" y2="222" class="ch-svg-gridline"/>
+            <text x="118" y="57" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Z 轴 (0°)</text>
+            <text x="202" y="148" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">X (90°)</text>
+            <!-- Quantum angles -->
+            <g class="chsh-view-quantum">
+              <line x1="118" y1="144" x2="118" y2="76" class="ch-vec-accent"/>
+              <line x1="118" y1="144" x2="186" y2="144" class="ch-vec-accent"/>
+              <line x1="118" y1="144" x2="166" y2="96" class="ch-vec-terra"/>
+              <line x1="118" y1="144" x2="70" y2="96" class="ch-vec-terra"/>
+              <text x="124" y="82" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">a₀=0°</text>
+              <text x="168" y="160" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">a₁=90°</text>
+              <text x="168" y="92" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">b₀=45°</text>
+              <text x="48" y="92" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">b₁=−45°</text>
+              <text x="118" y="254" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="700">Bell 态 |Φ⁺⟩ · S = 2√2 ≈ 2.828</text>
+            </g>
+            <!-- Classic angles -->
+            <g class="chsh-view-classic">
+              <line x1="118" y1="144" x2="118" y2="76" class="ch-vec-accent"/>
+              <line x1="118" y1="144" x2="118" y2="84" class="ch-vec-terra" stroke-dasharray="5 3"/>
+              <circle cx="118" cy="78" r="5" class="ch-dot-accent"/>
+              <text x="128" y="92" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700">确定策略 a=b=0</text>
+              <text x="118" y="254" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="700">局域隐变量 · S ≤ 2.000</text>
+            </g>
+            <!-- Right: 4-input win bars (shifted down >=20px so 100% clears heading & 75% pill sits cleanly above bars) -->
+            <text x="242" y="31" class="ch-txt-heading" font-size="12" font-weight="700">四种输入 (x, y) 胜率分布</text>
+            <line x1="242" y1="208" x2="474" y2="208" class="ch-svg-axis"/>
+            <g class="chsh-view-quantum">
+              <rect x="252" y="100" width="38" height="108" rx="4" class="ch-bar-accent"/>
+              <rect x="308" y="100" width="38" height="108" rx="4" class="ch-bar-accent"/>
+              <rect x="364" y="100" width="38" height="108" rx="4" class="ch-bar-accent"/>
+              <rect x="420" y="100" width="38" height="108" rx="4" class="ch-bar-accent"/>
+              <text x="271" y="93" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">85.4%</text>
+              <text x="327" y="93" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">85.4%</text>
+              <text x="383" y="93" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">85.4%</text>
+              <text x="439" y="93" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">85.4%</text>
+              <rect x="242" y="236" width="232" height="28" rx="5" class="ch-box-accent-soft"/>
+              <text x="358" y="254" text-anchor="middle" class="ch-txt-accent" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="800">总胜率 P_win = 85.36% (+10.36%)</text>
+            </g>
+            <g class="chsh-view-classic">
+              <rect x="252" y="82" width="38" height="126" rx="4" class="ch-bar-blue"/>
+              <rect x="308" y="82" width="38" height="126" rx="4" class="ch-bar-blue"/>
+              <rect x="364" y="82" width="38" height="126" rx="4" class="ch-bar-blue"/>
+              <rect x="420" y="204" width="38" height="4" rx="2" class="ch-bar-terra"/>
+              <text x="271" y="75" text-anchor="middle" class="ch-txt-blue" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">100%</text>
+              <text x="327" y="75" text-anchor="middle" class="ch-txt-blue" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">100%</text>
+              <text x="383" y="75" text-anchor="middle" class="ch-txt-blue" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">100%</text>
+              <text x="439" y="196" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">0% 必败</text>
+              <rect x="242" y="236" width="232" height="28" rx="5" class="ch-box-terra-soft"/>
+              <text x="358" y="254" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="800">总胜率 P_win = 75.00%（经典天花板）</text>
+            </g>
+            <!-- Classic 75% boundary line & high-contrast pill drawn AFTER all bars so nothing ever occludes it -->
+            <line x1="242" y1="113.5" x2="474" y2="113.5" class="ch-wire-warn" stroke-dasharray="4 3"/>
+            <rect x="358" y="40" width="118" height="19" rx="9.5" class="ch-box-warn"/>
+            <line x1="366" y1="49.5" x2="380" y2="49.5" class="ch-wire-warn"/>
+            <text x="385" y="53" class="ch-txt-amber" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10" font-weight="700">经典均界 75%</text>
+            <g class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" text-anchor="middle">
+              <text x="271" y="223">00</text><text x="327" y="223">01</text><text x="383" y="223">10</text><text x="439" y="223">11</text>
+            </g>
+          </svg>
+          <figcaption>
+            <strong class="course-chsh-result" role="status">量子最优角：S = 2√2 ≈ 2.828，胜率 85.36%，严格击穿经典 75% 上界。</strong>
+          </figcaption>
+        </figure>
+        <div class="course-case-links">
+          <a href="03-multiple-qubits.html">读第 03 章 · CHSH 推导 →</a>
+          <a href="lab/quantum-lab.html#tab-chsh">打开 04 号实验台模拟 1,000 局 →</a>
+        </div>
+      </article>
+
+      <!-- Case 2: d=3 Rotated Surface Code -->
+      <article class="course-case course-case-qec">
+        <p class="course-case-tag">第 10 章核心机制 · d = 3 旋转表面码症状解码</p>
+        <h3>为什么码距 d = 3 只能保纠 1 个错，2 个错就会触发逻辑翻转？</h3>
+        <p>[[9, 1, 3]] 旋转表面码用 9 颗数据比特与 8 个稳定子面编码 1 颗逻辑比特。单比特 X₅ 错点亮相邻两盏 Z 症状灯，最小权重解码精准还原；但双比特 X₄X₅ 错使中间症状奇偶抵消，解码器改选更短的 X₆ 修正链，与原错拼成逻辑 X̄！</p>
+        <figure class="course-case-diagram course-qec-widget" data-qec="single">
+          <div class="course-case-switch" role="group" aria-label="切换表面码错误案例">
+            <button type="button" data-course-qec="single" aria-pressed="true">单比特 X₅ 错 · 精准纠回</button>
+            <button type="button" data-course-qec="double" aria-pressed="false">双比特 X₄X₅ 错 · 逻辑翻转</button>
+          </div>
+          <svg viewBox="0 0 500 262" role="img" aria-labelledby="course-qec-title course-qec-desc">
+            <title id="course-qec-title">d=3 旋转表面码单错纠回与双错解码错配对比图</title>
+            <desc id="course-qec-desc">左侧展示 9 数据比特与 4 Z / 4 X 稳定子面棋盘格；右侧展示症状亮灯、最小权重修正链与逻辑 X̄ / Z̄ 核验结论。</desc>
+            <rect class="ch-case-bg" x="10" y="10" width="480" height="242" rx="9"/>
+            <!-- 3x3 Surface Code Patch (center around x=134, y=134, step=62) -->
+            <!-- Z1 (1,2,4,5) & Z2 (5,6,8,9) & Z3 cap (2,3) & Z4 cap (7,8) -->
+            <rect class="ch-qec-z qec-z1" x="72" y="72" width="62" height="62"/>
+            <rect class="ch-qec-z qec-z2" x="134" y="134" width="62" height="62"/>
+            <path class="ch-qec-z" d="M 134 72 A 31 22 0 0 1 196 72 Z"/>
+            <path class="ch-qec-z" d="M 72 196 A 31 22 0 0 0 134 196 Z"/>
+            <!-- X1 (2,3,5,6) & X2 (4,5,7,8) & X3 cap (1,4) & X4 cap (6,9) -->
+            <rect class="ch-qec-x" x="134" y="72" width="62" height="62"/>
+            <rect class="ch-qec-x" x="72" y="134" width="62" height="62"/>
+            <path class="ch-qec-x" d="M 72 72 A 22 31 0 0 0 72 134 Z"/>
+            <path class="ch-qec-x" d="M 196 134 A 22 31 0 0 1 196 196 Z"/>
+            <!-- Plaquette labels -->
+            <text x="103" y="108" text-anchor="middle" class="ch-txt-blue qec-lbl-z1" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="800">Z₁</text>
+            <text x="165" y="170" text-anchor="middle" class="ch-txt-blue qec-lbl-z2" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="800">Z₂</text>
+            <text x="165" y="108" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700">X₁</text>
+            <text x="103" y="170" text-anchor="middle" class="ch-txt-terra" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700">X₂</text>
+            <!-- Logical X_bar top line & Z_bar right line -->
+            <line x1="72" y1="72" x2="196" y2="72" class="ch-wire-terra" stroke-width="3" stroke-dasharray="6 4"/>
+            <line x1="196" y1="72" x2="196" y2="196" class="ch-wire-blue" stroke-width="3"/>
+            <!-- 9 data qubits -->
+            <g class="ch-qec-nodes" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700" text-anchor="middle">
+              <circle cx="72" cy="72" r="10"/><text x="72" y="76">1</text>
+              <circle cx="134" cy="72" r="10"/><text x="134" y="76">2</text>
+              <circle cx="196" cy="72" r="10"/><text x="196" y="76">3</text>
+              <circle class="qec-q4" cx="72" cy="134" r="10"/><text x="72" y="138">4</text>
+              <circle class="qec-q5" cx="134" cy="134" r="10"/><text x="134" y="138">5</text>
+              <circle class="qec-q6" cx="196" cy="134" r="10"/><text x="196" y="138">6</text>
+              <circle cx="72" cy="196" r="10"/><text x="72" y="200">7</text>
+              <circle cx="134" cy="196" r="10"/><text x="134" y="200">8</text>
+              <circle cx="196" cy="196" r="10"/><text x="196" y="200">9</text>
+            </g>
+            <!-- Right panel readout -->
+            <g class="qec-view-single">
+              <text x="234" y="54" class="ch-txt-heading" font-size="13" font-weight="700">注入单错：E = X₅</text>
+              <text x="234" y="82" class="ch-txt-quiet" font-size="12">1. 症状亮灯：Z₁ = −1，Z₂ = −1</text>
+              <text x="234" y="106" class="ch-txt-quiet" font-size="12">2. 最小权重解码：C = X₅（权 1）</text>
+              <text x="234" y="130" class="ch-txt-quiet" font-size="12">3. 残余算符：C·E = X₅² = I</text>
+              <text x="234" y="154" class="ch-txt-quiet" font-size="12">4. 逻辑核验：与 Z̄ 对易，无逻辑错</text>
+              <rect x="234" y="176" width="236" height="50" rx="7" class="ch-box-accent-soft"/>
+              <text x="352" y="198" text-anchor="middle" class="ch-txt-accent" font-size="13" font-weight="800">✓ 单比特错精准纠回</text>
+              <text x="352" y="216" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">全部 27 种单比特 Pauli 错 100% 保护</text>
+            </g>
+            <g class="qec-view-double">
+              <text x="234" y="54" class="ch-txt-terra" font-size="13" font-weight="700">注入双错：E = X₄ X₅</text>
+              <text x="234" y="82" class="ch-txt-quiet" font-size="12">1. 症状亮灯：Z₁ 抵消，仅 Z₂ = −1</text>
+              <text x="234" y="106" class="ch-txt-quiet" font-size="12">2. 最小权重解码：误选 C = X₆（权 1）</text>
+              <text x="234" y="130" class="ch-txt-quiet" font-size="12">3. 残余算符：X₄ X₅ X₆ ≡ X̄（逻辑链）</text>
+              <text x="234" y="154" class="ch-txt-terra" font-size="12" font-weight="700">4. 与 Z̄=Z₃Z₆Z₉ 交于 q₆ → 反对易！</text>
+              <rect x="234" y="176" width="236" height="50" rx="7" class="ch-box-terra-soft"/>
+              <text x="352" y="198" text-anchor="middle" class="ch-txt-terra" font-size="13" font-weight="800">✕ 解码错配：触发逻辑 X̄ 翻转</text>
+              <text x="352" y="216" text-anchor="middle" class="ch-txt-quiet" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">t = ⌊(d−1)/2⌋ = 1：超界即发生逻辑错</text>
+            </g>
+          </svg>
+          <figcaption>
+            <strong class="course-qec-result" role="status">单错 X₅：双 Z 面亮灯，权 1 解码精准复原（残余 I）。</strong>
+          </figcaption>
+        </figure>
+        <div class="course-case-links">
+          <a href="10-error-correction.html">读第 10 章 · 表面码与晶格手术 →</a>
+          <a href="lab/quantum-lab.html#tab-surface">打开 06 号实验台亲手点错解码 →</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Synchronized Quantum Sonification Board -->
+    <section class="course-case-audio" id="course-audio-board" aria-labelledby="course-audio-title">
+      <div class="course-audio-head">
+        <div>
+          <p class="course-kicker">同步多轨量子声化试听 · A01 &amp; A02</p>
+          <h3 id="course-audio-title">用耳朵分辨“相长基准 / 理想干涉 / 退相干稳态”的差别</h3>
+        </div>
+        <a class="course-secondary" href="labs/audio.html">打开完整声学实验册 →</a>
+      </div>
+      <p>三路音频共享同一 4.0 秒教学时间轴与固定数字增益（不做单轨峰值归一化），互斥播放防止空气混音干扰。点击下方同步时间点按钮，重点听清 <strong>2.4s 之后退相干轨收敛到稳态常音（P₀→1/2），而不是衰减成静音</strong>。</p>
+      <div class="course-audio-jumps" role="group" aria-label="将三路播放器同步定位到同一时刻" hidden>
+        <button type="button" data-course-seek="0.0">0.0s 起振</button>
+        <button type="button" data-course-seek="1.2">1.2s 相位拍频</button>
+        <button type="button" data-course-seek="2.4">2.4s 退相干尾</button>
+        <span class="course-seek-status" role="status"></span>
+      </div>
+      <div class="course-audio-grid">
+        <div>
+          <h4 id="course-aud-p0">轨 1 · 相长基准 φ = 0° (P₀ = 1.00)</h4>
+          <audio controls preload="none" aria-labelledby="course-aud-p0" src="assets/audio/phase-0.wav"></audio>
+          <p class="course-aud-cap">恒定最大包络 0.400 · RMS 0.2824</p>
+        </div>
+        <div>
+          <h4 id="course-aud-ri">轨 2 · 理想 Ramsey 干涉 (V = 1, 1 Hz)</h4>
+          <audio controls preload="none" aria-labelledby="course-aud-ri" src="assets/audio/ramsey-ideal.wav"></audio>
+          <p class="course-aud-cap">包络 0.4|cos(πt)| · 每半整数秒清零</p>
+        </div>
+        <div class="course-aud-featured">
+          <h4 id="course-aud-rd">轨 3 · 退相干 Ramsey (T₂ = 1.5 s)</h4>
+          <audio controls preload="none" aria-labelledby="course-aud-rd" src="assets/audio/ramsey-decay.wav"></audio>
+          <p class="course-aud-cap">包络 0.4√P₀(t) · 趋向稳态 0.4/√2 ≈ 0.283</p>
+        </div>
+      </div>
+      <div class="course-audio-subgrid" aria-label="相位相消对照音频">
+        <div>
+          <h4 id="course-aud-p120">A01 对照 · φ = 120° 部分相消 (P₀ = 0.25)</h4>
+          <audio controls preload="none" aria-labelledby="course-aud-p120" src="assets/audio/phase-120.wav"></audio>
+        </div>
+        <div>
+          <h4 id="course-aud-p180">A01 对照 · φ = 180° 完全反相静音 (P₀ = 0.00)</h4>
+          <audio controls preload="none" aria-labelledby="course-aud-p180" src="assets/audio/phase-180.wav"></audio>
+        </div>
+      </div>
+      <p class="course-audio-disclosure"><strong>声化物理映射与边界声明：</strong>全部 5 段音频均由 <code>codes/practice/generate_audio.py</code> 程序确定性合成（22050 Hz 单声道 16-bit PCM WAV，时长 4.0 s，440 Hz 正弦载波，单分量固定增益 0.2，首尾 10 ms 线性淡入淡出，不做单轨独立归一化），将 Born 概率平方根映射为瞬时包络 <code>A(t) = 0.4√P₀(t)</code>（均方声能类比测量概率）。<strong>这些音频绝非量子芯片实验设备实录</strong>；经典声压、量子复振幅与单次离散测量坍缩不可混为一谈。</p>
+    </section>
+
+    <!-- Warm Stone Lab Banner -->
+    <aside class="course-lab-banner" aria-labelledby="course-lab-title">
+      <div>
+        <p class="course-kicker">零安装浏览器实验 · 6 大顿悟级交互模块</p>
+        <h3 id="course-lab-title">亲手玩透 6 个经典量子现象：从 MZI 干涉声化到 d=3 表面码解码</h3>
+        <p>无需 Python 环境、无需联网、双击 <code>file://</code> 即开即跑：<strong>01</strong> MZI 干涉与密度矩阵声化 · <strong>02</strong> 3D 真弧旋转 Bloch 球与千次采样 · <strong>03</strong> Ramsey 失谐与退相干误区对比 · <strong>04</strong> Bell 态偏迹坍缩与 CHSH 千局博弈 · <strong>05</strong> Grover 半拍振幅放大与第 3 步过冲陷阱 · <strong>06</strong> d=3 旋转表面码点击注错与最小权重解码。</p>
+      </div>
+      <a class="course-cta" href="lab/quantum-lab.html">启动 6 模块交互实验台 <span aria-hidden="true">→</span></a>
+    </aside>
+  </section>
+
+  <!-- FOUR ENTRY LEARNING PATHS -->
+  <section class="course-path course-width" id="course-path" aria-labelledby="course-path-title">
+    <p class="course-kicker">分阶段学习路线图</p>
+    <h2 id="course-path-title">按你的背景选择最短切入路线</h2>
+    <p class="course-section-intro">全书保留 00–21 与 Q1–Q4 稳定编号，按教学依赖排为五篇；你也可以开启内页顶栏的<strong>「初学主线模式」</strong>一键折叠进阶证明，一刷抓核心，二刷补深潜。</p>
+    <ol class="course-stops">
+      <li>
+        <span>路线 01 · 零基础全景入门</span>
+        <h3>数学底座 → 物理直觉 → 量子态与噪声</h3>
+        <p>先花 10 分钟做七道先修自测，再拿草稿纸走完二维列向量、双缝实验、Bloch 球、Bell 纠缠、基础电路与 CPTP 噪声信道。</p>
+        <div>
+          <a href="appendices/prerequisites.html">七道先修自测</a>
+          <a href="00-overview.html">00 全景</a>
+          <a href="01-math.html">01 数学基础</a>
+          <a href="quantum-mechanics/01-experiments-states.html">Q1 实验与态</a>
+          <a href="02-single-qubit.html">02 单比特</a>
+          <a href="03-multiple-qubits.html">03 纠缠与 CHSH</a>
+          <a href="05-noise-channels.html">05 噪声信道</a>
+        </div>
+      </li>
+      <li>
+        <span>路线 02 · 算法与软件工程</span>
+        <h3>核心原语 → 变分统计 → 复算与经典模拟</h3>
+        <p>打通相位回踢、Grover、QPE、Shor 与 QSVT 统一框架，用 20 行纯标准库手写模拟器、做 Wilson 区间统计并掌握四大 SDK 与模拟边界。</p>
+        <div>
+          <a href="06-algorithmic-primitives.html">06 算法原语</a>
+          <a href="07-algorithms.html">07 代表性算法</a>
+          <a href="08-applications.html">08 变分与 QEM</a>
+          <a href="15-practice-research.html">15 动手与复核</a>
+          <a href="16-advanced-algorithms-verification.html">16 QSVT 与验证</a>
+          <a href="21-stabilizer-classical-simulation.html">21 经典模拟</a>
+        </div>
+      </li>
+      <li>
+        <span>路线 03 · 物理硬件与容错系统</span>
+        <h3>能级控制 → 六大平台 → 编译、纠错与整机</h3>
+        <p>从约瑟夫森结非谐性与色散读出出发，贯穿超导/离子阱/中性原子/光子硬件、Weyl 室编译、表面码晶格手术、实时解码与容错账本。</p>
+        <div>
+          <a href="quantum-mechanics/03-levels-control.html">Q3 能级控制</a>
+          <a href="09-hardware.html">09 硬件平台</a>
+          <a href="14-compilation-control.html">14 编译与脉冲</a>
+          <a href="10-error-correction.html">10 量子纠错</a>
+          <a href="11-resources-benchmarks.html">11 资源账本</a>
+          <a href="19-engineering-architecture.html">19 系统工程</a>
+        </div>
+      </li>
+      <li>
+        <span>路线 04 · 科研前沿与量子传感</span>
+        <h3>后量子密码 → 精密测量 → 信息容量与模型</h3>
+        <p>面向科研切入：一次打通 NIST 后量子迁移、三代量子中继、海森堡极限与核钟传感、量子信息熵界、连续变量 GKP 与七大计算模型。</p>
+        <div>
+          <a href="12-security-network-frontiers.html">12 密码与网络</a>
+          <a href="20-quantum-sensing-metrology.html">20 量子传感</a>
+          <a href="13-quantum-information.html">13 量子信息</a>
+          <a href="17-computation-models.html">17 七大模型</a>
+          <a href="quantum-mechanics/04-wavefunctions-models.html">Q4 波函数</a>
+          <a href="18-channels-capacities-complexity.html">18 信道与 CV</a>
+        </div>
+      </li>
+    </ol>
+    <p class="course-extra">
+      <span>常备工具书：</span>
+      <a href="appendices/notation.html">全局符号表与公式速查</a>
+      <a href="appendices/glossary.html">术语表（151 词条）</a>
+      <a href="appendices/exercises.html">271 道零跳步题答</a>
+      <a href="appendices/references.html">参考文献与证据分级</a>
+      <a href="labs/README.html">逐章实验手册</a>
+      <a href="appendices/software-practice.html">31 个开源项目对照</a>
+    </p>
+  </section>
+
+  <!-- DEEP CHARCOAL ENGINEERING, VERIFICATION & ALL-MEDIA DOWNLOADS -->
+  <section class="course-engineering" id="course-engineering" aria-labelledby="course-engineering-title">
+    <div class="course-width">
+      <p class="course-kicker">从纸面推导走向硬件验证与全介质离线交付</p>
+      <h2 id="course-engineering-title">工程闭环、可复算验证与全介质发布</h2>
+      <p class="course-section-intro">不把小规模模拟冒充硬件复现，不把抽象查询数冒充墙钟加速。全书每一条工程链路均给出参数单位、资源账本、可运行脚本与自动化验收门禁。</p>
+      <div class="course-engineering-grid">
+        <article>
+          <h3>01 · 硬件物理与脉冲编译</h3>
+          <p>覆盖 transmon / fluxonium / 中性原子 / 光子物理参数、Weyl 室最优双比特综合、ZX 演算全局 T-count 压缩、DRAG 抗泄漏整形、动态解耦与 M3/TREX 读出缓解。</p>
+          <div>
+            <a href="09-hardware.html">六大硬件平台对比 →</a>
+            <a href="14-compilation-control.html">九层编译控制链 →</a>
+          </div>
+        </article>
+        <article>
+          <h3>02 · 容错纠错与实时解码</h3>
+          <p>剖析表面码时空探测事件图、晶格手术逻辑门、魔法态培育（MSC）、MWPM / Union-Find / BP+OSD 解码尾延迟约束、制冷热预算与九步应用级容错资源账本。</p>
+          <div>
+            <a href="10-error-correction.html">表面码与 qLDPC →</a>
+            <a href="11-resources-benchmarks.html">九步资源估算 →</a>
+            <a href="19-engineering-architecture.html">整机运维工程 →</a>
+          </div>
+        </article>
+        <article>
+          <h3>03 · 零依赖复算与 31 项目对照</h3>
+          <p>提供 38 个纯标准库本地复算脚本（含稳定子表、MPS 与 Pauli 传播引擎），并系统对照 31 个开源项目 122 份固定提交源码与隔离环境实跑核验。</p>
+          <div>
+            <a href="labs/README.html">逐章动手实验册 →</a>
+            <a href="appendices/software-practice.html">31 个开源项目对照 →</a>
+            <a href="labs/sdk-validation.html">隔离 SDK 核验 →</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="course-downloads" id="course-downloads" aria-labelledby="course-downloads-title">
+        <div class="course-downloads-head">
+          <div>
+            <p class="course-kicker">ALL-MEDIA OFFLINE PUBLISHING · 同源零失真构建</p>
+            <h3 id="course-downloads-title">全介质电子书与整站离线包</h3>
+            <p>同一套 Markdown 与双主题 SVG 源码同源编译：支持在线阅读、双击离线网站、A4 印刷级 PDF（含三层书签与内部跳转）及原生 MathML 3 EPUB 3 电子书。</p>
+          </div>
+          <div class="course-dl-head-actions">
+            <a class="course-dl-all course-dl-all-secondary" href="./dist/index.html">站内下载页 →</a>
+            <a class="course-dl-all" href="https://github.com/nanless/quantum-computing-handbook/releases/latest" target="_blank" rel="noopener">前往 GitHub Releases ↗</a>
+          </div>
+        </div>
+        <div class="course-download-grid">
+          <article class="course-dl-card">
+            <span class="course-dl-badge">PDF · A4 合订本</span>
+            <strong>A4 印刷级全书 PDF</strong>
+            <span class="course-dl-desc">本地路径 <code>dist/quantum-computing-handbook.pdf</code> · 50,900+ 公式、完整三层书签与内部交叉链接</span>
+            <div class="course-dl-links">
+              <a class="course-dl-primary" href="./dist/index.html">站内下载页 →</a>
+              <a class="course-dl-mirror" href="https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.pdf" target="_blank" rel="noopener">Releases 镜像 ↗</a>
+            </div>
+          </article>
+          <article class="course-dl-card">
+            <span class="course-dl-badge">EPUB 3 · MathML</span>
+            <strong>原生公式 EPUB 3 电子书</strong>
+            <span class="course-dl-desc">本地路径 <code>dist/quantum-computing-handbook.epub</code> · Apple Books / Calibre 原生流式排版</span>
+            <div class="course-dl-links">
+              <a class="course-dl-primary" href="./dist/index.html">站内下载页 →</a>
+              <a class="course-dl-mirror" href="https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.epub" target="_blank" rel="noopener">Releases 镜像 ↗</a>
+            </div>
+          </article>
+          <article class="course-dl-card">
+            <span class="course-dl-badge">RELEASES · 全套离线包</span>
+            <strong>完整离线网站与自编代码 ZIP</strong>
+            <span class="course-dl-desc">GitHub Releases 最新版统一包含 <code>PDF / EPUB / 完整离线网站 ZIP / 自编代码 ZIP / SHA256SUMS.txt</code>，解压双击 <code>index.html</code> 即用</span>
+            <div class="course-dl-links">
+              <a class="course-dl-primary" href="https://github.com/nanless/quantum-computing-handbook/releases/latest" target="_blank" rel="noopener">前往 Releases 下载最新版 ↗</a>
+            </div>
+          </article>
+          <article class="course-dl-card">
+            <span class="course-dl-badge">SHA-256 校验</span>
+            <strong>完整性校验清单</strong>
+            <span class="course-dl-desc"><code>SHA256SUMS.txt</code> · 核对 PDF / EPUB / 离线网站 ZIP / 自编代码 ZIP 字节完整性</span>
+            <div class="course-dl-links">
+              <a class="course-dl-primary" href="https://github.com/nanless/quantum-computing-handbook/releases/latest/download/SHA256SUMS.txt" target="_blank" rel="noopener">下载校验清单 ↗</a>
+              <a class="course-dl-mirror" href="./dist/index.html">站内指引 →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="course-bridge">
+        <a href="appendices/audit-log.html">全书审校记录、数值交叉复算与边界说明 →</a>
+        <a class="course-bridge-down" href="#main-content">↓ 继续向下阅读：全书详细导读、五篇 26 章提要与统一符号约定</a>
+      </div>
+    </div>
+  </section>
+</div>

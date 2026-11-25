@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-12-lwe-lattice-repeaters-title v3-12-lwe-lattice-repeaters-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 624" role="img" aria-labelledby="v3-12-lwe-lattice-repeaters-title v3-12-lwe-lattice-repeaters-desc">
   <title id="v3-12-lwe-lattice-repeaters-title">LWE 模 17 解密噪声界与三代量子中继 1000 km 时延对照</title>
   <desc id="v3-12-lwe-lattice-repeaters-desc">左面板绘出模 q=17 圆形解码环、m=0 与 m=1 解码扇区、奇数模对称无歧义充分界 |w|&lt;=3（m=0 容 [-4,4]、m=1 编于 8 容 [-3,4]，(m=1,w=-4) 与 (m=0,w=+4) 碰撞于余数 4）、正常解密 w=+2 及越界失败反例 w=+5；右面板用对数纵轴对比 1000 km 光纤上 1G(10 ms)、2G(0.2 ms)、3G(1 us) 中继周期时延及 15.05 km 擦除上限。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
     .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
@@ -46,54 +46,18 @@
     .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
     .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
     
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .card{fill:#162330;stroke:#395066}
-      .subcard{fill:#1d2e3d;stroke:#3d566d}
-      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
-      .ink{fill:#eef6ff}
-      .muted{fill:#b4c8da}
-      .accent{fill:#6ed0f7}
-      .warn{fill:#ff8585}
-      .gold{fill:#f2c15a}
-      .purple{fill:#c0adff}
-      .green{fill:#6dd4aa}
-      .axis{stroke:#b9d0e2}
-      .axishead{fill:#b9d0e2}
-      .grid{stroke:#304659}
-      .divider{stroke:#4a637a}
-      .s-accent{stroke:#6ed0f7}
-      .s-warn{stroke:#ff8585}
-      .s-gold{stroke:#f2c15a}
-      .s-purple{stroke:#c0adff}
-      .s-green{stroke:#6dd4aa}
-      .s-muted{stroke:#8ca5ba}
-      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
-      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
-      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
-      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
-      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
-      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
-      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
-      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
-      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
-      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
-      .wire{stroke:#c9deee}
-      .ctrl{fill:#eef6ff}
-      .dot-ring{stroke:#162330}
-      
-    }
+    
   </style>
-  <rect class="bg" width="1000" height="580" rx="20"/>
+  <rect class="bg" width="1000" height="624" rx="20"/>
   <text class="title ink" x="34" y="44">LWE 模 17 解密容错圆环与三代量子中继 1000 km 时延对照</text>
   <text class="subtitle muted" x="34" y="68">左：ℤ<tspan dy="3" font-size="9.2">17</tspan><tspan dy="-3">&#8203;</tspan> 奇数解码环对称安全界 |w| ≤ 3、余数 4 碰撞边界与 w=+5 越界反例；右：1000 km 三代中继时延</text>
-  <rect class="card" x="32" y="84" width="468" height="446" rx="12"/>
+  <rect class="card" x="32" y="84" width="468" height="490" rx="12"/>
   <text class="h2 ink" x="48" y="108">(a) LWE 模 q = 17 圆形解码环（对称界 |w| ≤ 3）</text>
   <path class="f-accent" style="fill-opacity:.22;stroke:none" d="M146.0 276.0A106.0 106.0 0 0 1 358.0 276.0Z"/>
   <path class="f-gold" style="fill-opacity:.22;stroke:none" d="M358.0 276.0A106.0 106.0 0 0 1 146.0 276.0Z"/>
   <circle class="axis" style="stroke-width:2.0" cx="252.0" cy="276.0" r="106.0"/>
-  <line class="s-warn" style="stroke-width:1.8;stroke-dasharray:6 4" x1="128.0" y1="276.0" x2="376.0" y2="276.0"/>
-  <text class="xs warn" style="font-weight:700" x="124.0" y="280.0" text-anchor="end">−4.25</text>
+  <line class="s-warn" style="stroke-width:1.8;stroke-dasharray:6 4" x1="114.0" y1="276.0" x2="376.0" y2="276.0"/>
+  <text class="xs warn" style="font-weight:700" x="110.0" y="281.0" text-anchor="end">−4.25</text>
   <text class="xs warn" style="font-weight:700" x="380.0" y="280.0">+4.25 边界</text>
   <text class="xs accent" style="font-weight:700" x="252.0" y="232.0" text-anchor="middle">m = 0 区间 [0 ± 4.25]</text>
   <text class="xs muted" x="252.0" y="249.0" text-anchor="middle">{13..16, 0..4} · 容 [−4,4]</text>
@@ -155,12 +119,12 @@
   <line class="s-green" style="stroke-width:1.2" x1="180.2" y1="378.1" x2="136" y2="392"/>
   <text class="xs green" style="font-weight:700" x="132" y="387" text-anchor="end">8+2=10</text>
   <text class="xs muted" x="132" y="406" text-anchor="end">精准判 1</text>
-  <rect class="subcard" x="46" y="434" width="440" height="86" rx="8"/>
-  <text class="xs accent" style="font-weight:600" x="56" y="452">解密：v − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>u ≡ w + 8m (mod 17)，w = e<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>r + e<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>e<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan></text>
-  <text class="xs ink" style="font-weight:700" x="56" y="472">对称无歧义充分界 |w| ≤ 3（m=0 容 [−4,4]，m=1 编于 8 容 [−3,4]）</text>
-  <text class="xs warn" x="56" y="492">碰撞边界：(m=1, w=−4) 与 (m=0, w=+4) 均落余数 4（等距歧义）</text>
-  <text class="xs muted" x="56" y="512">正常例 w=+2 (0→2, 8→10) 准判；反例 w=+5 落入 5，m=0 误判为 1</text>
-  <rect class="card" x="516" y="84" width="452" height="446" rx="12"/>
+  <rect class="subcard" x="46" y="440" width="440" height="120" rx="8"/>
+  <text class="xs accent" style="font-weight:600" x="56" y="464">解密：v − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>u ≡ w + 8m (mod 17)，w = e<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>r + e<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>e<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs ink" style="font-weight:700" x="56" y="491">对称无歧义充分界 |w| ≤ 3（m=0 容 [−4,4]，m=1 编于 8 容 [−3,4]）</text>
+  <text class="xs warn" x="56" y="518">碰撞边界：(m=1, w=−4) 与 (m=0, w=+4) 均落余数 4（等距歧义）</text>
+  <text class="xs muted" x="56" y="545">正常例 w=+2 (0→2, 8→10) 准判；反例 w=+5 落入 5，m=0 误判为 1</text>
+  <rect class="card" x="516" y="84" width="452" height="490" rx="12"/>
   <text class="h2 ink" x="532" y="108">(b) 1000 km 光纤三代量子中继周期时延</text>
   <line class="grid" x1="594.0" y1="368.0" x2="946.0" y2="368.0"/>
   <line class="axis" style="stroke-width:1.3" x1="589.0" y1="368.0" x2="594.0" y2="368.0"/>
@@ -206,10 +170,10 @@
   <text class="xs green" x="844" y="287" text-anchor="middle">(总 10<tspan dy="-4.5" font-size="9.2">4</tspan><tspan dy="4.5">&#8203;</tspan>×)</text>
   <rect class="axis" x="594.0" y="128.0" width="352.0" height="240.0"/>
   <text class="lbl ink" x="534" y="248.0" text-anchor="middle" transform="rotate(-90 534 248.0)">单周期时延（对数刻度）</text>
-  <rect class="subcard" x="530" y="420" width="424" height="96" rx="8"/>
-  <text class="xs warn" style="font-weight:700" x="540" y="440">3G 物理硬红线：50% 擦除容量定理 Q(ℰ<tspan dy="3" font-size="9.2">p</tspan><tspan dy="-3">&#8203;</tspan>) = max(0, 1 − 2p)</text>
-  <text class="xs ink" x="540" y="461">单跳最大损耗 −10 log<tspan dy="3" font-size="9.2">10</tspan><tspan dy="-3">&#8203;</tspan>(0.5) ≈ 3.01 dB ⇒ 纯光纤站距 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan><tspan dy="-4.5" font-size="9.2">max</tspan><tspan dy="4.5">&#8203;</tspan> ≤ 15.05 km</text>
-  <text class="xs muted" x="540" y="482">参数：L=1,000 km，c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan>=2×10<tspan dy="-4.5" font-size="9.2">5</tspan><tspan dy="4.5">&#8203;</tspan> km/s，衰减 a=0.2 dB/km（2G 取 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan>=20 km）</text>
-  <text class="xs muted" x="540" y="503">计入发射、耦合与探测损耗后，实际 3G 中继站须密布至 1–5 km。</text>
-  <text class="sm muted" x="34" y="554">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图展示量子网络三代中继跨越 4 个量级的时延跃迁。</text>
+  <rect class="subcard" x="530" y="434" width="424" height="126" rx="8"/>
+  <text class="xs warn" style="font-weight:700" x="540" y="460">3G 物理硬红线：50% 擦除容量定理 Q(ℰ<tspan dy="3" font-size="9.2">p</tspan><tspan dy="-3">&#8203;</tspan>) = max(0, 1 − 2p)</text>
+  <text class="xs ink" x="540" y="488">单跳最大损耗 −10 log<tspan dy="3" font-size="9.2">10</tspan><tspan dy="-3">&#8203;</tspan>(0.5) ≈ 3.01 dB ⇒ 纯光纤站距 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan><tspan dy="-4.5" font-size="9.2">max</tspan><tspan dy="4.5">&#8203;</tspan> ≤ 15.05 km</text>
+  <text class="xs muted" x="540" y="516">参数：L=1,000 km，c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan>=2×10<tspan dy="-4.5" font-size="9.2">5</tspan><tspan dy="4.5">&#8203;</tspan> km/s，衰减 a=0.2 dB/km（2G 取 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan>=20 km）</text>
+  <text class="xs muted" x="540" y="544">计入发射、耦合与探测损耗后，实际 3G 中继站须密布至 1–5 km。</text>
+  <text class="sm muted" x="34" y="600">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图展示量子网络三代中继跨越 4 个量级的时延跃迁。</text>
 </svg>

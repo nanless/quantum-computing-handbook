@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">一维矩形方势垒透射率：连续势垒顶与高能干涉共振</title>
+  <desc id="desc">宽度参数 g = L√(2mV₀)/ℏ = 4 的一维矩形方势垒精确透射率 T(e)（e = E/V₀，两侧势能与质量相等）：e &lt; 1 为指数衰减隧穿区，e = 1 势垒顶处严格连续且 T(1) = 1/5 = 0.20（80% 被反射），e &gt; 1 为内部振荡干涉区，在 e₁ = 1 + π²/16 ≈ 1.61685 与 e₂ = 1 + π²/4 ≈ 3.46740 处达到完全透明 T = 1。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.5;stroke-dasharray:6 5;fill:none}
+.bloch-disk{fill:#dff4ff;fill-opacity:.38;stroke:#1b6ca8;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.node-bg{fill:#ffffff}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.13}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.bar-bg{fill:#e2e8f0}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.42}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-disk{fill:#164968;fill-opacity:.40;stroke:#6bc2f5}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .node-bg{fill:#16222e}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area2{fill:#f28872;fill-opacity:.15}
+  .area3{fill:#5dd1a8;fill-opacity:.16}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .bar-bg{fill:#273a4c}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.52}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">一维矩形方势垒透射率：连续势垒顶与高能干涉共振（g = 4）</text>
+  <text class="subtitle" x="34" y="76">定态单粒子精确解（两侧势能与质量相等）· 无量纲强度 g = L√(2mV₀)/ℏ = 4，传播矩阵核验全能区 R + T = 1</text>
+  <rect class="panel" x="28" y="94" width="638" height="456" rx="14"/>
+  <path class="phead" d="M 42 95 H 652 Q 665 95 665 108 V 132 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="132" x2="665" y2="132"/>
+  <text class="sec" x="44" y="118">透射率 T(e) 随无量纲能量 e = E/V₀ 变化曲线（g = 4）</text>
+  <rect class="panel" x="682" y="94" width="290" height="456" rx="14"/>
+  <path class="phead" d="M 696 95 H 958 Q 971 95 971 108 V 132 H 683 V 108 Q 683 95 696 95 Z"/>
+  <line class="grid" x1="683" y1="132" x2="971" y2="132"/>
+  <text class="sec" x="698" y="118">三能区闭式解与定量特征（g = 4）</text>
+  <line class="c1" stroke-width="2.7" x1="46" y1="152" x2="74" y2="152"/>
+  <text class="sm" x="80" y="156">透射率 T(e)（g = 4 精确解）</text>
+  <circle class="node-bg c4" stroke-width="2.4" cx="268" cy="152" r="4.5"/>
+  <text class="sm" x="279" y="156">势垒顶 e = 1 (T = 1/5)</text>
+  <rect class="c3-fill" x="436" y="148" width="9" height="9" rx="1"/>
+  <text class="sm" x="451" y="156">干涉共振峰 (T = 1)</text>
+  <rect class="forbid" x="94" y="178" width="134.81" height="266"/>
+  <rect fill="url(#hatch-red)" x="94" y="178" width="134.81" height="266"/>
+  <line class="grid" x1="94" y1="444" x2="640" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="444" x2="94" y2="444"/>
+  <text class="sm" x="85" y="448" text-anchor="end">0.0</text>
+  <line class="grid" x1="94" y1="396.5" x2="640" y2="396.5"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="396.5" x2="94" y2="396.5"/>
+  <text class="sm" x="85" y="400.5" text-anchor="end">0.2</text>
+  <line class="grid" x1="94" y1="349" x2="640" y2="349"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="349" x2="94" y2="349"/>
+  <text class="sm" x="85" y="353" text-anchor="end">0.4</text>
+  <line class="grid" x1="94" y1="301.5" x2="640" y2="301.5"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="301.5" x2="94" y2="301.5"/>
+  <text class="sm" x="85" y="305.5" text-anchor="end">0.6</text>
+  <line class="grid" x1="94" y1="254" x2="640" y2="254"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="254" x2="94" y2="254"/>
+  <text class="sm" x="85" y="258" text-anchor="end">0.8</text>
+  <line class="guide" x1="94" y1="206.5" x2="640" y2="206.5"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="206.5" x2="94" y2="206.5"/>
+  <text class="sm" x="85" y="210.5" text-anchor="end">1.0</text>
+  <line class="grid" x1="161.41" y1="178" x2="161.41" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="161.41" y1="444" x2="161.41" y2="449"/>
+  <text class="sm" x="161.41" y="463" text-anchor="middle">0.5</text>
+  <line class="c4" stroke-width="1.6" stroke-dasharray="6 4" x1="228.81" y1="178" x2="228.81" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="228.81" y1="444" x2="228.81" y2="449"/>
+  <text class="sm" x="228.81" y="463" text-anchor="middle">1</text>
+  <line class="grid" x1="296.22" y1="178" x2="296.22" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="296.22" y1="444" x2="296.22" y2="449"/>
+  <text class="sm" x="296.22" y="463" text-anchor="middle">1.5</text>
+  <line class="grid" x1="363.63" y1="178" x2="363.63" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="363.63" y1="444" x2="363.63" y2="449"/>
+  <text class="sm" x="363.63" y="463" text-anchor="middle">2</text>
+  <line class="grid" x1="431.04" y1="178" x2="431.04" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="431.04" y1="444" x2="431.04" y2="449"/>
+  <text class="sm" x="431.04" y="463" text-anchor="middle">2.5</text>
+  <line class="grid" x1="498.44" y1="178" x2="498.44" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="498.44" y1="444" x2="498.44" y2="449"/>
+  <text class="sm" x="498.44" y="463" text-anchor="middle">3</text>
+  <line class="grid" x1="565.85" y1="178" x2="565.85" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="565.85" y1="444" x2="565.85" y2="449"/>
+  <text class="sm" x="565.85" y="463" text-anchor="middle">3.5</text>
+  <line class="grid" x1="633.26" y1="178" x2="633.26" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="633.26" y1="444" x2="633.26" y2="449"/>
+  <text class="sm" x="633.26" y="463" text-anchor="middle">4</text>
+  <polygon class="area1" points="99.39,444 99.39,443.94 101.82,443.91 104.25,443.88 106.67,443.84 109.1,443.8 111.53,443.75 113.95,443.7 116.38,443.65 118.81,443.59 121.23,443.52 123.66,443.44 126.09,443.36 128.51,443.27 130.94,443.17 133.37,443.06 135.79,442.95 138.22,442.81 140.65,442.67 143.07,442.51 145.5,442.34 147.93,442.15 150.35,441.94 152.78,441.71 155.21,441.46 157.63,441.19 160.06,440.88 161.41,440.7 162.49,440.55 164.91,440.19 167.34,439.79 169.77,439.35 172.19,438.87 174.62,438.34 177.05,437.76 179.47,437.12 181.9,436.42 184.33,435.65 186.75,434.8 189.18,433.87 191.61,432.85 194.03,431.72 196.46,430.49 198.89,429.13 201.31,427.64 203.74,426 206.17,424.2 208.59,422.22 211.02,420.05 213.45,417.67 215.87,415.07 218.3,412.21 220.73,409.09 223.15,405.68 225.58,401.97 228.01,397.92 228.81,396.5 230.43,393.53 232.86,388.77 235.29,383.64 237.71,378.1 240.14,372.17 242.57,365.83 244.99,359.09 247.42,351.96 249.85,344.47 252.27,336.64 254.7,328.52 257.13,320.16 259.55,311.62 261.98,302.98 264.41,294.32 266.83,285.72 269.26,277.28 271.69,269.09 274.11,261.22 276.54,253.76 278.97,246.78 281.39,240.32 283.82,234.44 286.25,229.16 288.67,224.49 291.1,220.43 293.53,216.96 295.95,214.07 298.38,211.72 300.81,209.86 303.23,208.46 305.66,207.47 308.09,206.85 310.51,206.55 311.98,206.5 312.94,206.52 315.37,206.73 317.79,207.13 320.22,207.69 322.65,208.38 325.07,209.17 327.5,210.04 329.93,210.96 332.35,211.91 334.78,212.88 337.21,213.85 339.63,214.81 342.06,215.76 344.49,216.67 346.91,217.55 349.34,218.39 351.77,219.19 354.19,219.94 356.62,220.64 359.05,221.29 361.47,221.88 363.9,222.43 366.33,222.91 368.75,223.35 371.18,223.73 373.61,224.06 376.03,224.34 378.46,224.58 380.89,224.76 383.31,224.9 385.74,224.99 388.17,225.04 390.59,225.05 393.02,225.02 395.45,224.95 397.87,224.85 400.3,224.71 402.73,224.55 405.15,224.35 407.58,224.12 410.01,223.87 412.43,223.59 414.86,223.3 417.29,222.98 419.71,222.64 422.14,222.29 424.57,221.91 426.99,221.53 429.42,221.13 431.85,220.73 434.27,220.31 436.7,219.89 439.13,219.46 441.55,219.02 443.98,218.58 446.41,218.14 448.83,217.7 451.26,217.25 453.69,216.81 456.11,216.37 458.54,215.93 460.97,215.5 463.39,215.07 465.82,214.65 468.25,214.24 470.67,213.83 473.1,213.43 475.53,213.04 477.95,212.65 480.38,212.28 482.81,211.92 485.23,211.57 487.66,211.23 490.09,210.9 492.51,210.58 494.94,210.27 497.37,209.98 499.79,209.7 502.22,209.43 504.65,209.17 507.07,208.93 509.5,208.7 511.93,208.48 514.35,208.27 516.78,208.08 519.21,207.9 521.63,207.73 524.06,207.57 526.49,207.43 528.91,207.29 531.34,207.17 533.77,207.06 536.19,206.96 538.62,206.87 541.05,206.79 543.47,206.72 545.9,206.67 548.33,206.62 550.75,206.58 553.18,206.54 555.61,206.52 558.03,206.51 560.46,206.5 561.46,206.5 562.89,206.5 565.31,206.51 567.74,206.52 570.17,206.54 572.59,206.57 575.02,206.6 577.45,206.64 579.87,206.68 582.3,206.73 584.73,206.78 587.15,206.84 589.58,206.9 592.01,206.96 594.43,207.03 596.86,207.1 599.29,207.17 601.71,207.24 604.14,207.32 606.57,207.39 608.99,207.47 611.42,207.55 613.85,207.63 616.27,207.71 618.7,207.79 621.13,207.87 623.55,207.95 625.98,208.04 628.41,208.12 630.83,208.2 633.26,208.28 633.26,444"/>
+  <path class="c1" stroke-width="2.8" d="M 99.39 443.94 L 101.82 443.91 L 104.25 443.88 L 106.67 443.84 L 109.1 443.8 L 111.53 443.75 L 113.95 443.7 L 116.38 443.65 L 118.81 443.59 L 121.23 443.52 L 123.66 443.44 L 126.09 443.36 L 128.51 443.27 L 130.94 443.17 L 133.37 443.06 L 135.79 442.95 L 138.22 442.81 L 140.65 442.67 L 143.07 442.51 L 145.5 442.34 L 147.93 442.15 L 150.35 441.94 L 152.78 441.71 L 155.21 441.46 L 157.63 441.19 L 160.06 440.88 L 161.41 440.7 L 162.49 440.55 L 164.91 440.19 L 167.34 439.79 L 169.77 439.35 L 172.19 438.87 L 174.62 438.34 L 177.05 437.76 L 179.47 437.12 L 181.9 436.42 L 184.33 435.65 L 186.75 434.8 L 189.18 433.87 L 191.61 432.85 L 194.03 431.72 L 196.46 430.49 L 198.89 429.13 L 201.31 427.64 L 203.74 426 L 206.17 424.2 L 208.59 422.22 L 211.02 420.05 L 213.45 417.67 L 215.87 415.07 L 218.3 412.21 L 220.73 409.09 L 223.15 405.68 L 225.58 401.97 L 228.01 397.92 L 228.81 396.5 L 230.43 393.53 L 232.86 388.77 L 235.29 383.64 L 237.71 378.1 L 240.14 372.17 L 242.57 365.83 L 244.99 359.09 L 247.42 351.96 L 249.85 344.47 L 252.27 336.64 L 254.7 328.52 L 257.13 320.16 L 259.55 311.62 L 261.98 302.98 L 264.41 294.32 L 266.83 285.72 L 269.26 277.28 L 271.69 269.09 L 274.11 261.22 L 276.54 253.76 L 278.97 246.78 L 281.39 240.32 L 283.82 234.44 L 286.25 229.16 L 288.67 224.49 L 291.1 220.43 L 293.53 216.96 L 295.95 214.07 L 298.38 211.72 L 300.81 209.86 L 303.23 208.46 L 305.66 207.47 L 308.09 206.85 L 310.51 206.55 L 311.98 206.5 L 312.94 206.52 L 315.37 206.73 L 317.79 207.13 L 320.22 207.69 L 322.65 208.38 L 325.07 209.17 L 327.5 210.04 L 329.93 210.96 L 332.35 211.91 L 334.78 212.88 L 337.21 213.85 L 339.63 214.81 L 342.06 215.76 L 344.49 216.67 L 346.91 217.55 L 349.34 218.39 L 351.77 219.19 L 354.19 219.94 L 356.62 220.64 L 359.05 221.29 L 361.47 221.88 L 363.9 222.43 L 366.33 222.91 L 368.75 223.35 L 371.18 223.73 L 373.61 224.06 L 376.03 224.34 L 378.46 224.58 L 380.89 224.76 L 383.31 224.9 L 385.74 224.99 L 388.17 225.04 L 390.59 225.05 L 393.02 225.02 L 395.45 224.95 L 397.87 224.85 L 400.3 224.71 L 402.73 224.55 L 405.15 224.35 L 407.58 224.12 L 410.01 223.87 L 412.43 223.59 L 414.86 223.3 L 417.29 222.98 L 419.71 222.64 L 422.14 222.29 L 424.57 221.91 L 426.99 221.53 L 429.42 221.13 L 431.85 220.73 L 434.27 220.31 L 436.7 219.89 L 439.13 219.46 L 441.55 219.02 L 443.98 218.58 L 446.41 218.14 L 448.83 217.7 L 451.26 217.25 L 453.69 216.81 L 456.11 216.37 L 458.54 215.93 L 460.97 215.5 L 463.39 215.07 L 465.82 214.65 L 468.25 214.24 L 470.67 213.83 L 473.1 213.43 L 475.53 213.04 L 477.95 212.65 L 480.38 212.28 L 482.81 211.92 L 485.23 211.57 L 487.66 211.23 L 490.09 210.9 L 492.51 210.58 L 494.94 210.27 L 497.37 209.98 L 499.79 209.7 L 502.22 209.43 L 504.65 209.17 L 507.07 208.93 L 509.5 208.7 L 511.93 208.48 L 514.35 208.27 L 516.78 208.08 L 519.21 207.9 L 521.63 207.73 L 524.06 207.57 L 526.49 207.43 L 528.91 207.29 L 531.34 207.17 L 533.77 207.06 L 536.19 206.96 L 538.62 206.87 L 541.05 206.79 L 543.47 206.72 L 545.9 206.67 L 548.33 206.62 L 550.75 206.58 L 553.18 206.54 L 555.61 206.52 L 558.03 206.51 L 560.46 206.5 L 561.46 206.5 L 562.89 206.5 L 565.31 206.51 L 567.74 206.52 L 570.17 206.54 L 572.59 206.57 L 575.02 206.6 L 577.45 206.64 L 579.87 206.68 L 582.3 206.73 L 584.73 206.78 L 587.15 206.84 L 589.58 206.9 L 592.01 206.96 L 594.43 207.03 L 596.86 207.1 L 599.29 207.17 L 601.71 207.24 L 604.14 207.32 L 606.57 207.39 L 608.99 207.47 L 611.42 207.55 L 613.85 207.63 L 616.27 207.71 L 618.7 207.79 L 621.13 207.87 L 623.55 207.95 L 625.98 208.04 L 628.41 208.12 L 630.83 208.2 L 633.26 208.28"/>
+  <circle class="node-bg c4" stroke-width="2.8" cx="228.81" cy="396.5" r="5.5"/>
+  <rect class="c3-fill" x="306.98" y="201.5" width="10" height="10" rx="1.5"/>
+  <rect class="c3-fill" x="556.46" y="201.5" width="10" height="10" rx="1.5"/>
+  <rect class="c2-soft" x="104" y="188" width="116" height="38" rx="7"/>
+  <text class="xsb c2-txt" x="162" y="204" text-anchor="middle">能区 I (e &lt; 1)</text>
+  <text class="xs c2-txt" x="162" y="219" text-anchor="middle">指数隧穿衰减区</text>
+  <rect class="c3-soft" x="304" y="266" width="174" height="38" rx="7"/>
+  <text class="xsb c3-txt" x="391" y="282" text-anchor="middle">共振 ℓ=1：e₁ ≈ 1.61685</text>
+  <text class="xs c3-txt" x="391" y="297" text-anchor="middle">qL = π，T = 1（全透射）</text>
+  <line class="c3" stroke-width="1.3" x1="330" y1="266" x2="311.98" y2="213.5"/>
+  <rect class="c3-soft" x="454" y="320" width="176" height="38" rx="7"/>
+  <text class="xsb c3-txt" x="542" y="336" text-anchor="middle">共振 ℓ=2：e₂ ≈ 3.46740</text>
+  <text class="xs c3-txt" x="542" y="351" text-anchor="middle">qL = 2π，T = 1（全透射）</text>
+  <line class="c3" stroke-width="1.3" x1="556" y1="320" x2="561.46" y2="213.5"/>
+  <rect class="c4-soft" x="266" y="380" width="194" height="38" rx="7"/>
+  <text class="xsb c4-txt" x="363" y="396" text-anchor="middle">势垒顶 (e = 1)：T = 1/5 = 0.20</text>
+  <text class="xs c4-txt" x="363" y="411" text-anchor="middle">严格连续，但仍有 80% 被反射</text>
+  <line class="c4" stroke-width="1.3" x1="266" y1="397" x2="235.81" y2="396.5"/>
+  <line class="axis" x1="94" y1="444" x2="648" y2="444"/>
+  <polygon class="axis-fill" points="650,444 642.5,447.6 642.5,440.4"/>
+  <line class="axis" x1="94" y1="444" x2="94" y2="170"/>
+  <polygon class="axis-fill" points="94,168 97.6,175.5 90.4,175.5"/>
+  <text class="lbl" x="367" y="486" text-anchor="middle">无量纲能量比 e = E / V₀（无量纲）</text>
+  <text class="lbl" x="46" y="311" text-anchor="middle" transform="rotate(-90 46 311)">透射率 T（概率流之比，无量纲）</text>
+  <rect class="pill" x="44" y="502" width="606" height="34" rx="8"/>
+  <text class="sm" x="347" y="523" text-anchor="middle">低于势垒顶为衰减隧穿；高于势垒顶为内部振荡波，势垒宽装下整数半波长时边界反射相消</text>
+  <rect class="c2-soft" x="696" y="144" width="262" height="86" rx="10"/>
+  <text class="smb c2-txt" x="710" y="164">能区 I：0 &lt; e &lt; 1（指数隧穿）</text>
+  <text class="sm" x="710" y="185">衰减相位 κL = g√(1−e)</text>
+  <text class="sm" x="710" y="205">T = [1 + sinh²(κL)/(4e(1−e))]⁻¹</text>
+  <text class="xs" x="710" y="222">势垒内增长与衰减两支指数缺一不可</text>
+  <rect class="c4-soft" x="696" y="238" width="262" height="74" rx="10"/>
+  <text class="smb c4-txt" x="710" y="258">能区 II：e = 1（临界线性解）</text>
+  <text class="sm" x="710" y="280">T(1) = 1 / (1 + g²/4) = 1/5 = 0.20</text>
+  <text class="xs" x="710" y="300">左右极限严格连续，恒满足 T(1) &lt; 1</text>
+  <rect class="c3-soft" x="696" y="320" width="262" height="90" rx="10"/>
+  <text class="smb c3-txt" x="710" y="340">能区 III：e &gt; 1（边界干涉共振）</text>
+  <text class="sm" x="710" y="361">振荡相位 qL = g√(e−1)</text>
+  <text class="sm" x="710" y="381">T = [1 + sin²(qL)/(4e(e−1))]⁻¹</text>
+  <text class="xs" x="710" y="400">qL = ℓπ ⇒ e<tspan dy="3" font-size="75%">ℓ</tspan><tspan dy="-3">&#8203;</tspan> = 1 + (ℓπ/g)² 处 T = 1</text>
+  <rect class="pill" x="696" y="418" width="262" height="118" rx="10"/>
+  <text class="smb" x="710" y="438">关键特征点核验（R + T = 1）</text>
+  <text class="sm" x="710" y="460">• e = 0.50：T = 0.0139，R = 0.9861</text>
+  <text class="sm" x="710" y="481">• e = 1.00：T = 0.2000，R = 0.8000</text>
+  <text class="sm c3-txt" x="710" y="502">• e₁ = 1.61685：T = 1.0000（ℓ = 1）</text>
+  <text class="sm c3-txt" x="710" y="523">• e₂ = 3.46740：T = 1.0000（ℓ = 2）</text>
+</svg>

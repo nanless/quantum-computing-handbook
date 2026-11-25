@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">一维量子行走双峰弹道扩散与经典影子随机测量流程</title>
+  <desc id="desc">左面板实算 t=30 步一维经典随机游走高斯分布（σ_cl=5.48=√t）与对称初态 1D Hadamard 量子行走双峰弹道扩散（σ_Q=16.25∝t，双峰位于 ±t/√2 附近）；右面板展示随机单比特 Clifford 经典影子（Classical Shadows）四步流程：随机单比特旋转、计算基快照采样、离线逆通道重构及中位数均值估计 M 个局域观测量。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#111917}
+  .panel{fill:#172320;stroke:#314842}
+  .subpanel{fill:#1C2B27;stroke:#3A544D}
+  .phead{fill:#1F312C}
+  .title,.sec,.lblb,.math-txt{fill:#d9ebe5}
+  .subtitle,.sm{fill:#9FBAB2}
+  .lbl,.smb,.mono{fill:#CFE3DC}
+  .axis{stroke:#C4DCD4}
+  .axis-fill{fill:#C4DCD4}
+  .grid{stroke:#283C36}
+  .guide{stroke:#6F8F86}
+  .c1{stroke:#5DD1A8}
+  .c1-fill{fill:#5DD1A8}
+  .c1-txt{fill:#84E2C0}
+  .c1-soft{fill:#153B30;stroke:#5DD1A8}
+  .c2{stroke:#F28872}
+  .c2-fill{fill:#F28872}
+  .c2-txt{fill:#F8AA99}
+  .c2-soft{fill:#48241E;stroke:#F28872}
+  .c3{stroke:#6BC2F5}
+  .c3-fill{fill:#6BC2F5}
+  .c3-txt{fill:#92D4FA}
+  .c3-soft{fill:#173A52;stroke:#6BC2F5}
+  .c4{stroke:#F0BA5A}
+  .c4-fill{fill:#F0BA5A}
+  .c4-txt{fill:#F6CE86}
+  .c4-soft{fill:#3C2F14;stroke:#F0BA5A}
+  .c5{stroke:#B99CF5}
+  .c5-fill{fill:#B99CF5}
+  .c5-txt{fill:#D0BAFA}
+  .c5-soft{fill:#2D2147;stroke:#B99CF5}
+  .note{fill:#312814;stroke:#D6A240}
+  .pill{fill:#1E302B;stroke:#4B6B62}
+  .pill-bg{fill:#172320;fill-opacity:.94;stroke:#4B6B62}
+  .area1{fill:#5DD1A8;fill-opacity:.18}
+  .area2{fill:#F28872;fill-opacity:.17}
+  .area3{fill:#6BC2F5;fill-opacity:.17}
+  .area4{fill:#F0BA5A;fill-opacity:.17}
+  .bar-neutral{fill:#263833;stroke:#87A69D}
+  .badge-txt{fill:#111917}
+  .hatch-stroke1{stroke:#5DD1A8;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#F28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#6BC2F5;stroke-opacity:.45}
+}
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">一维量子行走双峰弹道扩散与经典影子采样流程</text>
+  <text class="subtitle" x="22.0" y="52.0">左：t = 30 步经典随机游走（σ = √t）vs Hadamard 量子行走（σ ∝ t）实算；右：单比特 Clifford 经典影子工作流</text>
+  <rect class="panel" x="20.0" y="64.0" width="466.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="464.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="485.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">(a) 经典游走 vs 1D Hadamard 量子行走（t = 30 实算）</text>
+  <line class="grid" x1="72.0" y1="112.0" x2="72.0" y2="316.0"/>
+  <line class="axis" x1="72.0" y1="316.0" x2="72.0" y2="320.0"/>
+  <text class="sm" x="72.0" y="333.0" text-anchor="middle">-30</text>
+  <line class="grid" x1="138.0" y1="112.0" x2="138.0" y2="316.0"/>
+  <line class="axis" x1="138.0" y1="316.0" x2="138.0" y2="320.0"/>
+  <text class="sm" x="138.0" y="333.0" text-anchor="middle">-20</text>
+  <line class="grid" x1="204.0" y1="112.0" x2="204.0" y2="316.0"/>
+  <line class="axis" x1="204.0" y1="316.0" x2="204.0" y2="320.0"/>
+  <text class="sm" x="204.0" y="333.0" text-anchor="middle">-10</text>
+  <line class="grid" x1="270.0" y1="112.0" x2="270.0" y2="316.0"/>
+  <line class="axis" x1="270.0" y1="316.0" x2="270.0" y2="320.0"/>
+  <text class="sm" x="270.0" y="333.0" text-anchor="middle">0</text>
+  <line class="grid" x1="336.0" y1="112.0" x2="336.0" y2="316.0"/>
+  <line class="axis" x1="336.0" y1="316.0" x2="336.0" y2="320.0"/>
+  <text class="sm" x="336.0" y="333.0" text-anchor="middle">10</text>
+  <line class="grid" x1="402.0" y1="112.0" x2="402.0" y2="316.0"/>
+  <line class="axis" x1="402.0" y1="316.0" x2="402.0" y2="320.0"/>
+  <text class="sm" x="402.0" y="333.0" text-anchor="middle">20</text>
+  <line class="grid" x1="468.0" y1="112.0" x2="468.0" y2="316.0"/>
+  <line class="axis" x1="468.0" y1="316.0" x2="468.0" y2="320.0"/>
+  <text class="sm" x="468.0" y="333.0" text-anchor="middle">30</text>
+  <line class="grid" x1="72.0" y1="316.0" x2="468.0" y2="316.0"/>
+  <line class="axis" x1="68.0" y1="316.0" x2="72.0" y2="316.0"/>
+  <text class="sm" x="64.0" y="320.0" text-anchor="end">0.00</text>
+  <line class="grid" x1="72.0" y1="271.9" x2="468.0" y2="271.9"/>
+  <line class="axis" x1="68.0" y1="271.9" x2="72.0" y2="271.9"/>
+  <text class="sm" x="64.0" y="275.9" text-anchor="end">0.04</text>
+  <line class="grid" x1="72.0" y1="227.8" x2="468.0" y2="227.8"/>
+  <line class="axis" x1="68.0" y1="227.8" x2="72.0" y2="227.8"/>
+  <text class="sm" x="64.0" y="231.8" text-anchor="end">0.08</text>
+  <line class="grid" x1="72.0" y1="183.7" x2="468.0" y2="183.7"/>
+  <line class="axis" x1="68.0" y1="183.7" x2="72.0" y2="183.7"/>
+  <text class="sm" x="64.0" y="187.7" text-anchor="end">0.12</text>
+  <line class="grid" x1="72.0" y1="139.6" x2="468.0" y2="139.6"/>
+  <line class="axis" x1="68.0" y1="139.6" x2="72.0" y2="139.6"/>
+  <text class="sm" x="64.0" y="143.6" text-anchor="end">0.16</text>
+  <text class="sm" x="68.0" y="106.0" text-anchor="end">P(x)</text>
+  <text class="smb" x="270.0" y="351.0" text-anchor="middle">位置格点 x（t = 30 步偶数格点包络）</text>
+  <polygon class="area2" points="72.00,316.00 72.00,316.00 85.20,316.00 98.40,316.00 111.60,316.00 124.80,315.97 138.00,315.85 151.20,315.39 164.40,313.91 177.60,309.99 190.80,301.31 204.00,285.14 217.20,259.90 230.40,227.17 243.60,193.01 256.80,166.65 270.00,156.70 283.20,166.65 296.40,193.01 309.60,227.17 322.80,259.90 336.00,285.14 349.20,301.31 362.40,309.99 375.60,313.91 388.80,315.39 402.00,315.85 415.20,315.97 428.40,316.00 441.60,316.00 454.80,316.00 468.00,316.00 468.00,316.00"/>
+  <polygon class="area1" points="72.00,316.00 72.00,316.00 85.20,316.00 98.40,315.89 111.60,311.84 124.80,266.41 138.00,154.76 151.20,242.28 164.40,265.83 177.60,287.19 190.80,271.58 204.00,285.20 217.20,292.54 230.40,292.16 243.60,291.45 256.80,291.62 270.00,291.81 283.20,291.62 296.40,291.45 309.60,292.16 322.80,292.54 336.00,285.20 349.20,271.58 362.40,287.19 375.60,265.83 388.80,242.28 402.00,154.76 415.20,266.41 428.40,311.84 441.60,315.89 454.80,316.00 468.00,316.00 468.00,316.00"/>
+  <line class="axis" x1="72.0" y1="112.0" x2="72.0" y2="316.0"/>
+  <line class="axis" x1="72.0" y1="316.0" x2="468.0" y2="316.0"/>
+  <polyline class="c2" points="72.00,316.00 85.20,316.00 98.40,316.00 111.60,316.00 124.80,315.97 138.00,315.85 151.20,315.39 164.40,313.91 177.60,309.99 190.80,301.31 204.00,285.14 217.20,259.90 230.40,227.17 243.60,193.01 256.80,166.65 270.00,156.70 283.20,166.65 296.40,193.01 309.60,227.17 322.80,259.90 336.00,285.14 349.20,301.31 362.40,309.99 375.60,313.91 388.80,315.39 402.00,315.85 415.20,315.97 428.40,316.00 441.60,316.00 454.80,316.00 468.00,316.00" stroke-width="2.0" stroke-dasharray="6 3.5"/>
+  <polyline class="c1" points="72.00,316.00 85.20,316.00 98.40,315.89 111.60,311.84 124.80,266.41 138.00,154.76 151.20,242.28 164.40,265.83 177.60,287.19 190.80,271.58 204.00,285.20 217.20,292.54 230.40,292.16 243.60,291.45 256.80,291.62 270.00,291.81 283.20,291.62 296.40,291.45 309.60,292.16 322.80,292.54 336.00,285.20 349.20,271.58 362.40,287.19 375.60,265.83 388.80,242.28 402.00,154.76 415.20,266.41 428.40,311.84 441.60,315.89 454.80,316.00 468.00,316.00" stroke-width="2.3"/>
+  <circle class="c2-fill" cx="270.0" cy="156.7" r="3.6"/>
+  <circle class="c1-fill" cx="138.0" cy="154.8" r="3.6"/>
+  <circle class="c1-fill" cx="402.0" cy="154.8" r="3.6"/>
+  <text class="smb c1-txt" x="76.0" y="126.0">量子双峰 ≈ ±t/√2</text>
+  <line class="c1" x1="124.0" y1="132.0" x2="136.0" y2="149.8" stroke-width="1.3"/>
+  <text class="smb c2-txt" x="270.0" y="141.0" text-anchor="middle">经典 σ_cl = √t ≈ 5.48</text>
+  <line class="c2" x1="270.0" y1="145.0" x2="270.0" y2="151.7" stroke-width="1.3"/>
+  <text class="smb c1-txt" x="464.0" y="126.0" text-anchor="end">弹道 σ_Q ≈ 16.25 ∝ t</text>
+  <line class="c1" x1="416.0" y1="132.0" x2="404.0" y2="149.8" stroke-width="1.3"/>
+  <rect class="subpanel" x="32.0" y="366.0" width="442.0" height="58.0" rx="7.0"/>
+  <text class="sm" x="42.0" y="386.0">初态 |x=0⟩⊗(|R⟩+i|L⟩)/√2，每步 W = S(I⊗H) 严格保持酉演化</text>
+  <text class="smb c1-txt" x="42.0" y="408.0">实算对比：σ_Q / σ_cl = 2.97×，相干干涉把扩散从 √t 推至弹道 t</text>
+  <rect class="panel" x="498.0" y="64.0" width="442.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="499.0" y="65.0" width="440.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="499.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="510.0" y="84.0">(b) 随机单比特 Clifford 经典影子采样与估计流程</text>
+  <rect class="c3-soft" x="510.0" y="102.0" width="418.0" height="50.0" rx="7.0"/>
+  <rect class="c3-fill" x="519.0" y="115.0" width="24.0" height="24.0" rx="5.0"/>
+  <text class="badge-txt" x="531.0" y="131.5" text-anchor="middle">1</text>
+  <text class="smb c3-txt" x="552.0" y="122.0">随机单比特 Clifford 旋转（硬件层）</text>
+  <text class="sm" x="552.0" y="141.0">对 n 比特未知态 ρ 逐比特独立抽 U_j ∈ {I, H, HS†}（Z/X/Y 基）</text>
+  <line class="axis" x1="719.0" y1="152.0" x2="719.0" y2="166.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
+  <rect class="c1-soft" x="510.0" y="168.0" width="418.0" height="48.0" rx="7.0"/>
+  <rect class="c1-fill" x="519.0" y="180.0" width="24.0" height="24.0" rx="5.0"/>
+  <text class="badge-txt" x="531.0" y="196.5" text-anchor="middle">2</text>
+  <text class="smb c1-txt" x="552.0" y="188.0">计算基单次投影快照（重复 N 轮）</text>
+  <text class="sm" x="552.0" y="205.0">测得比特串 b̂^(m) ∈ {0,1}ⁿ，经典存储 {(U^(m), b̂^(m))}_{m=1}^N</text>
+  <line class="axis" x1="719.0" y1="216.0" x2="719.0" y2="230.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
+  <rect class="c4-soft" x="510.0" y="232.0" width="418.0" height="54.0" rx="7.0"/>
+  <rect class="c4-fill" x="519.0" y="247.0" width="24.0" height="24.0" rx="5.0"/>
+  <text class="badge-txt" x="531.0" y="263.5" text-anchor="middle">3</text>
+  <text class="smb c4-txt" x="552.0" y="252.0">离线逆通道重构经典影子（经典层）</text>
+  <text class="sm" x="552.0" y="275.0">ρ̂^(m) = ⊗_j (3 U_j† |b̂_j⟩⟨b̂_j| U_j − I)，无偏满足 E[ρ̂] = ρ</text>
+  <line class="axis" x1="719.0" y1="286.0" x2="719.0" y2="300.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
+  <rect class="c5-soft" x="510.0" y="302.0" width="418.0" height="54.0" rx="7.0"/>
+  <rect class="c5-fill" x="519.0" y="317.0" width="24.0" height="24.0" rx="5.0"/>
+  <text class="badge-txt" x="531.0" y="333.5" text-anchor="middle">4</text>
+  <text class="smb c5-txt" x="552.0" y="322.0">中位数均值估计 M 个局域观测量 {O_i}</text>
+  <text class="sm" x="552.0" y="345.0">ô_i = median_k Tr(O_i ρ̂̄_k) ｜ N = O(log(M/δ) · 3^w / ε²)</text>
+  <rect class="note" x="510.0" y="368.0" width="418.0" height="56.0" rx="7.0"/>
+  <text class="smb" x="520.0" y="388.0">核心优势：先采样、后提问，样本数仅按 log M 缓慢增长</text>
+  <text class="sm" x="520.0" y="409.0">适用边界：单比特随机 Pauli 影子方差按 3^w 增长（限于低权重 w）</text>
+  <text class="sm" x="22.0" y="450.0">数学验证：第 16 章 §4.3、§8.3；t=30 偶数格点实算 ∑P_cl = ∑P_Q = 1.0000，量子行走标准差相对经典放大近 3 倍。</text>
+</svg>

@@ -4,7 +4,7 @@
 
 作为第二篇“核心算法与动手实践”的压轴章，这一章把实践手艺彻底前移：在迈入后续硬件物理（[Q3](quantum-mechanics/03-levels-control.md)与[第 09 章](09-hardware.md)）、编译控制（[第 14 章](14-compilation-control.md)）、量子纠错（[第 10 章](10-error-correction.md)—[第 11 章](11-resources-benchmarks.md)）与高阶理论深水区之前，先为你配齐四件可迁移到任何框架、任何硬件的**实验室基础武器**——从纸笔起步的 $O(2^n)$ 态矢量模拟与单元测试、经得起追问的有限样本统计工具箱、四大现代开源 SDK 的同题并排实战，以及像审稿人一样拆解论文与上游软件缺陷的核验心法。
 
-哪怕你还没怎么写过 Python，也完全可以先读懂第 1 节的验证阶梯、第 3 节的统计防坑和第 5 节的读论文心法——代码是帮我们核对的工具，不是理解实验的入场券。需要补齐数组和矩阵乘法基础时，随时可以翻回[第 01 章：数学工具](01-math.md)和[入门先修](appendices/prerequisites.md)。
+哪怕你还没怎么写过 Python，也完全可以先读懂第 1 节的验证阶梯、第 3 节的统计核验和第 5 节的读论文心法——代码是帮我们核对的工具，不是理解实验的入场券。文中标有 `进阶选读：` 的小节（Bootstrap 与 BCa 区间、线路等价性形式化验证 QCEC）第一遍可以先跳过，需要补齐数组和矩阵乘法基础时，随时可以翻回[第 01 章：数学工具](01-math.md)和[入门先修](appendices/prerequisites.md)。
 
 ---
 
@@ -158,12 +158,18 @@ def measure_qubit_collapse(state, q, n, rng):
     """单次投影测量第 q 比特，返回 (测量结果 0/1, 坍缩并重新归一化后的后态)。"""
     psi = state.reshape((2,) * n).copy()
     p0 = float(np.clip(np.sum(np.abs(np.take(psi, 0, axis=q)) ** 2), 0.0, 1.0))
-    outcome = 0 if rng.random() < p0 else 1
+    if p0 <= 0.0:
+        outcome = 1
+    elif p0 >= 1.0:
+        outcome = 0
+    else:
+        outcome = 0 if rng.random() < p0 else 1
     slc = [slice(None)] * n
     slc[q] = 1 - outcome
     psi[tuple(slc)] = 0.0  # 清零未命中的分支
     flat = psi.reshape(-1)
     norm = float(np.linalg.norm(flat))
+    assert norm > 1e-12, "测量坍缩后范数过小，请检查输入态是否已归一化"
     return outcome, flat / norm
 
 # 演示：用 O(2^n) 引擎制备 Bell 态并计算 <XX>，全程不构造 2^n x 2^n 矩阵
@@ -199,7 +205,7 @@ print(f"Bell state = {np.round(state.real, 4)}, <XX> = {exp_xx:.4f}")
 4. **已知解析恒等式回归测试**：至少用四个手算已知答案校验你的引擎——单比特 $HZH = X$、两比特 $|\Phi^+\rangle$ 的 $\langle ZZ\rangle = \langle XX\rangle = 1$、三比特 GHZ 态 $(|000\rangle+|111\rangle)/\sqrt{2}$，以及 3 比特 QFT（**含电路末尾的比特反转 SWAP 层**）对照 `np.fft.ifft(psi, norm="ortho")`（与[第 06 章](06-algorithmic-primitives.md)正指数 $\operatorname{QFT}_N$ 精确相等至浮点舍入精度 $\sim 10^{-16}$；漏掉末尾比特反转 SWAP 会导致振幅下标错位、核验必败）。
 5. **固定独立随机流并记版本**：统一用 `rng = np.random.default_rng(seed)`（现代 PCG64 生成器），别再使用会污染全局状态的旧接口 `np.random.seed()`；并且永远把随机种子与 Python、`NumPy` 精确版本号一起记进日志。
 
-**突破态矢量墙的进阶路标**：$O(2^n)$ 态矢量引擎在普通电脑上大约止步于 25–30 比特，而且无法直接演化混态噪声。当你后续研究大规模 Clifford 纠错电路（$O(n^2)$ 稳定子表格法）、低纠缠一维多体系统（$O(n\chi^2)$ 矩阵乘积态 MPS）或含噪算符海森堡演化（稀疏 Pauli 动力学 SPD）时，这些专门引擎的零跳步手算与纯 Python 迷你实现都将在[第 21 章：稳定子形式、经典模拟引擎与量子优势边界](21-stabilizer-classical-simulation.md)中完整展开。
+**突破态矢量墙的进阶路标**：$O(2^n)$ 态矢量引擎在普通电脑上大约止步于 25–30 比特，而且无法直接演化混态噪声。当你后续研究大规模 Clifford 纠错电路（$O(n^2)$ 稳定子表格法）、低纠缠一维多体系统（$O(n\chi^2)$ 矩阵乘积态 MPS）或含噪算符海森堡演化（稀疏 Pauli 动力学 SPD）时，这些专门引擎的分步手算与纯 Python 迷你实现都将在[第 21 章：稳定子形式、经典模拟引擎与量子优势边界](21-stabilizer-classical-simulation.md)中完整展开。
 
 ---
 
@@ -233,7 +239,7 @@ $$
 
 代入 $N = 1000, p = 0.5$，标准误约 $\sqrt{0.25/1000} \approx 0.0158$（约 1.6 个百分点）。因此两次千次实验相差 $0.01$ 时，连一个标准误都不到，根本说明不了硬件变好或变坏。
 
-但千万别顺手套用教科书最简陋的对称正态区间 $\hat p \pm z\sqrt{\hat p(1-\hat p)/N}$（学名 **Wald 区间**）！只要 $k$ 贴近 $0$ 或 $N$，Wald 区间就会彻底失灵：比如做了 1000 次实验零失败（$k=0$），Wald 区间给出的宽度是 $0$，区间缩成 $[0, 0]$，荒谬地告诉你“误差为零”；即使在 $N=100, p=0.05$ 这样很常见的设置下，名义 95% 的 Wald 区间实际覆盖率也仅为 $87.75\%$（降到 $p=0.03$ 时更跌至 $80.22\%$）。
+但不要直接套用教科书最简陋的对称正态区间 $\hat p \pm z\sqrt{\hat p(1-\hat p)/N}$（学名 **Wald 区间**）：只要 $k$ 贴近 $0$ 或 $N$，Wald 区间就会彻底失灵——比如做了 1000 次实验零失败（$k=0$），Wald 区间给出的宽度是 $0$，区间缩成 $[0, 0]$，荒谬地告诉你“误差为零”；即使在 $N=100, p=0.05$ 这样很常见的设置下，名义 95% 的 Wald 区间实际覆盖率也仅为 $87.75\%$（降到 $p=0.03$ 时更跌至 $80.22\%$）。
 
 日常实验请默认换用 **Wilson 得分区间**（Wilson, 1927）。给定显著性水平 $\alpha$ 和标准正态双侧分位数 $z = \Phi^{-1}(1 - \alpha/2)$（95% 置信度对应 $z \approx 1.959964$），区间端点为：
 
@@ -278,7 +284,7 @@ print(f"p00={phat:.3f}, 95% Wilson=[{center-half:.4f}, {center+half:.4f}]")
 
 这绝不是代码写错了，恰恰是最生动的一堂统计课：
 - **95% 置信水平指的是长期重复抽样时的覆盖频率**（Wilson 方法还带有渐近近似，是名义 95% 水平），它本来就意味着平均每 20 次独立实验里约有 1 次区间会与真值擦肩而过。如果改用贝叶斯框架下的 Jeffreys 区间，则要写明它基于 $\operatorname{Beta}(1/2, 1/2)$ 先验给出的是后验可信区间，不要把频率覆盖率和贝叶斯后验概率混为一谈。
-- **千万不要为了图省事或“让图更好看”而偷偷换种子重跑！** 一旦你换了五六个种子直到区间盖住 0.5 才贴进报告，又只报最后那一次，你就亲手把无偏抽样变成了**选择偏差**。在真实实验里，这样一次边缘结果足以触发一轮预先规定好的独立复测，但不足以单凭它就宣布芯片已经漂移。
+- **不要为了“让图更好看”而偷偷换种子重跑。** 一旦你换了五六个种子直到区间盖住 0.5 才贴进报告，又只报最后那一次，你就亲手把无偏抽样变成了**选择偏差**。在真实实验里，这样一次边缘结果足以触发一轮预先规定好的独立复测，但不足以单凭它就宣布芯片已经漂移。
 
 ### 3.2 零失败不等于零错误：Clopper–Pearson 精确上界与“三倍法则”
 
@@ -313,7 +319,7 @@ p_U \approx \frac{3}{N} \qquad (\text{零失败，单侧 }95\%\text{ 置信上�
 $$
 
 拿具体数字算两笔账，立刻能感受到它的威力：
-- **做 1000 次独立测试零失败**：精确公式给出 $p_U = 1 - 0.05^{1/1000} \approx 0.002991$（约 $0.299\%$），三倍法则心算 $3/1000 = 0.30\%$，精准得惊人。也就是说，一千次零失败只够支持“错误率低于 $0.3\%$”，远远不能说“错误率为零”。
+- **做 1000 次独立测试零失败**：精确公式给出 $p_U = 1 - 0.05^{1/1000} \approx 0.002991$（约 $0.299\%$），三倍法则心算 $3/1000 = 0.30\%$，两者相差不到 0.001 个百分点。也就是说，一千次零失败只够支持“错误率低于 $0.3\%$”，远远不能说“错误率为零”。
 - **反解实验前要准备多少样本**：若想在零失败的情况下把单侧 95% 上界压到目标门槛 $p_*$ 以下，两边取自然对数（注意 $\ln(1-p_*) < 0$，除过去不等号反转）：
 
   $$
@@ -326,7 +332,42 @@ $$
 
 完整的精确覆盖率网格验证与标准库代码见[零失败上界练习](labs/practice.md#p15-e一千次零失败不等于错误率为零)。
 
-### 3.3 总直方图会掩盖时间漂移：分批检测与聚类标准误
+### 3.3 进阶选读：非线性统计量用 Bootstrap（含 BCa 与 Cluster Bootstrap），边界比例坚持 Wilson
+
+Wilson 与 Clopper–Pearson 区间只适用于单一二元比例。可量子实验里到处都是**非线性观测量**——根保真度 $F = \sqrt{f_{\Phi^+}}$、纠缠熵、态纯度 $\operatorname{Tr}(\rho^2)$、能量差比值或 ZNE 指数拟合斜率——这时二项公式统统失灵，必须请出非参数重采样利器 **Bootstrap**（Efron, 1979；Efron & Tibshirani, 1993）。但新手也极易把 Bootstrap 用错地方，尤其是以下三类分工必须写清：
+
+| 统计目标与数据结构 | 推荐区间方法 | 原因与典型失效反例 |
+| :--- | :--- | :--- |
+| **单一二元比例（尤其 $k=0$ 或贴近 $0/1$）** | **Wilson / Clopper–Pearson** | **零失败崩溃反例**：当 $N = 1000, k = 0$ 时，原始样本全是 `0`，朴素 Bootstrap 每次有放回重采样抽出来的仍是 1000 个 `0`，区间直接崩成 **`[0, 0]`**（与 Wald 区间同样失效！）；Wilson 给出 $[0, 0.00383]$，单侧 Clopper–Pearson 给出 $0.00299$ |
+| **独立采样下的复杂非线性统计量**（如 $F = \sqrt{f}$、纠缠熵、曲线拟合） | **BCa Bootstrap**（偏差校正与加速，Efron 1987） | 相比朴素百分位 Bootstrap，BCa 通过中位偏移校正 $z_0$ 与留一 Jackknife 加速系数 $a$ 自动修正非线性变换引起的偏态与方差随均值变化 |
+| **分批漂移或随机化线路（如 PEC / Pauli twirling）** | **Cluster Bootstrap**（整簇重采样） | 必须把每个批次或每条随机电路当成一个不可分割的整簇有放回重抽；若拆散按单个 shot 重抽，会严重低估区间宽度 |
+
+**实操对照（沿用 4.2 节 Bell 三基原始计数）**：三组测量计数为 $XX:(775, 225)$、$YY:(250, 750)$、$ZZ:(800, 200)$，根保真度点估计 $\hat F = \sqrt{0.6625} \approx 0.8139$。下面 18 行纯 `NumPy` 代码对三组二项计数并行做 $B = 5{,}000$ 次有放回重采样（对应纯标准库含精确 BCa 校正的独立实现见[实践统计验证脚本](../codes/practice/v4_practice_lab.py)）：
+
+```python
+import numpy as np
+
+rng = np.random.default_rng(20261125)
+counts = np.array([[775, 225], [250, 750], [800, 200]])  # (N_+, N_-) for XX, YY, ZZ
+ns = counts.sum(axis=1)
+ps = counts[:, 0] / ns
+
+B = 5000
+k_boot = rng.binomial(ns, ps, size=(B, 3))               # 独立并行重采样三组二项计数
+corrs = (2 * k_boot - ns) / ns                           # 每组 Pauli 关联估计
+f_sq_boot = 0.25 * (1.0 + corrs[:, 0] - corrs[:, 1] + corrs[:, 2])
+F_boot = np.sqrt(np.clip(f_sq_boot, 0.0, 1.0))           # 非线性根保真度重采样分布
+
+lo, hi = np.percentile(F_boot, [2.5, 97.5])
+print(f"F_hat={np.sqrt(0.6625):.4f}, 95% Bootstrap=[{lo:.4f}, {hi:.4f}]")
+```
+
+把三种区间并排放在一起，松紧与假设边界一目了然（固定种子 `20261125` 复算）：
+- **95% 百分位 Bootstrap**：$[0.8000,\; 0.8270]$；
+- **95% BCa Bootstrap**（计入开根号非线性偏移 $z_0$ 与 Jackknife 加速系数 $a$）：$[0.7997,\; 0.8267]$；
+- **4.2 节无分布假设 Hoeffding 保守下界**：$0.7675$（无需渐近近似但明显更宽）。
+
+### 3.4 总直方图会掩盖时间漂移：分批检测与聚类标准误
 
 真实量子处理器可不是教科书里纹丝不动的理想硬币。芯片里的两能级缺陷（TLS）跳变、微波温漂和校准衰减，会让成功概率在几分钟或几小时内悄悄滑坡。**如果你只把一整晚跑完的总直方图存下来，时间漂移就被彻底抹平了。**
 
@@ -373,6 +414,7 @@ $$
 
 - 如果无视批次差异、把 2000 次一股脑塞进独立公式，得到的标准误只有 $\sqrt{0.567\times 0.433 / 2000} \approx \mathbf{0.01108}$；
 - 如果把每一批的均值 $\hat p_b = k_b/200$ 当作一个聚类单元，用 10 个批次均值的样本标准差除以 $\sqrt{10}$，得到的聚类标准误是 $\mathbf{0.01756}$——比朴素公式足足宽了 **1.59 倍**！
+- **少聚类构造 95% 置信区间必须改用自由度 $B - 1$ 的学生 $t$ 分位数**：当独立聚类数 $B$ 不大（例如本例 $B = 10$ 或练 15-A 的 $B = 4$）时，绝不能直接拿聚类标准误乘正态分位数 $1.96$，而必须乘自由度为 $B - 1$ 的学生 $t$ 分布分位数 $t_{B-1,\, 0.975}$——$B = 10$ 时 $t_{9,\, 0.975} \approx \mathbf{2.262}$（区间须再加宽 $15.4\%$），$B = 4$ 时更高达 $t_{3,\, 0.975} \approx \mathbf{3.182}$（须加宽 $62.4\%$！）。在[实践统计验证脚本](../codes/practice/v4_practice_lab.py)的 10,000 次蒙特卡洛检验中，$B = 4$ 下错用 $1.96$ 会让名义 95% 置信区间的真实覆盖率骤降至 **$84.9\%$**（$B = 10$ 时降至 $91.5\%$），换用 $t_{B-1}$ 后覆盖率立刻精确恢复至 **$94.7\%\text{–}94.8\%$**。若对上述 10 批做整簇 **Cluster Bootstrap**（整批有放回重采样），测得的标准误为 $0.01676$，同样显著宽于朴素公式的 $0.01108$。
 
 ![Wald 置信区间覆盖率崩溃 vs Wilson 区间与时间漂移隐匿演示](assets/v3-15-wilson-wald-drift.svg)
 
@@ -387,7 +429,7 @@ $$
 | **随机交错采集（A-B-A-B）** | 比较两种编译方案、两种缓解方法或实验/对照 | 把预算拆成多轮微批次，每轮随机交替跑 A 与 B，比“先跑完 A 再跑 B”抗漂移强一个量级 |
 | **聚类标准误（Clustered SE）** | 同一随机电路内共享多次 shots 的相关性 | 以每个独立随机电路（或时间块）的均值为独立单元，不拿总 shots 虚降误差条 |
 
-### 3.4 多重比较与“边跑边偷看”陷阱
+### 3.5 多重比较与“边跑边偷看”陷阱
 
 实验室里还有两类最隐蔽的统计翻车：一是**同时检验太多项却不校正**，二是**边采样边偷看、刚过线就叫停**。
 
@@ -454,7 +496,7 @@ $$
 > 1. 对 $N = 500$ 次独立运行且观察到零失败（$k = 0$），分别计算名义 95% Wald 区间、双侧 95% Wilson 区间与单侧 95% Clopper–Pearson 精确上界，并与三倍法则 $3/N$ 对照。
 > 2. 某真机连续采集 4 个时间批次、每批 $200$ shots，测得 `00` 计数依次为 $[90, 96, 114, 120]$。分别计算前后两半合并 $z$ 统计量、把 800 shots 混算的朴素标准误，以及按 4 个批次均值计算的聚类标准误（及其放大倍数）。
 >
-> *自核要点*：① Wald 区间退化为 $[0, 0]$；双侧 95% Wilson 上界为 $\frac{z^2}{N + z^2} \approx \frac{3.8415}{503.8415} \approx 0.00762$，区间为 $[0, 0.00762]$；单侧 95% Clopper–Pearson 上界为 $1 - 0.05^{1/500} \approx 0.00597$（三倍法则 $3/500 = 0.00600$）。② 前半频率 $186/400 = 0.4650$、后半 $234/400 = 0.5850$、合并 $\hat p = 0.5250$，得 $z \approx 3.398$；朴素标准误 $\sqrt{0.525\times 0.475 / 800} \approx 0.01766$，4 批次频率 $[0.45, 0.48, 0.57, 0.60]$ 的样本标准差除以 $\sqrt{4}$ 得聚类标准误 $\approx 0.03571$，足足是朴素公式的 **$2.02$ 倍**！
+> *自核要点*：① Wald 区间退化为 $[0, 0]$（朴素 Bootstrap 同样退化为 $[0, 0]$）；双侧 95% Wilson 上界为 $\frac{z^2}{N + z^2} \approx \frac{3.8415}{503.8415} \approx 0.00762$，区间为 $[0, 0.00762]$；单侧 95% Clopper–Pearson 上界为 $1 - 0.05^{1/500} \approx 0.00597$（三倍法则 $3/500 = 0.00600$）。② 前半频率 $186/400 = 0.4650$、后半 $234/400 = 0.5850$、合并 $\hat p = 0.5250$，得 $z \approx 3.398$；朴素标准误 $\sqrt{0.525\times 0.475 / 800} \approx 0.01766$，4 批次频率 $[0.45, 0.48, 0.57, 0.60]$ 的样本标准差除以 $\sqrt{4}$ 得聚类标准误 $\approx 0.03571$（足足是朴素公式的 **$2.02$ 倍**）；若据此构造 95% 置信区间，因仅 $B = 4$ 个独立聚类（自由度 $B - 1 = 3$），必须使用学生 $t$ 分位数 $t_{3,\,0.975} \approx \mathbf{3.182}$ 而非 $1.96$，半宽为 $3.182 \times 0.03571 \approx 0.1136$！
 
 ---
 
@@ -462,20 +504,11 @@ $$
 
 有了模拟器骨架和统计工具箱，就可以把这套方法落到五个层层递进的实验上了。每个实验都先在纸上写好理想预测，再上模拟器或真机核对。
 
-### 4.1 实验一：相对相位干涉
+### 4.1 实验一：相对相位干涉与三道真机排错对照
 
-**要检验的问题**：$|+\rangle$ 和 $|-\rangle$ 在计算基（$Z$ 基）下统计完全一样，但在 $X$ 基下可以 100% 区分开。
+**要检验的问题**：$|+\rangle$ 与 $|-\rangle$ 在计算基下统计完全相同（`0`/`1` 各半），但在 $X$ 基（测量前补施 $H$ 门）下分别以概率 $1$ 给出 `0` 与 `1`（数学推导见第 2.1 节与[第 02 章](02-single-qubit.md)）。
 
-**线路安排**：
-1. 制备 $|+\rangle$：从 $|0\rangle$ 施 $H$；制备 $|-\rangle$：从 $|0\rangle$ 先 $H$ 再 $Z$。
-2. $Z$ 基测量：直接测计算基；$X$ 基测量：在测量前再加一个 $H$ 门（把 $X$ 本征态旋转回计算基）。
-
-| 输入态 | $Z$ 基理想分布 | $X$ 基理想结果 |
-| :--- | :--- | :--- |
-| $|+\rangle$ | `0` 与 `1` 各 $50\%$ | 必得 `0` |
-| $|-\rangle$ | `0` 与 `1` 各 $50\%$ | 必得 `1` |
-
-**真机排错思路**：如果在硬件上测 $X$ 基时没拿到接近 100% 的确定结果，别笼统归结为“有噪声”，可以拆成三道小对照——跑一条什么门都不加的空线路量读出混淆矩阵，跑连续两个 $H$ 门（$H^2 = I$）测单门误差，再在两个 $H$ 之间插入逐渐拉长的等待时间看退相干，一步步把误差源剥离出来。
+**真机三道对照排错法**：如果在硬件上测 $X$ 基时没拿到接近 100% 的确定结果，不要笼统归结为“有噪声”，而是拆成三道递进对照——① 跑一条不加任何门的空线路量出读出混淆矩阵；② 跑连续两个 $H$ 门（$H^2 = I$）测单比特门误差；③ 在两个 $H$ 之间插入逐渐拉长的等待时间看退相干，一步步把误差源剥离出来。
 
 如果你想用耳朵感受“先加振幅再平方”和“对比度衰减”的区别，可以配合听一下[声音实验](labs/audio.md)里的五段教学合成音频（同相、120 度、反相与理想/衰减 Ramsey 条纹）；音频类比能帮大脑抓住干涉相位，但声波不是量子硬件录音，定性直觉之外定量判断仍要回到公式与计数。
 
@@ -576,7 +609,7 @@ $$
 1. **分清频率 $\Delta f$（Hz）与角频率 $\Delta = 2\pi\Delta f$（$\mathrm{rad/s}$）**：漏掉 $2\pi$ 会把失谐估计直接算错六倍多；
 2. **完整上报拟合参数**：把拉伸指数 $\alpha$（区别指数马尔可夫衰减与高斯 $1/f$ 慢噪声）、稳态偏置 $B$、失谐 $\Delta f$ 及其拟合置信区间一并报告，绝不只甩出一个孤零零的“相干时间”；
 3. **先测 $T_1$ 再解耦纯退相位与回波**：能量弛豫与纯退相位通过 $1/T_2 = 1/(2T_1) + 1/T_\phi$ 耦合（完整信道推导与脉冲机制见[第 05 章第 6 节](05-noise-channels.md)与[Q3 第 7 节](quantum-mechanics/03-levels-control.md)），因此不先独立标定 $T_1$ 就无法剥离纯退相位，且 Ramsey 测出的 $T_2^*$（混入慢频漂）不可与自旋回波 $T_2$ 混报；
-4. **切勿把三轴体检当成完整层析，警惕负特征值**：三轴曲线只能快速体检，完整重构单比特信道需要量子过程层析（至少 4 个线性独立输入态 $\times$ 3 组测量基）。在有限次采样下，**直接用朴素线性反演重构密度矩阵很容易撞出负特征值**——因为各 Pauli 期望的统计误差（甚至共享校准引起的关联误差）可能把经验 Bloch 向量推到单位球外（长度 $|\hat{\vec r}| > 1$），破坏正半定性，工程上必须用带物理约束的最大似然估计（MLE）并附上统计区间。
+4. **不要把三轴体检当成完整层析，警惕负特征值**：三轴曲线只能快速体检，完整重构单比特信道需要量子过程层析（至少 4 个线性独立输入态 $\times$ 3 组测量基）。在有限次采样下，**直接用朴素线性反演重构密度矩阵很容易撞出负特征值**——因为各 Pauli 期望的统计误差（甚至共享校准引起的关联误差）可能把经验 Bloch 向量推到单位球外（长度 $|\hat{\vec r}| > 1$），破坏正半定性，工程上必须用带物理约束的最大似然估计（MLE）并附上统计区间。
 
 ### 4.4 实验四：编译前后的真实代价
 
@@ -590,9 +623,28 @@ $$
 
 对比一下“双比特门最少”“调度时长最短”“挑中校准质量最好物理边”这三种编译目标，你很快会发现它们常常**不是同一个方案**——背后涉及的 KAK 综合、SABRE 路由启发式、串扰感知调度与硬件约束，都在[第 14 章](14-compilation-control.md)给出了完整推导。
 
+#### 进阶选读：编译正确性验收——线路等价性形式化验证（QCEC）
+
+只统计编译后的门数与深度还漏了一道关键门禁：**编译、布局置换、SWAP 路由与优化重写之后的电路 $C'$，在数学上真的与原电路 $C$ 等价吗？** 当比特数 $n > 25$ 时，直接算两者的 $2^n \times 2^n$ 酉矩阵早已内存溢出。现代量子编译验证工程采用三层递进流水线：
+
+1. **第一层（毫秒级随机态 / 稳定子证伪）**：生成 16 个随机计算基或单比特随机乘积纯态，分别送入原电路 $C$ 与编译电路 $C'$（严格按编译报告的**最终逻辑—物理比特布局置换**对齐输出位，并按根保真度 $|\langle\psi_C|\psi_{C'}\rangle|$ 忽略无关全局相位）。几乎所有常见的路由错位、CNOT 方向写反或 $S/S^\dagger$ 符号 Bug 都会在第一条随机乘积探针上瞬间露馅（[实践统计与等价性验证脚本](../codes/practice/v4_practice_lab.py)中已实现纯标准库 3 比特路由验证原型，16/16 探针全部秒抓错误映射）。
+2. **第二层（精确形式化等价验证）**：随机态只能证伪、不能穷尽证明全空间等价。精确验证有两条主力引擎——① **量子多值决策图（QMDD / Alternating DD）**：从两侧交替推进乘积 $C'^\dagger C$，只要编译正确，大量门对会在中途即时抵消，使中间决策图始终保持极小节点数并最终化为单位阵 $e^{i\phi}I$；② **ZX 演算图形化简**（衔接[第 14 章](14-compilation-control.md)）：将 $C'^\dagger C$ 转为 ZX 图并用局域蜘蛛融合与双代数规则约简至空图。
+3. **第三层（工业工具与边界）**：慕尼黑工业大学开源的 **MQT QCEC**（Burgholzer & Wille, *IEEE TCAD* **40**, 2021 [A]）将“随机仿真快速证伪 + Alternating DD + ZX 演算”并行编排，可直接解析 Qiskit 编译布局与辅助位：
+
+```python
+# 工业级编译等价性验证骨架（需安装 mqt.qcec 与 qiskit）
+from mqt import qcec
+
+# 自动解析 compiled_qc 的初始/最终布局置换与全局相位，判定是否数学等价
+result = qcec.verify_compilation(orig_qc, compiled_qc)
+print(result.equivalence)  # 期望输出 EquivalenceCriterion.equivalent_up_to_global_phase
+```
+
+必须同时清楚理论边界：一般量子线路等价性验证在最坏情形下是 **$\mathrm{QMA}$-完全**问题（因此对高度混沌、深度未对齐的任意双电路，决策图节点数仍可能指数膨胀）；此外，当编译引入未清理的垃圾辅助位或近似综合误差 $\epsilon > 0$ 时，不能套用严格全局酉等价，而须改用局部子空间等价或容差判据。
+
 ### 4.5 实验五：误差缓解的越界报告、后选择分母与成本预算
 
-很多同学第一次跑零噪声外推（ZNE）或读出缓解，看到曲线离理想值近了一大截，立刻觉得“白捡了精度”。关于 ZNE 线性外推的方差放大（均分 5 倍、最优 $3:1$ 分配仍 4 倍）及 PEC 指数代价的完整推导，已在[第 08 章第 7 节](08-applications.md)统一给出；做实验落盘时，还必须亲手管好下面四条极易遗漏的统计与报告细节：
+很多同学第一次跑零噪声外推（ZNE）或读出缓解，看到曲线离理想值近了一大截，立刻觉得“白捡了精度”。关于 ZNE 两点 $c=(1, 2)$ 与三点 Richardson 外推（固定总 shots 预算下最优分别放大 $9\times / 49\times$，均分 $10\times / 57\times$）及 PEC 指数代价的完整推导，已在[第 08 章第 7 节](08-applications.md#7-误差缓解qem用方差与样本换偏差)统一给出；而两点 $c=(1, 3)$ 线性外推在固定总预算下均分 $5\times$、最优 $3:1$ 分配仍 $4\times$ 的详细演算见[实验 P15-B](labs/practice.md#p15-b为什么外推到-110-不代表测出了超物理态)。做实验落盘时，还必须亲手管好下面四条极易遗漏的统计与报告细节：
 
 1. **诚实报告越出物理边界的外推值**：假设噪声倍率 $\lambda = 1$ 与 $\lambda = 3$ 测得期望估计分别为 $0.90$ 和 $0.50$，线性外推公式 $\hat E_0 = \frac{3}{2}\hat E(1) - \frac{1}{2}\hat E(3) = 1.5 \times 0.90 - 0.5 \times 0.50 = \mathbf{1.10} > 1$。它不是某个量子态直接测出的期望值，而是带负权统计外推的必然副产品——实验报告中应如实记录 $1.10$ 及其标准误，绝不悄悄硬截断成 `1.0` 了事；并在固定总预算下把未缓解与缓解后的均方误差（MSE = 偏差平方 + 方差）同台比拼。
 2. **后选择（Post-selection）必须同时报接受率和每尝试交付率**：在[后选择分母反例](labs/practice.md#p15-d后选择更准确为什么每次尝试反而更少成功)里，方法 B 把接受后的条件正确率从方法 A 的 $90\%$ 提到了 $96\%$，代价却是接受率从 $80\%$ 暴跌到 $25\%$——算上被丢弃的尝试，每次原始尝试交付的正确结果反而从 $0.80\times 0.90 = 72\%$ 跌到了 $0.25\times 0.96 = 24\%$！
@@ -698,7 +750,7 @@ $$
 
 满足厄米、迹为 $1$、特征值为 $1, 0, 0, 0$（正半定）。
 
-这并不是编出来的假想题——开源量子网络框架 SeQUeNCe `0.8.5` 版本的 Bell 态测量（`sequence/components/bsm.py` 中的 `_eq_psi_plus`）密度矩阵分支里，就真实出现过这一处硬编码外积写错，导致未防护运行（如种子 `730190`）实际产出的合法端点后态是 $|\Phi^-\rangle\langle\Phi^-|$、与目标态 $|\Phi^+\rangle$ 真实重叠为 $0$，而日志元数据仍谎报 `ENTANGLED` 和 `fidelity = 1`（与[第 12 章](12-security-network-frontiers.md)第 7.2 节的工程验算教训完全对应）。如果只盯着软件返回的元数据字段，这个错误会被完美漏过；唯有拿真实目标 Bell 态去做独立重叠与密度矩阵合法性检验，才能一针见血地拦下来。
+这并不是编出来的假想题——开源量子网络框架 SeQUeNCe `0.8.5` 版本的 Bell 态测量（`sequence/components/bsm.py` 中的 `_eq_psi_plus`）密度矩阵分支里，就真实出现过这一处硬编码外积写错，导致未防护运行（如种子 `730190`）实际产出的合法端点后态是 $|\Phi^-\rangle\langle\Phi^-|$、与目标态 $|\Phi^+\rangle$ 真实重叠为 $0$，而日志元数据仍谎报 `ENTANGLED` 和 `fidelity = 1`（与[第 12 章](12-security-network-frontiers.md)第 7.2 节的工程验算教训完全对应）。如果只盯着软件返回的元数据字段，这个错误会被完美漏过；唯有拿真实目标 Bell 态去做独立重叠与密度矩阵合法性检验，才能准确地将其拦下来。
 
 一旦在科研里撞见这类上游库缺陷，请坚持三条工程铁律：
 1. **先存档原失败**：用固定种子完整保存未加防护时的报错或异常输出，绝不把踩过的坑擦掉伪装成“一次通过”；
@@ -719,7 +771,7 @@ $$
 
 1. **Qiskit 2.x（v2.0–v2.6，IBM 主导，Apache-2.0）**
    - **定位**：硬件编译（Rust 化 LightSABRE 路由与 C-API 超算集成）、百比特级电路转译与云真机执行的工业主力。
-   - **2025–2026 必知断代变化（照抄 2022–2024 旧教程必踩坑！）**：
+   - **2025–2026 必知断代变化（照抄 2022–2024 旧教程容易报错）**：
      - 全面转向 **Primitives V2（`SamplerV2` / `EstimatorV2`）** 与向量化 **PUB（Primitive Unified Bloc）** 提交格式，移除了旧版 `backend.run()` 与 `BackendV1`；
      - 彻底移除旧的 `.c_if()` 单指令条件接口，统一改用符合 OpenQASM 3 语义的结构化控制流 `with qc.if_test(...):`；
      - **彻底移除 `qiskit.pulse` 模块**（百比特规模下旧脉冲对象模型难以扩展）；在 IBM Heron 等硬件上改用原生分数门（`use_fractional_gates=True`，支持任意实角 `RX(θ)` 与严格限角 $0 < \theta < \pi/2$ 的 `RZZ(θ)`），若需研究底层连续脉冲动力学请转向 QuTiP。
@@ -759,7 +811,7 @@ $$
 
 **公共任务**：制备 2 比特 Bell 态 $|\Phi^+\rangle$，在 $q_0$ 上施加**总非恒等 Pauli 翻转率 $q = 0.03$** 的等价单比特退极化噪声，随后测量 $\langle ZZ\rangle$ 与 $\langle XX\rangle$，并示范一次“测 $q_0$ 若为 `1` 则对 $q_1$ 施条件 $X$”的动态反馈写法。
 
-**先算解析基准值（零跳步防坑！）**：对单比特施加总翻转率 $q$ 的退极化信道，是以概率 $1-q$ 什么都不做、分别以概率 $q/3$ 施加 $X_0, Y_0, Z_0$：
+**先算解析基准值（防静默算错的基准核对）**：对单比特施加总翻转率 $q$ 的退极化信道，是以概率 $1-q$ 什么都不做、分别以概率 $q/3$ 施加 $X_0, Y_0, Z_0$：
 
 $$
 \mathcal{E}_{\mathrm{flip}}(\rho)
@@ -816,22 +868,31 @@ c[1] = measure q[1];
 ```
 
 ```python
-# 范式 2：Qiskit 2.x (V2 Primitives + Aer；注意小端序与 lambda = 4*q/3 = 0.04！)
+# 范式 2：Qiskit 2.x (V2 Primitives + Aer；注意小端序、density_matrix 与 lambda = 4*q/3 = 0.04！)
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import SparsePauliOp
 from qiskit_aer.noise import NoiseModel, depolarizing_error
 from qiskit_aer.primitives import EstimatorV2
 
 qc = QuantumCircuit(2)
-qc.h(0); qc.cx(0, 1); qc.id(0)  # 在 id(0) 处精确注入单次 q0 退极化噪声
+qc.h(0); qc.cx(0, 1)
+qc.barrier(0); qc.id(0); qc.barrier(0)  # 仅作未转译直跑示例；若经 optimization_level>=1 转译，
+                                        # RemoveIdentityEquivalent 会删掉 id 门导致噪声静默消失！
 q_flip = 0.03
 nm = NoiseModel()
 nm.add_quantum_error(depolarizing_error(4 * q_flip / 3, 1), ["id"], [0])  # 必须填 0.04！
 
-est = EstimatorV2(options={"backend_options": {"noise_model": nm}, "default_precision": 0.0})
+est = EstimatorV2(
+    options={
+        "backend_options": {"method": "density_matrix", "noise_model": nm},
+        "default_precision": 0.0,
+    }
+)
 res = est.run([(qc, [SparsePauliOp("ZZ"), SparsePauliOp("XX")])]).result()[0]
 print(res.data.evs)  # 精确密度矩阵期望：[0.96, 0.96]
 
+# 工程提醒：经 generate_preset_pass_manager(optimization_level>=1) 转译为 ISA 电路时，
+# 请勿把噪声挂在易被优化 pass 删掉的 id 门上，而应直接绑定真实原生门或显式插入自定义 Kraus 指令。
 # 动态反馈语法（Qiskit 2.x 统一块结构，已废除 .c_if）：
 # with qc.if_test((qc.clbits[0], 1)): qc.x(1)
 ```
@@ -849,7 +910,8 @@ def noisy_bell(q_flip=0.03):
     qml.DepolarizingChannel(q_flip, wires=0)  # 直接填 0.03！
     return qml.expval(qml.Z(0) @ qml.Z(1)), qml.expval(qml.X(0) @ qml.X(1))
 
-print(noisy_bell(0.03))  # (0.96, 0.96)
+print(noisy_bell(0.03))  # 精确解析期望：(0.96, 0.96)
+# 有限 shots 采样（对应下表 qml.set_shots 推荐接口）：qml.set_shots(noisy_bell, shots=10_000)(0.03)
 # 动态反馈（中段测量 + qml.cond）：m0 = qml.measure(0); qml.cond(m0, qml.X)(1)
 ```
 
@@ -931,7 +993,7 @@ def test_endianness_unitarity_and_depolarizing_contract():
 
 ### 8.1 五个新手能独立跑完的小研究项目
 
-- **项目 A：端序防坑对照表**——在两个不同框架（例如自写 $O(2^n)$ NumPy 模拟器与 Qiskit 2.x）里分别制备全部四个两比特计算基态 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$，对照记录线路编号、态矢量非零下标和计数字符串，整理成一份自己的跨框架转换速查卡。
+- **项目 A：端序核对对照表**——在两个不同框架（例如自写 $O(2^n)$ NumPy 模拟器与 Qiskit 2.x）里分别制备全部四个两比特计算基态 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$，对照记录线路编号、态矢量非零下标和计数字符串，整理成一份自己的跨框架转换速查卡。
 - **项目 B：Grover 真实资源成长曲线**——对 $n = 2, \dots, 10$，不只是画理想的 $\lfloor\frac{\pi}{4}\sqrt{2^n}\rfloor$ 查询次数，而是把 oracle、扩散算子和映射到受限连接图后的真实双比特门数一起画成曲线。
 - **项目 C：Bell 见证的采样门槛曲线**——在模拟里系统扫过不同的总 shots（如每基 $50$ 到 $5000$）和不对称读出误差，测算“$f_{\Phi^+} > 1/2$ 保守下界判定”的假阳性率与检出率。
 - **项目 D：编译器随机性的波动体检**——固定同一条 5 比特线路和同一后端拓扑，换 50 个随机布局/路由种子，画出编译后双比特门数、深度与预估成功率的直方图，感受单次编译结果有多大偶然性。
@@ -957,6 +1019,23 @@ def test_endianness_unitarity_and_depolarizing_contract():
 
 ---
 
+## 本章一页速记卡
+
+- **主干概念链**：四级验证阶梯（纸笔 $\to$ 态矢量 $\to$ 有限 shots $\to$ 含噪真机）$\longrightarrow$ $O(2^n)$ 张量切片引擎与五条自检 $\longrightarrow$ 统计工具箱（Wilson / Clopper–Pearson / BCa Bootstrap / 聚类 $t_{B-1}$ / Holm & BH-FDR / 望远镜序贯）$\longrightarrow$ 线路等价性验证（QCEC）与跨 SDK 口径对齐（端序 + $4/3$ 退极化换算）$\longrightarrow$ 审稿人十大红旗与独立复核。
+
+| 实践模块 | 核心公式或接口 | 适用条件与关键数值 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **$O(2^n)$ 张量模拟** | `tensordot` + `moveaxis`；内积 `np.vdot(u, v)` | $n = 20$ 态矢量仅 $16\,\mathrm{MiB}$；`np.kron` 需 $16\,\mathrm{TiB}$ | 用 `np.dot` 漏左共轭，或漏判 Qiskit 小端序 vs Cirq/PennyLane 大端序 |
+| **比例与零失败上界** | Wilson 区间；零失败 $p_U = 1 - \alpha^{1/N} \approx 3/N$ | $k = 0, N = 1000$：Wilson $\le 0.383\%$，单侧 CP $\le 0.299\%$ | 在 $k = 0$ 或低概率端用 Wald 或朴素 Bootstrap 得出虚假 $[0, 0]$ |
+| **非线性量与漂移聚类** | BCa Bootstrap；聚类 95% CI 用 $t_{B-1,\,0.975}\cdot\mathrm{SE}_{\mathrm{cluster}}$ | $B = 4 \implies t_3 = 3.182$（错用 $1.96$ 覆盖率跌至 $84.9\%$） | 合并总直方图抹平时间漂移，或把随机化线路总 shots 塞进 $1/\sqrt{N}$ |
+| **多重比较与序贯停机** | Holm $\alpha/(m-k+1)$；BH-FDR $(k/m)q$；望远镜 $\alpha/(j(j+1))$ | 20 次未校正独立检验假阳性高达 $64.15\%$ | 边跑边偷看刚过线就停机，或挑最优种子重跑后隐匿失败批 |
+| **编译验收（QCEC）** | 随机乘积态证伪 $\to$ Alternating DD / ZX $\to$ `mqt.qcec` | 需按末态逻辑—物理置换对齐并剥离全局相位 | 只看编译门数与深度，漏验路由/优化 pass 是否静默改写电路语义 |
+| **跨 SDK 噪声口径** | Qiskit Aer $\lambda = \frac{4}{3}q$；`method="density_matrix"` | $q = 0.03 \implies$ Aer 填 `0.04`，PennyLane/Stim 填 `0.03` | 跨框架照抄 `0.03` 少算 25% 误差，或把噪声挂在被优化器删掉的 `id` 门上 |
+
+- **首遍通关自测三句话**：① 为什么零失败（$k=0$）时 Wald 与朴素 Bootstrap 都会崩溃成 $[0,0]$，而非线性根保真度又为何要用 BCa Bootstrap？② 为什么少聚类（如 $B=4$）构造 95% 置信区间必须改用 $t_{B-1}$ 而非 $1.96$？③ 为什么跨框架对比 Qiskit Aer 与 PennyLane/Stim 退极化噪声时，参数要换算 $4/3$ 且不能把噪声挂在会被优化删掉的 `id` 门上？
+
+---
+
 ## 自检题
 
 先做第 1–4 题巩固模拟、纠缠见证与层析基础，再做第 5–8 题练习资源记账、报告写作与完整 Hoeffding 数值计算。
@@ -976,7 +1055,7 @@ def test_endianness_unitarity_and_depolarizing_contract():
 
 ## 延伸阅读与动手实验
 
-- **配套统计与核查实验册**：[有限样本、外推代价与多重比较](labs/practice.md)覆盖 Bell 分母对比、ZNE shots 分配、多重比较、后选择分母、零失败精确上界、按耗时分配与准概率估计七组可手算练习，对应纯 Python 标准库代码 [experiments.py](../codes/practice/experiments.py) 与 [research_checks.py](../codes/practice/research_checks.py)。
+- **配套统计、ZNE 倍率与等价性验证脚本**：[有限样本、外推代价与多重比较](labs/practice.md)覆盖 Bell 分母对比、ZNE shots 分配、多重比较、后选择分母、零失败精确上界、按耗时分配与准概率估计七组可手算练习，对应纯 Python 标准库代码 [experiments.py](../codes/practice/experiments.py)、[research_checks.py](../codes/practice/research_checks.py) 以及覆盖 Bootstrap/BCa 零失败反例、少聚类 $t_{B-1}$ 覆盖率、ZNE 固定总预算倍率与 QCEC 随机态证伪的 [v4_practice_lab.py](../codes/practice/v4_practice_lab.py)（完整目录与运行边界见[实践脚本说明](../codes/practice/README.md)）。
 - **相位听觉实验**：[声音实验](labs/audio.md)用五段相同数字增益的合成音频对比同相、120 度、反相与 Ramsey 对比度衰减，附公式、科学图与类比边界。
 - **软件栈与独立复核日志**：
   - [完整 SDK 实验册](labs/sdk-validation.md)汇总 31 个开源量子项目（含 26 个基础核心发行包与扩展工作流）的独立安装实跑、数学对照与上游缺陷防护过程；
@@ -984,7 +1063,7 @@ def test_endianness_unitarity_and_depolarizing_contract():
   - 全部章节实验总目录见[逐章实验映射](labs/README.md)；本章望远镜序贯预算与密度矩阵反例复算见[望远镜序贯预算复算脚本](../codes/systems/round71_checks.py)（运行参数 `--case 15`）与[进阶系统反例独立复核脚本](../codes/systems/round73_checks.py)（运行参数 `--case 15`），两套归档的独立核查分别见[基础系统安装与运行说明](../codes/systems/sdk/README.md)（配合[基础系统归档复核脚本](../codes/systems/sdk/verify_saved_results.py)）与[进阶系统归档复核脚本](../codes/systems/sdk73/verify_saved_results.py)。
 - **权威参考起点**：
   - E. B. Wilson, *Probable inference, the law of succession, and statistical inference*, *Journal of the American Statistical Association* **22**, 209–212 (1927)；C. J. Clopper & E. S. Pearson, *The use of confidence or fiducial limits illustrated in the case of the binomial*, *Biometrika* **26**, 404–413 (1934)；以及 NIST/SEMATECH, [Confidence intervals for a binomial proportion](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)。
-  - S. Holm, *A simple sequentially rejective multiple test procedure*, *Scandinavian Journal of Statistics* **6**, 65–70 (1979)；Y. Benjamini & Y. Hochberg, *Controlling the false discovery rate*, *JRSS-B* **57**, 289–300 (1995)。
+  - S. Holm, *A simple sequentially rejective multiple test procedure*, *Scandinavian Journal of Statistics* **6**, 65–70 (1979)；Y. Benjamini & Y. Hochberg, *Controlling the false discovery rate*, *JRSS-B* **57**, 289–300 (1995)；B. Efron & R. J. Tibshirani, *An Introduction to the Bootstrap*, Chapman & Hall (1993)；L. Burgholzer & R. Wille, *Advanced Equivalence Checking for Quantum Circuits*, *IEEE TCAD* **40**(9), 1810–1824 (2021，MQT QCEC)。
   - W. Hoeffding, [Probability inequalities for sums of bounded random variables](https://doi.org/10.1080/01621459.1963.10500830), *JASA* **58**, 13–30 (1963)；S. R. Howard, A. Ramdas, J. McAuliffe & J. Sekhon, [Time-uniform, nonparametric, nonasymptotic confidence sequences](https://arxiv.org/abs/1810.08240), *Annals of Statistics* **49**(2), 1055–1080 (2021)；A. Ramdas, P. Grünwald, V. Vovk & G. Shafer, *Game-theoretic statistics and safe anytime-valid inference*, *Statistical Science* **38**(4), 576–601 (2023)。
   - O. Gühne & G. Tóth, [Entanglement detection](https://arxiv.org/abs/0811.2803), *Physics Reports* **474**, 1–75 (2009)；M. Paris & J. Řeháček (eds.), *Quantum State Estimation*, Springer (2004)；M. C. Tichy et al., [Stringent and efficient assessment of boson-sampling devices](https://doi.org/10.1103/PhysRevLett.113.020502), *Physical Review Letters* **113**, 020502 (2014)。
   - 开源框架官方文档（2025–2026）：[IBM Quantum Learning & Qiskit Docs](https://quantum.cloud.ibm.com/docs/en/guides/transpile)、[PennyLane & Catalyst Docs](https://docs.pennylane.ai/)、[Cirq & Qualtran](https://quantumai.google/cirq)、[Stim & PyMatching](https://github.com/quantumlib/Stim)（O. Higgott & C. Gidney, *Sparse Blossom*, *Quantum* **9**, 1600, 2025）、[QuTiP 5 Documentation](https://qutip.org/)。

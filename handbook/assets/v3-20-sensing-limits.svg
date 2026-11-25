@@ -176,8 +176,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <line class="c2" stroke-width="1.1" x1="331.41" y1="219.33" x2="301.16" y2="244.41"/>
   <text class="xs" x="421.93" y="241.45" text-anchor="middle">Escher 精确界（大 N 差 √e）</text>
   <line class="guide" x1="429.88" y1="250.44" x2="429.88" y2="289.86"/>
-  <text class="xsb c5-txt" x="424" y="340" text-anchor="middle" transform="rotate(14 424 340)">6 dB 压缩 (n̄≫sinh²r)</text>
-  <text class="xsb c4-txt" x="444" y="388" text-anchor="middle" transform="rotate(23 444 388)">OAT 斜率 −5/6</text>
+  <text class="xsb c5-txt" x="493" y="357" text-anchor="end" transform="rotate(14 493 357)">6 dB 压缩 (n̄≫sinh²r)</text>
+  <text class="xsb c4-txt" x="444" y="391" text-anchor="middle" transform="rotate(23 444 391)">OAT 斜率 −5/6</text>
   <text class="xsb c3-txt" x="254.77" y="390.19" text-anchor="start">无噪 HL 斜率 −1</text>
   <rect class="pill" x="42" y="484" width="462" height="54" rx="9"/>
   <text class="xsb" x="273" y="505" text-anchor="middle">统一口径 T·Δω：N=1 含噪 GHZ、单比特与 Escher 严格重合（2√e）；全段 ≥ HL</text>

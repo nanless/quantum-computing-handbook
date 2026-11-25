@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">拓扑任意子编织通用性与 Landau-Zener 非绝热隧穿</title>
+  <desc id="desc">左面板对比 2+1 维非阿贝尔任意子世界线编织：Ising 任意子（σ×σ = 1+ψ）仅生成有限 Clifford 门群，非通用；Fibonacci 任意子（τ×τ = 1+τ，量子维数 φ ≈ 1.618）编织群在 SU(2) 稠密，纯编织即可通用。右面板上部绘制 Landau-Zener 避免交叉精确双曲线能级 E±(t) = ±½√((vt)²+Δ²)，下部精确绘制非绝热隧穿概率 P_LZ = exp(−πΔ²/(2ℏv)) 随无量纲扫频速率 ℏv/Δ² 的变化，并对比窄隙 0.6Δ 下跃迁加速。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.halo{stroke:#ffffff;fill:none}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.6;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.c4-soft{fill:#fdf2dc;stroke:#b57614;stroke-width:1.4}
+.c5{stroke:#744ea6;fill:none}
+.c5-fill{fill:#744ea6}
+.c5-txt{fill:#5b3987}
+.c5-soft{fill:#efe8fa;stroke:#744ea6;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.10}
+.area1{fill:#1b6ca8;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.11}
+.area4{fill:#b57614;fill-opacity:.12}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .halo{stroke:#16222e}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
+  .c5{stroke:#b999f0}
+  .c5-fill{fill:#b999f0}
+  .c5-txt{fill:#d0b8fa}
+  .c5-soft{fill:#2d2045;stroke:#b999f0}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.14}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .area4{fill:#f0ba5a;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
+  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-amber" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke4" x1="0" y1="0" x2="0" y2="9"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="32" y="52">拓扑任意子世界线编织与 Landau–Zener 非绝热隧穿</text>
+  <text class="subtitle" x="32" y="77">左：Ising（Clifford 受限）与 Fibonacci（稠密通用）编织对比；右：避免交叉能级与精确 P<tspan dy="2.8" font-size="74%">LZ</tspan><tspan dy="-2.8">&#8203;</tspan> 曲线</text>
+  <rect class="panel" x="28" y="96" width="452" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 466 Q 479 97 479 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="479" y2="134"/>
+  <text class="sec" x="44" y="120">2+1 维任意子世界线编织对比（示意）</text>
+  <rect class="panel" x="496" y="96" width="476" height="456" rx="14"/>
+  <path class="phead" d="M 510 97 H 958 Q 971 97 971 110 V 134 H 497 V 110 Q 497 97 510 97 Z"/>
+  <line class="grid" x1="497" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="512" y="120">Landau–Zener 避免交叉与隧穿概率（精确公式）</text>
+  <line class="axis" x1="50" y1="422" x2="50" y2="162"/>
+  <polygon class="axis-fill" points="50,158 53.36,165 46.64,165"/>
+  <text class="xsb" x="41" y="294" text-anchor="middle" transform="rotate(-90 41 294)">演化时间 t</text>
+  <rect class="c1-soft" fill-opacity=".22" x="60" y="148" width="206" height="288" rx="10"/>
+  <text class="smb c1-txt" x="163" y="168" text-anchor="middle">Ising 任意子（σ×σ = 1+ψ）</text>
+  <path class="c5" stroke-width="2.8" d="M 163 354 C 163 330 105 330 105 306"/>
+  <path class="halo" stroke-width="8.5" d="M 105 354 C 105 330 163 330 163 306"/>
+  <path class="c1" stroke-width="2.8" d="M 105 354 C 105 330 163 330 163 306"/>
+  <line class="c4" stroke-width="2.8" x1="221" y1="354" x2="221" y2="306"/>
+  <line class="c5" stroke-width="2.8" x1="105" y1="306" x2="105" y2="258"/>
+  <path class="c1" stroke-width="2.8" d="M 163 306 C 163 282 221 282 221 258"/>
+  <path class="halo" stroke-width="8.5" d="M 221 306 C 221 282 163 282 163 258"/>
+  <path class="c4" stroke-width="2.8" d="M 221 306 C 221 282 163 282 163 258"/>
+  <path class="c4" stroke-width="2.8" d="M 163 258 C 163 234 105 234 105 210"/>
+  <path class="halo" stroke-width="8.5" d="M 105 258 C 105 234 163 234 163 210"/>
+  <path class="c5" stroke-width="2.8" d="M 105 258 C 105 234 163 234 163 210"/>
+  <line class="c1" stroke-width="2.8" x1="221" y1="258" x2="221" y2="210"/>
+  <circle class="data-node" cx="105" cy="354" r="9.5"/>
+  <text class="xsb" x="105" y="357.5" text-anchor="middle">σ</text>
+  <circle class="c1-soft" cx="105" cy="210" r="9.5"/>
+  <text class="xsb c1-txt" x="105" y="213.5" text-anchor="middle">σ</text>
+  <circle class="data-node" cx="163" cy="354" r="9.5"/>
+  <text class="xsb" x="163" y="357.5" text-anchor="middle">σ</text>
+  <circle class="c1-soft" cx="163" cy="210" r="9.5"/>
+  <text class="xsb c1-txt" x="163" y="213.5" text-anchor="middle">σ</text>
+  <circle class="data-node" cx="221" cy="354" r="9.5"/>
+  <text class="xsb" x="221" y="357.5" text-anchor="middle">σ</text>
+  <circle class="c1-soft" cx="221" cy="210" r="9.5"/>
+  <text class="xsb c1-txt" x="221" y="213.5" text-anchor="middle">σ</text>
+  <text class="xs" x="163" y="191" text-anchor="middle">融合通道读出：1 或 ψ</text>
+  <text class="xs c1-txt" x="163" y="384" text-anchor="middle">相对相位 π/2 (Clifford S) · 有限编织群</text>
+  <text class="smb c1-txt" x="163" y="405" text-anchor="middle">仅生成 Clifford 门</text>
+  <text class="xs" x="163" y="424" text-anchor="middle">非通用，仍需魔法态注入</text>
+  <rect class="c3-soft" fill-opacity=".22" x="274" y="148" width="194" height="288" rx="10"/>
+  <text class="smb c3-txt" x="371" y="168" text-anchor="middle">Fibonacci（τ×τ = 1+τ）</text>
+  <path class="c2" stroke-width="2.8" d="M 371 354 C 371 330 313 330 313 306"/>
+  <path class="halo" stroke-width="8.5" d="M 313 354 C 313 330 371 330 371 306"/>
+  <path class="c3" stroke-width="2.8" d="M 313 354 C 313 330 371 330 371 306"/>
+  <line class="c1" stroke-width="2.8" x1="429" y1="354" x2="429" y2="306"/>
+  <line class="c2" stroke-width="2.8" x1="313" y1="306" x2="313" y2="258"/>
+  <path class="c1" stroke-width="2.8" d="M 429 306 C 429 282 371 282 371 258"/>
+  <path class="halo" stroke-width="8.5" d="M 371 306 C 371 282 429 282 429 258"/>
+  <path class="c3" stroke-width="2.8" d="M 371 306 C 371 282 429 282 429 258"/>
+  <path class="c2" stroke-width="2.8" d="M 313 258 C 313 234 371 234 371 210"/>
+  <path class="halo" stroke-width="8.5" d="M 371 258 C 371 234 313 234 313 210"/>
+  <path class="c1" stroke-width="2.8" d="M 371 258 C 371 234 313 234 313 210"/>
+  <line class="c3" stroke-width="2.8" x1="429" y1="258" x2="429" y2="210"/>
+  <circle class="data-node" cx="313" cy="354" r="9.5"/>
+  <text class="xsb" x="313" y="357.5" text-anchor="middle">τ</text>
+  <circle class="c3-soft" cx="313" cy="210" r="9.5"/>
+  <text class="xsb c3-txt" x="313" y="213.5" text-anchor="middle">τ</text>
+  <circle class="data-node" cx="371" cy="354" r="9.5"/>
+  <text class="xsb" x="371" y="357.5" text-anchor="middle">τ</text>
+  <circle class="c3-soft" cx="371" cy="210" r="9.5"/>
+  <text class="xsb c3-txt" x="371" y="213.5" text-anchor="middle">τ</text>
+  <circle class="data-node" cx="429" cy="354" r="9.5"/>
+  <text class="xsb" x="429" y="357.5" text-anchor="middle">τ</text>
+  <circle class="c3-soft" cx="429" cy="210" r="9.5"/>
+  <text class="xsb c3-txt" x="429" y="213.5" text-anchor="middle">τ</text>
+  <text class="xs" x="371" y="191" text-anchor="middle">编码子空间 |0<tspan dy="2.8" font-size="74%">L</tspan><tspan dy="-2.8">&#8203;</tspan>⟩(1), |1<tspan dy="2.8" font-size="74%">L</tspan><tspan dy="-2.8">&#8203;</tspan>⟩(τ)</text>
+  <text class="xs c3-txt" x="371" y="384" text-anchor="middle">量子维数 d<tspan dy="2.8" font-size="74%">τ</tspan><tspan dy="-2.8">&#8203;</tspan> = φ ≈ 1.618</text>
+  <text class="smb c3-txt" x="371" y="405" text-anchor="middle">编织群在 SU(2) 稠密</text>
+  <text class="xs" x="371" y="424" text-anchor="middle">纯编织逼近任意通用门</text>
+  <rect class="pill" x="44" y="448" width="424" height="88" rx="10"/>
+  <text class="smb" x="58" y="470">拓扑保护机制：体能隙抑制局域扰动，逻辑门只依赖扭结拓扑</text>
+  <text class="xs" x="58" y="492">• Ising（Majorana 零模对应）：可做拓扑 Clifford，但须非拓扑 T 门</text>
+  <text class="xs" x="58" y="514">• Fibonacci：融合维数按 1, 1, 2, 3, 5, 8… 增长，编织可实现 BQP 通用</text>
+  <line class="c1" stroke-width="2.4" x1="518" y1="150" x2="544" y2="150"/>
+  <text class="xs" x="550" y="154">绝热基态 E<tspan dy="2.8" font-size="74%">−</tspan><tspan dy="-2.8">&#8203;</tspan>(t)</text>
+  <line class="c2" stroke-width="2.4" x1="658" y1="150" x2="684" y2="150"/>
+  <text class="xs" x="690" y="154">激发态 E<tspan dy="2.8" font-size="74%">+</tspan><tspan dy="-2.8">&#8203;</tspan>(t)</text>
+  <line class="guide" x1="794" y1="150" x2="820" y2="150"/>
+  <text class="xs" x="826" y="154">透热能级 ±vt/2</text>
+  <line class="grid" x1="564" y1="226" x2="948" y2="226"/>
+  <line class="grid" x1="756" y1="166" x2="756" y2="286"/>
+  <line class="axis" x1="564" y1="286" x2="954" y2="286"/>
+  <polygon class="axis-fill" points="954,286 947.5,289.12 947.5,282.88"/>
+  <line class="axis" x1="564" y1="286" x2="564" y2="160"/>
+  <polygon class="axis-fill" points="564,160 567.12,166.5 560.88,166.5"/>
+  <text class="xs" x="520" y="230" text-anchor="middle" transform="rotate(-90 520 226)">能量 E / Δ</text>
+  <text class="xs" x="558" y="197.07" text-anchor="end">+1</text>
+  <text class="xs" x="558" y="229.5" text-anchor="end">0</text>
+  <text class="xs" x="558" y="261.93" text-anchor="end">−1</text>
+  <text class="xs" x="756" y="301" text-anchor="middle">扫频坐标 vt / Δ = 0（交叉中心）</text>
+  <line class="guide" x1="564" y1="277.89" x2="948" y2="174.11"/>
+  <line class="guide" x1="564" y1="174.11" x2="948" y2="277.89"/>
+  <path class="c2" stroke-width="2.5" d="M 564 171.63 L 567.2 172.46 L 570.4 173.28 L 573.6 174.1 L 576.8 174.92 L 580 175.74 L 583.2 176.56 L 586.4 177.38 L 589.6 178.19 L 592.8 179.01 L 596 179.82 L 599.2 180.62 L 602.4 181.43 L 605.6 182.24 L 608.8 183.04 L 612 183.84 L 615.2 184.63 L 618.4 185.43 L 621.6 186.22 L 624.8 187.01 L 628 187.79 L 631.2 188.57 L 634.4 189.35 L 637.6 190.13 L 640.8 190.89 L 644 191.66 L 647.2 192.42 L 650.4 193.17 L 653.6 193.92 L 656.8 194.67 L 660 195.4 L 663.2 196.13 L 666.4 196.86 L 669.6 197.57 L 672.8 198.28 L 676 198.97 L 679.2 199.66 L 682.4 200.34 L 685.6 201 L 688.8 201.65 L 692 202.29 L 695.2 202.91 L 698.4 203.52 L 701.6 204.11 L 704.8 204.68 L 708 205.23 L 711.2 205.76 L 714.4 206.27 L 717.6 206.75 L 720.8 207.2 L 724 207.62 L 727.2 208.01 L 730.4 208.37 L 733.6 208.69 L 736.8 208.97 L 740 209.22 L 743.2 209.42 L 746.4 209.58 L 749.6 209.69 L 752.8 209.76 L 756 209.78 L 759.2 209.76 L 762.4 209.69 L 765.6 209.58 L 768.8 209.42 L 772 209.22 L 775.2 208.97 L 778.4 208.69 L 781.6 208.37 L 784.8 208.01 L 788 207.62 L 791.2 207.2 L 794.4 206.75 L 797.6 206.27 L 800.8 205.76 L 804 205.23 L 807.2 204.68 L 810.4 204.11 L 813.6 203.52 L 816.8 202.91 L 820 202.29 L 823.2 201.65 L 826.4 201 L 829.6 200.34 L 832.8 199.66 L 836 198.97 L 839.2 198.28 L 842.4 197.57 L 845.6 196.86 L 848.8 196.13 L 852 195.4 L 855.2 194.67 L 858.4 193.92 L 861.6 193.17 L 864.8 192.42 L 868 191.66 L 871.2 190.89 L 874.4 190.13 L 877.6 189.35 L 880.8 188.57 L 884 187.79 L 887.2 187.01 L 890.4 186.22 L 893.6 185.43 L 896.8 184.63 L 900 183.84 L 903.2 183.04 L 906.4 182.24 L 909.6 181.43 L 912.8 180.62 L 916 179.82 L 919.2 179.01 L 922.4 178.19 L 925.6 177.38 L 928.8 176.56 L 932 175.74 L 935.2 174.92 L 938.4 174.1 L 941.6 173.28 L 944.8 172.46 L 948 171.63"/>
+  <path class="c1" stroke-width="2.5" d="M 564 280.37 L 567.2 279.54 L 570.4 278.72 L 573.6 277.9 L 576.8 277.08 L 580 276.26 L 583.2 275.44 L 586.4 274.62 L 589.6 273.81 L 592.8 272.99 L 596 272.18 L 599.2 271.38 L 602.4 270.57 L 605.6 269.76 L 608.8 268.96 L 612 268.16 L 615.2 267.37 L 618.4 266.57 L 621.6 265.78 L 624.8 264.99 L 628 264.21 L 631.2 263.43 L 634.4 262.65 L 637.6 261.87 L 640.8 261.11 L 644 260.34 L 647.2 259.58 L 650.4 258.83 L 653.6 258.08 L 656.8 257.33 L 660 256.6 L 663.2 255.87 L 666.4 255.14 L 669.6 254.43 L 672.8 253.72 L 676 253.03 L 679.2 252.34 L 682.4 251.66 L 685.6 251 L 688.8 250.35 L 692 249.71 L 695.2 249.09 L 698.4 248.48 L 701.6 247.89 L 704.8 247.32 L 708 246.77 L 711.2 246.24 L 714.4 245.73 L 717.6 245.25 L 720.8 244.8 L 724 244.38 L 727.2 243.99 L 730.4 243.63 L 733.6 243.31 L 736.8 243.03 L 740 242.78 L 743.2 242.58 L 746.4 242.42 L 749.6 242.31 L 752.8 242.24 L 756 242.22 L 759.2 242.24 L 762.4 242.31 L 765.6 242.42 L 768.8 242.58 L 772 242.78 L 775.2 243.03 L 778.4 243.31 L 781.6 243.63 L 784.8 243.99 L 788 244.38 L 791.2 244.8 L 794.4 245.25 L 797.6 245.73 L 800.8 246.24 L 804 246.77 L 807.2 247.32 L 810.4 247.89 L 813.6 248.48 L 816.8 249.09 L 820 249.71 L 823.2 250.35 L 826.4 251 L 829.6 251.66 L 832.8 252.34 L 836 253.03 L 839.2 253.72 L 842.4 254.43 L 845.6 255.14 L 848.8 255.87 L 852 256.6 L 855.2 257.33 L 858.4 258.08 L 861.6 258.83 L 864.8 259.58 L 868 260.34 L 871.2 261.11 L 874.4 261.87 L 877.6 262.65 L 880.8 263.43 L 884 264.21 L 887.2 264.99 L 890.4 265.78 L 893.6 266.57 L 896.8 267.37 L 900 268.16 L 903.2 268.96 L 906.4 269.76 L 909.6 270.57 L 912.8 271.38 L 916 272.18 L 919.2 272.99 L 922.4 273.81 L 925.6 274.62 L 928.8 275.44 L 932 276.26 L 935.2 277.08 L 938.4 277.9 L 941.6 278.72 L 944.8 279.54 L 948 280.37"/>
+  <line class="c3" stroke-width="1.8" x1="756" y1="213.78" x2="756" y2="238.22"/>
+  <polygon class="c3-fill" points="756,211.78 758.64,217.28 753.36,217.28"/>
+  <polygon class="c3-fill" points="756,240.22 753.36,234.72 758.64,234.72"/>
+  <text class="smb c3-txt" x="738" y="230" text-anchor="end">最小隙 Δ</text>
+  <path class="c2" stroke-width="1.8" stroke-dasharray="4 3" d="M 771 242.86 Q 801 226 807 204.92"/>
+  <polygon class="c2-fill" points="807,204.92 808.29,211.22 802.89,209.87"/>
+  <text class="xsb c2-txt" x="868.8" y="230" text-anchor="middle">非绝热隧穿 P<tspan dy="2.8" font-size="74%">LZ</tspan><tspan dy="-2.8">&#8203;</tspan></text>
+  <rect class="area3" x="564" y="336" width="38.4" height="126"/>
+  <line class="grid" x1="564" y1="462" x2="948" y2="462"/>
+  <text class="xs" x="558" y="465.5" text-anchor="end">0.0</text>
+  <line class="grid" x1="564" y1="399" x2="948" y2="399"/>
+  <text class="xs" x="558" y="402.5" text-anchor="end">0.5</text>
+  <line class="grid" x1="564" y1="336" x2="948" y2="336"/>
+  <text class="xs" x="558" y="339.5" text-anchor="end">1.0</text>
+  <line class="grid" x1="564" y1="336" x2="564" y2="462"/>
+  <text class="xs" x="564" y="477" text-anchor="middle">0</text>
+  <line class="grid" x1="640.8" y1="336" x2="640.8" y2="462"/>
+  <text class="xs" x="640.8" y="477" text-anchor="middle">1</text>
+  <line class="grid" x1="717.6" y1="336" x2="717.6" y2="462"/>
+  <text class="xs" x="717.6" y="477" text-anchor="middle">2</text>
+  <line class="grid" x1="794.4" y1="336" x2="794.4" y2="462"/>
+  <text class="xs" x="794.4" y="477" text-anchor="middle">3</text>
+  <line class="grid" x1="871.2" y1="336" x2="871.2" y2="462"/>
+  <text class="xs" x="871.2" y="477" text-anchor="middle">4</text>
+  <line class="grid" x1="948" y1="336" x2="948" y2="462"/>
+  <text class="xs" x="948" y="477" text-anchor="middle">5</text>
+  <path class="c1" stroke-width="2.6" d="M 564 462 L 566.4 462 L 568.8 462 L 571.2 462 L 573.6 462 L 576 461.99 L 578.4 461.97 L 580.8 461.9 L 583.2 461.76 L 585.6 461.53 L 588 461.17 L 590.4 460.69 L 592.8 460.09 L 595.2 459.36 L 597.6 458.52 L 600 457.58 L 602.4 456.56 L 604.8 455.45 L 607.2 454.28 L 609.6 453.06 L 612 451.79 L 614.4 450.5 L 616.8 449.17 L 619.2 447.83 L 621.6 446.48 L 624 445.13 L 626.4 443.77 L 628.8 442.42 L 631.2 441.07 L 633.6 439.74 L 636 438.41 L 638.4 437.1 L 640.8 435.81 L 643.2 434.53 L 645.6 433.27 L 648 432.03 L 650.4 430.81 L 652.8 429.61 L 655.2 428.43 L 657.6 427.28 L 660 426.14 L 662.4 425.02 L 664.8 423.93 L 667.2 422.85 L 669.6 421.8 L 672 420.77 L 674.4 419.75 L 676.8 418.76 L 679.2 417.78 L 681.6 416.83 L 684 415.89 L 686.4 414.97 L 688.8 414.07 L 691.2 413.19 L 693.6 412.33 L 696 411.48 L 698.4 410.65 L 700.8 409.83 L 703.2 409.03 L 705.6 408.25 L 708 407.48 L 710.4 406.73 L 712.8 405.99 L 715.2 405.26 L 717.6 404.55 L 720 403.85 L 722.4 403.17 L 724.8 402.5 L 727.2 401.84 L 729.6 401.19 L 732 400.55 L 734.4 399.93 L 736.8 399.31 L 739.2 398.71 L 741.6 398.12 L 744 397.54 L 746.4 396.97 L 748.8 396.41 L 751.2 395.85 L 753.6 395.31 L 756 394.78 L 758.4 394.26 L 760.8 393.74 L 763.2 393.24 L 765.6 392.74 L 768 392.25 L 770.4 391.77 L 772.8 391.29 L 775.2 390.83 L 777.6 390.37 L 780 389.92 L 782.4 389.48 L 784.8 389.04 L 787.2 388.61 L 789.6 388.19 L 792 387.77 L 794.4 387.36 L 796.8 386.96 L 799.2 386.56 L 801.6 386.17 L 804 385.78 L 806.4 385.4 L 808.8 385.02 L 811.2 384.66 L 813.6 384.29 L 816 383.93 L 818.4 383.58 L 820.8 383.23 L 823.2 382.89 L 825.6 382.55 L 828 382.22 L 830.4 381.89 L 832.8 381.56 L 835.2 381.24 L 837.6 380.93 L 840 380.62 L 842.4 380.31 L 844.8 380 L 847.2 379.71 L 849.6 379.41 L 852 379.12 L 854.4 378.83 L 856.8 378.55 L 859.2 378.27 L 861.6 377.99 L 864 377.72 L 866.4 377.45 L 868.8 377.18 L 871.2 376.92 L 873.6 376.66 L 876 376.41 L 878.4 376.15 L 880.8 375.9 L 883.2 375.66 L 885.6 375.41 L 888 375.17 L 890.4 374.93 L 892.8 374.7 L 895.2 374.46 L 897.6 374.24 L 900 374.01 L 902.4 373.78 L 904.8 373.56 L 907.2 373.34 L 909.6 373.13 L 912 372.91 L 914.4 372.7 L 916.8 372.49 L 919.2 372.28 L 921.6 372.08 L 924 371.88 L 926.4 371.68 L 928.8 371.48 L 931.2 371.28 L 933.6 371.09 L 936 370.9 L 938.4 370.71 L 940.8 370.52 L 943.2 370.33 L 945.6 370.15 L 948 369.97"/>
+  <path class="c2" stroke-width="2.2" stroke-dasharray="7 4" d="M 564 462 L 566.4 462 L 568.8 461.99 L 571.2 461.7 L 573.6 460.63 L 576 458.62 L 578.4 455.83 L 580.8 452.5 L 583.2 448.88 L 585.6 445.13 L 588 441.37 L 590.4 437.68 L 592.8 434.11 L 595.2 430.68 L 597.6 427.4 L 600 424.29 L 602.4 421.34 L 604.8 418.54 L 607.2 415.89 L 609.6 413.39 L 612 411.02 L 614.4 408.77 L 616.8 406.65 L 619.2 404.63 L 621.6 402.72 L 624 400.9 L 626.4 399.18 L 628.8 397.54 L 631.2 395.98 L 633.6 394.49 L 636 393.07 L 638.4 391.72 L 640.8 390.42 L 643.2 389.18 L 645.6 388 L 648 386.87 L 650.4 385.78 L 652.8 384.74 L 655.2 383.74 L 657.6 382.77 L 660 381.85 L 662.4 380.96 L 664.8 380.11 L 667.2 379.28 L 669.6 378.49 L 672 377.72 L 674.4 376.98 L 676.8 376.26 L 679.2 375.57 L 681.6 374.91 L 684 374.26 L 686.4 373.64 L 688.8 373.03 L 691.2 372.44 L 693.6 371.88 L 696 371.33 L 698.4 370.79 L 700.8 370.27 L 703.2 369.77 L 705.6 369.28 L 708 368.81 L 710.4 368.34 L 712.8 367.89 L 715.2 367.46 L 717.6 367.03 L 720 366.62 L 722.4 366.21 L 724.8 365.82 L 727.2 365.44 L 729.6 365.07 L 732 364.7 L 734.4 364.35 L 736.8 364 L 739.2 363.66 L 741.6 363.33 L 744 363.01 L 746.4 362.7 L 748.8 362.39 L 751.2 362.09 L 753.6 361.79 L 756 361.51 L 758.4 361.23 L 760.8 360.95 L 763.2 360.68 L 765.6 360.42 L 768 360.16 L 770.4 359.91 L 772.8 359.66 L 775.2 359.42 L 777.6 359.18 L 780 358.95 L 782.4 358.72 L 784.8 358.5 L 787.2 358.28 L 789.6 358.06 L 792 357.85 L 794.4 357.65 L 796.8 357.44 L 799.2 357.24 L 801.6 357.05 L 804 356.86 L 806.4 356.67 L 808.8 356.48 L 811.2 356.3 L 813.6 356.12 L 816 355.95 L 818.4 355.77 L 820.8 355.6 L 823.2 355.44 L 825.6 355.27 L 828 355.11 L 830.4 354.95 L 832.8 354.8 L 835.2 354.64 L 837.6 354.49 L 840 354.35 L 842.4 354.2 L 844.8 354.06 L 847.2 353.91 L 849.6 353.77 L 852 353.64 L 854.4 353.5 L 856.8 353.37 L 859.2 353.24 L 861.6 353.11 L 864 352.98 L 866.4 352.86 L 868.8 352.73 L 871.2 352.61 L 873.6 352.49 L 876 352.37 L 878.4 352.26 L 880.8 352.14 L 883.2 352.03 L 885.6 351.92 L 888 351.81 L 890.4 351.7 L 892.8 351.59 L 895.2 351.48 L 897.6 351.38 L 900 351.28 L 902.4 351.18 L 904.8 351.08 L 907.2 350.98 L 909.6 350.88 L 912 350.78 L 914.4 350.69 L 916.8 350.59 L 919.2 350.5 L 921.6 350.41 L 924 350.32 L 926.4 350.23 L 928.8 350.14 L 931.2 350.05 L 933.6 349.97 L 936 349.88 L 938.4 349.8 L 940.8 349.72 L 943.2 349.63 L 945.6 349.55 L 948 349.47"/>
+  <line class="axis" x1="564" y1="462" x2="954" y2="462"/>
+  <polygon class="axis-fill" points="954,462 947.5,465.12 947.5,458.88"/>
+  <line class="axis" x1="564" y1="462" x2="564" y2="328"/>
+  <polygon class="axis-fill" points="564,328 567.12,334.5 560.88,334.5"/>
+  <text class="xs" x="756" y="494" text-anchor="middle">无量纲扫频速率 ℏv / Δ²（越大越快）</text>
+  <text class="xs" x="520" y="399" text-anchor="middle" transform="rotate(-90 520 399)">跃迁概率 P<tspan dy="2.8" font-size="74%">LZ</tspan><tspan dy="-2.8">&#8203;</tspan></text>
+  <line class="guide" x1="738.04" y1="399" x2="738.04" y2="462"/>
+  <circle class="c1-fill" cx="738.04" cy="399" r="4.8"/>
+  <text class="xsb c1-txt" x="750.04" y="423">标准隙 Δ（P=0.5 在 2.27）</text>
+  <polygon class="c2-fill" points="640.8,384.92 646.3,390.42 640.8,395.92 635.3,390.42"/>
+  <text class="xsb c2-txt" x="711.46" y="342.3">窄隙 0.6Δ（隧穿剧增）</text>
+  <line class="c2" stroke-width="1.1" x1="645.8" y1="387.42" x2="708.38" y2="344.82"/>
+  <circle class="c3-fill" cx="602.4" cy="456.56" r="4.5"/>
+  <text class="xsb c3-txt" x="631.58" y="451.92">绝热区 4.3%</text>
+  <rect class="pill" x="512" y="506" width="444" height="32" rx="8"/>
+  <text class="xs" x="734" y="526" text-anchor="middle">P<tspan dy="2.8" font-size="74%">LZ</tspan><tspan dy="-2.8">&#8203;</tspan> = exp(−πΔ² / (2ℏv))；保证 P<tspan dy="2.8" font-size="74%">LZ</tspan><tspan dy="-2.8">&#8203;</tspan> ≤ ε 须满足 v ≤ πΔ² / (2ℏ ln(1/ε))</text>
+</svg>

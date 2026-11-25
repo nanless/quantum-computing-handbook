@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc">
+  <title id="title">三比特重复码中单个比特翻转的纠错症状流程</title>
+  <desc id="desc">未知逻辑态被编码，在至多一个比特翻转的假设内，两个奇偶检查定位错误位置而不读取逻辑振幅，最后进行纠正。</desc>
+  <style>
+    :root{color-scheme:dark}.bg{fill:#f8fafc}.box{fill:#eaf4fa;stroke:#4b82a2;stroke-width:2}.check{fill:#e7f2dc;stroke:#668e4d;stroke-width:2}.warn{fill:#fff0e8;stroke:#bd674a;stroke-width:2}.title{font:500 24px system-ui,sans-serif;fill:#142b3f}.body{font:400 17px system-ui,sans-serif;fill:#314c63}.arrow{stroke:#234b64;stroke-width:3;fill:none}.dash{stroke:#6f8698;stroke-width:2;stroke-dasharray:7 6}
+    
+.bg{fill:#101820}.box{fill:#203b4b}.check{fill:#304428}.warn{fill:#4b2f27}.title{fill:#eef6ff}.body{fill:#d0deea}.arrow{stroke:#a9d9f2}.dash{stroke:#8da5b6}
+
+  </style>
+  <rect class="bg" width="1080" height="560" rx="28"/>
+  <text class="title" x="45" y="54">纠错症状定位可纠正的 X 错误，不测未知振幅 α、β</text>
+  <rect class="box" x="40" y="190" width="210" height="150" rx="18"/>
+  <text class="title" x="66" y="230">编码</text>
+  <text class="body" x="66" y="270">α|0⟩ + β|1⟩</text>
+  <text class="body" x="66" y="304">↓</text><text class="body" x="66" y="330">α|000⟩ + β|111⟩</text>
+  <path class="arrow" d="M250 265H326"/><path class="arrow" d="M326 265l-17-9v18z"/>
+  <rect class="warn" x="330" y="190" width="190" height="150" rx="18"/>
+  <text class="title" x="356" y="230">发生 X₂ 错误</text>
+  <text class="body" x="356" y="274">α|010⟩</text><text class="body" x="356" y="304">+ β|101⟩</text>
+  <path class="arrow" d="M520 265H596"/><path class="arrow" d="M596 265l-17-9v18z"/>
+  <rect class="check" x="600" y="150" width="220" height="230" rx="18"/>
+  <text class="title" x="626" y="193">测稳定子</text>
+  <text class="body" x="626" y="235">S₁ = Z₁Z₂ → −1</text>
+  <text class="body" x="626" y="274">S₂ = Z₂Z₃ → −1</text>
+  <line class="dash" x1="626" y1="300" x2="792" y2="300"/>
+  <text class="body" x="626" y="335">纠错症状 (−1,−1)</text>
+  <text class="body" x="626" y="363">只说明第 2 位翻转</text>
+  <path class="arrow" d="M820 265H896"/><path class="arrow" d="M896 265l-17-9v18z"/>
+  <rect class="box" x="900" y="190" width="140" height="150" rx="18"/>
+  <text class="title" x="926" y="230">纠正</text>
+  <text class="body" x="926" y="274">施加 X₂</text>
+  <text class="body" x="926" y="310">恢复逻辑态</text>
+  <text class="body" x="110" y="455">关键：|000⟩ 与 |111⟩ 对两个稳定子都有相同本征值，因此纠错症状不区分 α 和 β。</text>
+  <text class="body" x="110" y="493">局限：这个码只纠正一个比特翻转；相位错误需要换基编码或更完整的量子码。</text>
+</svg>

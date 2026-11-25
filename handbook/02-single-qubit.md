@@ -10,7 +10,7 @@ $$
 
 它既有不相等的振幅大小，又带着虚数单位 $i$ 引入的相对相位。后面从复数模平方、Bloch 球坐标、$X/Y/Z$ 三轴测量、前置换基门次序，到单比特态层析与读出校准，我们都会反复拿它亲手算一遍，让每一个抽象概念都能对照到同一组具体数字。
 
-读本章只需先掌握[第 01 章：零基础数学工具](01-math.md)里的复数模平方、二维列向量和 $2\times 2$ 矩阵乘法。如果你想先从双缝干涉、分束器、Stern–Gerlach 与光子偏振建立物理直觉，可以先看[量子力学 Q1：从实验认识量子态](quantum-mechanics/01-experiments-states.md)；读完本章后，[量子力学 Q2](quantum-mechanics/02-observables-dynamics.md)会把这里的门矩阵与物理可观测量、哈密顿量和时间演化接通，[第 03 章](03-multiple-qubits.md)再迈向多比特与纠缠。文中标有“进阶回看”的小节，第一遍阅读时可以先跳过，等你熟悉了主干再回来细算。
+读本章只需先掌握[第 01 章：零基础数学工具](01-math.md)里的复数模平方、二维列向量和 $2\times 2$ 矩阵乘法。如果你想先从双缝干涉、分束器、Stern–Gerlach 与光子偏振建立物理直觉，可以先看[量子力学 Q1：从实验认识量子态](quantum-mechanics/01-experiments-states.md)；读完本章后，[量子力学 Q2](quantum-mechanics/02-observables-dynamics.md)会把这里的门矩阵与物理可观测量、哈密顿量和时间演化接通，[第 03 章](03-multiple-qubits.md)再迈向多比特与纠缠。文中标有“进阶回看”或“进阶选读”的小节，第一遍阅读时可以先跳过，等你熟悉了主干再回来细算。
 
 ---
 
@@ -64,70 +64,42 @@ $$
   p(1) = \left|\frac{i}{2}\right|^2 = \left(-\frac{i}{2}\right)\!\left(\frac{i}{2}\right) = \frac{-i^2}{4} = \frac{1}{4}.
   $$
 
-检验总概率：$\frac{3}{4} + \frac{1}{4} = 1$，完全合法。千万小心初学者最常犯的计算失误：算概率必须先取复共轭再相乘，**绝对不能**直接把复数平方，否则会误算出 $(i/2)^2 = -1/4$ 这种荒谬的“负概率”。
+检验总概率：$\frac{3}{4} + \frac{1}{4} = 1$，完全合法。注意初学者常犯的计算失误：算概率必须先取复共轭再相乘，不要直接把复数平方，否则会误算出 $(i/2)^2 = -1/4$ 这种非物理结果。
 
 **顺手小检验**：给定 $|\chi\rangle = \frac{3}{5}|0\rangle + \frac{4}{5}|1\rangle$，它归一化了吗？算一下：$(3/5)^2 + (4/5)^2 = 9/25 + 16/25 = 1$，已经归一化；在计算基测量，得到 $0$ 的概率是 $9/25$，得到 $1$ 的概率是 $16/25$。
 
-### 1.2 同样的 50/50 概率，为什么不是同一个状态？
+### 1.2 同样的计算基概率，为什么不是同一个状态？
 
-很多人刚学到叠加态时，会自然产生一个疑问：如果有一个态
+很多人刚学到叠加态时，会问一个自然的问题：标杆态 $|\psi\rangle = \frac{\sqrt{3}}{2}|0\rangle + \frac{i}{2}|1\rangle$ 在计算基下得到 $0$ 和 $1$ 的概率是 $3/4$ 与 $1/4$，那它和“实验员暗中按 $3/4$ 概率送出 $|0\rangle$、$1/4$ 概率送出 $|1\rangle$ 的不均匀硬币”有什么区别？
 
-$$
-|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix},
-$$
+如果**只允许**在计算基 $\{|0\rangle, |1\rangle\}$ 测量，两者的统计分布完全一样；但量子力学允许我们换一套正交归一基去检验。引入 **$Y$ 基**的两个正交归一态 $|{+i}\rangle = \frac{|0\rangle + i|1\rangle}{\sqrt{2}}$、$|{-i}\rangle = \frac{|0\rangle - i|1\rangle}{\sqrt{2}}$，比较两种制备在 $Y$ 基测得 $+i$ 的概率：
 
-在计算基测它，得 $0$ 和得 $1$ 的概率都是 $|1/\sqrt{2}|^2 = 1/2$。那它和“实验员背着你抛一枚均匀硬币，正面就送来 $|0\rangle$、反面就送来 $|1\rangle$”有什么两样？反正你测一千次，都是大约五百个 $0$、五百个 $1$。
-
-如果**只允许**在计算基 $\{|0\rangle, |1\rangle\}$ 下测量，这两种制备的统计分布确实一模一样，谁也分辨不出差别。可量子态允许我们换一套正交基去问问题。引入与 $|+\rangle$ 正交的态
-
-$$
-|-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix}.
-$$
-
-容易核对 $\langle + | - \rangle = \frac{1}{2}(1\cdot 1 + 1\cdot(-1)) = 0$，且两者的长度都是 $1$，因此 $\{|+\rangle, |-\rangle\}$ 构成了 $\mathbb{C}^2$ 里另一套完整的正交归一基，称为 **$X$ 基**。现在让两种制备各自接受 $X$ 基测量，看看得到结果 $+$ 的概率分别是多少：
-
-1. **情况甲（每次都制备纯态 $|+\rangle$）**：
-   结果 $+$ 的振幅就是内积 $\langle + | + \rangle$：
+1. **纯态叠加 $|\psi\rangle$**：取左矢 $\langle{+i}| = \frac{1}{\sqrt{2}}[1, -i]$（注意复共轭），算得
 
    $$
-   \langle + | + \rangle = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \end{bmatrix}\frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} = \frac{1 + 1}{2} = 1,
+   \langle{+i}|\psi\rangle
+   = \frac{1}{\sqrt{2}}\left(\frac{\sqrt{3}}{2} + (-i)\frac{i}{2}\right)
+   = \frac{\sqrt{3} + 1}{2\sqrt{2}},
    \qquad
-   p_{\text{甲}}(+) = |1|^2 = 1.
+   p_{\text{纯}}(+i) = \left|\frac{\sqrt{3}+1}{2\sqrt{2}}\right|^2 = \frac{2+\sqrt{3}}{4} \approx 93.3\%.
    $$
 
-   也就是说，**每一次都必然测到 $+$**，完全没有任何随机性！
-
-2. **情况乙（抛均匀硬币，一半概率送来 $|0\rangle$，一半概率送来 $|1\rangle$）**：
-   先算两种经典分支各自在 $X$ 基下测到 $+$ 的概率：
+2. **经典偏置混合（$3/4$ 送 $|0\rangle$、$1/4$ 送 $|1\rangle$）**：因为 $|\langle{+i}|0\rangle|^2 = |\langle{+i}|1\rangle|^2 = 1/2$，按经典先验加权平均得
 
    $$
-   \langle + | 0 \rangle = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \end{bmatrix} = \frac{1}{\sqrt{2}}
-   \implies
-   |\langle + | 0 \rangle|^2 = \frac{1}{2},
+   p_{\text{混}}(+i) = \frac{3}{4}\cdot\frac{1}{2} + \frac{1}{4}\cdot\frac{1}{2} = \frac{1}{2} = 50\%.
    $$
 
-   $$
-   \langle + | 1 \rangle = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \end{bmatrix}\begin{bmatrix} 0 \\ 1 \end{bmatrix} = \frac{1}{\sqrt{2}}
-   \implies
-   |\langle + | 1 \rangle|^2 = \frac{1}{2}.
-   $$
+同样地，对[量子力学 Q1 第 5 节](quantum-mechanics/01-experiments-states.md)对照过的等权情形——纯态 $|+\rangle = \frac{|0\rangle+|1\rangle}{\sqrt{2}}$ 与“抛均匀硬币等概率制备 $|0\rangle$ 或 $|1\rangle$”——两者在计算基均为 $(1/2, 1/2)$，换到 **$X$ 基** $\{|+\rangle, |-\rangle\}$（其中 $|-\rangle = \frac{|0\rangle-|1\rangle}{\sqrt{2}}$）测量时，前者因 $\langle+|+\rangle = 1$ 必得 $+$（概率 $1$），后者因 $|\langle+|0\rangle|^2 = |\langle+|1\rangle|^2 = 1/2$ 仍为 $1/2$。
 
-   再按抛硬币的先验概率各占 $1/2$ 做经典加权平均：
-
-   $$
-   p_{\text{乙}}(+) = \frac{1}{2}\cdot\frac{1}{2} + \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{2}.
-   $$
-
-   无论你换到计算基还是 $X$ 基，抛硬币送来的混态都只能给出一半 $+$、一半 $-$ 的随机计数。
-
-把两组对比结果定格在一张表里：
-
-| 制备方式 | 计算基测得 $0$ 的概率 | $X$ 基测得 $+$ 的概率 | 状态类型 |
+| 制备方式 | 计算基测得 $0$ 的概率 | 特征换基测量概率 | 状态类型 |
 | :--- | :---: | :---: | :--- |
-| 每次都制备叠加态 $\lvert+\rangle$ | $1/2$ | $1$ | 纯态（保留相对相位） |
-| 抛均匀硬币随机制备 $\lvert0\rangle$ 或 $\lvert1\rangle$ | $1/2$ | $1/2$ | 经典混合态（无相干相位） |
+| 标杆纯态 $\frac{\sqrt{3}}{2}\lvert0\rangle + \frac{i}{2}\lvert1\rangle$ | $3/4$ | $Y$ 基得 $+i$：$(2+\sqrt{3})/4 \approx 93.3\%$ | 纯态（保留相对相位 $i$） |
+| $3/4 : 1/4$ 经典偏置混合 | $3/4$ | $Y$ 基得 $+i$：$1/2 = 50\%$ | 经典混合态（无相干相位） |
+| 均匀叠加态 $\lvert+\rangle$ | $1/2$ | $X$ 基得 $+$：$1$ | 纯态（相对相位 $0$） |
+| 均匀硬币等概率混合 $\lvert0\rangle/\lvert1\rangle$ | $1/2$ | $X$ 基得 $+$：$1/2$ | 经典混合态（无相干相位） |
 
-这张表把**量子叠加**和**经典无知**的分界摆得明明白白：纯态 $|+\rangle$ 并不是“它其实已经在 $0$ 和 $1$ 中选了一个，只是我不知道”，而是两个分量之间保持着确定的相位联系，换到 $X$ 基时两路振幅会同相叠加成确定结果。当然，实验上要区分这两种制备，需要对同样制备出的许多份样本做 $X$ 基统计（例如测 20 次全得 $+$ 就能排除抛硬币），**单靠一次测量**仍无法百分之百认出未知来源——因为混态也有 $1/2$ 的机会在某一次碰巧给出 $+$。
+这张表清楚划开了**量子叠加**与**经典无知**的边界：纯态的分量之间保留着确定的相对相位，换基时两路振幅会相干干涉；当然，实验上需要重复测量许多份同源样本才能从统计上区分两者，单次测量无法百分之百识别未知来源。
 
 ---
 
@@ -162,33 +134,7 @@ $$
 
 回看 $|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$ 与 $|-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$。两个态在计算基下的概率都是 $(1/2, 1/2)$，区别只在 $|1\rangle$ 前面多了一个因子 $-1 = e^{i\pi}$，而 $|0\rangle$ 前面没有乘它。这种只存在于分量之间的相位差，称为**相对相位**（relative phase）。
 
-要让相对相位在计算基里显形，最经典的做法是让态经过一次 **Hadamard 门**（记作 $H$，矩阵将在第 4 节正式写出）。这里先用它的线性作用规则 $H|0\rangle = |+\rangle$、$H|1\rangle = |-\rangle$，逐步展开 $H|+\rangle$ 和 $H|-\rangle$：
-
-$$
-\begin{aligned}
-H|+\rangle
-&= H\!\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right)
-= \frac{H|0\rangle + H|1\rangle}{\sqrt{2}}
-= \frac{|+\rangle + |-\rangle}{\sqrt{2}} \\
-&= \frac{1}{\sqrt{2}}\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}} + \frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)
-= \frac{2|0\rangle}{2}
-= |0\rangle.
-\end{aligned}
-$$
-
-完全照样展开 $H|-\rangle$：
-
-$$
-\begin{aligned}
-H|-\rangle
-&= \frac{|+\rangle - |-\rangle}{\sqrt{2}}
-= \frac{1}{\sqrt{2}}\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}} - \frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)
-= \frac{2|1\rangle}{2}
-= |1\rangle.
-\end{aligned}
-$$
-
-看清括号里发生了什么：算 $H|+\rangle$ 时，来自两条路径的 $|0\rangle$ 振幅同号相加（相长干涉），而 $|1\rangle$ 的两路振幅一正一负精确抵消（相消干涉）；换成 $H|-\rangle$ 时，恰恰反过来，$|0\rangle$ 抵消、$|1\rangle$ 增强。原本在计算基下完全看不出的正负号差别，经过一次 $H$ 门干涉，立刻变成了百分百确定的 $0$ 或 $1$。
+要让相对相位在计算基里显形，最经典的做法是施加 **Hadamard 门** $H$（[第 00 章第 2.3 节](00-overview.md)与[第 01 章第 4.2 节](01-math.md)已验证 $H|0\rangle=|+\rangle,\; H|1\rangle=|-\rangle$ 且 $H^2=I$）。因此 $H|+\rangle = H^2|0\rangle = |0\rangle$（两路 $|0\rangle$ 振幅同号相长、$|1\rangle$ 振幅异号相消），而 $H|-\rangle = H^2|1\rangle = |1\rangle$（相长与相消的角色恰好互换）：原本在计算基下看不出的符号差别，经一次 $H$ 门即转为确定的 $0$ 或 $1$。
 
 推广到一般相对相位 $\phi \in [0, 2\pi)$：从 $|0\rangle$ 出发，先做一次 $H$ 得到 $\frac{|0\rangle+|1\rangle}{\sqrt{2}}$，再给 $|1\rangle$ 分支乘上相位 $e^{i\phi}$ 得到 $\frac{|0\rangle + e^{i\phi}|1\rangle}{\sqrt{2}}$，最后再做一次 $H$。展开两项：
 
@@ -252,7 +198,7 @@ $$
 
 **为什么公式里偏偏要写半角 $\theta/2$，而不是直接写 $\theta$？** 答案藏在“正交态的对跖几何”里（也正好接上 [Q1 第 4.3 节](quantum-mechanics/01-experiments-states.md)自旋-$1/2$ 正交态差 $180^\circ$ 的伏笔）。在二维复向量空间 $\mathbb{C}^2$ 里，$|0\rangle$ 和 $|1\rangle$ 彼此正交，向量夹角是 $\pi/2$（$90^\circ$）；可是画到 Bloch 球上时，$|0\rangle$ 占领北极 $(0,0,+1)$，$|1\rangle$ 占领南极 $(0,0,-1)$，它们成了**穿过球心的一对对跖点**，三维夹角拉大成了整整 $\pi$（$180^\circ$）！
 
-这种“夹角翻倍”对**任意一对正交态**都成立：$|+\rangle$ 在 $+x$、$|-\rangle$ 在 $-x$；$|{+i}\rangle$ 在 $+y$、$|{-i}\rangle$ 在 $-y$。更一般地，记任意两个纯态 $|\psi_1\rangle$、$|\psi_2\rangle$ 对应的两个三维单位 Bloch 向量 $\vec{r}_1$ 与 $\vec{r}_2$ 之间的**三维空间夹角**为 $\gamma \in [0, \pi]$（注意 $\gamma$ 是三维夹角 $\arccos(\vec{r}_1\cdot\vec{r}_2)$，**并不是**极角之差 $\theta_1 - \theta_2$——例如赤道上的 $|+\rangle$ 与 $|{+i}\rangle$ 极角差为 $0$，但三维夹角为 $\gamma = \pi/2$），它们的态重叠概率满足精确恒等式（我们将在第 4.2 节给出完整的三行零跳步推导并代入数字验算）：
+这种“夹角翻倍”对**任意一对正交态**都成立：$|+\rangle$ 在 $+x$、$|-\rangle$ 在 $-x$；$|{+i}\rangle$ 在 $+y$、$|{-i}\rangle$ 在 $-y$。更一般地，记任意两个纯态 $|\psi_1\rangle$、$|\psi_2\rangle$ 对应的两个三维单位 Bloch 向量 $\vec{r}_1$ 与 $\vec{r}_2$ 之间的**三维空间夹角**为 $\gamma \in [0, \pi]$（注意 $\gamma$ 是三维夹角 $\arccos(\vec{r}_1\cdot\vec{r}_2)$，**并不是**极角之差 $\theta_1 - \theta_2$——例如赤道上的 $|+\rangle$ 与 $|{+i}\rangle$ 极角差为 $0$，但三维夹角为 $\gamma = \pi/2$），它们的态重叠概率满足精确恒等式（我们将在第 4.2 节给出完整的三行推导并代入数字验算）：
 
 $$
 |\langle \psi_1 | \psi_2 \rangle|^2 = \frac{1 + \vec{r}_1 \cdot \vec{r}_2}{2} = \frac{1 + \cos\gamma}{2} = \cos^2\!\left(\frac{\gamma}{2}\right).
@@ -279,7 +225,7 @@ $$
 | 赤道 $+y$ | $(\pi/2, \pi/2)$ | $(0, +1, 0)$ | $\lvert{+i}\rangle = (\lvert0\rangle + i\lvert1\rangle)/\sqrt{2}$ | $Y = +1$ |
 | 赤道 $-y$ | $(\pi/2, 3\pi/2)$ | $(0, -1, 0)$ | $\lvert{-i}\rangle = (\lvert0\rangle - i\lvert1\rangle)/\sqrt{2}$ | $Y = -1$ |
 
-对照下图把这六个轴点记牢。请务必记住一条直觉边界：**Bloch 球的三个坐标 $(r_x, r_y, r_z)$ 是无量纲的统计期望值，不是粒子在三维物理空间里的 $(x, y, z)$ 位置**，球上的箭头也不是一颗在实验室里旋转的小钢珠。
+对照下图把这六个轴点记牢。需要记住一条直觉边界：**Bloch 球的三个坐标 $(r_x, r_y, r_z)$ 是无量纲的统计期望值，不是粒子在三维物理空间里的 $(x, y, z)$ 位置**，球上的箭头也不是一颗在实验室里旋转的小钢珠。
 
 ![Bloch 球的六个轴点：纯态位于单位球面，混态位于球体内部；三个无量纲坐标对应 Pauli 期望值而非空间位置](assets/bloch-sphere.svg)
 
@@ -309,7 +255,7 @@ $$
 | 对角元 $\rho_{00}, \rho_{11}$ | **布居**（population） | $\frac{1 \pm r_z}{2}$（纯态为 $\cos^2\frac{\theta}{2},\; \sin^2\frac{\theta}{2}$） | 由**纬度** $r_z = \rho_{00}-\rho_{11}$ 控制，决定计算基测量概率 |
 | 非对角元 $\rho_{10} = \rho_{01}^*$ | **相干项**（coherence） | $\frac{r_x + i r_y}{2}$（纯态为 $\frac{1}{2}\sin\theta\,e^{i\varphi}$） | 模长 $\lvert\rho_{10}\rvert = \frac{1}{2}\sqrt{r_x^2+r_y^2}$ 是**赤道投影半径的一半**；辐角即**经度** $\varphi$ |
 
-这张对照表能帮你一眼看穿全书后面反复出现的噪声几何：
+这张对照表能直接对应全书后面反复出现的噪声几何：
 
 - **球面 $|\vec{r}| = 1$**：纯态（相干项模长达到给定纬度下的最大值 $\sqrt{\rho_{00}\rho_{11}}$，如 $|+\rangle$ 在 $(1,0,0)$）。
 - **球内 $0 < |\vec{r}| < 1$**：部分混合态（例如纯退相位噪声只把非对角相干元按比例压小，几何上就是把 Bloch 向量水平拉向 $z$ 轴，保持纬度 $r_z$ 不变而缩短赤道投影）。
@@ -353,7 +299,7 @@ $$
 
 - **$X$ 门（比特翻转门）**：把 $|0\rangle$ 翻成 $|1\rangle$、把 $|1\rangle$ 翻成 $|0\rangle$，相当于经典计算里的“非门（NOT）”。在 Bloch 球上，它绕 $x$ 轴旋转 $\pi$（上下颠倒南北极）。
 - **$Z$ 门（相位翻转门）**：保持 $|0\rangle$ 不变，给 $|1\rangle$ 添一个负号（$Z|1\rangle = -|1\rangle$），所以 $Z|+\rangle = |-\rangle$、$Z|-\rangle = |+\rangle$。在 Bloch 球上，它绕 $z$ 轴旋转 $\pi$。
-- **$Y$ 门（比特加相位翻转）**：把 $|0\rangle$ 映到 $i|1\rangle$、把 $|1\rangle$ 映到 $-i|0\rangle$。用矩阵乘法逐格核对 $XZ$ 与 $ZX$，并乘上 $i$ 验证 $Y = iXZ = -iZX$（注意循环顺序，切勿误记成 $Y = iZX$）：
+- **$Y$ 门（比特加相位翻转）**：把 $|0\rangle$ 映到 $i|1\rangle$、把 $|1\rangle$ 映到 $-i|0\rangle$。用矩阵乘法逐格核对 $XZ$ 与 $ZX$，并乘上 $i$ 验证 $Y = iXZ = -iZX$（注意循环顺序，不要误记成 $Y = iZX$）：
 
   $$
   XZ = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix},
@@ -371,23 +317,7 @@ $$
   XY + YX = YZ + ZY = ZX + XZ = 0.
   $$
 
-- **$H$ 门（换基门）**：把 $Z$ 基与 $X$ 基互换。逐行乘一次列向量核对：
-
-  $$
-  H|0\rangle
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \end{bmatrix}
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1\cdot 1 + 1\cdot 0 \\ 1\cdot 1 + (-1)\cdot 0 \end{bmatrix}
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix}
-  = |+\rangle,
-  $$
-
-  $$
-  H|1\rangle
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} 0 \\ 1 \end{bmatrix}
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1\cdot 0 + 1\cdot 1 \\ 1\cdot 0 + (-1)\cdot 1 \end{bmatrix}
-  = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix}
-  = |-\rangle.
-  $$
+- **$H$ 门（换基门）**：把 $Z$ 基与 $X$ 基互换（[第 01 章第 4.2 节](01-math.md)已由列视角直接读出 $H|0\rangle = |+\rangle$、$H|1\rangle = |-\rangle$，且 $H^\dagger H = H^2 = I$）。
 
 再算一个在量子电路里反复出现的恒等式：$HZH$ 等于什么？从右向左先乘 $ZH$：
 
@@ -407,28 +337,9 @@ $$
 
 用它作用在 $|0\rangle$ 上：$|0\rangle \xrightarrow{H} |+\rangle \xrightarrow{Z} |-\rangle \xrightarrow{H} |1\rangle$。中间的 $Z$ 门只翻了一下相对相位（计算基概率始终是 50/50），可被前后两个 $H$ 夹住后，整体效果就等价于一个实打实的比特翻转门 $X$！在 Bloch 球上，$H$ 对应绕 $x$ 轴与 $z$ 轴平分线 $\frac{\hat{x}+\hat{z}}{\sqrt{2}}$ 旋转 $\pi$，它把 $Z$ 轴和 $X$ 轴互换（$HZH = X$、$HXH = Z$），同时把 $Y$ 轴反向（$HYH = -Y$）。
 
-#### Pauli 正交基与任意 $2\times 2$ 厄米矩阵分解
+**Pauli 正交基与单比特密度矩阵展开**：由[第 01 章第 5.6 节](01-math.md)已验算的迹正交关系 $\operatorname{Tr}(\sigma_\mu \sigma_\nu) = 2\delta_{\mu\nu}$（$\sigma_0=I,\;\sigma_1=X,\;\sigma_2=Y,\;\sigma_3=Z$），任意 $2\times 2$ 厄米矩阵都可唯一展开为 $A = \sum_{\mu=0}^{3} c_\mu \sigma_\mu$，其中 $c_\mu = \frac{1}{2}\operatorname{Tr}(A\sigma_\mu) \in \mathbb{R}$。将其用于满足 $\operatorname{Tr}(\rho) = 1$ 的单比特密度矩阵 $\rho$，立得 $c_0 = \frac{1}{2}$、$c_j = \frac{1}{2}\operatorname{Tr}(\rho\sigma_j) = \frac{1}{2}r_j$——这正是第 3.2 节 $\rho = \frac{1}{2}(I + \vec{r}\cdot\vec{\sigma})$ 的代数根源。
 
-仔细看四个矩阵 $\{\sigma_0, \sigma_1, \sigma_2, \sigma_3\} = \{I, X, Y, Z\}$ 的迹（主对角线元素之和）：$\operatorname{Tr}(I) = 2$，而 $\operatorname{Tr}(X) = \operatorname{Tr}(Y) = \operatorname{Tr}(Z) = 0$。结合上面的平方律与循环乘法律，任意两者的乘积之迹立即满足**迹正交关系**：
-
-$$
-\operatorname{Tr}(\sigma_\mu \sigma_\nu) = 2\delta_{\mu\nu}
-\qquad (\mu, \nu \in \{0, 1, 2, 3\}).
-$$
-
-核验非常干脆：$\mu = \nu$ 时 $\sigma_\mu^2 = I$，迹为 $2$；$\mu \ne \nu$ 且其中之一是 $I$ 时，乘积为无迹的 $X, Y$ 或 $Z$，迹为 $0$；两者是不同 Pauli 矩阵时，乘积等于 $\pm i$ 乘第三个 Pauli 矩阵，迹仍为 $0$。
-
-因此，$\{I, X, Y, Z\}$ 构成了全部 $2\times 2$ 厄米矩阵实向量空间的一组正交基：任意 $2\times 2$ 厄米矩阵 $A$ 都可以唯一展开为
-
-$$
-A = c_0 I + c_x X + c_y Y + c_z Z,
-\qquad
-c_\mu = \frac{1}{2}\operatorname{Tr}(A\sigma_\mu) \in \mathbb R.
-$$
-
-把它立刻套用到满足 $\operatorname{Tr}(\rho) = 1$ 的单比特密度矩阵 $\rho$ 上：常数项 $c_0 = \frac{1}{2}\operatorname{Tr}(\rho) = \frac{1}{2}$，三个 Pauli 系数 $c_j = \frac{1}{2}\operatorname{Tr}(\rho \sigma_j) = \frac{1}{2}r_j$——这正是第 3.2 节写出 $\rho = \frac{1}{2}(I + \vec{r}\cdot\vec{\sigma})$ 的代数根源！
-
-### 4.2 零跳步算例：从振幅算 Bloch 坐标、兑现态重叠公式与各轴概率
+### 4.2 完整算例：从振幅算 Bloch 坐标、兑现态重叠公式与各轴概率
 
 第 3 节提到，Bloch 坐标 $(r_x, r_y, r_z)$ 其实是 $X, Y, Z$ 三种测量的**期望值**（expectation value）$\langle X\rangle, \langle Y\rangle, \langle Z\rangle$。因为每次沿 $X, Y$ 或 $Z$ 测量只可能读出 $+1$ 或 $-1$，多次重复的平均读数就是 $p(+1) - p(-1)$；在矩阵语言里，纯态 $|\psi\rangle$ 对厄米矩阵 $M$ 的期望值由夹心乘积 $\langle\psi|M|\psi\rangle = \operatorname{Tr}(M|\psi\rangle\langle\psi|)$ 给出。
 
@@ -460,7 +371,7 @@ $$
 
 于是 $r_x = \sin\theta\cos\varphi$、$r_y = \sin\theta\sin\varphi$，而由二倍角公式 $r_z = \cos^2(\theta/2) - \sin^2(\theta/2) = \cos\theta$——与第 3.1 节的球面坐标完全吻合！
 
-#### 兑现第 3.1 节的承诺：三行零跳步证出态重叠公式
+**兑现第 3.1 节的承诺：态重叠公式的三行推导**
 
 现在手握 Pauli 迹正交关系，我们可以直接证明第 3.1 节写出的态重叠公式。设任意两个归一化纯态 $|\psi_1\rangle, |\psi_2\rangle$ 的密度矩阵为 $\rho_k = |\psi_k\rangle\langle\psi_k| = \frac{1}{2}(I + \vec{r}_k\cdot\vec{\sigma})$（$k=1,2$）。一方面，由外积与迹的循环性：
 
@@ -488,7 +399,7 @@ $$
 
 其中 $\gamma \in [0,\pi]$ 是单位向量 $\vec{r}_1$ 与 $\vec{r}_2$ 之间的三维空间夹角。立拿赤道上的 $|+\rangle$（$\vec{r}_1=(1,0,0)$）与 $|{+i}\rangle$（$\vec{r}_2=(0,1,0)$）做个快检：两者极角都是 $\theta=\pi/2$（$\theta_1-\theta_2=0$），但点积 $\vec{r}_1\cdot\vec{r}_2 = 0$（三维夹角 $\gamma=\pi/2$），所以重叠概率为 $\frac{1+0}{2} = \frac{1}{2}$。
 
-#### 标杆态三路径交叉核验
+**标杆态三路径交叉核验**
 
 现在代入我们的标杆态 $|\psi\rangle = \frac{\sqrt{3}}{2}|0\rangle + \frac{i}{2}|1\rangle$，一步步算全：
 
@@ -668,11 +579,13 @@ $$
 | $R_y(\theta)$ | $\begin{bmatrix}\cos(\theta/2) & -\sin(\theta/2) \\ \sin(\theta/2) & \cos(\theta/2)\end{bmatrix}$ | $e^{-i\theta Y/2}$ | 绕 $y$ 轴转 $\theta$ | 实矩阵，改变极角 $\theta$ |
 | $R_z(\varphi)$ | $\begin{bmatrix}e^{-i\varphi/2} & 0 \\ 0 & e^{i\varphi/2}\end{bmatrix}$ | $e^{-i\varphi Z/2}$ | 绕 $z$ 轴转 $\varphi$ | 改方位角，不改 $Z$ 基概率 |
 
+<span id="53-进阶回看矩阵指数2pi-负号反例与-zyz-欧拉分解"></span>
+
 ### 5.3 进阶回看：矩阵指数、$\mathrm{SU}(2)\to\mathrm{SO}(3)$ 双重覆盖与 $2\pi$ 负号
 
-#### 1. 绕任意单位轴 $\hat{n}$ 的统一旋转公式
+**1. 绕任意单位轴 $\hat{n}$ 的统一旋转公式**
 
-<span id="53-进阶回看矩阵指数2pi-负号反例与-zyz-欧拉分解"></span>取三维实单位向量 $\hat{n} = (n_x, n_y, n_z) \in \mathbb{R}^3$（$n_x^2 + n_y^2 + n_z^2 = 1$），定义厄米矩阵 $A := \hat{n}\cdot\vec{\sigma} = n_x X + n_y Y + n_z Z$。利用 Pauli 矩阵的乘法规则 $X^2=Y^2=Z^2=I$ 以及反对易关系 $XY+YX = YZ+ZY = ZX+XZ = 0$，把 $A^2$ 乘开，所有交叉项两两抵消：
+取三维实单位向量 $\hat{n} = (n_x, n_y, n_z) \in \mathbb{R}^3$（$n_x^2 + n_y^2 + n_z^2 = 1$），定义厄米矩阵 $A := \hat{n}\cdot\vec{\sigma} = n_x X + n_y Y + n_z Z$。利用 Pauli 矩阵的乘法规则 $X^2=Y^2=Z^2=I$ 以及反对易关系 $XY+YX = YZ+ZY = ZX+XZ = 0$，把 $A^2$ 乘开，所有交叉项两两抵消：
 
 $$
 A^2 = (n_x X + n_y Y + n_z Z)^2 = (n_x^2 + n_y^2 + n_z^2)I = I.
@@ -700,7 +613,7 @@ $$
 
 与第 5.1 节的矩阵逐格相同。
 
-#### 2. 零跳步共轭推导：$\mathrm{SU}(2) \to \mathrm{SO}(3)$ 的 2 对 1 双重覆盖
+**2. 共轭推导：$\mathrm{SU}(2) \to \mathrm{SO}(3)$ 的 2 对 1 双重覆盖**
 
 当旋转门 $U = R_{\hat{n}}(\theta)$ 作用在单比特态 $\rho = \frac{1}{2}(I + \vec{r}\cdot\vec{\sigma})$ 上时，密度矩阵变为 $U\rho U^\dagger = \frac{1}{2}\bigl(I + U(\vec{r}\cdot\vec{\sigma})U^\dagger\bigr)$。为什么矩阵里的**半角** $\theta/2$ 经过左右夹心共轭，会严丝合缝地变成 Bloch 球上的**整角** $\theta$ 三维旋转？下面分三步一格不跳地算出来：
 
@@ -784,7 +697,7 @@ $$
 
 反之，若某个 $U\in\mathrm{SU}(2)$ 令所有三维向量 $\vec{r}$ 保持不变（即 $U\sigma_j U^\dagger = \sigma_j$ 对 $j=x,y,z$ 均成立），则 $U$ 与全部 Pauli 矩阵对易，只能是单位阵的标量倍 $U = cI$；再由 $\det U = c^2 = 1$，唯一解就是 $c = \pm 1$。因此，映射到三维旋转群 $\mathrm{SO}(3)$ 时，恒等旋转的原像（映射核）精确为 $\{+I, -I\}$：$\mathrm{SU}(2)$ 中互为相反数的一对矩阵 $+U$ 与 $-U$（例如 $R_{\hat{n}}(\theta)$ 与 $R_{\hat{n}}(\theta + 2\pi) = -R_{\hat{n}}(\theta)$）精确对应同一个三维旋转，数学上称为 **2 对 1 双重覆盖**（double cover）。
 
-#### 3. 算例：转满 $2\pi$ 得到的负号 $-I$，真的永远不可测吗？
+**3. 算例：转满 $2\pi$ 得到的负号 $-I$，真的永远不可测吗？**
 
 把 $\theta = 2\pi$ 代入 $R_{\hat{n}}(\theta)$：$\cos\pi = -1$、$\sin\pi = 0$，于是
 
@@ -792,7 +705,7 @@ $$
 R_{\hat{n}}(2\pi) = -I, \qquad R_{\hat{n}}(4\pi) = +I.
 $$
 
-Bloch 球上的箭头转了一整圈 $2\pi$ 已经回到原位，可矩阵却翻出了一个负号 $-I$，必须转满 $4\pi$ 才回到 $+I$！对于一个孤立单量子比特，$-I|\psi\rangle = -|\psi\rangle$ 只是一个看不见的全局相位。**可千万别因此以为“$R_z(2\pi) = -I$ 在任何线路里都等同于什么都不做”！**
+Bloch 球上的箭头转了一整圈 $2\pi$ 已经回到原位，可矩阵却翻出了一个负号 $-I$，必须转满 $4\pi$ 才回到 $+I$！对于一个孤立单量子比特，$-I|\psi\rangle = -|\psi\rangle$ 只是一个看不见的全局相位。**但不要因此以为“$R_z(2\pi) = -I$ 在任何线路里都等同于什么都不做”。**
 
 考虑一个最简单的两比特实验（沿用全书高位在左的大端序 $|q_C q_T\rangle$）：控制比特 $C$ 制备在 $|+\rangle_C = \frac{|0\rangle_C + |1\rangle_C}{\sqrt{2}}$，目标比特 $T$ 处在任意归一化纯态 $|\psi\rangle_T$。现在施加一个**受控 $R_z(2\pi)$ 门**：当控制位为 $|0\rangle_C$ 时目标位什么都不做（施 $I$）；当控制位为 $|1\rangle_C$ 时对目标位施加 $R_z(2\pi) = -I$。逐支展开：
 
@@ -815,7 +728,39 @@ $$
 
 一条受控分支上的 $-I$ 变成了跨分支的**相对相位**，进而转化成确定性的实验差异。这一现象正是[第 04 章](04-circuits-protocols.md)里**相位回踢**（phase kickback）的原型，也在硬件编译中提醒我们：把两个只差全局相位的单比特门（例如 $R_x(\pi/2)$ 与 $\mathrm{SX} = e^{i\pi/4}R_x(\pi/2)$）放进受控门里时，绝不能随意互换。
 
-### 5.4 进阶回看：单比特通用欧拉分解（ZYZ 证明与 XYX / ZXZ 对照）
+**4. 几何相位（Berry / Pancharatnam 相位）：Bloch 球立体角 $-\Omega/2$**
+
+上面的 $2\pi$ 负号并不是偶然。设想让单量子比特的纯态沿着 Bloch 球面走完一条**闭合回路** $C$ 再回到出发点：从物理上看，Bloch 向量回到了原点，但态矢量除了随时间演化积累的**动力学相位**之外，还会额外带回一个只取决于回路在球面上所围面积（立体角 $\Omega$）的相位因子——这就是**几何相位**（连续绝热情形称 **Berry 相位**，Berry 1984；离散测地折线情形称 **Pancharatnam 相位**，Pancharatnam 1956）：
+
+$$
+\gamma_{\mathrm{geom}}(C) = -\frac{\Omega}{2} \pmod{2\pi}.
+$$
+
+这里的 $\Omega \in [0, 4\pi]$ 是闭合回路 $C$ 在单位 Bloch 球面上所围的定向立体角（沿回路逆时针绕行、使所围区域在左侧时取正号；反向绕行则反号）。立刻拿刚才的赤道一圈检验：一条沿赤道逆时针绕满 $2\pi$ 的大圆恰好围住整个北半球，立体角 $\Omega = 2\pi$，代入公式得 $\gamma_{\mathrm{geom}} = -\pi$，相位因子 $e^{-i\pi} = -1$——这正好从几何角度解释了 $R_z(2\pi) = -I$！
+
+不用微积分，也能用**离散 Bargmann 不变量**把任意测地多边形回路的几何相位一格不跳地算出来。对球面上依次连接的 $m$ 个纯态 $|v_1\rangle \to |v_2\rangle \to \cdots \to |v_m\rangle \to |v_1\rangle$（相邻两态非正交，用大圆弧连接），定义循环内积
+$\Delta_m := \langle v_1 | v_m \rangle \langle v_m | v_{m-1} \rangle \cdots \langle v_2 | v_1 \rangle$，其辐角 $\arg(\Delta_m)$ 就是这条闭合测地折线的几何相位（注意若把任一顶点态改乘任意相位 $|v_k\rangle \mapsto e^{i\alpha_k}|v_k\rangle$，由于 $|v_k\rangle$ 与 $\langle v_k|$ 成对出现，因子 $e^{i\alpha_k}e^{-i\alpha_k}=1$ 自动抵消，因此 $\Delta_m$ 与各顶点的全局相位选取无关）。
+
+**手算一例（八分之一球面三角形）**：让纯态沿三条大圆弧走过北极 $+z$、赤道 $+x$ 与赤道 $+y$ 再回到北极：$|v_1\rangle = |0\rangle \to |v_2\rangle = |+\rangle \to |v_3\rangle = |{+i}\rangle \to |0\rangle$。这条三角形恰好围住单位球第一卦限（总球面积 $4\pi$ 的 $1/8$），立体角为 $\Omega = \frac{4\pi}{8} = \frac{\pi}{2}$，理论预言几何相位为 $-\frac{\Omega}{2} = -\frac{\pi}{4}$。现在直接按左共轭内积逐项计算 Bargmann 不变量：
+
+- $\langle + | 0 \rangle = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \frac{1}{\sqrt{2}}$；
+- $\langle {+i} | + \rangle = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & -i\end{bmatrix}\frac{1}{\sqrt{2}}\begin{bmatrix}1 \\ 1\end{bmatrix} = \frac{1 - i}{2}$；
+- $\langle 0 | {+i} \rangle = \begin{bmatrix}1 & 0\end{bmatrix}\frac{1}{\sqrt{2}}\begin{bmatrix}1 \\ i\end{bmatrix} = \frac{1}{\sqrt{2}}$。
+
+三项相乘：
+
+$$
+\Delta_3 = \langle 0 | {+i} \rangle \langle {+i} | + \rangle \langle + | 0 \rangle
+= \frac{1}{\sqrt{2}} \cdot \frac{1 - i}{2} \cdot \frac{1}{\sqrt{2}}
+= \frac{1 - i}{4}
+= \frac{\sqrt{2}}{4} e^{-i\pi/4}.
+$$
+
+直接读出辐角 $\arg(\Delta_3) = -\frac{\pi}{4} = -\frac{\Omega}{2}$，与立体角公式精确一致！（若将绕行方向反过来走 $|0\rangle \to |{+i}\rangle \to |+\rangle \to |0\rangle$，内积取复共轭，几何相位立即翻号为 $+\frac{\pi}{4}$。）
+
+最后划清三类相位的边界：**孤立全局相位**是静态整体因子，不可观测；**动力学相位**取决于哈密顿量能级与演化时长（见[量子力学 Q2 第 5.4 节](quantum-mechanics/02-observables-dynamics.md)）；**几何相位**只取决于态空间回路的几何立体角，对沿途速率的轻微抖动天然不敏感，只要把回路放进干涉臂或受控分支就能直接测出——这一特性也是[第 09 章](09-hardware.md)几何量子门与[第 17 章](17-computation-models.md)绝热量子计算的物理基础之一。
+
+### 5.4 进阶回看：单比特通用欧拉分解（ZYZ 证明与 XYX/ZXZ 对照）
 
 面对无穷多种可能的 $2\times 2$ 酉矩阵，量子芯片不可能为每一种门都单独设计硬件脉冲。好在有一条极为实用的结构定理——**ZYZ 欧拉分解定理**（Nielsen & Chuang §4.2）：
 
@@ -827,7 +772,7 @@ $$
 
 几何直觉就像拨动地球仪：无论你想把地球仪转到哪个朝向，都只需先绕南北极转一下经度（$R_z(\gamma)$），再绕东西水平轴把目标点仰起或压低到合适纬度（$R_y(\beta)$），最后再绕南北极微调一次方位（$R_z(\alpha)$）。
 
-#### 6 行零跳步构造性证明
+**6 行构造性证明**
 
 1. **先展开右端目标形态**：直接把三个 $2\times 2$ 矩阵从右向左乘开，得
 
@@ -876,7 +821,7 @@ $$
 
 再乘上全局相位 $e^{i\pi/2} = i$，因为 $i(-i) = 1$，立刻精确还原出 $H = e^{i\pi/2} R_z(0) R_y(\pi/2) R_z(\pi)$！
 
-#### XYX 与 ZXZ 欧拉分解对照
+**XYX 与 ZXZ 欧拉分解对照**
 
 只要给 ZYZ 分解两边套一层固定单比特共轭，两行就能派生出另外两种硬件极常用的欧拉分解：
 
@@ -980,7 +925,7 @@ $$
 
 ### 6.3 换基测量：$X$ 基与 $Y$ 基（为什么前置门次序绝不能写反）
 
-#### 1. 在 $X$ 基测量
+**1. 在 $X$ 基测量**
 
 问一个量子比特在 $X$ 基 $\{|+\rangle, |-\rangle\}$ 下的结果，不是把计算基里的“$0, 1$”随手改名成“$+, -$”，而是真正换一套投影方向 $P_+ = |+\rangle\langle +|$、$P_- = |-\rangle\langle -$。继续用标杆态 $|\psi\rangle = \frac{\sqrt{3}}{2}|0\rangle + \frac{i}{2}|1\rangle$ 逐项展开：
 
@@ -1012,7 +957,7 @@ $$
 
 在真实量子处理器上，硬件探测器通常只原生支持计算基（$Z$ 基）读出。要想测 $X$ 基，工程上会在计算基读出前先施加一个 $H$ 门：因为 $H|+\rangle = |0\rangle$、$H|-\rangle = |1\rangle$，读出 `0` 就对应原本的 $+$，读出 `1` 就对应原本的 $-$。不过要留意测后态的区别：只做“$H$ 后接计算基测量”留下的物理后态是 $|0\rangle$ 或 $|1\rangle$；若后续电路还需要真正停在 $|\pm\rangle$ 的理想 $X$ 投影后态，读出之后必须再补做一次 $H$ 把坐标系换回来。
 
-#### 2. 在 $Y$ 基测量：前置门必须先 $S^\dagger$ 后 $H$，写反就会静默算错
+**2. 在 $Y$ 基测量：前置门必须先 $S^\dagger$ 后 $H$，写反就会静默算错**
 
 同理，如果硬件只支持计算基读出，怎么把 $Y$ 基 $\{|{+i}\rangle, |{-i}\rangle\}$ 映射到 $\{|0\rangle, |1\rangle\}$？我们需要一个酉变换 $U_Y$，满足 $U_Y |{+i}\rangle = |0\rangle$ 且 $U_Y |{-i}\rangle = |1\rangle$。分两步看最清楚：
 
@@ -1122,7 +1067,7 @@ $$
 
 正半定性保证每个 $p(k) \ge 0$，完备性 $\sum_k E_k = I$ 保证总概率 $\sum_k p(k) = \operatorname{Tr}\!\bigl((\sum_k E_k)\rho\bigr) = \operatorname{Tr}(\rho) = 1$。
 
-#### 例 1：带错判的二元非投影 POVM
+**例 1：带错判的二元非投影 POVM**
 
 看一对最简单的对角 POVM 元素：
 
@@ -1134,7 +1079,7 @@ $$
 
 核对条件：两个矩阵的对角本征值都是 $3/4, 1/4 > 0$（正半定），且 $E_0 + E_1 = I$。但 $E_0^2 = \mathrm{diag}(9/16, 1/16) \ne E_0$，说明它们**不是**投影矩阵。输入 $|0\rangle$ 时，报告 `0` 的概率是 $\langle 0 | E_0 | 0 \rangle = 3/4$，报告 `1` 的概率是 $\langle 0 | E_1 | 0 \rangle = 1/4$——这恰如一台有 $25\%$ 对称误判率的探测器。只看这两个 $E_k$，我们完全能算出任意输入的读出概率，却**还无法判断**测完后量子比特处于什么状态。
 
-#### 例 2：实系数三态对称 Trine POVM——二维空间里严格击败任意投影测量
+**例 2：实系数三态对称 Trine POVM——二维空间里严格击败任意投影测量**
 
 **先看困惑**：假设 Alice 等概率（各 $1/3$）地从下面三个对称分布于 Bloch 球 $x\text{-}z$ 平面内的实系数纯态中挑一个发给 Bob：
 
@@ -1177,14 +1122,14 @@ E_2 = \frac{2}{3}\begin{bmatrix} 1/4 & \sqrt{3}/4 \\ \sqrt{3}/4 & 3/4 \end{bmatr
 $$
 
 - **正半定性**：每个 $E_k$ 都是正数 $2/3$ 乘以秩一投影，本征值为 $2/3$ 与 $0$，全部非负。
-- **完备性**：逐格把三张矩阵相加——左上格 $\frac{2}{3}(1 + \frac{1}{4} + \frac{1}{4}) = 1$，反对角格 $\frac{2}{3}(0 - \frac{\sqrt{3}}{4} + \frac{\sqrt{3}}{4}) = 0$，右下格 $\frac{2}{3}(0 + \frac{3}{4} + \frac{3}{4}) = 1$，严格得到 $E_0 + E_1 + E_2 = I$（用 Bloch 展开更是一眼看穿：$\sum_k \frac{1}{3}(I + \vec{r}_k\cdot\vec{\sigma}) = I + \frac{1}{3}(\vec{r}_0+\vec{r}_1+\vec{r}_2)\cdot\vec{\sigma} = I$）！
+- **完备性**：逐格把三张矩阵相加——左上格 $\frac{2}{3}(1 + \frac{1}{4} + \frac{1}{4}) = 1$，反对角格 $\frac{2}{3}(0 - \frac{\sqrt{3}}{4} + \frac{\sqrt{3}}{4}) = 0$，右下格 $\frac{2}{3}(0 + \frac{3}{4} + \frac{3}{4}) = 1$，严格得到 $E_0 + E_1 + E_2 = I$（用 Bloch 展开更是一眼看出：$\sum_k \frac{1}{3}(I + \vec{r}_k\cdot\vec{\sigma}) = I + \frac{1}{3}(\vec{r}_0+\vec{r}_1+\vec{r}_2)\cdot\vec{\sigma} = I$）！
 - **平均猜对概率**：无论 Alice 发送哪个 $|\psi_k\rangle$，报出正确标签 $k$ 的概率为 $p(k\mid\psi_k) = \frac{2}{3}|\langle\psi_k|\psi_k\rangle|^2 = \frac{2}{3}$，报出另外两个错误标签的概率各为 $\frac{2}{3}\cdot\frac{1}{4} = \frac{1}{6}$（和为 $\frac{2}{3}+\frac{1}{6}+\frac{1}{6}=1$）。因此 Trine POVM 的总成功率为
 
   $$
   p_{\text{succ}}^{\text{Trine}} = \frac{1}{3}\left(\frac{2}{3} + \frac{2}{3} + \frac{2}{3}\right) = \frac{2}{3} \approx 66.67\%.
   $$
 
-**为什么二维空间里任何 2 结果投影测量（PVM）都打不过它？** 零跳步算清上限：二维空间里的任意非平凡投影测量只有两个对跖投影方向 $P_\pm = \frac{1}{2}(I \pm \hat{m}\cdot\vec{\sigma})$（$|\hat{m}|=1$），因此最多只能把两个输出指派给三个候选标签中的两个（不妨设为输出 $+$ 猜 `0`、输出 $-$ 猜 `1`、永不猜 `2`；由三态对称性，任选两个标签上限完全相同）。于是平均猜对概率为
+**为什么二维空间里任何 2 结果投影测量（PVM）都打不过它？** 逐步算清上限：二维空间里的任意非平凡投影测量只有两个对跖投影方向 $P_\pm = \frac{1}{2}(I \pm \hat{m}\cdot\vec{\sigma})$（$|\hat{m}|=1$），因此最多只能把两个输出指派给三个候选标签中的两个（不妨设为输出 $+$ 猜 `0`、输出 $-$ 猜 `1`、永不猜 `2`；由三态对称性，任选两个标签上限完全相同）。于是平均猜对概率为
 
 $$
 \begin{aligned}
@@ -1203,7 +1148,7 @@ $$
 
 哪怕只在单比特的二维空间里，3 元对称 POVM 也以 $66.67\%$ 实打实地击败了全部 2 结果投影测量的理论天花板 $62.20\%$！如果把效果算符换成指向对跖方向的“反三态” $E_k^\perp = \frac{1}{3}(I - \vec{r}_k\cdot\vec{\sigma})$，更能做到输入 $|\psi_k\rangle$ 时结果 $k$ 的概率严格为 $0$——单次测量就能以 100% 把握排除三态中的一个错误标签（留作章末 `练 02-B` 亲手核验）。
 
-#### 例 3：非正交态的三元无错判别（USD-POVM）
+**例 3：非正交态的三元无错判别（USD-POVM）**
 
 **先看困惑**：现在假设 Alice 等概率地从两个**非正交**纯态 $|0\rangle$ 和 $|+\rangle$ 中二选一发给 Bob（它们的内积是 $\langle 0 | + \rangle = 1/\sqrt{2} \ne 0$）。如果 Bob 只能用二维空间里的普通二元投影测量（PVM），无论怎么旋转测量轴，只要想在一次测量里猜出是哪一个态，就**必然**存在把 $|0\rangle$ 错认成 $|+\rangle$ 或者把 $|+\rangle$ 错认成 $|0\rangle$ 的风险。有没有办法设计一种测量，保证**只要给出结论就百分之百零误判**，代价仅仅是有时坦诚报告“这次无法判定（`?`）”？
 
@@ -1263,143 +1208,48 @@ $$
 
 结果一目了然：只要仪器亮起 `1` 或 `2`（总成功率约 $29.29\%$），Bob 就敢百分之百断定对方发来的是哪一个态，**零误判**；其余 $p_? = 1/\sqrt{2} = |\langle 0 | + \rangle|$ 的时候，仪器输出 `?` 表示弃权。这个 $p_? = |\langle 0 | + \rangle|$ 恰好触及了等先验二态无歧义判别的理论极限——Ivanovic–Dieks–Peres 界（我们会在[第 13 章：量子信息量度](13-quantum-information.md)把它和允许误判的 Helstrom 界系统比较）。
 
-#### 物理上怎么用两能级比特实现 3 个结果？Naimark 扩张定理
+**Naimark 扩张定理：如何用两能级比特实现 3 个结果？**
 
 听完三元 POVM，很多人会好奇：一个单量子比特明明只有两个正交状态，实验台怎样才能测出 3 种结果？**Naimark 扩张定理**（Naimark's dilation theorem）给出了一句非常清透的回答：**主系统 $S$ 上的任何一般 POVM，都可以先给它配上一个处于固定初态 $|0\rangle_A$ 的辅助量子系统 $A$，在更大的联合空间 $\mathcal{H}_S \otimes \mathcal{H}_A$ 上施加一个联合酉门 $U_{SA}$，再对联合系统做一次普通的正交投影测量（PVM）来实现！** 比如要实现 3 结果 POVM，只需把单比特和一个三能级（或两比特）辅助系统耦合，再对更大的联合空间做普通投影测量即可。所以 POVM 并不是脱离投影测量之外的神秘新法则，而是把更大系统上的标准投影测量“只盯着子系统 $S$ 看”的自然结果。
 
 ### 7.2 量子仪器：为什么仅有 POVM 还不足以决定测后态
 
-如果要把“结果概率”和“测后状态更新”同时写全，就需要第三层工具——**量子仪器**（quantum instrument）。在测后仍留在同一单比特空间的情形下，量子仪器由一组完全正且迹不增的线性映射 $\{\mathcal{I}_k\}$ 给出：
+要把“结果概率”和“测后状态更新”同时写全，需要第三层工具——**量子仪器**（quantum instrument）：由一组分支映射 $\mathcal{I}_k(\rho) = \sum_\alpha M_{k\alpha}\,\rho\, M_{k\alpha}^\dagger$（满足 $\sum_{k,\alpha} M_{k\alpha}^\dagger M_{k\alpha} = I$）刻画，其诱导出 POVM 元素 $E_k = \sum_\alpha M_{k\alpha}^\dagger M_{k\alpha}$ 与概率 $p(k) = \operatorname{Tr}[\mathcal{I}_k(\rho)] = \operatorname{Tr}(E_k\rho)$。已知结果 $k$ 时的条件后态为 $\rho_k = \mathcal{I}_k(\rho)/p(k)$，丢弃记录后的非选择后态为 $\rho' = \sum_k \mathcal{I}_k(\rho)$。（三层测量模型的完整对照表以及“同一计算基 POVM 下保留态 vs 测后复位态”的详细手算反例，统一安排在[第 05 章第 3.3 节](05-noise-channels.md)结合噪声信道精讲。）
 
-$$
-\mathcal{I}_k(\rho) = \sum_\alpha M_{k\alpha}\,\rho\, M_{k\alpha}^\dagger,
-\qquad
-\sum_{k, \alpha} M_{k\alpha}^\dagger M_{k\alpha} = I.
-$$
+这里先拿例 1 的非投影 POVM $E_0 = \mathrm{diag}(3/4, 1/4),\; E_1 = \mathrm{diag}(1/4, 3/4)$ 看一个最直接的弱测量反例：取最温和的平方根实现 $M_0 = \sqrt{E_0} = \mathrm{diag}(\sqrt{3}/2, 1/2)$、$M_1 = \sqrt{E_1} = \mathrm{diag}(1/2, \sqrt{3}/2)$（注意给 $M_0$ 左乘任意酉阵 $U$ 不改 $E_0 = M_0^\dagger U^\dagger U M_0$，却会翻转后态，可见同一 POVM 对应无穷多种仪器）。将 $|+\rangle$ 送入该仪器：
 
-这里的 $M_{k\alpha}$ 是 $2\times 2$ 复矩阵，称为 **Kraus 算符**；附加指标 $\alpha$ 允许同一个经典读数 $k$ 背后存在多条仪器未细分的内部物理分支。$\mathcal{I}_k(\rho)$ 是**尚未归一化**的测后矩阵，它的迹就是结果 $k$ 的出现概率；利用迹的循环性质 $\operatorname{Tr}(ABC) = \operatorname{Tr}(CAB)$，立刻能从量子仪器还原出对应的 POVM 元素 $E_k = \sum_\alpha M_{k\alpha}^\dagger M_{k\alpha}$：
-
-$$
-p(k) = \operatorname{Tr}[\mathcal{I}_k(\rho)]
-= \sum_\alpha \operatorname{Tr}\!\left(M_{k\alpha}^\dagger M_{k\alpha}\rho\right)
-= \operatorname{Tr}(E_k \rho).
-$$
-
-当 $p(k) > 0$ 时，已知结果为 $k$ 的**条件后态**为 $\rho_k = \mathcal{I}_k(\rho)/p(k)$；若丢弃结果记录，**非选择后态**为 $\rho' = \sum_k \mathcal{I}_k(\rho) = \sum_{k,\alpha} M_{k\alpha}\rho M_{k\alpha}^\dagger$。
-
-把三层测量模型放进一张对照表里，一目了然：
-
-| 层级 | 数学对象与完备条件 | 回答什么问题 | 测后态与可重复性 |
-| :--- | :--- | :--- | :--- |
-| **投影测量（PVM）** | 正交投影 $\{P_k\}$：$P_k^\dagger = P_k,\; P_k P_l = \delta_{kl} P_k,\; \sum_k P_k = I$ | 同时给出理想锐利概率与投影坍缩 | 条件后态 $\frac{P_k\rho P_k}{p(k)}$；理想 QND 可重复 |
-| **一般 POVM** | 正半定算符 $\{E_k\}$：$E_k \succeq 0,\; \sum_k E_k = I$（个数可 $> d$） | **仅回答**结果概率 $p(k) = \operatorname{Tr}(E_k\rho)$ | **不唯一决定后态**；支持 Trine 与 USD 等超越 PVM 的判别 |
-| **量子仪器** | 一族分支映射 $\mathcal{I}_k(\rho) = \sum_\alpha M_{k\alpha}\rho M_{k\alpha}^\dagger$，$\sum_{k,\alpha} M_{k\alpha}^\dagger M_{k\alpha} = I$ | **同时回答**概率 $p(k)$ 与测后态演化 | 条件态 $\rho_k = \mathcal{I}_k(\rho)/p(k)$、非选择态 $\sum_k \mathcal{I}_k(\rho)$；不一定可重复 |
-
-下面两个手算反例，能彻底破除“知道 POVM 就等于知道测后态”与“刚测出 `0`、立刻重测必得 `0`”两个常见误解。
-
-#### 反例一：同一个计算基 POVM，保留态与测后复位态对比
-
-考虑计算基 POVM：$E_0 = |0\rangle\langle 0|$、$E_1 = |1\rangle\langle 1|$。比较两台物理仪器：
-
-- **仪器甲（标准投影测量，保留态）**：$M_0 = |0\rangle\langle 0|$、$M_1 = |1\rangle\langle 1|$。
-- **仪器乙（读出后立即主动复位到 $|0\rangle$）**：$N_0 = |0\rangle\langle 0|$、$N_1 = |0\rangle\langle 1| = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$。
-
-先检验两者的 POVM 元素：
-
-$$
-N_0^\dagger N_0 = |0\rangle\langle 0|0\rangle\langle 0| = |0\rangle\langle 0| = E_0,
-\qquad
-N_1^\dagger N_1 = |1\rangle\langle 0|0\rangle\langle 1| = |1\rangle\langle 1| = E_1.
-$$
-
-完全相同！把 $|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$ 送入两台仪器：
-
-- 仪器甲给出 $M_0|+\rangle = |0\rangle/\sqrt{2}$、$M_1|+\rangle = |1\rangle/\sqrt{2}$，概率各 $1/2$；条件后态分别是 $|0\rangle$ 和 $|1\rangle$，丢弃结果后的非选择态是 $I/2$。
-- 仪器乙给出 $N_0|+\rangle = |0\rangle/\sqrt{2}$、$N_1|+\rangle = |0\rangle/\sqrt{2}$，概率**同样各 $1/2$**；可无论屏幕上亮出 `0` 还是 `1`，条件后态**统统是 $|0\rangle$**，丢弃结果后的非选择态也是纯态 $|0\rangle\langle 0|$！
-
-两台仪器在经典统计表里一模一样，测后物理状态却天差地别（Preskill Ph219 §3.1.2）。
-
-#### 反例二：把非投影 POVM 补全为弱测量仪器——为什么重测不一定重现原标签？
-
-回到例 1 的非投影 POVM：$E_0 = \mathrm{diag}(3/4, 1/4)$、$E_1 = \mathrm{diag}(1/4, 3/4)$。我们**额外指定**一种温和测量实现：取矩阵的非负平方根 $M_k = \sqrt{E_k}$，即
-
-$$
-M_0 = \begin{bmatrix} \sqrt{3}/2 & 0 \\ 0 & 1/2 \end{bmatrix},
-\qquad
-M_1 = \begin{bmatrix} 1/2 & 0 \\ 0 & \sqrt{3}/2 \end{bmatrix}.
-$$
-
-核对完备性：$M_0^\dagger M_0 + M_1^\dagger M_1 = E_0 + E_1 = I$。如果给 $M_0$ 左乘任意酉门 $U$（例如换成 $X M_0$），$E_0 = M_0^\dagger X^\dagger X M_0$ 依然不变，但测后态会被翻转，可见 $M_k = \sqrt{E_k}$ 只是同一 POVM 无穷多种实现里最温和的一种。
-
-现在把 $|+\rangle = \frac{1}{\sqrt{2}}[1, 1]^T$ 输入这台仪器，分三步手算到底：
-
-1. **求概率与条件后态**：
-
-   $$
-   M_0|+\rangle = \frac{1}{2\sqrt{2}}\begin{bmatrix} \sqrt{3} \\ 1 \end{bmatrix}
-   \implies
-   p(0) = \frac{3 + 1}{8} = \frac{1}{2},
-   \qquad
-   |\psi_0\rangle = \frac{M_0|+\rangle}{\sqrt{1/2}} = \frac{\sqrt{3}|0\rangle + |1\rangle}{2}.
-   $$
-
-   对称地，$p(1) = 1/2$，条件后态为 $|\psi_1\rangle = \frac{|0\rangle + \sqrt{3}|1\rangle}{2}$。
-
-2. **求丢弃结果后的非选择态与残余相干性**：
-   把两个条件外积按概率 $1/2$ 混合：
+1. **条件后态与非选择残余相干**：$M_0|+\rangle = \frac{1}{2\sqrt{2}}[\sqrt{3}, 1]^T \implies p(0) = 1/2$，条件后态 $|\psi_0\rangle = \frac{\sqrt{3}|0\rangle+|1\rangle}{2}$；对称地 $p(1)=1/2$、$|\psi_1\rangle = \frac{|0\rangle+\sqrt{3}|1\rangle}{2}$。丢弃记录后的非选择态为
 
    $$
    \rho' = \frac{1}{2}|\psi_0\rangle\langle\psi_0| + \frac{1}{2}|\psi_1\rangle\langle\psi_1|
-   = \frac{1}{2}\cdot\frac{1}{4}\begin{bmatrix} 3 & \sqrt{3} \\ \sqrt{3} & 1 \end{bmatrix}
-   + \frac{1}{2}\cdot\frac{1}{4}\begin{bmatrix} 1 & \sqrt{3} \\ \sqrt{3} & 3 \end{bmatrix}
-   = \begin{bmatrix} 1/2 & \sqrt{3}/4 \\ \sqrt{3}/4 & 1/2 \end{bmatrix}.
+   = \begin{bmatrix} 1/2 & \sqrt{3}/4 \\ \sqrt{3}/4 & 1/2 \end{bmatrix},
+   \qquad
+   \operatorname{Tr}(\rho'^2) = \frac{7}{8}.
    $$
 
-   算一下它的纯度：
-
-   $$
-   \operatorname{Tr}(\rho'^2) = \left(\frac{1}{2}\right)^2 + \left(\frac{\sqrt{3}}{4}\right)^2 + \left(\frac{\sqrt{3}}{4}\right)^2 + \left(\frac{1}{2}\right)^2 = \frac{1}{2} + \frac{3}{8} = \frac{7}{8}.
-   $$
-
-   此时若接着测 $X$，期望值是 $\operatorname{Tr}(X\rho') = \frac{\sqrt{3}}{4} + \frac{\sqrt{3}}{4} = \frac{\sqrt{3}}{2}$，测得 $X=+1$ 的概率是 $\frac{1 + \sqrt{3}/2}{2} \approx 0.933013$——介于未测量时的 $1$ 和强投影测量并丢弃记录后的 $1/2$ 之间。换句话说，这台弱测量仪器只“偷看了一点点”计算基信息，也只“轻微扰动了一点点”原来的相干性！
-
-3. **检验重测可重复性**：
-   假如第一次已经清楚读到了 `0`，系统处于 $|\psi_0\rangle = \frac{\sqrt{3}|0\rangle + |1\rangle}{2}$。立刻把同一台仪器再测一次，第二次仍然报 `0` 的概率是多少？
+   它只部分削弱了相干性（此时测 $X=+1$ 的概率仍高达 $\frac{1+\sqrt{3}/2}{2}\approx 0.933$）。
+2. **重测不一定重复原标签**：若第一次测得 `0` 后立即用同一仪器重测，第二次仍报 `0` 的概率仅为
 
    $$
    p(\text{第 2 次报 }0 \mid \text{第 1 次报 }0)
    = \langle\psi_0| E_0 |\psi_0\rangle
-   = \begin{bmatrix} \sqrt{3}/2 & 1/2 \end{bmatrix}
-     \begin{bmatrix} 3/4 & 0 \\ 0 & 1/4 \end{bmatrix}
-     \begin{bmatrix} \sqrt{3}/2 \\ 1/2 \end{bmatrix}
    = \frac{3}{4}\cdot\frac{3}{4} + \frac{1}{4}\cdot\frac{1}{4}
-   = \frac{10}{16} = \frac{5}{8}.
+   = \frac{10}{16} = \frac{5}{8} = 62.5\%.
    $$
 
-   只有 $62.5\%$，远不是 $100\%$！因此，“刚测到某标签、立刻重测必得同一标签”只适用于理想正交投影测量，不能直接推广到一般 POVM 或带噪声的弱测量仪器。
+因此，“刚测出某标签、立刻重测必得同一标签”只适用于理想正交投影测量，不能直接推广到一般 POVM 或带噪声的弱测量仪器。
 
 ---
 
 ## 8. 有限采样、单比特态层析与读出校准
 
-前面七节里，我们每次算出的概率都是纸面上的精确值。可真正坐到控制台前运行实验时，设备并不会直接打印出 $\alpha$ 和 $\beta$，它只会吐出一串由 `0` 和 `1` 组成的原始计数，而且真实探测器还会犯错。这一节讲清从“原始计数”回到“可信量子态”必须跨过的三道关：**有限采样波动**、**态层析的球外负本征值**，以及**不对称读出校准的仿射偏差与 SPAM 边界**。
+前面七节里，我们每次算出的概率都是纸面上的精确值。可真正坐到控制台前运行实验时，设备并不会直接打印出 $\alpha$ 和 $\beta$，它只会吐出一串由 `0` 和 `1` 组成的原始计数，而且真实探测器还会犯错。这一节讲清从“原始计数”回到“可信量子态”必须跨过的三道关：**有限采样波动**、**态层析的物理约束估计**，以及**不对称读出校准的仿射偏差与 SPAM 边界**。
 
 ### 8.1 采样统计波动不是设备噪声
 
-把同一个制备与测量流程在相同条件下独立重复 $N$ 次（常称 $N$ 次重复采样，英文习称 **shots**），设单次成功的真实固定概率为 $p$，观察到的成功次数为 $K$，则**样本频率** $\hat{p} = K/N$ 围绕 $p$ 随机波动。由[第 01 章](01-math.md)的二项分布可知，频率的标准差为
+独立重复测量 $N$ 次（英文习称 **shots**）时，样本频率 $\hat{p} = K/N$ 的统计标准差已由[第 01 章第 8.3 节](01-math.md)导出为 $\sigma_{\hat{p}} = \sqrt{p(1-p)/N}$，最坏情形（$p=1/2$）下 $\sigma_{\hat{p}} = \frac{1}{2\sqrt{N}}$：取 $N=1000$ 时约为 $1.58\%$，取 $N=10000$ 时降至 $0.5\%$——统计误差缩至 $1/10$ 必须将采样数增至 $100$ 倍。即便硬件完全无噪，有限采样波动也必然存在；反之，系统读出偏差或参数漂移无法靠单纯增加 $N$ 消除，而且 $\sigma_{\hat{p}}$ 只是典型涨落尺度，并非对每一批误差的绝对硬上限。
 
-$$
-\sigma_{\hat{p}} = \sqrt{\frac{p(1 - p)}{N}}.
-$$
-
-因为 $p(1 - p)$ 在 $p = 1/2$ 处取到最大值 $1/4$，所以最坏情形下的标准差是 $\frac{1}{2\sqrt{N}}$：
-
-- 取 $N = 1000$ 次时，$\sigma_{\hat{p}} = \sqrt{\frac{1/4}{1000}} = \frac{1}{\sqrt{4000}} \approx 0.0158$（约 $1.58$ 个百分点）；
-- 取 $N = 10000$ 次时，$\sigma_{\hat{p}} = \sqrt{\frac{1/4}{10000}} = \frac{1}{200} = 0.005$（$0.5$ 个百分点）。
-
-要让统计波动缩小到原来的 $1/10$，必须把重复次数扩大到 **$100$ 倍**。即便量子芯片完美无瑕、没有任何硬件噪声，有限采样波动依然存在；反之，如果设备存在系统偏差（比如读出老是把 `1` 错报成 `0`）或参数随时间漂移，$\hat{p}$ 就会围绕着一个偏移的中心波动，单纯增加采样次数并不能消除这种系统偏差。另外，$\sigma_{\hat{p}}$ 刻画的是重复多批实验时的典型涨落尺度，并非对每一批误差的绝对硬上限。
-
-### 8.2 单比特态层析（QST）：为什么合法计数会拼出“球外负本征值”？
+### 8.2 进阶选读：单比特态层析（QST）与物理约束估计
 
 如果我们手里有一个未知的单比特制备装置，想把它的状态完整测出来，就需要做**单比特量子态层析**（quantum state tomography，缩写 **QST**）：把大量独立重新制备的相同副本分成三批，分别沿 $X, Y, Z$ 三轴测量（注意是分三批测不同副本，绝不是对同一个量子比特连续测三次）。用每轴的二值计数估计三个 Bloch 坐标：
 
@@ -1416,7 +1266,7 @@ $$
 
 看起来顺理成章，可只要样本数有限，就会撞上一个经典的几何陷阱。
 
-#### 小样本手算例：三组合法计数怎样跑到 Bloch 球外
+**小样本手算例：三组合法计数怎样跑到 Bloch 球外**
 
 假设三批各只测 $N = 10$ 次，某次小样本测试得到三组完全合法的计数：$X$ 轴得 $+/-$ 为 $9/1$，$Y$ 轴得 $9/1$，$Z$ 轴得 $5/5$。
 
@@ -1477,9 +1327,42 @@ $$
    \rho_* = \frac{I}{2} + \frac{\hat{\rho} - I/2}{|\hat{\vec{r}}|}.
    $$
 
-   投影后的矩阵本征值恢复为合法的 $1$ 和 $0$。请注意，即便把每轴采样次数提高到数千次（例如每轴 $N=8192$ 次对本章标杆态做层析），因为纯态本来就紧贴在球面边界 $|\vec{r}|=1$ 上，任何轻微的正向统计涨落依然可能把线性估计推出球外（例如 $|\hat{\vec{r}}|\approx 1.016$，出现约 $-0.008$ 的微小负本征值）。所以球外负本征值绝不是“自然界出现负概率”或“芯片已坏”的铁证；径向投影也只是把点估计拉回物理可行域，不增加新的测量信息，对高维系统则需采用带物理约束的**最大似然估计**（MLE，James et al. 2001）。完整的 8192 次采样标杆态计数表与开源 SDK 实跑比对收录在[基础实验册](labs/foundations.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
+   投影后的矩阵本征值恢复为合法的 $1$ 和 $0$。请注意，即便把每轴采样次数提高到数千次（例如每轴 $N=8192$ 次对本章标杆态做层析），因为纯态本来就紧贴在球面边界 $|\vec{r}|=1$ 上，任何轻微的正向统计涨落依然可能把线性估计推出球外（例如 $|\hat{\vec{r}}|\approx 1.016$，出现约 $-0.008$ 的微小负本征值）。所以球外负本征值绝不是“自然界出现负概率”的证据，而径向投影只适合三轴采样次数与方差各向同性的简单情形。
+
+**不等采样反例与 Cholesky 最大似然估计（Cholesky-MLE）**
+
+一旦三轴采样次数悬殊（或存在不对称噪声），径向投影就会把高精度轴拉偏。看一个最小反例：设 $X$ 轴测了 $N_x = 100$ 次（得 $+/-$ 为 $80/20$，经验值 $\hat{r}_x = 0.60$，采样标准误仅 $2\sqrt{0.8\times 0.2/100} = 0.08$），而 $Y$ 轴仅测 $N_y = 10$ 次（$10/0$，$\hat{r}_y = 1.00$），$Z$ 轴测 $N_z = 10$ 次（$5/5$，$\hat{r}_z = 0$）。此时线性估计模长为 $|\hat{\vec{r}}| = \sqrt{0.6^2 + 1^2} = \sqrt{1.36} \approx 1.1662 > 1$：
+
+- **直接径向投影**：把三轴等比例缩小得 $\vec{r}_{\mathrm{rad}} = \hat{\vec{r}}/\sqrt{1.36} \approx (0.5145,\; 0.8575,\; 0)$——把经过 100 次采样的高可信 $\hat{r}_x = 0.60$ 硬生生拉偏了 $0.0855$（超过一个标准误），却对仅测 10 次的 $\hat{r}_y$ 让步太少；
+- **物理约束最大似然估计（MLE）**：在合法 Bloch 球 $|\vec{r}| \le 1$ 内直接最大化观测计数的对数似然函数
+
+  $$
+  \ell(\vec{r}) = \sum_{j\in\{x,y,z\}} \left[n_{j,+}\ln\frac{1+r_j}{2} + n_{j,-}\ln\frac{1-r_j}{2}\right],
+  $$
+
+  数值最优化给出 $\vec{r}_{\mathrm{MLE}} \approx (0.5742,\; 0.8187,\; 0)$——自动按各轴样本量加权，更好地保留高精度 $X$ 轴信息，主要修正噪声大的 $Y$ 轴。
+
+推广到任意 $d$ 维多比特层析时，为了在优化过程中**自动保证**重构矩阵厄米、正半定且迹为 $1$，工程上通行 **Cholesky 参数化**（James et al. 2001）：引入下三角矩阵 $T$（单比特含 $4$ 个实参数，$d$ 维含 $d^2$ 个实参数），令
+
+$$
+\rho(T) = \frac{T^\dagger T}{\operatorname{Tr}(T^\dagger T)},
+\qquad
+T = \begin{bmatrix} t_1 & 0 \\ t_3 + it_4 & t_2 \end{bmatrix} \quad (t_1,t_2,t_3,t_4 \in \mathbb{R}),
+$$
+
+则对任何非零 $T$，都有 $\rho(T)^\dagger = \rho(T)$、$\langle v|\rho(T)|v\rangle = \|T|v\rangle\|^2/\operatorname{Tr}(T^\dagger T) \ge 0$ 与 $\operatorname{Tr}\rho(T) = 1$ 自动成立，将有约束优化转化为无约束参数搜索。
+
+| 层析估计方法 | 保证物理合法性 | 处理不等采样 / 高维 | 局限与注意边界 |
+| :--- | :---: | :--- | :--- |
+| **线性逆重构** | 否（可出现负本征值） | 闭式极快，无偏 | 靠近纯态边界时频繁落到球外 |
+| **径向 PSD 投影** | 是（单比特） | 仅适合各向同性等权采样 | 忽略各轴样本量差异，易拉偏高精度轴 |
+| **Cholesky-MLE** | 是（任意维度） | 按似然自动加权，工程标准 | 对真纯态常落到零本征值边界，需用自助法或惩罚似然构造置信区间 |
+
+完整的 8192 次采样标杆态计数表与开源 SDK 实跑比对收录在[基础实验册](labs/foundations.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 8.3 不对称读出校准、方差传播与 SPAM 边界
+
+> **进阶选读提示**：本节面向硬件读出校准与误差传播分析；首遍学习单比特电路主干时可先浏览结论，待接触实验数据或第 09、14 章时再精读。
 
 真实的超导量子比特在读出脉冲持续期间，激发态 $|1\rangle$ 会因能量弛豫（$T_1$ 衰减）悄悄掉回基态 $|0\rangle$，因此“把真 `1` 错报成 `0`”的概率常常明显大于“把真 `0` 错报成 `1`”的概率。记
 
@@ -1498,7 +1381,7 @@ A = \begin{bmatrix} 1 - \alpha & \beta \\ \alpha & 1 - \beta \end{bmatrix},
 = A \begin{bmatrix} p_0 \\ p_1 \end{bmatrix}.
 $$
 
-#### 1. 不对称读出对 Pauli 期望的仿射畸变与反演
+**1. 不对称读出对 Pauli 期望的仿射畸变与反演**
 
 对任意 Pauli 轴（换基门视为理想时，最终都落回计算基读出），记真实期望为 $r = p_0 - p_1$，报告期望为 $m = q_0 - q_1$。把 $p_0 = \frac{1 + r}{2}$、$p_1 = \frac{1 - r}{2}$ 代入 $q_0 = (1 - \alpha)p_0 + \beta p_1$：
 
@@ -1520,16 +1403,16 @@ $$
 
 请盯住分子里多出来的偏置项 $(\beta - \alpha)$：**不对称读出不仅把 Bloch 坐标按比例 $d = 1 - \alpha - \beta$ 缩短，还会把整体中心平移 $(\beta - \alpha)$！** 拿典型参数 $\alpha = 0.12$、$\beta = 0.23$（中心偏置 $\beta - \alpha = +0.11$，缩放因子 $d = 0.65$）代入本章标杆态 $\vec{r} = (0, \sqrt{3}/2, 1/2)$ 立刻一目了然：原本严格为零的 $X$ 轴期望会漂移到 $m_x = +0.11$，原本为 $0.50$ 的 $Z$ 轴期望会畸变成 $m_z = 0.11 + 0.65 \times 0.50 = 0.435$。如果图省事只除以一个平均“读出保真度”，就会漏掉 $(\beta - \alpha)$ 偏置，导致校正后的状态依然系统偏斜。
 
-#### 2. 校准方差放大与三变量误差传播入口
+**2. 校准方差放大与三变量误差传播入口**
 
-做完反演之后，千万别把校准过的 $\hat{r}$ 当成零误差真值：
+做完反演之后，不要把校准过的 $\hat{r}$ 当成零误差真值：
 
 - **分母 $d < 1$ 的方差放大**：反演时把原始估计除以 $d = 1 - \alpha - \beta$，会直接把来自目标测量的采样标准误放大 $1/d$ 倍（方差放大 $1/d^2$ 倍；上面 $d=0.65$ 时标准误放大约 $1.54\times$，方差放大约 $2.37\times$）。读出越差，$d$ 越小，反演后的统计噪声就越剧烈。
 - **有限标定不确定度与跨轴协方差**：标定矩阵里的 $\hat{\alpha}, \hat{\beta}$ 本身也是靠有限次参考测量估计出来的，它们的不确定度会经由一阶误差传播（Delta 方法）并入总方差；当 $X, Y, Z$ 三轴共用同一份标定矩阵时，三轴误差之间还会产生正协方差。而且直接矩阵求逆遇涨落可能算出负准概率，多比特系统还会面临 $2^n \times 2^n$ 矩阵指数膨胀。
 
-关于三变量偏导数方差传播的完整零跳步推导、标定与目标样本的最优预算分配，本书统一安排在[第 09 章 §5.3](09-hardware.md)精讲；关于单比特与多比特读出缓解（单纯形投影、张量积/马尔可夫模型、无矩阵子空间缓解 **M3** 与 **TREX**）的工程实现，见[第 14 章 §9](14-compilation-control.md)；本章标杆态的 16384 次采样标定完整离线复算数据与偏导核验收录在[离线复算归档](../codes/foundations/round73-README.md)与[完整 SDK 实验册](labs/sdk-validation.md)（[基础实验册](labs/foundations.md)亦提供勘误摘要与复核指引）。
+关于三变量偏导数方差传播的完整推导、标定与目标样本的最优预算分配，本书统一安排在[第 09 章 §5.3](09-hardware.md)精讲；关于单比特与多比特读出缓解（单纯形投影、张量积/马尔可夫模型、无矩阵子空间缓解 **M3** 与 **TREX**）的工程实现，见[第 14 章 §9](14-compilation-control.md)；本章标杆态的 16384 次采样标定复算数据与偏导核验收录在[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)（[基础实验册](labs/foundations.md)亦提供勘误摘要与复核指引）。
 
-#### 3. 制备与读出同时出错怎么办？SPAM 不可辨识性与表征入口
+**3. 制备与读出同时出错怎么办？SPAM 不可辨识性与表征入口**
 
 **状态制备与测量误差**合称 **SPAM**（state preparation and measurement）。前面两列标定实际测到的是“下达制备 `0` 或 `1` 的指令后，探测器报告什么”。假如真实的态制备本身也存在混合误差矩阵 $B_{\text{prep}}$，那标定实验观测到的只是乘积 $A_{\text{read}} B_{\text{prep}}$。于是，“完美制备配上有错读出”与“有错制备配上完美读出”会吐出完全相同的两列计数——单靠制备 $|0\rangle, |1\rangle$ 并直接读出，数学上不可能把 $A_{\text{read}}$ 与 $B_{\text{prep}}$ 唯一拆开。
 
@@ -1547,6 +1430,23 @@ $$
 - **以为给了 POVM 元素就能推出测后态**：POVM 元素 $E_k$ 只决定结果概率；没有补充对应的量子仪器（Kraus 算符），无法确定测后状态，也不能默认重复测量必然重现原标签。
 - **以为一次测量随机就代表态本身杂乱无章**：纯态 $|+\rangle$ 的制备可以极其精确，在计算基测量出现随机结果，只是因为测量基与态的确定方向不重合。
 - **把层析中出现的负本征值当成物理奇观或忽视校准误差**：有限采样波动本身就可能把线性估计推出 Bloch 球外；而读出校准矩阵求逆在消除偏置的同时也会放大采样方差，并引入标定误差与跨轴协方差。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：单比特复振幅与相对相位 $\to$ Bloch 球半角几何与密度矩阵 $\to$ Pauli / $H$ / 旋转门、几何相位与 ZYZ 分解 $\to$ PVM / 换基测量 / POVM 与弱测量 $\to$ Cholesky-MLE 态层析与不对称读出校准。
+
+| 核心公式 / 结构 | 关键条件与常见边界 |
+| :--- | :--- |
+| Bloch 球与态重叠 | $\lvert\psi\rangle = \cos\frac{\theta}{2}\lvert0\rangle + e^{i\varphi}\sin\frac{\theta}{2}\lvert1\rangle$，$\lvert\langle\psi_1\vert\psi_2\rangle\rvert^2 = \frac{1+\vec r_1\cdot\vec r_2}{2} = \cos^2(\gamma/2)$ |
+| 旋转门与几何相位 | $R_{\hat n}(\theta)=e^{-i\frac{\theta}{2}(\hat n\cdot\vec\sigma)}$；$R_{\hat n}(2\pi)=-I$；闭合回路几何相位 $\gamma_{\mathrm{geom}}=-\Omega/2$ |
+| ZYZ 通用分解 | $U = e^{i\delta} R_z(\alpha) R_y(\beta) R_z(\gamma)$；$H$ 共轭得 XYX，$S$ 共轭得 ZXZ |
+| $Y$ 基换基读出 | 电路先 $S^\dagger$ 再 $H$（矩阵 $HS^\dagger$），写反成 $S^\dagger H$ 会静默算错复相位概率 |
+| POVM 与量子仪器 | $E_k\succeq 0,\;\sum_k E_k=I$ 仅定概率；测后态须由仪器 Kraus 算符 $M_{k\alpha}$ 指定 |
+| 层析与不对称读出 | 不等采样下 Cholesky-MLE 优于径向投影；读出校准 $\hat r = \frac{\hat m-(\hat\beta-\hat\alpha)}{1-\hat\alpha-\hat\beta}$ 放大标准误 $1/d$ 倍 |
+
+**三句自检要点**：① 孤立全局相位不可测，但放进受控门分支（如受控 $R_z(2\pi)$）会变为可观测相对相位；② 球外负本征值来自有限采样涨落而非“负概率”；③ 读出标定受 SPAM 耦合限制，不能单靠测 `0`/`1` 拆开制备与读出误差。
 
 ---
 
@@ -1624,12 +1524,13 @@ $$
 
 - **$Y$ 基测量前置门次序对照（先 $S^\dagger$ 后 $H$ 对比反序）**：运行 `python3 codes/foundations/foundations_lab.py --case 02`，验证标杆态的精确概率 $0.933013$ 与写反次序时的静默偏差 $0.5$。
 - **10 次采样球外层析与径向 PSD 投影**：运行 `python3 codes/foundations/diagnostic_lab.py --case 02`，核对负本征值 $-0.06569$ 与投影还原过程。
-- **非投影弱测量、8192 次采样单比特层析与不对称读出校准**：对应的离线标准库校验程序、16384 次采样标定数据与开源 SDK 实跑记录统一收录在[基础实验册](labs/foundations.md)、[离线复算归档](../codes/foundations/round73-README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
+- **非投影弱测量、8192 次采样单比特层析与不对称读出校准**：对应的离线标准库校验程序、16384 次采样标定数据与开源 SDK 实跑记录统一收录在[基础实验册](labs/foundations.md)、[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
 - **相位干涉听觉直觉**：打开[合成音频体验](labs/audio.md)，对照聆听相位差 $0$、$2\pi/3$ 与 $\pi$ 的波形合成效果。
 
 ## 参考起点
 
 - Michael A. Nielsen & Isaac L. Chuang, *Quantum Computation and Quantum Information* (10th Anniv. Ed., Cambridge University Press, 2010), §1.2, §2.2, §4.2：单量子比特、Bloch 球、旋转门与 ZYZ 欧拉分解的标准教材推导。
+- M. V. Berry, "Quantal phase factors accompanying adiabatic changes", *Proc. R. Soc. Lond. A* **392**, 45–57 (1984); S. Pancharatnam, "Generalized theory of interference, and its applications", *Proc. Indian Acad. Sci. A* **44**, 247–262 (1956)：连续绝热几何相位与离散测地回路几何相位的原始奠基文献。
 - John Watrous, [*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf) (Cambridge University Press, 2018), Ch. 2：POVM、Naimark 扩张与量子仪器的严格表述。
 - John Preskill, [*Lecture Notes for Ph219/CS219: Quantum Computation*](https://www.preskill.caltech.edu/ph219/chap3_15.pdf), Ch. 2–3 (§3.1.2)：广义测量、三态对称 POVM、无歧义态判别与同一 POVM 对应不同测后态的经典讲义。
 - IBM Quantum Learning, [Bloch sphere](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere) 与 [Formulations of measurements](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/general-measurements/formulations-of-measurements)：交互式入门教程。

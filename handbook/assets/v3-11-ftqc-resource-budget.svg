@@ -165,15 +165,15 @@
   <path class="b-purple" d="M104.0 147.2L109.5 152.7L104.0 158.2L98.5 152.7Z"/>
   <path class="b-purple" d="M130.0 154.1L135.5 159.6L130.0 165.1L124.5 159.6Z"/>
   <path class="b-purple" d="M156.0 161.1L161.5 166.6L156.0 172.1L150.5 166.6Z"/>
-  <line class="s-purple" style="stroke-width:1.2" x1="161.0" y1="166.6" x2="210" y2="178"/>
-  <rect class="pill" x="210" y="156" width="186" height="46" rx="7"/>
-  <text class="xs purple" style="font-weight:700" x="218" y="173">Willow 实测 d=3→5→7</text>
-  <text class="xs muted" x="218" y="193">Λ=2.14, ε<tspan dy="3" font-size="9.2">7</tspan><tspan dy="-3">&#8203;</tspan>=0.143%</text>
+  <line class="s-purple" style="stroke-width:1.4;stroke-dasharray:4 3" x1="156.0" y1="173.0" x2="156.0" y2="352.0"/>
+  <rect class="pill" x="112" y="352" width="176" height="48" rx="7"/>
+  <text class="xs purple" style="font-weight:700" x="122" y="371">Willow 实测 d=3→5→7</text>
+  <text class="xs muted" x="122" y="391">Λ=2.14, ε<tspan dy="3" font-size="9.2">7</tspan><tspan dy="-3">&#8203;</tspan>=0.143%</text>
   <circle class="f-green" cx="286.0" cy="316.4" r="5.5"/>
   <circle class="f-accent" cx="390.0" cy="318.2" r="5.5"/>
   <text class="xs purple" style="font-weight:700" x="462.0" y="254.7" text-anchor="end">Λ = 2.14 模型</text>
   <text class="xs accent" style="font-weight:700" x="462.0" y="278.7" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.2 (d=25 达标)</text>
-  <text class="xs green" style="font-weight:700" x="390.0" y="414.1" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.1 (d=17 达标)</text>
+  <text class="xs green" style="font-weight:700" x="406.0" y="424.0" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.1 (d=17 达标)</text>
   <rect class="axis" x="104.0" y="128.0" width="364.0" height="314.0"/>
   <text class="lbl ink" x="286.0" y="486.0" text-anchor="middle">表面码码距 d（奇数）</text>
   <text class="lbl ink" x="50" y="285.0" text-anchor="middle" transform="rotate(-90 50 285.0)">逻辑错误率 ε<tspan dy="3" font-size="9.2">L</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>

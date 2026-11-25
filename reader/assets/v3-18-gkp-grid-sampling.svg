@@ -2,7 +2,7 @@
   <title id="title">GKP 相空间网格稳定子与量子采样复杂度反证链</title>
   <desc id="desc">左面板在 [q̂, p̂] = i（ℏ = 1）相空间精确绘制方形 GKP 晶格：逻辑 |0_L⟩ 位于 q = 2s√π（蓝圆），|1_L⟩ 位于 q = (2s+1)√π（红菱），稳定子平移 S_p, S_q 步长 2√π 围出面积 4π = 2×2πℏ 的单逻辑比特晶胞，原点周围标出可纠错 Voronoi 域 [−√π/2, √π/2]²。右面板展示 BosonSampling/IQP/RCS 经 Stockmeyer 计数与反集中推向 PH 坍塌的反证链，并标出恒定门噪声抹平 Porter–Thomas 散斑涨落与 #P 难干涉信号（分布坍向均匀态）的经典边界。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -53,51 +53,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .halo{stroke:#16222e}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
-  .c5{stroke:#b999f0}
-  .c5-fill{fill:#b999f0}
-  .c5-txt{fill:#d0b8fa}
-  .c5-soft{fill:#2d2045;stroke:#b999f0}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .forbid{fill:#f28872;fill-opacity:.14}
-  .area1{fill:#6bc2f5;fill-opacity:.16}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .area4{fill:#f0ba5a;fill-opacity:.15}
-  .data-node{fill:#16222e;stroke:#d7e7f5}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
-  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

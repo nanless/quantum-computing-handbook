@@ -1,6 +1,6 @@
 # 符号表与全书统一契约
 
-全书 26 章（主篇 `00`–`21` 与量子力学基础篇 `Q1`–`Q4`）、附录与配套代码共享同一套核心符号与单位约定。阅读不同章节或对接开源 SDK 时，若遇到复用字母（例如 $H$、$\Omega$、$\gamma$、$\chi$），先看上下文给出的对象类型、维度与单位即可准确区分。
+全书 26 章（主篇 `00`–`21` 与量子力学基础篇 `Q1`–`Q4`）、附录与配套代码共享同一套核心符号与单位约定。阅读不同章节或对接开源 SDK 时，若遇到复用字母（例如 $H$、$\Omega$、$\alpha$、$\gamma$、$\chi$），先看上下文给出的对象类型、维度与单位即可准确区分。
 
 ## 1. 量子计算与信息核心符号
 
@@ -12,6 +12,8 @@
 | $A^T,\; A^\dagger$ | 矩阵转置、共轭转置（Hermitian 共轭） |
 | $\lvert\psi\rangle,\; \langle\psi\rvert$ | ket（列向量）与 bra（列向量共轭转置后的行向量） |
 | $\lvert +\rangle,\; \lvert -\rangle$ | $(\lvert 0\rangle \pm \lvert 1\rangle)/\sqrt{2}$，Pauli-$X$ 的两个本征态 |
+| $\lvert\Phi^\pm\rangle,\; \lvert\Psi^\pm\rangle$ | 两比特四大 Bell 最大纠缠基态：$\lvert\Phi^\pm\rangle = (\lvert 00\rangle \pm \lvert 11\rangle)/\sqrt{2}$，$\lvert\Psi^\pm\rangle = (\lvert 01\rangle \pm \lvert 10\rangle)/\sqrt{2}$ |
+| $\lvert\mathrm{GHZ}_N\rangle,\; \lvert W_N\rangle$ | 多体基准纠缠态：$\lvert\mathrm{GHZ}_N\rangle = (\lvert 0\rangle^{\otimes N} + \lvert 1\rangle^{\otimes N})/\sqrt{2}$ 与单激发对称叠加态 $\lvert W_N\rangle = \frac{1}{\sqrt{N}}\sum_{k=1}^N \lvert 0\cdots 1_k \cdots 0\rangle$ |
 | $\langle\phi\vert\psi\rangle$ | 左共轭内积 $\sum_j \phi_j^* \psi_j$（与 NumPy `np.vdot(phi, psi)` 一致） |
 | $\lvert a\rangle\langle b\rvert$ | 外积 / 秩一线性算符 |
 | $\otimes$ | 张量积（表示子系统组合）；上下文明确时可省略 |
@@ -20,25 +22,30 @@
 | $H, S, T$（量子门） | Hadamard 门、相位门 $S = \operatorname{diag}(1, i)$、$T = \operatorname{diag}(1, e^{i\pi/4})$；第 02 章旋转门处正式引入 $S,T$，须与经典熵 $H(X)$、von Neumann 熵 $S(\rho)$ 及总时间 $T$ 区分 |
 | $R_x(\theta), R_y(\theta), R_z(\theta)$ | 单比特旋转门 $R_j(\theta) = e^{-i\theta \sigma_j / 2}$，旋转角 $\theta$ 单位为弧度 |
 | $\mathrm{CNOT}, \mathrm{CZ}, \mathrm{SWAP}, \mathrm{Toffoli}$ | 标准多比特门；默认高位（左位）控低位（右位），$\mathrm{Toffoli}$ 即三比特受控非门（CCNOT） |
+| $\sqrt{X}\;(\mathrm{SX}),\; \mathrm{iSWAP},\; R_{XX}(\theta)$ | 硬件原生单/双比特门：$\sqrt{X} = \frac{1}{2}\bigl(\begin{smallmatrix}1+i&1-i\\1-i&1+i\end{smallmatrix}\bigr) = e^{i\pi/4}R_x(\pi/2)$、超导耦合原生门 $\mathrm{iSWAP} = \exp[i\frac{\pi}{4}(X\otimes X + Y\otimes Y)]$、离子阱 Mølmer–Sørensen 门 $R_{XX}(\theta) = \exp[-i\frac{\theta}{2}X\otimes X]$ |
+| $(k_x, k_y, k_z)$（Weyl 室坐标） | 第 14 章两比特门 KAK（Cartan）分解的典型非局域参数，$\exp[i(k_x X\otimes X + k_y Y\otimes Y + k_z Z\otimes Z)]$，满足 $\frac{\pi}{4} \ge k_x \ge k_y \ge \lvert k_z\rvert \ge 0$（底面 $k_z=0$ 至多需 2 个 CNOT，内部至多 3 个） |
 | $H$ 或 $\mathcal H$（哈密顿量） | 生成时间演化的厄米算符，与 Hadamard 门不同；物理单位下演化为 $e^{-i\mathcal H t / \hbar}$，算法模型常取 $\hbar = 1$ |
 | $\log_2,\; \ln$ | **全书对数底数契约**：信息论、熵、容量与比特数一律写 $\log_2$；自然对数（如 MWPM 边权 $\ln\frac{1-p}{p}$、热分布与弛豫）一律写 $\ln$；**严禁使用不标底数的裸对数** |
-| $\rho$ | 密度矩阵，满足厄米 $\rho^\dagger = \rho$、正半定 $\rho \succeq 0$ 与保迹 $\operatorname{Tr}(\rho) = 1$ |
+| $\rho,\; \operatorname{Tr}(\rho^2),\; \vec r$ | 密度矩阵（满足 $\rho^\dagger = \rho$、$\rho \succeq 0$、$\operatorname{Tr}(\rho) = 1$）、态纯度 $\operatorname{Tr}(\rho^2)\in[1/d, 1]$（纯态取 $1$），以及单比特 Bloch 矢量 $\vec r = (r_x, r_y, r_z) = (\operatorname{Tr}(\rho X), \operatorname{Tr}(\rho Y), \operatorname{Tr}(\rho Z))$（$\lvert\vec r\rvert \le 1$） |
 | $\operatorname{Tr},\; \operatorname{Tr}_B$ | 矩阵迹、对子系统 $B$ 求偏迹 |
 | $\mathcal E,\; \mathcal F$ | 量子信道（完全正且保迹的线性映射，CPTP）；全书统一用 $\mathcal E, \mathcal F$ 表示信道，不再用 $\mathcal N$ 表示信道 |
 | $K_k$ | 量子信道的 Kraus 算符，$\mathcal E(\rho) = \sum_k K_k \rho K_k^\dagger$，满足 $\sum_k K_k^\dagger K_k = I$ |
+| $L_k,\; \mathcal D[L](\rho)$ | 连续时间马尔可夫主方程的 Lindblad 跃迁（塌缩）算符（单位 $\mathrm{s}^{-1/2}$）及耗散超算符 $\mathcal D[L](\rho) = L\rho L^\dagger - \frac{1}{2}\{L^\dagger L, \rho\}$（见 Q2、第 05 章与第 20 章 HNLS 判据） |
 | $E_m$ | POVM 测量元素，满足 $E_m \succeq 0$ 且 $\sum_m E_m = I$，结果概率 $p_m = \operatorname{Tr}(\rho E_m)$ |
-| $\mathcal I_m$ | 量子仪器（quantum instrument，亦称量子测量工具）的第 $m$ 个分支映射（完全正、迹不增），$\sum_m \mathcal I_m$ 保迹；当 $p_m = \operatorname{Tr}\mathcal I_m(\rho) > 0$ 时，条件后态为 $\rho_m = \mathcal I_m(\rho)/p_m$ |
+| $\mathcal I_m$ | 量子仪器（quantum instrument）的第 $m$ 个分支映射（完全正、迹不增），$\sum_m \mathcal I_m$ 保迹；当 $p_m = \operatorname{Tr}\mathcal I_m(\rho) > 0$ 时，条件后态为 $\rho_m = \mathcal I_m(\rho)/p_m$ |
 | $\mathcal D_p,\; \widetilde{\mathcal D}_q$ | 退极化信道：$\mathcal D_p(\rho) = (1-p)\rho + p\frac{I}{2}$ 等价于随机 Pauli 形式 $\widetilde{\mathcal D}_q(\rho) = (1-q)\rho + \frac{q}{3}(X\rho X + Y\rho Y + Z\rho Z)$，其中 $q = \frac{3}{4}p$；Stim `DEPOLARIZE1(q)` 对应平均门不保真度 $r = 2q/3$ |
 | $q = A p$ | 读出混淆矩阵约定：全书统一按**列随机**定义（列对应真实态、行对应报告结果）；部分软件按行存储，二者互为转置 |
 | $z_i,\; s_i$（QUBO / Ising） | Pauli 特征值变量 $z_i = 1 - 2x_i$（$x_i=0 \leftrightarrow +1,\; x_i=1 \leftrightarrow -1$）；退火软件常用自旋 $s_i = 2x_i - 1 = -z_i$，一阶项反号、二阶项同号 |
 | $\lVert v\rVert,\; \lVert A\rVert_1,\; \lVert A\rVert_\infty$ | 向量欧氏范数、矩阵迹范数 $\operatorname{Tr}\sqrt{A^\dagger A}$、算符谱范数（最大奇异值） |
 | $\lVert\mathcal E - \mathcal F\rVert_\diamond$ | 信道判别所用的钻石范数（完全有界迹范数）；连续变量在平均能量上限 $E$ 下采用能量受限钻石范数 $\lVert\mathcal E - \mathcal F\rVert_{\diamond, E}$ |
 | $A = W \Sigma V^\dagger$ | 非厄米矩阵奇异值分解（SVD）：一般教材常写 $A = U\Sigma V^\dagger$，**第 16 章为避免与块编码酉矩阵 $U$ 撞名，统一写为 $A = W\Sigma V^\dagger$**（$W,V$ 分别为左、右奇异酉矩阵，$\Sigma$ 为非负奇异值对角阵） |
+| $\alpha$（块编码缩放因子） | 第 16 章把非酉矩阵 $A$ 嵌入酉算符 $U$ 左上角时的归一化缩放因子，$(\langle 0\rvert\otimes I)U(\lvert 0\rangle\otimes I) = A/\alpha$，必满足 $\alpha \ge \lVert A\rVert_\infty$（无量纲；与其他章节中的 $\alpha$ 辨析见第 4 节） |
 | $O, \Omega, \Theta$ | 渐近上界、下界、同阶记号；使用时需同时说明输入规模、计算模型与常数边界 |
 | $n, N$ | 复杂度章节中 $n$ 常指输入比特数，$N$ 常指候选项数或状态空间维数（常有 $N = 2^n$），两者不可混用 |
 | $\oplus,\; \mathbb F_2,\; x \cdot y$ | 模 2 加法（异或）、二元有限域 $\{0,1\}$、$\mathbb F_2$ 上按位内积（结果取模 2） |
+| $\mathcal P_n,\; \mathcal C_n,\; \mathcal S$ | $n$-比特 Pauli 群（含全局相位 $\{\pm 1,\pm i\}$）、将 $\mathcal P_n$ 共轭映射到自身的 Clifford 群 $\mathcal C_n$，以及不含 $-I$ 的阿贝尔稳定子群 $\mathcal S \subset \mathcal P_n$ |
 | $[[n, k, d]]$ | 用 $n$ 个物理量子比特编码 $k$ 个逻辑量子比特、码距为 $d$ 的量子纠错码 |
-| $H(X),\; S(\rho)$ | 经典 Shannon 熵 $-\sum_x p(x)\log_2 p(x)$、量子 von Neumann 熵 $-\operatorname{Tr}(\rho\log_2 \rho)$ |
+| $H(X),\; h_2(p),\; S(\rho)$ | 经典 Shannon 熵 $-\sum_x p(x)\log_2 p(x)$、二元熵函数 $h_2(p) = -p\log_2 p - (1-p)\log_2(1-p)$（$p\in[0,1]$，约定 $0\log_2 0 = 0$）、量子 von Neumann 熵 $-\operatorname{Tr}(\rho\log_2 \rho)$ |
 | $I(A:B),\; I(A:C\mid B)$ | 量子互信息 $S(A)+S(B)-S(AB)$、条件互信息 $S(AB)+S(BC)-S(B)-S(ABC)$ |
 | $T(\rho,\sigma)$ | 迹距离 $\lVert\rho - \sigma\rVert_1 / 2$，决定最优单次量子态判别成功率 |
 | $F(\rho,\sigma),\; F^2$ | 本书统一采用的**根保真度** $F(\rho,\sigma) = \operatorname{Tr}\sqrt{\sqrt\rho\sigma\sqrt\rho} = \lVert\sqrt\rho\sqrt\sigma\rVert_1$（纯态间为 $\lvert\langle\psi\vert\phi\rangle\rvert$）；重叠概率或平方保真度显式写作 $F^2$ 或 $f = \langle\psi\vert\rho\vert\psi\rangle$ |
@@ -48,7 +55,7 @@
 | $J_{\mathcal E}$ | 未归一化 Choi 矩阵 $J_{\mathcal E} = \sum_{i,j} \lvert i\rangle\langle j\rvert \otimes \mathcal E(\lvert i\rangle\langle j\rvert)$；$J_{\mathcal E} \succeq 0$ 等价于完全正，$\operatorname{Tr}_B J_{\mathcal E} = I_{A'}$ 等价于保迹 |
 | $D(\rho\Vert\sigma),\; D_H^\epsilon(\rho\Vert\sigma)$ | 量子相对熵 $\operatorname{Tr}[\rho(\log_2\rho - \log_2\sigma)]$、第一类错误不超过 $\epsilon$ 的假设检验相对熵 |
 | $I_c(\rho,\mathcal E)$ | 相干信息 $S(B) - S(RB) = -S(R\mid B)$，正则化后决定量子容量 |
-| $C, Q, P, C_E$ | 无辅助经典容量、量子容量、私密经典容量、纠缠辅助经典容量 |
+| $C, Q, P, C_E,\; C_{\mathrm{PLOB}}(\eta)$ | 无辅助经典容量、量子容量、私密经典容量、纠缠辅助经典容量，以及纯损耗信道透过率 $\eta\in(0,1)$ 下的无中继私密/量子容量上限 $C_{\mathrm{PLOB}}(\eta) = -\log_2(1-\eta)$（单位 $\mathrm{bit/use}$） |
 | $\mathcal N(\rho),\; E_N(\rho),\; C_{\mathrm{conc}}(\rho)$ | 二分态**负性** $\mathcal N(\rho) = (\lVert\rho^{T_B}\rVert_1 - 1)/2$、对数负性 $E_N(\rho) = \log_2(1 + 2\mathcal N(\rho))$、两比特共生度 $C_{\mathrm{conc}}(\rho)$（避免与经典容量 $C$ 混淆） |
 | $\hat q, \hat p,\; V,\; W(q,p)$ | 第 18 章连续变量无量纲正交分量（满足 $[\hat q,\hat p] = i$）、协方差矩阵（真空态 $V = I/2$）与相空间 Wigner 准概率函数 |
 | $\Omega$（连续变量辛形式） | 交错排序 $(q_1, p_1, \ldots, q_m, p_m)$ 下的块对角辛形式 $\bigoplus_j \bigl(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\bigr)$，使 $[R_j, R_k] = i\Omega_{jk}$ |
@@ -60,12 +67,15 @@
 | $F_C(\theta)$ | 第 20 章经典 Fisher 信息，$F_C(\theta) = \sum_{x:\,p(x\mid\theta)>0}[\partial_\theta p(x\mid\theta)]^2 / p(x\mid\theta)$，单位 $[\theta]^{-2}$；决定固定测量装置下的经典 Cramér–Rao 下界 $\Delta\theta \ge 1/\sqrt{\nu F_C(\theta)}$ |
 | $F_Q(\rho_\theta)$ | 第 20 章量子 Fisher 信息，$F_Q(\rho_\theta) = \operatorname{Tr}(\rho_\theta L_\theta^2)$，单位 $[\theta]^{-2}$；纯态幺正演化 $\lvert\psi_\theta\rangle = e^{-i\theta H}\lvert\psi_0\rangle$ 下化为 $F_Q = 4(\Delta H)^2$，给出一切合法量子测量的精度终极下界 |
 | $L_\theta$ | 第 20 章对称对数导数（SLD），满足 $\partial_\theta\rho_\theta = \frac{1}{2}(\rho_\theta L_\theta + L_\theta\rho_\theta)$ 的厄米算符，单位 $[\theta]^{-1}$；其本征基构成饱和量子 Cramér–Rao 界的最优投影测量 |
+| $d_B(\rho,\sigma)$ | 第 20 章 Bures 距离（无量纲），按本书根保真度定义为 $d_B(\rho,\sigma) = \sqrt{2\bigl(1 - F(\rho,\sigma)\bigr)}$；在无穷小步长下满足 $F_Q(\rho_\theta) = 4\lim_{\delta\to 0} d_B^2(\rho_\theta,\rho_{\theta+\delta})/\delta^2$ |
+| $\eta,\; F_{\mathrm{CPMG},n}(\omega T)$ | 第 20 章量子传感灵敏度 $\eta = \delta B_{\min}\sqrt{T_{\mathrm{tot}}}$（磁场探测单位 $\mathrm{T/\sqrt{Hz}}$；注意在光学损耗与 QKD 中 $\eta\in[0,1]$ 为无量纲透过率）及 $n$ 脉冲 CPMG 交流锁相滤波函数 $F_{\mathrm{CPMG},n}(\omega T)$ |
 | $\xi_R^2$ | 第 20 章 Wineland 自旋压缩参数（无量纲），$\xi_R^2 = N(\Delta J_\perp)^2 / \lvert\langle\vec J\rangle\rvert^2$；相干自旋态取 $\xi_R^2 = 1$，$\xi_R^2 < 1$ 表征突破标准量子极限且为多体纠缠的充分判据 |
 | $\mathrm{SQL},\; \mathrm{HL}$ | 第 20 章精密测量基准标度：标准量子极限（$\Delta\phi_{\mathrm{SQL}} = 1/\sqrt{N}$，无纠缠探针满足 $F_Q \le N$）与海森堡极限（$\Delta\phi_{\mathrm{HL}} = 1/N$，$F_Q = N^2$）；对应无量纲相位估计误差随探针数 $N$ 的标度 |
 | $(x\mid z)\in\mathbb{F}_2^{2n},\; r$（Tableau） | 第 21 章 $n$-比特 Pauli 串的二元辛向量编码（$x,z\in\mathbb{F}_2^n$，相位位 $r\in\mathbb{F}_2$ 表示符号 $(-1)^r$，无量纲）；Aaronson–Gottesman 稳定子表将其组织为 $2n\times(2n+1)$ 二元矩阵（前 $n$ 行为去稳定子、后 $n$ 行为稳定子） |
 | $\chi$（MPS 键维） | 第 21 章矩阵乘积态（MPS）相邻格点虚拟键的最大维数（无量纲正整数），存储代价 $O(n\chi^2)$；注意按上下文与第 13 章 Holevo 量 $\chi$ 区分 |
 | $w(P)$ | 第 21 章 $n$-比特 Pauli 串 $P$ 的权重（非恒等单比特因子 $X,Y,Z$ 的个数，无量纲整数 $0\le w(P)\le n$）；局域退极化伴随通道下按 $(1-p)^{w(P)}$ 衰减 |
-| $\chi_{\mathrm{stab}}$（亦简记 $\chi_S$） | 第 21 章精确稳定子秩（无量纲正整数），即将纯态分解为稳定子态线性叠加所需的最少项数；与无量纲稳定子展度 $\xi(\lvert\psi\rangle)$ 共同刻画魔术度与扩展稳定子模拟复杂度 |
+| $\chi_{\mathrm{stab}}$（亦简记 $\chi_S$） | 第 21 章精确稳定子秩（无量纲正整数），即将纯态分解为稳定子态线性叠加所需的最少项数，决定精确扩展稳定子分解项数 |
+| $\xi(\lvert\psi\rangle)$ | 第 21 章稳定子展度（stabilizer extent，无量纲实数 $\xi \ge 1$），定义为 $\xi(\lvert\psi\rangle) = \min\{\lVert c\rVert_1^2 : \lvert\psi\rangle = \sum_j c_j \lvert\phi_j\rangle,\; \lvert\phi_j\rangle\in\mathrm{STAB}\}$；单份魔法态满足 $\xi(\lvert T\rangle) = 4 - 2\sqrt{2} \approx 1.1716$，与第 20 章 Wineland 压缩参数 $\xi_R^2$ 含义不同 |
 
 ## 2. 量子力学基础篇与硬件控制物理符号
 
@@ -76,7 +86,7 @@
 | $\langle A\rangle,\; \Delta A$ | 同一量子态制备下可观测量的期望值与标准差，$(\Delta A)^2 = \langle A^2\rangle - \langle A\rangle^2$ |
 | $E_n,\; \omega,\; f$ | 能级能量（$\mathrm{J}$）、角频率（$\mathrm{rad/s}$）、普通频率（$\mathrm{Hz}$）；满足 $\omega = 2\pi f$，能隙 $\hbar\omega = hf$ |
 | $\Omega,\; \Delta,\; \Omega_{\mathrm{eff}}$ | 驱动 Rabi 角频率、**全书统一计算基失谐 $\Delta = \omega_d - \omega_0$**（驱动角频率减跃迁角频率）、有效 Rabi 角频率 $\sqrt{\Omega^2 + \Delta^2}$，单位均为 $\mathrm{rad/s}$ 或 $\mathrm{rad/ns}$ |
-| $Z_E,\; Y_E,\; \delta_E$ | 常见原子物理与核磁共振教材使用的能量基符号：$Z_E = \lvert 1\rangle\langle 1\rvert - \lvert 0\rangle\langle 0\rvert = -Z$，$Y_E = -Y$，$\delta_E = \omega_0 - \omega_d = -\Delta$。因 $\Delta Z = \delta_E Z_E$，两套约定生成的哈密顿量矩阵元完全相同（详见 [Q3 第 6.2 节](../quantum-mechanics/03-levels-control.md#62-彻底消除跨章失谐符号坑计算基与能量基的等价对照表)与[第 14 章第 5.1 节](../14-compilation-control.md#51-旋转坐标系模型与跨章符号对齐)） |
+| $Z_E,\; Y_E,\; \delta_E$ | 常见原子物理与核磁共振教材使用的能量基符号：$Z_E = \lvert 1\rangle\langle 1\rvert - \lvert 0\rangle\langle 0\rvert = -Z$，$Y_E = -Y$，$\delta_E = \omega_0 - \omega_d = -\Delta$。因 $\Delta Z = \delta_E Z_E$，两套约定生成的哈密顿量矩阵元完全相同（详见 [Q3 第 6.2 节](../quantum-mechanics/03-levels-control.md#62-计算基与能量基的失谐符号等价对照表)与[第 14 章第 5.1 节](../14-compilation-control.md#51-旋转坐标系模型与跨章符号对齐)） |
 | $T_1,\; T_2^*,\; T_2,\; T_\phi$ | 能量弛豫时间、含低频静态展宽的自由感应退相干时间、回波退相干时间与纯退相位时间；满足 $1/T_2 = 1/(2T_1) + 1/T_\phi$ |
 | $\beta/\alpha$（DRAG 系数） | 第 14 章 DRAG 正交导数整形脉冲 $Q(t) = -(\beta/\alpha)\dot I(t)$ 的比例系数，其中 $\beta$ 为无量纲缩放系数、$\alpha = \omega_{12} - \omega_{01}$ 为非谐性角频率（单位 $\mathrm{rad/s}$），故 $\beta/\alpha$ 单位为 $\mathrm{s}$（或 $\mathrm{ns}$）；用于同步抑制 $\lvert 1\rangle\to\lvert 2\rangle$ 泄漏与 AC Stark 相移 |
 | $\delta(t)$（动态解耦噪声） | 第 14 章量子比特空闲期的低频随机失谐角频率噪声，单位 $\mathrm{rad/s}$，对应噪声哈密顿量 $H_{\mathrm{noise}}(t) = \frac{\hbar}{2}\delta(t)Z$ 与调制累积相位 $\phi(T) = \int_0^T s(t)\,\delta(t)\,dt$ |
@@ -97,6 +107,9 @@
 
 | 容易混用的对象 | 全书统一标准与软件核对规则 |
 |---|---|
+| **$\alpha$ 的五种常见用法** | ① 态矢量复振幅（无量纲复数，第 01–04 章）；② 超导非谐性 $\alpha = \omega_{12} - \omega_{01}$（$\mathrm{rad/s}$ 或 $\mathrm{Hz}$，Q3 / 第 14 章）；③ 块编码与 LCU 归一化缩放因子 $\alpha \ge \lVert A\rVert_\infty$（无量纲，第 16 章）；④ 假设检验与置信区间显著性水平 $\alpha \in (0,1)$（如 $0.05$，第 15 章）；⑤ 不对称读出错判率 $\alpha = P(1\mid 0)$（无量纲，第 02 章）。读公式前先核对对象类型与单位 |
+| **$\xi(\lvert\psi\rangle)$ 与 $\xi_R^2$** | 第 21 章稳定子展度 $\xi(\lvert\psi\rangle) \ge 1$（无量纲，刻画非 Clifford 魔术度与扩展稳定子模拟开销，如 $\xi(\lvert T\rangle) = 4 - 2\sqrt{2}$）；第 20 章 Wineland 自旋压缩参数 $\xi_R^2 = N(\Delta J_\perp)^2/\lvert\langle\vec J\rangle\rvert^2$（无量纲，$\xi_R^2 < 1$ 表示突破 SQL 且认证纠缠）。两者方向相反、物理语境完全独立 |
+| **$p$、$q$、$r$ 与 $\hat p$** | $p$ 可表离散概率、退极化参数 $\mathcal D_p$、物理错误率或 QBER（均无量纲）；带帽 $\hat p$ 在 Q4 是动量算符（$\mathrm{kg\cdot m/s}$）、在第 18 章是无量纲正交分量。$q$ 专用于随机 Pauli 退极化 $\widetilde{\mathcal D}_q$（$q = \frac{3}{4}p$）或读出报告分布 $q = Ap$。$r$ 在不同章节分别指平均门不保真度 $r = 1 - F_{\mathrm{avg}}$、稀疏 Pauli 噪声累积率 $r_j$（$p_j = (1-e^{-2r_j})/2$）、Bloch 分量 $r_x,r_y,r_z$、QKD 密钥率或稳定子表相位位 $r\in\mathbb F_2$ |
 | **$F$、$F^2$ 与 Bell 重叠** | 本书 $F(\rho,\sigma) = \lVert\sqrt\rho\sqrt\sigma\rVert_1$ 为根保真度；实验论文常报的态重叠概率 $\langle\Phi\vert\rho\vert\Phi\rangle$ 与 The Walrus 等库的 `fidelity` 往往采用平方口径 $F^2$，比较前先核对是否开根号 |
 | **失谐 $\Delta$ 与 $\delta_E$** | Q3 与第 14 章已统一采用计算基 $Z = \lvert 0\rangle\langle 0\rvert - \lvert 1\rangle\langle 1\rvert$ 与 $\Delta = \omega_d - \omega_0$；阅读采用能量基 $H_0 = +\frac{\hbar\omega_0}{2}Z_E$ 的文献时，用 $Z_E = -Z,\; \delta_E = -\Delta$ 换算，同时核对时间单位（$\mathrm{rad/s}$ vs $\mathrm{rad/ns}$） |
 | **$\Omega$ 的四种用法** | Q3 / 第 14 章的 Rabi 角频率带 $\mathrm{rad/s}$ 单位；第 18 章的辛形式 $\Omega$ 是无量纲矩阵；$\Omega(g)$ 是渐近下界；$\lvert\Omega\rangle$ 是未归一化最大纠缠向量。四者靠单位、参数与 ket 清晰区分 |

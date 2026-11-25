@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">五类量子硬件的控制、读出与复位链</title>
+  <desc id="desc">用五条泳道比较超导、离子阱、中性原子、光子和半导体自旋从信号产生、调制与传输、量子器件、探测判决到复位再循环的工程链。每条泳道的横向箭头表示该平台本轮实验的处理顺序；最右列说明如何准备下一轮。</desc>
+  <style>
+    :root{color-scheme:dark}
+    .bg{fill:#f7fafc}.title{font:600 30px system-ui,sans-serif;fill:#13263a}.sub{font:400 17px system-ui,sans-serif;fill:#4b6073}
+    .lane{stroke-width:2}.sc{fill:#e6f3fb;stroke:#3b82a5}.ion{fill:#eeeafd;stroke:#7665b2}.atom{fill:#e8f5e9;stroke:#5b9363}.photo{fill:#fff4d9;stroke:#b88b2f}.spin{fill:#fcebe7;stroke:#b96758}
+    .tag{font:600 19px system-ui,sans-serif;fill:#173047}.box{fill:#fff;stroke:#9ab0c2;stroke-width:1.5}.boxt{font:500 16px system-ui,sans-serif;fill:#18324a}.small{font:400 14px system-ui,sans-serif;fill:#4c6478}
+    .arrow{stroke:#47647b;stroke-width:2.4;fill:none;marker-end:url(#arrow)}
+    .head{fill:#e9eef3;stroke:#8ca2b4}.headt{font:600 16px system-ui,sans-serif;fill:#263f55}
+    .markerArrow{fill:#47647b}
+    
+.bg{fill:#101820}.title{fill:#eef6ff}.sub{fill:#b7c8d7}.box{fill:#172632;stroke:#6d879a}.boxt{fill:#e9f3fa}.small{fill:#b8cbd9}.tag{fill:#eef6ff}.head{fill:#1c2d3a;stroke:#658094}.headt{fill:#e4f0f8}.sc{fill:#173e54}.ion{fill:#302c50}.atom{fill:#203f2b}.photo{fill:#4a3b1d}.spin{fill:#4a2e2a}.arrow{stroke:#9fc7de}.markerArrow{fill:#9fc7de}
+
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="markerArrow" d="M0 0L10 5L0 10z"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="820" rx="28"/>
+  <text class="title" x="60" y="58">从控制信号到经典结果：同一个“门”背后的五套机器</text>
+  <text class="sub" x="60" y="88">横向箭头沿各平台的控制与读出方向；最右列说明该平台怎样准备下一轮。</text>
+
+  <g transform="translate(220 112)">
+    <rect class="head" x="0" y="0" width="205" height="48" rx="12"/><text class="headt" x="102" y="30" text-anchor="middle">信号产生</text>
+    <rect class="head" x="225" y="0" width="205" height="48" rx="12"/><text class="headt" x="327" y="30" text-anchor="middle">调制与传输</text>
+    <rect class="head" x="450" y="0" width="205" height="48" rx="12"/><text class="headt" x="552" y="30" text-anchor="middle">量子器件</text>
+    <rect class="head" x="675" y="0" width="205" height="48" rx="12"/><text class="headt" x="777" y="30" text-anchor="middle">探测与判决</text>
+    <rect class="head" x="900" y="0" width="205" height="48" rx="12"/><text class="headt" x="1002" y="30" text-anchor="middle">复位与再循环</text>
+  </g>
+
+  <g transform="translate(60 185)">
+    <rect class="lane sc" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">超导</text><text class="small" x="24" y="68">mK 电路</text>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">DAC / AWG / I/Q</text><text class="small" x="102" y="50" text-anchor="middle">微波、磁通、耦合器</text></g>
+    <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">衰减、滤波、线缆</text><text class="small" x="102" y="50" text-anchor="middle">频分复用与热化</text></g>
+    <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">transmon + 谐振腔</text><text class="small" x="102" y="50" text-anchor="middle">门、泄漏与色散响应</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">JPA/TWPA → HEMT</text><text class="small" x="102" y="50" text-anchor="middle">室温放大、ADC、判决</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">等待 / 条件翻转</text><text class="small" x="97" y="50" text-anchor="middle">耗散抽运</text></g>
+    <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
+  </g>
+
+  <g transform="translate(60 300)">
+    <rect class="lane ion" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">离子阱</text><text class="small" x="24" y="68">真空与激光</text>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">激光器 + 阱电压</text><text class="small" x="102" y="50" text-anchor="middle">频率、相位与电极波形</text></g>
+    <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">电极搬运 / 激光寻址</text><text class="small" x="102" y="50" text-anchor="middle">AOM/EOM 调制、再冷却</text></g>
+    <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">内态 + 运动模</text><text class="small" x="102" y="50" text-anchor="middle">分区门区与存储区</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">荧光 → PMT / 相机</text><text class="small" x="102" y="50" text-anchor="middle">亮暗计数与串扰</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">光抽运 / 淬灭</text><text class="small" x="97" y="50" text-anchor="middle">再冷却与复用</text></g>
+    <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
+  </g>
+
+  <g transform="translate(60 415)">
+    <rect class="lane atom" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">中性原子</text><text class="small" x="24" y="68">光镊阵列</text>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">MOT / 储库 / 激光</text><text class="small" x="102" y="50" text-anchor="middle">装载与初始化</text></g>
+    <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">SLM / AOD / 光镊</text><text class="small" x="102" y="50" text-anchor="middle">Raman、Rydberg、重排</text></g>
+    <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">存储 / 纠缠区</text><text class="small" x="102" y="50" text-anchor="middle">原子、空位与丢失</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">荧光 / 位置映射</text><text class="small" x="102" y="50" text-anchor="middle">态与损失分辨</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">补原子 / 再重排</text><text class="small" x="97" y="50" text-anchor="middle">保留或重新装载</text></g>
+    <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
+  </g>
+
+  <g transform="translate(60 530)">
+    <rect class="lane photo" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">光子</text><text class="small" x="24" y="68">时空模式</text>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">泵浦 / 源 / 压缩器</text><text class="small" x="102" y="50" text-anchor="middle">先兆式非高斯资源</text></g>
+    <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">滤波 / 复用 / 延迟</text><text class="small" x="102" y="50" text-anchor="middle">干涉仪、开关与损耗</text></g>
+    <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">簇态 / 逻辑模式</text><text class="small" x="102" y="50" text-anchor="middle">空间 × 时间 × 时钟</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">PNR / 零差探测</text><text class="small" x="102" y="50" text-anchor="middle">探测、解码与前馈</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">重试 / 路由绕开</text><text class="small" x="97" y="50" text-anchor="middle">失败或擦除标志送解码</text></g>
+    <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
+  </g>
+
+  <g transform="translate(60 645)">
+    <rect class="lane spin" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">半导体自旋</text><text class="small" x="24" y="68">量子点</text>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">DC 栅压 + 共振场</text><text class="small" x="102" y="50" text-anchor="middle">装载、调谐与交换脉冲</text></g>
+    <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">低温复用 / cryo-CMOS</text><text class="small" x="102" y="50" text-anchor="middle">基带、ESR / EDSR</text></g>
+    <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">电子 / 空穴 / 施主</text><text class="small" x="102" y="50" text-anchor="middle">谷态与电荷噪声</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">自旋→电荷→RF</text><text class="small" x="102" y="50" text-anchor="middle">SET 与反射测量</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">电子库 / 条件复位</text><text class="small" x="97" y="50" text-anchor="middle">重新装载与验证</text></g>
+    <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
+  </g>
+
+  <text class="small" x="700" y="807" text-anchor="middle">各平台完成复位、补充或再循环后，分别进入自己的下一轮实验</text>
+</svg>

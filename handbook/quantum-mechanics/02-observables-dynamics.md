@@ -2,7 +2,7 @@
 
 在[量子力学基础篇 Q1](01-experiments-states.md)和[第 02 章](../02-single-qubit.md)里，我们已经学会用复数向量表示量子态，也看到了测量怎样把复振幅变成概率。顺着这条线往下走，立刻会冒出两个绕不开的问题：第一，实验室里测量一个物理量（比如能量或某个方向的自旋分量），在数学上到底对应什么对象？第二，在制备和测量之间什么都不测、只是静静等待或施加控制脉冲，量子态与可观测量又怎样随时间改变？
 
-本章专心回答这两个问题。整章不需要系统学过微积分——碰到时间变化率的地方，我们都用最直观的“指针转动速度”和初等矩阵乘法一步步算清楚。你可以先把精力放在第 1–3 节的可观测量算例和第 5–6 节的定常演化与进动翻转上；第 4 节的不确定关系、第 7 节的三种动力学绘景、第 8 节的时变脉冲次序以及第 9 节与[第 05 章](../05-noise-channels.md)衔接的开放系统动力学，既可以顺着读完，也可以在后续碰到旋转坐标系、脉冲控制与噪声模拟时回来细查。
+本章专心回答这两个问题。阅读上分为两条清晰轨道：**第 1–6 节为核心主线**，完全不需要微积分，只靠初等矩阵乘法与三角函数即可从头算到底（掌握可观测量、对易子、不确定关系与定常进动/翻转，足以顺畅衔接后续电路与算法章节）；**第 7–9 节标为“进阶选读”**，引入了乘积求导与指数求导（以及密度矩阵和偏迹），涵盖动力学绘景、含时脉冲排序与开放系统 Lindblad 主方程，既可以顺着读完，也可以在学完[第 03 章](../03-multiple-qubits.md)和[第 05 章](../05-noise-channels.md)后再回来精读。
 
 ---
 
@@ -14,29 +14,7 @@
 
 在有限维复向量空间 $\mathbb{C}^d$ 中，同时满足“拥有一组铺满整个空间的正交归一本征基（不同本征值对应的本征子空间两两正交、直和为 $\mathbb{C}^d$）”和“所有本征值全是实数”这两条要求的线性算符，正好是**厄米算符**（Hermitian operator）——满足 $A=A^\dagger$ 的 $d\times d$ 矩阵，其中 $A^\dagger=(A^*)^T$ 表示先把矩阵里每个元素取复共轭再转置。（在无限维连续空间里还需区分对称算符与更严格的自伴算符边界，详见 [Q4｜波函数与连续模型](04-wavefunctions-models.md)。）
 
-先别急着背一般定义，拿起最熟悉的单比特 Pauli 矩阵 $Z$（维度 $2\times 2$，在计算基 $|0\rangle=[1,0]^T$、$|1\rangle=[0,1]^T$ 下表示）亲手算一遍：
-
-$$
-Z=\begin{bmatrix}1 & 0\\ 0 & -1\end{bmatrix}.
-$$
-
-把 $Z$ 乘到两个基态上，逐行展开：
-
-$$
-Z|0\rangle
-=\begin{bmatrix}1 & 0\\ 0 & -1\end{bmatrix}\begin{bmatrix}1\\0\end{bmatrix}
-=\begin{bmatrix}1\cdot 1 + 0\cdot 0\\ 0\cdot 1 + (-1)\cdot 0\end{bmatrix}
-=+1|0\rangle,
-$$
-
-$$
-Z|1\rangle
-=\begin{bmatrix}1 & 0\\ 0 & -1\end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}
-=\begin{bmatrix}1\cdot 0 + 0\cdot 1\\ 0\cdot 0 + (-1)\cdot 1\end{bmatrix}
-=-1|1\rangle.
-$$
-
-这两个本征值 $+1$ 和 $-1$，就是测量 $Z$ 时仪器唯一可能报出的两种读数。现在把归一化纯态
+先拿最熟悉的单比特 Pauli 矩阵 $Z = \begin{bmatrix}1 & 0\\ 0 & -1\end{bmatrix}$（维度 $2\times 2$，计算基 $|0\rangle=[1,0]^T,\; |1\rangle=[0,1]^T$）直接检验其本征关系：$Z|0\rangle = +1|0\rangle$、$Z|1\rangle = -1|1\rangle$。这两个本征值 $+1$ 和 $-1$，就是测量 $Z$ 时仪器唯一可能报出的两种读数。现在把归一化纯态
 
 $$
 |\psi\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{1}{2}|1\rangle
@@ -513,7 +491,7 @@ $$
 
    左端 $=1$，Robertson 下界 $=1$，Schrödinger 下界 $=\sqrt{0^2+1^2}=1$，两者在这里恰好双双饱和！而且你会发现 $\widetilde{X}|{+i}\rangle=X|{+i}\rangle=i Z|{+i}\rangle=i\widetilde{Z}|{+i}\rangle$，比例系数 $\lambda=i$ 正是纯虚数。
 
-### 4.3 手算算例二：Robertson 给零界时，Schrödinger 协方差精准锁死
+### 4.3 进阶选读：Robertson 给零界时的 Schrödinger 协方差算例
 
 现在换成实系数叠加态（在 Bloch 球上位于 $XZ$ 平面、与 $+z$ 轴夹角 $\pi/4$ 的方向）：
 
@@ -565,7 +543,7 @@ $$
    \frac{1}{2}\left|\langle[X,Z]\rangle\right|=\frac{1}{2}\left|-2i\cdot 0\right|=0.
    $$
 
-   Robertson 关系只给出了平庸的 $\frac{1}{2}\ge 0$！千万不要看到右端为零，就误以为 $X$ 和 $Z$ 没有不确定性——它们俩的标准差明明都是 $1/\sqrt{2}\approx 0.7071$。
+   Robertson 关系只给出了平庸的 $\frac{1}{2}\ge 0$。不要看到右端为零，就误以为 $X$ 和 $Z$ 没有不确定性——它们俩的标准差明明都是 $1/\sqrt{2}\approx 0.7071$。
 
 4. **对照 Schrödinger 协方差下界**：别忘了 $\{X,Z\}=0$，把它代进对称协方差公式：
 
@@ -724,7 +702,7 @@ $$
 
 这条通用方程把抽象的复向量演化翻译成了实数期望值的运动法则，下面立刻拿它做两场硬核示范，并顺手摘下守恒律和能量–时间不确定关系两份礼物：
 
-#### 示范一：零跳步推出单比特 Bloch 叉积方程 $\dot{\vec{r}} = \vec{\Omega}\times\vec{r}$
+#### 示范一：逐步推出单比特 Bloch 叉积方程 $\dot{\vec{r}} = \vec{\Omega}\times\vec{r}$
 
 取最一般的无痕二能级哈密顿量 $\mathcal{H}(t) = \frac{\hbar}{2}\vec{\Omega}(t)\cdot\vec{\sigma} = \frac{\hbar}{2}\bigl(\Omega_x X + \Omega_y Y + \Omega_z Z\bigr)$，其中旋转角速度矢量 $\vec{\Omega}(t) = (\Omega_x, \Omega_y, \Omega_z)$ 的单位为 $\mathrm{rad/s}$。记 Bloch 坐标为 $\vec{r}(t) = (r_x, r_y, r_z) = (\langle X\rangle_t, \langle Y\rangle_t, \langle Z\rangle_t)$。
 
@@ -821,7 +799,7 @@ $$
 
   括号外仍是无影响的全局相位，但括号里面冒出了随时间旋转的**相对相位** $e^{-i(E_1-E_0)t/\hbar}$！只要在另一套测量基下把两支重新干涉，这个相对相位就会直接变出随时间振荡的探测概率，振荡角频率恰好由**能级差** $\omega=(E_1-E_0)/\hbar$ 决定。
 
-这顺便帮我们拆穿一个常见误解：如果把整个哈密顿量加上一个实数常量乘单位矩阵，$\mathcal{H}'=\mathcal{H}+cI$，因为 $I$ 与 $\mathcal{H}$ 对易，演化算符只多了一个共同因子：
+这顺便帮我们澄清一个常见误解：如果把整个哈密顿量加上一个实数常量乘单位矩阵，$\mathcal{H}'=\mathcal{H}+cI$，因为 $I$ 与 $\mathcal{H}$ 对易，演化算符只多了一个共同因子：
 
 $$
 U'(t)=e^{-i(\mathcal{H}+cI)t/\hbar}=e^{-ict/\hbar}U(t),
@@ -846,7 +824,7 @@ $$
 
 ## 6. 两个可以徒手算到底的单比特演化模型
 
-学会了 $U(t)=e^{-i\mathcal{H}t/\hbar}$，现在拿单比特上最重要的两个定常哈密顿量——$Z$ 型进动和 $X$ 型翻转——从头到尾零跳步算一遍，直接接通[第 02 章](../02-single-qubit.md)的旋转门和真实硬件里的微波脉冲。
+学会了 $U(t)=e^{-i\mathcal{H}t/\hbar}$，现在拿单比特上最重要的两个定常哈密顿量——$Z$ 型进动和 $X$ 型翻转——从头到尾逐步算一遍，直接接通[第 02 章](../02-single-qubit.md)的旋转门和真实硬件里的微波脉冲。
 
 ### 6.1 $Z$ 哈密顿量、两种符号约定与拉莫尔进动
 
@@ -953,6 +931,16 @@ $$
 t_\pi=\frac{\pi}{|\Omega|}.
 $$
 
+**一行验算量子速度极限（Mandelstam–Tamm 界与 Margolus–Levitin 界）**：回呼第 5.3 节预告的正交化最短时间下限，看看共振 $\pi$ 脉冲到底有多快。对 $\mathcal{H}_X = \frac{\hbar\Omega}{2}X$ 和初态 $|0\rangle$，能量期望为 $\langle \mathcal{H}_X\rangle = \frac{\hbar\Omega}{2}\langle 0|X|0\rangle = 0$，能量平方期望为 $\langle \mathcal{H}_X^2\rangle = \frac{\hbar^2\Omega^2}{4}\langle 0|I|0\rangle = \frac{\hbar^2\Omega^2}{4}$，故能量标准差 $\Delta E = \frac{\hbar|\Omega|}{2}$，基态能量 $E_0 = -\frac{\hbar|\Omega|}{2}$。分别代入 **Mandelstam–Tamm 界**（1945）与基于平均激发能的 **Margolus–Levitin 界**（1998）：
+
+$$
+\tau_{\mathrm{MT}} = \frac{\pi\hbar}{2\,\Delta E} = \frac{\pi\hbar}{2\cdot(\hbar|\Omega|/2)} = \frac{\pi}{|\Omega|},
+\qquad
+\tau_{\mathrm{ML}} = \frac{\pi\hbar}{2\bigl(\langle\mathcal{H}_X\rangle - E_0\bigr)} = \frac{\pi\hbar}{2\cdot(\hbar|\Omega|/2)} = \frac{\pi}{|\Omega|}.
+$$
+
+一般封闭定常系统的统一量子速度极限为 $\tau_\perp \ge \max(\tau_{\mathrm{MT}},\; \tau_{\mathrm{ML}})$，而共振 $\pi$ 脉冲的时长 $t_\pi = \frac{\pi}{|\Omega|}$ **同时精准饱和了两条下界**——在给定驱动强度 $|\Omega|$ 下，不可能存在比 $t_\pi$ 更快的恒幅正交翻转脉冲。
+
 如果实验论文给出的不是角频率 $\Omega$（$\mathrm{rad/s}$），而是普通频率 $f=\frac{|\Omega|}{2\pi}$（单位 $\mathrm{Hz}$，即每秒完整振荡多少个周期），把 $|\Omega|=2\pi f$ 代入得
 
 $$
@@ -989,7 +977,7 @@ $$
 
 用日常画面打个比方：舞台上有位按固定圆圈旋转的舞者，观众席上有一台摄像机。你可以让摄像机不动、盯着舞者转圈（薛定谔绘景）；也可以把舞者定格成参考系、让摄像机反方向转圈（海森堡绘景）；如果你自己干脆站上和舞台同步旋转的转盘，就只剩下舞者相对转盘的缓慢走位（相互作用绘景）。三种记法拍出的画面里，舞者与镜头之间的相对夹角每分每秒都一模一样；不过比方到此为止——在量子力学里，绘景切换是希尔伯特空间上的严格酉变换，保持全部内积、本征值谱和测量概率分毫不差。
 
-### 7.2 海森堡绘景：让算符演化与 $X_H(t)$ 零跳步手算
+### 7.2 海森堡绘景：让算符演化与 $X_H(t)$ 逐步手算
 
 在**海森堡绘景**中（设初值时刻 $t=0$ 与薛定谔绘景重合，$U(0)=I$），态矢量恒定不变，算符吸收全部演化：
 
@@ -1001,7 +989,7 @@ A_H(t) \equiv U^\dagger(t)\,A_S(t)\,U(t),
 \mathcal{H}_H(t) \equiv U^\dagger(t)\,\mathcal{H}_S(t)\,U(t).
 $$
 
-（若 $\mathcal{H}_S$ 定常，则它与 $U(t)=e^{-i\mathcal{H}_S t/\hbar}$ 对易，故 $\mathcal{H}_H = \mathcal{H}_S$。）现在对 $A_H(t)$ 求时间导数。利用演化算符的薛定谔方程 $\frac{dU}{dt} = -\frac{i}{\hbar}\mathcal{H}_S U$ 及其共轭转置 $\frac{dU^\dagger}{dt} = +\frac{i}{\hbar}U^\dagger \mathcal{H}_S$，并在适当位置插入恒等式 $U U^\dagger = I$，零跳步展开三项乘积求导：
+（若 $\mathcal{H}_S$ 定常，则它与 $U(t)=e^{-i\mathcal{H}_S t/\hbar}$ 对易，故 $\mathcal{H}_H = \mathcal{H}_S$。）现在对 $A_H(t)$ 求时间导数。利用演化算符的薛定谔方程 $\frac{dU}{dt} = -\frac{i}{\hbar}\mathcal{H}_S U$ 及其共轭转置 $\frac{dU^\dagger}{dt} = +\frac{i}{\hbar}U^\dagger \mathcal{H}_S$，并在适当位置插入恒等式 $U U^\dagger = I$，逐步展开三项乘积求导：
 
 $$
 \begin{aligned}
@@ -1021,7 +1009,7 @@ $$
 
 请牢牢盯住这里的顺序 $[A_H, \mathcal{H}_H] = -[\mathcal{H}_H, A_H]$：后面第 9.1 节推导出密度矩阵的 von Neumann 方程 $i\hbar\dot{\rho} = +[\mathcal{H},\rho]$ 时，两者恰好相差一个负号！
 
-**零跳步手算**：取第 6.1 节的门几何约定 $\mathcal{H}_Z = +\frac{\hbar\omega}{2}Z$，求 $X_H(t)$、$Y_H(t)$ 与 $Z_H(t)$，并用两种独立路径核对！
+**双路径手算**：取第 6.1 节的门几何约定 $\mathcal{H}_Z = +\frac{\hbar\omega}{2}Z$，求 $X_H(t)$、$Y_H(t)$ 与 $Z_H(t)$，并用两种独立路径核对！
 
 - **路径一**（解海森堡运动方程）：因为 $\mathcal{H}_Z$ 定常且 $X,Y,Z$ 不显含时间，把 $\mathcal{H}_H = \frac{\hbar\omega}{2}Z_H = \frac{\hbar\omega}{2}Z$ 代入（利用海森堡绘景保持对易关系 $[Z_H, X_H] = 2iY_H,\ [Z_H, Y_H] = -2iX_H$）：
 
@@ -1069,7 +1057,7 @@ $$
 
 在现代量子计算里，海森堡绘景远不止是换个写法省力气——当量子电路由 Clifford 门构成时，追踪 Pauli 算符的共轭演化 $U^\dagger P U$ 只需多项式时间，这正是[第 10 章](../10-error-correction.md)稳定子纠错码演化、泡利传播经典模拟（[第 16 章](../16-advanced-algorithms-verification.md)）以及连续变量高斯辛演化（[第 18 章](../18-channels-capacities-complexity.md)）背后的核心引擎。
 
-### 7.3 相互作用绘景：拆解 $\mathcal{H}_0 + V(t)$ 并直通旋转坐标系与失谐 $\Delta$
+### 7.3 进阶选读：相互作用绘景——拆解 $\mathcal{H}_0 + V(t)$ 并直通旋转坐标系与失谐 $\Delta$
 
 真实芯片上，量子比特自带高频自由哈密顿量 $\mathcal{H}_0$（比如 $5\ \mathrm{GHz}$ 的能级劈裂），而外面加进来的微波控制脉冲 $V(t)$ 往往弱得多（比如 $10\text{--}50\ \mathrm{MHz}$）：
 
@@ -1087,7 +1075,7 @@ $$
 
 检验期望值不变：$\langle\psi_I(t)|A_I(t)|\psi_I(t)\rangle = \langle\psi_S(t)|U_0 U_0^\dagger A_S U_0 U_0^\dagger|\psi_S(t)\rangle = \langle\psi_S(t)|A_S|\psi_S(t)\rangle$。
 
-现在零跳步推导 $|\psi_I(t)\rangle$ 满足的运动方程。利用 $i\hbar\frac{dU_0^\dagger}{dt} = -U_0^\dagger\mathcal{H}_0$（因为 $\frac{dU_0^\dagger}{dt} = +\frac{i}{\hbar}U_0^\dagger\mathcal{H}_0$，两边乘 $i\hbar$ 得 $i^2 = -1$）与 $i\hbar\frac{d}{dt}|\psi_S\rangle = (\mathcal{H}_0 + V(t))|\psi_S\rangle$：
+现在逐步推导 $|\psi_I(t)\rangle$ 满足的运动方程。利用 $i\hbar\frac{dU_0^\dagger}{dt} = -U_0^\dagger\mathcal{H}_0$（因为 $\frac{dU_0^\dagger}{dt} = +\frac{i}{\hbar}U_0^\dagger\mathcal{H}_0$，两边乘 $i\hbar$ 得 $i^2 = -1$）与 $i\hbar\frac{d}{dt}|\psi_S\rangle = (\mathcal{H}_0 + V(t))|\psi_S\rangle$：
 
 $$
 \begin{aligned}
@@ -1163,7 +1151,7 @@ $$
 
 ---
 
-## 8. 时变哈密顿量：时间排序、Dyson 级数与 Magnus 展开
+## 8. 进阶选读：时变哈密顿量——时间排序、Dyson 级数与 Magnus 展开
 
 实际操控量子计算机时，我们不可能只开着一个永远不变的哈密顿量干等：我们需要先加一段 $X$ 脉冲，关掉后再加一段 $Z$ 脉冲，或者施加像钟形曲线那样平滑升降的**高斯脉冲**。一旦 $\mathcal{H}(t)$ 随时间改变，还能不能简单地把总积分塞进一个指数写成 $\exp\!\left[-\frac{i}{\hbar}\int_{t_0}^t \mathcal{H}(s)\,ds\right]$？
 
@@ -1303,9 +1291,9 @@ $$
    U_{(1)}^\dagger U_{(1)} = \left(1 + \frac{\pi^2}{8}\right)I \approx 2.2337\,I!
    $$
 
-   作用在归一化态 $|0\rangle$ 上，输出向量长度平方竟膨胀到 $2.2337$——总概率暴涨到 $223\%$，彻底违反概率守恒！
+   作用在归一化态 $|0\rangle$ 上，输出向量长度平方膨胀到 $2.2337$——总概率升至 $223\%$，违背概率守恒。
 
-5. **保幺正的二阶 Magnus 展开零跳步数值手算**：怎么既保留时间顺序，又在任意阶截断后都**严格保持幺正**？把演化算符始终留在指数的帽子下面，写作 **Magnus 展开** $U(t,t_0) = \exp(\Omega_1 + \Omega_2 + \cdots)$（直观来源是 Baker–Campbell–Hausdorff 公式 $e^A e^B = \exp\bigl(A + B + \frac{1}{2}[A,B] + \cdots\bigr)$）。前两阶公式为
+5. **保幺正的二阶 Magnus 展开数值手算**：怎么既保留时间顺序，又在任意阶截断后都**严格保持幺正**？把演化算符始终留在指数的帽子下面，写作 **Magnus 展开** $U(t,t_0) = \exp(\Omega_1 + \Omega_2 + \cdots)$（直观来源是 Baker–Campbell–Hausdorff 公式 $e^A e^B = \exp\bigl(A + B + \frac{1}{2}[A,B] + \cdots\bigr)$）。前两阶公式为
 
    $$
    \Omega_1 = -\frac{i}{\hbar}\int_{t_0}^t \mathcal{H}(t_1)\,dt_1,
@@ -1373,7 +1361,7 @@ $$
 
 其中 $\Delta=0.7\ \mathrm{rad/\mu s}$，峰值出现在 $t=1.5\ \mu\mathrm{s}$。因为 $\Omega(t)$ 随时间变化且 $[Z,X]\ne 0$，不同时刻的 $h(t)$ 互不对易。
 
-数值上最直观也严格保幺正的求解办法是**中点分段连乘法**（等效于在每小段上保留局部二阶对称 Magnus 展开）：把 $[0,3]\ \mu\mathrm{s}$ 均分成 $M$ 段（每段宽 $\delta t=3/M$），在每段中点时刻 $t_k=(k+\tfrac{1}{2})\delta t$ 取一次短时酉矩阵 $e^{-ih(t_k)\delta t}$，按**较晚的片乘在左边**一路连乘起来。从初态 $|{+i}\rangle$（对应 Bloch 向量 $\vec{r}(0)=(0,1,0)$）出发，当切片数 $M$ 每次翻倍时，末态 Bloch 坐标最大误差按典型的二阶收敛律 $O(1/M^2)$ 缩小到约 $1/4$（例如从 $M=40$ 到 $M=320$，误差由 $5.4\times 10^{-5}$ 降至 $8.4\times 10^{-7}$）。相反，如果省事把 $\int_0^3 h(t)\,dt$ 算完后塞进单个矩阵指数，就算定积分算到 15 位小数，末态最大坐标偏差依然死死卡在 $0.055$ 上无法消除——完整收敛数据、标准库复现脚本与 QuTiP 实跑对照见[时变动力学核验说明](../../codes/foundations/round73-README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)。
+数值上最直观也严格保幺正的求解办法是**中点分段连乘法**（等效于在每小段上保留局部二阶对称 Magnus 展开）：把 $[0,3]\ \mu\mathrm{s}$ 均分成 $M$ 段（每段宽 $\delta t=3/M$），在每段中点时刻 $t_k=(k+\tfrac{1}{2})\delta t$ 取一次短时酉矩阵 $e^{-ih(t_k)\delta t}$，按**较晚的片乘在左边**一路连乘起来。从初态 $|{+i}\rangle$（对应 Bloch 向量 $\vec{r}(0)=(0,1,0)$）出发，当切片数 $M$ 每次翻倍时，末态 Bloch 坐标最大误差按典型的二阶收敛律 $O(1/M^2)$ 缩小到约 $1/4$（例如从 $M=40$ 到 $M=320$，误差由 $5.4\times 10^{-5}$ 降至 $8.4\times 10^{-7}$）。相反，如果省事把 $\int_0^3 h(t)\,dt$ 算完后塞进单个矩阵指数，就算定积分算到 15 位小数，末态最大坐标偏差依然死死卡在 $0.055$ 上无法消除——完整收敛数据、标准库复现脚本与 QuTiP 实跑对照见[基础代码说明](../../codes/foundations/README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)。
 
 顺手把封闭时变系统的三种常用方法做成一张速查对照表：
 
@@ -1400,15 +1388,17 @@ flowchart TD
 
 ---
 
-## 9. 走出封闭盒子：开放系统的 Lindblad 主方程与量子跳跃轨迹
+## 9. 进阶选读：走出封闭盒子——开放系统的 Lindblad 主方程与量子跳跃轨迹
+
+> **先修提示**：本节大量使用密度矩阵、偏迹与 Kraus 算符，若为首遍阅读且尚未学习[第 03 章](../03-multiple-qubits.md)与[第 05 章](../05-noise-channels.md)，建议先跳过本节，待熟悉混态与信道后再回看精读。
 
 前面的演化全部发生在“与世隔绝的理想盒子”里：纯态永远演化成纯态，相位永不丢失。可真实世界里的超导芯片、离子阱和原子总免不了与电磁真空、衬底声子或控制线路发生耦合。激发态 $|1\rangle$ 会把能量以光子的形式漏进环境，掉回基态 $|0\rangle$；随机的磁场或频率抖动也会把 $|0\rangle$ 和 $|1\rangle$ 之间的相对相位冲淡。
 
 当你只关心量子比特本身、不去记录逃进宏大环境的每一个光子时，单靠一条态矢量 $|\psi(t)\rangle$ 已经装不下“失去相干后的统计混合”了，必须升级为 $2\times 2$ 的**密度矩阵**（density matrix）$\rho(t)$（厄米、半正定、迹为 $1$；对纯态它就是外积 $|\psi\rangle\langle\psi|$，对角元 $\rho_{00},\rho_{11}$ 是布居概率，非对角元 $\rho_{01},\rho_{10}$ 记载着相干性）。[第 05 章](../05-noise-channels.md)会系统展开密度矩阵与离散量子信道；这里我们一步不跳地从薛定谔方程与系统–环境碰撞模型出发，亲手把开放系统的主方程导出来。
 
-### 9.1 von Neumann 方程与碰撞模型零跳步导出 Lindblad 主方程
+### 9.1 von Neumann 方程与碰撞模型导出 Lindblad 主方程
 
-#### 第一步：封闭密度矩阵的 von Neumann 方程（五步零跳步）
+#### 第一步：封闭密度矩阵的 von Neumann 方程
 
 先看系统与外界完全隔绝的情形。设系统以经典概率 $p_j$（$p_j\ge 0,\ \sum_j p_j=1$，不随时间改变）处于纯态 $|\psi_j(t)\rangle$，密度矩阵为 $\rho(t) = \sum_j p_j |\psi_j(t)\rangle\langle\psi_j(t)|$。对时间求导，逐项套用薛定谔方程 $\frac{d}{dt}|\psi_j\rangle = -\frac{i}{\hbar}\mathcal{H}|\psi_j\rangle$ 与共轭方程 $\frac{d}{dt}\langle\psi_j| = +\frac{i}{\hbar}\langle\psi_j|\mathcal{H}$：
 
@@ -1437,9 +1427,9 @@ $$
 
 两者恰好相差一个**负号**！道理很直观：态往前转 $\rho(t) = U\rho(0)U^\dagger$，而海森堡算符往回转 $A_H(t) = U^\dagger A_S U$，导数自然一正一负。
 
-#### 第二步：系统–环境碰撞模型零跳步导出 Lindblad 耗散项
+#### 第二步：系统–环境碰撞模型导出 Lindblad 耗散项
 
-现在把盒盖打开一条缝，让量子比特与外界交换能量。主方程里那个看似凭空冒出来的耗散项 $C\rho C^\dagger - \frac{1}{2}\{C^\dagger C, \rho\}$ 到底从何而来？借助现代开放系统教材最直观的**碰撞模型**（collision model，Ciccarello et al., *Phys. Rep.* 2022），只需 $4\times 4$ 矩阵和泰勒展开一阶项就能亲眼看穿！
+现在把盒盖打开一条缝，让量子比特与外界交换能量。主方程里那个看似凭空冒出来的耗散项 $L\rho L^\dagger - \frac{1}{2}\{L^\dagger L, \rho\}$ 到底从何而来？借助现代开放系统教材最直观的**碰撞模型**（collision model，Ciccarello et al., *Phys. Rep.* 2022），只需 $4\times 4$ 矩阵和泰勒展开一阶项就能一步步看清。
 
 设系统比特 $S$ 在每一个极短时间步 $\delta t$ 内，与一颗**全新的零温环境比特 $E$**（初始必定处于真空基态 $|0\rangle_E$；碰撞完立刻飞走丢弃，不再回来——这正是无记忆 **Markov 近似**最清晰的物理画面！）发生一次微弱的能量交换交互：
 
@@ -1489,15 +1479,15 @@ $$
 \end{aligned}
 $$
 
-两边减去 $\rho(t)$、除以 $\delta t$ 并令 $\delta t \to 0$，记跳跃算符 $C = \sqrt{\kappa}\,\sigma_-$（满足 $C^\dagger C = \kappa\,\sigma_+\sigma_-$），即导出标准的 Lindblad 耗散项：
+两边减去 $\rho(t)$、除以 $\delta t$ 并令 $\delta t \to 0$，记跳跃算符 $L = \sqrt{\kappa}\,\sigma_-$（满足 $L^\dagger L = \kappa\,\sigma_+\sigma_-$；与[第 05 章](../05-noise-channels.md)及全书[符号表](../appendices/notation.md)统一记作 $L$，部分工具库如 QuTiP 亦记作塌缩算符 $C$），即导出标准的 Lindblad 耗散项：
 
 $$
 \left(\frac{d\rho}{dt}\right)_{\mathrm{diss}}
 = \kappa\left(\sigma_-\rho\sigma_+ - \frac{1}{2}\bigl\{\sigma_+\sigma_-,\,\rho\bigr\}\right)
-= C\rho C^\dagger - \frac{1}{2}\bigl\{C^\dagger C,\,\rho\bigr\}!
+= L\rho L^\dagger - \frac{1}{2}\bigl\{L^\dagger L,\,\rho\bigr\}.
 $$
 
-这一刻两项的物理来历彻底通透：**第一项 $C\rho C^\dagger$** 来自环境吸收光子跃迁到 $|1\rangle_E$ 的跳跃分支；**第二项 $-\frac{1}{2}\{C^\dagger C,\rho\}$** 恰好来自 $\cos\sqrt{\kappa\,\delta t} \approx 1 - \frac{1}{2}\kappa\,\delta t$，表示“没有放出光子”分支的权重缩减，专门用来抵消第一项增加的迹，保证总概率永远等于 $1$！
+这一刻两项的物理来历一目了然：**第一项 $L\rho L^\dagger$** 来自环境吸收光子跃迁到 $|1\rangle_E$ 的跳跃分支；**第二项 $-\frac{1}{2}\{L^\dagger L,\rho\}$** 恰好来自 $\cos\sqrt{\kappa\,\delta t} \approx 1 - \frac{1}{2}\kappa\,\delta t$，表示“没有放出光子”分支的权重缩减，专门用来抵消第一项增加的迹，保证总概率永远等于 $1$。
 
 #### 第三步：一般 GKSL / Lindblad 主方程与纯退相位的“因子 2”核对
 
@@ -1506,53 +1496,20 @@ $$
 $$
 \frac{d\rho}{dt}
 =-\frac{i}{\hbar}[\mathcal{H},\rho]
-+\sum_{k}\left(C_k\rho C_k^\dagger - \frac{1}{2}\bigl\{C_k^\dagger C_k,\,\rho\bigr\}\right),
++\sum_{k}\left(L_k\rho L_k^\dagger - \frac{1}{2}\bigl\{L_k^\dagger L_k,\,\rho\bigr\}\right),
 $$
 
-其中 $C_k$ 称为**跳跃算符**（jump / collapse operator，亦称塌缩算符），量纲为 $\mathrm{时间}^{-1/2}$。
+其中 $L_k$ 称为**跳跃算符**（jump / Lindblad operator，亦称塌缩算符），量纲为 $\mathrm{时间}^{-1/2}$。利用迹的循环性容易验明 $\operatorname{Tr}(\dot{\rho})=0$，故总概率恒守恒。
 
-立刻做保迹体检：利用迹的循环性 $\operatorname{Tr}(XY)=\operatorname{Tr}(YX)$，对易子项 $\operatorname{Tr}(\mathcal{H}\rho-\rho\mathcal{H})=0$，且每条耗散项满足 $\operatorname{Tr}(C_k\rho C_k^\dagger)-\frac{1}{2}\operatorname{Tr}(C_k^\dagger C_k\rho)-\frac{1}{2}\operatorname{Tr}(\rho C_k^\dagger C_k)=\operatorname{Tr}(C_k^\dagger C_k\rho)-\operatorname{Tr}(C_k^\dagger C_k\rho)=0$。故只要 $\operatorname{Tr}\rho(0)=1$，总概率永远严格守恒。
-
-**最容易栽跟头的因子 2 检查**：对单个量子比特，最常见的两条噪声通道是能量弛豫（速率 $\Gamma_1=1/T_1$）和纯退相位（速率 $\Gamma_\phi=1/T_\phi$）：
+对单比特最常见的两条噪声通道——能量弛豫（速率 $\Gamma_1=1/T_1$）与纯退相位（速率 $\Gamma_\phi=1/T_\phi$），跳跃算符取为
 
 $$
-C_1=\sqrt{\Gamma_1}\,|0\rangle\langle 1|,
+L_1=\sqrt{\Gamma_1}\,|0\rangle\langle 1|,
 \qquad
-C_\phi=\sqrt{\frac{\Gamma_\phi}{2}}\,Z.
+L_\phi=\sqrt{\frac{\Gamma_\phi}{2}}\,Z.
 $$
 
-为什么 $C_\phi$ 的根号里一定要除以 $2$？亲手把 $C_\phi$ 代进耗散项算一遍就终身难忘。因为 $Z^\dagger Z=Z^2=I$，
-
-$$
-C_\phi\rho C_\phi^\dagger - \frac{1}{2}\{C_\phi^\dagger C_\phi,\rho\}
-=\frac{\Gamma_\phi}{2}\left(Z\rho Z - \rho\right).
-$$
-
-拿一般密度矩阵 $\rho=\begin{bmatrix}\rho_{00}&\rho_{01}\\\rho_{10}&\rho_{11}\end{bmatrix}$ 逐格相乘：
-
-$$
-Z\rho Z
-=\begin{bmatrix}1&0\\0&-1\end{bmatrix}
-\begin{bmatrix}\rho_{00}&\rho_{01}\\\rho_{10}&\rho_{11}\end{bmatrix}
-\begin{bmatrix}1&0\\0&-1\end{bmatrix}
-=\begin{bmatrix}\rho_{00}&-\rho_{01}\\-\rho_{10}&\rho_{11}\end{bmatrix}.
-$$
-
-减去 $\rho$ 再乘 $\frac{\Gamma_\phi}{2}$：
-
-$$
-\frac{\Gamma_\phi}{2}\bigl(Z\rho Z - \rho\bigr)
-=\frac{\Gamma_\phi}{2}\begin{bmatrix}0 & -2\rho_{01}\\ -2\rho_{10} & 0\end{bmatrix}
-=\begin{bmatrix}0 & -\Gamma_\phi\rho_{01}\\ -\Gamma_\phi\rho_{10} & 0\end{bmatrix}.
-$$
-
-$Z\rho Z-\rho$ 自己就会在非对角元上产生一个因子 $2$！正因预先在 $C_\phi=\sqrt{\Gamma_\phi/2}\,Z$ 里除以了 $\sqrt{2}$，非对角元才恰好按 $\dot{\rho}_{01}=-\Gamma_\phi\rho_{01}$ 以速率 $\Gamma_\phi$ 指数衰减。若同时存在能量弛豫 $C_1$（它对非对角元贡献 $-\frac{\Gamma_1}{2}\rho_{01}$，下面立刻手算），总相干衰减速率就是
-
-$$
-\frac{1}{T_2}=\frac{1}{2T_1}+\Gamma_\phi=\frac{1}{2T_1}+\frac{1}{T_\phi},
-$$
-
-与[第 05 章](../05-noise-channels.md)以及[第 09 章](../09-hardware.md)的退相干时间公式完全一致。要是粗心漏写了那个 $1/2$，算出来的纯退相位速率就会错整整一倍！
+留意 $L_\phi$ 根号内的**因子 $1/2$**：因为 $Z\rho Z$ 只把非对角元翻号，$Z\rho Z - \rho$ 自带系数 $-2$，所以 $\frac{\Gamma_\phi}{2}(Z\rho Z - \rho)$ 才恰好给出 $\dot{\rho}_{01} = -\Gamma_\phi \rho_{01}$；叠加上能量弛豫 $L_1$ 对非对角元的衰减 $-\frac{\Gamma_1}{2}\rho_{01}$，便得到全书通用的退相干时间关系 $\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$（从碰撞模型逐步导出因子 $1/2$ 见本节末 `练 Q2-B`，与离散退相位信道的换算见[第 05 章第 6.2 节](../05-noise-channels.md)）。
 
 ### 9.2 零温阻尼的完整手算：连续主方程对接第 05 章振幅阻尼信道
 
@@ -1561,10 +1518,10 @@ $$
 $$
 h=\frac{\mathcal{H}_0}{\hbar}=-\frac{\omega}{2}Z\quad (\omega=0.9\ \mathrm{rad/\mu s}),
 \qquad
-C=\sqrt{\kappa}\,|0\rangle\langle 1|\quad (\kappa=0.7\ \mu\mathrm{s}^{-1}),
+L=\sqrt{\kappa}\,|0\rangle\langle 1|\quad (\kappa=0.7\ \mu\mathrm{s}^{-1}),
 $$
 
-跳跃算符 $C=\begin{bmatrix}0&\sqrt{\kappa}\\0&0\end{bmatrix}$（量纲 $\mu\mathrm{s}^{-1/2}$）把激发态 $|1\rangle$ 拉回基态 $|0\rangle$。取归一化初态
+跳跃算符 $L=\begin{bmatrix}0&\sqrt{\kappa}\\0&0\end{bmatrix}$（量纲 $\mu\mathrm{s}^{-1/2}$）把激发态 $|1\rangle$ 拉回基态 $|0\rangle$。取归一化初态
 
 $$
 |\psi(0)\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{i}{2}|1\rangle,
@@ -1594,10 +1551,10 @@ $$
 
    乘以 $-i$ 得 $\begin{bmatrix}0 & +i\omega c\\ -i\omega c^* & 0\end{bmatrix}$。
 
-2. **耗散项 $C\rho C^\dagger - \frac{1}{2}\{C^\dagger C,\rho\}$**：先算 $C^\dagger C=\kappa|1\rangle\langle 1|=\begin{bmatrix}0&0\\0&\kappa\end{bmatrix}$ 与 $C\rho C^\dagger=\kappa b|0\rangle\langle 0|=\begin{bmatrix}\kappa b&0\\0&0\end{bmatrix}$；再算反对易子：
+2. **耗散项 $L\rho L^\dagger - \frac{1}{2}\{L^\dagger L,\rho\}$**：先算 $L^\dagger L=\kappa|1\rangle\langle 1|=\begin{bmatrix}0&0\\0&\kappa\end{bmatrix}$ 与 $L\rho L^\dagger=\kappa b|0\rangle\langle 0|=\begin{bmatrix}\kappa b&0\\0&0\end{bmatrix}$；再算反对易子：
 
    $$
-   \frac{1}{2}\{C^\dagger C,\rho\}
+   \frac{1}{2}\{L^\dagger L,\rho\}
    =\frac{1}{2}\left(
    \begin{bmatrix}0&0\\ \kappa c^* & \kappa b\end{bmatrix}
    +\begin{bmatrix}0 & \kappa c\\ 0 & \kappa b\end{bmatrix}
@@ -1625,25 +1582,7 @@ c(t)=-\frac{i\sqrt{3}}{4}e^{(-0.35+0.9i)t},
 \rho(t)=\begin{bmatrix}1-b(t) & c(t)\\ c(t)^* & b(t)\end{bmatrix}.
 $$
 
-现在回头对照[第 05 章](../05-noise-channels.md)里的零温振幅阻尼信道！定义无量纲阻尼概率
-
-$$
-\gamma(t)=1-e^{-\kappa t}\in[0,1).
-$$
-
-你会发现：$1-\gamma(t)=e^{-\kappa t}$，$\sqrt{1-\gamma(t)}=e^{-\kappa t/2}$，所以
-
-$$
-b(t)=\bigl(1-\gamma(t)\bigr)\,b(0),
-\qquad
-c(t)=\sqrt{1-\gamma(t)}\,e^{+i\omega t}\,c(0).
-$$
-
-连续时间的 Lindblad 微分方程，在每一个固定时刻 $t$ 上都精确等价于“先按自由哈密顿量旋转相位，再施加阻尼概率为 $\gamma(t)=1-e^{-\kappa t}$ 的振幅阻尼 Kraus 信道”——并且一眼就能看出相干模长 $|c(t)|$ 的衰减速率 $\kappa/2$ 恰好是布居衰减速率 $\kappa$ 的一半（即无纯退相位时的 $T_2 = 2T_1$）！
-
-![4,096 条真实 QuTiP 实跑轨迹均值与第 9.2 节零温阻尼解析解及残差对照](../assets/round72-foundations-trajectories.svg)
-
-（可打开[原尺寸 SVG](../assets/round72-foundations-trajectories.svg)查看清晰细节。上图直接对应本节初态 $|\psi(0)\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{i}{2}|1\rangle$（$b(0)=0.25$）、$\omega=0.9\ \mathrm{rad/\mu s}$、$\kappa=0.70\ \mu\mathrm{s}^{-1}$ 的隔离环境 QuTiP 实跑对照：主方程求解器 `mesolve` 与解析解 $b(t)=\frac{1}{4}e^{-0.7t}$ 的最大全矩阵元误差为 $6.34\times 10^{-11}$，而 $4{,}096$ 条随机轨迹 `mcsolve` 均值的最大全矩阵元误差（含非对角相干元）为 $3.05\times 10^{-3}$；下方对角布居残差 $\Delta\rho_{11}$ 因同批轨迹跨时刻正相关而呈同号起伏，但全程落在 $\pm 2\,\mathrm{SE}$ 范围内。完整实跑脚本与存档见[基础 SDK 运行说明](../../codes/foundations/round72-README.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。）
+令无量纲阻尼概率 $\gamma(t)=1-e^{-\kappa t}\in[0,1)$，则有 $b(t)=\bigl(1-\gamma(t)\bigr)b(0)$、$c(t)=\sqrt{1-\gamma(t)}\,e^{+i\omega t}c(0)$——连续主方程在任一时刻 $t$ 精确对接[第 05 章第 5.4 节](../05-noise-channels.md)的零温振幅阻尼 Kraus 信道，并直接体现出无纯退相位时的 $T_2 = 2T_1$。（本算例与 4,096 条 QuTiP 随机轨迹的实跑残差对照图及校验记录收录于[基础实验册](../labs/foundations.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。）
 
 ### 9.3 单条量子跳跃轨迹（MCWF）与系综平均
 
@@ -1652,38 +1591,46 @@ $$
 定义**非厄米有效哈密顿量**：
 
 $$
-\mathcal{H}_{\mathrm{eff}}=\mathcal{H}-\frac{i\hbar}{2}\sum_{k} C_k^\dagger C_k.
+\mathcal{H}_{\mathrm{eff}}=\mathcal{H}-\frac{i\hbar}{2}\sum_{k} L_k^\dagger L_k.
 $$
 
 从时刻 $t$ 的归一化纯态 $|\psi(t)\rangle$ 向前推进一小步 $\delta t$，大自然面临两条岔路（恰好对应第 9.1 节碰撞模型里环境比特 $E$ 的两条测量分支！）：
 
-1. **以极小概率 $\delta p_k = \delta t\,\langle\psi(t)|C_k^\dagger C_k|\psi(t)\rangle$ 发生一次量子跳跃**（探测器捕获到一颗逃逸光子）：态矢量瞬间按跳跃算符更新并重新归一化：
+1. **以极小概率 $\delta p_k = \delta t\,\langle\psi(t)|L_k^\dagger L_k|\psi(t)\rangle$ 发生一次量子跳跃**（探测器捕获到一颗逃逸光子）：态矢量瞬间按跳跃算符更新并重新归一化：
 
    $$
-   |\psi(t+\delta t)\rangle=\frac{C_k|\psi(t)\rangle}{\sqrt{\langle\psi(t)|C_k^\dagger C_k|\psi(t)\rangle}}
-   =\frac{C_k|\psi(t)\rangle}{\sqrt{\delta p_k/\delta t}}.
+   |\psi(t+\delta t)\rangle=\frac{L_k|\psi(t)\rangle}{\sqrt{\langle\psi(t)|L_k^\dagger L_k|\psi(t)\rangle}}
+   =\frac{L_k|\psi(t)\rangle}{\sqrt{\delta p_k/\delta t}}.
    $$
 
    在刚才的零温阻尼模型中，一旦探测器响起，态矢量瞬间跌落到基态 $|0\rangle$；因为没有驱动把它重新推回 $|1\rangle$，之后就永远停在 $|0\rangle$ 了。
 
-2. **以概率 $1-\delta p$（其中 $\delta p=\sum_k \delta p_k$）没有发生跳跃**（探测器保持安静）：千万别以为探测器没响、态就只按封闭 $\mathcal{H}$ 演化！**没有收到光子本身就是一条极有分量的贝叶斯信息**——系统每多坚持一小段时间还没发光，说明它原本处于激发态 $|1\rangle$ 的可能性就越低、处于基态 $|0\rangle$ 的后验权重就越高。数学上，无跳跃分支先按非厄米 $\mathcal{H}_{\mathrm{eff}}$ 演化一步：
+2. **以概率 $1-\delta p$（其中 $\delta p=\sum_k \delta p_k$）没有发生跳跃**（探测器保持安静）：不要以为探测器没响、态就只按封闭 $\mathcal{H}$ 演化——**没有收到光子本身就是一条有分量的贝叶斯信息**：系统每多坚持一小段时间还没发光，说明它原本处于激发态 $|1\rangle$ 的可能性就越低、处于基态 $|0\rangle$ 的后验权重就越高。数学上，无跳跃分支先按非厄米 $\mathcal{H}_{\mathrm{eff}}$ 演化一步：
 
    $$
    |\widetilde{\psi}(t+\delta t)\rangle
    =\left(I-\frac{i}{\hbar}\mathcal{H}_{\mathrm{eff}}\delta t\right)|\psi(t)\rangle,
    $$
 
-   它的长度平方恰好缩成 $1-\delta p+O(\delta t^2)$，再重新归一化得 $|\psi(t+\delta t)\rangle = |\widetilde{\psi}(t+\delta t)\rangle/\sqrt{1-\delta p}$。在零温阻尼模型里，这条无跳跃分支使 $|1\rangle$ 的相对振幅平滑地按 $e^{-\kappa t/2}$ 往下滑，仿佛态矢量静静滑向基态 $|0\rangle$。
+   计算其精确范数平方（利用 $\mathcal{H}_{\mathrm{eff}}^\dagger = \mathcal{H} + \frac{i\hbar}{2}\sum_k L_k^\dagger L_k$）：
 
-把这两类分支按概率加权平均成密度矩阵，分母里的 $1-\delta p$ 与 $\delta p_k$ 全部约掉（第二项约去 $\delta p_k$ 后，分母里的 $1/\delta t$ 翻回分子，正好凑出 $\delta t\,C_k|\psi\rangle\langle\psi|C_k^\dagger$）：
+   $$
+   \bigl\||\widetilde{\psi}(t+\delta t)\rangle\bigr\|^2
+   = \langle\psi(t)|\left(I+\frac{i}{\hbar}\mathcal{H}_{\mathrm{eff}}^\dagger\delta t\right)\left(I-\frac{i}{\hbar}\mathcal{H}_{\mathrm{eff}}\delta t\right)|\psi(t)\rangle
+   = 1 - \delta p + O(\delta t^2),
+   $$
+
+   再除以自身范数归一化得 $|\psi_{\mathrm{no\text{-}jump}}(t+\delta t)\rangle = |\widetilde{\psi}(t+\delta t)\rangle / \sqrt{1 - \delta p + O(\delta t^2)}$。在零温阻尼模型里，这条无跳跃分支使 $|1\rangle$ 的相对振幅平滑地按 $e^{-\kappa t/2}$ 往下滑，态矢量静静滑向基态 $|0\rangle$。
+
+把这两类分支按概率加权平均成密度矩阵。注意无跳跃项分母的 $1-\delta p + O(\delta t^2)$ 与分子的 $(1-\delta p)$ 相除等于 $1 + O(\delta t^2)$，于是两项的权重因子在 $\delta t$ 一阶精确约掉（跳跃项约去 $\delta p_k$ 后，分母里的 $1/\delta t$ 翻回分子，凑出 $\delta t\,L_k|\psi\rangle\langle\psi|L_k^\dagger$）：
 
 $$
 \begin{aligned}
 \mathbb{E}\!\left[|\psi(t+\delta t)\rangle\langle\psi(t+\delta t)|\right]
-&=(1-\delta p)\frac{|\widetilde{\psi}\rangle\langle\widetilde{\psi}|}{1-\delta p}
-+\sum_{k}\delta p_k\frac{C_k|\psi\rangle\langle\psi|C_k^\dagger}{\delta p_k/\delta t}\\
+&=(1-\delta p)\frac{|\widetilde{\psi}\rangle\langle\widetilde{\psi}|}{1-\delta p+O(\delta t^2)}
++\sum_{k}\delta p_k\frac{L_k|\psi\rangle\langle\psi|L_k^\dagger}{\delta p_k/\delta t}\\
 &=\rho(t)+\delta t\left(-\frac{i}{\hbar}[\mathcal{H},\rho(t)]
-+\sum_{k}\Bigl(C_k\rho(t)C_k^\dagger-\frac{1}{2}\{C_k^\dagger C_k,\rho(t)\}\Bigr)\right)+O(\delta t^2).
++\sum_{k}\Bigl(L_k\rho(t)L_k^\dagger-\frac{1}{2}\{L_k^\dagger L_k,\rho(t)\}\Bigr)\right)+O(\delta t^2).
 \end{aligned}
 $$
 
@@ -1695,11 +1642,11 @@ $$
 
 （可打开[原尺寸 SVG](../assets/v3-q2-lindblad-trajectories.svg)查看清晰细节。该图在无量纲时间 $\kappa t$ 下演示同一零温阻尼主方程的轨迹机制，其中能量弛豫速率统一记作 $\kappa$，以区别于第 9.2 节的无量纲阻尼概率 $\gamma(t)=1-e^{-\kappa t}$：左面板蓝色主曲线与 8 条突然跌落的阶梯轨迹取自完全激发初态 $|1\rangle$（$\rho_{11}(0)=1$，解析解为 $\rho_{11}(t)=e^{-\kappa t}$），绿色虚线则取自等权叠加初态 $|+\rangle$（$\rho_{11}(0)=1/2$），定格一直未检测到光子时的无跳跃贝叶斯下滑 $\frac{e^{-\kappa t}}{1+e^{-\kappa t}}$；右面板展示 $N=64, 512, 4096$ 条独立轨迹系综平均及其统计误差带按 $O(1/\sqrt{N})$ 向解析解收敛的过程。）
 
-回到第 9.2 节初态为 $|\psi(0)\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{i}{2}|1\rangle$（$b(0)=1/4$）的无驱动零温模型，单条轨迹在 $[0, 4]\ \mu\mathrm{s}$ 内至多跳一次，总跳跃概率恰好等于激发态减少的份额 $p_J = b(0) - b(4) = \frac{1}{4}(1 - e^{-2.8}) \approx 0.2348$。由于 $N$ 条独立随机轨迹平均的**标准误**按 $O(1/\sqrt{N})$ 缩小，想把采样起伏压小 $10$ 倍，必须把轨迹数增加到 $100$ 倍；详细的大样本轨迹统计、残差复现与 QuTiP 实跑存档见[基础 SDK 运行说明](../../codes/foundations/round72-README.md)、[时变动力学核验说明](../../codes/foundations/round73-README.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。
+回到第 9.2 节初态为 $|\psi(0)\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{i}{2}|1\rangle$（$b(0)=1/4$）的无驱动零温模型，单条轨迹在 $[0, 4]\ \mu\mathrm{s}$ 内至多跳一次，总跳跃概率恰好等于激发态减少的份额 $p_J = b(0) - b(4) = \frac{1}{4}(1 - e^{-2.8}) \approx 0.2348$。由于 $N$ 条独立随机轨迹平均的**标准误**按 $O(1/\sqrt{N})$ 缩小，想把采样起伏压小 $10$ 倍，必须把轨迹数增加到 $100$ 倍；详细的大样本轨迹统计、残差复现与 QuTiP 实跑存档见[基础代码说明](../../codes/foundations/README.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。
 
 ### 9.4 驱动耗散 Bloch 方程与三类数值误差边界
 
-现在把第 7.3 节与第 8.2 节的旋转坐标系驱动哈密顿量 $h(t)=\frac{\Delta Z+\Omega(t)X}{2}$（角频率矢量 $\vec{\Omega}(t) = (\Omega(t), 0, \Delta)$，失谐 $\Delta = \omega_d - \omega_0$）和零温阻尼 $C=\sqrt{\kappa}|0\rangle\langle 1|$ 合并在一起。
+现在把第 7.3 节与第 8.2 节的旋转坐标系驱动哈密顿量 $h(t)=\frac{\Delta Z+\Omega(t)X}{2}$（角频率矢量 $\vec{\Omega}(t) = (\Omega(t), 0, \Delta)$，失谐 $\Delta = \omega_d - \omega_0$）和零温阻尼 $L=\sqrt{\kappa}|0\rangle\langle 1|$ 合并在一起。
 
 借着前面两块已经打牢的地基，三条实数驱动耗散 **Bloch 方程**可以一字不跳地直接写出来：
 
@@ -1718,7 +1665,7 @@ $$
 
 方程的物理画面干净利落：横平面相干 $(x, y)$ 一边绕有效轴旋转、一边以速率 $\kappa/2$ 收缩；纵向坐标 $z$ 在驱动 $\Omega(t)$ 翻动的同时，始终被耗散项 $\kappa(1-z)$ 拉向基态北极 $z = +1$。有了驱动之后，掉回 $|0\rangle$ 的量子比特还能被脉冲重新激发，因此单条量子跳跃轨迹不再“至多跳一次”，同一条轨迹在不同时刻的读数也彼此存在时间相关性。
 
-把实际数值模拟量子动力学时最容易混为一谈的三类误差收束进一张概念对照表（具体的高斯驱动求解器容差扫描与轨迹样本协方差检验记录见[时变动力学核验说明](../../codes/foundations/round73-README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)）：
+把实际数值模拟量子动力学时最容易混为一谈的三类误差收束进一张概念对照表（具体的高斯驱动求解器容差扫描与轨迹样本协方差检验记录见[基础代码说明](../../codes/foundations/README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)）：
 
 | 误差类型 | 典型来源 | 识别特征 | 正确的改进方法 |
 | :--- | :--- | :--- | :--- |
@@ -1726,7 +1673,7 @@ $$
 | **数值积分（ODE）误差** | 求解器容差过松，或最大内部步长跨过了窄脉冲峰值 | 收紧容差并限制最大内部步长后，解迅速向参考曲线收敛 | 限制最大内部步长远小于脉冲宽度（注意：画图输出网格不等于内部步长） |
 | **有限轨迹采样误差** | 蒙特卡洛波函数（MCWF）轨迹数 $N$ 有限 | 均值围绕主方程解随机起伏，标准误按 $O(N^{-1/2})$ 衰减 | 增大轨迹数 $N$，或在低维系统直接解 Lindblad 主方程 |
 
-> **练 Q2-B（碰撞模型导出纯退相位与“因子 2”来源）**：让系统比特 $S$ 在每步 $\delta t$ 内与全新环境比特 $|0\rangle_E$ 按纯退相位交互 $U_{\delta t} = \exp\bigl[-i\theta\,(Z\otimes X_E)\bigr]$ 碰撞，其中 $\theta = \sqrt{\frac{\Gamma_\phi\,\delta t}{2}}$。(1) 利用 $(Z\otimes X_E)^2 = I$ 写出 $U_{\delta t}$ 对 $|0\rangle_S|0\rangle_E$ 与 $|1\rangle_S|0\rangle_E$ 的作用；(2) 对 $E$ 求偏迹读出 Kraus 算符 $K_0, K_1$；(3) 展开至 $\delta t$ 一阶取 $\delta t\to 0$，亲眼验证为什么跳跃算符正好是 $C_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 且非对角元衰减速率恰好为 $\Gamma_\phi$。
+> **练 Q2-B（碰撞模型导出纯退相位与“因子 2”来源）**：让系统比特 $S$ 在每步 $\delta t$ 内与全新环境比特 $|0\rangle_E$ 按纯退相位交互 $U_{\delta t} = \exp\bigl[-i\theta\,(Z\otimes X_E)\bigr]$ 碰撞，其中 $\theta = \sqrt{\frac{\Gamma_\phi\,\delta t}{2}}$。(1) 利用 $(Z\otimes X_E)^2 = I$ 写出 $U_{\delta t}$ 对 $|0\rangle_S|0\rangle_E$ 与 $|1\rangle_S|0\rangle_E$ 的作用；(2) 对 $E$ 求偏迹读出 Kraus 算符 $K_0, K_1$；(3) 展开至 $\delta t$ 一阶取 $\delta t\to 0$，亲眼验证为什么跳跃算符正好是 $L_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 且非对角元衰减速率恰好为 $\Gamma_\phi$。
 >
 > **自检核对**：(1) 因 $Z|0\rangle = +|0\rangle,\ Z|1\rangle = -|1\rangle$ 且 $X_E|0\rangle_E = |1\rangle_E$，有 $U_{\delta t}|00\rangle = \cos\theta|00\rangle - i\sin\theta|01\rangle$、$U_{\delta t}|10\rangle = \cos\theta|10\rangle + i\sin\theta|11\rangle$；(2) $K_0 = \cos\theta\,I$、$K_1 = -i\sin\theta\,Z$（由 $\cos^2\theta+\sin^2\theta=1$ 可直接核对 $K_0^\dagger K_0 + K_1^\dagger K_1 = I$）；(3) 展开得 $K_0 = (1 - \frac{\Gamma_\phi\delta t}{4})I + O(\delta t^2)$、$K_1 = -i\sqrt{\frac{\Gamma_\phi\delta t}{2}}Z + O(\delta t^{3/2})$，代入 $K_0\rho K_0^\dagger + K_1\rho K_1^\dagger$ 得 $\dot{\rho} = \frac{\Gamma_\phi}{2}(Z\rho Z - \rho)$，非对角元按 $\dot{\rho}_{01} = -\Gamma_\phi\rho_{01}$ 衰减，精准还原因子 $1/2$！
 
@@ -1744,7 +1691,24 @@ $$
 - **写反 von Neumann 方程与海森堡方程的符号**：薛定谔绘景密度矩阵是 $i\hbar\dot{\rho} = +[\mathcal{H},\rho]$，海森堡绘景算符是 $i\hbar\dot{A}_H = [A_H,\mathcal{H}_H] = -[\mathcal{H}_H,A_H]$，两者严格差一个负号。
 - **忘记 $\hbar$、混用 $\mathrm{Hz}$ 与 $\mathrm{rad/s}$ 或静默翻转 $\mathcal{H}_Z$ 符号**：放进指数前先检查 $\mathcal{H}t/\hbar$ 是否无量纲；核实拉比频率是 $f=\Omega/(2\pi)$ 还是 $\Omega$；明确交代使用的是门几何约定 $+\frac{\hbar\omega}{2}Z$、物理基态约定 $-\frac{\hbar\omega_0}{2}Z$ 还是旋转框失谐 $+\frac{\hbar\Delta}{2}Z$。
 - **把不对易的时变哈密顿量直接塞进单个指数，或把有限阶 Dyson 级数当量子门**：先检查 $[\mathcal{H}(t_1),\mathcal{H}(t_2)]$ 是否恒为零；不为零时必须按“晚左早右”分段连乘或用保幺正的 Magnus 展开。
-- **漏写纯退相位跳跃算符里的 $\sqrt{1/2}$，或把单条 MCWF 轨迹当成唯一物理实在**：$C_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 中的 $1/2$ 抵消了 $Z\rho Z-\rho$ 自带的因子 $2$；同一 Lindblad 主方程存在多种等价随机解缠，未监测环境时可观测的仍是系综平均密度矩阵 $\rho(t)$。
+- **漏写纯退相位跳跃算符里的 $\sqrt{1/2}$，或把单条 MCWF 轨迹当成唯一物理实在**：$L_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 中的 $1/2$ 抵消了 $Z\rho Z-\rho$ 自带的因子 $2$；同一 Lindblad 主方程存在多种等价随机解缠，未监测环境时可观测的仍是系综平均密度矩阵 $\rho(t)$。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：厄米算符与 Lüders 投影 $\to$ 对易子、CSCO 与 Robertson / Schrödinger 不确定关系 $\to$ 薛定谔方程、Ehrenfest 定理与量子速度极限 $\to$ 三种绘景与含时脉冲排序 $\to$ Lindblad 主方程与量子跳跃轨迹。
+
+| 核心公式 / 关系 | 物理含义与关键边界 |
+| :--- | :--- |
+| 谱分解与零方差 | $A=\sum_a aP_a$；$\Delta A = 0 \iff A\lvert\psi\rangle=\langle A\rangle\lvert\psi\rangle$；简并投影保留子空间相干 |
+| Schrödinger / Robertson 界 | $(\Delta A)^2(\Delta B)^2 \ge \operatorname{Cov}(A,B)^2 + \frac{1}{4}\lvert\langle[A,B]\rangle\rvert^2$（制备散布，非单次扰动） |
+| 薛定谔演化与量子速度极限 | $U(t)=e^{-i\mathcal H t/\hbar}$；$\tau_\perp \ge \max\!\left(\frac{\pi\hbar}{2\Delta E},\;\frac{\pi\hbar}{2(\langle\mathcal H\rangle-E_0)}\right)$，共振 $\pi$ 脉冲 $t_\pi=\pi/\lvert\Omega\rvert$ 饱和两界 |
+| 三种绘景与符号反差 | 密度矩阵 $i\hbar\dot\rho = +[\mathcal H,\rho]$；海森堡算符 $i\hbar\dot A_H = [A_H,\mathcal H_H]$（反号） |
+| 含时演化与 Magnus 展开 | $[\mathcal H(t_1),\mathcal H(t_2)]\ne 0$ 须“晚左早右”时间排序；Dyson 截断破幺正，Magnus 严格保幺正 |
+| Lindblad 主方程与退相干 | $\dot\rho = -\frac{i}{\hbar}[\mathcal H,\rho] + \sum_k(L_k\rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k,\rho\})$；$L_\phi=\sqrt{\Gamma_\phi/2}\,Z$，$\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$ |
+
+**三句自检要点**：① 核对角频率 $\Omega$（$\mathrm{rad/s}$）与普通频率 $f=\Omega/(2\pi)$（$\mathrm{Hz}$），避免 $t_\pi$ 差 $2\pi$ 倍；② 区分门几何约定 $+\frac{\hbar\omega}{2}Z$ 与物理基态约定 $-\frac{\hbar\omega_0}{2}Z$；③ 单条 MCWF 轨迹依赖环境监测方式，系综平均 $\rho(t)$ 才是无监测时的唯一物理预测。
 
 ---
 
@@ -1769,14 +1733,14 @@ $$
 
 - **能量平移与脉冲时序实验**：见[基础实验册 FQ2](../labs/foundations.md#fq2子系统整体能量平移仍然只是全局相位)与[基础代码说明](../../codes/foundations/README.md)（运行 `python3 codes/foundations/foundations_lab.py --case q2`），逐项验证两段 $X/Z$ 门序差异，以及子系统整体能量平移与单分支相移的区别。
 - **简并 Lüders 投影 vs 细分遗忘**：运行 `python3 codes/foundations/diagnostic_lab.py --case q2`，用 $3\times 3$ 矩阵直接核对回测 $|u\rangle\langle u|$ 的概率 $1$ 与 $1/2$。
-- **Schrödinger 协方差、自由阻尼随机轨迹与高斯驱动收敛复现**：上述数值检验脚本、容差收敛记录与独立 Bloch 方程交叉验证均收录于[时变动力学核验说明](../../codes/foundations/round73-README.md)、[基础 SDK 运行说明](../../codes/foundations/round72-README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)。
+- **Schrödinger 协方差、自由阻尼随机轨迹与高斯驱动收敛复现**：上述数值检验脚本、容差收敛记录与独立 Bloch 方程交叉验证均收录于[基础代码说明](../../codes/foundations/README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)。
 
 ## 参考资料
 
 - J. J. Sakurai & J. Napolitano, *Modern Quantum Mechanics*, 3rd ed. (Cambridge University Press, 2020)：第 1.4 节（相容可观测量、简并子空间与 CSCO）、第 2.1–2.2 节（时间演化算符、薛定谔/海森堡绘景与 Ehrenfest 定理）与第 5.6 节（相互作用绘景）。
 - MIT OpenCourseWare, [22.51 Course Notes, Chapter 3: Axioms of Quantum Mechanics](https://ocw.mit.edu/courses/22-51-quantum-theory-of-radiation-interactions-fall-2012/9cdcc3c1e36da2ae3e2f925d5b435ab6_MIT22_51F12_Ch3.pdf) 与 [8.321 Lecture 8: General Time Dependent Hamiltonians](https://ocw.mit.edu/courses/8-321-quantum-theory-i-fall-2017/579cb61c4eaa494b9adb90830d921099_MIT8_321F17_lec8.pdf)：谱测量公设、不确定关系与时间排序演化推导。
 - H. P. Robertson, ["The Uncertainty Principle," *Physical Review* **34**(1), 163–164 (1929)](https://doi.org/10.1103/PhysRev.34.163)；E. Schrödinger, *Sitzungsber. Preuss. Akad. Wiss.* **19**, 296–303 (1930)（[英译与评注 arXiv:quant-ph/9903100](https://arxiv.org/abs/quant-ph/9903100)）：Robertson 与 Schrödinger 不确定关系的原始文献。
-- L. Mandelstam & I. Tamm, "The uncertainty relation between energy and time in nonrelativistic quantum mechanics," *J. Phys. (USSR)* **9**, 249–254 (1945)；M. Ozawa, ["Universally valid reformulation of the Heisenberg uncertainty principle on noise and disturbance in measurement," *Physical Review A* **67**, 042105 (2003)](https://doi.org/10.1103/PhysRevA.67.042105)：能量–时间关系与测量误差–扰动关系的经典界碑。
+- L. Mandelstam & I. Tamm, "The uncertainty relation between energy and time in nonrelativistic quantum mechanics," *J. Phys. (USSR)* **9**, 249–254 (1945)；N. Margolus & L. B. Levitin, ["The maximum speed of dynamical evolution," *Physica D* **120**(1–2), 188–195 (1998)](https://doi.org/10.1016/S0167-2789(98)00054-2)；M. Ozawa, ["Universally valid reformulation of the Heisenberg uncertainty principle on noise and disturbance in measurement," *Physical Review A* **67**, 042105 (2003)](https://doi.org/10.1103/PhysRevA.67.042105)：能量–时间量子速度极限与测量误差–扰动关系的经典界碑。
 - S. Blanes, F. Casas, J. A. Oteo & J. Ros, ["The Magnus expansion and some of its applications," *Physics Reports* **470**(5–6), 151–238 (2009)](https://doi.org/10.1016/j.physrep.2008.11.001)：保幺正 Magnus 展开与时间排序演化综述。
 - V. Gorini, A. Kossakowski & E. C. G. Sudarshan, [*J. Math. Phys.* **17**, 821–825 (1976)](https://doi.org/10.1063/1.522979)；G. Lindblad, [*Commun. Math. Phys.* **48**, 119–130 (1976)](https://doi.org/10.1007/BF01608499)；F. Ciccarello, S. Lorenzo, V. Giovannetti & G. M. Palma, ["Quantum collision models: Open system dynamics from repeated interactions," *Physics Reports* **954**, 1–70 (2022)](https://doi.org/10.1016/j.physrep.2022.01.001)；D. Manzano, ["A short introduction to the Lindblad master equation," *AIP Advances* **10**, 025106 (2020)](https://doi.org/10.1063/1.5115323)：GKSL / Lindblad 主方程与碰撞模型导出综述。
 - J. Dalibard, Y. Castin & K. Mølmer, ["Wave-function approach to dissipative processes in quantum optics," *Physical Review Letters* **68**, 580–583 (1992)](https://doi.org/10.1103/PhysRevLett.68.580)；M. B. Plenio & P. L. Knight, ["The quantum-jump approach to dissipative dynamics in quantum optics," *Reviews of Modern Physics* **70**, 101–144 (1998)](https://doi.org/10.1103/RevModPhys.70.101)；Z. K. Minev et al., ["To catch and reverse a quantum jump mid-flight," *Nature* **570**, 200–204 (2019)](https://doi.org/10.1038/s41586-019-1287-z)：量子跳跃轨迹的原始提出、理论综述与超导人工原子实时拦截实验。

@@ -2,7 +2,7 @@
   <title id="title">20 任务 FIFO 实时解码排队尾延迟与停机并集可用率</title>
   <desc id="desc">左面板按精确有理数复算 20 任务单服务台 FIFO 队列（每 1 μs 到达、常规服务 0.8 μs、n=2 突发 4.0 μs）：尽管平均服务 0.96 μs &lt; 1 μs，单次突发仍致 n=2 至 n=11 共 10 项（50%）击穿 2.0 μs 硬反馈截止线。右面板上部绘制 d=7 归档解码尾延迟分布（p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 与 SLA 红线），下部绘制 service_timeline.py 的 24 小时重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -53,51 +53,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .halo{stroke:#16222e}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
-  .c5{stroke:#b999f0}
-  .c5-fill{fill:#b999f0}
-  .c5-txt{fill:#d0b8fa}
-  .c5-soft{fill:#2d2045;stroke:#b999f0}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .forbid{fill:#f28872;fill-opacity:.14}
-  .area1{fill:#6bc2f5;fill-opacity:.16}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .area4{fill:#f0ba5a;fill-opacity:.15}
-  .data-node{fill:#16222e;stroke:#d7e7f5}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
-  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

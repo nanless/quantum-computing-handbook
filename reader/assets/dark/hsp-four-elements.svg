@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 300" role="img" aria-labelledby="title desc">
+  <title id="title">四元素隐藏子群的两陪集与采样结果</title>
+  <desc id="desc">群中四个二位串分成两陪集。函数在每个陪集内相同。经过 Hadamard 变换，只采到 00 或 11，各占一半。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f7f9fc}.ink{fill:#172638}.muted{fill:#566578}.a{fill:#e5f4f0;stroke:#2f8575}.b{fill:#eaf0fc;stroke:#4e70ae}.out{fill:#fff;stroke:#bcc9d8}.line{stroke:#64788e;stroke-width:2;fill:none;marker-end:url(#arrow)}.head{font:600 19px system-ui,sans-serif}.label{font:15px system-ui,sans-serif}.bit{font:600 22px ui-monospace,SFMono-Regular,Consolas,monospace}.small{font:13px system-ui,sans-serif}
+      
+.bg{fill:#121c2a}.ink{fill:#edf4ff}.muted{fill:#b2c1d2}.a{fill:#143b37;stroke:#57b9a5}.b{fill:#1c2d50;stroke:#819fe3}.out{fill:#1d2c3d;stroke:#708096}.line{stroke:#a4b7ca}
+
+    </style>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 8 4 0 8Z" fill="#64788e"/></marker>
+  </defs>
+  <rect class="bg" width="920" height="300" rx="18"/>
+  <text class="head ink" x="30" y="39">同一个函数值，把输入分成两组</text>
+  <text class="small muted" x="30" y="61">G = {00, 01, 10, 11} · H = {00, 11}</text>
+  <rect class="a" x="30" y="89" width="275" height="154" rx="14"/>
+  <text class="label ink" x="48" y="119">陪集 C₀ · f(x) = 0</text>
+  <text class="bit ink" x="58" y="168">00</text><text class="bit ink" x="210" y="168">11</text>
+  <text class="small muted" x="48" y="218">|C₀⟩ = (|00⟩ + |11⟩)/√2</text>
+  <rect class="b" x="330" y="89" width="275" height="154" rx="14"/>
+  <text class="label ink" x="348" y="119">陪集 C₁ · f(x) = 1</text>
+  <text class="bit ink" x="358" y="168">01</text><text class="bit ink" x="510" y="168">10</text>
+  <text class="small muted" x="348" y="218">|C₁⟩ = (|01⟩ + |10⟩)/√2</text>
+  <path class="line" d="M619 165 H668"/>
+  <text class="small muted" x="620" y="124">双比特</text>
+  <text class="small muted" x="609" y="141">Hadamard</text>
+  <text class="small muted" x="631" y="190">测量</text>
+  <rect class="out" x="680" y="89" width="210" height="154" rx="14"/>
+  <text class="label ink" x="698" y="119">可能的输出 z</text>
+  <text class="bit ink" x="706" y="162">00</text><text class="small muted" x="770" y="162">概率 1/2</text>
+  <text class="bit ink" x="706" y="201">11</text><text class="small muted" x="770" y="201">概率 1/2</text>
+  <text class="small muted" x="30" y="275">两组的相对符号可以不同，但都满足 z·11 = 0（模 2）。</text>
+</svg>

@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">旋转表面码电路级抽样与 MWPM 解码：三种码距完整存储失败率与 95% 精确二项区间</title>
+  <desc id="desc">基于 Stim 与 PyMatching 归档数据绘制旋转表面码在合成 Pauli 电路级噪声 p = 0.001、X 基存储（轮数等于码距 d）、每点 N = 20,000 次独立抽样下的完整存储失败概率 q 及其双侧 95% 精确 Clopper-Pearson 区间。d = 3 为 13/20,000，d = 5 为 2/20,000，d = 7 为 0/20,000 并以空心下三角和向下箭头标示 95% 统计上界 1.84e-4。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">旋转表面码电路级抽样与 MWPM：三种码距 95% 精确二项区间</text>
+  <text class="subtitle" x="34" y="77">合成 Pauli 电路级噪声 p = 0.001（X 基存储，轮数 = d，每点 N = 20,000 次独立完整电路抽样）</text>
+  <rect class="panel" x="28" y="96" width="944" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 958 Q 971 97 971 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="44" y="120">完整 X 基存储失败概率 q（对数纵轴，双侧 95% 精确 Clopper–Pearson 区间）</text>
+  <line class="grid-minor" x1="126" y1="397.95" x2="624" y2="397.95"/>
+  <line class="grid-minor" x1="126" y1="322.4" x2="624" y2="322.4"/>
+  <line class="grid-minor" x1="126" y1="246.84" x2="624" y2="246.84"/>
+  <line class="grid-minor" x1="126" y1="171.28" x2="624" y2="171.28"/>
+  <line class="grid" x1="126" y1="434" x2="624" y2="434"/>
+  <text class="sm" x="116" y="438" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="126" y1="358.44" x2="624" y2="358.44"/>
+  <text class="sm" x="116" y="362.44" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-5</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="126" y1="282.89" x2="624" y2="282.89"/>
+  <text class="sm" x="116" y="286.89" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="126" y1="207.33" x2="624" y2="207.33"/>
+  <text class="sm" x="116" y="211.33" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="203.28" y1="162" x2="203.28" y2="434"/>
+  <text class="smb" x="203.28" y="454" text-anchor="middle">d = 3（3 轮）</text>
+  <line class="grid" x1="375" y1="162" x2="375" y2="434"/>
+  <text class="smb" x="375" y="454" text-anchor="middle">d = 5（5 轮）</text>
+  <line class="grid" x1="546.72" y1="162" x2="546.72" y2="434"/>
+  <text class="smb" x="546.72" y="454" text-anchor="middle">d = 7（7 轮）</text>
+  <line class="axis" x1="126" y1="434" x2="632" y2="434"/>
+  <polygon class="axis-fill" points="632,434 624.5,437.6 624.5,430.4"/>
+  <line class="axis" x1="126" y1="434" x2="126" y2="152"/>
+  <polygon class="axis-fill" points="126,152 129.6,159.5 122.4,159.5"/>
+  <text class="lbl" x="375" y="478" text-anchor="middle">码距 d（存储轮数 = d；物理比特数 2d² − 1 = 17, 49, 97）</text>
+  <text class="lbl" x="58" y="298" text-anchor="middle" transform="rotate(-90 58 298)">每次完整 X 基存储失败概率 q（无量纲）</text>
+  <line class="c1" stroke-width="2.4" x1="203.28" y1="242.15" x2="203.28" y2="203.87"/>
+  <line class="c1" stroke-width="2.2" x1="195.28" y1="203.87" x2="211.28" y2="203.87"/>
+  <line class="c1" stroke-width="2.2" x1="195.28" y1="242.15" x2="211.28" y2="242.15"/>
+  <circle class="c1-fill" cx="203.28" cy="221.47" r="6.2"/>
+  <text class="smb c1-txt" x="203.28" y="179.87" text-anchor="middle">13 / 20,000</text>
+  <text class="xs c1-txt" x="203.28" y="194.87" text-anchor="middle">q̂ = 6.50e-04</text>
+  <line class="c1" stroke-width="2.4" x1="375" y1="352.16" x2="375" y2="240.75"/>
+  <line class="c1" stroke-width="2.2" x1="367" y1="240.75" x2="383" y2="240.75"/>
+  <line class="c1" stroke-width="2.2" x1="367" y1="352.16" x2="383" y2="352.16"/>
+  <circle class="c1-fill" cx="375" cy="282.89" r="6.2"/>
+  <text class="smb c1-txt" x="375" y="216.75" text-anchor="middle">2 / 20,000</text>
+  <text class="xs c1-txt" x="375" y="231.75" text-anchor="middle">q̂ = 1.00e-04</text>
+  <line class="c2" stroke-width="2.2" x1="546.72" y1="270.8" x2="546.72" y2="420.7"/>
+  <polygon class="c2-fill" points="546.72,422.7 543.12,415.2 550.32,415.2"/>
+  <polygon class="hollow-c2" points="546.72,270.3 553.62,256.95 539.82,256.95"/>
+  <text class="smb c2-txt" x="546.72" y="220.8" text-anchor="middle">0 / 20,000（上界标记）</text>
+  <text class="xs c2-txt" x="546.72" y="235.8" text-anchor="middle">95% 上界 1.84e-04</text>
+  <text class="xs" x="546.72" y="250.8" text-anchor="middle">点估计为 0，未绘于对数轴</text>
+  <rect class="pill" x="648" y="154" width="308" height="326" rx="10"/>
+  <text class="smb" x="664" y="177">图例与归档计数摘要</text>
+  <line class="c1" stroke-width="2.2" x1="672" y1="192" x2="672" y2="210"/>
+  <line class="c1" stroke-width="2.0" x1="667" y1="192" x2="677" y2="192"/>
+  <line class="c1" stroke-width="2.0" x1="667" y1="210" x2="677" y2="210"/>
+  <circle class="c1-fill" cx="672" cy="201" r="4.5"/>
+  <text class="sm" x="690" y="205">失败频率与双侧 95% 精确区间</text>
+  <polygon class="hollow-c2" points="672,233.2 677.7,222.16 666.3,222.16"/>
+  <text class="sm" x="690" y="231">零失败 95% 统计上界（向下箭头）</text>
+  <line class="grid" x1="662" y1="246" x2="942" y2="246"/>
+  <text class="smb" x="664" y="270">d = 3（3 轮，24 检测器，q̂ = 6.50e-04）</text>
+  <text class="xs" x="664" y="288">失败 13/20,000 · 95% CI [3.46e-04, 1.11e-03]</text>
+  <text class="smb" x="664" y="322">d = 5（5 轮，120 检测器，q̂ = 1.00e-04）</text>
+  <text class="xs" x="664" y="340">失败 2/20,000 · 95% CI [1.21e-05, 3.61e-04]</text>
+  <text class="smb" x="664" y="374">d = 7（7 轮，336 检测器，q̂ = 0）</text>
+  <text class="xs" x="664" y="392">失败 0/20,000 · 95% CI [0, 1.84e-04]</text>
+  <line class="grid" x1="662" y1="422" x2="942" y2="422"/>
+  <text class="xs" x="664" y="444">零噪声自检（d = 3, p = 0, N = 1,000）：0 次失败</text>
+  <text class="xs" x="664" y="464">解码器：PyMatching 离线批处理 MWPM</text>
+  <rect class="note" x="44" y="496" width="912" height="40" rx="9"/>
+  <text class="sm" x="500" y="520" text-anchor="middle">口径说明：本图报告的是完整 d 轮存储失败率 q，而非每周期逻辑错误率，亦未拟合纠错阈值；零失败仅给出正统计上界。</text>
+</svg>

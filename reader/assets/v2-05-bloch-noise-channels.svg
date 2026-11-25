@@ -2,7 +2,7 @@
   <title id="v2-05-bloch-noise-title">单比特四大噪声信道对 Bloch 球 x-z 截面圆的变换</title>
   <desc id="v2-05-bloch-noise-desc">2x2 四联图展示比特翻转(p=0.25)、相位翻转(p=0.25)、退极化(p=0.4)与振幅阻尼(γ=0.5)对 Bloch 球 x-z 单位圆的精确仿射收缩与不动点，曲线均由 Kraus 算子逐点计算。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
     .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
@@ -43,41 +43,7 @@
     .mono{font:500 12.8px 'SFMono-Regular',Menlo,Consolas,monospace}
     .gate-txt{font:700 15px Georgia,'Times New Roman',serif}
     
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .card{fill:#162330;stroke:#395066}
-      .subcard{fill:#1d2e3d;stroke:#3d566d}
-      .pill{fill:#14212c;fill-opacity:.94;stroke:#6d8ba3}
-      .ink{fill:#eef6ff}
-      .muted{fill:#b4c8da}
-      .accent{fill:#6ed0f7}
-      .warn{fill:#ff8585}
-      .gold{fill:#f2c15a}
-      .purple{fill:#c0adff}
-      .green{fill:#6dd4aa}
-      .axis{stroke:#b9d0e2}
-      .axishead{fill:#b9d0e2}
-      .grid{stroke:#32485c}
-      .divider{stroke:#4a637a}
-      .unit-circle{stroke:#8aa5bc}
-      .region{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
-      .region-alt{fill:#5a4318;fill-opacity:.58;stroke:#f2c15a}
-      .vec-a{stroke:#6ed0f7}
-      .vec-a-head{fill:#6ed0f7}
-      .vec-b{stroke:#ff8585}
-      .vec-b-head{fill:#ff8585}
-      .vec-c{stroke:#c0adff}
-      .vec-c-head{fill:#c0adff}
-      .wire{stroke:#c9deee}
-      .gate{fill:#19425a;stroke:#6ed0f7}
-      .gate-alt{fill:#493818;stroke:#f2c15a}
-      .gate-inv{fill:#342859;stroke:#c0adff}
-      .node-a{fill:#1b5c7a;stroke:#6ed0f7;stroke-width:2.2}
-      .node-a-txt{fill:#eef6ff}
-      .ctrl{fill:#eef6ff}
-      .fixed{fill:#ff8585;stroke:#162330}
-      
-    }
+    
   </style>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title ink" x="38" y="52">单比特四大噪声信道在 Bloch 球 x–z 截面上的几何变换</text>

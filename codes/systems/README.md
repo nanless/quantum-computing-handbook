@@ -57,3 +57,21 @@ python3 codes/systems/service_timeline.py
 | S71-Q3 | 200MHz失谐、弱面积0.1rad；复积分与精确孤立两态式 | 2.5ns一阶0.00101321；5ns谱零点仍有高阶项；非完整三态泄漏 |
 
 `plot_round71_spectrum.py` 从 S71-Q3 公式生成 `handbook/assets/round71-systems-spectrum.svg`，只用标准库；时长单位ns、纵轴无量纲概率，图上明确合成模型与近似边界。运行 `python3 codes/systems/plot_round71_spectrum.py` 可重建，无需安装绘图库。
+
+## 第 20 章量子传感与精密测量验算（`sensing_lab.py`）
+
+运行 `python3 codes/systems/sensing_lab.py`（纯 Python 3 标准库、零外网、确定性计算；请勿使用 `-O` 关闭断言，已纳入统一入口 `python3 codes/run_all.py`）。对应[第 20 章](../../handbook/20-quantum-sensing-metrology.md)，包含 6 大核心断言模块（断言容差均不宽松于 `1e-12`）：
+
+| 模块 | 对应内容 | 核心验算与边界 |
+|---|---|---|
+| Ramsey CFI/QFI 与 Bures 极限 | 第 20 章 §2–§3 | 理想 $V=1$ 恒满足 $F_C(\phi)=1$；含噪 $V=0.9,0.8$ 峰值 $V^2$ 与 $\phi=0$ 盲点；与根保真度 Bures 二阶极限逐点对照 |
+| 多比特 GHZ 宇称测量与丢失坍塌 | 第 20 章 §3–§4 | $N=2,3,4$ 下 $\langle X^{\otimes N}\rangle=\cos(N\phi)$ 与 $F_C=F_Q=N^2$；丢弃任一比特求偏迹后 $F_Q=0$ 归零 |
+| Huelga (1997) 马尔可夫退相位标度 | 第 20 章 §4 | 零死时间 $t_d=0$ 时 GHZ 与独立探针最优精度严格打平、常数因子 $e$；有限死时间 $t_d>0$ 下 GHZ 严格劣于独立方案 |
+| 自旋压缩与光学损耗压缩 | 第 20 章 §5 | $N=2$ 精确 $3\times 3$ 单轴扭转（OAT）与 Kitagawa–Ueda 一般 $N$ Wineland 压缩参数 $\xi_R^2$；光学损耗正交压缩与 LIGO dB 换算 |
+| CPMG-$n$ 交流锁相滤波器 | 第 20 章 §6 | 验证 $2/\pi$ 整流因子与带通滤波器主峰 $|Y(\omega_0)|^2 = 4/\pi^2$ |
+| HNLS 判据与 2 比特纠错传感 | 第 20 章 §7 | 检验退相位、比特翻转与振幅阻尼信道下的 HNLS 子空间条件，并核对 2 比特纠错传感编码保护逻辑相位 |
+
+## 跨库独立复算与隔离交叉复核入口
+
+- **纯标准库独立复算**（均已纳入 `python3 codes/run_all.py`）：`python3 codes/systems/round72_checks.py --case all`（说明见 [round72-README.md](round72-README.md)，复算 [sdk/](sdk/README.md) 归档样本与 `liboqs-build-run.json`）与 `python3 codes/systems/round73_checks.py --case all`（说明见 [sdk73/README.md](sdk73/README.md)，零依赖解包 NPY/ZIP 复算双基解码、三维 GRAPE 传播与先兆网络重叠）。
+- **隔离环境交叉复核**（需在独立虚拟环境中安装 `numpy`/`scipy`/`stim`，不由默认标准库入口执行）：`codes/systems/crossreview72.py` 与 `codes/systems/sdk73/crossreview_algorithms.py`。

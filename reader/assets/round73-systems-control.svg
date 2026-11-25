@@ -2,7 +2,7 @@
   <title id="title">三能级 GRAPE 控制波形、1 ns 离散滤波与 |2⟩ 末态泄漏对照</title>
   <desc id="desc">左面板展示 40 ns、80 时间槽、Δ/2π = +5 MHz、非谐性 α/2π = −200 MHz 下三能级 GRAPE 优化的 x/y 控制波形与 1 ns 采样滤波波形。右面板以对数纵轴对比二能级波形放回三能级、三能级 GRAPE 理想模型与经 1 ns 离散滤波三种情形下输入 |0⟩、|1⟩ 的末态 |2⟩ 泄漏概率。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -48,46 +48,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
 .hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
 .hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .grid-minor{stroke:#213344}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#1c2c3b;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
-  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
-  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
-  .hollow-c2{fill:#16222e;stroke:#f28872}
-  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
-  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
-  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
-}
+
   </style>
   <defs>
     <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>

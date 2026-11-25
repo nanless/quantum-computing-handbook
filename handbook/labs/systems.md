@@ -1,6 +1,6 @@
-# 系统与传感实验册：七个跨层与计量问题的手算、代码与研究入口
+# 系统与传感实验册：跨层工程与精密测量的手算、代码与参数探究
 
-本册对应第 09、10、11、12、14、19 与 20 章。每项先读对应章内的算例与模型设定，再独立预测结果，最后运行程序。程序通过断言说明算例在该简化模型下自洽；从教学模型迈向真实系统，还需结合硬件校准与完整工程指标。
+本册对应第 09、10、11、12、14、19 与 20 章。每项先读对应章内的算例与模型设定，再独立预测结果，最后运行纯标准库程序核对断言。程序通过断言说明算例在该简化模型下自洽；从教学模型迈向真实系统，还需结合硬件校准与完整工程指标。直观体验 $d=3$ 表面码注错与解码流程，也可直接打开[离线交互量子实验台（模块 06）](../../reader/lab/quantum-lab.html)。
 
 ## 1. 实验路线与数据边界
 
@@ -12,9 +12,9 @@
 | [12](../12-security-network-frontiers.md) | 快慢不同的链路何时同时就绪？ | 独立几何等待、无超时、成功后存储 | [异速网络等待](../../codes/systems/network_wait.py) |
 | [14](../14-compilation-control.md) | 省 SWAP 后，如何保持答案含义？ | 理想 CNOT、固定三节点图 | [映射等价验证](../../codes/systems/routing_mapping.py) |
 | [19](../19-engineering-architecture.md) | 在线、合格与峰值吞吐如何区分？ | 一张合成的 24 小时日志 | [状态区间积分](../../codes/systems/service_timeline.py) |
-| [20](../20-quantum-sensing-metrology.md) | 纠缠探针何时突破标准量子极限，含噪为何坍塌？ | 单/多比特理想与马尔可夫纯退相位、单轴扭转与 HNLS 模型 | [传感与计量验算](../../codes/systems/sensing_lab.py) |
+| [20](../20-quantum-sensing-metrology.md) | 纠缠探针何时突破标准量子极限，含噪为何坍塌？ | 单/多比特理想与马尔可夫纯退相位、原子钟/重力仪标度、自旋压缩与 HNLS 模型 | [传感与计量验算](../../codes/systems/sensing_lab.py) |
 
-运行方法与预期输出见[代码说明](../../codes/systems/README.md)（第 20 章实验可直接运行 `python3 codes/systems/sensing_lab.py`）。所有概率参数都要连同其条件写下，例如“真实未丢失时发告警”，不能只写 0.2%。所有时间先统一单位；网络脚本输出时隙，乘时隙时长才能变成秒。
+运行方法与预期输出见[系统代码说明](../../codes/systems/README.md)（第 20 章实验可直接运行 `python3 codes/systems/sensing_lab.py`，同目录另附六组系统条件边界脚本见文末导览）。所有概率参数都要连同其条件写下，例如“真实未丢失时发告警”，不能只写 0.2%。所有时间先统一单位；网络脚本输出时隙，乘时隙时长才能变成秒。
 
 ## 2. 七组进阶练习及答案
 
@@ -83,40 +83,66 @@ $r=0.2$ 时，分界是 $p=0.04/0.68=1/17\approx0.05882$。$p$ 小于分界，�
 
 ### S20：量子传感的 CFI/QFI、Huelga 坍塌与 HNLS 纠错判据
 
-配套[第 20 章：量子传感与量子精密测量](../20-quantum-sensing-metrology.md)。[纯标准库验算脚本](../../codes/systems/sensing_lab.py)从仓库根目录执行 `python3 codes/systems/sensing_lab.py`，零第三方依赖完成六大传感核心推导的数值断言：
+配套[第 20 章：量子传感与量子精密测量](../20-quantum-sensing-metrology.md)。[传感与计量验算脚本](../../codes/systems/sensing_lab.py)在仓库根目录运行 `python3 codes/systems/sensing_lab.py`（纯 Python 3 标准库、零第三方依赖、断言容差 $\le 10^{-12}$），分四组参数探究贯通 Ramsey 灵敏度、Huelga 退相位坍塌、原子钟与重力仪标度、自旋/光学压缩及 HNLS 纠错判据：
 
-1. **Ramsey 经典与量子 Fisher 信息**：对可见度 $V = 0.9$ 的退相位 Ramsey 条纹 $P(+\mid\phi) = (1 + V\cos\phi)/2$，计算 $\phi = \pi/2$ 与 $\phi = 0$ 处的经典 Fisher 信息 $F_C$，并与由根保真度二阶展开 $F_Q = \lim_{\delta\to 0} 8[1 - F(\rho_\phi, \rho_{\phi+\delta})]/\delta^2$ 算得的数值比对。
-2. **GHZ 宇称与 Huelga（1997）退相位坍塌**：比较 $N = 1, 4, 16, 100$ 下无纠缠探针与 GHZ 态在固定总时长 $T$、独立马尔可夫纯退相位率 $\gamma$ 时的最优探询时间与最小频率不确定度，再检验引入有限死时间 $t_d = 0.1/\gamma$（$N = 16$）后的表现。
-3. **自旋压缩、CPMG 滤波与 HNLS 判据**：核对单轴扭转自旋压缩（$N = 2, \theta = \pi/6$）的 Wineland 参数、$20\%$ 光学损耗对 $10\,\mathrm{dB}$ 注入压缩的压制上限、CPMG-$n$ 交流锁相滤波峰值，以及信号 $H = Z/2$ 在纯退相位（$L = Z$）、比特翻转（$L = X$）与振幅阻尼（$L = |0\rangle\langle 1|$）下的 HNLS 子空间条件。
+#### S20-1｜Ramsey 灵敏度偏置、Bures 极限与单 NV 磁力计边界
 
-**答案与程序核验。**
+1. **手算与脚本核验**：对可见度 $V < 1$ 的退相位 Ramsey 条纹 $P(+\mid\phi) = (1 + V\cos\phi)/2$，经典 Fisher 信息为
+   $$
+   F_C(\phi; V) = \frac{V^2\sin^2\phi}{1 - V^2\cos^2\phi}.
+   $$
+   取 $V = 0.9$ 时，在最大斜率点 $\phi = \pi/2$ 处达到峰值 $F_C = V^2 = 0.81$，而在条纹峰顶 $\phi = 0$ 处跌至灵敏度盲点 $0$（可配合[声音实验册 A02](audio.md#3-a02ramsey-干涉与退相干双轨对比理想-vs-对比度衰减)听辨半高腰最陡点与峰谷平缓点的直觉差异）。由根保真度二阶展开 $F_Q = \lim_{\delta\to 0} 8[1 - F(\rho_\phi, \rho_{\phi+\delta})]/\delta^2$ 算得的 Bures 极限精确收敛到 $V^2$（$V = 1.0, 0.9, 0.8$ 依次给出 `1.000000`、`0.810000`、`0.640000`）。脚本同步核验单个金刚石 NV 电子自旋（$\gamma_e \approx 1.7609\times 10^{11}\,\mathrm{rad/(s\cdot T)}$）的理想直流灵敏度 `5.679 nT/√Hz` 与交流灵敏度 `0.1796 nT/√Hz`。
+2. **参数探究任务**：在脚本的 `check_ramsey_cfi_qfi_bures()` 中把 $V$ 改为 $0.5$ 并扫描 $\phi \in [0, \pi]$，观察为何理想情形（$V=1$）处处满足 $F_C \equiv 1$，而只要引入任意微小退相位（$V < 1$），$\phi = 0$ 附近立刻塌陷出盲区；同时结合 $1/r^3$ 偶极衰减比较单 NV 探针与厘米级 SERF 原子气室的探测体积权衡。
 
-- 单比特 Ramsey 满足 $F_C(\phi; V) = \frac{V^2\sin^2\phi}{1 - V^2\cos^2\phi}$。取 $V = 0.9$ 时，在 $\phi = \pi/2$ 处达到极大值 $V^2 = 0.81$，而在 $\phi = 0$ 处跌至盲点 $0$；根保真度有限差分精确收敛到 $F_Q = V^2$。理想 $N = 2, 3, 4$ GHZ 态的宇称测量均达到海森堡极限 $F_C = F_Q = N^2$，但一旦丢失 1 个比特并对其求偏迹，约化态不再依赖相位 $\phi$，$F_Q$ 直接跌为 $0$。
-- 在零死时间 $t_d = 0$ 的独立马尔可夫纯退相位模型下，无纠缠探针最优探询时间为 $t_{\mathrm{opt}} = 1/(2\gamma)$，GHZ 态必须缩短到 $1/(2N\gamma)$，两者的总 Fisher 信息极大值严格相等，均为
+#### S20-2｜GHZ 丢失坍塌与 Huelga（1997）退相位 + 死时间交叉点实验
 
-$$
-F_{\max} = \frac{N T}{2 e \gamma}.
-$$
+1. **手算与脚本核验**：理想 $N = 2, 3, 4$ 比特 GHZ 态的宇称测量 $\langle X^{\otimes N}\rangle = \cos(N\phi)$ 均严格饱和海森堡极限 $F_C = F_Q = N^2$，但一旦丢失任一比特求偏迹，约化态与 $\phi$ 完全无关（实测最大矩阵元差 $1.28\times 10^{-17}$），$F_Q$ 瞬时归零。在固定总时长 $T$、独立马尔可夫纯退相位率 $\gamma$ 且零死时间（$t_d = 0$）下，独立探针最优探询时间为 $t_{\mathrm{opt}} = 1/(2\gamma)$，GHZ 态必须缩短至 $1/(2N\gamma)$，两者总 Fisher 信息极大值严格打平：
+   $$
+   F_{\max} = \frac{N T}{2 e \gamma},
+   $$
+   相对马尔可夫终极界 $N T/(2\gamma)$ 仅差精度因子 $\sqrt{e} \approx 1.6487$。`sensing_lab.py` 实跑对比如下（取无量纲 $T = 100/\gamma$）：
 
-  两者与马尔可夫终极界 $N T / (2\gamma)$ 仅差方差因子 $e$（精度因子 $\sqrt{e} \approx 1.6487$）；但只要计入有限死时间 $t_d = 0.1/\gamma$（$N = 16$），GHZ 态由于探询时间过短、时间大量耗在复位读出上，频率不确定度反而比独立探针差约 $1.6962$ 倍。
-- 精确 $3 \times 3$ 自旋-1 矩阵与 Kitagawa–Ueda 闭式解一致给出 $N = 2, \theta = \pi/6$ 时 Wineland 参数 $\xi_R^2 = 2/3$（压缩约 $1.7609\,\mathrm{dB}$）；$20\%$ 光学损耗会把 $10\,\mathrm{dB}$ 注入压缩压至 $5.5284\,\mathrm{dB}$（无论注入多强都不可能越过 $-10\log_{10}(0.2) \approx 6.9897\,\mathrm{dB}$ 硬上限）。CPMG-$n$（$n = 2, 4, 8$）交流锁相的数值积分精准复现整流因子 $2/\pi$ 与带通峰值 $|Y(\omega_0)|^2 = 4/\pi^2$。
-- 在 $\mathrm{span}\{I, L, L^\dagger, L^\dagger L\}$ 的 Hilbert–Schmidt 垂直距离检验中，仅比特翻转噪声 $L = X$ 给出非零垂直分量 $1/\sqrt{2} \approx 0.707107 > 0$（满足 HNLS，脚本并用两比特编码 $|0_L\rangle = |00\rangle, |1_L\rangle = |11\rangle$ 验算 $P X_1 P = 0$ 与逻辑信号 $P Z_1 P = Z_L$），而纯退相位 $L = Z$ 与振幅阻尼 $L = |0\rangle\langle 1|$ 的垂直距离均为 $0$（无法靠快纠错恢复 $1/T$ 标度）。
+| 探针数 $N$ | GHZ 最优探询 $t_{\mathrm{opt}}\gamma$ | 独立探针最小 $\Delta\omega_{\mathrm{unc}}$ | GHZ 最小 $\Delta\omega_{\mathrm{GHZ}}$ | 错用单比特 $t_{\mathrm{opt}}$ 时 GHZ $\Delta\omega$ | 终极界 $\Delta\omega_{\mathrm{ult}}$ |
+|---:|---:|---:|---:|---:|---:|
+| 1 | `0.50000` | `0.233164` | `0.233164` | `0.233164` | `0.141421` |
+| 4 | `0.12500` | `0.116582` | `0.116582` | `0.261243` | `0.070711` |
+| 16 | `0.03125` | `0.058291` | `0.058291` | `26.348195` | `0.035355` |
+| 100 | `0.00500` | `0.023316` | `0.023316` | 数值溢出（$>10^{12}$） | `0.014142` |
 
-## 3. 从教学程序走到开源研究实现
+   只要加入有限制备与读出死时间 $t_d = 0.1/\gamma$（$N = 16$），独立探针最优调长至 $t_{\mathrm{opt}} = 0.574166/\gamma$（$\Delta\omega = 0.063481$），而 GHZ 被迫工作在 $0.051832/\gamma$、大量时间浪费在死时间上，不确定度反而恶化为 `0.107679`——**比无纠缠独立探针差约 $1.6962$ 倍**！
+2. **参数探究任务**：尝试在脚本中扫描死时间 $t_d \gamma \in \{0, 0.01, 0.05, 0.1\}$ 与比特数 $N \in \{4, 16, 64\}$，记录 GHZ 劣化倍数随 $N t_d \gamma$ 攀升的规律，验证“死时间越大、比特数越多，盲目追求 GHZ 越吃亏”的工程判据。
 
-以下官方项目入口初始核查于 2026-09-26，于 2026-11-25 复核版本与目录口径。表中许可证指所查仓库顶层文本，具体分发版本及依赖仍须按安装包核对。
+#### S20-3｜原子钟阿兰偏差 $\sigma_y(\tau)$ 与冷原子干涉重力仪 $T^2$ 标度探究
 
-| 项目与来源 | 可接续的研究任务 | 许可证核查 | 复现时须保存 |
-|---|---|---|---|
-| [Stim](https://github.com/quantumlib/Stim) | 稳定子线路、检测事件与电路级 Pauli 噪声抽样 | Apache-2.0 | 提交、线路文本、噪声参数、采样种子、检测器/逻辑可观测量定义 |
-| [PyMatching](https://github.com/oscarhiggott/PyMatching) | 检测图最小权匹配、相关匹配解码比较 | Apache-2.0 | 图模型、边权、关联处理开关、逻辑失败计数与耗时边界 |
-| [Qiskit](https://github.com/Qiskit/qiskit) | 目标机门分解、布局、路由与调度 | Apache-2.0 | Target、编译种子、最终布局、测量位映射、版本与输出线路 |
-| [Qualtran](https://github.com/quantumlib/Qualtran) | 容错算法分解及资源分析 | Apache-2.0 | 分解策略、精度、调用图、成本模型；不要只留 $T$ count |
-| [SeQUeNCe](https://github.com/sequence-toolbox/SeQUeNCe) | 器件与协议的离散事件网络模拟 | 官方 LICENSE 的三项再分发条件与免责声明；保留全文 | 拓扑、时钟单位、存储模型、协议、种子及配置；核对 Python 要求 |
-| [Quantify Scheduler](https://github.com/quantify-os/quantify-scheduler) | 带显式时序的门/脉冲混合调度 | BSD-3-Clause；GitHub 为 GitLab 镜像 | 后端版本、硬件配置、时钟、校准、编译时序及仪器驱动 |
+结合[第 20 章 §8.1](../20-quantum-sensing-metrology.md#81-物理传感前沿平台阿兰偏差重力仪与量子照明)动手完成两组前沿平台参数核算：
 
-报告结果时建议把三层证据分开标注：**模拟证据**来自明示模型与代码；**实机证据**需附设备、日期、校准与原始数据；**商业优势证据**还需同等任务质量下的强经典基线、完整成本与持续服务指标。
+1. **光晶格原子钟量子投影噪声（QPN）阿兰偏差**：对跃迁角频率 $\omega_0 = 2\pi\nu_0$、探询时间 $T_R$、循环周期 $T_c = T_R + T_d$（死时间 $T_d$）与 Wineland 参数 $\xi_R$ 的 $N$ 原子钟，平均时间 $\tau$ 内的 QPN 阿兰偏差为
+   $$
+   \sigma_y^{\mathrm{QPN}}(\tau) = \frac{\xi_R}{\omega_0 \sqrt{N\, T_R\, \tau}}\sqrt{\frac{T_c}{T_R}}.
+   $$
+   代入 $^{87}\mathrm{Sr}$ 参数（$\nu_0 \approx 4.292\times 10^{14}\,\mathrm{Hz} \Rightarrow \omega_0 \approx 2.697\times 10^{15}\,\mathrm{rad/s}$，$N = 10^4, T_R = 1.0\,\mathrm{s}, T_c = 1.2\,\mathrm{s}, \xi_R = 1$），得 $\sigma_y^{\mathrm{QPN}}(1\,\mathrm{s}) \approx 4.06\times 10^{-18}$，$\sigma_y^{\mathrm{QPN}}(100\,\mathrm{s}) \approx 4.06\times 10^{-19}$。**参数探究**：试算把自旋压缩提升至 $6\,\mathrm{dB}$（$\xi_R^2 = 0.25 \Rightarrow \xi_R = 0.5$）时 $\sigma_y$ 减半，再对比把死时间从 $0.2\,\mathrm{s}$ 拉长到 $1.0\,\mathrm{s}$（$T_c/T_R = 2$）时不仅 QPN 恶化 $\sqrt{2}$ 倍，还会加剧 Dick 效应把激光高频相位噪声混叠进低频频偏。
+2. **冷原子干涉重力仪 $\pi/2\text{–}\pi\text{–}\pi/2$ 序列与 $T^2$ 相位**：由三发拉曼脉冲的激光相位二阶前向差分 $\Delta\phi = \phi(0) - 2\phi(T) + \phi(2T) = -k_{\mathrm{eff}} g T^2$，初位置与初速度严格抵消。代入 $^{87}\mathrm{Rb}$ D2 线（$\lambda = 780\,\mathrm{nm} \Rightarrow k_{\mathrm{eff}} = 4\pi/\lambda \approx 1.611\times 10^7\,\mathrm{m}^{-1}$，$g = 9.80665\,\mathrm{m/s}^2$，$T = 0.1\,\mathrm{s}$），仅 $20\,\mathrm{cm}$ 下落高度即积累 $|\Delta\phi| \approx 1.580\times 10^6\,\mathrm{rad}$，配合 $N = 10^6$ 原子的 SQL 分辨率 $\delta\phi \sim 10^{-3}\,\mathrm{rad}$ 可达单次相对重力灵敏度 $\delta g/g \approx 6.33\times 10^{-10}$（$\delta g \approx 6.2\,\mathrm{nm/s}^2$）。**参数探究**：若把脉冲间隔 $T$ 翻倍至 $0.2\,\mathrm{s}$，验证相位灵敏度与自由落体高度均同步放大 $4$ 倍（下落约 $0.785\,\mathrm{m}$），并思考为何野外移动重力梯度仪必须用双原子云共用同一反射镜做差分来抵消微米级共模地面振动。
 
-核查时 PyMatching 的 stable 文档页标题停留在 2.1.0，而仓库 README 已介绍 2.3 起的相关匹配解码。这是文档与仓库可能不同步的具体例子：报告实际安装版本，查对应 tag 的接口与测试；不要写一个不带版本的“最新版”当复现条件。Stim 的种子也不应被当作跨版本、跨硬件绝对相同样本的保证，归档原始样本与环境仍有价值。
+#### S20-4｜自旋压缩、光学损耗硬顶、CPMG 锁相与 HNLS 纠错判据
 
-第三方源码收录以项目的 `codes/vendor` 清单为准。只收录片段时，应说明它不能独立替代完整安装，不要删除头部版权或把第三方文件改称本书原创。本册七组纯标准库实验故意不引入外部大依赖，使读者可以先理解数学与不变量，再进入大型开源软件栈。
+- **单轴扭转（OAT）自旋压缩与光学损耗硬顶**：脚本验证 $N = 2, \theta = \pi/6$ 处精确 $3\times 3$ 矩阵与 Kitagawa–Ueda 闭式一致给出 $\xi_R^2 = 2/3$（`1.7609 dB`），随原子数扩展 $N = 2, 10, 100, 1000$ 最佳压缩依次攀升至 `2.98 / 5.09 / 12.01 / 19.23 dB`；但面对 $20\%$ 光学损耗，$10\,\mathrm{dB}$ 注入压缩会被压至 `5.5284 dB`，且无论注入多强均无法越过 $-10\log_{10}(0.2) \approx 6.9897\,\mathrm{dB}$ 的硬顶（同步核验 LIGO O4 约 `1.585x–1.95x` 灵敏度增益换算）。
+- **CPMG 交流锁相与 HNLS 纠错传感**：CPMG-$n$（$n = 2, 4, 8$）均精准复现整流因子 $2/\pi \approx 0.63662$ 与共振带通主峰 $|Y(\omega_0)|^2 = 4/\pi^2 \approx 0.405285$，同时带外失谐泄漏随脉冲数从 `0.1958` 骤降至 `0.0676` 与 `0.0065`；在信号 $H = Z/2$ 相对 $\mathrm{span}\{I, L, L^\dagger, L^\dagger L\}$ 的 Hilbert–Schmidt 垂直距离检验中，仅比特翻转噪声 $L = X$ 给出非零垂直分量 $1/\sqrt{2} \approx 0.707107$（满足 HNLS，脚本以两比特码 $|0_L\rangle = |00\rangle, |1_L\rangle = |11\rangle$ 验算 $P X_1 P = 0$ 与 $P Z_1 P = Z_L$），而纯退相位 $L = Z$ 与振幅阻尼 $L = |0\rangle\langle 1|$ 的垂直分量均为 `0`（无法仅靠快纠错恢复 $1/T$ 标度）。
+
+## 3. 系统条件边界与拓展核验导览
+
+除上述 7 组主干脚本外，同目录还提供 **6 组条件边界独立实验**与**模型边界综合核验脚本**（全部纯 Python 3 标准库，已纳入 `python3 codes/run_all.py`，运行详情见[系统代码说明](../../codes/systems/README.md)）：
+
+| 章节 | 条件边界实验脚本 | 核验焦点与代表性输出 |
+|---|---|---|
+| 09 | [标定不确定度传播](../../codes/systems/calibration_uncertainty.py) | 三项方差与最优分配（标准误 `0.017814`），拒绝奇异标定模型 |
+| 10 | [相干误差重复码](../../codes/systems/coherent_repetition.py) | 纠错症状测后残余相干逻辑误差（$P_1 = 0.000296026, Y = -0.00392069$） |
+| 11 | [批内相关采样](../../codes/systems/correlated_shots.py) | 批内漂移相关性把方差放大 `4.96` 倍、有效样本压缩至 `2016.13` |
+| 12 | [网络存储超时截止](../../codes/systems/network_cutoff.py) | 瞬态概率传播对照更新过程闭式解（$K=1$ 平均等待 `42.143` 轮） |
+| 14 | [共享控制资源调度](../../codes/systems/resource_schedule.py) | 共享通道互斥约束把总调度时长从 `1100 ns` 拉长至 `1300 ns` |
+| 19 | [校准依赖闭包](../../codes/systems/calibration_dependencies.py) | 回归失败保留旧版本 7、全部通过才晋级版本 8，拒绝未验证参数 |
+
+同目录的[系统模型边界核验](../../codes/systems/round71_checks.py)（覆盖 09–15、19 与 Q3：被动复位底限、Steane 码 336 两位擦除支撑、虚拟 $Z$ 相位等式与矩形脉冲频谱零点）及[跨库归档复算程序](../../codes/systems/round73_checks.py)（零依赖解包复算双基解码、三能级 GRAPE 与先兆网络）也均已并入统一离线校验。
+
+## 4. 开源生态与完整 SDK 实跑入口
+
+硬件、纠错、路由、脉冲控制、网络与后量子密码的开源软件栈总表（Stim 1.16.0、PyMatching 2.4.0、Qiskit 2.5.2、Qualtran 0.7.0、SeQUeNCe 0.8.5、`qutip-qtrl` 0.2.0、`liboqs` 0.15.0、Quantify Scheduler 等许可证与归档边界）统一维护于[附录 F：算法、工业实践与开源代码对照](../appendices/software-practice.md)；31 个项目的隔离环境实跑输出、版本差异与上游陷阱见[完整 SDK 实验册](sdk-validation.md)。报告系统结果时应始终把**模拟证据**、**实机证据**与**商业优势证据**分层标注，避免把小规模教学断言或特定版本号的接口表现外推为生产级结论。

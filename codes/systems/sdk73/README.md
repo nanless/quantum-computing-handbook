@@ -25,7 +25,7 @@ python3 codes/systems/round73_checks.py --case all
 | 入口 | 输入/流程 | 验收 | 原始证据 |
 |---|---|---|---|
 | qec_grid.py | X/Z存储 × d3/5/7 × p.001/.003/.006；全部固定7轮，10000 shots/点；2零噪控制各1000 | DEM建普通/相关两图、相同样本两译码、真实逻辑位判错；1000单shot输出与batch逐个一致 | 20份`.stim`/`.dem`/`.npz`；qec-grid-results.json；qec-run.log |
-| grape_three.py | 三维RWA、80槽×.5 ns、±.12 rad/ns每路、目标(-iX)⊕1 | 实际qutip-qtrl受界优化16迭代；SciPy独立全矩阵对照；三维酉/两基输入泄漏；滤波和两参数敏感性扫描 | grape-three-amplitudes.csv、grape-three-results.json、grape-run.log |
+| grape_three.py | 三维RWA、80槽×.5 ns、±.12 rad/ns每路、目标(-iX)⊕1 | 实际qutip-qtrl受界优化16迭代；SciPy独立全矩阵对照；三维酉/两基输入泄漏；滤波和两参数敏感性扫描 | grape-three-amplitudes.csv、grape-three-results.json |
 | sequence_entanglement.py | 920次独立新Timeline；两个真正BK两轮生成链路，全部两段就绪才交换 | 成功先兆两端更新；200us真实SDK Bell测量/消息与修正；205us两端配对；密度矩阵偏迹；510us有限存储过期 | sequence-entanglement-results.json完整事件/矩阵；sequence-run.log；未防护反例及初始错误日志 |
 
 PyMatching普通/相关结果逐shot配对，分开保存救回与改错计数。每率有逐点精确95%区间和36率的Bonferroni同时区间；18个双侧条件配对检验另存，未用好看点代替全网格。所有率都是**七轮完整存储**口径。每点单shot服务纳秒数组包含热身后1000次调用，仅含Python+本地匹配，输入已收齐未来7轮；不是流式、队列或真实反馈。

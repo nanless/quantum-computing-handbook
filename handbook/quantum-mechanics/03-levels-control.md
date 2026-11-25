@@ -4,9 +4,10 @@
 
 答案是几乎没有。**量子比特不是宇宙里天然只有两级的小球，而是工程师在多能级真实器件里精心隔离出的二维计算子空间。**
 
-本章就把这条从物理器件通向抽象量子比特的桥彻底搭通：我们怎样用频率、温度和约瑟夫森非线性电感把两个能级隔离开；微波脉冲如何按旋转坐标系里的几何规律精准翻转量子态；怎样把 $T_1$ 反转恢复、Ramsey 干涉仪与 Hahn 自旋回波组成一套完整的实验室标定流程；二能级优化脉冲放回真实三能级器件时为什么会产生相干泄漏；以及在电路量子电动力学（cQED）框架下，如何从 Jaynes–Cummings 哈密顿量一步不跳推导出色散读出位移 $\chi$ 及其 Transmon 三能级修正。
+本章把这条从物理器件通向抽象量子比特的桥搭通：我们怎样用频率、温度和约瑟夫森非线性电感把两个能级隔离开；微波脉冲如何按旋转坐标系里的几何规律精准翻转量子态；怎样把 $T_1$ 反转恢复、Ramsey 干涉仪与 Hahn 自旋回波组成一套完整的实验室标定流程；二能级优化脉冲放回真实三能级器件时为什么会产生相干泄漏；以及在电路量子电动力学（cQED）框架下，如何从 Jaynes–Cummings 哈密顿量逐步推导出色散读出位移 $\chi$ 及其 Transmon 三能级修正。
 
-如果这是你第一遍阅读，可以先顺着 §1–§4 建立“能级间隔、温度与非谐性”的物理手感；§6 的旋转坐标系与旋转波近似、§9 的色散读出微扰变换每一步都写全了代数细节，哪怕第一次只先看结论和算例、回头再补中间矩阵与对易子展开，也完全不影响顺畅衔接[第 09 章主流硬件平台](../09-hardware.md)与[第 14 章编译与控制](../14-compilation-control.md)。
+- **首遍必读（★）**：§1–§4.3（能隙、热占据与 Transmon 非谐性）、§5–§7（自旋基态、Rabi/Ramsey/回波标定）与 §9.1、§9.3、§10–§11（色散读出结论、退相干与六大平台对照）；
+- **进阶选读（☆）**：§4.4（矩形脉冲 $\operatorname{sinc}$ 频谱微扰）、§8（三能级泄漏矩阵视角）与 §9.2（Schrieffer–Wolff 变换完整推导）——首遍可先看结论，回头再补代数细节，不影响顺畅衔接[第 09 章主流硬件平台](../09-hardware.md)与[第 14 章编译与控制](../14-compilation-control.md)。
 
 ---
 
@@ -28,7 +29,7 @@ $$
 h = 2\pi\hbar.
 $$
 
-初学者在阅读超导芯片参数时最容易栽在 $2\pi$ 上。可以拿秒针走圈来记：指针每秒转 $f = 1$ 整圈，对应的角度变化是每秒 $\omega = 2\pi\ \mathrm{rad/s}$；每秒转 $50$ 亿圈（$f = 5\ \mathrm{GHz}$），角频率就是 $\omega = 2\pi \times 5 \times 10^9\ \mathrm{rad/s} \approx 3.142 \times 10^{10}\ \mathrm{rad/s}$。实验论文口头说“这是一颗 $5\ \mathrm{GHz}$ 的超导量子比特”，报的几乎总是普通频率 $f_{01} = \omega_{01}/(2\pi)$。千万别把 $5 \times 10^9$ 直接代进 $\hbar\omega$ 却忘了先乘 $2\pi$。
+初学者在阅读超导芯片参数时最容易栽在 $2\pi$ 上。可以拿秒针走圈来记：指针每秒转 $f = 1$ 整圈，对应的角度变化是每秒 $\omega = 2\pi\ \mathrm{rad/s}$；每秒转 $50$ 亿圈（$f = 5\ \mathrm{GHz}$），角频率就是 $\omega = 2\pi \times 5 \times 10^9\ \mathrm{rad/s} \approx 3.142 \times 10^{10}\ \mathrm{rad/s}$。实验论文口头说“这是一颗 $5\ \mathrm{GHz}$ 的超导量子比特”，报的几乎总是普通频率 $f_{01} = \omega_{01}/(2\pi)$，换算成能量时不要把 $5 \times 10^9$ 直接代进 $\hbar\omega$ 而漏乘 $2\pi$。
 
 ### 算例：5 GHz 对应多大能量与温度尺度
 
@@ -99,7 +100,7 @@ $$
 L = 1 - \operatorname{Tr}(P_{\mathrm{comp}}\rho).
 $$
 
-对照刚才的三能级例子，$\operatorname{Tr}(P_{\mathrm{comp}}\rho) = 0.10 + 0.85 = 0.95$，于是 $L = 1 - 0.95 = 0.05$。请留意两件事：第一，$L = 0$ 只说明态没有逃出计算子空间，并不说明门做对了（一个相位全错的 $Z$ 门依然有 $L = 0$）；第二，如果实验的二元读出器把 $|2\rangle$ 粗暴地归类成“读数 1”，单看 0/1 计数就会彻底漏看泄漏，因此严肃的硬件表征都必须说明泄漏是如何直接分辨或单独标定的。
+对照刚才的三能级例子，$\operatorname{Tr}(P_{\mathrm{comp}}\rho) = 0.10 + 0.85 = 0.95$，于是 $L = 1 - 0.95 = 0.05$。请留意两件事：第一，$L = 0$ 只说明态没有逃出计算子空间，并不说明门做对了（一个相位全错的 $Z$ 门依然有 $L = 0$）；第二，如果实验的二元读出器把 $|2\rangle$ 粗暴地归类成“读数 1”，单看 0/1 计数就会漏看泄漏，因此严肃的硬件表征都必须说明泄漏是如何直接分辨或单独标定的。
 
 ---
 
@@ -192,7 +193,9 @@ $$
 T_{\mathrm{eff}} \approx \frac{0.239962\ \mathrm{K}}{4.5951} \approx 0.0522\ \mathrm{K} = 52.2\ \mathrm{mK}.
 $$
 
-请注意冷台温度和器件有效温度的区别。Jin 等人（2015, *Phys. Rev. Lett.* 114, 240501）在 3D transmon 上做过经典的变温测量：随着制冷机冷台从 $150\ \mathrm{mK}$ 一路降下来，量子比特的激发占据确实按玻尔兹曼律下降；但当冷台低于约 $35\ \mathrm{mK}$ 后，实测占据便不再继续变小，而是停在一个饱和平台上。多比特芯片上常见的残余激发往往在 $0.1\%\text{--}5\%$（对应 $T_{\mathrm{eff}} \approx 35\text{--}80\ \mathrm{mK}$），背后推手包括未完全屏蔽的红外杂散辐射、非平衡准粒子、微波衰减器漏热以及读出脉冲引起的回热。因此，$T_{\mathrm{eff}}$ 只是把实测占据比折算成温度的一个便捷标尺；在现代超导处理器上，要拿到高于 $99.9\%$ 的初始基态纯度，通常还要靠**主动重置（active reset）**（例如先测量再用条件脉冲翻回 $|0\rangle$，或借助读出腔把激发快速抽走），而不能只靠等它自然变冷。
+请注意冷台温度和器件有效温度的区别。Jin 等人（2015, *Phys. Rev. Lett.* 114, 240501）在 3D transmon 上做过经典的变温测量：随着制冷机冷台从 $150\ \mathrm{mK}$ 一路降下来，量子比特的激发占据确实按玻尔兹曼律下降；但当冷台低于约 $35\ \mathrm{mK}$ 后，实测占据便不再继续变小，而是停在一个饱和平台上。
+
+多比特芯片上常见的残余激发往往在 $0.1\%\text{--}5\%$（对应 $T_{\mathrm{eff}} \approx 35\text{--}80\ \mathrm{mK}$），背后推手包括未完全屏蔽的红外杂散辐射、非平衡准粒子、微波衰减器漏热以及读出脉冲引起的回热。因此，$T_{\mathrm{eff}}$ 只是把实测占据比折算成温度的一个便捷标尺；在现代超导处理器上，要拿到高于 $99.9\%$ 的初始基态纯度，通常还要靠**主动重置（active reset）**（例如先测量再用条件脉冲翻回 $|0\rangle$，或借助读出腔把激发快速抽走），而不能只靠等它自然变冷。
 
 ---
 
@@ -220,9 +223,9 @@ $$
 
 问题马上暴露出来：当你打进一束频率为 $\omega_r$ 的微波，想把粒子从 $|0\rangle$ 精准推到 $|1\rangle$ 时，这束微波对 $|1\rangle \leftrightarrow |2\rangle$、$|2\rangle \leftrightarrow |3\rangle$ 也同样严格共振！粒子刚爬上 $|1\rangle$，就会顺着等间距梯子继续往上爬到 $|2\rangle, |3\rangle, \dots$（线性驱动实际上会把谐振子基态推成无穷多能级叠加的相干态），你根本无法靠“调准频率”把动力学关在 $\{|0\rangle, |1\rangle\}$ 里面。
 
-![等间距谐振子与非等间距三能级系统；纵向间隔非等比例](../assets/qm-energy-levels.svg)
+![左：等间距谐振子抛物势与 transmon 余弦势非谐能级对比（非等比例示意）；右：Ω/2π=10 MHz 下共振与 6 MHz 失谐驱动的精确 Rabi 振荡曲线](../assets/v2-q3-anharmonic-rabi.svg)
 
-（示意图纵向间隔非等比例，可打开[原尺寸 SVG](../assets/qm-energy-levels.svg)查看清晰细节。）
+（左面板为非等比例势能示意图，清晰对比等间距抛物势与变软的余弦势能级，右面板将在第 6.4 节用于对照共振与失谐 Rabi 振荡；可打开[原尺寸 SVG](../assets/v2-q3-anharmonic-rabi.svg)查看清晰细节。）
 
 顺便澄清一句：谐振子不适合拿最低两级当裸频率寻址量子比特，并不意味着谐振子在量子计算里没用。[第 18 章](../18-channels-capacities-complexity.md)的连续变量计算与[第 19 章](../19-engineering-architecture.md)的玻色编码（如猫态码、GKP 码），正是主动利用谐振器庞大的多能级空间，并借助辅助非高斯元件或非线性耦合来完成编码与纠错的。
 
@@ -355,7 +358,7 @@ $$
 = -\frac{E_C}{12}.
 $$
 
-$E_J$ 竟然彻底消掉了！丢去不影响能级差的常数 $-E_J$，就得到 **Duffing 振子哈密顿量**：
+$E_J$ 恰好消掉了！丢去不影响能级差的常数 $-E_J$，就得到 **Duffing 振子哈密顿量**：
 
 $$
 \hat H_{\mathrm{Duffing}}
@@ -504,7 +507,7 @@ $$
 >
 > **参考核对**：（1）$E_C/h = e^2/(2hC_\Sigma) \approx 200.1\ \mathrm{MHz}$，$E_J/h = \Phi_0 I_c/(2\pi h) \approx 12.42\ \mathrm{GHz}$，$L_{J0} = \Phi_0/(2\pi I_c) \approx 13.16\ \mathrm{nH}$，$E_J/E_C \approx 62.1$；（2）两路均给出 $f_p \approx 4.458\ \mathrm{GHz}$，一阶微扰得 $f_{01} \approx 4.258\ \mathrm{GHz}$、$\alpha/(2\pi) \approx -200\ \mathrm{MHz}$、$f_{12} \approx 4.058\ \mathrm{GHz}$；（3）能级越高，相位振幅 $\varphi$ 越大，$\cos\varphi$ 越小而等效电感 $L_J(\varphi)$ 越大，电路等效振荡频率降低，故 $f_{12} < f_{01}$。
 
-### 4.4 门越快为什么越容易碰到 $|2\rangle$：矩形脉冲的 $\operatorname{sinc}$ 频谱与零点陷阱
+### 4.4 进阶选读：门越快为什么越容易碰到 $|2\rangle$：矩形脉冲的 $\operatorname{sinc}$ 频谱与零点边界
 
 有了约 $200\text{--}250\ \mathrm{MHz}$ 的非谐性，我们能把单比特门做多快？
 
@@ -556,9 +559,11 @@ $$
 
 ![固定弱驱动面积 0.1 弧度时，矩形脉冲在 200 MHz 失谐处的一阶跃迁概率随时长振荡，并在 5、10、15 ns 出现谱零点](../assets/round71-systems-spectrum.svg)
 
-（需要放大查看细节时，可打开[原尺寸 SVG](../assets/round71-systems-spectrum.svg)或阅读现行双主题[绘图脚本](../../codes/practice/upgrade_legacy_svgs_part1.py)（原始数值核对见 [round71_checks.py](../../codes/systems/round71_checks.py)）。图中 $\tau \to 0$ 仅是固定面积下 $\Omega_{ab} = 0.1/\tau \to \infty$ 的数学极限，真实控制器幅度有限。）
+（需要放大查看细节时，可打开[原尺寸 SVG](../assets/round71-systems-spectrum.svg)或阅读现行双主题[绘图脚本](../../codes/practice/upgrade_legacy_svgs_part1.py)，原始数值核对见[矩形脉冲频谱核验脚本](../../codes/systems/round71_checks.py)。图中 $\tau \to 0$ 仅是固定面积下 $\Omega_{ab} = 0.1/\tau \to \infty$ 的数学极限，真实控制器幅度有限。）
 
-看表格最右侧那一列！在 $\tau = 5\ \mathrm{ns}$ 处，一阶微扰概率恰好踩中谱零点等于 $0$，但用第 6 节即将推出的精确两态 Rabi 公式去算，真实概率其实是非零的 $4.009 \times 10^{-11}$——因为一阶积分只抵消了第一阶项，高阶过程并没有消失。更重要的是，在真实的 $\pi$ 门里，$|0\rangle \leftrightarrow |1\rangle$ 正在经历大幅翻转，不能把 $|1\rangle \leftrightarrow |2\rangle$ 孤立成弱驱动两态；加上线路滤波失真与频漂会轻易挪动谱零点位置，因此工程上不会拿“硬矩形脉冲配谱零点”当零泄漏保证，而是改用旁瓣衰减快得多的平滑包络（如高斯脉冲或余弦脉冲），并在正交通道叠加与主包络导数成正比的 **DRAG（导数去绝热门）** 波形（Motzoi et al., 2009），在频域的 $\alpha$ 处主动“挖”出一个受控凹槽来压制 $|2\rangle$ 泄漏。
+看表格最右侧那一列：在 $\tau = 5\ \mathrm{ns}$ 处，一阶微扰概率恰好踩中谱零点等于 $0$，但用第 6 节即将推出的精确两态 Rabi 公式去算，真实概率其实是非零的 $4.009 \times 10^{-11}$——因为一阶积分只抵消了第一阶项，高阶过程并没有消失。
+
+在真实的 $\pi$ 门里，$|0\rangle \leftrightarrow |1\rangle$ 正在经历大幅翻转，不能把 $|1\rangle \leftrightarrow |2\rangle$ 孤立成弱驱动两态；加上线路滤波失真与频漂会轻易挪动谱零点位置，因此工程上不会拿“硬矩形脉冲配谱零点”当零泄漏保证，而是改用旁瓣衰减快得多的平滑包络（如高斯脉冲或余弦脉冲），并在正交通道叠加与主包络导数成正比的 **DRAG（导数去绝热门）** 波形（Motzoi et al., 2009），在频域的 $\alpha$ 处主动“挖”出一个受控凹槽来压制 $|2\rangle$ 泄漏。
 
 同时，门也不是越慢越好：脉冲拉得太长，量子比特在操作期间暴露于能量弛豫和低频漂移的时间就会变长。物理门设计永远是在“太快引发宽带泄漏”与“太慢累积退相干”之间找平衡点。
 
@@ -622,7 +627,7 @@ H_{\mathrm{lab}}(t)
 = -\frac{\hbar\omega_0}{2} Z + \hbar\Omega\cos(\omega_d t + \phi)\,X.
 $$
 
-这里 $X = |0\rangle\langle 1| + |1\rangle\langle 0|$，驱动系数 $\Omega > 0$ 的单位是 $\mathrm{rad/s}$，已经把微波场幅、耦合常数与跃迁矩阵元打包在一起。很多原子物理与核磁共振教材喜欢用能量基算符 $Z_E \equiv |1\rangle\langle 1| - |0\rangle\langle 0| = -Z$，把同一项写成 $+\frac{\hbar\omega_0}{2} Z_E$——下面推导完旋转坐标系，我们会把两套写法并排摆在一张表里，彻底杜绝跨章正负号踩坑。
+这里 $X = |0\rangle\langle 1| + |1\rangle\langle 0|$，驱动系数 $\Omega > 0$ 的单位是 $\mathrm{rad/s}$，已经把微波场幅、耦合常数与跃迁矩阵元打包在一起。很多原子物理与核磁共振教材喜欢用能量基算符 $Z_E \equiv |1\rangle\langle 1| - |0\rangle\langle 0| = -Z$，把同一项写成 $+\frac{\hbar\omega_0}{2} Z_E$——下面推导完旋转坐标系，我们会把两套写法并排摆在一张表里，厘清跨章正负号约定。
 
 ### 6.1 一步不跳推完旋转坐标系与旋转波近似（RWA）
 
@@ -673,7 +678,7 @@ R^\dagger H_0 R - i\hbar R^\dagger\dot R
 \Delta \equiv \omega_d - \omega_0.
 $$
 
-这里的 $\Delta = \omega_d - \omega_0$（驱动角频率减去跃迁角频率）就是全书与[第 14 章](../14-compilation-control.md)统一采用的**失谐（detuning）**。当驱动精准对准共振（$\omega_d = \omega_0$）时，$\Delta = 0$，自由演化项在旋转坐标系里彻底静止！
+这里的 $\Delta = \omega_d - \omega_0$（驱动角频率减去跃迁角频率）就是全书与[第 14 章](../14-compilation-control.md)统一采用的**失谐（detuning）**。当驱动精准对准共振（$\omega_d = \omega_0$）时，$\Delta = 0$，自由演化项在旋转坐标系里静止不动。
 
 **第三步：逐格展开驱动项，看清 $1/2$ 因子与快慢两项。**
 
@@ -728,9 +733,9 @@ $$
 
 其中 $\Omega_x = \Omega\cos\phi$、$\Omega_y = -\Omega\sin\phi$。
 
-### 6.2 彻底消除跨章失谐符号坑：计算基与能量基的等价对照表
+### 6.2 计算基与能量基的失谐符号等价对照表
 
-读不同教科书和论文时，最让人头疼的莫过于失谐到底写 $\omega_d - \omega_0$ 还是 $\omega_0 - \omega_d$。其实它们之所以反号，完全是因为选取的 $Z$ 矩阵差了一个负号！把两套写法逐项对齐到下面这张表里，一劳永逸看透它们的等价性：
+读不同教科书和论文时，最容易混淆的莫过于失谐到底写 $\omega_d - \omega_0$ 还是 $\omega_0 - \omega_d$。其实它们之所以反号，完全是因为选取的 $Z$ 矩阵差了一个负号。把两套写法逐项对齐到下面这张表里，就能清楚看出它们的等价性：
 
 | 对比项 | 计算基约定（全书默认、本章后续与[第 14 章](../14-compilation-control.md)统一采用） | 能量基约定（常见原子物理 / NMR 文献） |
 |---|---|---|
@@ -758,7 +763,7 @@ $$
 - 对一颗 $f_0 = 5.0\ \mathrm{GHz}$ 的普通 transmon，就算把微波开得很猛（$\Omega/(2\pi) = 50\ \mathrm{MHz}$，对应 $10\ \mathrm{ns}$ 的 $\pi$ 脉冲），Bloch–Siegert 位移也只有 $\delta\omega_{\mathrm{BS}}/(2\pi) = (50\ \mathrm{MHz})^2 / (4 \times 5000\ \mathrm{MHz}) = 0.125\ \mathrm{MHz}$——远小于约 $250\ \mathrm{MHz}$ 的非谐性。所以 transmon 提速时最先撞上的墙是 $|2\rangle$ 能级泄漏，而不是 RWA 失效；
 - 但对一颗低频 **fluxonium** 超导量子比特（$f_0 = 200\ \mathrm{MHz}$），同样的 $\Omega/(2\pi) = 50\ \mathrm{MHz}$ 驱动就会带来 $\delta\omega_{\mathrm{BS}}/(2\pi) = 3.125\ \mathrm{MHz}$ 的明显频移，此时 RWA 修正必须放进校准模型里。
 
-### 6.4 零跳步推出 Rabi 振荡公式与 $1/2$ 因子核对
+### 6.4 逐步推出 Rabi 振荡公式与 $1/2$ 因子核对
 
 现在从不含时的 $H_{\mathrm{RWA}}$ 一步步算出演化算符 $U_{\mathrm{RWA}}(t) = e^{-i H_{\mathrm{RWA}} t / \hbar}$。把 $H_{\mathrm{RWA}} = \frac{\hbar}{2} K$ 中具有角频率单位（$\mathrm{rad/s}$）的 $2 \times 2$ 矩阵记作
 
@@ -883,11 +888,7 @@ $$
    P_1(50\ \mathrm{ns}) = \frac{100}{136}\sin^2(1.8318) \approx 0.6863.
    $$
 
-记住这个非常反直觉的结论：**失谐不是让 Rabi 振荡变慢，而是让它振得更快、但摆幅变矮，永远翻不到南极 $|1\rangle$。**
-
-![左：谐振子抛物势与 transmon 余弦势非谐能级对比（非等比例示意）；右：Ω/2π=10 MHz 下共振与 6 MHz 失谐驱动的精确 Rabi 振荡曲线](../assets/v2-q3-anharmonic-rabi.svg)
-
-（左面板为非等比例势能示意图，右面板由精确二能级公式绘制；可打开[原尺寸 SVG](../assets/v2-q3-anharmonic-rabi.svg)查看。）
+记住这个反直觉的结论：**失谐不是让 Rabi 振荡变慢，而是让它振得更快、但摆幅变矮，永远翻不到南极 $|1\rangle$。**（对照第 4.1 节所附双面板科学图 `v2-q3-anharmonic-rabi.svg` 的右面板，可直接查看 $\Omega/(2\pi)=10\ \mathrm{MHz}$ 下共振与 $6\ \mathrm{MHz}$ 失谐的精确 Rabi 振荡曲线；亦可打开[原尺寸 SVG](../assets/v2-q3-anharmonic-rabi.svg)。）
 
 ---
 
@@ -981,7 +982,7 @@ $$
 
 在许多超导与离子阱实验里，也可以两发都用绕 $X$ 轴出发的 $\pi/2$ 脉冲，但给第二发脉冲加上可控驱动相位偏移 $\varphi_d$（即旋转轴为 $\cos\varphi_d\,X - \sin\varphi_d\,Y$），直接手算或程序验证可得激发概率 $P_1(\tau) = \frac{1 + \cos(\delta\tau + \varphi_d)}{2}$：当 $\varphi_d = 0$ 时 $\tau=0$ 两发拼成一个 $X_\pi$ 门给出 $P_1(0)=1$；把第二发相位偏转 $\varphi_d = -\pi/2$，立刻读出 $\frac{1 + \sin(\delta\tau)}{2}$。实验中还常故意让 $\varphi_d = \Delta_{\mathrm{art}}\tau$ 随等待时长线性推进，人为叠上一组已知“虚拟失谐”条纹，从合成条纹频率偏快还是偏慢一眼读出真实 $\delta$ 的大小和正负号。
 
-### 算例：用 41.7 ns 一锤定音辨出 $\pm 6\ \mathrm{MHz}$ 失谐
+### 算例：用 41.7 ns 一次区分 $\pm 6\ \mathrm{MHz}$ 失谐
 
 回到前面让 Rabi 束手无策的两组候选失谐：$\delta/(2\pi) = +6\ \mathrm{MHz}$ 与 $-6\ \mathrm{MHz}$。选等待时长让相位正好转过四分之一圈（$|\delta\tau| = \pi/2$）：
 
@@ -1074,9 +1075,9 @@ flowchart LR
 
 ---
 
-## 8. 当二能级最优脉冲放回三能级器件：泄漏的矩阵视角与相干翻倍反例
+## 8. 进阶选读：当二能级最优脉冲放回三能级器件：泄漏的矩阵视角与相干翻倍反例
 
-前面我们一直在二维空间里推导旋转门。现在把视野拉回本章最核心的那句话：**真实器件是多能级的**。如果工程师只拿二能级模型把一个脉冲优化到误差小于 $10^{-11}$，再原封不动地打到真实的三能级 transmon 上，会发生什么？
+<span id="8-当二能级最优脉冲放回三能级器件泄漏的矩阵视角与相干翻倍反例"></span>前面我们一直在二维空间里推导旋转门。现在把视野拉回本章最核心的那句话：**真实器件是多能级的**。如果工程师只拿二能级模型把一个脉冲优化到误差小于 $10^{-11}$，再原封不动地打到真实的三能级 transmon 上，会发生什么？
 
 ### 8.1 把二能级最优波形放进三能级模型
 
@@ -1175,7 +1176,9 @@ $$
 
 如果只测了计算基 $|0\rangle$ 和 $|1\rangle$ 的泄漏都是 $1\%$，就拍胸脯宣称“任意态的泄漏都不超过 $1\%$”，在 $|+\rangle$ 上马上就翻车了。不过，在两个正交基态上等权平均时，交叉项正好抵消：计算子空间平均存活率为 $\bar s = \frac{1}{2}\operatorname{Tr}(M^\dagger M)$，平均泄漏正好等于 $\frac{1}{2}(L_0 + L_1) = 1 - \bar s$。
 
-正因为如此，实际多能级控制必须直接把 $|2\rangle$ 写进优化目标里。同样还是上面那组 $40\ \mathrm{ns}$、$\Delta/(2\pi) = 5\ \mathrm{MHz}$、$\alpha/(2\pi) = -200\ \mathrm{MHz}$ 的三能级模型，当把三能级子空间保真度直接放进 GRAPE 优化后（见 [grape_three.py](../../codes/systems/sdk73/grape_three.py) 与 [round73_checks.py](../../codes/systems/round73_checks.py)），$L_0$ 与 $L_1$ 双双压低到 $6.25 \times 10^{-10}$ 与 $6.15 \times 10^{-10}$；不过一旦把同一段波形过一遍 $1\ \mathrm{ns}$ 时间常数的离散一阶低通滤波器模拟线路带宽畸变，泄漏立刻又回弹到 $0.95\%$ 与 $0.52\%$（平均约 $0.74\%$）。这正好把物理推导与真实硬件工程扣在了一起：仿真里抑住了泄漏还不算完，线路滤波响应、更高能级与退相干都必须一起纳入端到端标定。
+正因为如此，实际多能级控制必须直接把 $|2\rangle$ 写进优化目标里。同样还是上面那组 $40\ \mathrm{ns}$、$\Delta/(2\pi) = 5\ \mathrm{MHz}$、$\alpha/(2\pi) = -200\ \mathrm{MHz}$ 的三能级模型，当把三能级子空间保真度直接放进 GRAPE 优化后（见[三能级 GRAPE 脚本](../../codes/systems/sdk73/grape_three.py)与[三能级泄漏核验脚本](../../codes/systems/round73_checks.py)），$L_0$ 与 $L_1$ 双双压低到 $6.25 \times 10^{-10}$ 与 $6.15 \times 10^{-10}$。
+
+不过一旦把同一段波形过一遍 $1\ \mathrm{ns}$ 时间常数的离散一阶低通滤波器模拟线路带宽畸变，泄漏立刻又回弹到 $0.95\%$ 与 $0.52\%$（平均约 $0.74\%$）。这把物理推导与真实硬件工程扣在了一起：仿真里抑住了泄漏还不算完，线路滤波响应、更高能级与退相干都必须一起纳入端到端标定。
 
 ---
 
@@ -1193,7 +1196,7 @@ $$
 \Delta_{qr} \equiv \omega_{01} - \omega_r,
 $$
 
-以此彻底区分于第 6 节的单比特微波驱动失谐 $\Delta = \omega_d - \omega_0$。
+以此明确区分于第 6 节的单比特微波驱动失谐 $\Delta = \omega_d - \omega_0$。
 
 当比特与谐振腔以电偶极耦合强度 $g$（单位 $\mathrm{rad/s}$）相连，且处于弱耦合条件 $g \ll \omega_{01} + \omega_r$ 时，做旋转波近似舍去不守恒总激发数的快振项 $\hat a^\dagger\sigma_+ + \hat a\sigma_-$，即得量子光学与 cQED 的基石——**Jaynes–Cummings（JC）哈密顿量**：
 
@@ -1208,7 +1211,7 @@ $$
 - **共振区**（$\Delta_{qr} = 0$）：$|1, n\rangle$ 与 $|0, n+1\rangle$ 原本能量简并，加上耦合 $\hat V$ 后立刻发生强杂化，形成间距为 $2g\sqrt{n+1}$ 的**真空拉比劈裂**。此时比特与谐振腔来回交换真实光子，能量很快通过有损耗的腔体泄向外部测量线——适合做快速复位或能量交换，却会直接毁掉 $|1\rangle$，不是非破坏读出。
 - **色散区**（$g \ll |\Delta_{qr}|$）：比特频率与腔频率拉开一大截，两者之间“能量账算不平”，交换不了真实光子；但量子力学允许**二阶虚光子交换**——两边的能级隔着一段距离互相轻轻“推开”一个微小的二阶位移。
 
-### 9.2 零跳步 Schrieffer–Wolff 变换导出色散位移 $\chi_{\mathrm{2LS}}$
+### 9.2 进阶选读：Schrieffer–Wolff 变换导出色散位移 $\chi_{\mathrm{2LS}}$
 
 如何把二阶虚光子推挤精确写成不含跃迁项的有效哈密顿量？最利落的工具是 **Schrieffer–Wolff 幺正变换**：找一个反厄米生成元 $\hat S$（满足 $\hat S^\dagger = -\hat S$），对 $\hat H_{\mathrm{JC}}$ 做幺正旋转并按 Baker–Campbell–Hausdorff（BCH）公式展开到 $(g/\Delta_{qr})^2$ 阶：
 
@@ -1246,7 +1249,7 @@ $$
 [\hat S, \hat H_0] = -\hbar g(\hat a\sigma_+ + \hat a^\dagger\sigma_-) = -\hat V.
 $$
 
-一阶交叉项 $\hat V + [\hat S, \hat H_0]$ 彻底抵消！
+一阶交叉项 $\hat V + [\hat S, \hat H_0]$ 完全抵消！
 
 **第二步：计算二阶有效项 $\frac{1}{2}[\hat S, \hat V]$。** 将 $[\hat S, \hat H_0] = -\hat V$ 代入 BCH 展开的二阶部分，得 $[\hat S, \hat V] + \frac{1}{2}[\hat S, -\hat V] = \frac{1}{2}[\hat S, \hat V]$。把 $\hat S$ 与 $\hat V$ 逐项乘开（利用任意算符与自身对易 $[\hat A, \hat A] = 0$）：
 
@@ -1322,7 +1325,7 @@ $$
 
 这样，真实 Transmon 在 $\{|0\rangle, |1\rangle\}$ 子空间内的有效色散哈密顿量写作 $\hat H_{\mathrm{disp}}^{\mathrm{transmon}} = \hbar(\tilde\omega_r + \chi_{\mathrm{transmon}} Z_E)\hat a^\dagger\hat a + \frac{\hbar}{2}\tilde\omega_{01} Z_E$。
 
-请停下来体会这个公式最震撼的物理极限：**令非谐性 $\alpha \to 0$（把约瑟夫森结换回普通线性电感），分子立刻归零，$\chi_{\mathrm{transmon}} \to 0$！** 两个线性谐振子耦合在一起，无论怎么拉近耦合，形成的只是两个固定频率的简正模，腔频根本不随激发态变化——约瑟夫森结的非线性不仅决定了我们能不能单频做门，也决定了我们能不能做色散读出！
+请停下来体会这个公式最关键的物理极限：**令非谐性 $\alpha \to 0$（把约瑟夫森结换回普通线性电感），分子立刻归零，$\chi_{\mathrm{transmon}} \to 0$！** 两个线性谐振子耦合在一起，无论怎么拉近耦合，形成的只是两个固定频率的简正模，腔频根本不随激发态变化——约瑟夫森结的非线性不仅决定了我们能不能单频做门，也决定了我们能不能做色散读出。
 
 | 对比项目 | 理想二能级模型（2LS） | 真实弱非谐 Transmon（含 $\lvert 2\rangle$ 修正） |
 | :--- | :--- | :--- |
@@ -1366,7 +1369,7 @@ $$
    = 56.25
    $$
 
-   时，色散近似彻底失效：比特与腔强杂化，探测微波的高阶多光子共振会把 Transmon 直接踢进 $|2\rangle$ 乃至更高能级（即[第 09 章 §4.1](../09-hardware.md)提到的测量诱导态跃迁 MIST）。这就是为什么超导读出既想加大微波功率把 $I\text{-}Q$ 平面上的两团信号拉远、压低读出错误，又绝不能无限加功率把腔光子数推过 $n_{\mathrm{crit}}$。
+   时，色散近似失效：比特与腔强杂化，探测微波的高阶多光子共振会把 Transmon 直接踢进 $|2\rangle$ 乃至更高能级（即[第 09 章 §4.1](../09-hardware.md)提到的测量诱导态跃迁 MIST）。这就是为什么超导读出既想加大微波功率把 $I\text{-}Q$ 平面上的两团信号拉远、压低读出错误，又不能无限加功率把腔光子数推过 $n_{\mathrm{crit}}$。
 
 > **练 Q3-B（就地练习｜cQED 色散位移：二能级 vs Transmon 与临界光子数）**
 >
@@ -1428,12 +1431,12 @@ $$
 
 | 硬件平台 | 计算子空间的典型选择 | 子空间之外仍存在的状态与自由度 |
 |---|---|---|
-| 超导 transmon | 非谐电路的最低两个能量本征态 $\lvert 0\rangle, \lvert 1\rangle$ | 更高能级 $\lvert 2\rangle, \lvert 3\rangle, \dots$、读出谐振腔与可调耦合器模式 |
+| 超导电路（以 transmon 为主；另有 Fluxonium、双轨擦除与猫态腔模，见第 09 章） | 非谐电路的最低两个能量本征态 $\lvert 0\rangle, \lvert 1\rangle$ | 更高能级 $\lvert 2\rangle, \lvert 3\rangle, \dots$、读出谐振腔与可调耦合器模式 |
 | 离子阱 | 离子的两个超精细态、塞曼（Zeeman）态或光学亚稳态 | 其他内部能级、离子链的多个集体简谐振动模（常借作两比特门总线） |
 | 中性原子 | 两个基态超精细态或光学钟态 | 高激发 Rydberg 辅助态、其他塞曼子能级、原子热运动以及原子逃逸丢失 |
-| 光子偏振 | 单个光子的水平/垂直偏振态 $\lvert H\rangle, \lvert V\rangle$ | 真空态（光子丢失）、多光子态、频率与时间波包等未编码自由度 |
-| 光子双轨 | 单光子占据两根波导之一：$\lvert 10\rangle_{ab}, \lvert 01\rangle_{ab}$ | 真空 $\lvert 00\rangle_{ab}$（表示光子丢失或擦除）、$\lvert 11\rangle_{ab}$ 等多光子扇区 |
+| 光子（偏振或空间/时间箱双轨） | 单光子的 $\lvert H\rangle,\lvert V\rangle$ 偏振态，或双轨单光子态 $\lvert 10\rangle_{ab},\lvert 01\rangle_{ab}$ | 真空态 $\lvert 00\rangle_{ab}$（光子丢失/擦除）、$\lvert 11\rangle_{ab}$ 等多光子扇区与时间波包自由度 |
 | 半导体自旋 | 单电子自旋两投影，或双/三电子单重态—三重态编码 | 量子点轨道态、硅谷态（valley states）、其他自旋组合与电荷态 |
+| 拓扑候选（InAs–Al / Kitaev 链） | 非局域 Majorana 零模联合费米子宇称 | 平庸 Andreev 束缚态、准粒子中毒与有限尺寸端点劈裂 |
 
 表中最容易被初学者读岔的是**光子双轨编码**与**辅助态借用**：
 
@@ -1466,6 +1469,24 @@ $$
 
 ---
 
+## 本章一页速记卡
+
+| 核心概念 / 工具 | 核心公式 | 维度 / 单位 / 适用条件 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **能隙与热平衡占据** | $\Delta E = hf = \hbar\omega$，$p_1 = \dfrac{e^{-x}}{1+e^{-x}}$，$x = \dfrac{\Delta E}{k_{\mathrm{B}}T}$ | $f$ 用 $\mathrm{Hz}$、$\omega=2\pi f$ 用 $\mathrm{rad/s}$；非简并二能级热平衡 | 把 $f$ 直接代进 $\hbar\omega$ 漏乘 $2\pi$；把冷台温度等同于器件有效温度 $T_{\mathrm{eff}}$ |
+| **Transmon 非谐能级** | $\hbar\omega_{01}\approx\sqrt{8E_JE_C}-E_C$，$\hbar\alpha\approx -E_C$ | $E_J/E_C\gg 1$（典型 $50\text{--}80$），$\alpha=\omega_{12}-\omega_{01}<0$ | 误以为增大 $E_J/E_C$ 时绝对非谐性 $|\alpha|$ 自动趋零 |
+| **旋转框 RWA 与 Rabi 振荡** | $H_{\mathrm{RWA}}=\frac{\hbar}{2}[\Delta Z+\Omega(\cos\phi\,X-\sin\phi\,Y)]$，$P_1(t)=\frac{\Omega^2}{\Omega^2+\Delta^2}\sin^2\frac{\Omega_{\mathrm{eff}}t}{2}$ | 计算基 $Z=\lvert 0\rangle\langle 0\rvert-\lvert 1\rangle\langle 1\rvert$，$\Delta=\omega_d-\omega_0$；$\Omega,|\Delta|\ll 2\omega_d$ | 误以为失谐让振荡变慢；只测 Rabi 或 $\langle X\rangle$ 无法辨别 $\pm\Delta$ |
+| **Ramsey 与 Hahn 回波** | $\langle X\rangle=\cos(\delta\tau),\ \langle Y\rangle=\sin(\delta\tau)$；$T_2^*\le T_2\le 2T_1$ | 瞬时 $\pi/2$、$\pi$ 脉冲近似；Hahn 回波仅滤除准静态慢漂移 | 把动态解耦 $T_2$ 误当作自由演化相干时间 $T_2^*$ |
+| **三能级泄漏恒等式** | $M^\dagger M + \boldsymbol\lambda^\dagger\boldsymbol\lambda = I_2$，$L(\lvert\psi\rangle)=\lvert\lambda_0 c_0+\lambda_1 c_1\rvert^2$ | 截断二维块 $M\in\mathbb C^{2\times 2}$ 在有泄漏时非酉 | 误以为基态泄漏 $1\%$ 能保证叠加态泄漏不超过 $1\%$ |
+| **Transmon 色散读出** | $\chi_{\mathrm{transmon}}=\dfrac{g^2}{\Delta_{qr}}\dfrac{\alpha}{\Delta_{qr}+\alpha}$，$n_{\mathrm{crit}}=\dfrac{\Delta_{qr}^2}{4g^2}$ | 色散区 $g\ll\lvert\Delta_{qr}\rvert$，$\Delta_{qr}=\omega_{01}-\omega_r$，腔光子数 $\bar n\ll n_{\mathrm{crit}}$ | 直接套二能级 $\chi_{\mathrm{2LS}}=g^2/\Delta_{qr}$（高估 $5\text{--}10\times$）；超功率诱发 MIST |
+
+**首遍通关自测三句话**：
+1. 我能说出为什么 $5\ \mathrm{GHz}$ 超导比特必须放进毫开尔文冷台，并说明约瑟夫森结的负非谐性怎样挡住 $|1\rangle\to|2\rangle$ 误激发；
+2. 我能区分 Rabi、Ramsey 与 Hahn 自旋回波分别测什么，并解释为什么测 $\langle Y\rangle = \sin(\delta\tau)$ 才能一次辨出失谐正负号；
+3. 我能写出 Transmon 色散位移公式，说明 $\alpha\to 0$ 时为何读出消失，以及为什么光子双轨 $|00\rangle_{ab}$ 是丢失而非逻辑 0。
+
+---
+
 ## 自检题
 
 1. $f = 6\ \mathrm{GHz}$ 的能隙是多少焦耳？对应的 $\Delta E / k_{\mathrm{B}}$ 是多少开尔文？
@@ -1489,8 +1510,8 @@ $$
 - **Ramsey 失谐辨号验证**：运行 `python3 codes/foundations/diagnostic_lab.py --case q3`（脚本见 [diagnostic_lab.py](../../codes/foundations/diagnostic_lab.py)），直接从旋转矩阵验算 $\pm 6\ \mathrm{MHz}$ 失谐在 $\tau \approx 41.67\ \mathrm{ns}$ 处的 $\langle Y\rangle = \pm 1$ 符号分辨。
 - **Ramsey 干涉与退相干声化实验**：进入[声音实验](../labs/audio.md)试听理想与对比度衰减的合成 Ramsey 教学音频，直观感受条纹对比度下降与平均概率保持 $1/2$ 的区别。
 - **矩形脉冲频谱与三能级泄漏复现**：
-  - 运行 `python3 codes/systems/round71_checks.py --case q3`（见 [round71_checks.py](../../codes/systems/round71_checks.py)），用数值复积分核对矩形脉冲一阶 $\operatorname{sinc}$ 振幅与精确两态解的差距；
-  - 查看 [grape_control.py](../../codes/systems/sdk/grape_control.py)（二能级最优 $X_\pi$ 放回三能级产生 $1.33\% / 2.36\%$ 泄漏）、[grape_three.py](../../codes/systems/sdk73/grape_three.py) 与 [round73_checks.py](../../codes/systems/round73_checks.py)（`--case q3`，核对三能级优化波形、80 槽脉冲表 [grape-three-amplitudes.csv](../../codes/systems/sdk73/grape-three-amplitudes.csv) 及 $1\ \mathrm{ns}$ 离散滤波下的相干泄漏恒等式）。
+  - 打开[矩形脉冲频谱核验脚本](../../codes/systems/round71_checks.py)（或通过统一入口 `python3 codes/run_all.py` 运行），用数值复积分核对矩形脉冲一阶 $\operatorname{sinc}$ 振幅与精确两态解的差距；
+  - 查看[二能级 GRAPE 脚本](../../codes/systems/sdk/grape_control.py)（二能级最优 $X_\pi$ 放回三能级产生 $1.33\% / 2.36\%$ 泄漏）、[三能级 GRAPE 脚本](../../codes/systems/sdk73/grape_three.py)与[三能级泄漏核验脚本](../../codes/systems/round73_checks.py)（核对三能级优化波形、80 槽脉冲表 [grape-three-amplitudes.csv](../../codes/systems/sdk73/grape-three-amplitudes.csv) 及 $1\ \mathrm{ns}$ 离散滤波下的相干泄漏恒等式）。
 
 ### 权威教材与一手文献
 

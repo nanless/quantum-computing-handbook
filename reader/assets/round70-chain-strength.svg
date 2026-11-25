@@ -2,7 +2,7 @@
   <title id="title">量子退火链强度能级交叉与归一化局域场幅度衰减</title>
   <desc id="desc">两自旋教学模型 E = −2s_a + 2s_b − J s_a s_b（无量纲模型单位）：左图展示链完整态 (+,+)/(−,−)（能量 −J）与断链态 (+,−)（J−4）、(−,+)（J+4）在 J = 2、E = −2 处精确交叉，仅 J &gt; 2 保证所有基态链完整；右图展示全部系数统一缩放到 [−1, 1] 后，有效局域场幅 2/max(2, J) 在 J = 3 降至 2/3、在 J = 8 降至 1/4。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -51,48 +51,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.42}
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.45}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.42}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .subpanel{fill:#1b2a38;stroke:#3b5369}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide,.unit-circle{stroke:#738fa8}
-  .bloch-disk{fill:#164968;fill-opacity:.40;stroke:#6bc2f5}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
-  .node-bg{fill:#16222e}
-  .area1{fill:#6bc2f5;fill-opacity:.16}
-  .area2{fill:#f28872;fill-opacity:.15}
-  .area3{fill:#5dd1a8;fill-opacity:.16}
-  .forbid{fill:#f28872;fill-opacity:.12}
-  .bar-bg{fill:#273a4c}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.52}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

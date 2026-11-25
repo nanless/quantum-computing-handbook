@@ -2,12 +2,11 @@
 
 走完[第 06 章](06-algorithmic-primitives.md)，你手头已经集齐了可逆预言机、相位回踢、振幅放大与固定点滤波、量子傅里叶变换（QFT）、量子相位估计（QPE）、量子计数、分片时间演化，以及 Hadamard/SWAP 测试与 QRAM 瓶颈这几块通用积木。这一章，我们按三条清晰递增的算法范式，把它们真正拼成六座改变计算理论版图的代表性算法——**隐藏周期与傅里叶采样（Simon 算法 → Shor 分解与椭圆曲线离散对数）**、**振幅放大与统计精度加速（Grover 搜索 → 量子幅度估计 QAE）**，以及**物理模拟与线性代数（哈密顿量模拟 → HHL 线性方程求解）**，最后把它们一起放进量子复杂度类的地图里，看清量子计算机究竟能加速什么、又卡在什么边界之外。
 
-读这一章时，可以按自己的数学底子分两遍推进。第一遍抓主干：读懂每个算法“给什么输入、靠哪条物理或数学机制工作、最后测出什么、哪一步可能失败”，走通 Simon 的两/三比特手算、Shor 分解 15 的好/坏底数、Grover 的四项均值反演，以及 HHL 的二维对角算例即可。第二遍再回头细啃 Shor 分解 35 的连分数、模幂可逆电路与椭圆曲线离散对数、BBHT 扩界条件、多体泡利门分解与自旋/费米资源分水岭、负谱非网格 HHL、Aaronson 四重细则的 PDE 实算，以及局域哈密顿量的复杂度界定。
+读这一章时，可以按自己的数学底子分两遍推进：
+- **首遍主干（★ 必读）**：第 1 节 Simon 两/三比特手算、第 2.1–2.4 节 Shor 分解 15 与 35、第 3 节 Grover 搜索、第 4.1 节标准 QAE、第 5.1–5.3 / 5.5 节 Trotter 与 qDRIFT、第 6.1–6.2 / 6.5 节 HHL 二维对角与四重细则、第 7 节复杂度地图。
+- **进阶选读（☆ 首遍可跳过）**：标有 `进阶选读：` 的第 2.5 / 2.7 节（模幂电路与 ECDLP）、第 4.2 节（MLAE 混叠）、第 5.4 节（多体泡利分解与 THC 分水岭）、第 6.4 节（负谱非网格 HHL）与第 6.6 节（量子微分方程 LCHS / Schrödingerization / Carleman）。
 
-动手之前，先对齐本章沿用的全书符号与三笔成本账：
-
-- **统一符号约定**：多比特基序采用**高位在左（大端序）**；电路从左到右表示时间，矩阵从右到左作用在态矢量上；内积采用左反线性共轭 $\langle u|v\rangle = \sum_j u_j^* v_j$；二进制对数一律写 $\log_2$，自然对数一律写 $\ln$；全章将 Grover / 振幅放大算符统一写作花体 $\mathcal{Q}$，将 Grover 目标个数专记 $M$，将所有相位估计寄存器网格大小统一写作正体 **$Q = 2^t$**；Hadamard 门 $H$ 与哈密顿量 $H$ 仅在各自所属小节使用，并在首次出现时明写对象与单位约定。
-- **三笔成本分开记**：**查询次数**只数向黑盒预言机提问了几回；**门复杂度与深度**还要把黑盒拆成基本量子门，并计入受控幂与反计算；**端到端总时间**则进一步把经典数据装载、态制备、读出、失败重试、容错纠错和经典后处理全部算进来。下文每次谈到“指数优势”或“平方加速”，都会把对应的访问模型与比较基线写清。
+全章沿用[符号表](appendices/notation.md)统一约定与[第 06 章第 0 节](06-algorithmic-primitives.md#0-读懂任何量子算法前的六件事与原语总图)的三笔成本划分（查询次数、门复杂度、端到端总时间）；本章局部专记 Grover 迭代算符 $\mathcal{Q}$、目标个数 $M$、QPE 网格总数正体 **$Q = 2^t$**，Hadamard 门 $H$ 与哈密顿量 $H$ 仅在各自小节使用并就地界定单位。
 
 ---
 
@@ -98,7 +97,7 @@ $$
 
 由于 $s \neq 0^n$，线性方程 $z \cdot s = 0$ 在 $n$ 维二元向量空间 $\mathbb{F}_2^n$ 里切出一个维数为 $d = n - 1$ 的正交补子空间 $s^\perp$，里面恰好有 $2^{n-1}$ 个向量，总概率 $2^{n-1} \times \frac{1}{2^{n-1}} = 1$。更妙的是，未知的随机偏移量 $x_0$ 只躲在局部符号 $(-1)^{x_0 \cdot z}$ 里，取模平方时彻底消失——不管第二寄存器撞到哪一对原像，第一寄存器输出的 $z$ 都在 $s^\perp$ 上**严格等概率均匀分布**！
 
-### 1.3 两比特与三比特零跳步手算
+### 1.3 两比特与三比特分步手算
 
 #### 热身算例：$n = 2,\, s = 11$
 
@@ -390,7 +389,7 @@ $$
    < \frac{1}{2 \cdot 12^2} = \frac{1}{288}.
    $$
 
-   Legendre 条件宽裕通过！用[第 06 章第 6.3 节](06-algorithmic-primitives.md#63-非精确网格相位dirichlet-核圆周绕回与前缀边界反例)的 Dirichlet 核公式，顺手算出在 $k = 1$ 分支下命中这个最近整数 $y = 171$ 的精确概率（相位偏差 $\Delta = \frac{1}{12} - \frac{171}{2048} = -\frac{1}{6144}$，故 $Q|\Delta| = \frac{1}{3}$）：
+   Legendre 条件宽裕通过！用[第 06 章第 6.3 节](06-algorithmic-primitives.md#63-进阶选读非精确网格相位dirichlet-核圆周绕回与前缀边界反例)的 Dirichlet 核公式，顺手算出在 $k = 1$ 分支下命中这个最近整数 $y = 171$ 的精确概率（相位偏差 $\Delta = \frac{1}{12} - \frac{171}{2048} = -\frac{1}{6144}$，故 $Q|\Delta| = \frac{1}{3}$）：
 
    $$
    \Pr(y = 171 \mid k = 1)
@@ -444,7 +443,7 @@ $$
 
 有效收敛子只给出 $1/6$（下一个是 $170/1021$，分母远超 $35$）。经典验证 $2^6 = 64 \equiv 29 \not\equiv 1 \pmod{35}$ 失败，于是拒绝分母 $6$ 并重试（或结合两次不同样本的候选分母取最小公倍数）。在全部 12 个分支里，只有与 $12$ 互素的 $k \in \{1, 5, 7, 11\}$ 能一把保留完整分母 $12$，这一关的比例是 $\frac{\varphi(12)}{12} = \frac{4}{12} = \frac{1}{3}$。
 
-### 2.5 拆开黑盒：模幂运算 $a^x \bmod N$ 的可逆算术电路与门数演进
+### 2.5 进阶选读：拆开黑盒——模幂运算 $a^x \bmod N$ 的可逆算术电路与门数演进
 
 前面的推导把 $U_a^{2^j}$ 写得轻描淡写，可在真正的 Shor 电路里，**超过 $99\%$ 的量子门和辅助比特都花在模幂运算 $|x\rangle|1\rangle \mapsto |x\rangle|a^x \bmod N\rangle$ 上**，而 QFT 反而只是个零头。为什么 Shor 的经典教科书门数是 $O(L^3)$、借助快速乘法又能压到 $O(L^2\log_2 L \log_2\log_2 L)$，而且中途还非做反计算不可？我们把模幂黑盒分三层彻底拆开。
 
@@ -529,7 +528,7 @@ $$
 | 经典因子恢复 | $r$ 为奇数，或 $a^{r/2} \equiv -1 \pmod N$ | 换一个随机 $a$ 重来（奇合数通过率 $\ge 1/2$） |
 | 最终验算 | 最大公因数为 $1$ 或 $N$ | 不接受，换随机底数重试；找到非平凡因子立即乘法核对 |
 
-以输入位长 $L = \lceil \log_2 N \rceil$ 计，Shor 算法的逻辑门复杂度是 $L$ 的多项式，而目前已知最强的经典通用因数分解算法——一般数域筛法（GNFS）——复杂度是亚指数 $\exp\bigl(O(L^{1/3}(\ln L)^{2/3})\bigr)$。这就是所谓“相对于已知最强通用经典算法的超多项式（常简称指数级）加速”的精确含义，切忌拿它和试除法对比。
+以输入位长 $L = \lceil \log_2 N \rceil$ 计，Shor 算法的逻辑门复杂度是 $L$ 的多项式，而目前已知最强的经典通用因数分解算法——一般数域筛法（GNFS）——复杂度是亚指数 $\exp\bigl(O(L^{1/3}(\ln L)^{2/3})\bigr)$。这就是所谓“相对于已知最强通用经典算法的超多项式（常简称指数级）加速”的精确含义，不应拿它和试除法对比。
 
 过去十余年间，模幂算术、剩余数表示与量子纠错的协同优化，把分解一颗现代 **RSA-2048** 密钥的容错资源估算拉低了三个数量级：
 
@@ -546,11 +545,11 @@ $$
 
 读懂这份表必须同时守住两条底线：第一，Gidney（2025）是**预印本级容错架构资源估算**，前提是近百万物理比特全部达到 $10^{-3}$ 均匀门错误率与微秒级实时解码，绝不等于当前百至千比特含噪实验芯片已接近破解 RSA-2048；而文献里“实验分解 15 或 21”的小演示往往把已知周期编译进了极简线路，不能直接外推到大整数。第二，它同样清晰地提醒密码工程界：算法与纠错协同进步会持续下修实用门槛，提前向后量子密码迁移非常必要（详见[第 12 章](12-security-network-frontiers.md)）。
 
-### 2.7 Shor 算法求解离散对数与椭圆曲线密码（ECDLP）
+### 2.7 进阶选读：Shor 算法求解离散对数与椭圆曲线密码（ECDLP）
 
 [第 00 章](00-overview.md)与[第 12 章](12-security-network-frontiers.md)都提到，Shor 算法不仅攻破 RSA，还同样攻破基于**离散对数**（DLP）与**椭圆曲线离散对数**（ECDLP）的现代公钥协议（如 Diffie–Hellman 密钥交换、ECDSA 与 EdDSA 数字签名）。它们共享的正是 Shor 1994 年同一篇论文里的**二维傅里叶周期提取**骨架！
 
-#### 问题设定与二维 QFT 零跳步推导
+#### 问题设定与二维 QFT 分步推导
 
 设 $(G, +)$ 是一个阶为素数 $r$ 的有限循环阿贝尔群（在有限域乘法群 $\mathbb{F}_p^*$ 中群运算写作乘法 $g^d \equiv h \pmod p$；在素域椭圆曲线群 $E(\mathbb{F}_p): y^2 \equiv x^3 + Ax + B \pmod p$ 中群运算写作点加、重复相加写作标量乘 $Q = dP$）。给定公开生成元 $P$ 与目标群元 $Q = dP$，任务是找出秘密私钥标量 $d \in \{0, 1, \dots, r-1\}$。
 
@@ -640,7 +639,7 @@ $$
 | Roetteler–Naehrig–Svore–Lauter (ASIACRYPT 2017) | NIST P-256 | ~2,330 | ~$1.26\times 10^{11}$ Toffoli | 首个门级精确资源估算，二进制扩展欧几里得求逆 |
 | Häner–Jaques–Naehrig–Roetteler–Soeken (PQCrypto 2020) | NIST P-256 | ~2,124 | $T$ 门压低约 $119\times$ | 窗口化标量乘 + 优化 Kaliski 模求逆与反计算 |
 | Litinski (`arXiv:2306.08585`, 2023 预印本) | NIST P-256 | 空间-时间折中 | **~$5\times 10^7$ Toffoli** | 活跃体积架构 + 跨密钥并行分摊模求逆 |
-| Chevignard–Fouque–Schrottenloher (2025) | 256 位曲线 | **~1,098–1,193** | $\tilde O(n^4)$（以时间换空间） | RNS 剩余数算术 + Legendre 符号压缩输出 |
+| Chevignard–Fouque–Schrottenloher (IACR ePrint 2026/280; EUROCRYPT 2026 [A]) | 256 位曲线 | **~1,098–1,193** | $\tilde O(n^4)$（以时间换空间） | RNS 剩余数算术 + Legendre 符号单比特压缩输出 |
 
 结论非常干脆：256 位 ECC 所需的逻辑比特门槛（1,100–2,330）与 RSA-2048 相当甚至更低。因此，向后量子密码迁移（如 NIST 标准化的 ML-KEM 与 ML-DSA，详见[第 12 章](12-security-network-frontiers.md)）必须**同时替换 RSA 与 ECC**，把 RSA 换成椭圆曲线完全不能抵御未来的容错量子计算机。
 
@@ -690,26 +689,18 @@ $$
 
 一轮结束，测得 `11` 的概率恰好为 $|1|^2 = 1$（上图中以 $\mu$ 记平均振幅 $\bar a$，以 oracle 指代相位预言机 $O_f$）！用二维角度公式核验也分毫不差：$\sin\theta = \sqrt{1/4} = 1/2 \implies \theta = \pi/6$，故 $p_1 = \sin^2(3 \times \pi/6) = \sin^2(\pi/2) = 1$。
 
-千万记住，$N = 4, M = 1$ 一轮直达 $100\%$ 是因为 $\theta = \pi/6$ 恰好整除 $\pi/2$。一般当 $0 < M < N/2$ 且 $M$ 已知时，要使 $(2k+1)\theta$ 尽量贴近 $\pi/2$，利用恒等式 $\operatorname{round}(x - 1/2) = \lfloor x \rfloor$，最优非负整数步数为
-
-$$
-k_{\mathrm{opt}} = \left\lfloor \frac{\pi}{4\theta} \right\rfloor \approx \left\lfloor \frac{\pi}{4}\sqrt{\frac{N}{M}} \right\rfloor
-$$
-
-（与[第 06 章第 4.4 节](06-algorithmic-primitives.md#44-a--116-逐轮演化边界行为与反射次序反例)的 $\operatorname{round}\!\bigl(\frac{\pi}{4\theta}-\frac{1}{2}\bigr)$ 完全等价，并保证 $p_{k_{\mathrm{opt}}} \ge 1 - M/N$；而当 $M/N \ge 1/2$ 时，直接随机采样已过半数，盲目迭代反而可能过旋掉至零）。
+（一般 $0 < M < N/2$ 且 $M$ 已知时的闭式最优步数 $k_{\mathrm{opt}} = \lfloor\frac{\pi}{4\theta}\rfloor \approx \lfloor\frac{\pi}{4}\sqrt{N/M}\rfloor$ 及 $a = 1/16$ 的逐轮精确分数演化已在[第 06 章第 4.4 节](06-algorithmic-primitives.md#44-a--116-逐轮演化边界行为与反射次序反例)完整推演，下节直接聚焦单解/多解过旋转对比与重启均值优化。）
 
 ### 3.2 过旋转、重启优化与未知目标数（BBHT）
 
-因为成功率 $p_k = \sin^2((2k+1)\theta)$ 是正弦平方函数，Grover 搜索就像烤蛋奶酥——火候不到没发起来，火候过了又会塌回去（文献里戏称“蛋奶酥问题”）。一旦旋转角 $(2k+1)\theta$ 越过 $\pi/2$，成功率就开始往下掉，这叫做**过旋转**（over-rotation），完全发生在理想零噪声线路里。
-
-拿 $N = 16$（四量子比特）做一组单解与多解对照：$M = 1$ 的逐轮精确分数已在[第 06 章第 4.4 节](06-algorithmic-primitives.md#44-a--116-逐轮演化边界行为与反射次序反例)手算过，现在把它和 $M = 4$（$\sin\theta = \sqrt{4/16} = 1/2 \implies \theta = \pi/6$，成功率以周期 3 在 $1/4$ 与 $1$ 之间来回跳动）排在同一张表里：
+因为成功率 $p_k = \sin^2((2k+1)\theta)$ 是周期振荡的正弦平方函数，迭代一旦越过 $\pi/2$ 就会发生**过旋转**（over-rotation）。将 $N = 16$ 下的单解 $M = 1$ 与多解 $M = 4$（$\theta = \pi/6$，周期 3 在 $1/4$ 与 $1$ 间跳动）并排对照：
 
 | 真实解数 | 初始角 $\theta$ | $p_0$ | $p_1$ | $p_2$ | $p_3$ | $p_4$ |
 |---:|---:|---:|---:|---:|---:|---:|
 | $M = 1$ | $\arcsin(1/4)$ | $0.062500$ | $0.472656$ | $0.908447$ | $0.961319$ | $0.581704$ |
 | $M = 4$ | $\pi/6$ | $0.250000$ | $1.000000$ | $0.250000$ | $0.250000$ | $1.000000$ |
 
-看表的最后两列便一目了然：如果不知情而盲目按单解方案跑 $k = 3$ 轮，遇到 $M = 4$ 时不仅多做了两轮无用功，成功率还从 $k = 1$ 的 $100\%$ 暴跌回 $25\%$！即使真的是单解 $M = 1$，多跑一轮到 $k = 4$ 也会从 $96.13\%$ 跌落到 $58.17\%$。
+表末两列显示：若不知情而按单解跑 $k = 3$ 轮，遇到 $M = 4$ 时成功率反从 $k = 1$ 的 $100\%$ 跌回 $25\%$；即便确为 $M = 1$，多跑一轮至 $k = 4$ 也会从 $96.13\%$ 跌至 $58.17\%$。
 
 更进一步：**就算 $M$ 已知，选单次成功率最高的 $k$ 也不一定最省平均查询数！**
 
@@ -755,20 +746,20 @@ $$
 
   这个无穷级数收敛，当且仅当公比 $\frac{3}{4}\lambda < 1$，即 **$\lambda < 4/3$**！一旦取 $\lambda \ge 4/3$，越界后上限拉大的速度会盖过失败率的指数衰减，期望查询上界便发散破坏。
 
-还要留神一个边界情况：万一 $M = 0$（根本无解），算法永远验不出真解，因此程序必须设定 $O(\sqrt{N})$ 量级的总查询上限，到限仍无解时停机报告“大概率无解”。除了 BBHT，若想在不预知 $M$ 时彻底避开过旋转，还可直接调用[第 06 章第 6.6 节](06-algorithmic-primitives.md#66-量子计数mathcalq-与-qpe-的首次合体)的**量子计数**先估出 $M$，或采用[第 06 章第 4.6 节](06-algorithmic-primitives.md#46-固定点振幅放大与防过旋转机制)的 **Yoder–Low–Chuang（2014）固定点振幅放大**。
+还要留神一个边界情况：万一 $M = 0$（根本无解），算法永远验不出真解，因此程序必须设定 $O(\sqrt{N})$ 量级的总查询上限，到限仍无解时停机报告“大概率无解”。除了 BBHT，若想在不预知 $M$ 时彻底避开过旋转，还可直接调用[第 06 章第 6.6 节](06-algorithmic-primitives.md#66-量子计数mathcalq-与-qpe-的首次合体)的**量子计数**先估出 $M$，或采用[第 06 章第 4.6 节](06-algorithmic-primitives.md#46-进阶选读固定点振幅放大与防过旋转机制)的 **Yoder–Low–Chuang（2014）固定点振幅放大**。
 
 ### 3.3 最优性下界（BBBV 与 Zalka）与现实落地成本
 
 Grover 把 $O(N)$ 砍到 $O(\sqrt{N})$，能不能再发明一个巧妙的量子算法，把无结构搜索压缩到 $O(\log_2 N)$？答案是**绝对不可能**。
 
-- **BBBV 定理**（Bennett–Bernstein–Brassard–Vazirani, *SIAM J. Comput.* 1997）：利用混合法（hybrid method，[第 06 章第 10.2 节](06-algorithmic-primitives.md#102-查询下界为什么-grover-的-thetasqrtn-无法再被突破)已给直觉，[第 16 章第 2 节](16-advanced-algorithms-verification.md#2-查询复杂度下界怎样证明不可能更少查询)给出完整证明）证明，任何量子算法解决无结构黑盒搜索都至少需要 $\Omega(\sqrt{N})$ 次查询；Beals 等人（*JACM* 2001）用多项式次数法给出了另一条独立证明。
+- **BBBV 定理**（Bennett–Bernstein–Brassard–Vazirani, *SIAM J. Comput.* 1997）：利用混合法（hybrid method，[第 06 章第 10.2 节](06-algorithmic-primitives.md#102-查询下界为什么-grover-的-thetasqrtn-无法再被突破)已给直觉，[第 16 章第 2 节](16-advanced-algorithms-verification.md#2-进阶选读查询复杂度下界怎样证明不可能更少查询)给出完整证明）证明，任何量子算法解决无结构黑盒搜索都至少需要 $\Omega(\sqrt{N})$ 次查询；Beals 等人（*JACM* 2001）用多项式次数法给出了另一条独立证明。
 - **Zalka 紧常数下界**（*Phys. Rev. A* 1999）：甚至连常数因子 $\frac{\pi}{4}\sqrt{N}$ 也已被证紧最优——不仅渐近阶不能再降，而且即使同时开动 $p$ 台量子计算机并行搜索，每台也只能把时间缩为原来的 $1/\sqrt{p}$ 倍（把搜索空间切成 $p$ 份，每份耗时 $\propto \sqrt{N/p}$），而经典并行却是线性缩小 $1/p$ 倍！
 
 这就顺理成章地引出了评估 Grover 实际工程价值的五笔成本：
 
 1. **可逆谓词的门数**：判断“这条记录是否满足条件”往往需要成千上万个可逆逻辑门与大量反计算工作位；
 2. **相干随机访问难题**：搜索静态经典数据库时，把数据相干地送进叠加态需要大规模容错 QRAM（其 Bucket-Brigade 架构与机会成本瓶颈详见[第 06 章第 9 节](06-algorithmic-primitives.md#9-量子随机访问内存qrambucket-brigade-架构与硬件瓶颈)），否则每次扫描数据本身就已经是 $\Theta(N)$；
-3. **多控扩散与路由开销**：多比特反射门 $S_0$ 拆解为原生门后需 $O(n)$ 级 Toffoli 门与辅助位管理（拆解账本见[第 06 章第 4.5 节](06-algorithmic-primitives.md#45-多控反射门-s_0-的实际门分解与成本账本)）；
+3. **多控扩散与路由开销**：多比特反射门 $S_0$ 拆解为原生门后需 $O(n)$ 级 Toffoli 门与辅助位管理（拆解方案见[第 06 章第 4.5 节](06-algorithmic-primitives.md#45-进阶选读多控反射门-s_0-的实际门分解与成本构成)）；
 4. **容错与慢时钟基线**：纠错后单个逻辑 Toffoli 门在微秒至毫秒量级，远慢于经典 GHz 处理器与大规模 GPU 并行集群；
 5. **平方加速的量级现实**：对 $2^n$ 规模的 NP 暴力搜索，Grover 只把指数从 $2^n$ 变成 $2^{n/2}$，依然是指数时间，绝不会把 NP 完全问题变成多项式时间。因此 Grover 最有前景的落脚点并非扫描无结构业务表，而是作为**子程序**嵌入可逆组合搜索、对称密码安全边际评估（如 AES-128 密钥空间等效平方折损，见[第 12 章](12-security-network-frontiers.md)）和下一节的幅度估计中。
 
@@ -820,7 +811,7 @@ $$
 
 两根峰对应互为相反数的旋转角 $+\theta$ 与 $-\theta$，平方之后完全重合，因此双峰输出恢复的是同一个好态**概率** $a = 1/2$，不会造成概率歧义。
 
-### 4.2 去掉 QFT：最大似然估计（MLAE）与单深度角度混叠
+### 4.2 进阶选读：去掉 QFT——最大似然估计（MLAE）与单深度角度混叠
 
 标准 QPE 型 QAE 的痛点也很现实：它既需要受控版本的 $\mathcal{Q}^{2^j}$，又需要多位相位寄存器和完整逆 QFT，电路深度与辅助比特开销都很大。能不能把 QPE 和 QFT 统统拿掉，只靠运行不同次数的普通 $\mathcal{Q}^k A$ 线路、把测量计数交给经典统计去拟合 $a$？
 
@@ -841,7 +832,16 @@ $$
 
    遇到 $p = 0$ 或 $p = 1$ 的端点时必须按极限处理：零次事件贡献 $0$（不能直接算 $0\cdot\ln 0$ 或代码中的 `0 * ln(0)`，须显式特判）；只要观测到了模型赋零概率的事件，该候选 $a$ 的对数似然就是 $-\infty$（直接排除）。
 
-对单个 $a \in (0, 1)$，可以算出该统计模型的 Fisher 信息为
+对单个 $a \in (0, 1)$，利用 $\theta = \arcsin\sqrt{a}$ 得 $\frac{d\theta}{da} = \frac{1}{2\sqrt{a(1-a)}}$，按链式法则求 $p_k(a) = \sin^2\bigl((2k+1)\theta\bigr)$ 的导数：
+
+$$
+\frac{dp_k}{da}
+= \frac{dp_k}{d\theta}\frac{d\theta}{da}
+= 2(2k+1)\sin\bigl((2k+1)\theta\bigr)\cos\bigl((2k+1)\theta\bigr)\cdot\frac{1}{2\sqrt{a(1-a)}}
+= (2k+1)\frac{\sin\bigl((2k+1)\theta\bigr)\cos\bigl((2k+1)\theta\bigr)}{\sqrt{a(1-a)}}.
+$$
+
+代入 $S_m$ 次独立二项试验的 Fisher 信息 $I_{F,m}(a) = S_m\frac{(dp_{k_m}/da)^2}{p_{k_m}(1 - p_{k_m})}$，由于分母 $p_{k_m}(1 - p_{k_m}) = \sin^2((2k_m+1)\theta)\cos^2((2k_m+1)\theta)$ 与分子三角因子精确约消，求和立得整组实验的 Fisher 信息：
 
 $$
 I_F(a) = \sum_m \frac{S_m (2k_m + 1)^2}{a(1 - a)}.
@@ -916,7 +916,7 @@ $$
 
 ### 5.1 物理演化任务与单位约定
 
-如果说 Shor 震撼了密码界，那么**哈密顿量模拟**（Hamiltonian simulation）才是物理学家 Richard Feynman 提出量子计算机的最初动因：用一台可控的量子系统，去模拟另一台复杂量子多体系统的动力学演化。
+如果说 Shor 改写了现代公钥密码格局，那么**哈密顿量模拟**（Hamiltonian simulation）才是物理学家 Richard Feynman 提出量子计算机的最初动因：用一台可控的量子系统，去模拟另一台复杂量子多体系统的动力学演化。
 
 先交代符号与单位。本节中的 $H$ 始终表示描述系统能量的**厄米矩阵（哈密顿量）**，与前文的 Hadamard 门无关。在算法模型中我们取无量纲单位 $\hbar = 1$，使 $Ht$ 无量纲；当封闭系统的哈密顿量 $H$ 不随时间变化时，时间演化算符为
 
@@ -942,13 +942,11 @@ $$
 S_1(\Delta t)^r = \left(\prod_{\gamma=1}^{\Gamma} e^{-i H_\gamma \Delta t}\right)^r \approx e^{-iHt}.
 $$
 
-我们在[第 06 章第 7.2 节](06-algorithmic-primitives.md#72-不对易情形一阶-lietrotter-拆分与单比特反例)已经推过单比特 $H = X + Z$ 的精确闭式演化
+直接承接[第 06 章第 7.2 节](06-algorithmic-primitives.md#72-不对易情形一阶-lietrotter-拆分与单比特反例)推导出的单比特 $H = X + Z$ 精确演化与 $V = e^{-i\tau X}e^{-i\tau Z}$，下面把总时间 $t$ 切成 $r$ 步，将**多步乘积矩阵 $V^r$、谱范数误差、对易子上界以及整套算法误差预算**逐步算清。下图左侧对照回顾第 1 节 Simon 算法的异或陪集干涉结构，右侧呈现本节 Trotter 时间切片缩小对易子误差的几何机制：
 
-$$
-e^{-it(X+Z)} = \cos(\sqrt{2}t)\, I - i\frac{\sin(\sqrt{2}t)}{\sqrt{2}}(X + Z).
-$$
+![Simon 异或陪集结构与 Trotter 时间切片误差机制](assets/v4-07-simon-trotter.svg)
 
-现在直接把总时间 $t$ 切成 $r$ 步，把**多步乘积矩阵 $V^r$、谱范数误差、对易子上界以及整套算法误差预算**一步步算透！
+[查看原尺寸科学图](assets/v4-07-simon-trotter.svg)。
 
 #### 第一步：求 $r$ 步一阶 Trotter 矩阵 $V^r$
 
@@ -1100,7 +1098,7 @@ $$
 
 不过使用时必须守住两条前提：第一，它对误差的依赖是 $1/\epsilon$（弱于高阶 Trotter 或 QSP），更适合中等精度、项数极多且权重高度不均的哈密顿量；第二，严格误差界约束的是**平均量子信道**，因此在做实验估计期望值时，**每一次采样都应该独立重新抽取一条随机线路**，绝不能只抽固定一条线路反复跑上万次再套用平均信道界。（若关心单条随机线路的涨落，Chen–Huang–Kueng–Tropp 在 *PRX Quantum* 2021 中用矩阵鞅不等式给出了单条线路的严格集中界。）
 
-### 5.4 多比特泡利指数门分解、自旋/费米子实算与 Trotter vs 量子化分水岭
+### 5.4 进阶选读：多比特泡利指数门分解、自旋/费米子实算与 Trotter vs 量子化分水岭
 
 前面的例子都停在单比特上。现实中怎么把一个双体甚至 $k$-体相互作用项（例如 $e^{-i\tau Z_1 Z_2}$ 或分子哈密顿量里的四体泡利串）编成标准单/双比特门？而且，在真实的凝聚态晶格与量子化学分子里，到底该选 Trotter 乘积公式，还是选渐近更优的 LCU / 量子化？
 
@@ -1158,7 +1156,7 @@ $$
 
 把目光转向电子和化学分子（费米子系统）：[第 08 章第 3.2 节](08-applications.md)会详细介绍如何通过 Jordan–Wigner 映射把费米子产生/湮灭算符译成泡利串（例如一维最近邻跳跃项 $c_j^\dagger c_{j+1} + c_{j+1}^\dagger c_j \mapsto \frac{1}{2}(X_j X_{j+1} + Y_j Y_{j+1})$ 没有长 $Z$-宇称链，而在二维网格上则需借助费米 SWAP 网络或 Verstraete–Cirac 局域编码消除长链）。
 
-读完下节的大 $O$ 渐近表后，读者很容易产生一个错觉：“既然量子化 / QSP 达到了对精度的最优对数标度 $O(\alpha t + \log_2(1/\epsilon))$，那它在一切物理和化学模拟任务上岂不都吊打 Trotter？”近年的权威容错资源估算（Childs et al., *PNAS* 2018；Kivlichan et al., *Quantum* 2020；Campbell, *Quantum Sci. Technol.* 2021；Lee et al., *PRX Quantum* 2021）给出了截然不同、极具启发性的真实交叉图景：
+读完下节的大 $O$ 渐近表后，读者很容易产生一个错觉：“既然量子化 / QSP 达到了对精度的最优对数标度 $O(\alpha t + \log_2(1/\epsilon))$，那它在一切物理和化学模拟任务上岂不都全面压过 Trotter？”近年的权威容错资源估算（Childs et al., *PNAS* 2018；Kivlichan et al., *Quantum* 2020；Campbell, *Quantum Sci. Technol.* 2021；Lee et al., *PRX Quantum* 2021）给出了截然不同、极具启发性的真实交叉图景：
 
 | 代表物理 / 化学体系 | 规模与精度口径 | 优化 Trotter 乘积公式 | LCU / 量子化（含张量超收缩 THC） | 胜出路线与物理根因 |
 |---|---|---|---|---|
@@ -1179,7 +1177,7 @@ $$
 | **Pauli / LCU 线性组合** | $H = \sum_j \alpha_j U_j$（$U_j$ 为酉算符） | `PREPARE`（制备系数叠加）、`SELECT`（按索引受控执行 $U_j$）及其逆电路 |
 | **块编码（Block encoding）** | 将 $H/\alpha$ 嵌入更大酉矩阵的左上角子块 | 更大酉矩阵的门数、辅助比特数、归一化因子 $\alpha$ 与编码截断误差 |
 
-配合输入模型，五大主流数字量子模拟路线的选型坐标如下（LCU、块编码、量子化与 QSP/QSVT 的完整矩阵构造将在[第 16 章第 5 节](16-advanced-algorithms-verification.md#5-现代统一算法栈从-lcu块编码到-qsvt-与-gqsp)一步步展开）：
+配合输入模型，五大主流数字量子模拟路线的选型坐标如下（`PREPARE`/`SELECT` 的 6 门显式电路与 4 项 QROM 一元迭代门级拆解见[第 06 章第 9.3 节](06-algorithmic-primitives.md#93-进阶选读噪声韧性工程机会成本批判与显式-prepareselectqrom-门级电路)，LCU、块编码、量子化与 QSP/QSVT 的完整矩阵构造将在[第 16 章第 5—6 节](16-advanced-algorithms-verification.md#5-现代统一算法栈上输入模型lcu-与块编码)一步步展开）：
 
 | 模拟方法 | 单步基础操作 | 主导复杂度参数 | 优先考虑的场景 | 主要限制 |
 |---|---|---|---|---|
@@ -1337,7 +1335,7 @@ $$
 |b\rangle = |0\rangle = \frac{|+\rangle + |-\rangle}{\sqrt{2}}.
 $$
 
-接着明确定义相位估计的演化酉算符：采用[第 06 章第 6.5 节](06-algorithmic-primitives.md#65-有符号谱解码与-nyquist-端点混叠衔接-hhl)的正号编码约定
+接着明确定义相位估计的演化酉算符：采用[第 06 章第 6.5 节](06-algorithmic-primitives.md#65-进阶选读有符号谱解码与-nyquist-端点混叠衔接-hhl)的正号编码约定
 
 $$
 U = e^{+i\pi A / 2}.
@@ -1399,13 +1397,13 @@ $$
 - **若把旋转常数 $C$ 改小一半，取 $C = 1/2$ 会怎样？** 两个受控旋转角变为 $2\arcsin(1/2) = \pi/3$ 与 $2\arcsin(1/4)$；整个成功分支振幅缩小为原来的 $1/2$，条件解态 $|x\rangle$ 纹丝不动，但成功概率骤降至 $(1/2)^2 \cdot \frac{5}{8} = \frac{5}{32}$，独立重试的平均次数也从 $8/5 = 1.6$ 次飙升到 $32/5 = 6.4$ 次。
 - **能不能偷懒省掉阶段 ③ 的逆 QPE？** 绝对不行！回头看 $|\Psi_2\rangle$ 里辅助位为 $1$ 的分支：$\frac{1}{\sqrt{2}}|01\rangle_p|+\rangle_s + \frac{1}{2\sqrt{2}}|10\rangle_p|-\rangle_s$。如果直接把相位寄存器扔掉（求偏迹），由于 $\langle 01|10\rangle = 0$，$|+\rangle$ 和 $|-\rangle$ 之间的交叉相干项全部归零，系统退化成混合态 $\frac{4}{5}|+\rangle\langle +| + \frac{1}{5}|-\rangle\langle -|$，完全不再是纯解态 $|x\rangle$！
 
-### 6.4 第三级手算：负特征值、非网格谱泄漏与反计算垃圾方差
+### 6.4 进阶选读：第三级手算——负特征值、非网格谱泄漏与反计算垃圾方差
 
 前两级算例把特征值都设计成了恰好落在网格上的正数。一旦进入真实矩阵——既有**负特征值**（包括 6.1 节非厄米扩维必然带来的 $\pm\sigma_j$ 对称谱），特征值又**不在 $Q = 2^t$ 网格点上**——两个全新现象就会立刻浮出水面：有符号编码的端点规避，以及**逆 QPE 无法彻底清零相位寄存器而留下的“垃圾概率”**。
 
 #### 近零截断滤波器
 
-沿用[第 06 章第 6.5 节](06-algorithmic-primitives.md#65-有符号谱解码与-nyquist-端点混叠衔接-hhl)的补码式有符号谱解码：预先立下严格谱界承诺 $|\lambda_j| < \Lambda$（排除 $\pm\Lambda$ 端点混叠），构造 $U = \exp\bigl(\frac{i\pi A}{\Lambda}\bigr)$，并将 $t$ 位读数 $y \in \{0, \dots, Q-1\}$ 译为有符号标签 $\widetilde\lambda_y$。
+沿用[第 06 章第 6.5 节](06-algorithmic-primitives.md#65-进阶选读有符号谱解码与-nyquist-端点混叠衔接-hhl)的补码式有符号谱解码：预先立下严格谱界承诺 $|\lambda_j| < \Lambda$（排除 $\pm\Lambda$ 端点混叠），构造 $U = \exp\bigl(\frac{i\pi A}{\Lambda}\bigr)$，并将 $t$ 位读数 $y \in \{0, \dots, Q-1\}$ 译为有符号标签 $\widetilde\lambda_y$。
 
 当非网格特征值发生谱泄漏时，零标签 $\widetilde\lambda_0 = 0$ 或极小标签也会分到一点非零振幅，若直接算 $C/\widetilde\lambda_y$ 会除零或超出 $[-1, 1]$。下面取参数 $\Lambda = 4$、承诺 $0.5 \le |\lambda_j| < 4$、缩放常数 $C = 0.5$，给受控旋转定义一条明确合法的硬截断滤波规则：
 
@@ -1473,7 +1471,7 @@ A = V \operatorname{diag}(-1.1,\, 2.3) V^T, \qquad
 |b\rangle = \begin{pmatrix} \sqrt{0.6} \\ i\sqrt{0.4} \end{pmatrix},
 $$
 
-参数取 $\Lambda = 4,\, C = 0.5$、近零截断阈值 $0.5$。先算理想精确倒数的成功概率：$p_{\mathrm{ideal}} = C^2 \|A^{-1}|b\rangle\|^2 \approx \mathbf{0.131860}$。再把 $t = 3, 4, 5, 6$ 逐位用精确傅里叶和算出来（均可由 `python3 codes/algorithms/round73_checks.py 07` 独立复核）：
+参数取 $\Lambda = 4,\, C = 0.5$、近零截断阈值 $0.5$。先算理想精确倒数的成功概率：$p_{\mathrm{ideal}} = C^2 \|A^{-1}|b\rangle\|^2 \approx \mathbf{0.131860}$。再把 $t = 3, 4, 5, 6$ 逐位用精确傅里叶和算出来（均可由[负谱非网格 HHL 独立复核脚本](../codes/algorithms/round73_checks.py)参数 `07` 独立复核）：
 
 | 相位位数 $t$ | 只筛 $a=1$ 的概率 $p_a$ | 同时筛全零的概率 $p_{a,0}$ | 成功子组内条件垃圾率 $(p_a - p_{a,0})/p_a$ | 仅筛 $a=1$ 的混态根保真度 $F$ |
 |---:|---:|---:|---:|---:|
@@ -1486,7 +1484,7 @@ $$
 
 1. **多加一位相位比特，条件垃圾率反而暴涨近一倍！** 从 $t = 3$ 到 $t = 4$，成功子组内未清零的垃圾比例竟然从 **$7.96\%$ 反升到 $14.52\%$**。原因在于 $-1.1$ 与 $2.3$ 在不同网格分辨率下相对最近格点与截断边界的距离会跳变，叠加硬截断滤波器后，有限比特下的误差并不保证单调递减。
 2. **更高的 $p_a$ 不等于“更准”**：理想成功率只有 $0.131860$，$t = 3, 4$ 时的 $p_a \approx 0.160, 0.166$ 之所以偏高，恰恰是被泄漏到小标签（大倒数权重）上的错误振幅与垃圾分支虚抬上去的！
-3. **过滤精度与重试成本的真实权衡**：到 $t = 6$ 时，如果再多筛一步相位全零，条件纯态的根保真度能从 $0.994448$ 跃升至 $0.999970$，代价是平均独立重试次数从 $1/0.130850 \approx 7.642$ 次小幅上升到 $1/0.126346 \approx 7.915$ 次。在实测统计时也要盯紧分母：在本地 Cirq 复现脚本[validate_algorithms.py](../codes/algorithms/sdk73/validate_algorithms.py)（固定随机种子 `73011`、详见[负谱非网格 HHL SDK 复现说明](../codes/algorithms/sdk73/README.md)）对 $t = 4$ 运行 20,000 次独立采样，测得辅助成功 3,215 次，其中相位全零 2,751 次、垃圾 464 次，经验条件垃圾率是 $464 / 3215 \approx 14.43\%$（紧密吻合理论值 $14.52\%$），切忌除以总采样数 20,000 后仍称之为“成功子组内垃圾率”；而包含正逆 QPE 的基本受控 $U$ 顺序调用账是 $2(2^4 - 1) = 30$ 次，尚未计入输入制备、QFT 与 15 个非零受控倒数旋转（$2^4 = 16$ 个标签中 $y = 0$ 被截断跳过）的门分解。
+3. **过滤精度与重试成本的真实权衡**：到 $t = 6$ 时，如果再多筛一步相位全零，条件纯态的根保真度能从 $0.994448$ 跃升至 $0.999970$，代价是平均独立重试次数从 $1/0.130850 \approx 7.642$ 次小幅上升到 $1/0.126346 \approx 7.915$ 次。在实测统计时也要盯紧分母：在本地 Cirq 复现脚本[validate_algorithms.py](../codes/algorithms/sdk73/validate_algorithms.py)（固定随机种子 `73011`、详见[负谱非网格 HHL SDK 复现说明](../codes/algorithms/sdk73/README.md)）对 $t = 4$ 运行 20,000 次独立采样，测得辅助成功 3,215 次，其中相位全零 2,751 次、垃圾 464 次，经验条件垃圾率是 $464 / 3215 \approx 14.43\%$（紧密吻合理论值 $14.52\%$），不能除以总采样数 20,000 后仍称之为“成功子组内垃圾率”；而包含正逆 QPE 的基本受控 $U$ 顺序调用账是 $2(2^4 - 1) = 30$ 次，尚未计入输入制备、QFT 与 15 个非零受控倒数旋转（$2^4 = 16$ 个标签中 $y = 0$ 被截断跳过）的门分解。
 
 ### 6.5 Aaronson 四重细则精确量化、PDE 实算与最优 QLSA 演进
 
@@ -1530,13 +1528,117 @@ $$
 | **低常数捷径型** | Dalzell (TQC 2024; `arXiv:2406.12086`, 2026 年 4 月修订预印本) | 核反射 / 投影捷径 | **$56\kappa + 1.05\kappa\ln(1/\epsilon) + o(\kappa)$** | 显式常数比绝热方案压低逾一个数量级，仍受四重细则约束 |
 | **经典去量子化对照** | Tang (STOC 2019) / Chia et al. (*JACM* 2022) | $\ell_2$ 采样-查询经典数据结构 | $\operatorname{poly}(k, \kappa, 1/\epsilon, \log_2 N)$ | 仅适用低秩（秩 $k$）样本访问，**无法攻破高秩稀疏良条件系统** |
 
-看清最后一行至关重要：Ewin Tang（2019）与 Chia 等人（2022）证明，许多早期宣称利用 HHL 风格获得指数加速的低秩机器学习算法（如量子推荐系统、低秩主成分分析与低秩回归），一旦允许经典计算机使用同等的 $\ell_2$ 范数采样-查询数据结构，就会被经典算法以多项式代价“去量子化”。但**高秩、稀疏、良条件**的线性系统依然是 **BQP-完全**问题——也就是说，它与通用量子计算能力等价，并未被去量子化，真正的挑战全在四重细则能否在实际应用里同时落地。
+看清最后一行至关重要：Ewin Tang（2019）与 Chia 等人（2022）证明，许多早期宣称利用 HHL 风格获得指数加速的低秩机器学习算法（如量子推荐系统、低秩主成分分析与低秩回归），一旦允许经典计算机使用同等的 $\ell_2$ 范数采样-查询数据结构，就会被经典算法以多项式代价“去量子化”。2024–2026 年，去量子化进一步向两个纵深扩张：一方面，**经典奇异值变换（CSVT）**（Gharibian–Le Gall 与 Tang 等后续框架 [A]）把对低秩、低精度矩阵的 QSVT 也纳入经典采样模拟；另一方面，Bakshi、Liu、Moitra 与 Tang（STOC / FOCS 2024–2025 [A]）证明，高温下的局域哈密顿量 Gibbs 态无长程纠缠且可高效制备，任意温度下的局域哈密顿量亦可多项式时间学习。但**高秩、稀疏、良条件**的线性系统（BQP-完全）以及**低温强关联量子多体问题**仍未被去量子化，真正的挑战全在四重细则能否在实际应用里同时落地。
 
 > **练 07-B（两比特泡利门分解与 2D / 3D 泊松方程条件数实算）**
 > 1. 参照第 5.4 节，写出实现两体演化 $e^{-i\tau X_1 Y_2}$ 的完整基本门序列（明确区分电路从左到右的施加时序与算符从右到左的矩阵乘积），并用基变换关系 $(H S^\dagger) Y (S H) = Z$ 说明为何末层不能原样沿用首层的基变换顺序；
 > 2. 计算 $100 \times 100$ 内部网格的 2D 泊松方程（$N = 10^4$）与 $100^3$ 内部网格的 3D 泊松方程（$N = 10^6$）未预处理条件数的近似值 $\kappa \approx \frac{4}{\pi^2}(m+1)^2$，并据此定性比较最优 QLSA（$\tilde O(\kappa)$）与经典共轭梯度法（$O(N\sqrt{\kappa})$）的量级。
 >
-> *核对要点*：① 按**电路从左到右**施加时序为 $(I_1 \otimes S_2^\dagger) \to (H_1 \otimes H_2) \to \mathrm{CNOT}_{1\to 2} \to R_{z,2}(2\tau) \to \mathrm{CNOT}_{1\to 2} \to (H_1 \otimes H_2) \to (I_1 \otimes S_2)$（即第 2 比特首层**先施 $S_2^\dagger$ 再施 $H_2$**、末层**先施 $H_2$ 再施 $S_2$**）；写成**算符从右到左**的矩阵乘积则为 $(H_1 \otimes S_2 H_2)\,\mathrm{CNOT}_{1\to 2}\,R_{z,2}(2\tau)\,\mathrm{CNOT}_{1\to 2}\,(H_1 \otimes H_2 S_2^\dagger)$；末层必须是首层的逆 $(H S^\dagger)^\dagger = S H$ 才能还原到原计算基（切勿按矩阵乘积字面反序先施 $H_2$ 再施 $S_2^\dagger$，否则会错演成 $e^{-i\tau X_1 X_2}$）；② 两者 $m = 100$ 相同，故 $\kappa \approx \frac{4}{\pi^2}\times 101^2 \approx 4{,}134$（精确 $4{,}133.6$）；2D 下 $N = 10^4$ 与 $\kappa \approx 4{,}134$ 同量级，无指数加速；3D 下 $N\sqrt{\kappa} \approx 6.4\times 10^7$ 显著大于 $\kappa \approx 4{,}134$，呈现多项式级 $N^{2/3}$ vs $N^{4/3}$ 分离（但仍须对照多重网格 $O(N)$ 及细则 ①④）。
+> *核对要点*：① 按**电路从左到右**施加时序为 $(I_1 \otimes S_2^\dagger) \to (H_1 \otimes H_2) \to \mathrm{CNOT}_{1\to 2} \to R_{z,2}(2\tau) \to \mathrm{CNOT}_{1\to 2} \to (H_1 \otimes H_2) \to (I_1 \otimes S_2)$（即第 2 比特首层**先施 $S_2^\dagger$ 再施 $H_2$**、末层**先施 $H_2$ 再施 $S_2$**）；写成**算符从右到左**的矩阵乘积则为 $(H_1 \otimes S_2 H_2)\,\mathrm{CNOT}_{1\to 2}\,R_{z,2}(2\tau)\,\mathrm{CNOT}_{1\to 2}\,(H_1 \otimes H_2 S_2^\dagger)$；末层必须是首层的逆 $(H S^\dagger)^\dagger = S H$ 才能还原到原计算基（不要按矩阵乘积字面反序先施 $H_2$ 再施 $S_2^\dagger$，否则会错演成 $e^{-i\tau X_1 X_2}$）；② 两者 $m = 100$ 相同，故 $\kappa \approx \frac{4}{\pi^2}\times 101^2 \approx 4{,}134$（精确 $4{,}133.6$）；2D 下 $N = 10^4$ 与 $\kappa \approx 4{,}134$ 同量级，无指数加速；3D 下 $N\sqrt{\kappa} \approx 6.4\times 10^7$ 显著大于 $\kappa \approx 4{,}134$，呈现多项式级 $N^{2/3}$ vs $N^{4/3}$ 分离（但仍须对照多重网格 $O(N)$ 及细则 ①④）。
+
+### 6.6 进阶选读：从静态线性方程到量子微分方程（LCHS、Schrödingerization 与 Carleman 线性化）
+
+第 5 节的哈密顿量模拟处理的是严格保范数的**酉演化** $\frac{d|\psi\rangle}{dt} = -iH|\psi\rangle$，第 6.1–6.5 节的 HHL/QLSA 处理的是静态线性方程 $A\vec x = \vec b$。但在计算物理、热传导、流体力学与金融衍生品定价中，最核心的问题往往是**含时非酉线性常/偏微分方程（ODE/PDE）**
+
+$$
+\frac{du(t)}{dt} = -A\,u(t), \qquad u(0) = u_0,
+$$
+
+（$A$ 不是反厄米矩阵，解范数 $\|u(t)\|$ 会随耗散衰减），以及像 Burgers / Navier–Stokes 那样的**非线性耗散微分方程** $\frac{du}{dt} = F_1 u + F_2 u^{\otimes 2}$。早期路线把全部时间步硬拼成一张巨型“历史态”线性方程组交给 QLSA，虽可求解却背上了高阶条件数和昂贵的初态查询常数。2021–2026 年间，三条更贴近物理结构的量子微分方程主线逐渐成型。
+
+#### 路线一：哈密顿量模拟线性组合（LCHS）与 1D 耗散核三行手算
+
+An、Liu 与 Lin（*Phys. Rev. Lett.* **131**, 150603, 2023 [A]）提出 **LCHS（Linear Combination of Hamiltonian Simulation）**：将任意一般矩阵 $A$ 唯一分解为厄米耗散部 $L = \frac{A + A^\dagger}{2}$ 与厄米振荡部 $H = \frac{A - A^\dagger}{2i}$，即
+
+$$
+A = L + iH, \qquad L^\dagger = L,\; H^\dagger = H, \qquad L \succeq 0\text{（稳定耗散条件）}.
+$$
+
+在此正半定耗散前提下，非酉传播子 $e^{-At}$ 满足一条极其简洁的积分恒等式——**恰好是无穷多条严格酉哈密顿量演化的加权组合**：
+
+$$
+e^{-At} = \int_{-\infty}^{\infty} \frac{1}{\pi(1 + k^2)}\, e^{-i(kL + H)t}\,dk.
+$$
+
+用 1 维纯耗散方程 $\dot u = -\gamma u$（$L = \gamma > 0,\, H = 0$，精确解 $u(t) = e^{-\gamma t} u_0$）做三行留数验证：被积函数 $\frac{e^{-ik\gamma t}}{\pi(1 + k^2)}$ 在下半复平面 $\operatorname{Im}(k) \le 0$ 仅有唯一一阶极点 $k = -i$（因 $k^2 + 1 = (k - i)(k + i)$，且当 $\gamma t \ge 0$ 时 $\operatorname{Im}(k) < 0$ 使 $|e^{-ik\gamma t}| = e^{\operatorname{Im}(k)\gamma t} \to 0$，下半圆弧积分为零）；取顺时针围道（乘 $-2\pi i$）：
+
+$$
+\int_{-\infty}^{\infty} \frac{e^{-ik\gamma t}}{\pi(1+k^2)}\,dk
+= (-2\pi i)\,\operatorname{Res}_{k=-i}\!\left[\frac{e^{-ik\gamma t}}{\pi(k-i)(k+i)}\right]
+= (-2\pi i)\cdot\frac{e^{-i(-i)\gamma t}}{\pi(-2i)}
+= e^{-\gamma t}!
+$$
+
+这正是柯西分布的特征函数。在量子电路上，把积分截断到 $[-K, K]$ 并用求积节点离散化后，LCHS 直接化为**对普通哈密顿量模拟 $e^{-i(k_j L + H)t}$ 做一次 LCU**，既彻底绕开了历史态矩阵求逆与可变时间振幅放大（VTAA），又达到最优的初态制备查询复杂度（仅 $O(\|u_0\|/\|u(t)\|)$）。
+
+原始柯西核的唯一短板是衰减太慢（仅按 $1/k^2$ 多项式衰减），迫使截断半径 $K = O(1/\epsilon)$ 拖慢精度标度。随后 **An、Childs 与 Lin**（`arXiv:2312.03916`, *Comm. Math. Phys.* 2024–2025 [A]）构造了一族在下半平面解析、沿实轴呈近指数衰减的改进核函数，例如（$\beta \in (0, 1)$）：
+
+$$
+f_\beta(k) = \frac{e^{2^\beta}}{2\pi(1 - ik)\exp\!\bigl((1 + ik)^\beta\bigr)}, \qquad
+\int_{-\infty}^{\infty} f_\beta(k)\,e^{-ikx}\,dk = e^{-x}\;\;(x \ge 0),
+$$
+
+一举把 LCHS 的截断误差压至近指数衰减、精度复杂度提升至 $\tilde O(\operatorname{polylog}(1/\epsilon))$；2025–2026 年的后续工作进一步将极小极大（minimax）最优核与显式块编码构造（如 Novikau & Joseph 2025 [C]、LC-Schrödingerization 2026 [C]）落地到等离子体与声波方程。取 $\gamma = 1.0,\, t = 1.5$（精确值 $e^{-1.5} \approx 0.22313016$），在相同截断 $K = 50$ 与 $2{,}000$ 节点下，原始柯西核求积误差为 $6.99\times 10^{-5}$，而改进核（$\beta = 0.8$）已压至 $8.18\times 10^{-6}$（详见[第二篇综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)参数 `07`）。
+
+#### 路线二：薛定谔化（Schrödingerization）
+
+Jin、Liu 与 Yu（*Phys. Rev. Lett.* / *Phys. Rev. A* 2023–2025 [A]）提出了物理图像同样直观的**薛定谔化**：为系统多添一个一维辅助连续坐标 $p \in \mathbb{R}$，定义扭曲相位变换（warped phase transform）$w(t, p) = e^{-p} u(t)$（对 $p > 0$，并在 $p < 0$ 做偶延拓 $e^{-|p|}u(t)$）。因为 $\partial_p (e^{-p} u) = -e^{-p} u$，耗散项 $-L u$ 瞬间转化为关于辅助坐标的一阶对流项 $L\partial_p w$；在 $p$ 的傅里叶对偶变量 $\eta$ 空间里（$\partial_p \mapsto i\eta$），原非酉线性 PDE 直接升维成一条**高一维、严格酉的薛定谔方程**：
+
+$$
+i\frac{\partial \tilde w(t, \eta)}{\partial t} = (H - \eta L)\,\tilde w(t, \eta).
+$$
+
+演化完毕后逆变换回 $p$ 空间并在 $p > 0$ 区域做后选择，即可提取出解态 $|u(t)\rangle$。从代数本质上看，薛定谔化在傅里叶变量 $\eta$ 上的演化与 LCHS 的积分表示高度相通，但在处理含非齐次源项和复杂物理边界条件（如 Robin / 吸收边界）时格外自然。
+
+#### 路线三：Carleman 线性化与 $R < 1$ 强非线性崩溃边界
+
+如果微分方程本身是**非线性**的呢？量子力学演化天生是线性的，不能直接实现 $|u\rangle \mapsto |u^{\otimes 2}\rangle$（否则违背不可克隆定理）。Liu、Kolden、Krovi、Loureiro、Trivisa 与 Childs（*PNAS* **118**(35), e2026805118, 2021 [A]）将经典的 **Carleman 线性化** 引入量子算法：把未知向量 $u$ 连同它的张量高次幂 $u^{\otimes 2}, u^{\otimes 3}, \dots, u^{\otimes N}$ 拼成一个高维长向量 $y = [u,\, u^{\otimes 2},\, \dots,\, u^{\otimes N}]^T$，在最高阶截断后化为线性 ODE 交给 QLSA 或 LCHS 求解。
+
+用最简 **1 维二次耗散方程** 亲手算清它的成功区与崩溃边界：
+
+$$
+\frac{du}{dt} = -u + \varepsilon u^2, \qquad u(0) = u_0 > 0,\quad \varepsilon > 0.
+$$
+
+定义无量纲**非线性—耗散比** $R := \frac{\varepsilon u_0}{1} = \varepsilon u_0$。这是一道可精确求解的 Bernoulli 方程（令 $v = 1/u$ 得 $\dot v = v - \varepsilon$），精确解为：
+
+$$
+u_{\mathrm{exact}}(t) = \frac{u_0 e^{-t}}{1 - R(1 - e^{-t})}.
+$$
+
+现在做 **$2\times 2$ 二阶 Carleman 截断**：令 $y = [y_1, y_2]^T = [u, u^2]^T$。计算第二分量的导数：
+
+$$
+\frac{d(u^2)}{dt} = 2u\frac{du}{dt} = 2u(-u + \varepsilon u^2) = -2u^2 + 2\varepsilon u^3 \approx -2u^2\quad\text{（截掉三阶项 }2\varepsilon u^3\text{）}.
+$$
+
+从而得到封闭的 $2\times 2$ 线性系统与精确解（先解 $y_2(t) = u_0^2 e^{-2t}$，再代回 $\dot y_1 + y_1 = \varepsilon u_0^2 e^{-2t}$）：
+
+$$
+\frac{d}{dt}\begin{pmatrix} y_1 \\ y_2 \end{pmatrix}
+= \begin{pmatrix} -1 & \varepsilon \\ 0 & -2 \end{pmatrix}
+\begin{pmatrix} y_1 \\ y_2 \end{pmatrix}
+\implies
+y_1(t) = u_0 e^{-t} + \varepsilon u_0^2(e^{-t} - e^{-2t}) = u_0 e^{-t}\bigl[1 + R(1 - e^{-t})\bigr].
+$$
+
+把 $u_{\mathrm{exact}}(t)$ 按等比级数展开对比 $y_1(t)$，胜负门槛一目了然：
+
+$$
+u_{\mathrm{exact}}(t) = u_0 e^{-t}\Bigl[1 + R(1 - e^{-t}) + R^2(1 - e^{-t})^2 + \cdots\Bigr].
+$$
+
+- **弱非线性区（$R < 1$）**：级数绝对收敛，$N$ 阶 Carleman 截断误差按 $O(R^N)$ 指数衰减，只需截断阶数 $N = O(\log_2(1/\epsilon))$，整个算法在维度与精度上均可高效运行！例如取 $\varepsilon = 0.2,\, u_0 = 1$（$R = 0.2$），在 $t = 1.0$ 时精确解为 $0.4211$，仅用 $2\times 2$ 截断就给出 $0.4144$（误差仅 $0.0067$）。
+- **强非线性崩溃区（$R \ge 1$）**：一旦非线性压过耗散，级数彻底发散！例如取 $R = 1.5$，精确解在有限时刻 $t^* = \ln\frac{1.5}{0.5} = \ln 3 \approx 1.0986$ 发生爆破（$t = 1.0$ 时已飙升至 $7.0993$），而 $2\times 2$ 线性截断解却错误衰减到 $0.7167$！正如 2021–2026 年流体动力学评估所指出的，高雷诺数湍流（$R \gg 1$）仍远超出 Carleman 线性化的有效半径。
+
+#### 量子微分方程四路线选型与现实边界表
+
+| 求解路线 | 适用方程类型 | 核心数学前提 | 端到端主要开销与不可忽略的边界 |
+| :--- | :--- | :--- | :--- |
+| **QLSA 历史态法**（Berry 2014 / Krovi 2023） | 一般线性 ODE/PDE（含高阶时间步） | 矩阵对角化良条件或稳定耗散 | 条件数与 $T$、空间网格耦合，常数大，受 6.5 节四重细则制约 |
+| **LCHS**（An–Liu–Lin 2023 / 2024–2026 改进核） | 含时非酉线性 ODE/PDE（$A = L + iH$） | 严格稳定耗散 **$L \succeq 0$** | 绕开历史态求逆、初态制备最优；若解范数 $\|u(t)\|$ 随耗散指数衰减，末态提取后选择仍呈指数开销 |
+| **Schrödingerization**（Jin–Liu–Yu 2023–2025） | 非酉线性 PDE 与开放边界/源项问题 | $L \succeq 0$ 与辅助坐标截断精度 | 额外引入 1 维辅助寄存器与 $p > 0$ 后选择；同样受解范数衰减与读出细则制约 |
+| **Carleman 线性化**（Liu et al. *PNAS* 2021） | 弱非线性耗散二次 ODE/PDE（如低雷诺数 Burgers） | **严格要求 $R < 1$**（耗散压倒非线性） | $R \ge 1$（强非线性/湍流）时截断阶数与误差失控；高阶张量态制备与末态读出仍面临四重细则 |
 
 ---
 
@@ -1647,9 +1749,11 @@ $$
 | 概率或期望高精度估计 | QAE / IQAE / MLAE / 量子计数 | 相对经典蒙特卡洛对 $1/\epsilon$ 二次加速 | 硬件能否支撑 $O(1/\epsilon)$ 深度的相干 Grover 幂？ |
 | 多体哈密顿量动力学 | Trotter / qDRIFT / 量子化 + THC | 局域、稀疏或块编码模型下多项式时间 | 属哪种输入模型？局域对易子与 1-范数谁占优？初态与读出成本几何？ |
 | 线性方程组整体特征 | HHL / 最优 QLSA | 四重细则同时满足时对维度呈对数依赖 | 态装载、矩阵访问、PDE 条件数 $\kappa(N)$ 与输出读出是否都过关？ |
+| 非酉/弱非线性微分方程 | LCHS / Schrödingerization / Carleman | 稳定耗散下多项式于维数与 $\operatorname{polylog}(1/\epsilon)$ | 是否满足 $L\succeq 0$ 与非线性比 $R < 1$？解范数耗散衰减后选择是否爆炸？ |
+| 稀疏傅里叶结构组合优化 | 解码量子干涉（DQI，*Nature* 2025，见第 08 章 §4.4） | 在 OPI 等稀疏代数结构上具超多项式加速候选 | 目标是否具稀疏傅里叶解码结构？可逆容错解码电路开销多大？ |
 | 酉算符本征相位 | 量子相位估计（QPE / QCELS） | 精度对 $1/\epsilon$ 呈海森堡标度 | 高重叠初态与受控高次幂 $U^{2^j}$ 怎么制备？ |
 
-**覆盖边界说明**：本章完整核验了六大奠基性代表算法（含模幂电路、ECDLP、多体模拟交叉与 PDE 条件数实算）及其复杂度地图，并纳入了 2021–2026 年间容错 Shor/ECC、嵌套对易子 Trotter、THC 量子化、最优 QLSA、Modified IQAE 与 NLTS/GLH 的核心进展，但并未穷尽全部量子算法家族。面向近期含噪设备的变分算法（VQE、QAOA、量子机器学习与误差缓解）见[第 08 章](08-applications.md)；量子纠错与整机容错资源拆解见[第 10 章](10-error-correction.md)与[第 11 章](11-resources-benchmarks.md)；查询下界严格证明、一般隐藏子群问题、量子行走以及 LCU—块编码—量子化—QSVT 大统一栈见[第 16 章](16-advanced-algorithms-verification.md)。
+**覆盖边界说明**：本章完整核验了六大奠基性代表算法及量子微分方程主线（含模幂电路、ECDLP、多体模拟交叉、PDE 条件数与 LCHS/Carleman 实算）及其复杂度地图，并纳入了 2021–2026 年间容错 Shor/ECC、嵌套对易子 Trotter、THC 量子化、最优 QLSA、LCHS/Schrödingerization、Modified IQAE 与 NLTS/GLH 的核心进展，但并未穷尽全部量子算法家族。面向近期含噪设备的变分算法（VQE、QAOA、DQI、量子机器学习与误差缓解）见[第 08 章](08-applications.md)；量子纠错与整机容错资源拆解见[第 10 章](10-error-correction.md)与[第 11 章](11-resources-benchmarks.md)；查询下界严格证明、一般隐藏子群问题、量子行走以及 LCU—块编码—量子化—QSVT 大统一栈见[第 16 章](16-advanced-algorithms-verification.md)。
 
 ---
 
@@ -1663,6 +1767,23 @@ $$
 6. **把 HHL 说成“指数加速所有线性方程组”，或以为逆 QPE 总能把相位位清零。** 任何 HHL 应用都必须逐条过 Aaronson 四重细则量化检验（未预处理 1D/2D 泊松方程 $\kappa = \Theta(N^{2/d})$ 直接击碎指数加速）；一旦存在非网格特征值，逆 QPE 会留下与 $r_y$ 方差精确相等的垃圾概率，且有限比特配硬截断时垃圾率可能非单调反弹。
 7. **以为无 QFT 幅度估计单选一个大 $k$ 就能单调提精度。** 单一 Grover 深度存在固有角度混叠（如 $k = 1$ 永远分不清 $a = 1/4$ 与 $a = 1$），必须联合多深度并核对完整 $A/A^\dagger$ 调用账本；若硬件锁死最大深度，二次精度优势将不复存在。
 8. **把 $\mathrm{PostBQP} = \mathrm{PP}$ 当成现实量子机能力，或把 2-Local 承诺间隙当成物理谱隙。** 后选择在现实中需指数次重跑；承诺间隙 $b - a$ 是判定阈值宽度，物理谱隙 $E_1 - E_0$ 是能级间距，两者完全不同。
+
+---
+
+## 本章一页速记卡
+
+- **主干概念链**：隐藏周期与傅里叶采样（Simon $\to$ Shor RSA / ECDLP）$\longrightarrow$ 振幅放大与统计加速（Grover / BBHT $\to$ QAE / IQAE / MLAE）$\longrightarrow$ 物理模拟与线性/微分方程（Trotter / qDRIFT / 量子化 $\to$ HHL / LCHS / Carleman）$\longrightarrow$ 复杂度边界（$\mathrm{BPP}\subseteq\mathrm{BQP}\subseteq\mathrm{QMA}\subseteq\mathrm{PP}\subseteq\mathrm{PSPACE}$）。
+
+| 代表算法 | 核心公式与标度 | 适用条件与基线 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **Simon 算法** | $z\cdot s = 0\pmod 2$；$p_{\mathrm{full}}(d,d) \to 0.2888$ | 两对一承诺 + Q2 叠加查询；经典 $\mathbb{F}_2$ 消元 $O(n^3)$ | 以为采 $n-1$ 次必满秩，或把 Q2 攻击套给经典 Q1 接口 |
+| **Shor（RSA / ECDLP）** | $Q = 2^t > N^2$；$a^r \equiv 1\pmod N$；$d \equiv v u^{-1}\pmod r$ | 对最强经典 GNFS 亚指数的位长超多项式加速；模幂占 $>99\%$ 门 | 拿试除法作基线，或误以为 256 位 ECC 比 RSA-2048 更抗量子 |
+| **Grover 与 QAE** | $p_k = \sin^2((2k+1)\theta)$；$|\tilde a - a| \le \frac{2\pi\sqrt{a(1-a)}}{Q} + \frac{\pi^2}{Q^2}$ | BBHT 须 $1 < \lambda < 4/3$；MLAE 须多深度防混叠 | 以为 Grover 把 NP-完全降成多项式，或忽略硬件深度上限 |
+| **哈密顿量模拟** | $r = O\bigl(\tilde\alpha_{\mathrm{comm}}^{1/p}t^{1+1/p}/\epsilon^{1/p}\bigr)$；qDRIFT $R = O(\lambda^2 t^2/\epsilon)$ | 无快进下界 $\Omega(t)$；局域晶格常是 Trotter 胜出 | 脱离输入模型与体系稀疏度空谈大 $O$，或混写 $\epsilon_U$ 与 $2\epsilon_U$ |
+| **HHL 与量子 ODE** | $\kappa_{\mathrm{Poisson}} = \Theta(N^{2/d})$；LCHS $e^{-At}=\int f(k)e^{-i(kL+H)t}dk$ | 四重细则同时满足；LCHS 须 $L\succeq 0$；Carleman 须 $R<1$ | 打印全部 $N$ 个坐标、未预处理低维 PDE 或强非线性硬套 Carleman |
+| **复杂度边界** | $\mathrm{PostBQP} = \mathrm{PP}$；2-Local 哈密顿量 $\mathrm{QMA}$-完全 | 承诺间隙 $b-a \neq$ 物理谱隙 $E_1 - E_0$ | 把 $\mathrm{PostBQP}=\mathrm{PP}$ 误读为现实量子机能解 $\mathrm{NP}$-完全 |
+
+- **首遍通关自测三句话**：① 为什么 Shor 算法绝大部分量子门花在模幂算术而不是 QFT，且连分数单次读数仍可能因 $\gcd(k, r) > 1$ 失败？② 为什么 Grover 单次成功率最高点 $k=3$ 的重启平均查询数反而不如 $k=2$，且单深度 MLAE 永远分不清 $a=1/4$ 与 $a=1$？③ 面对 2D 泊松方程或强非线性流体，为什么直接套用 HHL 或 Carleman 线性化会失去加速甚至失效？
 
 ---
 
@@ -1694,10 +1815,10 @@ $$
 
 本章全部核心手算与反例都配有零云依赖、本地可复算的 Python 验证程序，入口汇总见[算法实验册：实验 07-A](labs/algorithms.md#实验-07-a逐振幅检查过度旋转)与[算法代码总说明](../codes/algorithms/README.md)：
 
-- **Grover 过旋转、固定预算与重启均值**：运行 `python3 codes/algorithms/experiments.py 07`，逐振幅模拟 $N = 16$（$M = 1$ 与 $M = 4$）四轮迭代，独立核对二维旋转公式以及 $p \ge 1/4$ 时 $R = 16$ 与 $R = 17$ 的重试失败率阈值；关于 $k = 2$ 平均查询 $3.3023$ 优于 $k = 3$ 的 $4.1609$ 的重启成本逐项对照，详见[算法实验册：实验 07-A](labs/algorithms.md#实验-07-a逐振幅检查过度旋转)；
-- **Simon 满秩穷举与固定预算并合界**：运行 `python3 codes/algorithms/round71_checks.py 07`，枚举 $d = 2$ 下 $k = 0 \dots 5$ 的全部允许样本序列并用 $\mathbb{F}_2$ 消元核对精确乘积公式，以及 $k = 9$ 的并合界 $3/512$ 与精确失败率；
-- **MLAE 单深度混叠与联合似然**：运行 `python3 codes/algorithms/round70_checks.py 07`，用三倍角多项式 $p_1(a) = a(3-4a)^2$ 核对 $a = 1/4$ 与 $a = 1$ 的混叠，并在网格上验证 $25/100$ 与 $100/100$ 联合似然峰值与 400 次制备调用账本；
-- **负谱非网格 HHL 与垃圾方差恒等式**：运行 `python3 codes/algorithms/round73_checks.py 07` 用标准库标量傅里叶和复核 $t = 3, 4, 5, 6$ 的全部 $p_a$、$p_{a,0}$ 与条件垃圾率；完整的本地 Cirq 线路复现中，4 比特非对角 HHL 与三 CNOT Simon 函数电路实现于 [sdk/round72_sdk.py](../codes/algorithms/sdk/round72_sdk.py)（详见[非对角 HHL 与 Simon 电路复现](../codes/algorithms/sdk/README.md)），负谱非网格 2 维/4 维 HHL 完整线路见[负谱非网格 HHL 完整线路复现](../codes/algorithms/sdk73/README.md)。
+- **Grover 过旋转、固定预算与重启均值**：运行[主干实验脚本](../codes/algorithms/experiments.py)（`python3 codes/algorithms/experiments.py 07`），逐振幅模拟 $N = 16$（$M = 1$ 与 $M = 4$）四轮迭代，独立核对二维旋转公式以及 $p \ge 1/4$ 时 $R = 16$ 与 $R = 17$ 的重试失败率阈值；关于 $k = 2$ 平均查询 $3.3023$ 优于 $k = 3$ 的 $4.1609$ 的重启成本逐项对照，详见[算法实验册：实验 07-A](labs/algorithms.md#实验-07-a逐振幅检查过度旋转)；
+- **LCHS、Carleman 线性化、Shor 35、ECDLP 与泊松条件数**：运行[第二篇综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)（`python3 codes/algorithms/v4_algorithms_lab.py 07`），独立验算 LCHS 柯西核与 2024 改进速降核、Carleman $2\times 2$ 在 $R = 0.2$ 与 $R = 1.5$ 的收敛/崩溃对比、$N=35$ 连分数、$E(\mathbb{F}_7)$ 群表与泊松方程条件数；
+- **Simon 满秩穷举与 MLAE 混叠**：分别运行[有限预算与满秩穷举脚本](../codes/algorithms/round71_checks.py)（参数 `07`）与[接口符号与混叠核验脚本](../codes/algorithms/round70_checks.py)（参数 `07`），核对 $d = 2$ 下 $k \le 5$ 全部样本满秩率、$k = 9$ 并合界以及 $p_1(a)=a(3-4a)^2$ 混叠与 400 次制备调用；
+- **负谱非网格 HHL 与垃圾方差恒等式**：运行[负谱非网格 HHL 独立复核脚本](../codes/algorithms/round73_checks.py)（参数 `07`）用标准库标量傅里叶和复核 $t = 3, 4, 5, 6$ 的全部 $p_a$、$p_{a,0}$ 与条件垃圾率；完整的本地 Cirq 线路复现中，4 比特非对角 HHL 与三 CNOT Simon 函数电路见[非对角 HHL 与 Simon 电路复现](../codes/algorithms/sdk/README.md)，负谱非网格 2 维/4 维 HHL 完整线路见[负谱非网格 HHL 完整线路复现](../codes/algorithms/sdk73/README.md)。
 
 ### 延伸阅读起点
 
@@ -1713,8 +1834,8 @@ $$
   - G. Brassard, P. Høyer, M. Mosca & A. Tapp (2002), [Quantum Amplitude Amplification and Estimation](https://arxiv.org/abs/quant-ph/0005055), *Contemp. Math.* 305, 53–74；
   - S. Aaronson (2005), [Quantum Computing, Postselection, and Probabilistic Polynomial-Time](https://www.scottaaronson.com/papers/pp.pdf), *Proc. R. Soc. A* 461, 3473–3482；J. Kempe, A. Kitaev & O. Regev (2006), [The Complexity of the Local Hamiltonian Problem](https://arxiv.org/abs/quant-ph/0406180), *SIAM J. Comput.* 35, 1070–1097；J. Watrous (2008), [Quantum Computational Complexity](https://arxiv.org/abs/0804.3401)。
 - **现代突破、算法演进与资源估算（2015–2026）**：
-  - **Shor 模幂、RSA 与 ECC 资源演进**：C. Gidney (2019 预印本), `arXiv:1905.09749`（窗口量子算术）；C. Gidney & M. Ekerå (2021), *How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits*, *Quantum* 5, 433；G. D. Kahanamoku-Meyer & N. Y. Yao (2024 预印本), `arXiv:2403.18006`（零额外辅助位快速量子乘法）；C. Chevignard, P.-A. Fouque & A. Schrottenloher (ePrint 2024/222; CRYPTO 2025), *Reducing the Number of Qubits in Quantum Factoring*（以及 2025 椭圆曲线 RNS 资源估算）；C. Gidney (2025 年 5 月预印本 / 资源估算), [How to factor 2048 bit RSA integers with less than a million noisy qubits](https://arxiv.org/abs/2505.15917)（`arXiv:2505.15917`）；O. Regev (2023 / *JACM* 2025), *An Efficient Quantum Factoring Algorithm*；S. Ragavan & V. Vaikuntanathan (CRYPTO 2024), *Space-Efficient and Noise-Robust Quantum Factoring*；M. Roetteler et al. (ASIACRYPT 2017), *Quantum Resource Estimates for Computing Elliptic Curve Discrete Logarithms*；T. Häner et al. (PQCrypto 2020), *Improved Quantum Circuits for Elliptic Curve Discrete Logarithms*；D. Litinski (2023 预印本), `arXiv:2306.08585`（活跃体积 256 位 ECC 攻击）；
+  - **Shor 模幂、RSA 与 ECC 资源演进**：C. Gidney (2019 预印本), `arXiv:1905.09749`（窗口量子算术）；C. Gidney & M. Ekerå (2021), *How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits*, *Quantum* 5, 433；G. D. Kahanamoku-Meyer & N. Y. Yao (2024 预印本), `arXiv:2403.18006`（零额外辅助位快速量子乘法）；C. Chevignard, P.-A. Fouque & A. Schrottenloher (ePrint 2024/222; CRYPTO 2025 [A]), *Reducing the Number of Qubits in Quantum Factoring* 及 *Reducing the Number of Qubits in Quantum Discrete Logarithms on Elliptic Curves*（IACR ePrint 2026/280; EUROCRYPT 2026 [A]）；C. Gidney (2025 年 5 月预印本 / 资源估算 [C]), [How to factor 2048 bit RSA integers with less than a million noisy qubits](https://arxiv.org/abs/2505.15917)（`arXiv:2505.15917`）；O. Regev (2023 / *JACM* 2025 [A]), *An Efficient Quantum Factoring Algorithm*；S. Ragavan & V. Vaikuntanathan (CRYPTO 2024 [A]), *Space-Efficient and Noise-Robust Quantum Factoring*；M. Roetteler et al. (ASIACRYPT 2017 [A])；T. Häner et al. (PQCrypto 2020 [A])；D. Litinski (2023 预印本 [C]), `arXiv:2306.08585`（活跃体积 256 位 ECC 攻击）；
   - **哈密顿量模拟与体系资源交叉**：Y. Atia & D. Aharonov (2017), *Fast-forwarding of Hamiltonians and exponentially precise measurements*, *Nature Comm.* 8, 1572；A. M. Childs et al. (2018), *Toward the first quantum simulation with quantum speedup*, *PNAS* 115(38), 9456–9461；E. Campbell (2019), [A random compiler for fast Hamiltonian simulation](https://arxiv.org/abs/1811.08017), *Phys. Rev. Lett.* 123, 070503（qDRIFT）；G. H. Low & I. L. Chuang (2019), [Hamiltonian Simulation by Qubitization](https://quantum-journal.org/papers/q-2019-07-12-163/), *Quantum* 3, 163；M. Kieferová, A. Scherer & D. W. Berry (2019), *Phys. Rev. A* 99, 042314；I. D. Kivlichan et al. (2020), *Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization*, *Quantum* 4, 296；A. M. Childs et al. (2021), [Theory of Trotter Error with Commutator Scaling](https://doi.org/10.1103/PhysRevX.11.011020), *Phys. Rev. X* 11, 011020；E. Campbell (2021), *Early fault-tolerant simulations of the Hubbard model*, *Quantum Sci. Technol.* 7, 015007；J. Lee et al. (2021), *Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction*, *PRX Quantum* 2, 030305（FeMoco THC 量子化）；
-  - **量子线性系统与去量子化**：S. Aaronson (2015), *Read the fine print*, *Nature Physics* 11, 291–293；A. M. Childs, R. Kothari & R. D. Somma (2017), *SIAM J. Comput.* 46, 1920–1950；R. D. Somma & Y. Subaşı (2021), [Complexity of quantum state verification in the quantum linear systems problem](https://arxiv.org/abs/2007.15698), *PRX Quantum* 2, 010315；P. C. S. Costa et al. (2022), *Optimal Scaling Quantum Linear-Systems Solver via Discrete Adiabatic Theorem*, *PRX Quantum* 3, 040303；N.-H. Chia et al. (2022), *Sampling-based Sublinear Low-rank Matrix Arithmetic Framework for Dequantizing Quantum Machine Learning*, *JACM* 69；A. M. Dalzell (TQC 2024; `arXiv:2406.12086`, 2026 年 4 月修订预印本), *A shortcut to an optimal quantum linear system solver*；L. Lin (2022), *Lecture Notes on Quantum Algorithms for Scientific Computation*（`arXiv:2201.08309`）；
+  - **量子线性系统、微分方程与去量子化**：S. Aaronson (2015), *Read the fine print*, *Nature Physics* 11, 291–293；A. M. Childs, R. Kothari & R. D. Somma (2017), *SIAM J. Comput.* 46, 1920–1950；R. D. Somma & Y. Subaşı (2021), [Complexity of quantum state verification in the quantum linear systems problem](https://arxiv.org/abs/2007.15698), *PRX Quantum* 2, 010315；P. C. S. Costa et al. (2022), *Optimal Scaling Quantum Linear-Systems Solver via Discrete Adiabatic Theorem*, *PRX Quantum* 3, 040303；N.-H. Chia et al. (2022), *JACM* 69；A. Bakshi, A. Liu, A. Moitra & E. Tang (STOC 2024 / FOCS 2024–2025 [A]), *High-Temperature Gibbs States are Unentangled and Efficiently Preparable*；A. M. Dalzell (TQC 2024; `arXiv:2406.12086`, 2026 年 4 月修订预印本 [C])；J.-P. Liu et al. (*PNAS* **118**(35), e2026805118, 2021 [A]，Carleman 线性化)；D. An, J.-P. Liu & L. Lin (*Phys. Rev. Lett.* **131**, 150603, 2023 [A]，LCHS)；D. An, A. M. Childs & L. Lin (`arXiv:2312.03916`, *Comm. Math. Phys.* 2024–2025 [A]，改进核 LCHS)；S. Jin, N. Liu & Y. Yu (*Phys. Rev. Lett.* / *Phys. Rev. A* 2023–2025 [A]，Schrödingerization)；L. Lin (2022), *Lecture Notes on Quantum Algorithms for Scientific Computation*（`arXiv:2201.08309`）（上述 2024–2026 时效进展最近联网核验日期：2026-11-25）；
   - **幅度估计与固定点放大**：T. J. Yoder, G. H. Low & I. L. Chuang (2014), *Phys. Rev. Lett.* 113, 210501；Y. Suzuki et al. (2020), [Amplitude estimation without phase estimation](https://arxiv.org/abs/1904.10246), *Quantum Inf. Process.* 19, 75（MLAE）；D. Grinko et al. (2021), *Iterative Quantum Amplitude Estimation*, *npj Quantum Inf.* 7, 52（IQAE）；S. Fukuzawa, C. Ho, S. Irani & J. Zion (2023), *Modified Iterative Quantum Amplitude Estimation is Asymptotically Optimal*, SIAM ALENEX 2023, pp. 135–147（`arXiv:2208.14612`）；
   - **量子复杂度前沿**：R. Raz & A. Tal (2022), *Oracle Separation of BQP and PH*, *JACM* 69；S. Gharibian & F. Le Gall (STOC 2022), *Dequantizing the Quantum Singular Value Transformation: Hardness and Applications to Quantum Chemistry and the Quantum PCP Conjecture*（GLH）；A. Anshu, N. P. Breuckmann & C. Nirkhe (STOC 2023), *NLTS Hamiltonians from Good Quantum Codes*。

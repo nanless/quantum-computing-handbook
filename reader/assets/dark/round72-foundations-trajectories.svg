@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">量子轨迹平均逼近主方程系综态（4096 条 QuTiP 实跑轨迹对照）</title>
+  <desc id="desc">基于保存的 QuTiP 实跑数据绘制：上图对比解析解、mesolve 与 4096 条 mcsolve 轨迹均值及 ±1 SE 误差棒，下图给出 4,096 条轨迹 ρ₁₁ 残差（同批轨迹跨时刻相关），右侧误差账本列明全密度矩阵最大元误差（含非对角项）。</desc>
+  <style>
+    svg { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif; }
+    .bg { fill: #fbfaf6; }
+    .panel { fill: #ffffff; stroke: #d8d4c8; stroke-width: 1.2; }
+    .card { fill: #f4f1e8; stroke: #d5cfc0; stroke-width: 1.2; }
+    .title { font-size: 20px; font-weight: 700; fill: #162421; }
+    .sub { font-size: 13px; fill: #4c5c57; }
+    .sec { font-size: 13.5px; font-weight: 700; fill: #14453d; }
+    .axis-lbl { font-size: 12.5px; font-weight: 600; fill: #263733; }
+    .tick { font-size: 11.5px; fill: #4a5a55; }
+    .note { font-size: 12px; fill: #2b3a36; }
+    .mono { font-size: 12px; font-family: "SFMono-Regular","Menlo","Consolas",monospace; fill: #14453d; font-weight: 600; }
+    .grid { stroke: #e5e1d6; stroke-width: 1; }
+    .axis { stroke: #4b5c57; stroke-width: 1.3; fill: none; }
+    .zero-line { stroke: #1a365d; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    .exact { fill: none; stroke: #1a365d; stroke-width: 2.4; }
+    .me { fill: none; stroke: #c05621; stroke-width: 2; stroke-dasharray: 7 4; }
+    .res-line { fill: none; stroke: #1f7a68; stroke-width: 1.5; opacity: 0.8; }
+    .errbar { stroke: #1f7a68; stroke-width: 1.3; }
+    .mc-dot { fill: #1f7a68; stroke: #ffffff; stroke-width: 0.9; }
+    
+.bg { fill: #121716; }
+      .panel { fill: #18201e; stroke: #2f3e3a; }
+      .card { fill: #1b2522; stroke: #31423d; }
+      .title { fill: #ecf3f0; }
+      .sub { fill: #a4b7b1; }
+      .sec { fill: #6cd3bc; }
+      .axis-lbl { fill: #d7e4df; }
+      .tick { fill: #9fb3ac; }
+      .note { fill: #d0ddd8; }
+      .mono { fill: #84e0cb; }
+      .grid { stroke: #273531; }
+      .axis { stroke: #7f9790; }
+      .zero-line { stroke: #7bb4f0; }
+      .exact { stroke: #7bb4f0; }
+      .me { stroke: #f29d5b; }
+      .res-line { stroke: #55d0b4; }
+      .errbar { stroke: #55d0b4; }
+      .mc-dot { fill: #55d0b4; stroke: #18201e; }
+
+  </style>
+  <rect width="960" height="560" rx="12" class="bg"/>
+  <text x="34" y="38" class="title">量子轨迹平均逼近主方程系综态（4,096 条实跑轨迹对照）</text>
+  <text x="34" y="60" class="sub">数据来源：codes/foundations/sdk/all-results.json（QuTiP mesolve / mcsolve 实跑存档，κ = 0.70 μs⁻¹，seed 锁定）</text>
+
+  <!-- Top Plot Panel -->
+  <text x="96" y="88" class="sec">上图：激发态布居数 ρ₁₁(t) 随时间衰减</text>
+  <rect x="96" y="98" width="580" height="216" class="panel"/>
+  <line x1="96" y1="314.0" x2="676" y2="314.0" class="grid"/><text x="86" y="318.0" text-anchor="end" class="tick">0.00</text><line x1="96" y1="274.0" x2="676" y2="274.0" class="grid"/><text x="86" y="278.0" text-anchor="end" class="tick">0.05</text><line x1="96" y1="234.0" x2="676" y2="234.0" class="grid"/><text x="86" y="238.0" text-anchor="end" class="tick">0.10</text><line x1="96" y1="194.0" x2="676" y2="194.0" class="grid"/><text x="86" y="198.0" text-anchor="end" class="tick">0.15</text><line x1="96" y1="154.0" x2="676" y2="154.0" class="grid"/><text x="86" y="158.0" text-anchor="end" class="tick">0.20</text><line x1="96" y1="114.0" x2="676" y2="114.0" class="grid"/><text x="86" y="118.0" text-anchor="end" class="tick">0.25</text><line x1="96.0" y1="98" x2="96.0" y2="314" class="grid"/><line x1="96.0" y1="368" x2="96.0" y2="496" class="grid"/><text x="96.0" y="516" text-anchor="middle" class="tick">0.0</text><line x1="241.0" y1="98" x2="241.0" y2="314" class="grid"/><line x1="241.0" y1="368" x2="241.0" y2="496" class="grid"/><text x="241.0" y="516" text-anchor="middle" class="tick">1.0</text><line x1="386.0" y1="98" x2="386.0" y2="314" class="grid"/><line x1="386.0" y1="368" x2="386.0" y2="496" class="grid"/><text x="386.0" y="516" text-anchor="middle" class="tick">2.0</text><line x1="531.0" y1="98" x2="531.0" y2="314" class="grid"/><line x1="531.0" y1="368" x2="531.0" y2="496" class="grid"/><text x="531.0" y="516" text-anchor="middle" class="tick">3.0</text><line x1="676.0" y1="98" x2="676.0" y2="314" class="grid"/><line x1="676.0" y1="368" x2="676.0" y2="496" class="grid"/><text x="676.0" y="516" text-anchor="middle" class="tick">4.0</text>
+  <polyline points="96.0,114.0 110.5,127.5 125.0,140.1 139.5,151.9 154.0,162.8 168.5,173.1 183.0,182.6 197.5,191.5 212.0,199.8 226.5,207.5 241.0,214.7 255.5,221.4 270.0,227.7 284.5,233.5 299.0,238.9 313.5,244.0 328.0,248.7 342.5,253.2 357.0,257.3 371.5,261.1 386.0,264.7 400.5,268.0 415.0,271.1 429.5,274.0 444.0,276.7 458.5,279.2 473.0,281.6 487.5,283.8 502.0,285.8 516.5,287.7 531.0,289.5 545.5,291.2 560.0,292.7 574.5,294.1 589.0,295.5 603.5,296.7 618.0,297.9 632.5,299.0 647.0,300.0 661.5,301.0 676.0,301.8" class="exact"/>
+  <polyline points="96.0,114.0 110.5,127.5 125.0,140.1 139.5,151.9 154.0,162.8 168.5,173.1 183.0,182.6 197.5,191.5 212.0,199.8 226.5,207.5 241.0,214.7 255.5,221.4 270.0,227.7 284.5,233.5 299.0,238.9 313.5,244.0 328.0,248.7 342.5,253.2 357.0,257.3 371.5,261.1 386.0,264.7 400.5,268.0 415.0,271.1 429.5,274.0 444.0,276.7 458.5,279.2 473.0,281.6 487.5,283.8 502.0,285.8 516.5,287.7 531.0,289.5 545.5,291.2 560.0,292.7 574.5,294.1 589.0,295.5 603.5,296.7 618.0,297.9 632.5,299.0 647.0,300.0 661.5,301.0 676.0,301.8" class="me"/>
+  <line x1="96.0" y1="114.0" x2="96.0" y2="114.0" class="errbar"/><line x1="92.0" y1="114.0" x2="100.0" y2="114.0" class="errbar"/><line x1="92.0" y1="114.0" x2="100.0" y2="114.0" class="errbar"/><rect x="92.5" y="110.5" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="154.0" y1="162.6" x2="154.0" y2="163.8" class="errbar"/><line x1="150.0" y1="162.6" x2="158.0" y2="162.6" class="errbar"/><line x1="150.0" y1="163.8" x2="158.0" y2="163.8" class="errbar"/><rect x="150.5" y="159.7" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="212.0" y1="199.8" x2="212.0" y2="201.1" class="errbar"/><line x1="208.0" y1="199.8" x2="216.0" y2="199.8" class="errbar"/><line x1="208.0" y1="201.1" x2="216.0" y2="201.1" class="errbar"/><rect x="208.5" y="197.0" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="270.0" y1="227.5" x2="270.0" y2="228.6" class="errbar"/><line x1="266.0" y1="227.5" x2="274.0" y2="227.5" class="errbar"/><line x1="266.0" y1="228.6" x2="274.0" y2="228.6" class="errbar"/><rect x="266.5" y="224.6" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="328.0" y1="248.5" x2="328.0" y2="249.4" class="errbar"/><line x1="324.0" y1="248.5" x2="332.0" y2="248.5" class="errbar"/><line x1="324.0" y1="249.4" x2="332.0" y2="249.4" class="errbar"/><rect x="324.5" y="245.4" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="386.0" y1="264.3" x2="386.0" y2="265.1" class="errbar"/><line x1="382.0" y1="264.3" x2="390.0" y2="264.3" class="errbar"/><line x1="382.0" y1="265.1" x2="390.0" y2="265.1" class="errbar"/><rect x="382.5" y="261.2" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="444.0" y1="276.5" x2="444.0" y2="277.1" class="errbar"/><line x1="440.0" y1="276.5" x2="448.0" y2="276.5" class="errbar"/><line x1="440.0" y1="277.1" x2="448.0" y2="277.1" class="errbar"/><rect x="440.5" y="273.3" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="502.0" y1="285.6" x2="502.0" y2="286.1" class="errbar"/><line x1="498.0" y1="285.6" x2="506.0" y2="285.6" class="errbar"/><line x1="498.0" y1="286.1" x2="506.0" y2="286.1" class="errbar"/><rect x="498.5" y="282.4" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="560.0" y1="292.6" x2="560.0" y2="292.9" class="errbar"/><line x1="556.0" y1="292.6" x2="564.0" y2="292.6" class="errbar"/><line x1="556.0" y1="292.9" x2="564.0" y2="292.9" class="errbar"/><rect x="556.5" y="289.3" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="618.0" y1="297.8" x2="618.0" y2="298.1" class="errbar"/><line x1="614.0" y1="297.8" x2="622.0" y2="297.8" class="errbar"/><line x1="614.0" y1="298.1" x2="622.0" y2="298.1" class="errbar"/><rect x="614.5" y="294.5" width="7" height="7" rx="1.2" class="mc-dot"/><line x1="676.0" y1="301.7" x2="676.0" y2="302.0" class="errbar"/><line x1="672.0" y1="301.7" x2="680.0" y2="301.7" class="errbar"/><line x1="672.0" y1="302.0" x2="680.0" y2="302.0" class="errbar"/><rect x="672.5" y="298.4" width="7" height="7" rx="1.2" class="mc-dot"/>
+  <rect x="96" y="98" width="580" height="216" class="axis"/>
+  <text x="32" y="206" transform="rotate(-90 32 206)" text-anchor="middle" class="axis-lbl">激发态布居数（无量纲）</text>
+
+  <!-- Legend inside top-right -->
+  <rect x="466" y="110" width="198" height="74" rx="8" class="card"/>
+  <line x1="480" y1="129" x2="512" y2="129" class="exact"/>
+  <text x="520" y="133" class="note">解析主方程系综解</text>
+  <line x1="480" y1="149" x2="512" y2="149" class="me"/>
+  <text x="520" y="153" class="note">mesolve 密度矩阵解</text>
+  <rect x="492" y="165" width="7" height="7" rx="1.2" class="mc-dot"/>
+  <text x="520" y="173" class="note">mcsolve 均值 ± 1 SE</text>
+
+  <!-- Bottom Residual Panel -->
+  <text x="96" y="356" class="sec">下图：4,096 条轨迹 ρ₁₁ 残差（同批轨迹跨时刻相关）</text>
+  <rect x="96" y="368" width="580" height="128" class="panel"/>
+  <line x1="96" y1="480.0" x2="676" y2="480.0" class="grid"/><text x="86" y="484.0" text-anchor="end" class="tick">-0.003</text><line x1="96" y1="432.0" x2="676" y2="432.0" class="zero-line"/><text x="86" y="436.0" text-anchor="end" class="tick">0.000</text><line x1="96" y1="384.0" x2="676" y2="384.0" class="grid"/><text x="86" y="388.0" text-anchor="end" class="tick">+0.003</text>
+  <polyline points="96.0,432.0 110.5,440.1 125.0,432.2 139.5,442.0 154.0,439.0 168.5,445.8 183.0,449.4 197.5,454.1 212.0,446.3 226.5,441.6 241.0,438.4 255.5,439.9 270.0,440.4 284.5,438.1 299.0,438.2 313.5,436.6 328.0,435.5 342.5,435.8 357.0,434.9 371.5,432.9 386.0,432.7 400.5,434.9 415.0,435.0 429.5,434.1 444.0,434.2 458.5,434.1 473.0,433.0 487.5,432.1 502.0,432.7 516.5,432.9 531.0,432.1 545.5,432.7 560.0,432.9 574.5,432.8 589.0,433.4 603.5,432.8 618.0,432.9 632.5,432.6 647.0,432.3 661.5,432.4 676.0,432.3" class="res-line"/>
+  <line x1="96.0" y1="432.0" x2="96.0" y2="432.0" class="errbar"/><circle cx="96.0" cy="432.0" r="2.7" class="mc-dot"/><line x1="125.0" y1="422.2" x2="125.0" y2="442.2" class="errbar"/><circle cx="125.0" cy="432.2" r="2.7" class="mc-dot"/><line x1="154.0" y1="426.8" x2="154.0" y2="451.3" class="errbar"/><circle cx="154.0" cy="439.0" r="2.7" class="mc-dot"/><line x1="183.0" y1="436.4" x2="183.0" y2="462.4" class="errbar"/><circle cx="183.0" cy="449.4" r="2.7" class="mc-dot"/><line x1="212.0" y1="433.7" x2="212.0" y2="459.0" class="errbar"/><circle cx="212.0" cy="446.3" r="2.7" class="mc-dot"/><line x1="241.0" y1="426.5" x2="241.0" y2="450.3" class="errbar"/><circle cx="241.0" cy="438.4" r="2.7" class="mc-dot"/><line x1="270.0" y1="429.3" x2="270.0" y2="451.5" class="errbar"/><circle cx="270.0" cy="440.4" r="2.7" class="mc-dot"/><line x1="299.0" y1="428.0" x2="299.0" y2="448.4" class="errbar"/><circle cx="299.0" cy="438.2" r="2.7" class="mc-dot"/><line x1="328.0" y1="426.3" x2="328.0" y2="444.7" class="errbar"/><circle cx="328.0" cy="435.5" r="2.7" class="mc-dot"/><line x1="357.0" y1="426.5" x2="357.0" y2="443.2" class="errbar"/><circle cx="357.0" cy="434.9" r="2.7" class="mc-dot"/><line x1="386.0" y1="425.3" x2="386.0" y2="440.2" class="errbar"/><circle cx="386.0" cy="432.7" r="2.7" class="mc-dot"/><line x1="415.0" y1="428.3" x2="415.0" y2="441.7" class="errbar"/><circle cx="415.0" cy="435.0" r="2.7" class="mc-dot"/><line x1="444.0" y1="428.3" x2="444.0" y2="440.2" class="errbar"/><circle cx="444.0" cy="434.2" r="2.7" class="mc-dot"/><line x1="473.0" y1="427.8" x2="473.0" y2="438.2" class="errbar"/><circle cx="473.0" cy="433.0" r="2.7" class="mc-dot"/><line x1="502.0" y1="428.1" x2="502.0" y2="437.4" class="errbar"/><circle cx="502.0" cy="432.7" r="2.7" class="mc-dot"/><line x1="531.0" y1="428.0" x2="531.0" y2="436.1" class="errbar"/><circle cx="531.0" cy="432.1" r="2.7" class="mc-dot"/><line x1="560.0" y1="429.4" x2="560.0" y2="436.5" class="errbar"/><circle cx="560.0" cy="432.9" r="2.7" class="mc-dot"/><line x1="589.0" y1="430.2" x2="589.0" y2="436.5" class="errbar"/><circle cx="589.0" cy="433.4" r="2.7" class="mc-dot"/><line x1="618.0" y1="430.1" x2="618.0" y2="435.6" class="errbar"/><circle cx="618.0" cy="432.9" r="2.7" class="mc-dot"/><line x1="647.0" y1="429.9" x2="647.0" y2="434.7" class="errbar"/><circle cx="647.0" cy="432.3" r="2.7" class="mc-dot"/><line x1="676.0" y1="430.1" x2="676.0" y2="434.4" class="errbar"/><circle cx="676.0" cy="432.3" r="2.7" class="mc-dot"/>
+  <rect x="96" y="368" width="580" height="128" class="axis"/>
+  <text x="32" y="432" transform="rotate(-90 32 432)" text-anchor="middle" class="axis-lbl">残差 Δρ₁₁</text>
+  <text x="386" y="540" text-anchor="middle" class="axis-lbl">演化时间 t（μs）</text>
+
+  <!-- Right Diagnostic Cards -->
+  <rect x="694" y="98" width="244" height="190" rx="10" class="card"/>
+  <text x="708" y="121" class="sec">1. 实跑误差账本</text>
+  <text x="708" y="146" class="note">轨迹样本量：</text>
+  <text x="708" y="165" class="mono">N = 4,096 条独立轨迹</text>
+  <text x="708" y="191" class="note">mesolve 全密度矩阵最大元误差：</text>
+  <text x="708" y="210" class="mono">6.34e-11</text>
+  <text x="708" y="236" class="note">mcsolve 全密度矩阵最大元误差</text>
+  <text x="708" y="253" class="note">（含非对角项）：</text>
+  <text x="708" y="273" class="mono">3.05e-03</text>
+
+  <rect x="694" y="302" width="244" height="194" rx="10" class="card"/>
+  <text x="708" y="328" class="sec">2. 物理与统计边界</text>
+  <text x="708" y="356" class="note">• 单条轨迹随机量子跃迁，</text>
+  <text x="708" y="376" class="note">  始终保持纯态而非混态。</text>
+  <text x="708" y="404" class="note">• 仅当对大量独立轨迹求平均，</text>
+  <text x="708" y="424" class="note">  才以 1/√N 速率收敛到主方程。</text>
+  <text x="708" y="452" class="note">• 标准误 SE 由实证轨迹方差</text>
+  <text x="708" y="472" class="note">  直接估计，不混淆单次波动。</text>
+</svg>

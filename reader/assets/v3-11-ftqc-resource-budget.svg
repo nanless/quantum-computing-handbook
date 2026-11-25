@@ -2,7 +2,7 @@
   <title id="v3-11-ftqc-resource-budget-title">表面码指数压错与 RSA-2048 容错资源演进分解</title>
   <desc id="v3-11-ftqc-resource-budget-desc">左面板绘出表面码逻辑错率随码距 d=3..31 的指数压制曲线并标注 Willow 实测与 10^-10 门槛；右面板线性对比 Gidney-Ekera 2021 的 2000 万物理比特与 Gidney 2025 的 897,864 物理比特并放大拆解冷存储、热存储与计算培育三区占比。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
     .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
@@ -46,43 +46,7 @@
     .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
     .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
     
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .card{fill:#162330;stroke:#395066}
-      .subcard{fill:#1d2e3d;stroke:#3d566d}
-      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
-      .ink{fill:#eef6ff}
-      .muted{fill:#b4c8da}
-      .accent{fill:#6ed0f7}
-      .warn{fill:#ff8585}
-      .gold{fill:#f2c15a}
-      .purple{fill:#c0adff}
-      .green{fill:#6dd4aa}
-      .axis{stroke:#b9d0e2}
-      .axishead{fill:#b9d0e2}
-      .grid{stroke:#304659}
-      .divider{stroke:#4a637a}
-      .s-accent{stroke:#6ed0f7}
-      .s-warn{stroke:#ff8585}
-      .s-gold{stroke:#f2c15a}
-      .s-purple{stroke:#c0adff}
-      .s-green{stroke:#6dd4aa}
-      .s-muted{stroke:#8ca5ba}
-      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
-      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
-      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
-      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
-      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
-      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
-      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
-      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
-      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
-      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
-      .wire{stroke:#c9deee}
-      .ctrl{fill:#eef6ff}
-      .dot-ring{stroke:#162330}
-      
-    }
+    
   </style>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title ink" x="34" y="44">表面码逻辑错率指数压制与 RSA-2048 容错资源演进</text>
@@ -165,15 +129,15 @@
   <path class="b-purple" d="M104.0 147.2L109.5 152.7L104.0 158.2L98.5 152.7Z"/>
   <path class="b-purple" d="M130.0 154.1L135.5 159.6L130.0 165.1L124.5 159.6Z"/>
   <path class="b-purple" d="M156.0 161.1L161.5 166.6L156.0 172.1L150.5 166.6Z"/>
-  <line class="s-purple" style="stroke-width:1.2" x1="161.0" y1="166.6" x2="210" y2="178"/>
-  <rect class="pill" x="210" y="156" width="186" height="46" rx="7"/>
-  <text class="xs purple" style="font-weight:700" x="218" y="173">Willow 实测 d=3→5→7</text>
-  <text class="xs muted" x="218" y="193">Λ=2.14, ε<tspan dy="3" font-size="9.2">7</tspan><tspan dy="-3">&#8203;</tspan>=0.143%</text>
+  <line class="s-purple" style="stroke-width:1.4;stroke-dasharray:4 3" x1="156.0" y1="173.0" x2="156.0" y2="352.0"/>
+  <rect class="pill" x="112" y="352" width="176" height="48" rx="7"/>
+  <text class="xs purple" style="font-weight:700" x="122" y="371">Willow 实测 d=3→5→7</text>
+  <text class="xs muted" x="122" y="391">Λ=2.14, ε<tspan dy="3" font-size="9.2">7</tspan><tspan dy="-3">&#8203;</tspan>=0.143%</text>
   <circle class="f-green" cx="286.0" cy="316.4" r="5.5"/>
   <circle class="f-accent" cx="390.0" cy="318.2" r="5.5"/>
   <text class="xs purple" style="font-weight:700" x="462.0" y="254.7" text-anchor="end">Λ = 2.14 模型</text>
   <text class="xs accent" style="font-weight:700" x="462.0" y="278.7" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.2 (d=25 达标)</text>
-  <text class="xs green" style="font-weight:700" x="390.0" y="414.1" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.1 (d=17 达标)</text>
+  <text class="xs green" style="font-weight:700" x="406.0" y="424.0" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.1 (d=17 达标)</text>
   <rect class="axis" x="104.0" y="128.0" width="364.0" height="314.0"/>
   <text class="lbl ink" x="286.0" y="486.0" text-anchor="middle">表面码码距 d（奇数）</text>
   <text class="lbl ink" x="50" y="285.0" text-anchor="middle" transform="rotate(-90 50 285.0)">逻辑错误率 ε<tspan dy="3" font-size="9.2">L</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>

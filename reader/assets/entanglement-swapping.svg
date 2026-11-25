@@ -3,7 +3,7 @@
   <desc id="desc">从上往下读。初始只有A与B1、B2与C两对Bell纠缠，中间节点持有B1和B2。中间节点完成Bell测量，发送两位经典结果。端点收到记录并按需要作Pauli修正后得到A与C的Bell对。忽略中间记录且未作条件修正时，AC的平均态为四维单位矩阵除以四。实线表示纠缠配对关系，不是光子路径；虚线表示经典消息。</desc>
   <style>
     text{font-family:'PingFang SC','Microsoft YaHei',sans-serif}.bg{fill:#f7faf5}.ink{fill:#203e36}.muted{fill:#586f64}.panel{fill:#edf3e9;stroke:#c4d4c4}.node{fill:#fffefa;stroke:#38745a;stroke-width:2.5}.pair{stroke:#34765b;stroke-width:4;fill:none}.message{stroke:#9a631b;stroke-width:2.5;stroke-dasharray:9 6;fill:none}.head{fill:#9a631b}.box{fill:#fff2db;stroke:#c69747;stroke-width:2}.title{font-size:28px;font-weight:600}.body{font-size:21px}.small{font-size:18px}.label{font-size:24px;font-weight:600}.math{font-family:'Cambria Math','Times New Roman',serif;font-size:24px}
-    @media(prefers-color-scheme:dark){.bg{fill:#172820}.ink{fill:#eaf5ed}.muted{fill:#bacfc0}.panel{fill:#20392c;stroke:#52715c}.node{fill:#244734;stroke:#a9d7ba}.pair{stroke:#a9d7ba}.message{stroke:#e9bd72}.head{fill:#e9bd72}.box{fill:#433824;stroke:#c9a262}}
+    
   </style>
   <rect class="bg" width="1100" height="590" rx="20"/>
   <text class="title ink" x="32" y="46">纠缠交换：两段资源，连接两个端点</text>

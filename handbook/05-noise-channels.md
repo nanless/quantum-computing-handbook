@@ -1,28 +1,17 @@
 # 05｜混态、噪声与量子信道
 
-前四章里的量子比特都待在理想化的无菌室里：初始状态被完美制备成单个纯态列向量 $|\psi\rangle$，量子门都是严丝合缝的可逆酉矩阵 $U$，连纠缠对里的每一个比特都在我们的掌控之中。
+前四章里的量子比特都处于理想封闭环境：初始态是单个纯态列向量 $|\psi\rangle$，演化是可逆酉矩阵 $U$。进入真实量子处理器后，两条现实限制立刻出现：其一，比特不可避免地与周围电磁场、衬底缺陷或控制线路耦合，把相位与能量泄漏到环境中；其二，即使没有环境噪声，只要只观察纠缠对的一半或面对经典随机态制备，单个列向量 $|\psi\rangle$ 已不足以描述全部测量统计。
 
-可真正走出黑板、面对一台放在稀释制冷机或真空腔里的量子处理器时，这个理想画面立刻会碰到两道现实墙壁：第一，你手上的比特不可避免地会和周围的电磁场、芯片衬底或控制线路发生耦合，悄悄把相位与能量漏进环境；第二，就算没有任何噪声，只要你只拿到了纠缠对里的一半，或者制备装置在背后按经典概率随机出牌，单个列向量 $|\psi\rangle$ 就已经装不下你需要预测的所有统计了。
+本章把量子计算语言从封闭系统升级到开放系统，按两条阅读路径组织（通用记号汇总见[符号表](appendices/notation.md)）：
 
-这一章要做的，是把整套量子计算语言从“封闭孤岛”升级到“真实开放世界”，并且把抽象的密度矩阵与量子信道变成一幅看得见的**几何动画与矩阵工具箱**：
+- **★ 首遍主线**：第 1.1–1.3 节（密度矩阵与纯度）$\to$ 第 2 节（实心 Bloch 球证明）$\to$ 第 3.1–3.2 节（酉演化与测量）$\to$ 第 4.1 节与第 4.3 节（完全正性与无信号定理）$\to$ 第 5 节（五大单比特噪声信道与 Bloch 形变）$\to$ 第 6 节（短时 Kraus 到 Lindblad 主方程与 $T_1, T_2^*, T_2, T_\phi$）$\to$ 第 9 节（QPT / QEM / QEC 分界）。
+- **☆ 进阶选读**：第 1.4 节（HJW 定理）、第 3.3 节（量子仪器）、第 4.2 节（超算符五表示互转）、第 7 节（$1/f$ 低频噪声与非马尔可夫性）与第 8 节（过程层析与 Pauli 旋转随机化）。
 
-- 在第 1–2 节，引入**密度矩阵**，并一步不跳地兑现[第 02 章](02-single-qubit.md)留下的承诺——把单比特密度矩阵完整映射进三维实心 Bloch 球，证明为什么合法物理态恰好填满 $|\vec r|\le 1$；
-- 在第 3–4 节，把测量工具升级为 POVM 与**量子仪器**，建立开放系统演化的通用规则（完全正保迹映射，CPTP），并把五种核心超算符表示（Stinespring 扩张、Kraus 算符、Choi 矩阵、向量化 Liouville 超算符与 Pauli 转移矩阵 PTM）零跳步打通；
-- 在第 5–6 节，看清五大单比特噪声的 Bloch 球形变（含 Landauer 擦除热耗下限），用 $4\times 4$ PTM 两行乘法秒算信道级联不对易，再从短时 Kraus 算符零跳步推出 Lindblad 主方程并直连实验室每天都在测的 $T_1, T_2^*, T_2, T_\phi$；
-- 在第 7–9 节，推导出 $1/f$ 低频噪声的高斯衰减与非马尔可夫性，掌握过程层析（QPT）的四态重构与 CP/TP 排雷、Pauli 旋转随机化（Pauli Twirling）如何抹平相干误差，并划清 QPT、QEM 与 QEC 三条路线的边界。
-
-读本章前，只需熟悉[第 01 章](01-math.md)的矩阵乘法、迹与正半定概念，以及[第 02 章](02-single-qubit.md)至[第 04 章](04-circuits-protocols.md)的 Bloch 球、偏迹与基础门。为了通篇零歧义，先把本章用到的记号和口径统一固定下来：
-
-| 记号 / 约定 | 本章定义与取值范围 | 关键提醒 |
-| :--- | :--- | :--- |
-| $\rho$ | $d\times d$ 密度矩阵，满足 $\rho^\dagger=\rho$、$\rho\succeq 0$、$\operatorname{Tr}\rho=1$ | 单比特时 $d=2$，对应 Bloch 向量 $\vec r\in\mathbb R^3$ 且 $\lvert\vec r\rvert\le 1$ |
-| $E_m$ | 广义测量（POVM）的效果算符，$E_m\succeq 0$ 且 $\sum_m E_m=I$ | 下标 $m$ 专指测量结果；只定概率 $p(m)=\operatorname{Tr}(E_m\rho)$，不定后态 |
-| $\mathcal I_m$ | 量子仪器分支，$\mathcal I_m(\rho)=\sum_\alpha M_{m\alpha}\rho M_{m\alpha}^\dagger$ | 同时给出结果概率与测后态；$\sum_m \mathcal I_m$ 保迹 |
-| $K_k$ | 量子信道的 Kraus 算符，$\mathcal E(\rho)=\sum_k K_k\rho K_k^\dagger$，$\sum_k K_k^\dagger K_k=I$ | 全章统一用 $K_k$，绝不与 POVM 元 $E_m$ 混写 |
-| $J_{\mathcal E},\; \mathcal S_{\mathcal E},\; R$ | 未归一化 Choi 矩阵、列堆叠 Liouville 矩阵、Pauli 转移矩阵（PTM） | $J_{\mathcal E}$ 判 CP/TP，$\mathcal S_{\mathcal E}$ 与 $R$ 直接用矩阵乘法算信道串联 |
-| $\mathcal D_p$ 与 $\widetilde{\mathcal D}_q$ | $\mathcal D_p(\rho)=(1-p)\rho+p\frac{I}{2}$；$\widetilde{\mathcal D}_q(\rho)=(1-q)\rho+\frac{q}{3}(X\rho X+Y\rho Y+Z\rho Z)$ | 同一信道满足 $q=\frac{3}{4}p$，平均单比特门错误率 $r = 1-F_{\mathrm{avg}} = \frac{2}{3}q$ |
-| $p_{\mathrm{eq}}$ | 广义振幅阻尼（GAD）稳态的激发态 $\lvert 1\rangle$ 占据概率 | 专记 $p_{\mathrm{eq}}$，与 Bloch 坐标 $r_z$ 和门错误率 $r$ 彻底区分 |
-| $T$ 与 $F$ | 迹距离 $T(\rho,\sigma)=\frac{1}{2}\lVert\rho-\sigma\rVert_1$；根保真度 $F(\rho,\sigma)=\operatorname{Tr}\sqrt{\sqrt\rho\,\sigma\sqrt\rho}$ | 区分根保真度 $F$ 与平方保真度 $F^2$；熵用 $\log_2$，自然对数用 $\ln$ |
+本章重点区分四组易混记号：
+- **$E_m$（POVM 效果算符）vs $\mathcal I_m$（量子仪器分支）vs $K_k$（信道 Kraus 算符）**：$E_m\succeq 0$ 只定概率，$\mathcal I_m$ 同时定概率与后态，全章信道一律用 $K_k$ 且满足 $\sum_k K_k^\dagger K_k=I$；
+- **$J_{\mathcal E}$、$\mathcal S_{\mathcal E}$、$R$**：分别为未归一化 Choi 矩阵、列堆叠 Liouville 矩阵与 Pauli 转移矩阵（PTM）；
+- **$\mathcal D_p$ vs $\widetilde{\mathcal D}_q$ 与 $p_{\mathrm{eq}}$**：退极化混合参数 $p$ 与随机 Pauli 参数 $q$ 满足 $q=\frac{3}{4}p$，平均门错误率 $r=1-F_{\mathrm{avg}}=\frac{2}{3}q$；广义振幅阻尼的稳态 $|1\rangle$ 占据专记 $p_{\mathrm{eq}}$，与 Bloch 坐标 $r_z$ 和门错误率 $r$ 区分；
+- **$T$ 与 $F$**：迹距离 $T(\rho,\sigma)=\frac{1}{2}\lVert\rho-\sigma\rVert_1$，根保真度 $F(\rho,\sigma)=\operatorname{Tr}\sqrt{\sqrt\rho\,\sigma\sqrt\rho}$（区别于平方保真度 $F^2$）；信息熵用 $\log_2$，自然对数用 $\ln$。
 
 ---
 
@@ -32,50 +21,25 @@
 
 ### 1.1 来历一：背后有人抛硬币（经典系综）
 
-设想实验室里有一台带随机开关的态制备机：每一轮实验开始前，机器内部悄悄抛一枚均匀硬币。正面就送出纯态 $|0\rangle$，反面就送出纯态 $|1\rangle$，但不把硬币的正反面告诉接收者。
-
-站在接收者的视角，你只知道这台机器以 $p_0=1/2$ 制备 $|0\rangle$、以 $p_1=1/2$ 制备 $|1\rangle$。能不能把它简写成叠加态 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt{2}$？我们在[第 02 章](02-single-qubit.md)已经试过，答案是不行：在计算基（$Z$ 基）下，两者给出 $0$ 和 $1$ 的概率确实都是各一半；可一旦换到 $X$ 基（$\{|+\rangle, |-\rangle\}$）测量，纯态 $|+\rangle$ 百分之百给出 $+$，而抛硬币送来的 $|0\rangle$ 和 $|1\rangle$ 各自都只有 $1/2$ 的概率给出 $+$，加权平均后仍是 $1/2$。
-
-那应该怎么记录“以概率 $p_j$ 制备纯态 $|\psi_j\rangle$”这个整体信息呢？直接把每个纯态的外积 $|\psi_j\rangle\langle\psi_j|$ 按经典概率 $p_j$ 加权求和，得到的方阵就叫**密度矩阵（density matrix）**：
+若制备装置以经典概率 $p_j$ 送出归一化纯态 $|\psi_j\rangle\in\mathbb C^d$，却不告知具体分支，就把各纯态外积按经典概率加权求和，得到**密度矩阵（density matrix）**：
 
 $$
-\rho = \sum_j p_j |\psi_j\rangle\langle\psi_j|, \qquad p_j \ge 0,\quad \sum_j p_j = 1,
+\rho = \sum_j p_j |\psi_j\rangle\langle\psi_j|, \qquad p_j \ge 0,\quad \sum_j p_j = 1.
 $$
 
-其中每个 $|\psi_j\rangle\in\mathbb C^d$ 都是归一化列向量。把刚才那枚硬币的两种纯态代进去，逐格展开：
+回看前文反复对比的相干叠加态 $|+\rangle$ 与均匀抛硬币混合（物理判别实验见[量子力学 Q1 第 5 节](quantum-mechanics/01-experiments-states.md)与[第 02 章第 1.2 节](02-single-qubit.md)），直接写出它们的 $2\times 2$ 矩阵：
 
 $$
-\begin{aligned}
-\rho_{\mathrm{coin}}
-&= \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|1\rangle\langle 1| \\
-&= \frac{1}{2}\begin{bmatrix} 1 \\ 0 \end{bmatrix}\begin{bmatrix} 1 & 0 \end{bmatrix}
- + \frac{1}{2}\begin{bmatrix} 0 \\ 1 \end{bmatrix}\begin{bmatrix} 0 & 1 \end{bmatrix} \\
-&= \frac{1}{2}\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}
- + \frac{1}{2}\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
- = \begin{bmatrix} 1/2 & 0 \\ 0 & 1/2 \end{bmatrix}
- = \frac{I}{2}.
-\end{aligned}
+\rho_{\mathrm{coin}} = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|1\rangle\langle 1| = \begin{bmatrix} 1/2 & 0 \\ 0 & 1/2 \end{bmatrix} = \frac{I}{2},
+\qquad
+\rho_+ = |+\rangle\langle +| = \begin{bmatrix} 1/2 & 1/2 \\ 1/2 & 1/2 \end{bmatrix}.
 $$
 
-再把纯态 $|+\rangle = \frac{1}{\sqrt{2}}\begin{bmatrix}1\\1\end{bmatrix}$ 也写成密度矩阵 $\rho_+ = |+\rangle\langle +|$：
-
-$$
-\rho_+
-= |+\rangle\langle +|
-= \frac{1}{2}\begin{bmatrix} 1 \\ 1 \end{bmatrix}\begin{bmatrix} 1 & 1 \end{bmatrix}
-= \begin{bmatrix} 1/2 & 1/2 \\ 1/2 & 1/2 \end{bmatrix}.
-$$
-
-把这两张 $2\times 2$ 矩阵并排放在桌面上，差别一下子就露了出来：
-
-- **主对角线元素**（$\rho_{00}$ 与 $\rho_{11}$）代表计算基测得 $0$ 与 $1$ 的概率（也叫**布居**，population）。两张矩阵的对角线都是 $1/2$ 和 $1/2$，所以计算基统计分毫不差。
-- **非对角元素**（$\rho_{01}$ 与 $\rho_{10}$）代表两个基态分量之间稳定的相位关联（也叫**相干项**，coherence）。$\rho_+$ 的非对角项是 $1/2$，正是它让 $|+\rangle$ 在 $X$ 基测量中产生相长干涉、以概率 $1$ 命中 $+$；而 $\rho_{\mathrm{coin}}$ 的非对角项全为零，说明两个分支之间没有相位相干，只剩下纯粹的经典概率混合。
+两张矩阵的差异一目了然：**主对角元**（$\rho_{00}, \rho_{11}$，称为**布居** population）记录计算基概率，两者均为 $1/2$；**非对角元**（$\rho_{01}, \rho_{10}$，称为**相干项** coherence）记录基态间稳定的相对相位关联，$\rho_+$ 保留了 $1/2$ 从而在 $X$ 基干涉命中 $|+\rangle$，而 $\rho_{\mathrm{coin}}$ 非对角元为零，只剩经典概率混合。
 
 ### 1.2 来历二：只看见纠缠对的一半（子系统约化态）
 
-密度矩阵的第二种来历更深刻，甚至不需要任何经典抛硬币。
-
-回想[第 03 章](03-multiple-qubits.md)的 Bell 态 $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$。对于整个两比特系统 $AB$ 而言，它是一个百分之百确定的纯态，没有任何人为的随机制备。可如果 Alice 只拿到了比特 $A$，比特 $B$ 被锁在远方，Alice 想预测自己本地任何测量会看到什么统计，就必须对 $B$ 做偏迹：
+即使不存在任何人为的经典随机制备，只要系统 $A$ 与未观测的远端系统 $B$ 处于纠缠纯态，局部统计同样需要密度矩阵。以[第 03 章第 4.2 节](03-multiple-qubits.md)算过的 Bell 态 $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$ 为例，对 $B$ 求偏迹立刻得到
 
 $$
 \rho_A = \operatorname{Tr}_B\bigl(|\Phi^+\rangle\langle\Phi^+|\bigr)
@@ -83,9 +47,7 @@ $$
 = \frac{I}{2}.
 $$
 
-令人惊讶的结果出现了：**Alice 手上这半个纠缠比特的局部密度矩阵，和刚才那台抛硬币机器送出的 $\rho_{\mathrm{coin}}=I/2$ 完全一模一样！** 物理上，比特 $A$ 并不是“早就确定处于 $0$ 或 $1$ 只是 Alice 忘了看”，而是因为它的相位信息彻底锁进了 $A$ 与 $B$ 的联合关联里；一旦忽略 $B$，局部能看到的就只剩下最大程度的不确定性。
-
-两种截然不同的物理场景——经典的制备无知，以及与外部系统纠缠后的局部观察——最后竟然汇入同一个数学对象 $\rho$。这也正是开放量子系统（系统 + 环境）必须用密度矩阵建模的根本原因：哪怕“系统 + 环境”整体处于纯态，只要我们不测量浩瀚的环境，系统本身就几乎必然表现为混态。
+比特 $A$ 的约化密度矩阵与经典抛硬币送出的 $\rho_{\mathrm{coin}}=I/2$ 完全相同：相位信息并未消失，而是锁进了 $A$ 与 $B$ 的联合关联之中。开放量子系统（系统 + 环境）之所以普遍表现为混态，正是因为两者发生纠缠后我们不再追踪浩瀚的环境自由度。
 
 ### 1.3 密度矩阵的三条铁律与纯度
 
@@ -95,7 +57,7 @@ $$
 2. **正半定性（Positive Semidefiniteness）**：$\rho \succeq 0$，即对任意列向量 $|v\rangle\in\mathbb C^d$ 都有 $\langle v|\rho|v\rangle \ge 0$（等价于全部本征值 $\lambda_i \ge 0$）。它保证在任何测量基下算出的概率都不为负。
 3. **单位迹（Unit Trace）**：$\operatorname{Tr}\rho = \sum_{i=0}^{d-1}\rho_{ii} = 1$（等价于全部本征值之和 $\sum_i \lambda_i = 1$）。它保证一次完整测量的总概率恰好等于 $1$。
 
-千万不要把第 2 条简化成“主对角线元素都非负”。回忆[第 01 章](01-math.md#6-迹正半定矩阵指数与求逆条件数)的反例：矩阵 $\begin{bmatrix}1/2 & 1\\ 1 & 1/2\end{bmatrix}$ 既厄米、对角线又全是正数、迹也是 $1$，可它的两个本征值是 $3/2$ 和 $-1/2$，在 $|-\rangle$ 方向上给出的“概率”是 $\langle -|\rho|-\rangle = -1/2 < 0$，绝不是合法量子态。
+不要把第 2 条简化成“主对角线元素都非负”。回忆[第 01 章](01-math.md#6-迹正半定矩阵指数与求逆条件数)的反例：矩阵 $\begin{bmatrix}1/2 & 1\\ 1 & 1/2\end{bmatrix}$ 既厄米、对角线又全是正数、迹也是 $1$，可它的两个本征值是 $3/2$ 和 $-1/2$，在 $|-\rangle$ 方向上给出的“概率”是 $\langle -|\rho|-\rangle = -1/2 < 0$，绝不是合法量子态。
 
 有了合法密度矩阵，怎么一眼分辨它是**纯态**还是**混态**？定义一个极好算的标量——**纯度（purity）** $\gamma_{\mathrm{pur}}(\rho) = \operatorname{Tr}(\rho^2)$。利用厄米矩阵的谱分解 $\rho = \sum_{i=1}^d \lambda_i |u_i\rangle\langle u_i|$（$\lambda_i \ge 0$ 且 $\sum_{i=1}^d \lambda_i = 1$），因为本征态正交归一，有 $\rho^2 = \sum_{i=1}^d \lambda_i^2 |u_i\rangle\langle u_i|$，于是：
 
@@ -144,7 +106,7 @@ $$
 
 正好压在二维系统纯度下界 $1/d = 1/2$ 上。
 
-### 1.4 同一个密度矩阵，无穷多种制备剧本：HJW 定理直觉
+### 1.4 进阶选读：同一个密度矩阵，无穷多种制备剧本——HJW 定理直觉
 
 刚才我们已经看到，抛硬币制备 $|0\rangle/|1\rangle$ 得到 $I/2$。现在换一台机器：抛硬币，正面制备 $|+\rangle$，反面制备 $|-\rangle$。算一下它的密度矩阵：
 
@@ -173,34 +135,19 @@ $$
 
 ## 2. 兑现 Bloch 球之约：从球面纯态到整个实心球
 
-在[第 02 章](02-single-qubit.md#3-bloch-球把单量子比特画成三维球面)里，我们把所有单比特纯态画到了三维单位球面 $|\vec r|=1$ 上，并且许下一个约定：到第 05 章，我们要亲手把整个实心球 $|\vec r|\le 1$ 和全部单比特密度矩阵一一对应起来。现在拿好草稿纸，把这套推导从第一行算到最后一行，绝不跳步。
+在[第 02 章](02-single-qubit.md#3-bloch-球把单量子比特画成三维球面)里，我们把所有单比特纯态画到了三维单位球面 $|\vec r|=1$ 上，并约好在本章将整个实心球 $|\vec r|\le 1$ 与全部单比特密度矩阵一一对应起来。下面逐步完成这套推导。
 
-### 2.1 四张基石矩阵：Pauli 基的 Hilbert–Schmidt 正交性
+### 2.1 Pauli 基的 Hilbert–Schmidt 正交性
 
-先把单位矩阵与三个 Pauli 矩阵统一编号为 $\sigma_0 = I$、$\sigma_1 = X$、$\sigma_2 = Y$、$\sigma_3 = Z$：
-
-$$
-\sigma_0 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix},\quad
-\sigma_1 = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix},\quad
-\sigma_2 = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix},\quad
-\sigma_3 = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}.
-$$
-
-它们既是厄米矩阵（$\sigma_\mu^\dagger = \sigma_\mu$），又满足三条好算的性质：
-
-1. **平方全等于单位阵**：$\sigma_0^2 = \sigma_1^2 = \sigma_2^2 = \sigma_3^2 = I$，因此对任意 $\mu \in \{0,1,2,3\}$，都有 $\operatorname{Tr}(\sigma_\mu^2) = \operatorname{Tr}(I) = 2$。
-2. **三个 Pauli 矩阵的迹全为零**：$\operatorname{Tr}(X) = \operatorname{Tr}(Y) = \operatorname{Tr}(Z) = 0$。
-3. **不同 Pauli 矩阵相乘的迹为零**：因为 $XY = iZ$、$YZ = iX$、$ZX = iY$（换序只添负号），它们乘积的迹正比于另一个无迹 Pauli 矩阵的迹，全为 $0$；而 $\sigma_0 \sigma_j = \sigma_j$（$j=1,2,3$）的迹同样为 $0$。
-
-把上面三条合在一起，在 $2\times 2$ 矩阵空间的 **Hilbert–Schmidt 内积** $\langle A, B\rangle_{\mathrm{HS}} = \operatorname{Tr}(A^\dagger B)$ 下，四个矩阵两两正交：
+沿用[第 01 章第 5.6 节](01-math.md)已验证过的四个厄米基矩阵 $\sigma_0=I,\;\sigma_1=X,\;\sigma_2=Y,\;\sigma_3=Z$（满足 $\sigma_\mu^2=I$、无迹 Pauli 相乘给出另一无迹 Pauli）：在 $2\times 2$ 矩阵空间的 **Hilbert–Schmidt 内积** $\langle A, B\rangle_{\mathrm{HS}} = \operatorname{Tr}(A^\dagger B)$ 下，它们两两正交：
 
 $$
 \operatorname{Tr}(\sigma_\mu \sigma_\nu) = 2\delta_{\mu\nu} \qquad (\mu,\nu \in \{0,1,2,3\}).
 $$
 
-因为 $2\times 2$ 复矩阵空间一共只有 $4$ 个复自由度，四个非零且两两正交的矩阵必然构成这个空间的一组完整正交基。也就是说，**任何** $2\times 2$ 复矩阵都可以唯一地写成 $I, X, Y, Z$ 的线性组合。
+由于 $2\times 2$ 复矩阵空间恰有 $4$ 个复自由度，这四个正交非零矩阵构成完整正交基，任意 $2\times 2$ 复矩阵都可唯一写成 $I, X, Y, Z$ 的线性组合。
 
-### 2.2 零跳步导出 $\rho = \frac{1}{2}(I + \vec r\cdot\vec\sigma)$
+### 2.2 逐步导出 $\rho = \frac{1}{2}(I + \vec r\cdot\vec\sigma)$
 
 设 $\rho$ 是任意 $2\times 2$ 合法密度矩阵。按刚才的正交基展开，先写作
 
@@ -326,24 +273,9 @@ $$
 | **球心** | $\lvert\vec r\rvert = 0$ | $(\frac{1}{2},\; \frac{1}{2})$ | $\frac{1}{2}$ | **最大混态** $I/2$，各方向统计完全对称 |
 | **球外** | $\lvert\vec r\rvert > 1$ | $\lambda_+ > 1,\; \lambda_- < 0$ | $> 1$ | **非物理矩阵**（存在负概率，不合法） |
 
-#### 算例：球外一点为何会算出负概率？
+回看[第 02 章第 8.2 节](02-single-qubit.md)的线性逆层析反例 $\hat{\vec r} = (0.8,\; 0.8,\; 0)$（长度 $\sqrt{1.28}\approx 1.1314 > 1$）：代入本节公式立刻得到 $\lambda_\pm = \frac{1 \pm \sqrt{1.28}}{2} \approx 1.0657,\; -0.0657$。沿着反方向单位态 $|\psi_-\rangle = \frac{1}{\sqrt{2}}\bigl(|0\rangle - e^{i\pi/4}|1\rangle\bigr)$ 检验，矩阵 $\hat\rho$ 给出负概率 $\langle\psi_-|\hat\rho|\psi_-\rangle = -0.0657$——这正是实验层析必须施加正半定约束（如第 02 章第 8.2 节的 Cholesky-MLE）的直接代数原因。
 
-在做单比特态层析时（回看[第 02 章](02-single-qubit.md)），如果你因有限采样波动估出 $\hat r_x = 0.8$、$\hat r_y = 0.8$、$\hat r_z = 0$，单个坐标都在 $[-1, 1]$ 之内，可向量长度已冲出球面：
-
-$$
-|\hat{\vec r}| = \sqrt{0.8^2 + 0.8^2 + 0^2} = \sqrt{1.28} \approx 1.1314 > 1.
-$$
-
-填进矩阵 $\hat\rho = \frac{1}{2}\begin{bmatrix} 1 & 0.8 - 0.8i \\ 0.8 + 0.8i & 1 \end{bmatrix}$，行列式为 $\frac{1 - 1.28}{4} = -0.07 < 0$，两个本征值为
-
-$$
-\lambda_+ = \frac{1 + \sqrt{1.28}}{2} \approx 1.0657, \qquad
-\lambda_- = \frac{1 - \sqrt{1.28}}{2} \approx -0.0657 < 0.
-$$
-
-沿着反方向单位态 $|\psi_-\rangle = \frac{1}{\sqrt{2}}\bigl(|0\rangle - e^{i\pi/4}|1\rangle\bigr)$ 测量，这个矩阵竟预测出 $-6.57\%$ 的负概率！这就是为什么实验上做完线性逆层析后，一旦点跑到球外，必须通过物理约束（如约束最大似然估计）把它合法地投影回实心球内。
-
-> **推广边界提醒**：千万别以为“实心超球面”能直接照搬到更高维。对于 $d \ge 3$ 的量子系统（如三能级 qutrit 或两比特 $d=4$），若采用满足 $\operatorname{Tr}(\lambda_a \lambda_b) = 2\delta_{ab}$ 的标准无迹厄米生成元（如 Gell-Mann 矩阵），只有在**使纯态满足 $|\vec r|=1$ 的归一化展开** $\rho = \frac{1}{d}\!\left(I + \sqrt{\frac{d(d-1)}{2}}\,\vec r\cdot\vec\lambda\right)$ 下，长度有界 $|\vec r| \le 1$ 才是合法态的必要条件（若直接写成 $\frac{1}{d}(I+\vec r\cdot\vec\lambda)$，qutrit 纯态长度为 $\sqrt{3} > 1$）。而且即使在归一化约定下，满足 $\rho \succeq 0$ 的合法态集合也**不再是欧氏实心球**，而是一个棱角各异的高维凸体。只有单比特（$d=2$）拥有这颗完美对称的实心球。
+> **推广边界提醒**：不要以为“实心超球面”能直接照搬到更高维。对于 $d \ge 3$ 的量子系统（如三能级 qutrit 或两比特 $d=4$），若采用满足 $\operatorname{Tr}(\lambda_a \lambda_b) = 2\delta_{ab}$ 的标准无迹厄米生成元（如 Gell-Mann 矩阵），只有在**使纯态满足 $|\vec r|=1$ 的归一化展开** $\rho = \frac{1}{d}\!\left(I + \sqrt{\frac{d(d-1)}{2}}\,\vec r\cdot\vec\lambda\right)$ 下，长度有界 $|\vec r| \le 1$ 才是合法态的必要条件（若直接写成 $\frac{1}{d}(I+\vec r\cdot\vec\lambda)$，qutrit 纯态长度为 $\sqrt{3} > 1$）。而且即使在归一化约定下，满足 $\rho \succeq 0$ 的合法态集合也**不再是欧氏实心球**，而是一个棱角各异的高维凸体。只有单比特（$d=2$）拥有这颗完美对称的实心球。
 
 ---
 
@@ -353,55 +285,25 @@ $$
 
 ### 3.1 封闭酉演化、期望值与 POVM 概率
 
-1. **封闭系统的酉演化**：如果纯态按 $|\psi\rangle \mapsto U|\psi\rangle$ 演化，那么对系综 $\rho = \sum_j p_j |\psi_j\rangle\langle\psi_j|$，每一支都变为 $U|\psi_j\rangle\langle\psi_j|U^\dagger$，由线性立刻得到
+将[第 02 章第 6–7 节](02-single-qubit.md)纯态的演化与测量公式按系综线性推广到任意密度矩阵 $\rho = \sum_j p_j |\psi_j\rangle\langle\psi_j|$，直接得到三条基础规则：
 
-$$
-\rho \longmapsto U \rho U^\dagger.
-$$
-
-   检查两条立即可用的几何推论：
-   - **最大混态在任何酉门下纹丝不动**：$U(I/d)U^\dagger = \frac{1}{d}UU^\dagger = \frac{I}{d}$。在 Bloch 球里，球心 $\vec r=\vec 0$ 是所有单比特酉旋转的共同不动点。
-   - **酉门保持纯度与 Bloch 球半径**：由迹循环性，$\operatorname{Tr}\bigl((U\rho U^\dagger)^2\bigr) = \operatorname{Tr}(U\rho^2 U^\dagger) = \operatorname{Tr}(\rho^2)$。对单比特，纯度 $(1+|\vec r|^2)/2$ 不变意味着 $|\vec r'|=|\vec r|$——**任何单比特酉门在 Bloch 球里都只是绕球心的刚体旋转，既不压缩球体，也不移动球心**。
-
-2. **可观测量的期望值**：对厄米算符 $A$，纯态的期望值是 $\langle\psi|A|\psi\rangle = \operatorname{Tr}(A|\psi\rangle\langle\psi|)$。对系综加权求和即得
-
-$$
-\langle A \rangle = \operatorname{Tr}(A\rho).
-$$
-
-3. **广义测量（POVM）的概率公式**：一套 **POVM**（Positive Operator-Valued Measure，正算符取值测量）由一组正半定矩阵 $\{E_m\}$ 构成，满足
-
-$$
-E_m \succeq 0, \qquad \sum_m E_m = I.
-$$
-
-   这里下标 $m$ 标记不同的经典读出结果（结果个数甚至可以大于空间维数 $d$）。在态 $\rho$ 上测得结果 $m$ 的概率是
-
-$$
-p(m) = \operatorname{Tr}(E_m \rho).
-$$
-
-   因为 $E_m \succeq 0$ 且 $\rho \succeq 0$，必有 $p(m) \ge 0$；又由 $\sum_m E_m = I$，全部概率相加为 $\sum_m p(m) = \operatorname{Tr}(\rho) = 1$。
+1. **封闭酉演化**：$\rho \longmapsto U \rho U^\dagger$。立即推出两条几何不变性：最大混态不动（$U(I/d)U^\dagger = I/d$）；纯度不变（$\operatorname{Tr}((U\rho U^\dagger)^2)=\operatorname{Tr}(\rho^2)$），因此单比特酉门在 Bloch 球内只是绕球心的刚体旋转（$|\vec r'|=|\vec r|$）。
+2. **可观测量期望值**：对厄米算符 $A$，$\langle A \rangle = \operatorname{Tr}(A\rho)$。
+3. **广义测量（POVM）概率**：对满足 $E_m \succeq 0$、$\sum_m E_m = I$ 的效果算符族 $\{E_m\}$，读出结果 $m$ 的概率为 $p(m) = \operatorname{Tr}(E_m \rho)$（由正半定与完备性自动保证 $p(m)\ge 0$ 且 $\sum_m p(m)=1$）。
 
 ### 3.2 投影测量（PVM）：看结果与丢结果的差别
 
-POVM 只回答“每个结果以多大概率出现”，并没有说明“测完之后量子系统变成了什么态”。最熟悉的一类完整测量模型是**理想投影测量（PVM）**，它由一组彼此正交的投影算符 $\{P_m\}$ 组成，满足 $P_m^\dagger = P_m$、$P_m P_n = \delta_{mn} P_m$、$\sum_m P_m = I$：
-
-- **看了结果且得到概率非零的结果 $m$**：系统塌缩到归一化后的**条件后态（conditional post-measurement state）**（又称 Lüders 规则）：
+POVM 只规定结果概率，不规定测后态。对满足 $P_m^\dagger = P_m$、$P_m P_n = \delta_{mn} P_m$、$\sum_m P_m = I$ 的理想投影测量（PVM），是否保留经典记录会导向截然不同的后态：
 
 $$
-\rho_m = \frac{P_m \rho P_m}{\operatorname{Tr}(P_m \rho)}.
+\rho_m = \frac{P_m \rho P_m}{\operatorname{Tr}(P_m \rho)}\ \bigl(\text{读到结果 }m\text{ 的条件后态，Lüders 规则}\bigr),
+\qquad
+\rho' = \sum_m p(m)\,\rho_m = \sum_m P_m \rho P_m\ \bigl(\text{丢弃记录的非选择后态}\bigr).
 $$
 
-- **测量发生了但扔掉记录（不看结果）**：按各结果概率 $p(m)=\operatorname{Tr}(P_m\rho)$ 加权平均，得到**非选择后态（non-selective post-measurement state）**：
+例如对 $\rho_+ = |+\rangle\langle +|$ 做计算基投影（$P_0 = |0\rangle\langle 0|,\; P_1 = |1\rangle\langle 1|$）：读到 `0` 时条件后态为纯态 $|0\rangle\langle 0|$；丢弃记录时非选择后态变为 $\rho' = P_0\rho_+P_0 + P_1\rho_+P_1 = I/2$——仅仅不保留结果，就会抹平非对角相干项。
 
-$$
-\rho' = \sum_m p(m)\,\rho_m = \sum_m P_m \rho P_m.
-$$
-
-例如对纯态 $\rho_+ = |+\rangle\langle +| = \frac{1}{2}\begin{bmatrix}1 & 1\\ 1 & 1\end{bmatrix}$ 做计算基投影（$P_0 = |0\rangle\langle 0|,\; P_1 = |1\rangle\langle 1|$）：读到结果 $0$（概率 $1/2$）时条件后态为纯态 $|0\rangle\langle 0|$；而若丢弃记录，非选择后态为 $\rho' = P_0 \rho_+ P_0 + P_1 \rho_+ P_1 = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|1\rangle\langle 1| = I/2$——仅仅是“测了却不看结果”，就抹平了全部非对角相干项。
-
-### 3.3 量子仪器 $\mathcal I_m$：同一套统计，两种截然不同的命运
+### 3.3 进阶选读：量子仪器 $\mathcal I_m$——同一套统计，两种截然不同的命运
 
 真实实验里的测量并不总是温柔的投影：光子探测器读到光子时会直接把光子吸收掉；超导量子比特做完中段测量后，电路有时会立刻把处于 $|1\rangle$ 的比特复位回 $|0\rangle$ 以便复用。要同时刻画**经典读出概率**与**任意物理后态**，就需要使用**量子仪器（quantum instrument）**。
 
@@ -477,26 +379,7 @@ $$
 
 矩阵转置 $T(\rho) = \rho^T$ 是验证这一区别的经典试金石。在单系统上，转置不改变特征多项式，因此 $\rho$ 与 $\rho^T$ 拥有完全相同的本征值——转置是一个名副其实的正映射。
 
-现在把 $T$ 单独作用在两比特 Bell 态 $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$ 的第一个比特 $A$ 上，第二个比特 $B$ 保持不变。先按大端序 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$ 写出联合密度矩阵：
-
-$$
-|\Phi^+\rangle\langle\Phi^+|
-= \frac{1}{2}\bigl(|00\rangle\langle 00| + |00\rangle\langle 11| + |11\rangle\langle 00| + |11\rangle\langle 11|\bigr)
-= \frac{1}{2}\begin{bmatrix}
-1 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-1 & 0 & 0 & 1
-\end{bmatrix}.
-$$
-
-只对第一个比特做转置，即把 $|a\rangle\langle b|_A$ 换成 $|b\rangle\langle a|_A$，而把第二个比特原封不动留着：
-
-- $|00\rangle\langle 00| \longmapsto |00\rangle\langle 00|$，$|11\rangle\langle 11| \longmapsto |11\rangle\langle 11|$；
-- $|00\rangle\langle 11| = |0\rangle\langle 1|_A \otimes |0\rangle\langle 1|_B \longmapsto |1\rangle\langle 0|_A \otimes |0\rangle\langle 1|_B = |10\rangle\langle 01|$；
-- $|11\rangle\langle 00| = |1\rangle\langle 0|_A \otimes |1\rangle\langle 0|_B \longmapsto |0\rangle\langle 1|_A \otimes |1\rangle\langle 0|_B = |01\rangle\langle 10|$。
-
-重新排回 $4\times 4$ 矩阵，两个非对角 $1$ 从四个角落跳进了中间 $2\times 2$ 块，整个矩阵变成了 $\frac{1}{2}\mathrm{SWAP}$：
+现在把 $T$ 单独作用在两比特 Bell 态 $|\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}\sum_{a,b\in\{0,1\}} |a\rangle\langle b|_A \otimes |a\rangle\langle b|_B$ 的第一个比特 $A$ 上，第二个比特 $B$ 保持不变：仅把 $|a\rangle\langle b|_A$ 换成 $|b\rangle\langle a|_A$，于是 $|00\rangle\langle 11|$ 与 $|11\rangle\langle 00|$ 分别跳到 $|10\rangle\langle 01|$ 与 $|01\rangle\langle 10|$，在大端序 $\{|00\rangle, |01\rangle, |10\rangle, |11\rangle\}$ 下得到 $\frac{1}{2}\mathrm{SWAP}$：
 
 $$
 (T \otimes \mathcal I_B)\bigl(|\Phi^+\rangle\langle\Phi^+|\bigr)
@@ -508,25 +391,11 @@ $$
 \end{bmatrix}.
 $$
 
-这个矩阵呈块对角结构，可直接读出全部四个本征值：第 1 行和第 4 行各自给出本征值 $+1/2$；中间的 $2\times 2$ 块是 $\frac{1}{2}X = \begin{bmatrix}0 & 1/2\\ 1/2 & 0\end{bmatrix}$，特征方程 $\lambda^2 - \frac{1}{4} = 0$ 解得 $+1/2$ 与 $-1/2$！
+这个块对角矩阵的四个本征值可直接读出：第 1、4 行各给出 $+1/2$；中间 $2\times 2$ 块为 $\frac{1}{2}X$，本征值为 $+1/2$ 与 $-1/2$。负本征值 $-1/2$ 对应的本征向量正是单态 $|\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}$——若局域仪器能实现转置，在它后面测 $|\Psi^-\rangle$ 就会出现 $-1/2$ 的负概率。因此，转置映射虽“正”却不“完全正”，不能作为局域量子信道实现（也正因如此，部分转置在[第 03 章第 6.2 节](03-multiple-qubits.md)成为了检验纠缠的 PPT 判据）。
 
-四个本征值合起来是 $\{1/2,\; 1/2,\; 1/2,\; -1/2\}$。负本征值 $-1/2$ 对应的本征向量正是反对称单态 $|\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}$——如果一台物理仪器能对局部比特实现转置，在它后面测 $|\Psi^-\rangle$ 就会冒出 $-1/2$ 的负概率！因此，转置映射虽“正”却不“完全正”，绝不可能作为局域量子信道实现（不过，正是它对纠缠态吐出负本征值的“破坏力”，使[第 03 章](03-multiple-qubits.md)的 PPT 纠缠判据成为强力工具）。
+### 4.2 进阶选读：超算符五表示大一统（Stinespring ↔ Kraus ↔ Choi ↔ Liouville ↔ PTM）
 
-### 4.2 超算符五表示大一统：Stinespring ↔ Kraus ↔ Choi ↔ Liouville ↔ PTM
-
-在有限维空间里，同一条 CPTP 量子信道有**五种**在理论与工程中频繁切换的等价写法。前三种构成最经典的物理与数学铁三角：
-
-```mermaid
-flowchart LR
-  S["Stinespring 扩张：系统与环境联合酉演化 U 后偏迹"]
-  K["Kraus 算符和：对全部分支求 K_k ρ K_k† 之和"]
-  C["未归一化 Choi 矩阵：正半定判 CP，输出偏迹判 TP"]
-  S <-->|"环境正交基投影提取 K_k"| K
-  K <-->|"作用于最大纠缠态半边"| C
-  S <-->|"大空间纯化与同构对应"| C
-```
-
-而在真实的量子噪声模拟、过程层析与误差缓解代码里，人们还会把映射拉直成矩阵——这就是**向量化 Liouville 超算符 $\mathcal S_{\mathcal E}$** 与 **Pauli 转移矩阵（PTM）$R$**。下面一步不跳地把五种表示全部打通，并写出彼此间的显式换算公式（全图可视化另见第 8.3 节插图）。
+在有限维空间里，同一条 CPTP 量子信道有**五种**常用等价表示：面向物理与数学分析的 **Stinespring 扩张**、**Kraus 算符和**、**未归一化 Choi 矩阵 $J_{\mathcal E}$**，以及面向模拟器、过程层析与误差缓解的**列堆叠 Liouville 超算符 $\mathcal S_{\mathcal E}$** 与 **Pauli 转移矩阵（PTM）$R$**。下面逐步打通五者的显式换算公式（五表示互转总览见第 8.3 节插图）。
 
 #### 视角一：Stinespring 扩张（物理起源）
 
@@ -546,7 +415,16 @@ $$
 \mathcal E(\rho) = \sum_k K_k \rho K_k^\dagger, \qquad \sum_k K_k^\dagger K_k = I.
 $$
 
-由环境基完备性 $\sum_k |k\rangle\langle k|_E = I_E$ 和 $U^\dagger U = I_{SE}$，自动有 $\sum_k K_k^\dagger K_k = {}_E\langle 0|U^\dagger I_E U|0\rangle_E = I_S$（保迹 TP）；同时对任意辅助系统 $R$ 与向量 $|v\rangle$，令 $|w_k\rangle = (I_R\otimes K_k^\dagger)|v\rangle$，有 $\langle v|(\mathcal I_R\otimes\mathcal E)(\rho_{RA})|v\rangle = \sum_k \langle w_k|\rho_{RA}|w_k\rangle \ge 0$（天生完全正 CP）。单比特信道至多需要 $d_A d_B = 4$ 个 Kraus 算符，且和 HJW 定理一样具有酉自由度：任意酉混合 $L_j = \sum_k u_{jk} K_k$ 给出同一条信道。
+由环境基完备性 $\sum_k |k\rangle\langle k|_E = I_E$ 和 $U^\dagger U = I_{SE}$，自动有 $\sum_k K_k^\dagger K_k = {}_E\langle 0|U^\dagger I_E U|0\rangle_E = I_S$（保迹 TP）；同时对任意辅助系统 $R$ 与向量 $|v\rangle$，令 $|w_k\rangle = (I_R\otimes K_k^\dagger)|v\rangle$，有 $\langle v|(\mathcal I_R\otimes\mathcal E)(\rho_{RA})|v\rangle = \sum_k \langle w_k|\rho_{RA}|w_k\rangle \ge 0$（自动满足完全正 CP）。**单比特信道的最小表示至多含 $d_A d_B = 4$ 个 Kraus 算符（最小数目等于 $\operatorname{rank} J_{\mathcal E}$）**，但 Kraus 分解并不唯一，具有**酉自由度（unitary freedom）**：两组（短组补零算符至等长后）Kraus 算符 $\{K_k\}$ 与 $\{L_j\}$ 表示同一条信道，**当且仅当**存在酉矩阵 $u$（$u^\dagger u = I$）使 $L_j = \sum_k u_{jk} K_k$。充分性两行即证：
+
+$$
+\sum_j L_j \rho L_j^\dagger
+= \sum_{k,l}\!\left(\sum_j u_{jk} u_{jl}^*\right) K_k \rho K_l^\dagger
+= \sum_{k,l} \delta_{kl}\,K_k \rho K_l^\dagger
+= \sum_k K_k \rho K_k^\dagger,
+$$
+
+其中用了 $(u^\dagger u)_{lk} = \sum_j u_{jl}^* u_{jk} = \delta_{kl}$；必要性可把下文的 Choi 矩阵 $J_{\mathcal E} = \sum_k \operatorname{vec}_c(K_k)\operatorname{vec}_c(K_k)^\dagger$ 视作（未归一化）密度矩阵并直接套用第 1.4 节的 HJW 定理得出（显式 $2\times 2$ 酉旋转例见第 5.2 节）。
 
 #### 视角三：未归一化 Choi 矩阵 $J_{\mathcal E}$（一张矩阵验明正身）
 
@@ -572,12 +450,12 @@ $$
 
 如果把两条信道串联 $\mathcal E_2 \circ \mathcal E_1$，用 Kraus 算符要算双层求和 $\sum_{j,k} L_j K_k \rho K_k^\dagger L_j^\dagger$，很不顺手。怎么把整条量子信道写成一个普通的 $d^2 \times d^2$ 矩阵？
 
-把 $d\times d$ 矩阵按**列优先**自上而下拉直成一个 $d^2$ 维列向量（列堆叠向量化，column-stacking vectorization），即把基矩阵 $|m\rangle\langle n|$ 映为 $\operatorname{vec}(|m\rangle\langle n|) = |n\rangle \otimes |m\rangle$。例如 $2\times 2$ 矩阵 $\rho = \begin{bmatrix}\rho_{00} & \rho_{01}\\ \rho_{10} & \rho_{11}\end{bmatrix}$ 拉直后是 $\operatorname{vec}(\rho) = [\rho_{00},\; \rho_{10},\; \rho_{01},\; \rho_{11}]^T$。
+沿用[第 01 章第 7.4 节](01-math.md)的列/行向量化记号：把 $d\times d$ 矩阵按**列优先**自上而下拉直成 $d^2$ 维列向量（列堆叠向量化，column-stacking vectorization），记作 $\operatorname{vec}_c$，即将基矩阵 $|m\rangle\langle n|$ 映为 $\operatorname{vec}_c(|m\rangle\langle n|) = |n\rangle \otimes |m\rangle$。例如 $2\times 2$ 矩阵 $\rho = \begin{bmatrix}\rho_{00} & \rho_{01}\\ \rho_{10} & \rho_{11}\end{bmatrix}$ 拉直后是 $\operatorname{vec}_c(\rho) = [\rho_{00},\; \rho_{10},\; \rho_{01},\; \rho_{11}]^T$。
 
-现在零跳步证明一条万能恒等式：
+现在逐步证明一条常用恒等式：
 
 $$
-\operatorname{vec}(A \rho B) = (B^T \otimes A)\,\operatorname{vec}(\rho).
+\operatorname{vec}_c(A \rho B) = (B^T \otimes A)\,\operatorname{vec}_c(\rho).
 $$
 
 **证明**：由线性性，只需在任意基元 $\rho = |m\rangle\langle n|$ 上验证。展开左边：
@@ -587,20 +465,20 @@ A(|m\rangle\langle n|)B = (A|m\rangle)\bigl((B^T|n\rangle)^T\bigr)
 = \sum_{p,q} A_{pm} (B^T)_{qn} |p\rangle\langle q|.
 $$
 
-对其取列堆叠向量化 $\operatorname{vec}(|p\rangle\langle q|) = |q\rangle \otimes |p\rangle$：
+对其取列堆叠向量化 $\operatorname{vec}_c(|p\rangle\langle q|) = |q\rangle \otimes |p\rangle$：
 
 $$
-\operatorname{vec}\bigl(A|m\rangle\langle n|B\bigr)
+\operatorname{vec}_c\bigl(A|m\rangle\langle n|B\bigr)
 = \sum_{p,q} (B^T)_{qn} A_{pm} \bigl(|q\rangle \otimes |p\rangle\bigr)
 = \bigl(B^T|n\rangle\bigr) \otimes \bigl(A|m\rangle\bigr)
 = (B^T \otimes A)\bigl(|n\rangle\otimes|m\rangle\bigr)
-= (B^T \otimes A)\,\operatorname{vec}(|m\rangle\langle n|).
+= (B^T \otimes A)\,\operatorname{vec}_c(|m\rangle\langle n|).
 $$
 
 把 $A = K_k$、$B = K_k^\dagger$ 代入，因为 $(K_k^\dagger)^T = K_k^*$（逐元素复共轭），立刻得到 **Liouville 超算符矩阵 $\mathcal S_{\mathcal E}$**：
 
 $$
-\operatorname{vec}\bigl(\mathcal E(\rho)\bigr) = \mathcal S_{\mathcal E}\,\operatorname{vec}(\rho),
+\operatorname{vec}_c\bigl(\mathcal E(\rho)\bigr) = \mathcal S_{\mathcal E}\,\operatorname{vec}_c(\rho),
 \qquad
 \mathcal S_{\mathcal E} = \sum_k K_k^* \otimes K_k.
 $$
@@ -613,23 +491,23 @@ $$
 
 同时，**Kraus ↔ Choi ↔ Liouville 之间的显式互转**一目了然：
 
-1. **Kraus → Choi**：注意 $(I \otimes K_k)|\Omega\rangle = \sum_a |a\rangle \otimes (K_k|a\rangle) = \operatorname{vec}(K_k)$（正好把 $K_k$ 的各列拼成列向量！），因此
+1. **Kraus → Choi**：注意 $(I \otimes K_k)|\Omega\rangle = \sum_a |a\rangle \otimes (K_k|a\rangle) = \operatorname{vec}_c(K_k)$（正好把 $K_k$ 的各列拼成列向量），因此
 
 $$
 J_{\mathcal E}
 = \sum_k (I \otimes K_k)|\Omega\rangle\langle\Omega|(I \otimes K_k^\dagger)
-= \sum_k \operatorname{vec}(K_k)\,\operatorname{vec}(K_k)^\dagger.
+= \sum_k \operatorname{vec}_c(K_k)\,\operatorname{vec}_c(K_k)^\dagger.
 $$
 
-   这条等式一步就看清了为什么任意 Kraus 和对应的 Choi 矩阵必正半定（它是若干半正定外积之和）！
-2. **Choi → Kraus（最小 Kraus 分解）**：反过来，给定任意满足 $J_{\mathcal E} \succeq 0$ 的 Choi 矩阵，做厄米谱分解 $J_{\mathcal E} = \sum_k \lambda_k |v_k\rangle\langle v_k|$（只保留 $\lambda_k > 0$ 的项），把每个 $\sqrt{\lambda_k}|v_k\rangle$ 按列还原成 $d_B \times d_A$ 矩阵 $K_k$，就自动得到数目最少（等于 $\operatorname{rank} J_{\mathcal E}$）的一组 Kraus 算符！
+   这条等式一步就看清了为什么任意 Kraus 和对应的 Choi 矩阵必正半定（它是若干半正定外积之和）。
+2. **Choi → Kraus（最小 Kraus 分解）**：反过来，给定任意满足 $J_{\mathcal E} \succeq 0$ 的 Choi 矩阵，做厄米谱分解 $J_{\mathcal E} = \sum_k \lambda_k |v_k\rangle\langle v_k|$（只保留 $\lambda_k > 0$ 的项），把每个 $\sqrt{\lambda_k}|v_k\rangle$ 按列还原成 $d_B \times d_A$ 矩阵 $K_k$，就自动得到数目最少（等于 $\operatorname{rank} J_{\mathcal E}$）的一组 Kraus 算符。
 3. **Choi ↔ Liouville（下标重排 / reshuffling）**：逐元比较 $(J_{\mathcal E})_{(p,m),(q,n)} = \sum_k (K_k)_{mp}(K_k^*)_{nq}$ 与 $(\mathcal S_{\mathcal E})_{(n,m),(q,p)} = \sum_k (K_k^*)_{nq}(K_k)_{mp}$，可见两者包含**完全相同的 $d^4$ 个矩阵元**，仅仅把指标 $(p, n)$ 对调了一下位置：
 
 $$
 (\mathcal S_{\mathcal E})_{(n,m),(q,p)} = (J_{\mathcal E})_{(p,m),(q,n)}.
 $$
 
-> **写代码的红线提醒（列堆叠 vs 行堆叠）**：NumPy 的 `rho.reshape(-1)` 默认采用**行优先**（row-stacking）拉直（把 $|m\rangle\langle n|$ 映为 $|m\rangle\otimes|n\rangle$），此时恒等式变为 $\operatorname{vec}_{\mathrm{row}}(A\rho B) = (A \otimes B^T)\operatorname{vec}_{\mathrm{row}}(\rho)$，对应的 Liouville 矩阵是 $\sum_k K_k \otimes K_k^*$（两个张量因子恰好左右对调！）。阅读任何软件库（如 Qiskit `SuperOp` 采用列优先、QuTiP 默认列优先）前，拿一个非对称小矩阵 $A\rho B$ 实测一遍就能立刻锁定约定。
+> **写代码的红线提醒（列堆叠 $\operatorname{vec}_c$ vs 行堆叠 $\operatorname{vec}_r$）**：NumPy 的 `rho.reshape(-1)` 默认采用**行优先**（row-stacking）拉直（把 $|m\rangle\langle n|$ 映为 $|m\rangle\otimes|n\rangle$），此时恒等式变为 $\operatorname{vec}_r(A\rho B) = (A \otimes B^T)\operatorname{vec}_r(\rho)$，对应的 Liouville 矩阵是 $\sum_k K_k \otimes K_k^*$（两个张量因子恰好左右对调）。阅读任何软件库（如 Qiskit `SuperOp` 与 QuTiP 默认列优先）前，拿一个非对称小矩阵 $A\rho B$ 实测一遍就能立刻锁定约定。
 
 #### 视角五：Pauli 转移矩阵（PTM）$R$（全实数、与 Bloch 球完全合体）
 
@@ -640,7 +518,7 @@ R_{ij} = \frac{1}{2}\operatorname{Tr}\bigl(\sigma_i\,\mathcal E(\sigma_j)\bigr),
 \qquad i, j \in \{0, 1, 2, 3\}\;\text{对应}\;\{I, X, Y, Z\}.
 $$
 
-构造 $4\times 4$ 换基矩阵 $M = \frac{1}{\sqrt{2}}\bigl[\operatorname{vec}(I),\; \operatorname{vec}(X),\; \operatorname{vec}(Y),\; \operatorname{vec}(Z)\bigr]$。因为 $\frac{1}{2}\operatorname{Tr}(\sigma_i\sigma_j) = \delta_{ij}$，容易验算 $M^\dagger M = I_4$（$M$ 是酉矩阵！），于是 **PTM 不过是 Liouville 超算符的一次酉相似换基**：
+构造 $4\times 4$ 换基矩阵 $M = \frac{1}{\sqrt{2}}\bigl[\operatorname{vec}_c(I),\; \operatorname{vec}_c(X),\; \operatorname{vec}_c(Y),\; \operatorname{vec}_c(Z)\bigr]$。因为 $\frac{1}{2}\operatorname{Tr}(\sigma_i\sigma_j) = \delta_{ij}$，容易验算 $M^\dagger M = I_4$（$M$ 是酉矩阵），于是 **PTM 不过是 Liouville 超算符的一次酉相似换基**：
 
 $$
 R = M^\dagger \mathcal S_{\mathcal E} M,
@@ -648,11 +526,11 @@ R = M^\dagger \mathcal S_{\mathcal E} M,
 R_{\mathcal E_2 \circ \mathcal E_1} = R_{\mathcal E_2}\,R_{\mathcal E_1}.
 $$
 
-PTM 拥有四条让人爱不释手的性质：
+PTM 拥有四条实用性质：
 
-1. **全为实数**：因为合法信道保持厄米性（$\mathcal E(\sigma_j)^\dagger = \mathcal E(\sigma_j)$），$R_{ij} \in \mathbb R$，彻底告别复数运算。
-2. **保迹（TP）一眼看穿**：第 0 行元素 $R_{0j} = \frac{1}{2}\operatorname{Tr}(\mathcal E(\sigma_j)) = \frac{1}{2}\operatorname{Tr}(\sigma_j) = \delta_{0j}$，因此**信道保迹当且仅当 PTM 第一行恒为 $[1,\; 0,\; 0,\; 0]$**。
-3. **保单位（unital）一眼看穿**：第 0 列元素 $R_{i0} = \frac{1}{2}\operatorname{Tr}(\sigma_i\mathcal E(I))$，因此**信道保单位（$\mathcal E(I)=I$）当且仅当 PTM 第一列恒为 $[1,\; 0,\; 0,\; 0]^T$**。
+1. **全为实数**：因为合法信道保持厄米性（$\mathcal E(\sigma_j)^\dagger = \mathcal E(\sigma_j)$），$R_{ij} \in \mathbb R$，无需复数运算。
+2. **保迹（TP）直接读出**：第 0 行元素 $R_{0j} = \frac{1}{2}\operatorname{Tr}(\mathcal E(\sigma_j)) = \frac{1}{2}\operatorname{Tr}(\sigma_j) = \delta_{0j}$，因此**信道保迹当且仅当 PTM 第一行恒为 $[1,\; 0,\; 0,\; 0]$**。
+3. **保单位（unital）直接读出**：第 0 列元素 $R_{i0} = \frac{1}{2}\operatorname{Tr}(\sigma_i\mathcal E(I))$，因此**信道保单位（$\mathcal E(I)=I$）当且仅当 PTM 第一列恒为 $[1,\; 0,\; 0,\; 0]^T$**。
 4. **无缝装入第 5 节的 Bloch 球仿射变换**：把 $\rho = \frac{1}{2}(I + \vec r\cdot\vec\sigma)$ 写成四维实列向量 $[1,\; r_x,\; r_y,\; r_z]^T$，PTM 的 $4\times 4$ 分块结构正好把 Bloch 仿射变换 $\vec r' = M_{\mathrm{Bloch}}\vec r + \vec c$ 严丝合缝地装在里面：
 
 $$
@@ -695,7 +573,7 @@ $$
 \end{aligned}
 $$
 
-这是一个完全合法的 CPTP 信道！它**并不违反**[第 04 章](04-circuits-protocols.md)的不可删除定理：从 Stinespring 扩张看，只要让系统 $S$ 与初态为 $|0\rangle_E$ 的环境比特做一个 $\mathrm{SWAP}$ 门（$|\psi\rangle_S |0\rangle_E \mapsto |0\rangle_S |\psi\rangle_E$），再丢掉环境 $E$，系统就精准复位到了 $|0\rangle$。原态的信息并没有在封闭宇宙里凭空抹除，只是被等距搬进了我们不再追踪的环境里。
+这是一个完全合法的 CPTP 信道，并不违反[第 04 章第 4.3 节](04-circuits-protocols.md)的不可删除定理：通过与初态 $|0\rangle_E$ 的环境做 $\mathrm{SWAP}$ 再丢弃环境，原态信息并未被抹除，而是等距转移进了未追踪的环境。
 
 在真实硬件中，理想纯复位 $\mathcal R$ 往往是工程努力逼近的目标：被动等待系统弛豫通常只会收敛到带热激发的混合平衡态，主动复位（如测量后条件翻转、光学抽运或耦合耗散辅助腔）则需要同时报告残余激发概率、复位耗时、非计算能级泄漏以及对相邻比特的串扰。
 
@@ -821,7 +699,34 @@ $$
 p = \frac{1 - \sqrt{1 - \lambda}}{2} \in \left[0, \frac{1}{2}\right],
 $$
 
-两者的输出矩阵对**一切**输入 $\rho$ 完全相同！也就是说，在 $p\in[0,1/2]$ 范围内，**相位阻尼与相位翻转是同一条量子信道的两套不同 Kraus 分解**。连续纯退相位模型中 $p(t) = \frac{1 - e^{-t/T_\phi}}{2}$ 从 $0$ 单调趋近 $1/2$；若把 $p$ 调大超过 $1/2$，$|1-2p|$ 反而重新增大（相当于高频施加确定性 $Z$ 门），不再代表更强退相干。比较不同软件的“退相位参数”时，务必先看清写的是 $p$ 还是 $\lambda$。
+两者的输出矩阵对**一切**输入 $\rho$ 完全相同！也就是说，在 $p\in[0,1/2]$ 范围内（等价于 $\lambda = 4p(1-p)$），**相位阻尼与相位翻转是同一条量子信道的两套不同 Kraus 分解**。下面直接构造第 4.2 节预告的 $2\times 2$ 酉矩阵 $u$，验证两者确实通过酉自由度相连：
+
+$$
+u = \begin{bmatrix} \sqrt{1-p} & \sqrt{p} \\ \sqrt{p} & -\sqrt{1-p} \end{bmatrix},
+\qquad
+u^\dagger u = u^2 = \begin{bmatrix} (1-p)+p & \sqrt{p(1-p)}-\sqrt{p(1-p)} \\ \sqrt{p(1-p)}-\sqrt{p(1-p)} & p+(1-p) \end{bmatrix} = I_2.
+$$
+
+将 $u$ 作用在相位翻转算符族 $\{K_0^{\mathrm{PF}}=\sqrt{1-p}\,I,\; K_1^{\mathrm{PF}}=\sqrt{p}\,Z\}$ 上，逐项相加：
+
+$$
+\begin{aligned}
+L_0 &= u_{00}K_0^{\mathrm{PF}} + u_{01}K_1^{\mathrm{PF}}
+     = (1-p)I + pZ
+     = \begin{bmatrix} 1 & 0 \\ 0 & 1-2p \end{bmatrix}
+     = \begin{bmatrix} 1 & 0 \\ 0 & \sqrt{1-\lambda} \end{bmatrix}
+     = K_0^{(\mathrm{PD})}, \\
+L_1 &= u_{10}K_0^{\mathrm{PF}} + u_{11}K_1^{\mathrm{PF}}
+     = \sqrt{p(1-p)}\,(I - Z)
+     = \begin{bmatrix} 0 & 0 \\ 0 & 2\sqrt{p(1-p)} \end{bmatrix}
+     = \begin{bmatrix} 0 & 0 \\ 0 & \sqrt{\lambda} \end{bmatrix}
+     = K_1^{(\mathrm{PD})}.
+\end{aligned}
+$$
+
+例如取 $p = 1/4$（对应 $\lambda = 3/4,\; \sqrt{1-\lambda} = 1/2$），酉阵 $u = \frac{1}{2}\begin{bmatrix}\sqrt{3} & 1 \\ 1 & -\sqrt{3}\end{bmatrix}$ 精确把 $\{\frac{\sqrt{3}}{2}I,\; \frac{1}{2}Z\}$ 旋成 $\{\operatorname{diag}(1, 1/2),\; \operatorname{diag}(0, \sqrt{3}/2)\}$。在物理上，对环境换一套正交基做 Stinespring 测量便给出不同的 Kraus 分解——这正是[量子力学 Q2 第 9.3 节](quantum-mechanics/02-observables-dynamics.md)中同一主方程存在多种量子跳跃展开（unraveling）的离散对应。
+
+连续纯退相位模型中 $p(t) = \frac{1 - e^{-t/T_\phi}}{2}$ 从 $0$ 单调趋近 $1/2$；若把 $p$ 调大超过 $1/2$，$|1-2p|$ 反而重新增大（相当于高频施加确定性 $Z$ 门），不再代表更强退相干。比较不同软件的“退相位参数”时，务必先看清写的是 $p$ 还是 $\lambda$。
 
 ### 5.3 退极化信道（Depolarizing）：双参数换算与平均门错误率
 
@@ -952,7 +857,7 @@ $$
 > Q_{\min} = k_B T \ln 2, \qquad k_B \approx 1.380649 \times 10^{-23}\,\mathrm{J/K}.
 > $$
 >
-> 代入两个极具冲击力的真实温度标尺：
+> 代入两个直观的真实温度标尺：
 >
 > - **室温（$T = 300\,\mathrm{K}$）**：$Q_{\min} \approx 2.87 \times 10^{-21}\,\mathrm{J}$；
 > - **稀释制冷机混合腔（$T = 20\,\mathrm{mK}$）**：$Q_{\min} \approx 1.91 \times 10^{-25}\,\mathrm{J}$，整整低了 $15{,}000$ 倍！
@@ -999,7 +904,7 @@ $$
 
 > **工程核查提醒**：在固定版本 Qiskit Aer `0.17.1` 的 `amplitude_damping_error` 文档中，参数 `excited_state_population` 曾误写为平衡态 $|0\rangle$ 占据，却与同页 Kraus 矩阵及实际源码不动点 $\operatorname{diag}(1-p_{\mathrm{eq}}, p_{\mathrm{eq}})$（实为 $|1\rangle$ 占据）矛盾。调用任何开源噪声接口前，请始终按“读出 Kraus 算符 $\to$ 验 $\sum_k K_k^\dagger K_k = I$ $\to$ 求不动点”独立核查（完整版本归档见[开源软件对照](appendices/software-practice.md#88-噪声模型名字相同先查-kraus-矩阵与固定点)）。
 
-### 5.6 五大单比特噪声信道 Bloch 仿射变换总表
+### 5.6 五大类单比特噪声信道 Bloch 仿射变换总表（含相位翻转 / 相位阻尼等价对照）
 
 | 信道名称 | Kraus 算符与参数范围 | Bloch 仿射变换 $(r_x', r_y', r_z')$ | 几何形变与不动点 | 是否保单位（unital） |
 | :--- | :--- | :--- | :--- | :--- |
@@ -1012,7 +917,7 @@ $$
 
 ### 5.7 噪声的先后次序很重要：信道一般不可交换
 
-两个量子门换序结果会变（$ZH \ne HZ$），那两条噪声信道先后作用呢？现在直接请出第 4.2 节刚学会的 **$4\times 4$ Pauli 转移矩阵（PTM）**，亲手算透零温振幅阻尼 $\mathcal A_\gamma$ 的完整 PTM，再拿两行矩阵乘法秒杀信道串联不对易！
+两个量子门换序结果会变（$ZH \ne HZ$），那两条噪声信道先后作用呢？现在直接请出第 4.2 节刚学会的 **$4\times 4$ Pauli 转移矩阵（PTM）**，亲手算透零温振幅阻尼 $\mathcal A_\gamma$ 的完整 PTM，再拿两行矩阵乘法算清信道串联不对易！
 
 **第一步：逐列算出零温振幅阻尼 $\mathcal A_\gamma$ 的 $4\times 4$ PTM。**
 把 $I, X, Y, Z$ 依次送入 $K_0 = \operatorname{diag}(1, \sqrt{1-\gamma}),\; K_1 = \sqrt{\gamma}|0\rangle\langle 1|$：
@@ -1042,7 +947,7 @@ $$
 
 核对第 4.2 节的三条性质：第一行是 $[1, 0, 0, 0]$（保迹 TP）；第一列左下角 $(Z, I)$ 元为 $\gamma = 0.36 \ne 0$（非保单位，正是 Bloch 球中心上移的 $\vec c = (0, 0, \gamma)^T$）；右下 $3\times 3$ 块正是 Bloch 收缩矩阵 $\operatorname{diag}(0.8, 0.8, 0.64)$！
 
-**第二步：两行实矩阵乘法秒算 $\mathcal A_{0.36} \circ \mathcal F_{0.25}$ 与 $\mathcal F_{0.25} \circ \mathcal A_{0.36}$ 的差异。**
+**第二步：两行实矩阵乘法算出 $\mathcal A_{0.36} \circ \mathcal F_{0.25}$ 与 $\mathcal F_{0.25} \circ \mathcal A_{0.36}$ 的差异。**
 比特翻转 $\mathcal F_p$（取 $p = 0.25 \implies 1 - 2p = 0.5$）的 PTM 是纯对角阵 $R_{\mathcal F_{0.25}} = \operatorname{diag}(1,\; 1,\; 0.5,\; 0.5)$。直接按从右向左复合做两次 $4\times 4$ 乘法：
 
 $$
@@ -1077,13 +982,13 @@ $$
 - **先翻转再阻尼（$\mathcal A_{0.36}\circ\mathcal F_{0.25}$）**：$r_z' = 0.36 + 0.32\times 1 = 0.68$，激发态布居 $b = \frac{1-0.68}{2} = 0.16$（输出 $\operatorname{diag}(0.84, 0.16)$）——翻上去的 $25\%$ 还有机会弛豫掉 $36\%$；
 - **先阻尼再翻转（$\mathcal F_{0.25}\circ\mathcal A_{0.36}$）**：$r_z' = 0.18 + 0.32\times 1 = 0.50$，激发态布居 $b = \frac{1-0.50}{2} = 0.25$（输出 $\operatorname{diag}(0.75, 0.25)$）——$|0\rangle$ 过阻尼不动，最后才翻上去 $25\%$！
 
-两者的激发概率差正好是 $0.16 - 0.25 = -0.09 = -p\gamma$。调用任何软件库的信道复合接口（如 Qiskit `compose` 与 `dot`）前，拿这道 $0.16$ 对 $0.25$ 的算例跑一遍，先后顺序立刻原形毕露。
+两者的激发概率差正好是 $0.16 - 0.25 = -0.09 = -p\gamma$。调用任何软件库的信道复合接口（如 Qiskit `compose` 与 `dot`）前，拿这道 $0.16$ 对 $0.25$ 的算例跑一遍，先后顺序即可明确核对。
 
 ---
 
 ## 6. 从离散信道到连续时间：短时 Kraus、Lindblad 与 $T_1, T_2^*, T_2, T_\phi$
 
-打开硬件规格表，迎面扑来的往往不是 Kraus 算符，而是四个带时间单位（$\mu\mathrm{s}$、$\mathrm{ms}$ 或 $\mathrm{s}$）的字母：$T_1$、$T_2^*$、$T_2$ 与 $T_\phi$。本节先厘清四者的物理含义，再一步不跳地搭起“离散 Kraus 算符 $\leftrightarrow$ 连续 Lindblad 主方程”的桥梁，最后推导出著名的 $1/T_2 = 1/(2T_1) + 1/T_\phi$。
+打开硬件规格表，迎面扑来的往往不是 Kraus 算符，而是四个带时间单位（$\mu\mathrm{s}$、$\mathrm{ms}$ 或 $\mathrm{s}$）的字母：$T_1$、$T_2^*$、$T_2$ 与 $T_\phi$。本节先厘清四者的物理含义，再逐步搭起“离散 Kraus 算符 $\leftrightarrow$ 连续 Lindblad 主方程”的桥梁，最后推导出常用的 $1/T_2 = 1/(2T_1) + 1/T_\phi$。
 
 ### 6.1 四个相干时间尺度各测什么
 
@@ -1092,9 +997,9 @@ $$
 - **$T_2^*$（Ramsey 自由演化退相位时间）**：在 Ramsey 实验（$\frac{\pi}{2}$ 脉冲 $\to$ 等待 $\tau$ $\to$ $\frac{\pi}{2}$ 脉冲）中，比特既承受高频随机噪声，也承受跨越多次采样的**慢频漂移**与失谐不均匀性；测得的有效相干时间记为 $T_2^*$（注意右上角星号不是乘号）。
 - **$T_2$（回波相干时间）**：在等待中点插入 $\pi$ 翻转脉冲（Hahn echo 自旋回波）或多脉冲动态解耦（如 CPMG，见[第 14 章](14-compilation-control.md)），抵消前后半段的准静态慢漂移相位，重聚焦相干性，因此通常有 $T_2^* \le T_2$。
 
-### 6.2 从短时 Kraus 算符零跳步导出 Lindblad 主方程
+### 6.2 从短时 Kraus 算符导出 Lindblad 主方程
 
-很多初学者读完物理篇后一直纳闷：第 5 章的离散矩阵和 $\rho \mapsto \sum_k K_k \rho K_k^\dagger$，与[量子力学 Q2 第 9 节](quantum-mechanics/02-observables-dynamics.md#9-走出封闭盒子开放系统的-lindblad-主方程与量子跳跃轨迹)的连续微分方程 $\frac{d\rho}{dt}$ 究竟怎么一拍拍连起来的？用极短时间步 $\delta t$，四行代数就能把两者焊在一起！
+很多初学者读完物理篇后一直纳闷：第 5 章的离散矩阵和 $\rho \mapsto \sum_k K_k \rho K_k^\dagger$，与[量子力学 Q2 第 9 节](quantum-mechanics/02-observables-dynamics.md#9-进阶选读走出封闭盒子开放系统的-lindblad-主方程与量子跳跃轨迹)的连续微分方程 $\frac{d\rho}{dt}$ 究竟怎么衔接？用极短时间步 $\delta t$，四步代数就能把两者连在一起（为免与 Hadamard 门 $H$ 混淆，此处沿用全书约定记系统哈密顿量为 $\mathcal{H}$）。
 
 考虑无记忆（马尔可夫）开放系统在极短时间步 $\delta t$ 内的 CPTP 演化 $\rho(t + \delta t) = K_0 \rho K_0^\dagger + \sum_{k \ge 1} K_k \rho K_k^\dagger$：
 
@@ -1102,24 +1007,24 @@ $$
 2. **无跃迁分支（$\delta t \to 0$ 时趋近 $I$）**：写出最一般的 $O(\delta t)$ 展开，把厄米部分和反厄米部分拆开：
 
 $$
-K_0 = I + \left(-\frac{i}{\hbar}H + M\right)\delta t,
+K_0 = I + \left(-\frac{i}{\hbar}\mathcal{H} + M\right)\delta t,
 $$
 
-   其中 $H^\dagger = H$（系统有效哈密顿量，单位焦耳），$M^\dagger = M$ 为待定厄米算符。
+   其中 $\mathcal{H}^\dagger = \mathcal{H}$（系统有效哈密顿量，单位焦耳），$M^\dagger = M$ 为待定厄米算符。
 3. **由保迹完备性 $\sum_{k\ge 0} K_k^\dagger K_k = I + O(\delta t^2)$ 唯一锁定 $M$**：展开
 
 $$
 \begin{aligned}
 K_0^\dagger K_0 + \sum_{k\ge 1} K_k^\dagger K_k
-&= \left[I + \left(+\frac{i}{\hbar}H + M\right)\delta t\right]\left[I + \left(-\frac{i}{\hbar}H + M\right)\delta t\right] + \delta t\sum_{k\ge 1} L_k^\dagger L_k \\
+&= \left[I + \left(+\frac{i}{\hbar}\mathcal{H} + M\right)\delta t\right]\left[I + \left(-\frac{i}{\hbar}\mathcal{H} + M\right)\delta t\right] + \delta t\sum_{k\ge 1} L_k^\dagger L_k \\
 &= I + \left(2M + \sum_{k\ge 1} L_k^\dagger L_k\right)\delta t + O(\delta t^2) = I,
 \end{aligned}
 $$
 
-   对比 $\delta t$ 一阶系数，解得 $M = -\frac{1}{2}\sum_{k\ge 1} L_k^\dagger L_k$！于是**短时 Kraus 算符**被完全确定为
+   对比 $\delta t$ 一阶系数，解得 $M = -\frac{1}{2}\sum_{k\ge 1} L_k^\dagger L_k$。于是**短时 Kraus 算符**被完全确定为
 
 $$
-K_0 = I - \left(\frac{i}{\hbar}H + \frac{1}{2}\sum_{k\ge 1} L_k^\dagger L_k\right)\delta t,
+K_0 = I - \left(\frac{i}{\hbar}\mathcal{H} + \frac{1}{2}\sum_{k\ge 1} L_k^\dagger L_k\right)\delta t,
 \qquad
 K_k = \sqrt{\delta t}\,L_k.
 $$
@@ -1128,22 +1033,22 @@ $$
 
 $$
 \rho(t+\delta t)
-= \rho - \frac{i}{\hbar}[H, \rho]\delta t
+= \rho - \frac{i}{\hbar}[\mathcal{H}, \rho]\delta t
 - \frac{1}{2}\sum_{k\ge 1}\bigl(L_k^\dagger L_k \rho + \rho L_k^\dagger L_k\bigr)\delta t
 + \sum_{k\ge 1} L_k \rho L_k^\dagger\,\delta t + O(\delta t^2).
 $$
 
-   两边减去 $\rho(t)$、除以 $\delta t$ 并令 $\delta t \to 0$，一步精准导出 **GKSL / Lindblad 主方程**（Gorini–Kossakowski–Sudarshan 1976; Lindblad 1976）：
+   两边减去 $\rho(t)$、除以 $\delta t$ 并令 $\delta t \to 0$，即得 **GKSL / Lindblad 主方程**（Gorini–Kossakowski–Sudarshan 1976; Lindblad 1976）：
 
 $$
-\frac{d\rho}{dt} = -\frac{i}{\hbar}[H, \rho] + \sum_k \left(L_k \rho L_k^\dagger - \frac{1}{2}\bigl\{L_k^\dagger L_k, \rho\bigr\}\right),
+\frac{d\rho}{dt} = -\frac{i}{\hbar}[\mathcal{H}, \rho] + \sum_k \left(L_k \rho L_k^\dagger - \frac{1}{2}\bigl\{L_k^\dagger L_k, \rho\bigr\}\right),
 $$
 
    其中反对易子 $\{A, B\} := AB + BA$。
 
 **立刻回验第 5.4 节的振幅阻尼与纯退相位**：
 
-- 取 $H = 0$ 与单个弛豫跳跃算符 $L_1 = \sqrt{1/T_1}\,|0\rangle\langle 1|$，则 $L_1^\dagger L_1 = \frac{1}{T_1}|1\rangle\langle 1|$，短时 Kraus 算符立刻化为
+- 取 $\mathcal{H} = 0$ 与单个弛豫跳跃算符 $L_1 = \sqrt{1/T_1}\,|0\rangle\langle 1|$，则 $L_1^\dagger L_1 = \frac{1}{T_1}|1\rangle\langle 1|$，短时 Kraus 算符立刻化为
 
 $$
 K_0 = \begin{bmatrix} 1 & 0 \\ 0 & 1 - \frac{\delta t}{2T_1} \end{bmatrix}
@@ -1210,24 +1115,24 @@ $$
 
 ---
 
-## 7. 超越独立同分布泡利噪声：$1/f$ 低频噪声与非马尔可夫退相干
+## 7. 进阶选读：超越独立同分布泡利噪声——$1/f$ 低频噪声与非马尔可夫退相干
 
 ### 7.1 真实芯片上六类偏离 i.i.d. Pauli 的噪声
 
-为了便于理论分析，量子纠错入门常假设“每个门后面独立、同分布（i.i.d.）地随机挂上一个单比特 Pauli 信道”。这个简化模型极其有用，但在真机上，下面六类偏离几乎无处不在：
+为了便于理论分析，量子纠错入门常假设“每个门后面独立、同分布（i.i.d.）地随机挂上一个单比特 Pauli 信道”。这个简化模型非常有用，但在真机上，下面六类偏离几乎无处不在：
 
 1. **缓慢校准漂移（drift）**：微波振幅、驱动频率或激光功率在几分钟到几小时内缓慢飘走，同一套门在不同批次里的错误方向彼此相关，不再是独立随机硬币。
 2. **串扰（crosstalk）**：给比特 A 施加控制脉冲或读出脉冲时，电磁场或光斑边缘悄悄漏到旁观比特 B 上，引发多比特关联相位偏移（如超导芯片上常见的寄生 $ZZ$ 耦合）。
 3. **非计算能级泄漏（leakage）**：物理比特很少真的是孤立二能级系统——超导 transmon 有 $|2\rangle, |3\rangle$ 高能级，中性原子可能逃离光镊陷阱。一旦状态离开 $\{|0\rangle, |1\rangle\}$ 子空间，常规单比特 Pauli 信道甚至装不下它。
 4. **$1/f$ 低频噪声与非马尔可夫记忆效应**：衬底里的两能级缺陷（TLS）或磁通涨落带有长时记忆，环境记住系统上一拍做了什么，违反第 4.2 节“每拍重新从无关联环境出发”的假设。
-5. **高能粒子与突发相关错（correlated bursts）**：宇宙射线或芯片衬底微量放射性衰变撞击超导芯片，瞬间激发大量准粒子，让一大片区域的多个比特同时 $T_1$ 暴跌。
+5. **高能粒子与突发相关错（correlated bursts）**：宇宙射线或芯片衬底微量放射性衰变撞击超导芯片，瞬间激发大量准粒子，让一大片区域的多个比特同时 $T_1$ 骤降。
 6. **状态制备与测量误差（SPAM）**：初态没清干净、读出窗口里发生 $|1\rangle\to|0\rangle$ 弛豫或分类阈值判错，在单次运行里和门错误缠在一起。
 
 因此提到[第 10 章](10-error-correction.md)的**容错阈值定理**时，绝不能把“低于 $1\%$ 就能容错”当成放之四海而皆准的口号——任何阈值数字都严格绑定于特定的纠错码、解码器、门集以及噪声相关性与泄漏模型。
 
 ### 7.2 $1/f$ 准静态高斯衰减 $e^{-(t/T_2^*)^2}$、时间非齐次性与自旋回波直觉
 
-为什么第 6.4 节 Ramsey 包络里，白噪声给出纯指数衰减 $e^{-t/T_\phi}$（$\alpha = 1$），而低频 $1/f$ 噪声常常给出高斯衰减 $e^{-(t/T_2^*)^2}$（$\alpha = 2$），而且 Hahn 自旋回波偏偏能救回后者却救不回前者？用一个四行即可算完的经典简化模型就能彻底看穿（综述见 Paladino et al., 2014）。
+为什么第 6.4 节 Ramsey 包络里，白噪声给出纯指数衰减 $e^{-t/T_\phi}$（$\alpha = 1$），而低频 $1/f$ 噪声常常给出高斯衰减 $e^{-(t/T_2^*)^2}$（$\alpha = 2$），而且 Hahn 自旋回波偏偏能救回后者却救不回前者？用一个四行即可算完的经典简化模型就能一步看清（综述见 Paladino et al., 2014）。
 
 **准静态高斯频率抖动模型**：设比特能隙在单次实验时长 $t$ 内近乎静止不变，但在不同重复采样轮次之间按正态分布 $\delta\omega \sim \mathcal N(0, \sigma_\omega^2)$ 缓慢漂移。初态 $|+\rangle$ 自由演化时间 $t$ 后，单次实验的非对角相干元获得随机相位因子 $e^{-i\delta\omega\cdot t}$。对大量重复轮次取系综平均（正态分布的特征函数积分）：
 
@@ -1258,7 +1163,7 @@ $$
 
 ---
 
-## 8. 过程表征、CP+TP 层析陷阱与 Pauli 旋转随机化
+## 8. 进阶选读：过程表征、CP+TP 层析陷阱与 Pauli 旋转随机化
 
 面对一台带噪量子设备，光说“噪声不大”毫无意义。我们需要定量衡量误差，从实验计数重构合法量子信道，并学会把危险的相干误差“旋”成可控的随机 Pauli 噪声。
 
@@ -1330,7 +1235,7 @@ $$
 p_{s,b,y}(J_{\mathcal E}) = \operatorname{Tr}\!\left[\bigl(\rho_s^T \otimes E_{b,y}\bigr)\,J_{\mathcal E}\right].
 $$
 
-**一步不跳地验算为何是普通转置 $\rho_s^T$**：代入 $J_{\mathcal E} = \sum_{a,c} |a\rangle\langle c|\otimes\mathcal E(|a\rangle\langle c|)$ 并利用 $\operatorname{Tr}(A\otimes B) = \operatorname{Tr}(A)\operatorname{Tr}(B)$：
+**逐步验算为何是普通转置 $\rho_s^T$**：代入 $J_{\mathcal E} = \sum_{a,c} |a\rangle\langle c|\otimes\mathcal E(|a\rangle\langle c|)$ 并利用 $\operatorname{Tr}(A\otimes B) = \operatorname{Tr}(A)\operatorname{Tr}(B)$：
 
 $$
 \begin{aligned}
@@ -1358,10 +1263,10 @@ $$
 
 验收 CP 与 TP：四角子块 $\begin{bmatrix}0.964 & 0.8\\ 0.8 & 0.676\end{bmatrix}$ 的行列式为 $0.011664 > 0$，四个本征值全为正；把四个 $2\times 2$ 子块各自的迹拼成偏迹，得 $\operatorname{Tr}_B(J_{\mathcal E}) = \begin{bmatrix}0.964+0.036 & 0\\ 0 & 0.324+0.676\end{bmatrix} = I_2$。
 
-有限采样计数总带涨落，直接线性反演往往破坏物理约束。下面两个极短手算反例拆穿重构代码里最隐蔽的两个陷阱：
+有限采样计数总带涨落，直接线性反演往往破坏物理约束。下面两个极短手算反例揭示重构代码里最隐蔽的两个陷阱：
 
 1. **陷阱一（只修成正半定且总迹为 $2$，并不保证保迹 TP）**：取 $J_* = 2|00\rangle\langle 00| = \operatorname{diag}(2, 0, 0, 0)$。它厄米、正半定、总迹 $\operatorname{Tr}(J_*) = 2$，可偏迹为 $\operatorname{Tr}_B(J_*) = \operatorname{diag}(2, 0) \ne I_2$——把 $|0\rangle\langle 0|$ 放大到迹 $2$、把 $|1\rangle\langle 1|$ 抹成零矩阵！
-2. **陷阱二（只约束偏迹实部等于 $I_2$，漏掉虚部照样翻车）**：取 $\epsilon = 0.1$，构造
+2. **陷阱二（只约束偏迹实部等于 $I_2$，漏掉虚部仍违背保迹条件）**：取 $\epsilon = 0.1$，构造
 
 $$
 J_\star = \frac{1}{2}I_4 + \epsilon (Y \otimes I_2)
@@ -1387,7 +1292,7 @@ $$
 
 ### 8.3 Pauli 旋转随机化（Pauli Twirling）：把相干误差旋成随机 Pauli 信道
 
-学完 PTM 和过程层析，现在来解开现代容错（QEC）与误差缓解（PEC）共同依赖的一把“降魔利器”——**Pauli 旋转随机化（Pauli Twirling）**（以及电路级的**随机化编译 Randomized Compiling**，Wallman & Emerson 2016）。
+学完 PTM 和过程层析，现在来了解现代容错（QEC）与误差缓解（PEC）共同依赖的一项核心技术——**Pauli 旋转随机化（Pauli Twirling）**（以及电路级的**随机化编译 Randomized Compiling**，Wallman & Emerson 2016）。
 
 **问题抛出**：假设硬件脉冲过冲，使单比特门多转了一个很小的相干误差角 $U_\varepsilon = R_z(\varepsilon)$（取 $\varepsilon = 0.2\,\mathrm{rad}$）。由第 5.3 节公式可算得它的单步平均门错误率只有 $r = \frac{2}{3}\sin^2(\varepsilon/2) \approx 0.66\%$，看起来微不足道。可如果把这套带相干过旋转的门连续串联 $N = 10$ 次，误差角会同向**线性累加**成 $N\varepsilon = 2.0\,\mathrm{rad}$！对赤道态 $|+\rangle$ 来说，错误概率按
 
@@ -1395,15 +1300,15 @@ $$
 P_{\mathrm{err}}^{\mathrm{coh}}(N) = \sin^2\!\left(\frac{N\varepsilon}{2}\right) \approx \frac{N^2 \varepsilon^2}{4}
 $$
 
-**随深度 $N$ 二次方爆炸**（$N = 10$ 时高达 $\sin^2(1.0) \approx 70.8\%$！）。相比之下，如果误差是无记忆的随机相位翻转 $p_z = \sin^2(\varepsilon/2) \approx 0.997\%$，串联 $N$ 次后错误概率只按 $\frac{1 - (1 - 2p_z)^N}{2} \approx N p_z$ **线性增长**（$N = 10$ 时仅约 $9.1\%$——两者相差近 **7.8 倍**！）。
+**随深度 $N$ 二次方增长**（$N = 10$ 时高达 $\sin^2(1.0) \approx 70.8\%$）。相比之下，如果误差是无记忆的随机相位翻转 $p_z = \sin^2(\varepsilon/2) \approx 0.997\%$，串联 $N$ 次后错误概率只按 $\frac{1 - (1 - 2p_z)^N}{2} \approx N p_z$ **线性增长**（$N = 10$ 时仅约 $9.1\%$——两者相差近 **7.8 倍**）。
 
-怎么把危险的相干误差转化成温和的随机 Pauli 噪声？做法出奇地简单：**在噪声信道 $\mathcal E$ 前后均匀随机夹入同一个 Pauli 算符 $P \in \{I, X, Y, Z\}$**（对理想 Clifford 双比特门 $C$ 则在门前随机插 $P$、门后插共轭补偿 $P' = C P C^\dagger$，逻辑功能不变，且单比特 Pauli 门可吸收进相邻单比特层，不增加电路深度！），取等权系综平均得到**旋转随机化信道**：
+怎么把危险的相干误差转化成温和的随机 Pauli 噪声？做法出奇地简单：**在噪声信道 $\mathcal E$ 前后均匀随机夹入同一个 Pauli 算符 $P \in \{I, X, Y, Z\}$**（对理想 Clifford 双比特门 $C$ 则在门前随机插 $P$、门后插共轭补偿 $P' = C P C^\dagger$，逻辑功能不变，且单比特 Pauli 门可吸收进相邻单比特层，不增加电路深度），取等权系综平均得到**旋转随机化信道**：
 
 $$
 \mathcal E_{\mathrm{twirl}}(\rho) := \frac{1}{4}\sum_{P \in \{I, X, Y, Z\}} P\,\mathcal E(P\rho P)\,P.
 $$
 
-#### 零跳步手算一：相干过旋转 $U_\varepsilon = R_z(\varepsilon)$ 精确变身为纯随机相位翻转
+#### 手算一：相干过旋转 $U_\varepsilon = R_z(\varepsilon)$ 精确转化为纯随机相位翻转
 
 记 $c = \cos(\varepsilon/2),\; s = \sin(\varepsilon/2)$，则 $U_\varepsilon = c I - i s Z$。先写出无旋转时的演化：
 
@@ -1413,7 +1318,7 @@ $$
 = c^2 \rho + s^2 Z\rho Z - i c s\,(Z\rho - \rho Z).
 $$
 
-那个讨厌的相干交叉项 $-i c s [Z, \rho]$ 正是引起二次方累加的罪魁祸首。现在逐一计算四个 Pauli 夹心分支 $P\,\mathcal E(P\rho P)\,P$：
+那个相干交叉项 $-i c s [Z, \rho]$ 正是引起二次方累加的来源。现在逐一计算四个 Pauli 夹心分支 $P\,\mathcal E(P\rho P)\,P$：
 
 - **$P = I$ 或 $P = Z$**（与 $Z$ 对易，$P Z P = +Z$）：两分支都保持 $-i c s [Z, \rho]$；
 - **$P = X$ 或 $P = Y$**（与 $Z$ 反对易，$P Z P = -Z$）：交叉项里的 $Z$ 全部翻成 $-Z$，两分支都变成 $+i c s [Z, \rho]$！
@@ -1425,9 +1330,9 @@ $$
 = \cos^2\!\left(\frac{\varepsilon}{2}\right)\rho + \sin^2\!\left(\frac{\varepsilon}{2}\right) Z\rho Z!
 $$
 
-#### 零跳步手算二：在 PTM 眼里，Pauli Twirling 只做了一件事——清零全部非对角元！
+#### 手算二：PTM 视角下的 Pauli Twirling——清零全部非对角元
 
-放到第 4.2 节的 $4\times 4$ PTM 上看，奇迹更加震撼。计算旋转后信道的第 $(i, j)$ 个 PTM 元素（$\sigma_i, \sigma_j \in \{I, X, Y, Z\}$）：
+放到第 4.2 节的 $4\times 4$ PTM 上看，规律更加清晰。计算旋转后信道的第 $(i, j)$ 个 PTM 元素（$\sigma_i, \sigma_j \in \{I, X, Y, Z\}$）：
 
 $$
 (R_{\mathrm{twirl}})_{ij}
@@ -1474,7 +1379,7 @@ $$
 | **量子误差缓解（QEM）** | **后处理估期望**：借额外采样与经典后处理降低期望值偏差 | ZNE、基于 Pauli Twirling 的稀疏 PEC、读出缓解（Cai et al. 2023） | 不保护单次量子态；**采样开销随总噪声与深度指数增长**（Takagi et al. 2022），详见[第 08 章第 7 节](08-applications.md) |
 | **量子纠错（QEC）** | **主动护态**：编码逻辑比特并周期性测纠错症状（syndrome）纠正错误 | 稳定子码、表面码、qLDPC 码与容错阈值架构 | 物理错率低于阈值且噪声可控时逻辑错误率随码距指数下降，但空间比特与 $T$ 门成本高昂（[第 10 章](10-error-correction.md)） |
 
-核心结论只有一句：**误差缓解（QEM）不能取代量子纠错（QEC）。** QEM 适合在短深度电路上修正期望值偏差，一旦线路足够深，为放大衰减信号付出的采样数会指数爆炸；运行大规模深层算法最终必须走通容错量子纠错之路。
+核心结论只有一句：**误差缓解（QEM）不能取代量子纠错（QEC）。** QEM 适合在短深度电路上修正期望值偏差，一旦线路足够深，为放大衰减信号付出的采样数会指数增长；运行大规模深层算法最终必须走通容错量子纠错之路。
 
 ---
 
@@ -1483,11 +1388,30 @@ $$
 - **误区 1：计算基概率相同就是同一个态，或对角线非负且迹为 1 就一定合法。** $|+\rangle\langle +|$ 与 $I/2$ 在计算基同为 $1/2$，差在非对角相干元；密度矩阵还必须满足正半定（单比特等价于 Bloch 实心球 $|\vec r|\le 1$，球外点即使坐标都在 $[-1,1]$ 内也会给出负概率）。
 - **误区 2：POVM 唯一决定测后态，或正映射就是合法信道。** 同一个计算基 POVM 既可对应保留投影，也可对应测后立刻复位到 $|0\rangle$；矩阵转置单系统保正，但 $(T\otimes\mathcal I)(|\Phi^+\rangle\langle\Phi^+|)$ 吐出负本征值 $-1/2$，物理信道必须完全正（CP）。
 - **误区 3：单输入不变说明无噪声，或噪声信道满足交换律。** 比特翻转对 $|+\rangle$ 不动、振幅阻尼对 $|0\rangle$ 不动；而 $\mathcal A_\gamma\circ\mathcal F_p$ 与 $\mathcal F_p\circ\mathcal A_\gamma$ 交换次序会产生精确差值 $p\gamma Z$（PTM 中 $(Z, I)$ 元相差 $2p\gamma$）。
-- **误区 4：不同文献的退极化参数可以直接比数字，或写超算符代码不区分列堆叠与行堆叠。** $\mathcal D_p$ 与随机 Pauli $\widetilde{\mathcal D}_q$ 差因子 $q=3p/4$，平均门错误率为 $r = 2q/3$；列堆叠 $\operatorname{vec}(A\rho B)=(B^T\otimes A)\operatorname{vec}(\rho)$，而 NumPy 默认行堆叠变为 $(A\otimes B^T)\operatorname{vec}_{\mathrm{row}}(\rho)$。
+- **误区 4：不同文献的退极化参数可以直接比数字，或写超算符代码不区分列堆叠与行堆叠。** $\mathcal D_p$ 与随机 Pauli $\widetilde{\mathcal D}_q$ 差因子 $q=3p/4$，平均门错误率为 $r = 2q/3$；列堆叠 $\operatorname{vec}_c(A\rho B)=(B^T\otimes A)\operatorname{vec}_c(\rho)$，而 NumPy 默认行堆叠变为 $(A\otimes B^T)\operatorname{vec}_r(\rho)$。
 - **误区 5：任何噪声信道都必然增大系统熵。** 只有保单位（unital）信道保证不减熵；零温振幅阻尼能把最大混态 $I/2$ 拉向基态 $|0\rangle$ 局部降熵，同时按 Landauer 下限向冷环境排热至少 $k_B T \ln 2$ 每比特。
 - **误区 6：Choi 矩阵正半定且总迹为 $d_A$，或偏迹实部等于 $I$ 就保证保迹。** 必须同时满足完整复偏迹等式 $\operatorname{Tr}_B J_{\mathcal E} = I_A$（实部与虚部缺一不可）。
-- **误区 7：Pauli Twirling 能降低单步平均门错误率 $r$。** 错！Pauli Twirling 保留 PTM 主对角线，单步 $F_{\mathrm{avg}}$ 与 $r$ 严格不变；它做的是清零非对角元，把危险的相干二次方累加（$O(N^2\varepsilon^2)$）转化为温和的随机 Pauli 线性累加（$O(N\varepsilon^2)$）。
+- **误区 7：Pauli Twirling 能降低单步平均门错误率 $r$。** 并不正确：Pauli Twirling 保留 PTM 主对角线，单步 $F_{\mathrm{avg}}$ 与 $r$ 严格不变；它做的是清零非对角元，把相干二次方累加（$O(N^2\varepsilon^2)$）转化为随机 Pauli 线性累加（$O(N\varepsilon^2)$）。
 - **误区 8：任何退相干都是纯指数且无记忆的。** 低频 $1/f$ 准静态漂移产生高斯衰减 $e^{-(t/T_2^*)^2}$，其单时间映射因瞬时率 $2t/(T_2^*)^2 \ge 0$ 仍严格 CP-可分，但打破了时间齐次半群律（$\mathcal E_{t_1+t_2}\ne\mathcal E_{t_2}\circ\mathcal E_{t_1}$）与插入回波脉冲时的多时间无记忆性，从而能被 Hahn 自旋回波在 $t/2$ 处重聚焦抵消；而强耦合 TLS 等共振环境才会让瞬时率转负、出现信息回流并真正打破 CP-可分性。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：密度矩阵（经典系综 / 纠缠约化） $\to$ 实心 Bloch 球 $|\vec r|\le 1$ $\to$ POVM 与量子仪器 $\to$ CPTP 五表示与 Kraus 酉自由度 $\to$ 五大单比特噪声与 PTM $\to$ 短时 Kraus $\leftrightarrow$ Lindblad 与 $T_2\le 2T_1$ $\to$ $1/f$ 高斯衰减、QPT 与 Pauli Twirling。
+
+| 核心对象 | 关键公式 / 判据 | 必记边界 |
+| :--- | :--- | :--- |
+| 密度矩阵与 Bloch 球 | $\rho=\frac{1}{2}(I+\vec r\cdot\vec\sigma)$，$\lambda_\pm=\frac{1\pm|\vec r|}{2}$，$\operatorname{Tr}(\rho^2)=\frac{1+|\vec r|^2}{2}$ | 单比特 $\rho\succeq 0\iff|\vec r|\le 1$；$d\ge 3$ 合法态不再是实心球 |
+| 测量与量子仪器 | $p(m)=\operatorname{Tr}(E_m\rho)$；$\mathcal I_m(\rho)=\sum_\alpha M_{m\alpha}\rho M_{m\alpha}^\dagger$ | 同一 POVM 可对应不同测后态（如投影 vs 测后复位） |
+| CPTP 五表示 | $J_{\mathcal E}\succeq 0,\;\operatorname{Tr}_B J_{\mathcal E}=I_A$；$\mathcal S_{\mathcal E}=\sum_k K_k^*\otimes K_k$；$R_{ij}=\frac{1}{2}\operatorname{Tr}(\sigma_i\mathcal E(\sigma_j))$ | 单比特最小 Kraus 数 $\le 4$；Kraus 具酉自由度 $L_j=\sum_k u_{jk}K_k$；$\operatorname{vec}_c$ 与 $\operatorname{vec}_r$ 左右对调 |
+| 退极化与相干时间 | $q=\frac{3}{4}p$，$r=\frac{p}{2}=\frac{2}{3}q$；$\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$ | 核对参数是 $p/q/r$；马尔可夫下 $T_2^*\le T_2\le 2T_1$；非 unital 信道可局部降熵但受 Landauer 下限 $k_B T\ln 2$ 约束 |
+| QPT 与 Twirling | $p_{s,b,y}=\operatorname{Tr}[(\rho_s^T\otimes E_{b,y})J_{\mathcal E}]$；$R_{\mathrm{twirl}}=\operatorname{diag}(1,R_{XX},R_{YY},R_{ZZ})$ | QPT 必须同时约束 $J_{\mathcal E}\succeq 0$ 与完整复偏迹 $\operatorname{Tr}_B J_{\mathcal E}=I_2$；Twirling 不降单步 $r$，QEM 不能取代 QEC |
+
+**三句自检要点**：
+1. 能否写出 $\mathcal E(\rho)=\sum_k K_k\rho K_k^\dagger$ 与相位翻转 $\leftrightarrow$ 相位阻尼的 $2\times 2$ 酉矩阵换算？
+2. 能否用 $4\times 4$ PTM 两行乘法判定两条单比特噪声信道是否对易，并看出保迹与保单位条件？
+3. 能否从短时 Kraus 算符导出 Lindblad 主方程，并说清 $T_2\le 2T_1$ 与 $1/f$ 高斯包络的成因？
 
 ---
 
@@ -1526,9 +1450,8 @@ $$
 
 - **纯 Python 标准库数值实验**（详解见[基础实验册](labs/foundations.md)与[基础代码总览](../codes/foundations/README.md)）：
   - `python3 codes/foundations/foundations_lab.py --case 05`：组合 $T_1=T_\phi=60\,\mu\mathrm{s}$ 的振幅阻尼与纯退相位，逐格验证 $40\,\mu\mathrm{s}$ 后的布居与相干元，并检查 Kraus 完备性与恒等/复位边界；
-  - `python3 codes/foundations/diagnostic_lab.py --case 05`：验证广义振幅阻尼（$\gamma=0.36,\; p_{\mathrm{eq}}=0.10$）的四个 Kraus 算符、三个输入态输出、热平衡固定点及多组边界参数；
-  - `python3 codes/foundations/round71_checks.py --case 05`：用 Kraus 分支独立核验比特翻转与振幅阻尼的不对易差值 $p\gamma Z$（$0.16$ 对 $0.25$）以及非最大复相位纠缠态上的远端阻尼无信号检验（说明见[信道顺序与边界检查](../codes/foundations/round71-README.md)）。
-- **开源量子 SDK 实测与过程层析验证**：在隔离环境中基于 Qiskit Aer、Qiskit Experiments 与 CVXPY 实际运行单比特 12 设置过程层析（含低样本数事后修正破坏 TP、仅约束偏迹实部漏掉虚部的实测反例，以及高斯加权最小二乘与多项计数最大似然的完整复偏迹对比），全部锁定依赖、原始计数、复现脚本与工程防护记录汇总于[完整 SDK 实验册](labs/sdk-validation.md)，细分运行说明亦见[过程层析初检记录](../codes/foundations/round72-README.md)与[完整 CP/TP 约束拟合说明](../codes/foundations/round73-README.md)。
+  - `python3 codes/foundations/diagnostic_lab.py --case 05`：验证广义振幅阻尼（$\gamma=0.36,\; p_{\mathrm{eq}}=0.10$）的四个 Kraus 算符、三个输入态输出、热平衡固定点及多组边界参数；信道顺序不对易与远端阻尼无信号检验等补充脚本亦收录于[基础代码总览](../codes/foundations/README.md)。
+- **开源量子 SDK 实测与过程层析验证**：在隔离环境中基于 Qiskit Aer、Qiskit Experiments 与 CVXPY 实际运行单比特 12 设置过程层析（含低样本数事后修正破坏 TP、仅约束偏迹实部漏掉虚部的实测反例，以及高斯加权最小二乘与多项计数最大似然的完整复偏迹对比），全部锁定依赖、原始计数、复现脚本与工程防护记录汇总于[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 延伸阅读起点
 

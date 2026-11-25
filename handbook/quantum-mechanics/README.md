@@ -11,7 +11,7 @@
 | [Q1｜从实验认识量子态](01-experiments-states.md) | 双缝干涉、Mach–Zehnder 干涉仪与 **Elitzur–Vaidman 量子炸弹测试**；**Stern–Gerlach 级联实验**与光子三偏振片**马吕斯定律**；相干叠加 vs 经典混合、Englert 互补关系与延迟选择量子擦除 | **第一篇**：位于[第 01 章](../01-math.md)之后、[第 02 章](../02-single-qubit.md)之前 |
 | [Q2｜可观测量与量子态的时间演化](02-observables-dynamics.md) | 厄米算符与完备对易集（CSCO）、Robertson/Schrödinger 不确定关系、**Ehrenfest 定理**、**薛定谔 / 海森堡 / 相互作用三绘景**、Dyson 与 **Magnus 展开**，以及由**碰撞模型导出 Lindblad 主方程**与量子跳跃轨迹 | **第一篇**：位于 Q1 与[第 02 章](../02-single-qubit.md)之后、[第 03 章](../03-multiple-qubits.md)之前 |
 | [Q3｜从能级到物理量子比特](03-levels-control.md) | 热占据与毫开尔文制冷、**约瑟夫森结与 Transmon 非谐性推导**、计算基与能量基失谐等价换算、Rabi 振荡、Ramsey 干涉与 Hahn 回波、三能级泄漏矩阵视角，以及**电路量子电动力学（cQED）Jaynes–Cummings 与色散读出位移** | **第三篇起点**：位于[第 09 章硬件](../09-hardware.md)与[第 14 章编译控制](../14-compilation-control.md)之前（也是[第 20 章量子传感](../20-quantum-sensing-metrology.md)的重要先修） |
-| [Q4｜波函数、势阱、谐振子、隧穿与原子能级](04-wavefunctions-models.md) | 连续位置波函数与**自由高斯波包色散展宽**、无限深方势阱、谐振子升降算符与零点能、矩形势垒三能区透射与 **WKB 对称双势阱能级劈裂**、**原子角动量耦合与超精细钟态铭牌**，以及空间网格离散与 Fock 截断陷阱 | **第五篇进阶选读桥**：位于[第 18 章](../18-channels-capacities-complexity.md)之前，需 Q2 + 一元微积分，为连续变量相空间与 GKP 网格码铺路 |
+| [Q4｜波函数、势阱、谐振子、隧穿与原子能级](04-wavefunctions-models.md) | 连续位置波函数与**自由高斯波包色散展宽**、无限深方势阱、谐振子升降算符与零点能、矩形势垒三能区透射与 **WKB 对称双势阱能级劈裂**、**原子角动量耦合与超精细/光学钟铭牌（含 $^{87}\mathrm{Sr}$）**，以及空间网格离散与 Fock 截断数值失真（文首附硬件/连续变量双入口跳读指南） | **第五篇进阶选读桥**：位于[第 18 章](../18-channels-capacities-complexity.md)之前，需 Q2 + 一元微积分，为连续变量相空间与 GKP 网格码铺路 |
 
 对零基础读者，最顺畅的起步路线是按第一篇顺序走完 **`00 → 01 → Q1 → 02 → Q2 → 03 → 04 → 05`**，紧接着在第二篇完成核心算法与实践（`06 → 07 → 08 → 15`），随后在第三篇以 **Q3** 为起点打通 `Q3 → 09 → 14 → 10 → 11 → 19` 硬件全栈。Q3 用到的谐振子等间距能级结论可以先放心当作已知事实使用，想看它怎么用升降算符一步步推出来、或准备深入第 18 章连续变量与玻色编码时，再翻开位于第五篇的 **Q4**。
 
@@ -23,7 +23,7 @@
 
 读 Q2 时，要分清**理论公设**和**数学推论**。Born 规则与薛定谔方程是经受大量实验检验的物理公设；在承认它们之后，我们可以严格推出酉演化保持归一化、厄米哈密顿量生成旋转门、以及三绘景之间的等价性，但这些推导展示的是框架内部的自洽性，而不是纯数学凭空证明了自然定律。
 
-读 Q3 时，本书与[第 14 章](../14-compilation-control.md)已经全面统一采用计算基 $Z=\lvert 0\rangle\langle 0\rvert-\lvert 1\rangle\langle 1\rvert$ 与失谐 $\Delta=\omega_d-\omega_0$，并在 [Q3 第 6.2 节](03-levels-control.md#62-彻底消除跨章失谐符号坑计算基与能量基的等价对照表)附上了与原子物理/核磁共振能量基文献（$Z_E=-Z,\;\delta_E=\omega_0-\omega_d$）的逐项换算表，跨书查阅公式时可以直接对照，不再被正负号绕晕。
+读 Q3 时，本书与[第 14 章](../14-compilation-control.md)已经全面统一采用计算基 $Z=\lvert 0\rangle\langle 0\rvert-\lvert 1\rangle\langle 1\rvert$ 与失谐 $\Delta=\omega_d-\omega_0$，并在 [Q3 第 6.2 节](03-levels-control.md#62-计算基与能量基的失谐符号等价对照表)附上了与原子物理/核磁共振能量基文献（$Z_E=-Z,\;\delta_E=\omega_0-\omega_d$）的逐项换算表，跨书查阅公式时可以直接对照，不再被正负号绕晕。
 
 ## 本篇最值得牢记的六处区分
 
@@ -38,6 +38,6 @@
 
 ## 练习与全书衔接
 
-四章全部自检题都在附录配有零跳步分步解答，入口见[练习答案：量子力学 Q1–Q4](../appendices/exercises.md#量子力学-q1)。线性代数基序、对数底数与保真度等全书契约见[主篇统一约定](../README.md#统一约定)与[符号表](../appendices/notation.md)，所有物理与量子信息核心概念汇总在[术语表](../appendices/glossary.md)。
+四章全部自检题都在附录配有完整分步解答，入口见[练习答案：量子力学 Q1–Q4](../appendices/exercises.md#量子力学-q1)。线性代数基序、对数底数与保真度等全书契约见[主篇统一约定](../README.md#统一约定)与[符号表](../appendices/notation.md)，所有物理与量子信息核心概念汇总在[术语表](../appendices/glossary.md)。
 
 [返回全书目录](../README.md)

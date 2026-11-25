@@ -10,85 +10,39 @@
 4. 用**奇异值分解**（SVD）桥接 **Schmidt 分解**、**纯化唯一性**与**纠缠熵**，再用**纠缠见证**、**Peres–Horodecki PPT 判据**（及负性 $\mathcal{N}$）与 **LOCC 单调性**分辨经典关联混态与真正的量子纠缠；
 5. 通过 **CHSH 合作博弈**把经典的 $75\%$ 赢率天花板与量子的 $85.36\%$ 赢率逐行算透，用 **Mermin–GHZ 悖论**见识单次决定性矛盾，并理解三比特纠缠为何受**单配性**约束。
 
-读本章前，建议先熟悉[第 01 章：数学工具](01-math.md)的列向量、矩阵乘法与张量积，以及[第 02 章：单量子比特](02-single-qubit.md)的 Bloch 球和投影测量。全章严格沿用本书统一约定：**高位在左**（大端序）——两比特的四个计算基态依次排作 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$，左边第一位属于 Alice（子系统 $A$），右边第二位属于 Bob（子系统 $B$）。部分软件（例如 Qiskit 默认打印的测量位串）采用右边为低位索引 $q_0$ 的小端序；对照程序输出时，先把左右位序对上号，再比较具体振幅。
+读本章前，建议先熟悉[第 01 章：数学工具](01-math.md)的列向量、矩阵乘法与张量积，以及[第 02 章：单量子比特](02-single-qubit.md)的 Bloch 球和投影测量。初次阅读可按两轨推进：**★ 首遍主线**聚焦 §1–§4、§5.1、§5.3、§6.1 与 §7.1–§7.3、§7.5；**☆ 进阶选读**（文中已标明）涵盖复系数 SVD 手算、纯化、PPT/LOCC、Tsirelson 界、Mermin–GHZ 悖论与三比特单配性。全章严格沿用本书**高位在左（大端序）** 约定（$|00\rangle, |01\rangle, |10\rangle, |11\rangle$，左 $A$ 右 $B$；与小端序软件如 Qiskit 的位序对照见[符号表](appendices/notation.md)）。
 
 ---
 
 ## 1. 多量子比特与张量积：空间为何指数膨胀
 
-### 1.1 两比特的四种计算基态与张量积规则
+### 1.1 两比特的计算基态与复数乘积态
 
-先从一个朴素的问题开始：一个经典比特有 $0$ 和 $1$ 两种状态；把两个经典比特摆在桌上，一共需要记录几种联合结果？答案是 $2 \times 2 = 4$ 种——$00, 01, 10, 11$。
+两个经典比特有 $2\times 2 = 4$ 种联合结果；量子力学将其升级为四维复空间 $\mathbb{C}^4 = \mathbb{C}^2 \otimes \mathbb{C}^2$ 里的四个正交归一计算基态 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$（列向量与印章分块规则已在[第 01 章第 7 节](01-math.md#7-张量积多比特系统的印章分块法则)完整列出，其中 $|01\rangle = [0,1,0,0]^T$ 与 $|10\rangle = [0,0,1,0]^T$ 互相正交，顺序不可交换）。
 
-量子世界把这四种经典可区分的结果升级为四维复向量空间 $\mathbb{C}^4 = \mathbb{C}^2 \otimes \mathbb{C}^2$ 里的四个正交归一**计算基态**：
-
-$$
-|00\rangle = |0\rangle_A \otimes |0\rangle_B,\quad
-|01\rangle = |0\rangle_A \otimes |1\rangle_B,\quad
-|10\rangle = |1\rangle_A \otimes |0\rangle_B,\quad
-|11\rangle = |1\rangle_A \otimes |1\rangle_B.
-$$
-
-这里的符号 $\otimes$ 读作**张量积**（tensor product），简写时常直接省掉，写成 $|0\rangle_A|1\rangle_B$ 或 $|01\rangle$。它不是把两个数相乘，而是**按固定顺序把两个子系统的坐标组合成一张更大的坐标表**。具体规则是：取左边向量的第一个分量乘以整个右边向量，排在上面；再取左边向量的第二个分量乘以整个右边向量，排在下面。
-
-用 $|0\rangle = \begin{bmatrix}1\\0\end{bmatrix}$、$|1\rangle = \begin{bmatrix}0\\1\end{bmatrix}$ 亲手算一遍 $|01\rangle$ 和 $|10\rangle$：
+把两个一般单比特纯态 $|u\rangle_A = u|0\rangle + v|1\rangle$ 与 $|w\rangle_B = s|0\rangle + t|1\rangle$（$|u|^2+|v|^2 = |s|^2+|t|^2 = 1$）按分配律展开，得乘积态
 
 $$
-|01\rangle = |0\rangle \otimes |1\rangle
-= \begin{bmatrix} 1 \cdot \begin{bmatrix}0\\1\end{bmatrix} \\[8pt] 0 \cdot \begin{bmatrix}0\\1\end{bmatrix} \end{bmatrix}
-= \begin{bmatrix} 1\cdot 0 \\ 1\cdot 1 \\ 0\cdot 0 \\ 0\cdot 1 \end{bmatrix}
-= \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix},
-\qquad
-|10\rangle = |1\rangle \otimes |0\rangle
-= \begin{bmatrix} 0 \cdot \begin{bmatrix}1\\0\end{bmatrix} \\[8pt] 1 \cdot \begin{bmatrix}1\\0\end{bmatrix} \end{bmatrix}
-= \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}.
-$$
-
-同理可得 $|00\rangle = [1, 0, 0, 0]^T$、$|11\rangle = [0, 0, 0, 1]^T$。请一眼盯住 $|01\rangle$ 和 $|10\rangle$ 的位置：$|01\rangle$ 的 $1$ 在第二格，$|10\rangle$ 的 $1$ 在第三格。张量积**不满足交换律**——Alice 拿 $0$、Bob 拿 $1$，和 Alice 拿 $1$、Bob 拿 $0$，是两个彼此正交的物理状态。
-
-现在把两个一般单比特纯态真正乘开。设 Alice 手里是 $|u\rangle_A = u|0\rangle + v|1\rangle$（$|u|^2 + |v|^2 = 1$），Bob 手里是 $|w\rangle_B = s|0\rangle + t|1\rangle$（$|s|^2 + |t|^2 = 1$），其中 $u, v, s, t \in \mathbb{C}$。张量积对加法满足分配律，只需像拆普通括号一样逐项展开，同时死守“左 $A$ 右 $B$”的顺序：
-
-$$
-\begin{aligned}
 |u\rangle_A \otimes |w\rangle_B
-&= (u|0\rangle + v|1\rangle) \otimes (s|0\rangle + t|1\rangle) \\
-&= us\,|00\rangle + ut\,|01\rangle + vs\,|10\rangle + vt\,|11\rangle
-= \begin{bmatrix} us \\ ut \\ vs \\ vt \end{bmatrix}.
-\end{aligned}
+= us\,|00\rangle + ut\,|01\rangle + vs\,|10\rangle + vt\,|11\rangle
+= \begin{bmatrix} us \\ ut \\ vs \\ vt \end{bmatrix},
 $$
 
-顺手验算一下新向量的归一化：
+其模平方和为 $(|u|^2+|v|^2)(|s|^2+|t|^2) = 1$，自动归一化。
+
+拿一道含虚数的乘积态练手：计算 $|{+i}\rangle_A \otimes |-\rangle_B$（其中 $|{+i}\rangle = \frac{|0\rangle + i|1\rangle}{\sqrt{2}}$、$|-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$）。这里 $u = \frac{1}{\sqrt{2}},\; v = \frac{i}{\sqrt{2}},\; s = \frac{1}{\sqrt{2}},\; t = -\frac{1}{\sqrt{2}}$，逐格代入得
 
 $$
-|us|^2 + |ut|^2 + |vs|^2 + |vt|^2
-= |u|^2(|s|^2 + |t|^2) + |v|^2(|s|^2 + |t|^2)
-= (|u|^2 + |v|^2)(|s|^2 + |t|^2)
-= 1 \cdot 1 = 1.
+|{+i}\rangle_A \otimes |-\rangle_B
+= \frac{1}{2}\bigl(|00\rangle - |01\rangle + i|10\rangle - i|11\rangle\bigr)
+= \frac{1}{2}\begin{bmatrix} 1 \\ -1 \\ i \\ -i \end{bmatrix}.
 $$
 
-来一道具体数字手算：求 $|+\rangle_A \otimes |1\rangle_B$，其中 $|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$。这里 $u = v = \frac{1}{\sqrt{2}}$，$s = 0$，$t = 1$，逐格代入展开式得
-
-$$
-|+\rangle_A \otimes |1\rangle_B
-= \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |1\rangle
-= \frac{|01\rangle + |11\rangle}{\sqrt{2}}
-= \begin{bmatrix} 0 \\ 1/\sqrt{2} \\ 0 \\ 1/\sqrt{2} \end{bmatrix}.
-$$
-
-如果立刻在计算基上同时测量两个比特，读到四种结果的概率分别是振幅的模平方：$p(00) = 0$，$p(01) = |1/\sqrt{2}|^2 = 1/2$，$p(10) = 0$，$p(11) = |1/\sqrt{2}|^2 = 1/2$，四者相加正好等于 $1$。记住：这表示单次测量以等概率吐出 `01` 或 `11` 中的**一个**两位串，而不是一次测量同时把四个振幅读出来。
+如果在计算基上同时测量两个比特，四种结果的概率都是模平方 $|1/2|^2 = |-1/2|^2 = |\pm i/2|^2 = 1/4$，总和为 $1$。单次测量只会以等概率吐出 `00, 01, 10, 11` 中的**一个**两位串，而不是同时读出四个振幅。
 
 ### 1.2 并行操作怎么算：张量积矩阵的分块手算表
 
-如果 Alice 对自己的比特施加单比特门 $A = \begin{bmatrix} a_{00} & a_{01} \\ a_{10} & a_{11} \end{bmatrix}$，同一拍里 Bob 对自己的比特施加单比特门 $B$，整个两比特系统经历的 $4 \times 4$ 联合矩阵写成 $A \otimes B$。它的构造法则和向量张量积一模一样：**把矩阵 $A$ 里的每一个数 $a_{jk}$，替换成 $2 \times 2$ 的子块 $a_{jk} B$**（行列顺序仍固定为 $00, 01, 10, 11$）：
-
-$$
-A \otimes B = \begin{bmatrix}
-a_{00} B & a_{01} B \\
-a_{10} B & a_{11} B
-\end{bmatrix}.
-$$
-
-我们来亲手算一张最常用的并行门：$H \otimes X$，即 Alice 做 Hadamard 门 $H = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}$，Bob 做翻转门 $X = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}$。先把 $H$ 的四个位置拆成四张 $2 \times 2$ 分块手算表：
+同一拍里 Alice 施加单比特门 $A$、Bob 施加单比特门 $B$，联合操作是按[第 01 章第 7.2 节](01-math.md)印章分块规则构造的 $4\times 4$ 矩阵 $A\otimes B = \begin{bmatrix} a_{00}B & a_{01}B \\ a_{10}B & a_{11}B \end{bmatrix}$。下面亲手算一张常用的并行门 $H \otimes X$（$H = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix},\; X = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}$）：
 
 | $H$ 的位置 $(j, k)$ | 对应元素 $H_{jk}$ | 生成的 $2 \times 2$ 子块 $H_{jk} X$ | 落入 $4 \times 4$ 矩阵的行列范围 |
 | :--- | :---: | :---: | :--- |
@@ -248,7 +202,7 @@ $$
    ad - bc = \frac{1}{2}\cdot\frac{1}{2} - \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{4} - \frac{1}{4} = 0.
    $$
 
-   它就是 $|+\rangle_A \otimes |+\rangle_B$！请记住：**千万别看到式子里有四项就误以为它纠缠**。
+   它就是 $|+\rangle_A \otimes |+\rangle_B$！请记住：**不要看到式子里有四项就误以为它纠缠**。
 
 3. **带复数的四项可分态**：$|\psi_3\rangle = \frac{|00\rangle + i|01\rangle + i|10\rangle - |11\rangle}{2}$。系数为 $(a,b,c,d) = (\frac{1}{2}, \frac{i}{2}, \frac{i}{2}, -\frac{1}{2})$，按复数乘法算：
 
@@ -575,7 +529,7 @@ $$
 
    因为这对所有 $O_A$ 均成立，所以 $\rho'_A = \rho_A$ 丝毫未变！
 
-换个日常视角理解这件事：纠缠在测量发生时确实建立了跨越空间的强关联，但必须等到 Alice 把她的经典记录（光速以内）发给 Bob，两人把数据按轮次对齐分组之后，才能看见那份惊人的条件关联。纠缠与相对论的因果律和平共处。
+换个日常视角理解这件事：纠缠在测量发生时确实建立了跨越空间的强关联，但必须等到 Alice 把她的经典记录（光速以内）发给 Bob，两人把数据按轮次对齐分组之后，才能看见那份超越经典的条件关联。纠缠与相对论的因果律和平共处。
 
 **马上核对**：对单态 $|\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}$，Alice 在计算基测得 $0$ 时，Bob 的条件态是什么？只保留 $A = 0$ 的项得未归一化向量 $\frac{1}{\sqrt{2}}|01\rangle$，概率 $p_0 = 1/2$，归一化条件联合后态为 $|01\rangle$，因此 Bob 确定处于 $|1\rangle$。
 
@@ -595,16 +549,16 @@ $$
 
 其中所有 **Schmidt 权重** $\lambda_j > 0$ 且 $\sum_{j=1}^r \lambda_j = 1$；非负实数 $s_j = \sqrt{\lambda_j}$ 称为 **Schmidt 系数**（振幅）；非零项的个数 $r \le \min(d_A, d_B)$ 称为 **Schmidt 秩**（Schmidt rank）。
 
-这个定理直接长在矩阵**奇异值分解**（SVD）上。把态展开在计算基下写成 $|\psi\rangle_{AB} = \sum_{a, b} C_{ab}|a\rangle_A|b\rangle_B$，对 $d_A \times d_B$ 的系数矩阵 $C$ 做 SVD：$C = U \Sigma V^\dagger$，其中 $U, V$ 是酉矩阵，$\Sigma$ 的非零对角元是非负奇异值 $s_j = \sqrt{\lambda_j}$。按矩阵乘法逐元素写出 $C_{ab} = \sum_{j=1}^r s_j U_{aj} (V^\dagger)_{jb} = \sum_{j=1}^r s_j U_{aj} V^*_{bj}$，放回态矢量里：
+这个定理直接长在矩阵**奇异值分解**（SVD）上。把态展开在计算基下写成 $|\psi\rangle_{AB} = \sum_{a, b} C_{ab}|a\rangle_A|b\rangle_B$，沿用[第 01 章第 6.4 节](01-math.md)与全书[符号表](appendices/notation.md)的 SVD 符号，对 $d_A \times d_B$ 的系数矩阵 $C$ 做 SVD：$C = W \Sigma V^\dagger$，其中 $W, V$ 是酉矩阵，$\Sigma$ 的非零对角元是非负奇异值 $s_j = \sqrt{\lambda_j}$。按矩阵乘法逐元素写出 $C_{ab} = \sum_{j=1}^r s_j W_{aj} (V^\dagger)_{jb} = \sum_{j=1}^r s_j W_{aj} V^*_{bj}$，放回态矢量里：
 
 $$
 |\psi\rangle_{AB}
 = \sum_{j=1}^{r} \sqrt{\lambda_j}
-  \underbrace{\left(\sum_a U_{aj}|a\rangle_A\right)}_{|u_j\rangle_A}
+  \underbrace{\left(\sum_a W_{aj}|a\rangle_A\right)}_{|u_j\rangle_A}
   \otimes
   \underbrace{\left(\sum_b (V^\dagger)_{jb}|b\rangle_B\right)}_{|v_j\rangle_B}
 = \sum_{j=1}^{r} \sqrt{\lambda_j}
-  \left(\sum_a U_{aj}|a\rangle_A\right)
+  \left(\sum_a W_{aj}|a\rangle_A\right)
   \otimes
   \left(\sum_b V^*_{bj}|b\rangle_B\right).
 $$
@@ -620,24 +574,24 @@ $$
 核对归一化：$(4+4+1+1)/10 = 1$；四格判据 $ad - bc = \frac{1}{10}(-2i - 2i) = -\frac{2i}{5} \ne 0$，确定纠缠。现在显式写出它的三因子 SVD 矩阵：
 
 $$
-U = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix},
+W = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix},
 \qquad
 \Sigma = \begin{bmatrix} 2/\sqrt{5} & 0 \\ 0 & 1/\sqrt{5} \end{bmatrix},
 \qquad
 V^\dagger = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & i \\ 1 & -i \end{bmatrix}.
 $$
 
-逐格乘开验算 $U\Sigma V^\dagger$：
+逐格乘开验算 $W\Sigma V^\dagger$：
 
 $$
-U\Sigma V^\dagger
+W\Sigma V^\dagger
 = \begin{bmatrix} 2/\sqrt{5} & 0 \\ 0 & 1/\sqrt{5} \end{bmatrix}
   \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & i \\ 1 & -i \end{bmatrix}
 = \frac{1}{\sqrt{10}}\begin{bmatrix} 2 & 2i \\ 1 & -i \end{bmatrix} = C!
 $$
 
 现在从矩阵里直接读出两边的 Schmidt 向量：
-- $A$ 侧取 $U$ 的两列：$|u_0\rangle_A = |0\rangle$、$|u_1\rangle_A = |1\rangle$；
+- $A$ 侧取 $W$ 的两列：$|u_0\rangle_A = |0\rangle$、$|u_1\rangle_A = |1\rangle$；
 - $B$ 侧直接把 **$V^\dagger$ 的第 $j$ 行不取共轭、原封不动立成列向量**：$|v_0\rangle_B = \frac{|0\rangle + i|1\rangle}{\sqrt{2}} = |{+i}\rangle$、$|v_1\rangle_B = \frac{|0\rangle - i|1\rangle}{\sqrt{2}} = |{-i}\rangle$！验证重组：
 
   $$
@@ -648,12 +602,12 @@ $$
 
 - **反面警示**：如果你先算出 $V = (V^\dagger)^\dagger = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ -i & i\end{bmatrix}$，却忘了对 $V$ 的列取复共轭，就会把 $|v_0\rangle_B$ 误读成 $|{-i}\rangle$、$|v_1\rangle_B$ 误读成 $|{+i}\rangle$，还原出 $\frac{2|00\rangle - 2i|01\rangle + |10\rangle + i|11\rangle}{\sqrt{10}} \ne |\psi_{\mathrm{svd}}\rangle$——所有虚数符号全反了！
 
-把这套矩阵—代码对应关系收进一张避坑速查表：
+把这套矩阵—代码对应关系收进一张对照速查表（注：NumPy 函数文档常把左奇异酉阵记作 `U`，对应本手册的 $W$）：
 
-| 对象 | 矩阵表达（$C = U\Sigma V^\dagger$） | Python/NumPy (`U, s, Vh = np.linalg.svd(C)`) | 常见错误 |
+| 对象 | 矩阵表达（$C = W\Sigma V^\dagger$） | Python/NumPy (`W, s, Vh = np.linalg.svd(C)`) | 常见错误 |
 | :--- | :--- | :--- | :--- |
 | Schmidt 系数与权重 | $s_j = \Sigma_{jj}$，$\lambda_j = s_j^2$ | `s[j]`，`s[j]**2` | 把振幅 $s_j$ 当成概率权重 $\lambda_j$ |
-| $A$ 侧 Schmidt 向量 | $U$ 的第 $j$ 列 | `U[:, j]` | 误取 $U$ 的行向量 |
+| $A$ 侧 Schmidt 向量 | $W$ 的第 $j$ 列 | `W[:, j]` | 误取 $W$ 的行向量 |
 | $B$ 侧 Schmidt 向量 | $V^\dagger$ 的第 $j$ 行直接转置（即 $V$ 的第 $j$ 列取复共轭） | `Vh[j, :]`（**不要再取共轭**） | 误用 `Vh[j, :].conj()` 或直接拿 $V$ 的列不共轭 |
 
 对 Schmidt 形式做一次偏迹，威力立刻全部显现。把 $|\psi\rangle\langle\psi| = \sum_{j, k=1}^r \sqrt{\lambda_j\lambda_k}\,|u_j\rangle\langle u_k|_A \otimes |v_j\rangle\langle v_k|_B$ 对 $B$ 取偏迹，利用 $\langle v_k|v_j\rangle = \delta_{jk}$，所有 $j \ne k$ 的交叉项瞬间归零，只留下对角和：
@@ -672,9 +626,9 @@ $$
 2. **两端非零本征值谱完全相同**：即使 $A$ 是 2 维、$B$ 是 100 维，$\rho_A$ 和 $\rho_B$ 的非零本征值集合也**一模一样**，恰好都是 $\{\lambda_1, \dots, \lambda_r\}$（多出的维度只能补零本征值）。
 3. **振幅与权重别混写**：$|\psi\rangle = \frac{\sqrt{3}}{2}|00\rangle + \frac{1}{2}|11\rangle$ 已经是 Schmidt 形式，它的 Schmidt 系数是 $\frac{\sqrt{3}}{2}, \frac{1}{2}$，而 Schmidt 权重（即约化态本征值）是它们的平方 $\lambda_1 = \frac{3}{4}, \lambda_2 = \frac{1}{4}$。
 
-### 5.2 复系数完整手算：$\rho_B = C^T C^* \ne C^\dagger C$ 的陷阱与 $U\Sigma V^\dagger$ 回验
+### 5.2 进阶选读：复系数完整手算——$\rho_B = C^T C^* \ne C^\dagger C$ 的陷阱与 $W\Sigma V^\dagger$ 回验
 
-光算完现成的 SVD 还不够踏实，现在我们挑一个**带着虚数单位 $i$、三项非零且 $U, V^\dagger$ 都非对角**的两比特纯态，从头到尾亲手算出它的 Schmidt 分解，再拼回 $U\Sigma V^\dagger = C$，顺便抓出复系数偏迹里十有八九会踩的坑！
+光算完现成的 SVD 还不够踏实，现在我们挑一个**带着虚数单位 $i$、三项非零且 $W, V^\dagger$ 都非对角**的两比特纯态，从头到尾亲手算出它的 Schmidt 分解，再拼回 $W\Sigma V^\dagger = C$，顺便抓出复系数偏迹里最容易出现的共轭错误。
 
 取基序 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$ 下的纯态
 
@@ -773,7 +727,7 @@ $$
 
 再检查两向量正交性：由韦达定理 $t_+ t_- = -1$，左共轭内积分子为 $(-i)(i) + t_+ t_- = 1 + (-1) = 0$，故 $\langle u_+|u_-\rangle = 0$。
 
-**第四步：求与 $|u_\pm\rangle$ 配对的 $B$ 侧向量 $|v_\pm\rangle$，并拼回 $U\Sigma V^\dagger = C$ 做终极回验。**
+**第四步：求与 $|u_\pm\rangle$ 配对的 $B$ 侧向量 $|v_\pm\rangle$，并拼回 $W\Sigma V^\dagger = C$ 做完整回验。**
 
 在 Schmidt 展开 $|\chi\rangle = \sum_j \sqrt{\lambda_j}|u_j\rangle_A|v_j\rangle_B$ 两边左乘 $\langle u_j|_A \otimes I_B$，因为 $\langle u_j|u_k\rangle = \delta_{jk}$，直接抽出配对向量：
 
@@ -798,10 +752,10 @@ $$
 
 先验算 $|v_\pm\rangle$ 的归一化：由 $t_\pm^2 = 1 - t_\pm$ 与 $3\lambda_\pm = 2 + t_\pm$，分子的模平方为 $|-i|^2 + (1 + t_\pm)^2 = 1 + (1 + 2t_\pm + t_\pm^2) = 3 + t_\pm$，而分母平方恰为 $3\lambda_\pm(1 + t_\pm^2) = (2 + t_\pm)(2 - t_\pm) = 4 - t_\pm^2 = 3 + t_\pm$，故 $\langle v_\pm|v_\pm\rangle = 1$ 严格成立。
 
-现在把刚刚算出的列向量按第 5.1 节的 SVD 规则显式拼成三张 $2\times 2$ 矩阵——$U = \bigl[|u_+\rangle,\ |u_-\rangle\bigr]$、$\Sigma = \operatorname{diag}(\sqrt{\lambda_+},\ \sqrt{\lambda_-})$，以及把 $|v_\pm\rangle$ **不取共轭直接横放成行**拼出 $V^\dagger = \begin{bmatrix}|v_+\rangle^T \\ |v_-\rangle^T\end{bmatrix}$：
+现在把刚刚算出的列向量按第 5.1 节的 SVD 规则显式拼成三张 $2\times 2$ 矩阵——$W = \bigl[|u_+\rangle,\ |u_-\rangle\bigr]$、$\Sigma = \operatorname{diag}(\sqrt{\lambda_+},\ \sqrt{\lambda_-})$，以及把 $|v_\pm\rangle$ **不取共轭直接横放成行**拼出 $V^\dagger = \begin{bmatrix}|v_+\rangle^T \\ |v_-\rangle^T\end{bmatrix}$：
 
 $$
-U\Sigma V^\dagger
+W\Sigma V^\dagger
 = \sqrt{\lambda_+}\,|u_+\rangle |v_+\rangle^T + \sqrt{\lambda_-}\,|u_-\rangle |v_-\rangle^T
 = \frac{1}{\sqrt{3}(1+t_+^2)}\begin{bmatrix} 1 & i(1+t_+) \\ -it_+ & t_+(1+t_+) \end{bmatrix}
 + \frac{1}{\sqrt{3}(1+t_-^2)}\begin{bmatrix} 1 & i(1+t_-) \\ -it_- & t_-(1+t_-) \end{bmatrix}.
@@ -814,7 +768,7 @@ $$
 - $(0,1)$ 格：提取公因子 $\frac{i}{\sqrt{3}}$ 后通分，分子为 $(1 + t_+)(2 - t_-) + (1 + t_-)(2 - t_+) = 4 + (t_+ + t_-) - 2t_+ t_- = 4 - 1 + 2 = 5$，除以分母 $5$ 精确得 $\frac{i}{\sqrt{3}}$；
 - $(1,1)$ 格：因 $t_\pm(1 + t_\pm) = t_\pm + t_\pm^2 = 1$，分子与 $(0,0)$ 格完全一致，故同样为 $\frac{1}{\sqrt{3}}$。
 
-因此 $U\Sigma V^\dagger = \frac{1}{\sqrt{3}}\begin{bmatrix}1 & i \\ 0 & 1\end{bmatrix} = C$，连每一个虚数符号都不差。
+因此 $W\Sigma V^\dagger = \frac{1}{\sqrt{3}}\begin{bmatrix}1 & i \\ 0 & 1\end{bmatrix} = C$，连每一个虚数符号都不差。
 
 ### 5.3 二分纯态的纠缠熵：用 bit 度量纠缠强弱
 
@@ -862,7 +816,7 @@ $$
 
 一条必须用红笔圈出来的红线：**$S(\rho_A) > 0$ 等价于纠缠，这一结论只适用于整体是纯态的二分系统！** 只要联合态本身是混态，局部熵立刻失效——下一节马上就看一个局部熵高达 $1\ \mathrm{bit}$、纠缠却严格为零的经典混态。
 
-### 5.4 纯化构造、唯一性与 Uhlmann 定理直觉
+### 5.4 进阶选读：纯化构造、唯一性与 Uhlmann 定理直觉
 
 刚刚我们是从一个两体纯态 $|\psi\rangle_{AR}$ 出发，对 $R$ 求偏迹得到混态 $\rho_A$。现在反过来问一个极有威力的逆问题：**随便给你一个混态密度矩阵 $\rho_A$，能不能总给它找一个“隐身参考系统” $R$，把 $\rho_A$ 看成更大空间上某个纯态 $|\psi\rangle_{AR}$ 的约化态？**
 
@@ -969,7 +923,9 @@ $$
 
 ### 6.2 纠缠见证：用少量局域测量排除所有可分态
 
-刚才只测了 $Z \otimes Z$ 和 $X \otimes X$ 两组局域关联，就能一眼拆穿 $\rho_{\mathrm{mix}}$。一个很自然的念头冒出来：**有没有可能不去做费时费力的全态层析，只测这两组关联，就能以数学铁证排除全天下所有的可分态？**
+> **进阶选读提示**：6.2–6.4 节系统展开混态纠缠判据与 LOCC 框架；首遍阅读可先记清核心结论，再直接进入第 7 节 CHSH 博弈。
+
+刚才只测了 $Z \otimes Z$ 和 $X \otimes X$ 两组局域关联，就能直接排除 $\rho_{\mathrm{mix}}$。一个很自然的念头冒出来：**有没有可能不去做费时费力的全态层析，只测这两组关联，就能以数学铁证排除全天下所有的可分态？**
 
 答案是肯定的，这种工具叫**纠缠见证**（entanglement witness）。从几何上看，所有可分态的集合 $\mathrm{SEP}$ 构成一个封闭的凸体（任意两个可分态的混合仍可分）。根据凸分析的分离超平面定理，对任意落在 $\mathrm{SEP}$ 外面的纠缠态 $\rho$，总存在一个厄米算符 $W$（像一堵平直的墙）把它们隔开：
 
@@ -1054,18 +1010,11 @@ $$
 
   因此 $C_{XY} = \langle X \otimes Y \rangle = 1$，改用见证 $C_Z + C_{XY} > 1$（可分上界由二维向量 $(z_A, x_A)$ 与 $(z_B, y_B)$ 的 Cauchy–Schwarz 不等式同样证明为 $1$），立刻测出 $1 + 1 = 2 > 1$！从线路角度看，让 Bob 在测 $X$ 之前先施加一个 $S^\dagger = \operatorname{diag}(1, -i)$ 门，就能把 $|\psi_i\rangle$ 变回 $|\Phi^+\rangle$，等效于把 Bob 的测量方向从 $X$ 转向 $Y$。另外要注意统计纪律：不能先偷看一批数据，事后专挑数值最大的轴来宣告“显著超过 $1$”，那会引入多重检验偏差，正确做法是事先定好见证或用独立验证样本复测。
 
-> **实验校准提醒：双端非对称读出偏差造成的“假漏检”**
+> **实验校准提醒：双端读出失真可造成见证“假漏检”**
 >
-> 纠缠见证高度依赖探测器校准。沿用[第 02 章](02-single-qubit.md)的单端非对称读出仿射模型 $\mathbb{E}[\tilde{a}\mid a] = o + d\,a$（设 $0\to 1$ 错报率 $\alpha = 0.12$、$1\to 0$ 错报率 $\beta = 0.23$，故偏置 $o = \beta - \alpha = 0.11$、缩放 $d = 1 - \alpha - \beta = 0.65$），当两端探测器独立时，报告关联 $\widetilde{C} = \mathbb{E}[\tilde{a}\tilde{b}]$ 与真实关联 $C$ 满足 $\widetilde{C} = o^2 + od(\langle a\rangle + \langle b\rangle) + d^2 C$。把**完美 Bell 态** $|\Phi^+\rangle$（$\langle a\rangle=\langle b\rangle=0,\ C_Z=C_X=1$）送入这对探测器，屏幕上看到的竟然只有
->
-> $$
-> \widetilde{C}_Z = \widetilde{C}_X = 0.11^2 + 0.65^2 = 0.4346
-> \implies \widetilde{C}_X + \widetilde{C}_Z = 0.8692 < 1!
-> $$
->
-> 完美的纠缠态竟因读出失真掉到门槛以下；反之，如果忘了扣偏置 $o$、直接拿 $\widetilde{C}/d^2$ 反演，又会算出 $0.4346/0.4225 \approx 1.0286 > 1$ 的非物理超界结果！完整的读出混淆矩阵求逆与标定不确定度传播详见[第 09 章](09-hardware.md)与[第 14 章](14-compilation-control.md)，四格联合概率复算见[读出与见证核验说明](../codes/foundations/round73-README.md)与[全书实验总图谱](labs/README.md)。正因为见证必须信任设备校准，它绝不能与第 7 节的**设备无关 Bell 检验**混为一谈。
+> 纠缠见证高度依赖探测器校准。沿用[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)的不对称读出基准参数（偏置 $o = \beta - \alpha = 0.11$、缩放 $d = 1 - \alpha - \beta = 0.65$），独立双端探测器的报告关联为 $\widetilde{C} = o^2 + od(\langle a\rangle + \langle b\rangle) + d^2 C$。将完美 Bell 态 $|\Phi^+\rangle$ 送入该探测器，报告值跌至 $\widetilde{C}_Z = \widetilde{C}_X = 0.11^2 + 0.65^2 = 0.4346$，使见证总和降至 $\widetilde{C}_X + \widetilde{C}_Z = 0.8692 < 1$（假漏检）；反之，若忽略偏置 $o$ 直接算 $\widetilde{C}/d^2$，又会得出 $0.4346/0.4225 \approx 1.0286 > 1$ 的非物理超界估计（完整校准与复算入口见[基础代码说明](../codes/foundations/README.md)与[第 14 章](14-compilation-control.md)）。正因见证信任设备校准，它不可与第 7 节的**设备无关 Bell 检验**混为一谈。
 
-### 6.3 Peres–Horodecki PPT 判据、负性与 Werner 态分层
+### 6.3 进阶选读：Peres–Horodecki PPT 判据、负性与 Werner 态分层
 
 如果手头已经拿到了完整的两比特密度矩阵 $\rho_{AB}$（比如理论分析或态层析重构之后），有没有一把**不需要猜轴、在两比特世界里百发百中**的通用判据？有——这就是量子信息里最常用的 **Peres–Horodecki 部分转置正性判据**（PPT criterion，Peres 1996；M., P. & R. Horodecki 1996）。
 
@@ -1117,7 +1066,7 @@ $$
 \boxed{\rho_{AB}^{T_B} \text{ 只要出现哪怕一个负本征值} \quad\Longrightarrow\quad \rho_{AB} \text{ 必然纠缠}.}
 $$
 
-Horodecki 三父子在同年（1996）进一步证明了一个惊人定理：**在 $2 \times 2$（两比特）和 $2 \times 3$ 系统中，PPT 不仅是可分的必要条件，也是充分条件！** 也就是说，对任意两比特态，$\rho_{AB}$ 可分当且仅当 $\rho_{AB}^{T_B} \succeq 0$。为了把“负本征值有多负”量化成一个顺手的纠缠度量，定义**负性**（negativity，详见[符号表](appendices/notation.md)与[第 18 章](18-channels-capacities-complexity.md)）：
+Horodecki 三父子在同年（1996）进一步证明了一个重要定理：**在 $2 \times 2$（两比特）和 $2 \times 3$ 系统中，PPT 不仅是可分的必要条件，也是充分条件！** 也就是说，对任意两比特态，$\rho_{AB}$ 可分当且仅当 $\rho_{AB}^{T_B} \succeq 0$。为了把“负本征值有多负”量化成一个顺手的纠缠度量，定义**负性**（negativity，详见[符号表](appendices/notation.md)与[第 18 章](18-channels-capacities-complexity.md)）：
 
 $$
 \mathcal{N}(\rho_{AB}) \equiv \frac{\lVert\rho_{AB}^{T_B}\rVert_1 - 1}{2} = \sum_{\lambda_i < 0} |\lambda_i|,
@@ -1185,9 +1134,9 @@ $$
 \text{Bell 非局域（能违背某个 Bell 不等式）} \;\subsetneq\; \text{EPR 可导引（steering）} \;\subsetneq\; \text{量子纠缠（不可分）}.
 $$
 
-顺带衔接[第 05 章](05-noise-channels.md)：如果把 $|\Phi^+\rangle$ 的 $B$ 比特送进真实的有限温度热阻尼信道（例如阻尼强度 $\gamma = 0.36$、热平衡激发占据记作 $p_{\mathrm{eq}} = 0.10$，与第 05 章及符号表统一；四条 Kraus 算符将在第 05 章完整展开），对输出联合态求偏迹会验出 $\rho'_A = I/2$ 严格满足无信号定理，而部分转置最小本征值仍约为 $-0.3164 < 0$（负性 $0.3164$），说明强局部耗散下纠缠仍可大比例存活，具体数值验证见[基础 SDK 运行说明](../codes/foundations/round72-README.md)与[全书实验总图谱](labs/README.md)。
+顺带衔接[第 05 章](05-noise-channels.md)：如果把 $|\Phi^+\rangle$ 的 $B$ 比特送进真实的有限温度热阻尼信道（例如阻尼强度 $\gamma = 0.36$、热平衡激发占据记作 $p_{\mathrm{eq}} = 0.10$，与第 05 章及符号表统一；四条 Kraus 算符将在第 05 章完整展开），对输出联合态求偏迹会验出 $\rho'_A = I/2$ 严格满足无信号定理，而部分转置最小本征值仍约为 $-0.3164 < 0$（负性 $0.3164$），说明强局部耗散下纠缠仍可大比例存活，具体数值验证见[基础代码说明](../codes/foundations/README.md)与[全书实验总图谱](labs/README.md)。
 
-### 6.4 LOCC 框架与纠缠单调性直觉
+### 6.4 进阶选读：LOCC 框架与纠缠单调性直觉
 
 前面的偏迹、无信号定理和可分混态，共同指向量子信息论里一个贯穿全书的操作框架——**LOCC**（Local Operations and Classical Communication，**局域操作与经典通信**）。想象 Alice 和 Bob 住在相隔千里的两座实验室，他们之间没有量子光纤，只允许做两件事：各自在本地对自己的比特施加量子门或测量，然后用普通电话/互联网交换经典测量结果，再根据对方报来的数字决定下一步的本地操作。
 
@@ -1238,13 +1187,17 @@ $$
 | 共生度 $C_{\mathrm{conc}}(\rho)$ | 两比特纯态与混态 | 充要 | 见第 8.2 节；两比特纯态简化为 $2\lvert ad - bc\rvert$ |
 | CHSH 违背 $\lvert S\rvert > 2$ | 任意维（设备无关） | 仅充分（比纠缠更强） | $\lvert S\rvert > 2 \implies$ 非局域且必纠缠 |
 
+![双比特 Schmidt 分解与混态纠缠判据决策树](assets/v4-03-schmidt-entanglement-tree.svg)
+
+上图将第 5–6 节的两体纠缠判定流程整合为一张决策树：纯态走 Schmidt / $ad-bc$ 快速分支，混态走 PPT（$2\times 2, 2\times 3$ 充要）、纠缠见证与设备无关 Bell 检验三层判据（可打开[原尺寸双比特纠缠判据决策树](assets/v4-03-schmidt-entanglement-tree.svg)放大查阅）。
+
 ---
 
 ## 7. CHSH 合作博弈、Bell 不等式与 2022 诺贝尔物理学奖
 
 第 6 节的纠缠见证虽然方便，却有一个硬伤：你必须信任实验室的测量仪器真的在测 $X$ 和 $Z$，并且校准无误。那有没有一种完全不看仪器内部构造、只盯着输入按钮和输出红绿灯的测试，就能直接证明：**自然界里的关联，根本不可能用任何“事先藏好的经典剧本”来解释？**
 
-1964 年，物理学家 John S. Bell 把爱因斯坦等人（EPR）关于“局域实在论”的哲学争论，改写成了一条可以用实验证伪的数学不等式；1969 年，Clauser、Horne、Shimony 与 Holt（CHSH）把它推演成最便于光学实验检验的形式。如今理解 CHSH 最直观的入口，是一道看似简单、实则惊艳的**双人合作博弈**。
+1964 年，物理学家 John S. Bell 把爱因斯坦等人（EPR）关于“局域实在论”的哲学争论，改写成了一条可以用实验证伪的数学不等式；1969 年，Clauser、Horne、Shimony 与 Holt（CHSH）把它推演成最便于光学实验检验的形式。如今理解 CHSH 最直观的入口，是一道看似简单、实则深刻的**双人合作博弈**。
 
 ### 7.1 Alice 与 Bob 的合作博弈：经典世界永远超不过 $75\%$
 
@@ -1289,7 +1242,7 @@ p_{\mathrm{win}}^{\mathrm{cl}} = \sum_\lambda p_\lambda\,p_{\mathrm{win}}(\lambd
 \le \sum_\lambda p_\lambda \cdot \frac{3}{4} = \frac{3}{4} = 75\%.
 $$
 
-在只能靠经典信息（包括任意隐变量与共享随机数）协作的世界里，$75\%$ 就是一道冲不破的铜墙铁壁。
+在只能靠经典信息（包括任意隐变量与共享随机数）协作的世界里，$75\%$ 就是一道无法逾越的上界。
 
 ### 7.2 翻译成 $\pm 1$ 关联与 CHSH 不等式 $|S| \le 2$
 
@@ -1416,7 +1369,7 @@ $$
 
 顺手回接第 6.3 节的 Werner 态 $\rho_q = q|\Phi^+\rangle\langle\Phi^+| + (1 - q)\frac{I_4}{4}$：因为白噪声 $I_4/4$ 对四个 $E(x, y)$ 贡献皆为零，沿用同一套测量算符直接算得 $S(\rho_q) = 2\sqrt{2}\,q$。要打破 $|S| \le 2$，必须满足 $2\sqrt{2}\,q > 2 \iff q > \frac{1}{\sqrt{2}} \approx 0.7071$，正好印证了此前表格里那道高于纠缠门槛 $q > 1/3$ 与投影导引门槛 $q > 1/2$ 的分界线！
 
-### 7.4 量子力学也有天花板：Tsirelson 界 $2\sqrt{2}$
+### 7.4 进阶选读：量子力学也有天花板——Tsirelson 界 $2\sqrt{2}$
 
 刚才的例子证明了量子力学能把 $S$ 做到 $2\sqrt{2}$。一个自然的问题随之而来：**能不能再换一对更复杂的纠缠态或更高维度的测量，把 $S$ 推到 $3$ 甚至 $4$（$100\%$ 必赢）？**
 
@@ -1492,7 +1445,7 @@ $$
 
 最后牢记两句冷静的科学边界：Bell 不等式的实验违背，排除了满足局域性与设置独立性的经典隐变量理论；它**绝不意味着可以超光速通信**（第 4.4 节无信号定理依然严格成立），也**与“人类意识决定物理现实”毫无关系**——探测器只是冷冰冰的物理器件，有没有人盯着屏幕看结果，统计分布丝毫不差。
 
-### 7.6 Mermin–GHZ 三比特悖论：超越统计不等式的决定性矛盾
+### 7.6 进阶选读：Mermin–GHZ 三比特悖论——超越统计不等式的决定性矛盾
 
 CHSH 不等式的结论虽然鲜明，但它的矛盾依然是**统计型**的——$75\%$ 对比 $85.36\%$，必须重复测成百上千次才能以统计显著性判别。到了 1989–1990 年，Greenberger、Horne、Zeilinger 以及 N. David Mermin 提出了一个更直接的理论构造：**只要把参与人数从 $2$ 人增加到 $3$ 人（Alice、Bob、Charlie），量子力学与局域隐变量理论的冲突就不再只是概率高低的偏差，而是直接表现为“$+1 = -1$”的决定性逻辑矛盾。**
 
@@ -1564,7 +1517,7 @@ $$
 A_X B_X C_X = -1!
 $$
 
-**一切局域隐变量理论都铁板钉钉地预言：三人同时测 $X$ 时，乘积 $100\%$ 必须是 $-1$！** 可我们第一步刚刚亲手算过，量子力学预言 $X\otimes X\otimes X$ 的乘积 **$100\%$ 必须是 $+1$**！
+**一切局域隐变量理论都必然预言：三人同时测 $X$ 时，乘积 $100\%$ 必须是 $-1$！** 可我们第一步刚刚亲手算过，量子力学预言 $X\otimes X\otimes X$ 的乘积 **$100\%$ 必须是 $+1$**！
 
 $$
 \text{局域隐变量预测：} A_X B_X C_X = -1
@@ -1595,7 +1548,7 @@ $$
 
 ---
 
-## 8. 纠缠单配性与三比特对照：GHZ 态 vs W 态
+## 8. 进阶选读：纠缠单配性与三比特对照（GHZ 态 vs W 态）
 
 日常的经典关联可以无限复制分享：如果张三、李四、王五手里各自拿着一张印着同一期彩票头奖号码的纸条，张三和李四完全相关，张三和王五也完全相关，互不妨碍。
 
@@ -1613,7 +1566,7 @@ $$
 
 1. 对二分纯态 $|\Psi\rangle_{(AB)E'}$ 做 $AB$ 与 $E'$ 之间的 Schmidt 分解。我们已知左边的约化态是纯态 $\rho_{AB} = |\Phi^+\rangle\langle\Phi^+|$, 它只有一个非零本征值 $\lambda_1 = 1$！
 2. Schmidt 秩 $r = 1$ 意味着 $|\Psi\rangle_{(AB)E'}$ 必定是可分乘积态 $|\Phi^+\rangle_{AB} \otimes |\phi\rangle_{E'}$！再对附加系统 $E$ 取偏迹，立刻得到 $\rho_{ABC} = |\Phi^+\rangle\langle\Phi^+|_{AB} \otimes \rho_C$。
-3. **关键收尾一步**（单看乘积态 $\rho_{ABC} = \rho_{AB}\otimes\rho_C$ 其实对任何纯态如无纠缠的 $|00\rangle_{AB}$ 也成立，最大纠缠真正的排他杀伤力藏在这一步）：对上式再对 $B$ 取偏迹，因为 $\operatorname{Tr}_B\bigl(|\Phi^+\rangle\langle\Phi^+|_{AB}\bigr) = \frac{I_A}{2}$，立刻算出 $A$ 与 $C$ 之间的两体约化态：
+3. **关键收尾一步**（单看乘积态 $\rho_{ABC} = \rho_{AB}\otimes\rho_C$ 其实对任何纯态如无纠缠的 $|00\rangle_{AB}$ 也成立，最大纠缠真正的排他约束体现在这一步）：对上式再对 $B$ 取偏迹，因为 $\operatorname{Tr}_B\bigl(|\Phi^+\rangle\langle\Phi^+|_{AB}\bigr) = \frac{I_A}{2}$，立刻算出 $A$ 与 $C$ 之间的两体约化态：
 
    $$
    \rho_{AC} = \operatorname{Tr}_B(\rho_{ABC})
@@ -1793,9 +1746,26 @@ $$
 - **误区 3：可分混态等于“能写成一个单乘积 $\rho_A \otimes \rho_B$”。** 错。可分混态允许写成若干乘积态的概率混合 $\sum_j p_j \rho_A^{(j)} \otimes \rho_B^{(j)}$；$\rho_{\mathrm{mix}}$ 写不成单个乘积，却仍是可分态。
 - **误区 4：约化态的熵 $S(\rho_A) = 1\ \mathrm{bit}$，就代表联合态有 $1\ \mathrm{bit}$ 纠缠。** 错。这一公式只对**二分纯态**成立；对混态（如 $\rho_{\mathrm{mix}}$），局部熵里混杂了经典无知，不能直接当纠缠度量。
 - **误区 5：Alice 测量纠缠对的一半，远方的 Bob 立刻就能察觉变化。** 错。无信号定理保证 Bob 收到经典消息之前，他的无条件约化态不会发生任何变化，无法借纠缠超光速通信。
-- **误区 6：算复系数纯态的 $\rho_B$ 时顺手写成 $C^\dagger C$，或用 SVD 时忘了取 $V$ 的共轭。** 错。当 $C_{ab} = \langle ab|\psi\rangle$ 时，$\rho_A = CC^\dagger$ 而 $\rho_B = C^T C^*$；做 SVD $C = U\Sigma V^\dagger$ 时，$B$ 侧向量是 $V^\dagger$ 的行向量直接立成列（即 $V$ 的列取共轭）。
+- **误区 6：算复系数纯态的 $\rho_B$ 时顺手写成 $C^\dagger C$，或用 SVD 时忘了取 $V$ 的共轭。** 错。当 $C_{ab} = \langle ab|\psi\rangle$ 时，$\rho_A = CC^\dagger$ 而 $\rho_B = C^T C^*$；做 SVD $C = W\Sigma V^\dagger$ 时，$B$ 侧向量是 $V^\dagger$ 的行向量直接立成列（即 $V$ 的列取共轭）。
 - **误区 7：纠缠见证没过阈值就等于不纠缠，或者见证过线就等价于 Bell 非局域。** 两头都错。见证只是充分条件，可能因符号取向不对、相位旋转到别的轴或读出偏差而漏检；同时见证依赖测量基校准，而设备无关 Bell 违背条件更严（例如 $q = 1/2$ 的 Werner 态纠缠却不违背 CHSH）。
 - **误区 8：纠缠越多，量子算法就一定越快。** 错。如[第 04 章](04-circuits-protocols.md)的 Gottesman–Knill 定理将展示的，纯 Clifford 电路能造出高度纠缠的 Bell 态与 GHZ 态，却照样能在经典电脑上高效模拟；算法加速还需要恰当的干涉结构与非 Clifford 资源。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：张量积指数空间 $\to$ 纯态可分四格判据 $ad-bc=0$ 与四 Bell 基 $\to$ 偏迹与无信号定理 $\to$ SVD / Schmidt 分解与纠缠熵 $\to$ 混态见证、PPT 判据与 LOCC $\to$ CHSH / Tsirelson / GHZ 非局域性与纠缠单配性。
+
+| 核心工具 / 定理 | 表达式与关键边界 |
+| :--- | :--- |
+| 两比特纯态判据与 Bell 基 | 可分 $\iff ad-bc = 0$；四 Bell 态两两正交，局部约化态皆为 $I/2$ |
+| 偏迹与无信号定理 | $(\rho_A)_{a,c}=\rho_{a0,c0}+\rho_{a1,c1}$；远端局域酉门或非选择测量不改 $\rho_A$ |
+| SVD 与 Schmidt 分解 | $C = W\Sigma V^\dagger$，$\rho_A = CC^\dagger$、$\rho_B = C^T C^* \ne C^\dagger C$；纯态熵 $S(\rho_A)=-\sum\lambda_j\log_2\lambda_j$（混态失效） |
+| 混态判据层级 | 非局域（$q > 1/\sqrt{2}$ 违背 CHSH）$\subsetneq$ 投影导引（$q>1/2$）$\subsetneq$ 纠缠（$2\times 2$ 下 PPT 充要，$q>1/3$） |
+| CHSH 与 Tsirelson 界 | 经典 $\lvert S\rvert \le 2$（$75\%$），量子 $\lvert S\rvert \le 2\sqrt{2}$（$85.36\%$）；Mermin–GHZ 呈 $+1=-1$ 决定性矛盾 |
+| 纠缠单配性（CKW） | $C_{\mathrm{conc},AB}^2 + C_{\mathrm{conc},AC}^2 \le 4\det\rho_A$；GHZ $\tau=1$（丢一退纠缠），W $\tau=0$（两体分摊 $C_{\mathrm{conc}}=2/3$） |
+
+**三句自检要点**：① 四项全非零也可分（如 $\lvert +\rangle\lvert +\rangle$），仅测计算基无法区分 $\lvert\Phi^+\rangle$ 与经典硬币混态；② 偏迹单比特熵仅在整体为纯态时才等于纠缠度量；③ 纠缠见证依赖仪器校准，设备无关检验须看 Bell 违背并堵住实验漏洞。
 
 ---
 
@@ -1825,7 +1795,7 @@ $$
 
 - **非均匀纠缠态偏迹与远端旋转无信号检验**：运行 `python3 codes/foundations/foundations_lab.py --case 03`（验证对 $B$ 施加局域旋转 $R_y(0.731)$ 后 $\rho_A$ 保持不变而 $\rho_B$ 改变，专门抓出取错偏迹方向的程序错误）；
 - **复相位旋转导致的见证漏检与 $S^\dagger$ 轴修正**：运行 `python3 codes/foundations/diagnostic_lab.py --case 03`（核对 $|\psi_i\rangle = (|00\rangle + i|11\rangle)/\sqrt{2}$ 的 $C_Z = 1, C_X = 0, C_{XY} = 1$）；
-- **复系数 Schmidt 分解、双端读出偏差与单侧热噪声 PPT 检验**：完整复现脚本与固定数值核验记录见[全书实验总图谱](labs/README.md)、[读出与见证核验说明](../codes/foundations/round73-README.md)、[基础 SDK 运行说明](../codes/foundations/round72-README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
+- **复系数 Schmidt 分解、双端读出偏差与单侧热噪声 PPT 检验**：完整复现脚本与固定数值核验记录见[全书实验总图谱](labs/README.md)、[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 延伸阅读起点
 

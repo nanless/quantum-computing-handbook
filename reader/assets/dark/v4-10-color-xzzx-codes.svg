@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">二维颜色码几何与偏置噪声 XZZX 表面码对角线重复链</title>
+  <desc id="desc">左面板对比 d=3 Steane [[7,1,3]] 与 d=5 [[19,1,5]] 三角颜色码的红绿蓝三着色面元及内部三色超边结构；右面板展示奇数位施加 Hadamard 后的 d=3 旋转 XZZX 表面码，中心 Z₅ 错仅点亮 45° 对角线两面元，纯 Z 偏置下解耦为 1D 对角线重复链并将码容量阈值推至 50%。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#ffffff;stroke:#d4cfc3;stroke-width:1.35}
+.subpanel{fill:#f5f2ea;stroke:#d8d3c6;stroke-width:1.15}
+.phead{fill:#edf3ef}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12.5px;font-weight:400;fill:#4a5f59}
+.sec{font-size:13.8px;font-weight:700;fill:#14453d}
+.lbl{font-size:12.5px;font-weight:500;fill:#1f3832}
+.lblb{font-size:12.5px;font-weight:700;fill:#122b25}
+.sm{font-size:12px;font-weight:400;fill:#435852}
+.smb{font-size:12px;font-weight:600;fill:#1b332d}
+.xs{font-size:11.5px;font-weight:500;fill:#485e58}
+.xsb{font-size:11.5px;font-weight:700;fill:#19312b}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:700;fill:#122b25}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#122b25}
+.axis{stroke:#243d37;stroke-width:1.6;fill:none}
+.axis-fill{fill:#243d37}
+.wire{stroke:#243d37;stroke-width:1.8;fill:none}
+.cwire{stroke:#5a706a;stroke-width:1.35;fill:none}
+.ctrl{fill:#14453d}
+.targ{fill:#ffffff;stroke:#14453d;stroke-width:1.9}
+.grid{stroke:#e3ded2;stroke-width:1;fill:none}
+.guide{stroke:#7e928c;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#687f78;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1f5a92;fill:none}
+.c1-fill{fill:#1f5a92}
+.c1-txt{fill:#174775}
+.c1-soft{fill:#e6f0fa;stroke:#1f5a92;stroke-width:1.4}
+.c2{stroke:#b3542d;fill:none}
+.c2-fill{fill:#b3542d}
+.c2-txt{fill:#96411e}
+.c2-soft{fill:#fbeae3;stroke:#b3542d;stroke-width:1.4}
+.c3{stroke:#14453d;fill:none}
+.c3-fill{fill:#14453d}
+.c3-txt{fill:#14453d}
+.c3-soft{fill:#e3f2ec;stroke:#14453d;stroke-width:1.4}
+.c4{stroke:#b07016;fill:none}
+.c4-fill{fill:#b07016}
+.c4-txt{fill:#8a550c}
+.c4-soft{fill:#fcf2db;stroke:#b07016;stroke-width:1.4}
+.c5{stroke:#644696;fill:none}
+.c5-fill{fill:#644696}
+.c5-txt{fill:#4e347a}
+.c5-soft{fill:#f0eaf9;stroke:#644696;stroke-width:1.4}
+.note{fill:#fdf6e6;stroke:#c89232;stroke-width:1.25}
+.pill{fill:#f4f0e6;stroke:#b7b0a2;stroke-width:1.15}
+.pill-bg{fill:#FAF8F3;fill-opacity:.95;stroke:#b7b0a2;stroke-width:1.1}
+.area1{fill:#1f5a92;fill-opacity:.13}
+.area2{fill:#b3542d;fill-opacity:.14}
+.area3{fill:#14453d;fill-opacity:.13}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.cc-r{fill:#b3542d;fill-opacity:.23;stroke:#b3542d;stroke-width:1.5}
+.cc-g{fill:#1c7a5e;fill-opacity:.22;stroke:#14453d;stroke-width:1.5}
+.cc-b{fill:#1f5a92;fill-opacity:.22;stroke:#1f5a92;stroke-width:1.5}
+.qnode{fill:#ffffff;stroke:#14453d;stroke-width:1.6}
+.qnode-err{fill:#b3542d;stroke:#ffffff;stroke-width:1.8}
+.qnode-hi{fill:#14453d;stroke:#ffffff;stroke-width:1.6}
+
+.bg{fill:#111917}
+  .panel{fill:#182420;stroke:#2f443d}
+  .subpanel{fill:#1d2b26;stroke:#354d45}
+  .phead{fill:#1c2b26}
+  .title,.sec,.lblb,.math-txt,.gate-txt{fill:#edf6f2}
+  .subtitle,.sm,.xs{fill:#a4bdb5}
+  .lbl,.smb,.xsb{fill:#d9ebe5}
+  .axis,.wire{stroke:#cde2db}
+  .axis-fill,.ctrl{fill:#d9ebe5}
+  .cwire{stroke:#8ea9a0}
+  .targ{fill:#182420;stroke:#d9ebe5}
+  .grid{stroke:#283b35}
+  .guide,.unit-circle{stroke:#708c83}
+  .c1{stroke:#74bdf5}
+  .c1-fill{fill:#74bdf5}
+  .c1-txt{fill:#96d0fa}
+  .c1-soft{fill:#17354d;stroke:#74bdf5}
+  .c2{stroke:#eb8863}
+  .c2-fill{fill:#eb8863}
+  .c2-txt{fill:#f5a789}
+  .c2-soft{fill:#47251a;stroke:#eb8863}
+  .c3{stroke:#5ed1ad}
+  .c3-fill{fill:#5ed1ad}
+  .c3-txt{fill:#84e3c5}
+  .c3-soft{fill:#163b31;stroke:#5ed1ad}
+  .c4{stroke:#f0bf5e}
+  .c4-fill{fill:#f0bf5e}
+  .c4-txt{fill:#f5cf84}
+  .c4-soft{fill:#3b2e14;stroke:#f0bf5e}
+  .c5{stroke:#b89ef2}
+  .c5-fill{fill:#b89ef2}
+  .c5-txt{fill:#cebbf7}
+  .c5-soft{fill:#2c2145;stroke:#b89ef2}
+  .note{fill:#2e2514;stroke:#d19c3d}
+  .pill{fill:#1f2e29;stroke:#476158}
+  .pill-bg{fill:#182420;fill-opacity:.95;stroke:#476158}
+  .area1{fill:#74bdf5;fill-opacity:.18}
+  .area2{fill:#eb8863;fill-opacity:.19}
+  .area3{fill:#5ed1ad;fill-opacity:.17}
+  .badge-txt{fill:#111917}
+  .cc-r{fill:#eb8863;fill-opacity:.28;stroke:#eb8863}
+  .cc-g{fill:#5ed1ad;fill-opacity:.25;stroke:#5ed1ad}
+  .cc-b{fill:#74bdf5;fill-opacity:.26;stroke:#74bdf5}
+  .qnode{fill:#182420;stroke:#d9ebe5}
+  .qnode-err{fill:#eb8863;stroke:#111917}
+  .qnode-hi{fill:#5ed1ad;stroke:#111917}
+
+  </style>
+  <rect class="bg" width="960" height="460" rx="16"/>
+  <text class="title" x="22" y="34">二维三角颜色码三色面元与偏置噪声 XZZX 表面码对角线重复链</text>
+  <text class="subtitle" x="22" y="54">左：d = 3 Steane [[7,1,3]] 与 d = 5 [[19,1,5]] 三角色码及三色超边；右：XZZX 表面码纯 Z 错解耦为 1D 对角重复链</text>
+  <rect class="panel" x="20.0" y="68.0" width="460.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 32.0 69.0 H 468.0 Q 479.0 69.0 479.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
+  <line class="grid" x1="21.0" y1="99.0" x2="479.0" y2="99.0"/>
+  <text class="sec" x="33.0" y="89.5">1. 二维三角颜色码：d = 3 (Steane) 与 d = 5 ([[19,1,5]])</text>
+  <text class="smb c3-txt" x="116" y="124" text-anchor="middle">d = 3 Steane [[7, 1, 3]]</text>
+  <text class="xs" x="116" y="141" text-anchor="middle">3 面元（全权重 4）</text>
+  <polygon class="cc-r" points="116.0,172.0 139.1,212.0 116.0,252.0 69.8,252.0"/>
+  <polygon class="cc-b" points="116.0,252.0 139.1,212.0 185.3,292.0 139.1,292.0"/>
+  <polygon class="cc-g" points="69.8,252.0 116.0,252.0 139.1,292.0 46.7,292.0"/>
+  <circle class="qnode" cx="116.0" cy="172.0" r="4.8"/>
+  <circle class="qnode" cx="139.1" cy="212.0" r="4.8"/>
+  <circle class="qnode" cx="69.8" cy="252.0" r="4.8"/>
+  <circle class="qnode-err" cx="116.0" cy="252.0" r="6.2"/>
+  <circle class="qnode" cx="46.7" cy="292.0" r="4.8"/>
+  <circle class="qnode" cx="139.1" cy="292.0" r="4.8"/>
+  <circle class="qnode" cx="185.3" cy="292.0" r="4.8"/>
+  <line class="grid" stroke-dasharray="4 4" x1="214" y1="112" x2="214" y2="318"/>
+  <text class="smb c3-txt" x="344" y="124" text-anchor="middle">d = 5 三角色码 [[19, 1, 5]]</text>
+  <text class="xs" x="344" y="141" text-anchor="middle">6 边界权重 4 + 3 内部权重 6</text>
+  <polygon class="cc-b" points="344.0,152.0 359.6,179.0 344.0,206.0 312.8,206.0"/>
+  <polygon class="cc-g" points="344.0,206.0 359.6,179.0 390.8,233.0 359.6,233.0"/>
+  <polygon class="cc-r" points="312.8,206.0 344.0,206.0 359.6,233.0 344.0,260.0 312.8,260.0 297.2,233.0"/>
+  <polygon class="cc-b" points="359.6,233.0 390.8,233.0 406.4,260.0 390.8,287.0 359.6,287.0 344.0,260.0"/>
+  <polygon class="cc-g" points="390.8,287.0 406.4,260.0 437.5,314.0 406.4,314.0"/>
+  <polygon class="cc-b" points="297.2,233.0 312.8,260.0 297.2,287.0 266.1,287.0"/>
+  <polygon class="cc-g" points="312.8,260.0 344.0,260.0 359.6,287.0 344.0,314.0 312.8,314.0 297.2,287.0"/>
+  <polygon class="cc-r" points="359.6,287.0 390.8,287.0 406.4,314.0 344.0,314.0"/>
+  <polygon class="cc-r" points="266.1,287.0 297.2,287.0 312.8,314.0 250.5,314.0"/>
+  <circle class="qnode" cx="344.0" cy="152.0" r="4.2"/>
+  <circle class="qnode" cx="359.6" cy="179.0" r="4.2"/>
+  <circle class="qnode" cx="312.8" cy="206.0" r="4.2"/>
+  <circle class="qnode" cx="344.0" cy="206.0" r="4.2"/>
+  <circle class="qnode" cx="297.2" cy="233.0" r="4.2"/>
+  <circle class="qnode" cx="359.6" cy="233.0" r="4.2"/>
+  <circle class="qnode" cx="390.8" cy="233.0" r="4.2"/>
+  <circle class="qnode" cx="312.8" cy="260.0" r="4.2"/>
+  <circle class="qnode-err" cx="344.0" cy="260.0" r="5.6"/>
+  <circle class="qnode" cx="406.4" cy="260.0" r="4.2"/>
+  <circle class="qnode" cx="266.1" cy="287.0" r="4.2"/>
+  <circle class="qnode" cx="297.2" cy="287.0" r="4.2"/>
+  <circle class="qnode" cx="359.6" cy="287.0" r="4.2"/>
+  <circle class="qnode" cx="390.8" cy="287.0" r="4.2"/>
+  <circle class="qnode" cx="250.5" cy="314.0" r="4.2"/>
+  <circle class="qnode" cx="312.8" cy="314.0" r="4.2"/>
+  <circle class="qnode" cx="344.0" cy="314.0" r="4.2"/>
+  <circle class="qnode" cx="406.4" cy="314.0" r="4.2"/>
+  <circle class="qnode" cx="437.5" cy="314.0" r="4.2"/>
+  <rect class="subpanel" x="34" y="328" width="432" height="66" rx="9"/>
+  <rect class="cc-r" x="46" y="339" width="14" height="12" rx="2"/>
+  <rect class="cc-g" x="65" y="339" width="14" height="12" rx="2"/>
+  <rect class="cc-b" x="84" y="339" width="14" height="12" rx="2"/>
+  <text class="xsb" x="106" y="349">红/绿/蓝面元各载 X 与 Z 稳定子（H_X = H_Z 自对偶）</text>
+  <circle class="qnode-err" cx="53" cy="368" r="4.8"/>
+  <text class="xs c2-txt" x="66" y="372">内部单比特错同时点亮 3 色面元（超边，需 Chromobius 解码）</text>
+  <text class="xs c3-txt" x="46" y="388">比特密度 (3d²+1)/4 省 ~25%；全 Clifford 横向（逻辑 S = (S†)⊗ⁿ）</text>
+  <rect class="note" x="34.0" y="404.0" width="432.0" height="30.0" rx="8"/>
+  <text class="xsb" x="250.0" y="423.2" text-anchor="middle">二维颜色码以权重 6 校验与超边解码为代价，换取全 Clifford 群横向能力</text>
+  <rect class="panel" x="492.0" y="68.0" width="448.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 504.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 493.0 V 80.0 Q 493.0 69.0 504.0 69.0 Z"/>
+  <line class="grid" x1="493.0" y1="99.0" x2="939.0" y2="99.0"/>
+  <text class="sec" x="505.0" y="89.5">2. 偏置噪声 XZZX 表面码：纯 Z 错解耦为 1D 对角链</text>
+  <path class="pill" d="M 542 148 A 36 22 0 0 1 614 148 Z"/>
+  <text class="xs" x="578" y="142" text-anchor="middle">Z₁X₂</text>
+  <path class="pill" d="M 614 292 A 36 22 0 0 0 686 292 Z"/>
+  <text class="xs" x="650" y="308" text-anchor="middle">X₈Z₉</text>
+  <path class="pill" d="M 686 148 A 22 36 0 0 1 686 220 Z"/>
+  <text class="xs" x="697" y="188" text-anchor="middle">XZ</text>
+  <path class="pill" d="M 542 220 A 22 36 0 0 0 542 292 Z"/>
+  <text class="xs" x="531" y="260" text-anchor="middle">ZX</text>
+  <polygon class="cc-r" points="542,148 614,148 614,220 542,220"/>
+  <polygon class="cc-b" points="614,148 686,148 686,220 614,220"/>
+  <polygon class="cc-b" points="542,220 614,220 614,292 542,292"/>
+  <polygon class="cc-r" points="614,220 686,220 686,292 614,292"/>
+  <line class="c2" stroke-width="2.6" stroke-dasharray="5 4" x1="542" y1="148" x2="686" y2="292"/>
+  <line class="c3" stroke-width="2.0" stroke-dasharray="5 4" x1="614" y1="148" x2="686" y2="220"/>
+  <line class="c3" stroke-width="2.0" stroke-dasharray="5 4" x1="542" y1="220" x2="614" y2="292"/>
+  <text class="xsb c2-txt" x="569" y="164" text-anchor="middle">X</text>
+  <text class="xsb c1-txt" x="600" y="168" text-anchor="middle">Z</text>
+  <text class="xsb c1-txt" x="556" y="210" text-anchor="middle">Z</text>
+  <text class="xsb c2-txt" x="587" y="214" text-anchor="middle">X</text>
+  <circle class="c2-fill" cx="578" cy="184" r="11"/>
+  <text class="badge-txt" x="578" y="188" text-anchor="middle">−1</text>
+  <text class="xsb c2-txt" x="641" y="164" text-anchor="middle">X</text>
+  <text class="xsb c1-txt" x="672" y="168" text-anchor="middle">Z</text>
+  <text class="xsb c1-txt" x="628" y="210" text-anchor="middle">Z</text>
+  <text class="xsb c2-txt" x="659" y="214" text-anchor="middle">X</text>
+  <text class="xsb c2-txt" x="569" y="236" text-anchor="middle">X</text>
+  <text class="xsb c1-txt" x="600" y="240" text-anchor="middle">Z</text>
+  <text class="xsb c1-txt" x="556" y="282" text-anchor="middle">Z</text>
+  <text class="xsb c2-txt" x="587" y="286" text-anchor="middle">X</text>
+  <text class="xsb c2-txt" x="641" y="236" text-anchor="middle">X</text>
+  <text class="xsb c1-txt" x="672" y="240" text-anchor="middle">Z</text>
+  <text class="xsb c1-txt" x="628" y="282" text-anchor="middle">Z</text>
+  <text class="xsb c2-txt" x="659" y="286" text-anchor="middle">X</text>
+  <circle class="c2-fill" cx="650" cy="256" r="11"/>
+  <text class="badge-txt" x="650" y="260" text-anchor="middle">−1</text>
+  <circle class="qnode" cx="542" cy="148" r="10.5"/>
+  <text class="xsb" x="542" y="152" text-anchor="middle">1</text>
+  <circle class="qnode" cx="614" cy="148" r="10.5"/>
+  <text class="xsb" x="614" y="152" text-anchor="middle">2</text>
+  <circle class="qnode" cx="686" cy="148" r="10.5"/>
+  <text class="xsb" x="686" y="152" text-anchor="middle">3</text>
+  <circle class="qnode" cx="542" cy="220" r="10.5"/>
+  <text class="xsb" x="542" y="224" text-anchor="middle">4</text>
+  <circle class="qnode-err" cx="614" cy="220" r="12.5"/>
+  <text class="badge-txt" x="614" y="224" text-anchor="middle">Z₅</text>
+  <circle class="qnode" cx="686" cy="220" r="10.5"/>
+  <text class="xsb" x="686" y="224" text-anchor="middle">6</text>
+  <circle class="qnode" cx="542" cy="292" r="10.5"/>
+  <text class="xsb" x="542" y="296" text-anchor="middle">7</text>
+  <circle class="qnode" cx="614" cy="292" r="10.5"/>
+  <text class="xsb" x="614" y="296" text-anchor="middle">8</text>
+  <circle class="qnode" cx="686" cy="292" r="10.5"/>
+  <text class="xsb" x="686" y="296" text-anchor="middle">9</text>
+  <rect class="c2-soft" x="726" y="114" width="202" height="104" rx="9"/>
+  <text class="xsb c2-txt" x="738" y="133">纯 Z 错解耦机制（d = 3）</text>
+  <text class="xs" x="738" y="152">奇数位 {1,3,5,7,9} 施 H，</text>
+  <text class="xs" x="738" y="169">内部稳定子全变 XZZX 面元。</text>
+  <text class="xs" x="738" y="187">Z₅ 仅点亮 NW/SE 对角两面</text>
+  <text class="xsb c2-txt" x="738" y="206">（与 NE/SW 面元严格对易）</text>
+  <rect class="c3-soft" x="726" y="226" width="202" height="104" rx="9"/>
+  <text class="xsb c3-txt" x="738" y="245">1D 对角重复链与 50% 阈值</text>
+  <text class="xs" x="738" y="264">纯 Z 偏置（η = p_Z/p_X → ∞）</text>
+  <text class="xs" x="738" y="282">将二维格解耦为 d 条 45° 链：</text>
+  <text class="xsb c3-txt" x="738" y="301">码容量阈值飙升至 50%</text>
+  <text class="xs" x="738" y="319">（常规去极化表面码 ~10.9%）</text>
+  <rect class="subpanel" x="506" y="340" width="422" height="54" rx="9"/>
+  <text class="xsb c1-txt" x="518" y="359">硬前提——偏置保持门（Bias-Preserving Gates）：</text>
+  <text class="xs" x="518" y="379">校验门电路不得将 Z 错转化为 X 错（如猫态比特 CX），否则高阈值瓦解</text>
+  <rect class="note" x="506.0" y="404.0" width="422.0" height="30.0" rx="8"/>
+  <text class="xsb" x="717.0" y="423.2" text-anchor="middle">纯 Z 偏置下 XZZX 表面码解耦为 1D 对角重复链，码容量阈值逼近 50%</text>
+</svg>

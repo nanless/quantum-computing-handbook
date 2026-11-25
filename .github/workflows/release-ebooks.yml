@@ -1,0 +1,153 @@
+name: Release Ebooks and Offline Reader
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Optional GitHub Release tag (e.g. v1.1.0); leave blank to package v1.0.0 workflow artifacts only"
+        required: false
+        type: string
+        default: ""
+      prerelease:
+        description: "Mark GitHub Release as pre-release"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "release-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: "tools/reader/package-lock.json"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('tools/reader/package-lock.json') }}
+
+      - name: Install reader, CJK font, zip/unzip, and PDF dependencies
+        run: |
+          npm ci --prefix tools/reader --ignore-scripts --no-audit --no-fund
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-wqy-zenhei zip unzip
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" != "true" ]; then
+            npm exec --prefix tools/reader -- playwright install --with-deps chromium
+          else
+            npm exec --prefix tools/reader -- playwright install-deps chromium
+          fi
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r tools/reader/requirements-pdf.txt
+
+      - name: Run offline stdlib experiments and quality gates
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 codes/run_all.py
+          node tools/reader/check-v3-quality.mjs
+          node tools/reader/check-qm-examples.mjs
+          node tools/reader/check-qm-review.mjs
+          node tools/reader/check-network-examples.mjs
+
+      - name: Build and verify offline web reader
+        run: |
+          node tools/reader/build.mjs
+          node tools/reader/verify.mjs
+
+      - name: Build A4 PDF and EPUB 3 ebooks
+        env:
+          PDF_PRINT_CONCURRENCY: "2"
+        run: |
+          node tools/reader/build-pdf.mjs
+          node tools/reader/build-epub.mjs
+
+      - name: Package and verify release suite
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          INPUT_TAG: ${{ inputs.release_tag }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            RELEASE_TAG="${INPUT_TAG:-v1.0.0}"
+          else
+            RELEASE_TAG="$REF_NAME"
+          fi
+          node tools/reader/build-release.mjs --version "$RELEASE_TAG"
+          test -f dist/release/quantum-computing-handbook.pdf
+          test -f dist/release/quantum-computing-handbook.epub
+          test -f "dist/release/quantum-computing-handbook-${RELEASE_TAG}-web.zip"
+          test -f "dist/release/quantum-computing-handbook-${RELEASE_TAG}-codes.zip"
+          test -f dist/release/SHA256SUMS.txt
+          (cd dist/release && sha256sum -c SHA256SUMS.txt)
+          ls -lh dist/release
+
+      - name: Upload release suite artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: handbook-release-suite
+          path: dist/release/
+          retention-days: 14
+
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download release suite artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: handbook-release-suite
+          path: dist/release
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          INPUT_TAG: ${{ inputs.release_tag }}
+          INPUT_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            TAG="$INPUT_TAG"
+          else
+            TAG="$REF_NAME"
+          fi
+          EXTRA_ARGS=()
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$INPUT_PRERELEASE" = "true" ]; then
+            EXTRA_ARGS+=(--prerelease)
+          fi
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/release/* --clobber -R "$GITHUB_REPOSITORY"
+          else
+            gh release create "$TAG" dist/release/* \
+              --title "量子计算手册 ${TAG}" \
+              --generate-notes \
+              "${EXTRA_ARGS[@]}" \
+              -R "$GITHUB_REPOSITORY"
+          fi

@@ -2,7 +2,7 @@
   <title id="title">DRAG 高斯整形脉冲波形与动态解耦时序对比</title>
   <desc id="desc">左面板精确绘制高斯同相包络 I(t) = Ω₀ exp[−(t−t₀)²/(2σ²)]（实线，t₀ = 8 ns，σ = 2 ns）与 DRAG 正交导数修正 Q(t) = −(β/α) İ(t)（虚线，α/2π = −200 MHz，β = 1，正负峰位于 t₀ ± σ = 6、10 ns，幅值 ±0.241 Ω₀）。右面板对比相同总时长 T 下的三种时序：自由演化 Ramsey、Hahn 自旋回波（T/2 − π − T/2）与 CPMG 四脉冲序列（τ/2 − π_Y − τ − π_Y − τ − π_Y − τ − π_Y − τ/2，τ = T/4，初末脉冲为 π/2_X）。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -42,42 +42,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm{fill:#b7cde0}
-  .lbl,.smb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .forbid{fill:#f28872;fill-opacity:.12}
-  .area1{fill:#6bc2f5;fill-opacity:.15}
-  .data-node{fill:#16222e;stroke:#d7e7f5}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

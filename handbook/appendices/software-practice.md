@@ -2,17 +2,17 @@
 
 > 源码与校验清单核验基线：2026-09-26 / 2026-10-13；生态版本对照更新至 2026-11-25。
 
-这一页把全书 26 章（主篇 `00`–`21` 与量子力学基础篇 `Q1`–`Q4`）的数学模型连接到本地可运行的教学程序、真实开源项目的核心源码，以及当前工业界的典型工作流。阅读这一页时，心中随时把四件事分清：**有开源库实现**、**能在真机跑通**、**已经带来商业收益**、**证明了量子加速**——它们是四个截然不同的问题。
+这一页是全书**开源软件生态与工业工作流推导的单真相源**，把五篇 26 章（主篇 `00`–`21` 与量子力学基础篇 `Q1`–`Q4`）的数学模型连接到本地可运行的教学程序、真实开源项目的核心源码以及当前工业界的典型工作流。阅读这一页时，心中随时把四件事分清：**有开源库实现**、**能在真机跑通**、**已经带来商业收益**、**证明了量子加速**——它们是四个截然不同的问题。
 
 为了方便读者对照阅读、同时保留可验证的来源边界，仓库在 `codes/vendor/` 下归档了 **31 个开源项目的 122 份核心源码、许可证与声明文件**，全部锁定到 40 位 Git 提交哈希与 SHA-256 校验值，详见[完整源码索引](../../codes/vendor/README.md)和[机器可读校验清单](../../codes/vendor/manifest.json)。这些摘录原字节保存，用来阅读算法接口与底层数学约定；若要完整运行，请按清单中的固定提交在隔离环境中安装完整上游包。此外，仓库还在隔离环境中对这 31 个项目的完整发行包或 C/C++ 提交跑通了指定本地 CPU 任务，每个项目的实际版本、输入、原始计数、复现的上游陷阱与验收边界全部汇总在[完整 SDK 实验册](../labs/sdk-validation.md)。
 
 ## 1. 怎样读懂开源生态与算法对照表
 
-截至 2025–2026 年，量子开源软件栈已形成较清晰的分层（详细选型见[第 15 章第 7 节](../15-practice-research.md#7-20252026-主流开源量子软件栈速览与选型)）：**Qiskit 2.x**（全面转向 Rust 加速编译器 LightSABRE 与 Primitives V2 接口，并拆出 `qiskit-addon-*` 专题扩展包）、**PennyLane + Catalyst**（自动微分与混合编译）、**Cirq + Qualtran**（底层硬件调度与容错资源估算）、**Stim + PyMatching 2.x**（稳定子电路级纠错模拟与 Sparse Blossom 高速解码）、**QuTiP 5.x**（开放量子系统主方程与脉冲最优控制）以及 **CUDA-Q**（面向 GPU 加速态矢量、张量网络与混合异构编排的高性能模拟框架）。
+截至 2025–2026 年，量子开源软件栈已形成较清晰的分层（详细选型见[第 15 章第 7 节](../15-practice-research.md#7-20252026-主流开源量子软件栈速览与选型)）：**Qiskit 2.x**（本地实跑锁定 `2.5.2`，全面转向 Rust 加速编译器 LightSABRE 与 Primitives V2 接口，并拆出 `qiskit-addon-*` 专题扩展包）、**PennyLane + Catalyst**（自动微分与混合编译）、**Cirq + Qualtran**（底层硬件调度与容错资源估算）、**Stim + PyMatching 2.x**（本地实跑锁定 `1.16.0` / `2.4.0`，稳定子电路级纠错模拟与 Sparse Blossom 高速解码）、**QuTiP 5.x**（开放量子系统主方程与脉冲最优控制），以及面向 GPU 加速态矢量与张量网络编排的 **CUDA-Q**（外部生态入口，未归档至 `codes/vendor/`）。
 
 在动手写模拟或复核论文宣称的“经典不可模拟”之前，应先按[第 21 章｜稳定子形式、经典模拟引擎与量子优势边界](../21-stabilizer-classical-simulation.md)建立的四维标尺（量子比特数、非 Clifford 门数、纠缠拓扑与电路噪声率）分流选型：一般小规模线路用态矢量或密度矩阵（Qiskit Aer、PennyLane、QuTiP 或 CUDA-Q），大规模 Clifford 与 Pauli 噪声线路用稳定子表（Stim + PyMatching），弱纠缠或局域几何线路用矩阵乘积态与张量网络（`quimb`、CUDA-Q），浅层含噪期望值则优先试跑海森堡 Pauli 传播（`pauli-prop`、`PauliPropagation.jl`）。
 
-看任何算法实现对照表前，先盯住三件事：输入怎么给、黑箱或电路访问怎么算账、输出究竟是一个经典比特、一组采样统计，还是一个量子态。比如 HHL 输出的是解向量的量子态，若任务要求打印全部经典分量，后处理读出成本就会吞掉加速；振幅估计里“一次预言机调用”背后往往藏着昂贵的数据装载与可逆算术。表中的“本地源码”指仓库已归档该项目的代表性核心文件，未归档模块标为外部入口或理论练习。
+看任何算法实现对照表前，先盯住三件事：输入怎么给、黑箱或电路访问怎么算账、输出究竟是一个经典比特、一组采样统计，还是一个量子态。比如 HHL 输出的是解向量的量子态，若任务要求打印全部经典分量，后处理读出成本就会吞掉加速；振幅估计里“一次预言机调用”背后往往藏着昂贵的数据装载与可逆算术。表中的“本地源码”指仓库已归档该项目的代表性核心文件，未归档模块均明确标为**外部生态入口（未归档至 `codes/vendor/`）** 或理论练习。
 
 ## 2. 基础算法与容错算法族
 
@@ -40,14 +40,14 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 | VQE | 参数化试探态 → 分组 Pauli 测量 → 经典优化 | Qiskit `vqe.py`；[第 08 章实验](../labs/algorithms.md) | 同一基组、活性空间与精度门槛；计入优化总迭代与全部采样次数 |
 | QAOA | 成本层与混合层 → 采样 → 可行解筛选 | PennyLane `qaoa/cost.py`；第 08 章三节点精确分布 | 同时间预算下对比穷举、局部搜索与成熟整数规划求解器 |
 | SQD | 量子采样 → 组态恢复 → 经典子空间对角化 | Qiskit SQD / SQD-HPC 恢复与费米子模块 | 同哈密顿量下对比 SHCI / DMRG，记录去重子空间维数与经典内存 |
-| 量子核 / 变分学习 | 数据编码 → 核矩阵或测量特征 → 经典学习 | PennyLane 项目入口（未归档完整训练流水线） | 数据划分、特征缩放、超参预算、强经典模型与数据加载开销 |
+| 量子核 / 变分学习 | 数据编码 → 核矩阵或测量特征 → 经典学习 | PennyLane 外部生态入口（未归档完整训练流水线） | 数据划分、特征缩放、超参预算、强经典模型与数据加载开销 |
 | 随机测量 / 经典阴影，16 | 随机 Pauli 测量 → 快照逆映射 → 观测量估计 | PennyLane `ClassicalShadow` 后处理源码与本地 $30{,}000$ 次采样复算 | 目标观测量族、阴影范数方差、多重比较校正 |
 | ZNE / PEC / 读出缓解，08、15 | 噪声缩放或准概率线路 → 带权重构 | Mitiq 折叠与外推源码；[ZNE 预算实验](../labs/practice.md) | 固定总采样预算、校准耗时、噪声漂移，偏差与方差分开报 |
 | 量子退火 / QUBO，17 | 建模、次图嵌入、采样、链修复与验算 | `dimod` `ExactSolver` 本地基线；云端 QPU 需另行接入 | 罚项与动态范围压缩、链长、可行率与端到端求解时间（TTS） |
-| MPS / 张量网络，16、21 | 量子态分解与张量收缩 → 期望值 | `quimb` 线路生成与收缩源码；[第 21 章](../21-stabilizer-classical-simulation.md)与 [simulation_engines_lab.py](../../codes/algorithms/simulation_engines_lab.py)；GPU 加速可用 CUDA-Q | 最大键维 $\chi$、奇异值截断误差、收缩顺序与收敛性 |
-| Pauli 传播 / 稀疏 Pauli 动力学，16、21 | 可观测量反向传播 → 截断小系数/高权重项 | IBM `pauli-prop` Python/Rust 源码；[第 21 章](../21-stabilizer-classical-simulation.md)；生态另见 `PauliPropagation.jl` | 截断偏差界、可观测量项数爆炸阈值与噪声模型精度 |
+| MPS / 张量网络，16、21 | 量子态分解与张量收缩 → 期望值 | `quimb` 线路生成与收缩源码；[第 21 章](../21-stabilizer-classical-simulation.md)与 [三引擎标准库实验](../../codes/algorithms/simulation_engines_lab.py)；GPU 加速可用 CUDA-Q（外部生态入口，未归档至 `codes/vendor/`） | 最大键维 $\chi$、奇异值截断误差、收缩顺序与收敛性 |
+| Pauli 传播 / 稀疏 Pauli 动力学，16、21 | 可观测量反向传播 → 截断小系数/高权重项 | IBM `pauli-prop` Python/Rust 源码；[第 21 章](../21-stabilizer-classical-simulation.md)；生态另见 `PauliPropagation.jl`（外部生态入口，未归档至 `codes/vendor/`） | 截断偏差界、可观测量项数爆炸阈值与噪声模型精度 |
 | 主方程 / 量子轨迹，05、09 | 哈密顿量与塌缩算符 → 密度矩阵或随机轨迹 | QuTiP 5 `mesolve.py` 与 `mcsolve.py` 源码 | 马尔可夫近似、Fock 截断维数、轨迹标准误与积分容差 |
-| 量子传感与精密测量模拟，20 | 含噪探针演化与干涉序列 → 经典/量子 Fisher 信息、灵敏度与 HNLS 判据 | [第 20 章](../20-quantum-sensing-metrology.md)与自编 [sensing_lab.py](../../codes/systems/sensing_lab.py)；开放系统拓展可用 QuTiP 5 | 统一总探针数 $N$、探询时长与死时间、灵敏度单位（如 $\mathrm{T/\sqrt{Hz}}$）及非纠缠标准量子极限基线 |
+| 量子传感与精密测量模拟，20 | 含噪探针演化与干涉序列 → 经典/量子 Fisher 信息、灵敏度与 HNLS 判据 | [第 20 章](../20-quantum-sensing-metrology.md)与自编 [传感标准库实验](../../codes/systems/sensing_lab.py)；开放系统与脉冲突发拓展可用 QuTiP 5 / Qiskit Dynamics（后者为外部生态入口，未归档至 `codes/vendor/`） | 统一总探针数 $N$、探询时长与死时间、灵敏度单位（如 $\mathrm{T/\sqrt{Hz}}$）及非纠缠标准量子极限基线 |
 
 对于 SQD，[IBM SQD 官方文档](https://quantum.cloud.ibm.com/docs/en/addons/qiskit-addon-sqd)明确展示了“量子处理器采样 + 经典超算做组态恢复与子空间对角化”的混合分工，这与“量子芯片独立算完整个大分子”有本质区别。
 
@@ -55,15 +55,16 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 
 | 工程环节与章节 | 输入与输出 | 代码入口 | 必须随实验归档的信息 |
 |---|---|---|---|
-| 编译、布局与 SABRE 路由，14 | 抽象门图与硬件耦合图 → 原生线路与末态映射 | Qiskit SABRE 入口；[末态映射实验](../labs/systems.md) | 初/末布局、随机种子、目标硬件描述（`target`）、原生门数、时长与误差 |
-| 稳定子电路采样，10、21 | 电路级 Pauli 噪声线路 → 探测事件与逻辑翻转 | Stim 表面码/重复码生成器；[第 21 章](../21-stabilizer-classical-simulation.md)与 [simulation_engines_lab.py](../../codes/algorithms/simulation_engines_lab.py) | 电路级噪声模型、边界、轮数与相关错误（不直接模拟非 Clifford 门） |
-| 最小权完美匹配解码，10 | 探测事件与对数似然边权 → 逻辑修正预测 | PyMatching `matching.py`（Sparse Blossom） | 边权来源、相关匹配设置、时空边界、失败计数与置信区间 |
+| 编译、布局与 SABRE 路由，14 | 抽象门图与硬件耦合图 → 原生线路与末态映射 | Qiskit 2.5.2 SABRE 入口；[末态映射实验](../labs/systems.md) | 初/末布局、随机种子、目标硬件描述（`target`）、原生门数、时长与误差 |
+| 稳定子电路采样，10、21 | 电路级 Pauli 噪声线路 → 探测事件与逻辑翻转 | Stim 1.16.0 表面码/重复码生成器；[第 21 章](../21-stabilizer-classical-simulation.md)与 [三引擎标准库实验](../../codes/algorithms/simulation_engines_lab.py) | 电路级噪声模型、边界、轮数与相关错误（不直接模拟非 Clifford 门） |
+| 最小权完美匹配解码，10 | 探测事件与对数似然边权 → 逻辑修正预测 | PyMatching 2.4.0 `matching.py`（Sparse Blossom 与相关匹配） | 边权来源、相关匹配设置、时空边界、失败计数与置信区间 |
 | 魔法态工厂调度，11 | 需求时间线与产出周期 → 缓存库存与停顿 | [自编离散事件实验](../labs/systems.md) | 仅看平均吞吐不够，须记录缓存上限、首件延迟与突发停顿 |
-| 量子网络协议仿真，12 | 链路成功、存储退相干与纠缠交换 → 远程纠缠率 | SeQUeNCe 传态与协议基类；双链等待实验 | 光纤衰减、经典信令往返、存储截止时间与末态保真度 |
+| 量子网络协议仿真，12 | 链路成功、存储退相干与纠缠交换 → 远程纠缠率 | SeQUeNCe 0.8.5 传态与协议基类；双链等待实验 | 光纤衰减、经典信令往返、存储截止时间与末态保真度 |
 | 擦除标记、校准与运维，09、19 | 观测告警与维护窗口 → 后验精确率与可用率 | 自编贝叶斯告警与区间并集脚本 | 先验基率、误报率、停机重叠区间 |
-| 后量子密码（PQC），12 | 随机数与密钥参数 → 封装与解封装 | `liboqs` C 语言 KEM 示例 | 经典密码原型代码（非量子算法），不等同于通过侧信道认证的生产库 |
-| 脉冲最优控制（GRAPE / CRAB），14 | 漂移/控制哈密顿量与目标酉 → 离散控制脉冲 | `qutip-qtrl` `pulseoptim.py` 与 `grape.py` 源码 | 带宽、幅度上限、三能级泄漏、控制链滤波与失谐鲁棒性 |
-| 跨芯片线路切割，14、19 | 超规模电路与切口位置 → 子电路集合与带权重构 | `qiskit-addon-cutting` 权重与重构源码（见[第 14 章第 11 节](../14-compilation-control.md#11-跨芯片编译入口线路切割circuit-cutting与准概率重构)） | 分区映射、作业 ID 顺序、准概率放大系数 $\Gamma$ 与总采样预算 |
+| 后量子密码（PQC），12 | 随机数与密钥参数 → 封装与解封装 | `liboqs` 0.15.0 C 语言 KEM 示例 | 经典密码原型代码（非量子算法），不等同于通过侧信道认证的生产库 |
+| 脉冲最优控制（GRAPE / CRAB），14 | 漂移/控制哈密顿量与目标酉 → 离散控制脉冲 | `qutip-qtrl` 0.2.0 `pulseoptim.py` 与 `grape.py` 源码 | 带宽、幅度上限、三能级泄漏、控制链滤波与失谐鲁棒性 |
+| 跨芯片线路切割，14、19 | 超规模电路与切口位置 → 子电路集合与带权重构 | `qiskit-addon-cutting` 0.10.0 权重与重构源码（见[第 14 章第 11 节](../14-compilation-control.md#11-跨芯片编译入口线路切割circuit-cutting与准概率重构)） | 分区映射、作业 ID 顺序、准概率放大系数 $\Gamma$ 与总采样预算 |
+| 门/脉冲混合调度，14、19 | 显式时序约束与硬件波形配置 → 仪器调度表 | Quantify Scheduler（外部生态入口，未归档至 `codes/vendor/`） | 后端版本、硬件配置、时钟域、校准、编译时序及仪器驱动 |
 
 [Stim 官方文档](https://github.com/quantumlib/Stim)明确限定其面向稳定子电路与 Pauli 噪声模型；若需仿真连续相干旋转、振幅阻尼或大量非 Clifford 门，应按[第 21 章｜稳定子形式、经典模拟引擎与量子优势边界](../21-stabilizer-classical-simulation.md)的四引擎决策树改用态矢量、密度矩阵、张量网络、Pauli 传播或 QuTiP。
 
@@ -120,13 +121,13 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 
 ## 7. 覆盖状态与明确未包含的范围
 
-本仓库已实现全部 26 章的教学手算验证（含[第 20 章](../20-quantum-sensing-metrology.md)配套 [sensing_lab.py](../../codes/systems/sensing_lab.py) 与[第 21 章](../21-stabilizer-classical-simulation.md)配套 [simulation_engines_lab.py](../../codes/algorithms/simulation_engines_lab.py)）、31 个代表性开源项目的 122 份固定提交源码归档，以及全套 31 个完整发行包/源码仓的隔离环境本地 CPU 实跑（含非对角/负谱 HHL、SKW 超立方体搜索、两比特经典阴影、三能级 GRAPE、高斯光子概率、两步 MBQC、动态多乘积公式、阴影光锥与反噪声传播采样、长序列门集层析以及单机 Philox 并行子空间对角化，详细样本见[完整 SDK 实验册](../labs/sdk-validation.md)）。
+本仓库已实现全部 26 章的教学手算验证（含[第 20 章](../20-quantum-sensing-metrology.md)配套 [传感标准库实验](../../codes/systems/sensing_lab.py) 与[第 21 章](../21-stabilizer-classical-simulation.md)配套 [三引擎标准库实验](../../codes/algorithms/simulation_engines_lab.py)）、31 个代表性开源项目的 122 份固定提交源码归档，以及全套 31 个完整发行包/源码仓的隔离环境本地 CPU 实跑（含非对角/负谱 HHL、SKW 超立方体搜索、两比特经典阴影、三能级 GRAPE、高斯光子概率、两步 MBQC、动态多乘积公式、阴影光锥与反噪声传播采样、长序列门集层析以及单机 Philox 并行子空间对角化，详细样本见[完整 SDK 实验册](../labs/sdk-validation.md)）。
 
 以下内容明确**不在**当前仓库交付范围内：任意大规模非阿贝尔隐藏子群求解、拓扑量子计算硬件仿真、多节点分布式容错集群、真实硬件在线噪声标定与学习、付费云 QPU 作业日志、闭源设备固件与未经授权的实验录音。
 
 ## 8. 精选源码精读指南：从公式走到代码
 
-本节围绕 `codes/vendor/` 中最具教学价值的核心文件，说明应该按什么顺序读、重点防哪些约定陷阱。练习 S04、S05、S06、S08 的独立纯标准库复算见[source_reading_checks.py](../../codes/practice/source_reading_checks.py)与[固定样本结果](../../codes/practice/source-reading-results.json)。
+本节围绕 `codes/vendor/` 中最具教学价值的核心文件，说明应该按什么顺序读、重点防哪些约定陷阱。练习 S04、S05、S06、S08 的独立纯标准库复算见[源码精读校验程序](../../codes/practice/source_reading_checks.py)与[固定样本结果](../../codes/practice/source-reading-results.json)。
 
 ### 8.1 QSP 相位求解：先核对多项式基，再核对复响应
 
@@ -152,7 +153,7 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 
 ### 8.4 变分梯度：训练参数、门角度与计算图是三层对象
 
-对应[第 08 章](../08-applications.md)。PennyLane 的 [parameter_shift.py](../../codes/vendor/pennylane/pennylane/gradients/parameter_shift.py) 负责按**参数移位法则**对各门角度生成平移线路并线性组合；当同一个外部训练参数同时出现在多扇门中时，必须靠经典计算图按链式法则累加偏导，而不能把所有门同时平移一次直接套用单门二点公式。独立对比正确逐门求导、错误整体平移与解析导数的脚本见 [round70_checks.py](../../codes/algorithms/round70_checks.py)。
+对应[第 08 章](../08-applications.md)。PennyLane 的 [parameter_shift.py](../../codes/vendor/pennylane/pennylane/gradients/parameter_shift.py) 负责按**参数移位法则**对各门角度生成平移线路并线性组合；当同一个外部训练参数同时出现在多扇门中时，必须靠经典计算图按链式法则累加偏导，而不能把所有门同时平移一次直接套用单门二点公式。独立对比正确逐门求导、错误整体平移与解析导数的程序见[变分梯度对照脚本](../../codes/algorithms/round70_checks.py)（参数 `08`）。
 
 ### 8.5 主方程与量子轨迹：平均曲线不等于单条随机跳跃
 
@@ -164,11 +165,11 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 
 **源码练习 S07**：软件在二能级模型里优化出极小目标误差的脉冲后，送到真实芯片前至少还要核查哪些项目？**答案**：时间步离散收敛性、驱动幅度与带宽上限、控制线传递函数畸变、向 $\lvert 2\rangle$ 及更高能级的泄漏、失谐与幅度漂移鲁棒性，以及真实读出与校准误差。
 
-### 8.7 线路切割：采样权重与重构顺序必须同时保留
+### 8.7 线路切割：异步作业返回乱序陷阱与权重绑定
 
-对应[第 14 章第 11 节：线路切割与准概率重构](../14-compilation-control.md#11-跨芯片编译入口线路切割circuit-cutting与准概率重构)、[第 19 章](../19-engineering-architecture.md)及[统计实验 P15-G](../labs/practice.md)。归档的 `qiskit-addon-cutting` 源码包含 [weights.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/qpd/weights.py)（区分精确权重与抽样权重）与 [cutting_reconstruction.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/cutting_reconstruction.py)（要求回收结果与子实验及可观测量的原始顺序严格对齐），官方说明见 [Qiskit Addon Cutting](https://qiskit.github.io/qiskit-addon-cutting/)。
+对应[第 14 章第 11 节：线路切割与准概率重构](../14-compilation-control.md#11-跨芯片编译入口线路切割circuit-cutting与准概率重构)、[第 19 章](../19-engineering-architecture.md)及[统计实验 P15-G](../labs/practice.md#p15-g负权重不是负概率线路切割的代价怎样算)（准概率抽样与精确方差推导见 P15-G，本节聚焦多作业并发重构的工程顺序校验）。归档的 `qiskit-addon-cutting` 源码包含 [weights.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/qpd/weights.py)（区分精确权重与抽样权重）与 [cutting_reconstruction.py](../../codes/vendor/qiskit-addon-cutting/qiskit_addon_cutting/cutting_reconstruction.py)（要求回收结果与子实验及可观测量的原始顺序严格对齐），官方说明见 [Qiskit Addon Cutting](https://qiskit.github.io/qiskit-addon-cutting/)。
 
-**源码练习 S08**：某次切割重构的两项权重为 $1.5$ 和 $-0.5$，对应子线路均值分别为 $0.4$ 和 $-0.2$，正确重构结果是 $1.5(0.4) - 0.5(-0.2) = 0.7$；如果回收作业结果时顺序颠倒而权重未换，会算出 $1.5(-0.2) - 0.5(0.4) = -0.5$。两个数字都落在合法范围 $[-1, 1]$ 内，单看“数值未越界”完全抓不到错序！因此必须把作业 ID、分区标签、可观测量与系数绑定存档，绝不能按异步返回先后顺序直接拼接。
+**源码练习 S08（异步乱序陷阱）**：某次跨分区重构的两项绑定系数为 $(c_1, c_2) = (1.25, -0.25)$，对应子线路期望值分别为 $(m_1, m_2) = (0.60, -0.40)$；若按作业完成先后顺序错配回收，为什么仅检查“最终期望落在 $[-1, 1]$ 内”完全抓不到错序？**答案**：正确绑定重构为 $1.25(0.60) - 0.25(-0.40) = 0.85$；若两项异步返回颠倒而权重表未同步重排，会算出 $1.25(-0.40) - 0.25(0.60) = -0.65$。两个结果都安静地落在合法区间 $[-1, 1]$ 内（同类型双项权重校验亦见[源码精读校验程序](../../codes/practice/source_reading_checks.py)），因此工程上必须把作业 ID、分区标签、可观测量与系数一起落盘绑定，绝不能按并发回调顺序直接拼接。
 
 ### 8.8 噪声模型：名字相同，先查 Kraus 矩阵与固定点
 
@@ -196,7 +197,7 @@ Qualtran 仍在持续演进，接口与模块细节可能随版本变化；锁�
 
 ## 11. 多乘积公式：抵消近似误差之后还要算方差
 
-本节至第 16 节对应的独立纯 Python 核算程序为 [workflow_checks.py](../../codes/practice/workflow_checks.py) 与[固定计算结果](../../codes/practice/workflow-results.json)。
+本节至第 15 节对应的独立纯 Python 核算程序为 [workflow_checks.py](../../codes/practice/workflow_checks.py) 与[固定计算结果](../../codes/practice/workflow-results.json)（与真实发行包的隔离实跑对比集中见[完整 SDK 实验册](../labs/sdk-validation.md)）。
 
 更细的 Trotter 步长能减小时间离散误差，却会让线路深度成倍拉长。多乘积公式（MPF）改用分别运行若干条不同步长的浅线路，再把各自的期望值做经典带权组合以消去低阶误差（参考[MPF 官方教程](https://qiskit.github.io/qiskit-addon-mpf/tutorials/01_getting_started.html)与 [Carrera Vazquez 等 2023 论文](https://quantum-journal.org/papers/q-2023-07-25-1067/)）。这种经典带权合并不同于把量子振幅相干叠加，带负权重的组合算符也未必对应合法的物理密度矩阵。
 
@@ -248,7 +249,7 @@ $$
 
 上图按该理想模型的精确偏差平方加方差上界（$1/N$ 与 $(5/3)^2/N$）绘制，双对数坐标（绘图脚本见[workflow_figures.py](../../codes/practice/workflow_figures.py)）。可以看到：在总采样次数偏少时，负权重带来的方差放大反而可能让均方误差上界高于单一高步数方案；只有在足够大的采样预算下，降偏差的优势才显现出来。
 
-源码阅读入口依次为 [static.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/static.py)、[lse.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/lse.py)、[exact.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/exact.py) 与动态构造 [dynamic.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/dynamic.py)。静态优化与动态 MPO 后端实跑记录见[SDK 实验册](../labs/sdk-validation.md)。
+源码阅读入口依次为 [static.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/static.py)、[lse.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/lse.py)、[exact.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/costs/exact.py) 与动态构造 [dynamic.py](../../codes/vendor/qiskit-addon-mpf/qiskit_addon_mpf/dynamic.py)。静态优化与动态 MPO 后端实跑记录见[SDK 实验册 `SDK-04` 与 `SDK-07`](../labs/sdk-validation.md)。
 
 ## 12. 可观测量反向传播：线路变短后改测什么
 
@@ -280,7 +281,7 @@ $$
 \lvert\operatorname{Tr}(D\rho)\rvert \le \lVert D\rVert_\infty \le \sum_{j \in R} \lvert d_j\rvert.
 $$
 
-这是不会随增加采样次数自动消失的系统截断偏差。源码阅读入口为 [backpropagation.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/backpropagation.py)、[truncating.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/truncating.py) 与 [metadata.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/metadata.py)。
+这是不会随增加采样次数自动消失的系统截断偏差。源码阅读入口为 [backpropagation.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/backpropagation.py)、[truncating.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/truncating.py) 与 [metadata.py](../../codes/vendor/qiskit-addon-obp/qiskit_addon_obp/utils/metadata.py)；真实发行包的零接受段缺陷复现见[SDK 实验册 `SDK-02`](../labs/sdk-validation.md)。
 
 ## 13. Pauli 传播与含噪伴随映射
 
@@ -292,7 +293,7 @@ $$
 \mathcal E^\dagger(O) = \sum_k K_k^\dagger O K_k.
 $$
 
-保迹条件保证 $\mathcal E^\dagger(I) = I$，但 $\mathcal E^\dagger$ 并非去除噪声的逆信道，而是把噪声的衰减效应向后传到可观测量上（见[第 05 章](../05-noise-channels.md)）。
+保迹条件保证 $\mathcal E^\dagger(I) = I$，但 $\mathcal E^\dagger$ 并非去除噪声的逆信道，而是把噪声的衰减效应向后传到可观测量上（见[第 05 章](../05-noise-channels.md)与[第 21 章第 6 节](../21-stabilizer-classical-simulation.md#6-海森堡绘景-pauli-传播与稀疏-pauli-动力学spd)）。
 
 **练习 W3（含噪伴随映射双路径核对）**：从 $\lvert 0\rangle$ 出发，先做 $U = R_y(\pi/6)$，再经概率 $p = 0.1$ 的相位翻转信道 $\mathcal E(\rho) = (1-p)\rho + p Z\rho Z$，最后测 $X$。用状态演化和可观测量反向传播两条路径互相验算。
 
@@ -332,20 +333,18 @@ $$
 
 **逐步解答**：输入制备有 $4^n$ 种组合，输出测量基有 $3^n$ 种组合，总设置数为 $12^n$。对 $n = 1, 2, 5, 10$ 分别为 $12$、$144$、$248{,}832$ 与 $61{,}917{,}364{,}224$ 组；5 比特每组设置 $1{,}000$ 次采样便需 $2.48832 \times 10^8$ 次采样（每组设置同时输出 $2^n$ 种位串统计，不必再把 $2^n$ 乘进设置数）。源码对应 Qiskit Experiments 的 [qpt_experiment.py](../../codes/vendor/qiskit-experiments/qiskit_experiments/library/tomography/qpt_experiment.py) 与 [tomography_analysis.py](../../codes/vendor/qiskit-experiments/qiskit_experiments/library/tomography/tomography_analysis.py)（官方说明见 [ProcessTomography](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.ProcessTomography.html)）；处理中途测量条件分支时，必须同时保留发生概率与归一化方式，绝不能把各分支条件密度矩阵丢掉概率后等权平均。
 
-## 16. 把开源软件约定带回全书公式
+## 16. 跨开源软件数学约定核对与源码入口
 
-不同开源库对同名函数常采用不同物理或数学约定，写对照脚本前先核清下面三处：
+写跨库对照脚本前，**高斯协方差 $\hbar$ 与多模排序、根保真度 $F$ 与平方重叠 $F^2$、信道复合方向 `compose`、QSP 相位与端序**等全部跨库口径统一以[符号表第 4 节（跨章与开源软件核对速查表）](notation.md#4-跨章与开源软件核对速查表)为单真相源，此处不再重复抄录。对应可查证源码入口如下：
 
-| 对照对象 | 全书标准 vs 固定源码约定 | 实操核对方式 |
-|---|---|---|
-| **高斯协方差** | 第 18 章用 $[\hat q,\hat p]=i$、真空 $V=I/2$；The Walrus `is_valid_cov` 默认 `hbar=2` | 显式传入 `hbar=1`，或对均值与协方差做整体缩放 |
-| **保真度口径** | 本书 $F$ 为根保真度；The Walrus `fidelity` 采用纯态平方重叠 $F^2$ | 对齐 $F$ 与 $F^2$ 再比较（如纯态内积模 $0.8$ 对应 $0.8$ 与 $0.64$） |
-| **信道复合顺序** | $\mathcal B \circ \mathcal A$ 表示先 $\mathcal A$ 后 $\mathcal B$；SDK `compose(front=...)` 方向随参数变化 | 用两套不对易的 Kraus 算符 $\{A_j\},\{B_k\}$ 验证组合集合是 $\{B_k A_j\}$ |
+- **高斯态物理性与协方差校验**：The Walrus [gaussian_checks.py](../../codes/vendor/thewalrus/thewalrus/quantum/gaussian_checks.py)（默认 `hbar=2` 与分组序，与第 18 章交错序 `hbar=1` 对照）；
+- **信道复合方向与 Kraus 表示**：Qiskit [kraus.py](../../codes/vendor/qiskit/qiskit/quantum_info/operators/channel/kraus.py)（用两套不对易 Kraus 算符实测 `compose` 作用方向）；
+- **量子仪器与测后状态**：pyGSTi [instrument.py](../../codes/vendor/pygsti/pygsti/modelmembers/instruments/instrument.py)（Apache-2.0，原 NOTICE 保留，上游见 [pyGSTi 源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)）。
 
-相应固定源码入口为 The Walrus 的 [gaussian_checks.py](../../codes/vendor/thewalrus/thewalrus/quantum/gaussian_checks.py)、Qiskit 的 [kraus.py](../../codes/vendor/qiskit/qiskit/quantum_info/operators/channel/kraus.py)，以及把测量标签与测后操作统一封装的 pyGSTi [instrument.py](../../codes/vendor/pygsti/pygsti/modelmembers/instruments/instrument.py)（Apache-2.0，原 NOTICE 保留，上游见 [pyGSTi 源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)）。相应正文推导见[第 05 章](../05-noise-channels.md)与[第 18 章](../18-channels-capacities-complexity.md)。
+相应正文推导见[第 05 章](../05-noise-channels.md)与[第 18 章](../18-channels-capacities-complexity.md)。
 
 ## 17. 端到端工业工作流的完整实跑入口与迁移边界
 
-上述高级工作流的完整隔离环境实跑细算、原始计数与独立参考核验集中在[完整 SDK 实验册](../labs/sdk-validation.md)，涵盖动态多乘积公式（16 维精确指数核验 MPO 重叠）、阴影光锥噪声界筛选、反噪声可观测量传播、含制备与测量误差及规范自由度的长序列门集层析，以及按工作项索引的官方 Philox 并行随机流。
+上述高级工作流的完整隔离环境实跑细算、原始计数、上游缺陷复现与独立参考核验集中在[完整 SDK 实验册](../labs/sdk-validation.md)，涵盖动态多乘积公式（16 维精确指数核验 MPO 重叠）、阴影光锥噪声界筛选、反噪声可观测量传播、含制备与测量误差及规范自由度的长序列门集层析，以及按工作项索引的官方 Philox 并行随机流。
 
 要把这些模块进一步迁移到真实生产或云端硬件，还须在上下游补齐真实硬件的在线噪声标定与学习、实时校准快照、同精度强经典基线（选型参见[第 21 章](../21-stabilizer-classical-simulation.md)）、队列与整机能耗账本。保留这份清晰的边界清单，正是把“读懂代码”变成“扎实做研究”的起点。

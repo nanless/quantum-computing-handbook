@@ -2,7 +2,7 @@
   <title id="title">复平面上的旋转、共轭镜像与模平方辨析</title>
   <desc id="desc">左图在等比例复平面上绘制 z₁ = 1 + i（模 √2，角度 45°）、乘以虚数单位 i 后逆时针旋转 90° 得到的 z₂ = −1 + i（135°），以及关于实轴镜像的共轭 z₁* = 1 − i（−45°），三点同位于半径 √2 的圆周。右图对比 Born 概率所需的非负实数模平方 |z₁|² = z₁*·z₁ = 2 与复数直接平方 z₁² = 2i。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -57,52 +57,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .subpanel{fill:#1b2a38;stroke:#3b5369}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb{fill:#d7e7f5}
-  .axis,.wire{stroke:#cde0f2}
-  .axis-fill,.ctrl{fill:#cde0f2}
-  .cwire{stroke:#9bb6ce}
-  .targ{fill:#16222e;stroke:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide,.unit-circle{stroke:#738fa8}
-  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
-  .area1{fill:#6bc2f5;fill-opacity:.15}
-  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
-  .wall{fill:#8ca5bc;stroke:#cde0f2}
-  .mirror{stroke:#cde0f2}
-  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
-  .det-body{fill:#163d31;stroke:#5dd1a8}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
-  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

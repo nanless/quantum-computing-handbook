@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">张量积升维与偏迹降维的互逆结构</title>
+  <desc id="desc">左面板展示 2×2 矩阵 A 与印章 B 通过张量积生成 4×4 块矩阵的升维过程及数值验算；右面板以 Bell 态密度矩阵为例，展示偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）将 4×4 压回 2×2 约化密度矩阵 I/2 的降维结构。</desc>
+  <style>
+:root{color-scheme:light}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#ffffff;stroke:#d4cfc3;stroke-width:1.35}
+.subpanel{fill:#f5f2ea;stroke:#d8d3c6;stroke-width:1.15}
+.phead{fill:#edf3ef}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12.5px;font-weight:400;fill:#4a5f59}
+.sec{font-size:13.8px;font-weight:700;fill:#14453d}
+.lbl{font-size:12.5px;font-weight:500;fill:#1f3832}
+.lblb{font-size:12.5px;font-weight:700;fill:#122b25}
+.sm{font-size:12px;font-weight:400;fill:#435852}
+.smb{font-size:12px;font-weight:600;fill:#1b332d}
+.xs{font-size:11.5px;font-weight:500;fill:#485e58}
+.xsb{font-size:11.5px;font-weight:700;fill:#19312b}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:700;fill:#122b25}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#122b25}
+.axis{stroke:#243d37;stroke-width:1.6;fill:none}
+.axis-fill{fill:#243d37}
+.wire{stroke:#243d37;stroke-width:1.8;fill:none}
+.cwire{stroke:#5a706a;stroke-width:1.35;fill:none}
+.ctrl{fill:#14453d}
+.targ{fill:#ffffff;stroke:#14453d;stroke-width:1.9}
+.grid{stroke:#e3ded2;stroke-width:1;fill:none}
+.guide{stroke:#7e928c;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#687f78;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1f5a92;fill:none}
+.c1-fill{fill:#1f5a92}
+.c1-txt{fill:#174775}
+.c1-soft{fill:#e6f0fa;stroke:#1f5a92;stroke-width:1.4}
+.c2{stroke:#b3542d;fill:none}
+.c2-fill{fill:#b3542d}
+.c2-txt{fill:#96411e}
+.c2-soft{fill:#fbeae3;stroke:#b3542d;stroke-width:1.4}
+.c3{stroke:#14453d;fill:none}
+.c3-fill{fill:#14453d}
+.c3-txt{fill:#14453d}
+.c3-soft{fill:#e3f2ec;stroke:#14453d;stroke-width:1.4}
+.c4{stroke:#b07016;fill:none}
+.c4-fill{fill:#b07016}
+.c4-txt{fill:#8a550c}
+.c4-soft{fill:#fcf2db;stroke:#b07016;stroke-width:1.4}
+.c5{stroke:#644696;fill:none}
+.c5-fill{fill:#644696}
+.c5-txt{fill:#4e347a}
+.c5-soft{fill:#f0eaf9;stroke:#644696;stroke-width:1.4}
+.note{fill:#fdf6e6;stroke:#c89232;stroke-width:1.25}
+.pill{fill:#f4f0e6;stroke:#b7b0a2;stroke-width:1.15}
+.pill-bg{fill:#FAF8F3;fill-opacity:.95;stroke:#b7b0a2;stroke-width:1.1}
+.area1{fill:#1f5a92;fill-opacity:.13}
+.area2{fill:#b3542d;fill-opacity:.14}
+.area3{fill:#14453d;fill-opacity:.13}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.cc-r{fill:#b3542d;fill-opacity:.23;stroke:#b3542d;stroke-width:1.5}
+.cc-g{fill:#1c7a5e;fill-opacity:.22;stroke:#14453d;stroke-width:1.5}
+.cc-b{fill:#1f5a92;fill-opacity:.22;stroke:#1f5a92;stroke-width:1.5}
+.qnode{fill:#ffffff;stroke:#14453d;stroke-width:1.6}
+.qnode-err{fill:#b3542d;stroke:#ffffff;stroke-width:1.8}
+.qnode-hi{fill:#14453d;stroke:#ffffff;stroke-width:1.6}
+
+  </style>
+  <rect class="bg" width="960" height="460" rx="16"/>
+  <text class="title" x="22" y="34">张量积升维与偏迹降维的互逆结构</text>
+  <text class="subtitle" x="22" y="54">左：印章分块法则将 2×2 矩阵张成 4×4 块矩阵；右：偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）压回 2×2 约化态</text>
+  <rect class="panel" x="20.0" y="68.0" width="452.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 32.0 69.0 H 460.0 Q 471.0 69.0 471.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
+  <line class="grid" x1="21.0" y1="99.0" x2="471.0" y2="99.0"/>
+  <text class="sec" x="33.0" y="89.5">1. 张量积升维（印章分块：2×2 ⊗ 2×2 → 4×4）</text>
+  <text class="smb" x="77" y="124" text-anchor="middle">子系统 A (2×2)</text>
+  <rect class="c3-soft" x="36" y="134" width="40" height="39" rx="4"/>
+  <text class="math-txt c3-txt" x="56" y="158" text-anchor="middle">a₀₀</text>
+  <rect class="c1-soft" x="77" y="134" width="40" height="39" rx="4"/>
+  <text class="math-txt c1-txt" x="97" y="158" text-anchor="middle">a₀₁</text>
+  <rect class="c4-soft" x="36" y="174" width="40" height="39" rx="4"/>
+  <text class="math-txt c4-txt" x="56" y="198" text-anchor="middle">a₁₀</text>
+  <rect class="c2-soft" x="77" y="174" width="40" height="39" rx="4"/>
+  <text class="math-txt c2-txt" x="97" y="198" text-anchor="middle">a₁₁</text>
+  <text class="title" x="132" y="180" text-anchor="middle">⊗</text>
+  <text class="smb" x="186" y="124" text-anchor="middle">印章 B (2×2)</text>
+  <rect class="pill" x="148" y="134" width="37" height="39" rx="4"/>
+  <text class="sm" x="166.5" y="158" text-anchor="middle">b₀₀</text>
+  <rect class="pill" x="186" y="134" width="37" height="39" rx="4"/>
+  <text class="sm" x="204.5" y="158" text-anchor="middle">b₀₁</text>
+  <rect class="pill" x="148" y="174" width="37" height="39" rx="4"/>
+  <text class="sm" x="166.5" y="198" text-anchor="middle">b₁₀</text>
+  <rect class="pill" x="186" y="174" width="37" height="39" rx="4"/>
+  <text class="sm" x="204.5" y="198" text-anchor="middle">b₁₁</text>
+  <text class="xsb c3-txt" x="250" y="164" text-anchor="middle">升维</text>
+  <line class="c3" stroke-width="2.00" x1="231.00" y1="174.00" x2="265.60" y2="174.00"/>
+  <polygon class="c3-fill" points="270.00,174.00 262.00,177.60 262.00,170.40"/>
+  <text class="xs" x="300.5" y="124" text-anchor="middle">|00⟩</text>
+  <text class="xs" x="345.5" y="124" text-anchor="middle">|01⟩</text>
+  <text class="xs" x="390.5" y="124" text-anchor="middle">|10⟩</text>
+  <text class="xs" x="435.5" y="124" text-anchor="middle">|11⟩</text>
+  <rect class="c3-soft" x="278" y="134" width="89" height="75" rx="5"/>
+  <line class="grid" stroke-dasharray="3 3" x1="322.5" y1="136" x2="322.5" y2="207"/>
+  <line class="grid" stroke-dasharray="3 3" x1="280" y1="171.5" x2="365" y2="171.5"/>
+  <rect class="pill-bg" x="285" y="149" width="75" height="44" rx="6"/>
+  <text class="xsb c3-txt" x="322.5" y="168" text-anchor="middle">M₀₀ = a₀₀·B</text>
+  <text class="xs" x="322.5" y="185" text-anchor="middle">2×2 子块</text>
+  <rect class="c1-soft" x="368" y="134" width="89" height="75" rx="5"/>
+  <line class="grid" stroke-dasharray="3 3" x1="412.5" y1="136" x2="412.5" y2="207"/>
+  <line class="grid" stroke-dasharray="3 3" x1="370" y1="171.5" x2="455" y2="171.5"/>
+  <rect class="pill-bg" x="375" y="149" width="75" height="44" rx="6"/>
+  <text class="xsb c1-txt" x="412.5" y="168" text-anchor="middle">M₀₁ = a₀₁·B</text>
+  <text class="xs" x="412.5" y="185" text-anchor="middle">2×2 子块</text>
+  <rect class="c4-soft" x="278" y="210" width="89" height="75" rx="5"/>
+  <line class="grid" stroke-dasharray="3 3" x1="322.5" y1="212" x2="322.5" y2="283"/>
+  <line class="grid" stroke-dasharray="3 3" x1="280" y1="247.5" x2="365" y2="247.5"/>
+  <rect class="pill-bg" x="285" y="225" width="75" height="44" rx="6"/>
+  <text class="xsb c4-txt" x="322.5" y="244" text-anchor="middle">M₁₀ = a₁₀·B</text>
+  <text class="xs" x="322.5" y="261" text-anchor="middle">2×2 子块</text>
+  <rect class="c2-soft" x="368" y="210" width="89" height="75" rx="5"/>
+  <line class="grid" stroke-dasharray="3 3" x1="412.5" y1="212" x2="412.5" y2="283"/>
+  <line class="grid" stroke-dasharray="3 3" x1="370" y1="247.5" x2="455" y2="247.5"/>
+  <rect class="pill-bg" x="375" y="225" width="75" height="44" rx="6"/>
+  <text class="xsb c2-txt" x="412.5" y="244" text-anchor="middle">M₁₁ = a₁₁·B</text>
+  <text class="xs" x="412.5" y="261" text-anchor="middle">2×2 子块</text>
+  <rect class="axis" stroke-width="1.6" x="278" y="134" width="179" height="151" rx="5"/>
+  <line class="axis" stroke-width="1.5" x1="367.5" y1="134" x2="367.5" y2="285"/>
+  <line class="axis" stroke-width="1.5" x1="278" y1="209.5" x2="457" y2="209.5"/>
+  <rect class="subpanel" x="34" y="226" width="228" height="59" rx="8"/>
+  <text class="xsb c3-txt" x="45" y="245">印章法则（Kronecker 积）</text>
+  <text class="xs" x="45" y="263">把 A 的每个元素 aᵢⱼ 当缩放系数，</text>
+  <text class="xs" x="45" y="279">整块盖上印章 B，生成 4×4 矩阵。</text>
+  <rect class="subpanel" x="34" y="298" width="424" height="96" rx="9"/>
+  <text class="smb c3-txt" x="46" y="318">数值回验：ρ_A = diag(0.7, 0.3)，ρ_B = |+⟩⟨+| = ½[1,1; 1,1]</text>
+  <text class="sm" x="46" y="340">M₀₀ = 0.35·[1,1; 1,1]，M₀₁ = M₁₀ = 0，M₁₁ = 0.15·[1,1; 1,1]</text>
+  <text class="sm" x="46" y="361">迹守恒：Tr(ρ_A ⊗ ρ_B) = Tr(M₀₀) + Tr(M₁₁) = 0.70 + 0.30 = 1</text>
+  <text class="xs c1-txt" x="46" y="383">混合乘积律：(U⊗V)(ρ_A⊗ρ_B)(U†⊗V†) = (Uρ_A U†) ⊗ (Vρ_B V†)</text>
+  <rect class="note" x="34.0" y="404.0" width="424.0" height="30.0" rx="8"/>
+  <text class="xsb" x="246.0" y="423.2" text-anchor="middle">大端序 |q_A q_B⟩：外层按 A 分块、内层按 B 展开；维度相乘 2×2 → 4×4</text>
+  <rect class="panel" x="488.0" y="68.0" width="452.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 500.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 489.0 V 80.0 Q 489.0 69.0 500.0 69.0 Z"/>
+  <line class="grid" x1="489.0" y1="99.0" x2="939.0" y2="99.0"/>
+  <text class="sec" x="501.0" y="89.5">2. 偏迹降维（4×4 → 2×2）：逐块取迹与对角块相加</text>
+  <text class="smb" x="502" y="121">Bell 态 ρ_Φ⁺ = |Φ⁺⟩⟨Φ⁺|（整体纯态，Tr(ρ²)=1）</text>
+  <rect class="c3-soft" x="504" y="132" width="84" height="56" rx="3"/>
+  <rect class="c1-soft" x="588" y="132" width="84" height="56" rx="3"/>
+  <rect class="c4-soft" x="504" y="188" width="84" height="56" rx="3"/>
+  <rect class="c2-soft" x="588" y="188" width="84" height="56" rx="3"/>
+  <rect class="grid" x="504" y="132" width="42" height="28"/>
+  <text class="xsb c2-txt" x="525.0" y="150.2" text-anchor="middle">1/2</text>
+  <rect class="grid" x="546" y="132" width="42" height="28"/>
+  <text class="xs" x="567.0" y="150.2" text-anchor="middle">0</text>
+  <rect class="grid" x="588" y="132" width="42" height="28"/>
+  <text class="xs" x="609.0" y="150.2" text-anchor="middle">0</text>
+  <rect class="grid" x="630" y="132" width="42" height="28"/>
+  <text class="xsb c2-txt" x="651.0" y="150.2" text-anchor="middle">1/2</text>
+  <rect class="grid" x="504" y="160" width="42" height="28"/>
+  <text class="xs" x="525.0" y="178.2" text-anchor="middle">0</text>
+  <rect class="grid" x="546" y="160" width="42" height="28"/>
+  <text class="xs" x="567.0" y="178.2" text-anchor="middle">0</text>
+  <rect class="grid" x="588" y="160" width="42" height="28"/>
+  <text class="xs" x="609.0" y="178.2" text-anchor="middle">0</text>
+  <rect class="grid" x="630" y="160" width="42" height="28"/>
+  <text class="xs" x="651.0" y="178.2" text-anchor="middle">0</text>
+  <rect class="grid" x="504" y="188" width="42" height="28"/>
+  <text class="xs" x="525.0" y="206.2" text-anchor="middle">0</text>
+  <rect class="grid" x="546" y="188" width="42" height="28"/>
+  <text class="xs" x="567.0" y="206.2" text-anchor="middle">0</text>
+  <rect class="grid" x="588" y="188" width="42" height="28"/>
+  <text class="xs" x="609.0" y="206.2" text-anchor="middle">0</text>
+  <rect class="grid" x="630" y="188" width="42" height="28"/>
+  <text class="xs" x="651.0" y="206.2" text-anchor="middle">0</text>
+  <rect class="grid" x="504" y="216" width="42" height="28"/>
+  <text class="xsb c2-txt" x="525.0" y="234.2" text-anchor="middle">1/2</text>
+  <rect class="grid" x="546" y="216" width="42" height="28"/>
+  <text class="xs" x="567.0" y="234.2" text-anchor="middle">0</text>
+  <rect class="grid" x="588" y="216" width="42" height="28"/>
+  <text class="xs" x="609.0" y="234.2" text-anchor="middle">0</text>
+  <rect class="grid" x="630" y="216" width="42" height="28"/>
+  <text class="xsb c2-txt" x="651.0" y="234.2" text-anchor="middle">1/2</text>
+  <rect class="axis" stroke-width="1.6" x="504" y="132" width="168" height="112" rx="3"/>
+  <line class="axis" stroke-width="1.6" x1="588" y1="132" x2="588" y2="244"/>
+  <line class="axis" stroke-width="1.6" x1="504" y1="188" x2="672" y2="188"/>
+  <rect class="subpanel" x="688" y="132" width="238" height="112" rx="8"/>
+  <text class="xsb" x="700" y="151">四个 2×2 子块（读出偏迹的钥匙）</text>
+  <text class="xs c3-txt" x="700" y="172">M₀₀ = ½[1,0; 0,0]   → Tr(M₀₀) = 1/2</text>
+  <text class="xs c1-txt" x="700" y="191">M₀₁ = ½[0,1; 0,0]   → Tr(M₀₁) = 0</text>
+  <text class="xs c4-txt" x="700" y="210">M₁₀ = ½[0,0; 1,0]   → Tr(M₁₀) = 0</text>
+  <text class="xs c2-txt" x="700" y="229">M₁₁ = ½[0,0; 0,1]   → Tr(M₁₁) = 1/2</text>
+  <line class="c3" stroke-width="1.90" x1="605.00" y1="246.00" x2="605.00" y2="262.60"/>
+  <polygon class="c3-fill" points="605.00,267.00 601.40,259.00 608.60,259.00"/>
+  <line class="c1" stroke-width="1.90" x1="823.00" y1="246.00" x2="823.00" y2="262.60"/>
+  <polygon class="c1-fill" points="823.00,267.00 819.40,259.00 826.60,259.00"/>
+  <rect class="c3-soft" x="502" y="270" width="206" height="124" rx="9"/>
+  <text class="smb c3-txt" x="605" y="290" text-anchor="middle">Tr_B(M)：丢弃 B，保留 A</text>
+  <text class="xsb" x="514" y="311">法则：对每个子块 Mᵢⱼ 求迹</text>
+  <text class="xs" x="514" y="330">ρ_A = [Tr(M₀₀)  Tr(M₀₁)]</text>
+  <text class="xs" x="514" y="347">      [Tr(M₁₀)  Tr(M₁₁)]</text>
+  <text class="xsb c2-txt" x="514" y="368">Bell 态 → diag(½, ½) = I/2</text>
+  <text class="xs" x="514" y="386">乘积态 A⊗B → A·Tr(B) = A</text>
+  <rect class="c1-soft" x="720" y="270" width="206" height="124" rx="9"/>
+  <text class="smb c1-txt" x="823" y="290" text-anchor="middle">Tr_A(M)：丢弃 A，保留 B</text>
+  <text class="xsb" x="732" y="311">法则：主对角两子块相加</text>
+  <text class="xs" x="732" y="330">ρ_B = M₀₀ + M₁₁</text>
+  <text class="xs" x="732" y="347">（非对角块 M₀₁, M₁₀ 不入和）</text>
+  <text class="xsb c2-txt" x="732" y="368">Bell 态 → diag(½, ½) = I/2</text>
+  <text class="xs" x="732" y="386">乘积态 A⊗B → Tr(A)·B = B</text>
+  <rect class="note" x="502.0" y="404.0" width="424.0" height="30.0" rx="8"/>
+  <text class="xsb" x="714.0" y="423.2" text-anchor="middle">仅乘积态可无损还原 ρ_A⊗ρ_B；纠缠态偏迹丢弃关联相干，单端成混态 I/2</text>
+</svg>

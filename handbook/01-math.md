@@ -11,7 +11,7 @@
 - **进入 [第 03 章多量子比特与纠缠](03-multiple-qubits.md) 前（★ 多比特必读）**：补上第 7 节的张量积、混合乘积律与部分迹分块直觉。
 - **进入算法篇 [第 06 章](06-algorithmic-primitives.md)、[第 07 章](07-algorithms.md) 与信息论篇章时（☆ 按需回看）**：再读第 7.4 节（克罗内克和与 $\operatorname{vec}$）、第 8.5 节（二元信息熵）与第 9 节（渐近复杂度）。
 
-标有“进阶回看”或“进阶预览”的小节第一遍可以先跳过，留到后面需要时再翻回来核对。全章不依赖微积分（仅在矩阵指数处直接借用三个熟知幂级数作为已知代数恒等式）。
+标有“进阶回看”“进阶预览”或“进阶选读”的小节第一遍可以先跳过，留到后面需要时再翻回来核对。全章不依赖微积分（仅在矩阵指数处直接借用三个熟知幂级数作为已知代数恒等式）。
 
 ---
 
@@ -33,7 +33,7 @@ $$
 z = a + bi
 $$
 
-叫作**复数**，所有复数的集合记为 $\mathbb{C}$。其中实数 $a$ 叫**实部**（记作 $\operatorname{Re} z$），实数 $b$ 叫**虚部**（记作 $\operatorname{Im} z$）。留意一个小坑：虚部是实数 $b$，不带那个 $i$。例如 $3 - 2i$ 的实部是 $3$，虚部是 $-2$；当 $b = 0$ 时，普通实数就是复数的特例。
+叫作**复数**，所有复数的集合记为 $\mathbb{C}$。其中实数 $a$ 叫**实部**（记作 $\operatorname{Re} z$），实数 $b$ 叫**虚部**（记作 $\operatorname{Im} z$）。留意一个常见细节：虚部是实数 $b$，不带那个 $i$。例如 $3 - 2i$ 的实部是 $3$，虚部是 $-2$；当 $b = 0$ 时，普通实数就是复数的特例。
 
 加减法就是实部对实部、虚部对虚部各自相加减：
 
@@ -83,7 +83,7 @@ $$
   |z| = \sqrt{a^2 + b^2}, \qquad |z|^2 = a^2 + b^2 = z^* z.
   $$
 
-  例如 $z = 1 + i$ 落在点 $(1, 1)$，长度 $|1 + i| = \sqrt{1^2 + 1^2} = \sqrt{2}$，模平方 $|1 + i|^2 = 2$。写题时千万别把长度 $\sqrt{2}$ 和模平方 $2$ 混成一个数。
+  例如 $z = 1 + i$ 落在点 $(1, 1)$，长度 $|1 + i| = \sqrt{1^2 + 1^2} = \sqrt{2}$，模平方 $|1 + i|^2 = 2$。写题时不要把长度 $\sqrt{2}$ 和模平方 $2$ 混成一个数。
 - **相位（方向角）**：从正实轴逆时针转到箭头方向所经过的角度 $\theta$。量子计算习惯用弧度：整圈 $360^\circ$ 是 $2\pi$，半圈 $180^\circ$ 是 $\pi$，直角 $90^\circ$ 是 $\pi/2$，$45^\circ$ 是 $\pi/4$。当 $r = |z| > 0$ 时，由直角三角形的边角关系立刻有
 
   $$
@@ -223,7 +223,7 @@ $$
 
 ![列向量 ket 与行向量 bra 的共轭转置、内积标量与外积矩阵](assets/math-object-shapes.svg)
 
-对照上图记忆最省力（可打开[原尺寸 ket/bra 形状对照图](assets/math-object-shapes.svg)放大查看）：嘴对嘴拼成 $\langle v|v\rangle$，内侧的维度相互吞并，结果塌缩成一个**数**；背靠背拼成 $|v\rangle\langle v|$，结果张开成一张 $2\times 2$ 的**矩阵**。两种顺序得到的连对象类型都不一样，绝对不能随意互换。
+对照上图记忆最省力（可打开[原尺寸 ket/bra 形状对照图](assets/math-object-shapes.svg)放大查看）：嘴对嘴拼成 $\langle v|v\rangle$，内侧的维度相互吞并，结果塌缩成一个**数**；背靠背拼成 $|v\rangle\langle v|$，结果张开成一张 $2\times 2$ 的**矩阵**。两种顺序得到的连对象类型都不一样，不能随意互换。
 
 ### 2.3 为什么复数内积必须左共轭？
 
@@ -313,9 +313,9 @@ $$
 
   两条路径结果完全一致。再算反过来的 $\langle u|w\rangle = i\langle u|u\rangle = +i$，恰好等于 $(-i)^*$，验证了共轭对称性。
 
-### 2.5 全局相位与相对相位：千万别混为一谈
+### 2.5 全局相位与相对相位：明确区分两类相位
 
-如果给整个量子态乘上一个单位复数 $e^{i\theta_{\mathrm{g}}}$（$\theta_{\mathrm{g}} \in \mathbb{R}$），得到 $e^{i\theta_{\mathrm{g}}}|\psi\rangle$，它和 $|\psi\rangle$ 描述的是**同一个物理态**。原因用刚学的模平方一行就能看穿：在任何测量基下，无论哪个结果原本的振幅是 $c$，整体乘相位后都变成 $e^{i\theta_{\mathrm{g}}} c$，其概率为
+如果给整个量子态乘上一个单位复数 $e^{i\theta_{\mathrm{g}}}$（$\theta_{\mathrm{g}} \in \mathbb{R}$），得到 $e^{i\theta_{\mathrm{g}}}|\psi\rangle$，它和 $|\psi\rangle$ 描述的是**同一个物理态**。原因用刚学的模平方一行就能看清：在任何测量基下，无论哪个结果原本的振幅是 $c$，整体乘相位后都变成 $e^{i\theta_{\mathrm{g}}} c$，其概率为
 
 $$
 |e^{i\theta_{\mathrm{g}}} c|^2 = (e^{i\theta_{\mathrm{g}}} c)^*(e^{i\theta_{\mathrm{g}}} c) = e^{-i\theta_{\mathrm{g}}} e^{i\theta_{\mathrm{g}}} c^* c = |c|^2.
@@ -638,9 +638,11 @@ $$
 
 ---
 
-## 5. 本征值、本征向量与谱分解：2×2 零跳步配方
+<span id="5-本征值本征向量与谱分解22-零跳步配方"></span>
 
-矩阵作用在空间里，绝大多数向量都会被掰歪方向。但总有极少数“倔强”的非零方向，经过矩阵作用后依然留在原来的直线上，只是被拉长、缩短，或者翻了个方向。找到这些方向，就相当于看穿了矩阵的骨架。
+## 5. 本征值、本征向量与谱分解：2×2 逐步配方
+
+矩阵作用在空间里，绝大多数向量都会被掰歪方向。但总有极少数“倔强”的非零方向，经过矩阵作用后依然留在原来的直线上，只是被拉长、缩短，或者翻了个方向。找到这些方向，就抓住了矩阵的核心结构。
 
 ### 5.1 定义与热身：Pauli $X$ 与 $Z$
 
@@ -659,7 +661,7 @@ $$
   - $\lambda = +1$ 时 $y = x$，归一化得 $|+\rangle = \frac{1}{\sqrt{2}}[1, 1]^T$；
   - $\lambda = -1$ 时 $y = -x$，归一化得 $|-\rangle = \frac{1}{\sqrt{2}}[1, -1]^T$。
 
-### 5.2 一般 2×2 矩阵的特征方程与三步零跳步配方
+### 5.2 一般 2×2 矩阵的特征方程与三步配方
 
 遇到带复数、对角元又不全为零的一般 $2\times 2$ 矩阵 $A = \begin{bmatrix}a & b \\ c & d\end{bmatrix}$ 时，先把本征值方程 $A|v\rangle = \lambda|v\rangle$ 移项改写成齐次线性方程组：
 
@@ -851,7 +853,7 @@ $$
 
 ## 6. 迹、正半定、矩阵指数与求逆条件数
 
-这一节补齐后面进入密度矩阵、旋转门、哈密顿量演化和硬件读出校准时最常遇到的四把工具。每一把都先看直觉，再给零跳步手算。
+这一节补齐后面进入密度矩阵、旋转门、哈密顿量演化和硬件读出校准时最常遇到的四把工具。每一把都先看直觉，再给完整逐步手算。
 
 ### 6.1 迹与纯态密度矩阵
 
@@ -906,7 +908,7 @@ $$
 
 一个厄米矩阵 $A = A^\dagger$ 如果对所有列向量 $|v\rangle \in \mathbb{C}^d$ 都满足 $\langle v|A|v\rangle \ge 0$，就称为**正半定**（PSD），记作 $A \succeq 0$；若对一切非零向量都严格满足 $\langle v|A|v\rangle > 0$，则称为**严格正定**（PD），记作 $A \succ 0$。对有限维厄米矩阵，这完全等价于“所有本征值都 $\ge 0$”（正半定）或“所有本征值都 $> 0$”（严格正定），因为把 $|v\rangle$ 按本征基展开后有 $\langle v|A|v\rangle = \sum_j \lambda_j |c_j|^2$。
 
-对单比特最常碰到的 $2\times 2$ 厄米矩阵 $A = \begin{bmatrix}a & c \\ c^* & d\end{bmatrix}$（$a, d \in \mathbb{R},\; c \in \mathbb{C}$），利用 $\lambda_1 + \lambda_2 = a + d = \operatorname{Tr}(A)$ 与 $\lambda_1\lambda_2 = ad - |c|^2 = \det(A)$，不需要先算本征值，就能直接用 **$2\times 2$ Sylvester 准则**秒判：
+对单比特最常碰到的 $2\times 2$ 厄米矩阵 $A = \begin{bmatrix}a & c \\ c^* & d\end{bmatrix}$（$a, d \in \mathbb{R},\; c \in \mathbb{C}$），利用 $\lambda_1 + \lambda_2 = a + d = \operatorname{Tr}(A)$ 与 $\lambda_1\lambda_2 = ad - |c|^2 = \det(A)$，不需要先算本征值，就能直接用 **$2\times 2$ Sylvester 准则**判断：
 
 - **严格正定（$A \succ 0$）** $\iff a > 0$ 且 $\det(A) = ad - |c|^2 > 0$（两个顺序主子式全正；此时由 $ad > |c|^2 \ge 0$ 与 $a > 0$ 自动保证 $d > 0$，故两本征值必同为正）。
 - **正半定（$A \succeq 0$）** $\iff a \ge 0,\; d \ge 0$ 且 $\det(A) = ad - |c|^2 \ge 0$（等价于 $\operatorname{Tr}(A) \ge 0$ 且 $\det(A) \ge 0$，保证两本征值之和与乘积均非负）。
@@ -967,9 +969,9 @@ flowchart LR
   $$
 
 - **用捷径 2（$X^2 = I$）**：$\cos(\pi/4) I - i\sin(\pi/4) X = \frac{1}{\sqrt{2}}I - \frac{i}{\sqrt{2}}X = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & -i \\ -i & 1\end{bmatrix}$，一步出结果且两条路径完全吻合！核对第一列（输入 $|0\rangle$ 的输出）：$\frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)$，两项模平方各为 $1/2$，总和为 $1$。
-- **避坑 1（禁止逐格按计算器）**：如果错误地把 $-i\frac{\pi}{4}X = \begin{bmatrix}0 & -i\pi/4 \\ -i\pi/4 & 0\end{bmatrix}$ 的每一格单独取指数，零格会变成 $e^0 = 1$，算出 $\begin{bmatrix}1 & e^{-i\pi/4} \\ e^{-i\pi/4} & 1\end{bmatrix}$——它的每一列长度平方都是 $1^2 + |e^{-i\pi/4}|^2 = 2 \neq 1$，彻底破坏了酉性。
+- **易错点 1（不要逐格取指数）**：如果错误地把 $-i\frac{\pi}{4}X = \begin{bmatrix}0 & -i\pi/4 \\ -i\pi/4 & 0\end{bmatrix}$ 的每一格单独取指数，零格会变成 $e^0 = 1$，算出 $\begin{bmatrix}1 & e^{-i\pi/4} \\ e^{-i\pi/4} & 1\end{bmatrix}$——它的每一列长度平方都是 $1^2 + |e^{-i\pi/4}|^2 = 2 \neq 1$，破坏了酉性。
 
-**算例 B（避坑 2：不对易矩阵不能直接把指数相加）**：对普通数总有 $e^a e^b = e^{a+b}$，但对矩阵一般**不成立**，因为 $(A + B)^2 = A^2 + AB + BA + B^2$；除非 $[A, B] = 0$（$AB = BA$），否则 $AB + BA \neq 2AB$。拿 $A = i\frac{\pi}{2}X$ 和 $B = i\frac{\pi}{2}Z$ 实算一次就明白：
+**算例 B（易错点 2：不对易矩阵不能直接把指数相加）**：对普通数总有 $e^a e^b = e^{a+b}$，但对矩阵一般**不成立**，因为 $(A + B)^2 = A^2 + AB + BA + B^2$；除非 $[A, B] = 0$（$AB = BA$），否则 $AB + BA \neq 2AB$。拿 $A = i\frac{\pi}{2}X$ 和 $B = i\frac{\pi}{2}Z$ 实算一次就明白：
 
 - 分别对正号情形应用捷径 2（把上式中的矩阵依次取为 $X$、$Z$，角度取 $\theta = \frac{\pi}{2}$）：$e^A = e^{i\frac{\pi}{2}X} = \cos(\frac{\pi}{2})I + i\sin(\frac{\pi}{2})X = iX$，同理 $e^B = e^{i\frac{\pi}{2}Z} = iZ$。相乘得
 
@@ -987,7 +989,7 @@ flowchart LR
 
   算具体数值：$\frac{\pi}{\sqrt{2}} \approx 2.2214$ 弧度（约 $127.3^\circ$），左上角主对角元为 $\cos(\frac{\pi}{\sqrt{2}}) + \frac{i}{\sqrt{2}}\sin(\frac{\pi}{\sqrt{2}}) \approx -0.6057 + 0.5626i \neq 0$！与 $e^A e^B$ 的零对角元截然不同。正是这个非对易差异，催生了 [第 06 章](06-algorithmic-primitives.md) 与 [第 07 章](07-algorithms.md) 的 Trotter 拆分模拟技术。
 
-### 6.4 奇异值分解（SVD）、三大矩阵范数与读出条件数
+### 6.4 进阶选读：奇异值分解（SVD）、三大矩阵范数与读出条件数
 
 5.5 节说非正规矩阵（甚至非方阵）没有正交归一的本征基。那遇到一般 $m\times n$ 复矩阵 $A$（例如多比特纠缠的 Schmidt 系数阵、硬件读出混淆矩阵，或第 16 章 QSVT 要处理的非厄米矩阵）时，怎么看清它在各个方向上的拉伸倍数？
 
@@ -1001,7 +1003,7 @@ $$
 
 怎么不用黑箱软件、靠手算求 SVD？核心只有一句话：对任意矩阵 $A$，乘积 $A^\dagger A$ 一定是**厄米且正半定**的方阵（因为 $\langle x|A^\dagger A|x\rangle = \|A|x\rangle\|^2 \ge 0$），且 $A^\dagger A = V\Sigma^\dagger\Sigma V^\dagger$——所以 **$A$ 的奇异值正是 $A^\dagger A$ 本征值的非负平方根 $\sigma_j = \sqrt{\mu_j}$，右奇异向量 $|v_j\rangle$ 就是 $A^\dagger A$ 的正交归一特征向量，而当 $\sigma_j > 0$ 时左奇异向量一步给出 $|w_j\rangle = \frac{1}{\sigma_j}A|v_j\rangle$**。
 
-**算例 A（非对称 $2\times 2$ 矩阵的零跳步完整 SVD 手算）**：考察实剪切矩阵 $A = \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}$。它不对称且非正规，无法做正交谱分解，但 SVD 可以零跳步算得干干净净：
+**算例 A（非对称 $2\times 2$ 矩阵的完整逐步 SVD 手算）**：考察实剪切矩阵 $A = \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}$。它不对称且非正规，无法做正交谱分解，但 SVD 可以按步算清：
 
 1. **构造 $A^\dagger A$**：
 
@@ -1071,22 +1073,31 @@ $$
 \kappa_2(A) = \frac{\sigma_{\max}}{\sigma_{\min}} \ge 1.
 $$
 
-正演 $q = Ap$ 把单位圆压扁成椭圆，在最弱方向上把信号压扁了 $\kappa_2$ 倍；反演 $p = A^{-1}q$ 就必须把这个方向拉回原长，顺带把最坏方向上的相对统计误差放大多达 $\kappa_2$ 倍！酉矩阵保持单位圆不变（$\sigma_{\max} = \sigma_{\min} = 1$），所以 $\kappa_2(U) = 1$——**酉门绝不放大相对噪声**；上面剪切矩阵的 $\kappa_2 = \varphi / \varphi^{-1} = \varphi^2 \approx 2.618$；而当读出矩阵两列趋于平行时，$\sigma_{\min} \to 0$，条件数飙向无穷大。
+正演 $q = Ap$ 把单位圆压扁成椭圆，反演 $p = A^{-1}q$ 时需要严格区分两把不同的误差放大尺子（记输入扰动为 $\delta q$、反演误差为 $\delta p = A^{-1}\delta q$）：
+
+- **绝对误差放大上界由 $1/\sigma_{\min}$ 决定**：因为 $\|A^{-1}\|_\infty = 1/\sigma_{\min}$，对任意扰动都有 $\|\delta p\|_2 \le \frac{1}{\sigma_{\min}}\|\delta q\|_2$，沿最短奇异轴方向取等号；
+- **相对误差放大上界由条件数 $\kappa_2(A) = \sigma_{\max}/\sigma_{\min}$ 决定**：结合 $\|q\|_2 = \|Ap\|_2 \le \sigma_{\max}\|p\|_2$，两式相除即得
+
+$$
+\frac{\|\delta p\|_2}{\|p\|_2} \le \kappa_2(A)\,\frac{\|\delta q\|_2}{\|q\|_2}.
+$$
+
+酉矩阵保持单位圆不变（$\sigma_{\max} = \sigma_{\min} = 1$），所以绝对与相对放大倍数均为 $1$——**酉门绝不放大噪声**；上面剪切矩阵的 $1/\sigma_{\min} = \varphi \approx 1.618$、$\kappa_2 = \varphi / \varphi^{-1} = \varphi^2 \approx 2.618$；而当读出矩阵两列趋于平行时，$\sigma_{\min} \to 0$，两把尺子都会趋于无穷大。
 
 ![奇异值分解几何椭圆与条件数噪声放大](assets/v3-01-svd-condition-ellipse.svg)
 
-观察上图就能把奇异值与条件数彻底印进脑子：优质读出 $A(0.05)$ 近乎把单位圆保持为圆（$\kappa_2 \approx 1.11$）；剪切阵 $A = \bigl[\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\bigr]$ 将单位圆拉成长短半轴为黄金分割 $\varphi$ 与 $\varphi^{-1}$ 的倾斜椭圆（$\kappa_2 \approx 2.62$）；而糟糕读出 $A(0.45)$ 把单位圆压成极扁的细长椭圆（$\kappa_2 = 10$），逆算时沿短轴方向的微小采样抖动立刻被放大 10 倍。（可打开[原尺寸奇异值分解几何椭圆与条件数图](assets/v3-01-svd-condition-ellipse.svg)清晰查看奇异轴与放大倍数标注。）
+观察上图就能把奇异值与条件数的几何含义印在脑海里：优质读出 $A(0.05)$ 近乎把单位圆保持为圆（$\kappa_2 \approx 1.11$）；剪切阵 $A = \bigl[\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\bigr]$ 将单位圆拉成长短半轴为黄金分割 $\varphi$ 与 $\varphi^{-1}$ 的倾斜椭圆（$\kappa_2 \approx 2.62$）；而糟糕读出 $A(0.45)$ 把单位圆压成极扁的细长椭圆（$\kappa_2 = 10$），逆算时沿短轴方向的微小采样抖动立刻被放大 10 倍。（可打开[原尺寸奇异值分解几何椭圆与条件数图](assets/v3-01-svd-condition-ellipse.svg)清晰查看奇异轴与放大倍数标注。）
 
-**算例 B（对称读出矩阵 $A(e)$ 的条件数对照）**：设 $\alpha = \beta = e$（$0 \le e < 1/2$），于是 $A(e) = \begin{bmatrix}1 - e & e \\ e & 1 - e\end{bmatrix}$。因它是实对称矩阵且 $e < 1/2$ 保证两个本征值 $\lambda_1 = 1$（方向 $[1,1]^T$）与 $\lambda_2 = 1 - 2e > 0$（方向 $[1,-1]^T$）全为正，故奇异值直接等于本征值（提醒：一般厄米矩阵的奇异值是本征值的**绝对值** $|\lambda_j|$；若 $e > 1/2$ 则 $\lambda_2 = 1 - 2e < 0$，最小奇异值须取 $|1 - 2e| = 2e - 1$），于是精确条件数为
+**算例 B（对称读出矩阵 $A(e)$ 的条件数对照）**：设 $\alpha = \beta = e$（$0 \le e < 1/2$），于是 $A(e) = \begin{bmatrix}1 - e & e \\ e & 1 - e\end{bmatrix}$。因它是实对称矩阵且 $e < 1/2$ 保证两个本征值 $\lambda_1 = 1$（方向 $[1,1]^T$）与 $\lambda_2 = 1 - 2e > 0$（方向 $[1,-1]^T$）全为正，故奇异值直接等于本征值（提醒：一般厄米矩阵的奇异值是本征值的**绝对值** $|\lambda_j|$；若 $e > 1/2$ 则 $\lambda_2 = 1 - 2e < 0$，最小奇异值须取 $|1 - 2e| = 2e - 1$）。由于此处 $\sigma_{\max} = 1$，绝对误差放大 $1/\sigma_{\min}$ 与相对误差条件数 $\kappa_2$ 恰好重合：
 
 $$
-\kappa_2\big(A(e)\big) = \frac{1}{|1 - 2e|}.
+\frac{1}{\sigma_{\min}} = \kappa_2\big(A(e)\big) = \frac{1}{|1 - 2e|}.
 $$
 
 - **优质读出（$e = 0.05$）**：$\kappa_2 = \frac{1}{0.9} \approx 1.11$，$1\%$ 采样抖动 $\delta q = (0.01, -0.01)^T$ 反演后仅为 $(0.0111, -0.0111)^T$。
-- **糟糕读出（$e = 0.45$）**：$\kappa_2 = \frac{1}{0.1} = 10$，同样 $1\%$ 抖动反演后暴涨 10 倍成 $(0.10, -0.10)^T$；若某批样本碰巧测出 $q = (0.58, 0.42)^T$，直接乘 $A(0.45)^{-1} = \frac{1}{0.1}\begin{bmatrix}0.55 & -0.45 \\ -0.45 & 0.55\end{bmatrix}$ 会算出 $p = (1.30, -0.30)^T$——出现了落在 $[0, 1]$ 之外的负值！
+- **糟糕读出（$e = 0.45$）**：$\kappa_2 = \frac{1}{0.1} = 10$，同样 $1\%$ 抖动反演后放大 10 倍成 $(0.10, -0.10)^T$；若某批样本碰巧测出 $q = (0.58, 0.42)^T$，直接乘 $A(0.45)^{-1} = \frac{1}{0.1}\begin{bmatrix}0.55 & -0.45 \\ -0.45 & 0.55\end{bmatrix}$ 会算出 $p = (1.30, -0.30)^T$——出现了落在 $[0, 1]$ 之外的负值！
 
-**算例 C（不对称读出矩阵的简要提醒）**：若 $\alpha = 0.12, \beta = 0.23$，则 $\det A = 0.65$、$A^{-1} = \frac{1}{0.65}\begin{bmatrix}0.77 & -0.23 \\ -0.12 & 0.88\end{bmatrix}$。观测频率 $(0.90, 0.10)^T$ 经逆算会给出 $(1.0308, -0.0308)^T$——负格子只是无约束线性反演的“带符号估计”，绝不代表物理上存在负概率。此外，不对称矩阵沿差值方向的放大倍率 $1/\det A \approx 1.538$ 与全方向最坏条件数 $\kappa_2(A) \approx 1.570$（由 $A^T A$ 配方求得 $\sigma_{\max}\approx 1.0103,\;\sigma_{\min}\approx 0.6434$）并不相等；当 $\alpha + \beta = 1$ 时 $\det A = 0$，数据彻底丧失分辨能力。完整的读出标定方差传播与多比特校准方法见[第 09 章第 5.3 节](09-hardware.md)与[第 14 章第 9 节](14-compilation-control.md)。
+**算例 C（不对称读出矩阵的三把尺子辨析）**：一旦 $\alpha \neq \beta$，最大奇异值不再等于 $1$，三把放大尺子便各不相同。以[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)将完整演练的 $\alpha = 0.12,\; \beta = 0.23$ 为例（$\det A = 0.65$），由 $A^T A$ 配方求得 $\sigma_{\max}\approx 1.0103$、$\sigma_{\min}\approx 0.6434$，于是沿差值方向的倍率 $1/\det A \approx 1.538$、全方向绝对放大上界 $1/\sigma_{\min} \approx 1.554$ 与相对条件数 $\kappa_2(A) \approx 1.570$ 彼此分离；当 $\alpha + \beta = 1$ 时 $\det A = 0$，矩阵不可逆。完整的读出方差传播与校准流程见[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)、[第 09 章第 5.3 节](09-hardware.md)与[第 14 章第 9 节](14-compilation-control.md)。
 
 ---
 
@@ -1155,7 +1166,7 @@ $$
 = \begin{bmatrix}a_{00} B & a_{01} B \\ a_{10} B & a_{11} B\end{bmatrix}.
 $$
 
-有了印章分块法则，只需一行分块矩阵乘法，就能零跳步证出多比特运算最常用的**通用混合乘积律**（对任意尺寸相容的矩阵 $A, B, C, D$）：
+有了印章分块法则，只需一行分块矩阵乘法，就能直接证出多比特运算最常用的**通用混合乘积律**（对任意尺寸相容的矩阵 $A, B, C, D$）：
 
 $$
 \begin{aligned}
@@ -1288,6 +1299,10 @@ $$
 - **乘积算符 $A \otimes B = \begin{bmatrix}a_{00}B & a_{01}B \\ a_{10}B & a_{11}B\end{bmatrix}$**：逐块取迹得 $\operatorname{Tr}_B(A\otimes B) = A\,\operatorname{Tr}(B)$；主对角块相加得 $\operatorname{Tr}_A(A\otimes B) = (a_{00} + a_{11})B = \operatorname{Tr}(A)\,B$。
 - **Bell 态密度矩阵 $\rho_{\Phi^+} = |\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}\begin{bmatrix}1&0&0&1 \\ 0&0&0&0 \\ 0&0&0&0 \\ 1&0&0&1\end{bmatrix}$**：它的四个 $2\times 2$ 子块依次为 $M_{00}=\frac{1}{2}\begin{bmatrix}1&0\\0&0\end{bmatrix}$、$M_{01}=\frac{1}{2}\begin{bmatrix}0&1\\0&0\end{bmatrix}$、$M_{10}=\frac{1}{2}\begin{bmatrix}0&0\\1&0\end{bmatrix}$、$M_{11}=\frac{1}{2}\begin{bmatrix}0&0\\0&1\end{bmatrix}$。逐块取迹得 $\operatorname{Tr}_B(\rho_{\Phi^+}) = \frac{1}{2}\begin{bmatrix}1&0\\0&1\end{bmatrix} = \frac{I}{2}$，主对角块相加同样得 $\operatorname{Tr}_A(\rho_{\Phi^+}) = M_{00} + M_{11} = \frac{1}{2}\begin{bmatrix}1&0\\0&1\end{bmatrix} = \frac{I}{2}$——整体是纯态，但单独看其中任意一端都是完全随机的 $\frac{I}{2}$！
 
+![张量积升维与偏迹降维的互逆结构](assets/v4-01-tensor-partial-trace.svg)
+
+上图把第 7.2 节的印章分块升维（$2\times 2 \to 4\times 4$）与本节的逐块取迹 / 主对角块相加降维（$4\times 4 \to 2\times 2$）并列对照，方便在[第 03 章](03-multiple-qubits.md)与[第 05 章](05-noise-channels.md)反复回查（可打开[原尺寸张量积与偏迹结构图](assets/v4-01-tensor-partial-trace.svg)查看细节）。
+
 **2. 克罗内克和（Kronecker sum）与无耦合多体演化**
 
 当两个互不相互作用的量子比特各自按哈密顿量 $A$ 与 $B$ 演化时，总算符写成**克罗内克和** $A \oplus_{\mathrm{K}} B = A \otimes I + I \otimes B$。用 7.2 节的混合乘积律检查对易性：$(A \otimes I)(I \otimes B) = A \otimes B = (I \otimes B)(A \otimes I)$，两项完全对易！因此避开了 6.3 节算例 B 的非对易障碍，直接有
@@ -1298,7 +1313,7 @@ $$
 
 **3. 矩阵拉直（向量化 $\operatorname{vec}$）的两种约定**
 
-在量子信道与超算符章节，常把 $d\times d$ 矩阵 $X$ 拉直成 $d^2$ 维列向量 $\operatorname{vec}(X)$，从而把双边夹心乘法 $AXB$ 写成单边矩阵乘向量。不同教材存在**行优先**与**列优先**两套约定，千万别混用（以 $2\times 2$ 矩阵 $X = \begin{bmatrix}x_{00} & x_{01} \\ x_{10} & x_{11}\end{bmatrix}$ 为例）：
+在量子信道与超算符章节，常把 $d\times d$ 矩阵 $X$ 拉直成 $d^2$ 维列向量 $\operatorname{vec}(X)$，从而把双边夹心乘法 $AXB$ 写成单边矩阵乘向量。不同教材存在**行优先**与**列优先**两套约定，切忌混用（以 $2\times 2$ 矩阵 $X = \begin{bmatrix}x_{00} & x_{01} \\ x_{10} & x_{11}\end{bmatrix}$ 为例）：
 
 - **行优先拉直**（物理与 Choi 矩阵常用）：按行依次堆叠 $\operatorname{vec}_r(X) = [x_{00}, x_{01}, x_{10}, x_{11}]^T$，满足 $\operatorname{vec}_r(AXB) = (A \otimes B^T)\,\operatorname{vec}_r(X)$；
 - **列优先拉直**（线性代数与控制论常用）：按列依次堆叠 $\operatorname{vec}_c(X) = [x_{00}, x_{10}, x_{01}, x_{11}]^T$，满足 $\operatorname{vec}_c(AXB) = (B^T \otimes A)\,\operatorname{vec}_c(X)$。
@@ -1454,7 +1469,9 @@ $$
 
 ---
 
-## 9. 渐近复杂度：看清增速、口径与常数交叉点
+<span id="9-渐近复杂度看清增速口径与常数交叉点"></span>
+
+## 9. 进阶选读：渐近复杂度、口径与常数交叉点
 
 到了算法篇，我们会反复比较“经典算法要多少步、量子算法要多少步”。渐近复杂度记号 $O, \Omega, \Theta$ 比较的是**问题规模变大时的增长趋势**，不是跑表测出来的秒数。
 
@@ -1477,7 +1494,7 @@ $$
 
 ### 9.2 渐近符号三兄弟：$O$、$\Omega$、$\Theta$
 
-初学者最常踩的一个大坑，是把 $O$ 背成“最坏情形”、把 $\Omega$ 背成“最好情形”、把 $\Theta$ 背成“平均情形”。**这是完全错误的！**
+初学者最常见的一个误解，是把 $O$ 背成“最坏情形”、把 $\Omega$ 背成“最好情形”、把 $\Theta$ 背成“平均情形”。这是不正确的。
 
 “最坏 / 平均 / 最好情形”选的是**哪一类输入**；而 $O, \Omega, \Theta$ 描述的是**一个给定增长函数的上界、下界还是紧界**，两者是完全正交的两个维度。比如线性查找的**最坏情形**要查 $n$ 次，所以最坏情形是 $\Theta(n)$（同时也是 $O(n)$ 和 $\Omega(n)$）；它的**最好情形**（第一格就命中）是 $\Theta(1)$（同样既有上界 $O(1)$ 也有下界 $\Omega(1)$）。
 
@@ -1506,21 +1523,7 @@ $$
 | $1\,000$ | $1\,000\,000$ | $1\,000\,000$ | **交叉点（打平）** |
 | $10\,000$ | $10\,000\,000$ | $100\,000\,000$ | $T_A$ 反超快 $10$ 倍 |
 
-**算例 B（量子—经典交叉点的倍率平方律）**：回呼[第 00 章第 5 节](00-overview.md#一次查询不等于一纳秒算一笔交叉点账)的平方加速交叉点模型：若经典单步耗时 $t_{\mathrm{cl}}$、量子单次查询耗时 $t_{\mathrm{q}} = C\,t_{\mathrm{cl}}$（慢 $C$ 倍），则 $C\,t_{\mathrm{cl}}\sqrt{N} \le t_{\mathrm{cl}}N$ 直接给出通用交叉点公式
-
-$$
-\sqrt{N} \ge C \implies N \ge C^2.
-$$
-
-交叉点按单步时钟倍率 $C$ 的**平方**移动，下面三行数字一眼看清工程常数有多敏感（取经典单步 $t_{\mathrm{cl}} = 1\,\mathrm{ns} = 10^{-9}\,\mathrm{s}$）：
-
-| 量子单次查询耗时 $t_{\mathrm{q}}$ | 单步倍率 $C = t_{\mathrm{q}}/t_{\mathrm{cl}}$ | 追平交叉点 $N = C^2$ | 交叉点单边耗时 $C^2 t_{\mathrm{cl}}$ |
-| ---: | ---: | ---: | ---: |
-| $0.1\,\mathrm{ms}\;(10^{-4}\,\mathrm{s})$ | $10^5$ | $10^{10}$ | $10\,\mathrm{s}$ |
-| $1\,\mathrm{ms}\;(10^{-3}\,\mathrm{s})$ | $10^6$ | $10^{12}$ | $1{,}000\,\mathrm{s}$ |
-| $10\,\mathrm{ms}\;(10^{-2}\,\mathrm{s})$ | $10^7$ | $10^{14}$ | $10^5\,\mathrm{s}$（约 $27.8$ 小时） |
-
-单次查询耗时仅放慢 $10$ 倍，平方根加速的实用门槛就会被推远整整 $100$ 倍。这就是为什么评估量子加速时，必须把逻辑纠错开销和实际时钟速度一起放进账本。
+**算例 B（量子—经典交叉点的倍率平方律）**：回呼[第 00 章第 5 节](00-overview.md#一次查询不等于一纳秒算一笔交叉点账)的平方加速交叉点模型：若经典单步耗时 $t_{\mathrm{cl}}$、量子单次查询耗时 $t_{\mathrm{q}} = C\,t_{\mathrm{cl}}$（慢 $C$ 倍），则 $C\,t_{\mathrm{cl}}\sqrt{N} \le t_{\mathrm{cl}}N$ 立即给出通用交叉点公式 $\sqrt{N} \ge C \implies N \ge C^2$。可见交叉点随单步时钟倍率 $C$ 的**平方**推移（例如 $t_{\mathrm{q}}$ 放慢 $10$ 倍，实用门槛便推远 $100$ 倍；具体毫秒级数值对照表见第 00 章第 5 节），因此评估量子加速必须将时钟倍率与纠错开销一并计入账本。
 
 ### 9.4 统一问题口径：任务类型与“查询复杂度 $\neq$ 时间复杂度”
 
@@ -1552,6 +1555,23 @@ $$
 - **逐格取矩阵指数或把不对易指数硬相加**：$e^A$ 必须通过谱分解或级数算，不能把矩阵每个格子分别套一次 $e^x$；当 $[A, B] \neq 0$ 时，$e^A e^B \neq e^{A+B}$。
 - **混淆张量积顺序与软件位序**：一般 $A \otimes B \neq B \otimes A$；跨教材和软件框架读多比特位串时必须核对是大端序（本手册将 $q_0$ 放在最左）还是小端序（如 Qiskit 将 $q_0$ 放在最右低位）。
 - **把大 $O$ 当秒表或把查询当物理门**：混淆渐近界（$O/\Omega/\Theta$）与输入情形（最坏/最好）；忽略常数交叉点、读出条件数噪声放大以及预言机的真实电路实现成本。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：复数振幅（模平方与相位）$\to$ 左共轭内积与正交投影 $\to$ 酉门、厄米算符与谱分解 $\to$ 矩阵指数、SVD 与张量积/偏迹 $\to$ 条件概率、二项抽样与渐近界。
+
+| 核心对象 / 公式 | 关键条件与常见边界 |
+| :--- | :--- |
+| 左共轭内积 $\langle\phi\vert\psi\rangle = \sum_j \phi_j^*\psi_j$ | 右线性、左反线性；概率取模平方 $\lvert z\rvert^2 = z^*z$，绝不取 $z^2$ |
+| 酉门 $U^\dagger U = I$；厄米阵 $A = A^\dagger$ | 酉阵要求各列正交且归一（仅列归一不足够）；正规阵 $A^\dagger A = AA^\dagger$ 方有正交谱分解 |
+| 矩阵指数 $e^{\pm i\theta A} = (\cos\theta)I \pm i(\sin\theta)A$ | 仅当 $A^2 = I$ 成立；$[A,B]\neq 0$ 时 $e^A e^B \neq e^{A+B}$ |
+| SVD $A = W\Sigma V^\dagger$ 与求逆误差界 | 绝对误差放大上界为 $1/\sigma_{\min}$，相对误差放大上界为 $\kappa_2 = \sigma_{\max}/\sigma_{\min}$ |
+| 张量积 $(A\otimes B)(C\otimes D) = (AC)\otimes(BD)$ | 全书大端序（$q_0$ 在最左）；偏迹 $\operatorname{Tr}_B$ 逐块取迹，$\operatorname{Tr}_A$ 主对角块相加 |
+| 有限采样 $\operatorname{sd}(\hat p) = \sqrt{p(1-p)/N}$ 与 $O/\Omega/\Theta$ | 误差缩至 $1/10$ 需 $100\times$ 采样；$O/\Omega/\Theta$ 描述增速界，不等同最坏/最好情形 |
+
+**三句自检要点**：① 看到 Dirac 表达式先辨对象形状（标量、列向量还是方阵）；② 区分被动换基（态与算符同步变）与主动施门（只变态）；③ 判 $2\times 2$ 正半定须查齐 $a\ge 0,\;d\ge 0,\;\det A\ge 0$，不能只看对角线。
 
 ---
 
@@ -1589,7 +1609,7 @@ $$
 
 - **配套数值练习与本地脚本**：
   - [基础实验册](labs/foundations.md#f01不取复共轭会把长度算成复数)的 `F01` 组提供复共轭归一化、外积矩阵与 Hadamard 概率的完整手算与核验任务；
-  - [基础代码说明](../codes/foundations/README.md)汇总了本章全部本地可运行验证脚本（涵盖复内积与外积、列归一非正交反例、被动换基与主动施门对照，以及[矩阵指数复算说明](../codes/foundations/round72-README.md)与[不对称读出求逆说明](../codes/foundations/round73-README.md)对应的核验任务）；所有核心数学核验脚本均只依赖 Python 3 标准库、使用本地合成数据、不联网也不调用付费云服务；完整多框架 SDK 对照实验见[完整 SDK 实验册](labs/sdk-validation.md)。
+  - [基础代码说明](../codes/foundations/README.md)汇总了本章全部本地可运行验证脚本（涵盖复内积与外积、列归一非正交反例、被动换基与主动施门对照，以及矩阵指数复算与不对称读出求逆核验任务）；所有核心数学核验脚本均只依赖 Python 3 标准库、使用本地合成数据、不联网也不调用付费云服务；完整多框架 SDK 对照实验见[完整 SDK 实验册](labs/sdk-validation.md)。
 - **推荐公开参考资料**：
   - OpenStax, [《Precalculus 2e》复数与极坐标形式](https://openstax.org/books/precalculus-2e/pages/3-1-complex-numbers) 与 [《Introductory Statistics 2e》概率与期望方差](https://openstax.org/books/introductory-statistics-2e/pages/3-formula-review)，适合补练复数运算和基础统计；
   - Grant Sanderson (3Blue1Brown), [《线性代数的本质》](https://www.3blue1brown.com/topics/linear-algebra) 与 [《贝叶斯定理的几何直觉》](https://www.3blue1brown.com/lessons/bayes-theorem)，用动画强化矩阵列视角、特征值与面积直觉；

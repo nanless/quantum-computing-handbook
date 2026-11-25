@@ -1,9 +1,0 @@
-Optimal spacetime partitioning not implemented!Just partitioning list of noisy boxes.
-Traceback (most recent call last):
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/slc_workflow.py", line 66, in <module>
-    if __name__=='__main__':main()
-                            ^^^^^^
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/sdk/round73/slc_workflow.py", line 51, in main
-    assert observed<=bias+1e-10,(observed,bias)
-           ^^^^^^^^^^^^^^^^^^^^
-AssertionError: (0.08673558283252802, np.float64(0.0))

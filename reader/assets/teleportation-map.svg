@@ -3,7 +3,7 @@
   <desc id="desc">Alice 与 Bob 预先共享一对 Bell 量子比特。Alice 将未知输入 Q 与自己的 A 做 CNOT，对 Q 做 Hadamard，再测 Q 和 A，得到四种等概率结果之一。她用普通通信发送两位结果，Bob 按 00、01、10、11 分别做 I、X、Z、ZX 校正，才得到输入态。消息未到时，Bob 本地态为 I 除以二。</desc>
   <style>
     .bg{fill:#f7faf6}.card{fill:#fffefa;stroke:#c6d7cc;stroke-width:2}.card2{fill:#e7f2eb;stroke:#a8cbb5;stroke-width:2}.ink{fill:#1e4238}.muted{fill:#567064}.accent{fill:#25664c}.accent2{fill:#9a5a35}.pill{fill:#e6f1e9}.rule{stroke:#c6d7cc;stroke-width:1.5}.arrow{stroke:#47785c;stroke-width:3;fill:none;marker-end:url(#arrowhead)}.arrowhead{fill:#47785c}.head{font:600 26px 'PingFang SC',system-ui,sans-serif}.label{font:600 20px 'PingFang SC',system-ui,sans-serif}.body{font:18px 'PingFang SC',system-ui,sans-serif}.small{font:16px 'PingFang SC',system-ui,sans-serif}.math{font:22px 'Cambria Math','Times New Roman',serif}.mono{font:600 21px 'SFMono-Regular',Consolas,monospace}
-    @media(prefers-color-scheme:dark){.bg{fill:#152620}.card{fill:#1c3027;stroke:#668c73}.card2{fill:#274638;stroke:#82aa8a}.ink{fill:#ebf6ed}.muted{fill:#bed0c2}.accent{fill:#a8e0bb}.accent2{fill:#efbb92}.pill{fill:#315443}.rule{stroke:#668c73}.arrow{stroke:#9ed6b0}.arrowhead{fill:#9ed6b0}}
+    
   </style>
   <defs><marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrowhead" d="M0 0L10 5L0 10Z"/></marker></defs>
   <rect class="bg" width="1120" height="630" rx="22"/>

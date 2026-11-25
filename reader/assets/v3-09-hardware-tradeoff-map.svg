@@ -2,7 +2,7 @@
   <title id="v3-09-hardware-tradeoff-map-title">六大硬件路线门时长与相干时间双对数相图及光子存活雪崩</title>
   <desc id="v3-09-hardware-tradeoff-map-desc">左面板绘出超导、离子阱、中性原子、硅自旋、光子与拓扑候选的双对数门时长-相干时间相图与等比值线 T2/tg=10^2..10^5；右面板精确绘出 N=1..100 时 eta=0.999, 0.995, 0.99, 0.90 的光子全存活概率曲线。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
     .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
@@ -46,43 +46,7 @@
     .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
     .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
     
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .card{fill:#162330;stroke:#395066}
-      .subcard{fill:#1d2e3d;stroke:#3d566d}
-      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
-      .ink{fill:#eef6ff}
-      .muted{fill:#b4c8da}
-      .accent{fill:#6ed0f7}
-      .warn{fill:#ff8585}
-      .gold{fill:#f2c15a}
-      .purple{fill:#c0adff}
-      .green{fill:#6dd4aa}
-      .axis{stroke:#b9d0e2}
-      .axishead{fill:#b9d0e2}
-      .grid{stroke:#304659}
-      .divider{stroke:#4a637a}
-      .s-accent{stroke:#6ed0f7}
-      .s-warn{stroke:#ff8585}
-      .s-gold{stroke:#f2c15a}
-      .s-purple{stroke:#c0adff}
-      .s-green{stroke:#6dd4aa}
-      .s-muted{stroke:#8ca5ba}
-      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
-      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
-      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
-      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
-      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
-      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
-      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
-      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
-      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
-      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
-      .wire{stroke:#c9deee}
-      .ctrl{fill:#eef6ff}
-      .dot-ring{stroke:#162330}
-      
-    }
+    
   </style>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title ink" x="34" y="44">六大硬件路线门时长–相干时间双对数相图与光子存活雪崩</text>

@@ -2,14 +2,14 @@
   <title id="title">五类量子硬件的控制、读出与复位链</title>
   <desc id="desc">用五条泳道比较超导、离子阱、中性原子、光子和半导体自旋从信号产生、调制与传输、量子器件、探测判决到复位再循环的工程链。每条泳道的横向箭头表示该平台本轮实验的处理顺序；最右列说明如何准备下一轮。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f7fafc}.title{font:600 30px system-ui,sans-serif;fill:#13263a}.sub{font:400 17px system-ui,sans-serif;fill:#4b6073}
     .lane{stroke-width:2}.sc{fill:#e6f3fb;stroke:#3b82a5}.ion{fill:#eeeafd;stroke:#7665b2}.atom{fill:#e8f5e9;stroke:#5b9363}.photo{fill:#fff4d9;stroke:#b88b2f}.spin{fill:#fcebe7;stroke:#b96758}
     .tag{font:600 19px system-ui,sans-serif;fill:#173047}.box{fill:#fff;stroke:#9ab0c2;stroke-width:1.5}.boxt{font:500 16px system-ui,sans-serif;fill:#18324a}.small{font:400 14px system-ui,sans-serif;fill:#4c6478}
     .arrow{stroke:#47647b;stroke-width:2.4;fill:none;marker-end:url(#arrow)}
     .head{fill:#e9eef3;stroke:#8ca2b4}.headt{font:600 16px system-ui,sans-serif;fill:#263f55}
     .markerArrow{fill:#47647b}
-    @media(prefers-color-scheme:dark){.bg{fill:#101820}.title{fill:#eef6ff}.sub{fill:#b7c8d7}.box{fill:#172632;stroke:#6d879a}.boxt{fill:#e9f3fa}.small{fill:#b8cbd9}.tag{fill:#eef6ff}.head{fill:#1c2d3a;stroke:#658094}.headt{fill:#e4f0f8}.sc{fill:#173e54}.ion{fill:#302c50}.atom{fill:#203f2b}.photo{fill:#4a3b1d}.spin{fill:#4a2e2a}.arrow{stroke:#9fc7de}.markerArrow{fill:#9fc7de}}
+    
   </style>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="markerArrow" d="M0 0L10 5L0 10z"/></marker>

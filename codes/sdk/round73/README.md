@@ -10,6 +10,8 @@ python3.11 -m venv .venv-round73-workflows
 .venv-round73-workflows/bin/python codes/sdk/round73/long_gst.py
 .venv-round73-workflows/bin/python codes/sdk/round73/pna_workflow.py
 .venv-round73-workflows/bin/python codes/sdk/round73/slc_workflow.py
+# 或通过本目录的可选完整 SDK 批量调度入口串行运行上述四条流程：
+.venv-round73-workflows/bin/python codes/sdk/round73/run_workflows.py
 python3 codes/sdk/round73/check_saved.py
 ```
 

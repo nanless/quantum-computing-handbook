@@ -11,12 +11,26 @@ const assetsDir = path.join(handbookDir, 'assets');
 const exercisesPath = path.join(handbookDir, 'appendices/exercises.md');
 
 const EXPECTED_TOTAL_EXERCISES = 271;
-const HISTORICAL_TERMINOLOGY_EXEMPT = new Set(['handbook/appendices/audit-log.md']);
 
-async function walk(dir) {
+const BINARY_EXTENSIONS = new Set([
+  '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.bmp',
+  '.wav', '.mp3', '.ogg', '.mp4', '.webm',
+  '.pdf', '.epub', '.zip', '.gz', '.tar', '.bz2', '.xz',
+  '.npz', '.npy', '.pyc', '.pyo',
+  '.woff', '.woff2', '.ttf', '.otf', '.eot',
+  '.o', '.so', '.dylib', '.dll', '.exe',
+]);
+
+async function walk(dir, { skipDirNames = new Set() } = {}) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const nested = await Promise.all(
-    entries.map(e => (e.isDirectory() ? walk(path.join(dir, e.name)) : path.join(dir, e.name))),
+    entries.map(e => {
+      if (e.isDirectory()) {
+        if (skipDirNames.has(e.name)) return [];
+        return walk(path.join(dir, e.name), { skipDirNames });
+      }
+      return path.join(dir, e.name);
+    }),
   );
   return nested.flat();
 }
@@ -81,8 +95,8 @@ function parseExercisesByChapter(exercisesText) {
     const heading = (firstNewline === -1 ? sec : sec.slice(0, firstNewline)).trim();
     const body = firstNewline === -1 ? '' : sec.slice(firstNewline + 1);
     let key = null;
-    const mMain = heading.match(/^##\s*第\s*(\d+)\s*章(?:\s*[｜|].*)?$/);
-    const mQm = heading.match(/^##\s*(?:量子力学|物理篇)\s*Q(\d+)(?:\s*[｜|].*)?$/);
+    const mMain = heading.match(/^##\s*第\s*(\d+)\s*章(?:\s*[｜|：:].*)?$/);
+    const mQm = heading.match(/^##\s*(?:量子力学(?:基础)?|物理(?:基础)?篇?)\s*Q(\d+)(?:\s*[｜|：:].*)?$/);
     if (mMain) key = String(Number(mMain[1])).padStart(2, '0');
     else if (mQm) key = `Q${Number(mQm[1])}`;
     if (key) {
@@ -101,7 +115,7 @@ async function main() {
   const plan = readingPlan(chapterFiles);
   const orderedIds = readingGroups.flatMap(([, ids]) => ids);
 
-  // Target prose files: 26 chapters + READMEs + appendices/ + labs/
+  // Target prose files: 26 chapters + READMEs + appendices/ (including audit-log.md) + labs/
   const scanFiles = allMd.filter(f => {
     const rel = path.relative(handbookDir, f).replaceAll('\\', '/');
     return rel !== 'STYLE.md';
@@ -110,7 +124,6 @@ async function main() {
   const gate1LatexDelims = [];
   const gate2BannedTerms = [];
   const gate3DecodeTerm = [];
-  const historicalTerminologyNotes = [];
 
   const bannedPattern = /参数偏移|玩具模型|左线性/g;
   const decodePattern = /译码/g;
@@ -121,12 +134,10 @@ async function main() {
     const rel = path.relative(root, file).replaceAll('\\', '/');
     const raw = await fs.readFile(file, 'utf8');
     const masked = maskCodePreserveLines(raw);
-    const isHistorical = HISTORICAL_TERMINOLOGY_EXEMPT.has(rel);
 
     // Gate 1: Zero \(...\) or \[...\] in prose (code excluded).
     for (const m of masked.matchAll(latexDelimPattern)) {
       const idx = m.index;
-      // Ignore Markdown escaped brackets like \[1\] only if not part of math? No, standard prose shouldn't use \[ or \(.
       gate1LatexDelims.push({
         file: rel,
         line: lineNumberAt(raw, idx),
@@ -135,19 +146,17 @@ async function main() {
       });
     }
 
-    // Gate 2: Zero 参数偏移 / 玩具模型 / 左线性
+    // Gate 2: Zero 参数偏移 / 玩具模型 / 左线性 across all reader-facing prose & appendices.
     for (const m of masked.matchAll(bannedPattern)) {
-      const hit = {
+      gate2BannedTerms.push({
         file: rel,
         line: lineNumberAt(raw, m.index),
         term: m[0],
         excerpt: excerptAround(raw, m.index),
-      };
-      if (isHistorical) historicalTerminologyNotes.push({ gate: 'bannedTerms', ...hit });
-      else gate2BannedTerms.push(hit);
+      });
     }
 
-    // Gate 3: Zero 译码 (allow only 亦称译码 / 旧称译码 / vendor 原始引用)
+    // Gate 3: Zero 译码 across all reader-facing prose & appendices (allow only 亦称译码 / 旧称译码 / vendor refs).
     for (const m of masked.matchAll(decodePattern)) {
       const idx = m.index;
       const before = raw.slice(Math.max(0, idx - 6), idx);
@@ -160,13 +169,11 @@ async function main() {
       const allowedVendor = /\bvendor\b|codes\/vendor/i.test(fullLine);
       if (allowedAlias || allowedVendor) continue;
 
-      const hit = {
+      gate3DecodeTerm.push({
         file: rel,
         line: lineNumberAt(raw, idx),
         excerpt: excerptAround(raw, idx),
-      };
-      if (isHistorical) historicalTerminologyNotes.push({ gate: 'decodeTerm', ...hit });
-      else gate3DecodeTerm.push(hit);
+      });
     }
   }
 
@@ -219,11 +226,45 @@ async function main() {
     totalChapterQuestions === EXPECTED_TOTAL_EXERCISES &&
     totalExerciseAnswers === EXPECTED_TOTAL_EXERCISES;
 
+  // Gate 6: Local privacy path leakage blocker across handbook/, codes/ (excl vendor/), and tools/reader/.
+  // Build regex segments dynamically so this gate script never false-positives on its own source.
+  const privacyPathPattern = new RegExp(
+    ['/Users/[a-zA-Z0-9._-]+/', '\\.' + 'codex/', '[Cc]:\\\\{1,2}' + 'Users\\\\{1,2}'].join('|'),
+    'g',
+  );
+  const privacyRoots = [
+    { dir: handbookDir, skip: new Set() },
+    { dir: path.join(root, 'codes'), skip: new Set(['vendor', '__pycache__']) },
+    { dir: path.join(root, 'tools/reader'), skip: new Set(['node_modules']) },
+  ];
+  const privacyTargets = (
+    await Promise.all(privacyRoots.map(({ dir, skip }) => walk(dir, { skipDirNames: skip })))
+  )
+    .flat()
+    .filter(f => !BINARY_EXTENSIONS.has(path.extname(f).toLowerCase()))
+    .sort();
+
+  const gate6PrivacyViolations = [];
+  for (const file of privacyTargets) {
+    const rel = path.relative(root, file).replaceAll('\\', '/');
+    const buf = await fs.readFile(file);
+    if (buf.includes(0)) continue; // skip unexpected binary blobs
+    const raw = buf.toString('utf8');
+    for (const m of raw.matchAll(privacyPathPattern)) {
+      gate6PrivacyViolations.push({
+        file: rel,
+        line: lineNumberAt(raw, m.index),
+        match: m[0],
+        excerpt: excerptAround(raw, m.index),
+      });
+    }
+  }
+
   const summary = {
     generatedAt: new Date().toISOString(),
     scannedMarkdownFiles: scanFiles.length,
     scannedSvgFiles: svgFiles.length,
-    excludedHistoricalForTerminology: [...HISTORICAL_TERMINOLOGY_EXEMPT],
+    scannedPrivacyFiles: privacyTargets.length,
     gates: {
       gate1LatexDelimiters: {
         passed: gate1LatexDelims.length === 0,
@@ -257,8 +298,13 @@ async function main() {
         mismatches: exerciseMismatches,
         perChapter: exerciseChecks,
       },
+      gate6PrivacyPaths: {
+        passed: gate6PrivacyViolations.length === 0,
+        scannedFiles: privacyTargets.length,
+        count: gate6PrivacyViolations.length,
+        violations: gate6PrivacyViolations.slice(0, 50),
+      },
     },
-    historicalTerminologyNotesCount: historicalTerminologyNotes.length,
   };
 
   const allPassed = Object.values(summary.gates).every(g => g.passed);

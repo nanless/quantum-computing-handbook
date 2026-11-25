@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">带负谱非网格 HHL 有限相位误差与 16 顶点离散量子行走搜索</title>
+  <desc id="desc">三联科学图基于本地精确模拟归档数据：左图对比非网格带负特征值 (−1.1, 2.3) 的 HHL 线路在相位寄存器位数 t = 3..6 下仅选标志位与同时要求相位归零两类成功概率；中图展示条件混态根保真度与残留非零相位垃圾占比；右图展示 4 维超立方体（16 顶点）SKW 离散量子行走的标记顶点概率，在第 4 步达最早峰值 25/64，第 8 步过步回落至 1/256。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">带负谱非网格 HHL 有限相位误差与 16 顶点离散行走搜索</text>
+  <text class="subtitle" x="34" y="77">左/中：2×2 特征值 (−1.1, 2.3) 随相位位数 t 的成功事件与残留垃圾；右：4 维超立方体 SKW 行走峰值与过步回落</text>
+  <rect class="panel" x="28" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 320 Q 333 97 333 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="333" y2="134"/>
+  <text class="sec" x="44" y="120">A. 有限 QPE：两类成功事件</text>
+  <line class="c1" stroke-width="2.0" x1="40" y1="154" x2="58" y2="154"/>
+  <circle class="c1-fill" cx="49" cy="154" r="3.4"/>
+  <text class="xs c1-txt" x="63" y="158">标志位 = 1</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="5 3" x1="140" y1="154" x2="158" y2="154"/>
+  <rect class="c2-fill" x="145.5" y="150.5" width="7" height="7" rx="1"/>
+  <text class="xs c2-txt" x="163" y="158">标志=1 且相位归零</text>
+  <line class="guide" x1="40" y1="174" x2="58" y2="174"/>
+  <text class="xs" x="63" y="178">理想倒数成功率（0.1319）</text>
+  <line class="grid" x1="92" y1="412.17" x2="316" y2="412.17"/>
+  <text class="xs" x="85" y="416.17" text-anchor="end">0.12</text>
+  <line class="grid" x1="92" y1="372.5" x2="316" y2="372.5"/>
+  <text class="xs" x="85" y="376.5" text-anchor="end">0.13</text>
+  <line class="grid" x1="92" y1="332.83" x2="316" y2="332.83"/>
+  <text class="xs" x="85" y="336.83" text-anchor="end">0.14</text>
+  <line class="grid" x1="92" y1="293.17" x2="316" y2="293.17"/>
+  <text class="xs" x="85" y="297.17" text-anchor="end">0.15</text>
+  <line class="grid" x1="92" y1="253.5" x2="316" y2="253.5"/>
+  <text class="xs" x="85" y="257.5" text-anchor="end">0.16</text>
+  <line class="grid" x1="92" y1="213.83" x2="316" y2="213.83"/>
+  <text class="xs" x="85" y="217.83" text-anchor="end">0.17</text>
+  <line class="grid" x1="113.19" y1="194" x2="113.19" y2="432"/>
+  <text class="xs" x="113.19" y="449" text-anchor="middle">3</text>
+  <line class="grid" x1="173.73" y1="194" x2="173.73" y2="432"/>
+  <text class="xs" x="173.73" y="449" text-anchor="middle">4</text>
+  <line class="grid" x1="234.27" y1="194" x2="234.27" y2="432"/>
+  <text class="xs" x="234.27" y="449" text-anchor="middle">5</text>
+  <line class="grid" x1="294.81" y1="194" x2="294.81" y2="432"/>
+  <text class="xs" x="294.81" y="449" text-anchor="middle">6</text>
+  <line class="guide" x1="92" y1="365.12" x2="316" y2="365.12"/>
+  <line class="axis" x1="92" y1="432" x2="322" y2="432"/>
+  <polygon class="axis-fill" points="322,432 315.5,435.12 315.5,428.88"/>
+  <line class="axis" x1="92" y1="432" x2="92" y2="186"/>
+  <polygon class="axis-fill" points="92,186 95.12,192.5 88.88,192.5"/>
+  <text class="sm" x="204" y="472" text-anchor="middle">相位寄存器位数 t (bit)</text>
+  <text class="sm" x="44" y="313" text-anchor="middle" transform="rotate(-90 44 313)">成功概率（无量纲）</text>
+  <path class="c1" stroke-width="2.2" d="M 113.19 253.86 L 173.73 231.53 L 234.27 304.06 L 294.81 369.13"/>
+  <path class="c2" stroke-width="2.1" stroke-dasharray="6 3" d="M 113.19 304.33 L 173.73 326.85 L 234.27 372.63 L 294.81 386.99"/>
+  <circle class="c1-fill" cx="113.19" cy="253.86" r="4.2"/>
+  <circle class="c1-fill" cx="173.73" cy="231.53" r="4.2"/>
+  <circle class="c1-fill" cx="234.27" cy="304.06" r="4.2"/>
+  <circle class="c1-fill" cx="294.81" cy="369.13" r="4.2"/>
+  <rect class="c2-fill" x="109.59" y="300.73" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="170.13" y="323.25" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="230.67" y="369.03" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="291.21" y="383.39" width="7.2" height="7.2" rx="1"/>
+  <line class="c4" stroke-width="1.5" x1="165.73" y1="233.53" x2="165.73" y2="324.85"/>
+  <line class="c4" stroke-width="1.3" x1="162.73" y1="233.53" x2="168.73" y2="233.53"/>
+  <line class="c4" stroke-width="1.3" x1="162.73" y1="324.85" x2="168.73" y2="324.85"/>
+  <text class="xsb c4-txt" x="159.73" y="274" text-anchor="end">t=4 差值</text>
+  <text class="xs c4-txt" x="159.73" y="289" text-anchor="end">0.024</text>
+  <rect class="pill" x="40" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="181" y="520" text-anchor="middle">两曲线之差即逆 QPE 后残留的相位垃圾概率</text>
+  <rect class="panel" x="347" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 361 97 H 639 Q 652 97 652 110 V 134 H 348 V 110 Q 348 97 361 97 Z"/>
+  <line class="grid" x1="348" y1="134" x2="652" y2="134"/>
+  <text class="sec" x="363" y="120">B. 逆 QPE 无法消零相位垃圾</text>
+  <line class="c1" stroke-width="2.0" x1="360" y1="154" x2="380" y2="154"/>
+  <circle class="c1-fill" cx="370" cy="154" r="3.4"/>
+  <text class="xs c1-txt" x="386" y="158">仅选标志混态根保真度 F</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="5 3" x1="360" y1="174" x2="380" y2="174"/>
+  <rect class="c2-fill" x="366.5" y="170.5" width="7" height="7" rx="1"/>
+  <text class="xs c2-txt" x="386" y="178">条件垃圾 P(相位 ≠ 0 | 标志 = 1)</text>
+  <line class="grid" x1="406" y1="432" x2="636" y2="432"/>
+  <text class="xs" x="399" y="436" text-anchor="end">0.0</text>
+  <line class="grid" x1="406" y1="387.93" x2="636" y2="387.93"/>
+  <text class="xs" x="399" y="391.93" text-anchor="end">0.2</text>
+  <line class="grid" x1="406" y1="343.85" x2="636" y2="343.85"/>
+  <text class="xs" x="399" y="347.85" text-anchor="end">0.4</text>
+  <line class="grid" x1="406" y1="299.78" x2="636" y2="299.78"/>
+  <text class="xs" x="399" y="303.78" text-anchor="end">0.6</text>
+  <line class="grid" x1="406" y1="255.7" x2="636" y2="255.7"/>
+  <text class="xs" x="399" y="259.7" text-anchor="end">0.8</text>
+  <line class="grid" x1="406" y1="211.63" x2="636" y2="211.63"/>
+  <text class="xs" x="399" y="215.63" text-anchor="end">1.0</text>
+  <line class="grid" x1="427.76" y1="194" x2="427.76" y2="432"/>
+  <text class="xs" x="427.76" y="449" text-anchor="middle">3</text>
+  <line class="grid" x1="489.92" y1="194" x2="489.92" y2="432"/>
+  <text class="xs" x="489.92" y="449" text-anchor="middle">4</text>
+  <line class="grid" x1="552.08" y1="194" x2="552.08" y2="432"/>
+  <text class="xs" x="552.08" y="449" text-anchor="middle">5</text>
+  <line class="grid" x1="614.24" y1="194" x2="614.24" y2="432"/>
+  <text class="xs" x="614.24" y="449" text-anchor="middle">6</text>
+  <line class="axis" x1="406" y1="432" x2="642" y2="432"/>
+  <polygon class="axis-fill" points="642,432 635.5,435.12 635.5,428.88"/>
+  <line class="axis" x1="406" y1="432" x2="406" y2="186"/>
+  <polygon class="axis-fill" points="406,186 409.12,192.5 402.88,192.5"/>
+  <text class="sm" x="521" y="472" text-anchor="middle">相位寄存器位数 t (bit)</text>
+  <text class="sm" x="363" y="313" text-anchor="middle" transform="rotate(-90 363 313)">无量纲指标</text>
+  <path class="c1" stroke-width="2.2" d="M 427.76 218.25 L 489.92 218.11 L 552.08 214.62 L 614.24 212.85"/>
+  <path class="c2" stroke-width="2.1" stroke-dasharray="6 3" d="M 427.76 414.47 L 489.92 400.01 L 552.08 406.13 L 614.24 424.41"/>
+  <circle class="c1-fill" cx="427.76" cy="218.25" r="4.2"/>
+  <circle class="c1-fill" cx="489.92" cy="218.11" r="4.2"/>
+  <circle class="c1-fill" cx="552.08" cy="214.62" r="4.2"/>
+  <circle class="c1-fill" cx="614.24" cy="212.85" r="4.2"/>
+  <rect class="c2-fill" x="424.16" y="410.87" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="486.32" y="396.41" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="548.48" y="402.53" width="7.2" height="7.2" rx="1"/>
+  <rect class="c2-fill" x="610.64" y="420.81" width="7.2" height="7.2" rx="1"/>
+  <text class="xsb c1-txt" x="433.76" y="240.25">t=3: F = 0.970</text>
+  <text class="xsb c1-txt" x="622.24" y="236.85" text-anchor="end">t=6: F = 0.994</text>
+  <text class="xsb c2-txt" x="489.92" y="386.01" text-anchor="middle">t=4: 14.5%</text>
+  <text class="xsb c2-txt" x="622.24" y="408.41" text-anchor="end">t=6: 3.4%</text>
+  <rect class="pill" x="359" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="500" y="520" text-anchor="middle">t = 4 垃圾先升至 14.5%，至 t = 6 才降至 3.4%</text>
+  <rect class="panel" x="666" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 680 97 H 958 Q 971 97 971 110 V 134 H 667 V 110 Q 667 97 680 97 Z"/>
+  <line class="grid" x1="667" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="682" y="120">C. 4 维超立方体 SKW 离散行走</text>
+  <line class="c1" stroke-width="2.0" x1="678" y1="154" x2="696" y2="154"/>
+  <circle class="c1-fill" cx="687" cy="154" r="3.4"/>
+  <text class="xs c1-txt" x="701" y="158">SKW 标记概率</text>
+  <line class="guide" x1="788" y1="154" x2="804" y2="154"/>
+  <text class="xs" x="809" y="158">无标记基线 1/16</text>
+  <rect class="hollow-c2" x="683" y="169" width="8.5" height="8.5" rx="1"/>
+  <text class="xs c2-txt" x="698" y="178">预选最早峰值（k = 4，p = 25/64）</text>
+  <line class="grid" x1="724" y1="424.48" x2="956" y2="424.48"/>
+  <text class="xs" x="717" y="428.48" text-anchor="end">0.0</text>
+  <line class="grid" x1="724" y1="374.38" x2="956" y2="374.38"/>
+  <text class="xs" x="717" y="378.38" text-anchor="end">0.1</text>
+  <line class="grid" x1="724" y1="324.27" x2="956" y2="324.27"/>
+  <text class="xs" x="717" y="328.27" text-anchor="end">0.2</text>
+  <line class="grid" x1="724" y1="274.17" x2="956" y2="274.17"/>
+  <text class="xs" x="717" y="278.17" text-anchor="end">0.3</text>
+  <line class="grid" x1="724" y1="224.06" x2="956" y2="224.06"/>
+  <text class="xs" x="717" y="228.06" text-anchor="end">0.4</text>
+  <line class="grid" x1="729.52" y1="194" x2="729.52" y2="432"/>
+  <text class="xs" x="729.52" y="449" text-anchor="middle">0</text>
+  <line class="grid" x1="784.76" y1="194" x2="784.76" y2="432"/>
+  <text class="xs" x="784.76" y="449" text-anchor="middle">4</text>
+  <line class="grid" x1="840" y1="194" x2="840" y2="432"/>
+  <text class="xs" x="840" y="449" text-anchor="middle">8</text>
+  <line class="grid" x1="895.24" y1="194" x2="895.24" y2="432"/>
+  <text class="xs" x="895.24" y="449" text-anchor="middle">12</text>
+  <line class="grid" x1="950.48" y1="194" x2="950.48" y2="432"/>
+  <text class="xs" x="950.48" y="449" text-anchor="middle">16</text>
+  <line class="guide" x1="724" y1="393.17" x2="956" y2="393.17"/>
+  <line class="axis" x1="724" y1="432" x2="962" y2="432"/>
+  <polygon class="axis-fill" points="962,432 955.5,435.12 955.5,428.88"/>
+  <line class="axis" x1="724" y1="432" x2="724" y2="186"/>
+  <polygon class="axis-fill" points="724,186 727.12,192.5 720.88,192.5"/>
+  <text class="sm" x="840" y="472" text-anchor="middle">完整行走步数 k（步）</text>
+  <text class="sm" x="682" y="313" text-anchor="middle" transform="rotate(-90 682 313)">标记顶点概率</text>
+  <path class="c1" stroke-width="2.1" d="M 729.52 393.17 L 743.33 393.17 L 757.14 299.22 L 770.95 299.22 L 784.76 228.76 L 798.57 228.76 L 812.38 299.22 L 826.19 299.22 L 840 422.53 L 853.81 422.53 L 867.62 393.17 L 881.43 393.17 L 895.24 247.84 L 909.05 247.84 L 922.86 228.76 L 936.67 228.76 L 950.48 359.77"/>
+  <circle class="c1-fill" cx="729.52" cy="393.17" r="3.2"/>
+  <circle class="c1-fill" cx="743.33" cy="393.17" r="3.2"/>
+  <circle class="c1-fill" cx="757.14" cy="299.22" r="3.2"/>
+  <circle class="c1-fill" cx="770.95" cy="299.22" r="3.2"/>
+  <circle class="c1-fill" cx="784.76" cy="228.76" r="3.2"/>
+  <circle class="c1-fill" cx="798.57" cy="228.76" r="3.2"/>
+  <circle class="c1-fill" cx="812.38" cy="299.22" r="3.2"/>
+  <circle class="c1-fill" cx="826.19" cy="299.22" r="3.2"/>
+  <circle class="c1-fill" cx="840" cy="422.53" r="3.2"/>
+  <circle class="c1-fill" cx="853.81" cy="422.53" r="3.2"/>
+  <circle class="c1-fill" cx="867.62" cy="393.17" r="3.2"/>
+  <circle class="c1-fill" cx="881.43" cy="393.17" r="3.2"/>
+  <circle class="c1-fill" cx="895.24" cy="247.84" r="3.2"/>
+  <circle class="c1-fill" cx="909.05" cy="247.84" r="3.2"/>
+  <circle class="c1-fill" cx="922.86" cy="228.76" r="3.2"/>
+  <circle class="c1-fill" cx="936.67" cy="228.76" r="3.2"/>
+  <circle class="c1-fill" cx="950.48" cy="359.77" r="3.2"/>
+  <rect class="hollow-c2" x="779.26" y="223.26" width="11" height="11" rx="1.5"/>
+  <text class="xsb c2-txt" x="791.76" y="214.76" text-anchor="middle">k=4: 25/64 ≈ 0.391</text>
+  <rect class="pill-bg" x="812" y="232" width="72" height="34" rx="6"/>
+  <text class="xsb c2-txt" x="848" y="246" text-anchor="middle">k = 8 过步</text>
+  <text class="xs" x="848" y="260" text-anchor="middle">跌至 1/256</text>
+  <line class="c2" stroke-width="1.3" stroke-dasharray="3 2" x1="846" y1="266" x2="840" y2="416.53"/>
+  <rect class="note" x="678" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="819" y="520" text-anchor="middle">存在最优停步峰；多走 4 步即过旋跌至 0.39%</text>
+</svg>

@@ -1,29 +1,28 @@
 #!/usr/bin/env node
 /**
- * Build publication-grade A4 PDF for the Quantum Computing Handbook.
+ * Build publication-grade A4 PDF for the Quantum Computing Handbook (V4).
  *
- * High-speed chunked rendering pipeline:
+ * Two-pass 8-chunk offline rendering pipeline:
  * 1. Dynamically reads handbook/README.md edition & reading-order.mjs part/chapter plan
- *    plus all 7 appendices (A–G) and 7 labs (100% offline, zero external network requests).
- * 2. Resolves Mermaid diagrams from reader/assets/flow-<sha14>.svg (exact build.mjs hash),
- *    falling back to work/render-cache or headless Playwright Mermaid rendering into /tmp.
- * 3. Pre-renders all LaTeX formulas via local KaTeX (output: 'html' — ~65% smaller DOM)
- *    using build.mjs protectMath, and extracts clean Unicode outline titles directly from
- *    Markdown headings (no MathML dependency).
- * 4. Splits the book into lightweight HTML chunks (< ~5 MB each) preserving exact chapter
- *    page breaks, intra-chunk Named Destinations, and cross-chunk link sentinels
- *    (https://qch.local/#<anchor>), then prints cover.pdf + all chunk-*.pdf in parallel
- *    via Chrome with tagged: true, displayHeaderFooter: false, preferCSSPageSize: true.
- * 5. Writes /tmp/qch-pdf-build/outline-manifest.json and invokes postprocess-pdf.py to
- *    merge chunks (retaining catalog /StructTreeRoot from front chunk while honestly auditing
- *    per-page /StructParents coverage), stamp continuous running headers & page numbers,
- *    rewrite TOC + cross-chunk internal GoTo links, write 3-level Unicode bookmarks,
- *    normalize Kangxi /ToUnicode CMaps, losslessly deduplicate & compress (<50 MiB),
- *    run all 10 publishing QA gates, and render 4 150-DPI previews.
+ *    plus all 7 appendices (A–G) and 7 labs (100% offline, zero external network requests),
+ *    using shared diagram-titles.mjs for Mermaid captions.
+ * 2. Pre-renders all LaTeX formulas via local KaTeX (output: 'html') with CJK kinsoku
+ *    punctuation glue (.math-tail / .math-punct-keep) to eliminate line-leading punctuation.
+ * 3. Packs the book into 7 large body chunks (no artificial mid-chapter split of Appendix D)
+ *    + 1 standalone TOC chunk + 1 standalone Cover inside an isolated mkdtemp workspace
+ *    (cleaned up in finally). Prints Cover + 7 body chunks in parallel (tagged: false;
+ *    native MathML 3 EPUB 3 is the preferred screen-reader accessible edition).
+ * 4. Pass 2 probes exact 1-based printed body page numbers via postprocess-pdf.py
+ *    --probe-pages, renders the two-column TOC with right-aligned printed page numbers
+ *    and dot leaders, then invokes postprocess-pdf.py for merging, /PageLabels, 0-offset
+ *    headers/footers (suppressed on cover/TOC/part dividers), GoTo links, 3-level Unicode
+ *    bookmarks, Kangxi CMap normalization, stream/SMask deduplication, font subsetting,
+ *    lossless compression, and automated QA verification.
  */
 
 import fs from 'node:fs/promises';
 import fsSync from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
 import crypto from 'node:crypto';
@@ -33,34 +32,81 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { marked } from 'marked';
 import katex from 'katex';
 import { readingPlan } from './reading-order.mjs';
+import { resolveDiagramTitle } from './diagram-titles.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const source = path.join(root, 'handbook');
 const readerDir = path.join(root, 'reader');
 const workCache = path.join(root, 'work/render-cache');
-const tmpDir = '/tmp/qch-pdf-build';
-const tmpAssetsDir = path.join(tmpDir, 'assets');
 const distDir = path.join(root, 'dist');
 const finalPdfPath = path.join(distDir, 'quantum-computing-handbook.pdf');
 
 const skipPostprocess = process.argv.includes('--skip-postprocess');
 const CROSS_LINK_PREFIX = 'https://qch.local/#';
-const TARGET_CHUNK_BYTES = 4.8 * 1024 * 1024;
-const EXERCISES_CHUNK_BYTES = 4.2 * 1024 * 1024;
-const PRINT_CONCURRENCY = Math.max(1, Math.min(6, Number(process.env.PDF_PRINT_CONCURRENCY || 6)));
+const PRINT_CONCURRENCY = Math.max(1, Math.min(7, Number(process.env.PDF_PRINT_CONCURRENCY || 6)));
 
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.HANDBOOK_NODE_MODULES
   ? path.join(process.env.HANDBOOK_NODE_MODULES, 'playwright')
   : 'playwright');
 
-const CHROME_DEFAULT = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const browserOptions = { headless: true };
-if (process.env.HANDBOOK_CHROMIUM) {
-  browserOptions.executablePath = process.env.HANDBOOK_CHROMIUM;
-} else if (fsSync.existsSync(CHROME_DEFAULT)) {
-  browserOptions.executablePath = CHROME_DEFAULT;
+const SYSTEM_CHROME_CANDIDATES = [
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/Applications/Chromium.app/Contents/MacOS/Chromium',
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+  '/usr/bin/chromium',
+  '/usr/bin/chromium-browser',
+  '/snap/bin/chromium',
+];
+
+function findSystemChrome() {
+  for (const candidate of SYSTEM_CHROME_CANDIDATES) {
+    if (fsSync.existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+function hasPlaywrightChromium() {
+  try {
+    const pwPath = chromium.executablePath();
+    return Boolean(pwPath && fsSync.existsSync(pwPath));
+  } catch {
+    return false;
+  }
+}
+
+async function launchChromium() {
+  if (process.env.HANDBOOK_CHROMIUM) {
+    return chromium.launch({ headless: true, executablePath: process.env.HANDBOOK_CHROMIUM });
+  }
+  const attempts = [];
+  const pwInstalled = hasPlaywrightChromium();
+  if (pwInstalled) attempts.push({ headless: true });
+  const systemChrome = findSystemChrome();
+  if (systemChrome) attempts.push({ headless: true, executablePath: systemChrome });
+  if (!pwInstalled) attempts.push({ headless: true });
+  attempts.push({ headless: true, channel: 'chrome' });
+
+  let lastErr = null;
+  for (const opts of attempts) {
+    try {
+      return await chromium.launch(opts);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error('Unable to launch Playwright Chromium or system Chrome for PDF rendering');
+}
+
+function refreshCoverBannerMetrics(svgText) {
+  return String(svgText || '')
+    .replaceAll('46,000+ 公式、80+ 矢量图、271 题零跳步题答、36 离线验算脚本', '50,900+ 公式、92 科学图 + 30 流程图、271 题零跳步题答、38 标准库脚本')
+    .replaceAll('46,000+ 公式', '50,900+ 公式')
+    .replaceAll('80+ 矢量图', '122 矢量图')
+    .replaceAll('公式驱动 SVG + 架构流程图', '92 科学图 + 30 流程图')
+    .replaceAll('36 离线验算脚本', '38 标准库脚本');
 }
 
 const safeDecode = s => {
@@ -188,32 +234,12 @@ function cleanMarkdownHeading(raw) {
   return s.replace(/\s+/g, ' ').trim();
 }
 
-const diagramTitles = {
-  'README.md': ['主篇的主题分组与推荐衔接'],
-  '00-overview.md': ['一次量子计算从输入到验证的五个环节', '相同测量概率的两态经 H 门干涉后的分流对照'],
-  '01-math.md': ['从厄米算符出发的测量与酉演化两条路径'],
-  '02-single-qubit.md': ['单量子比特测量模型的三层结构：投影测量、POVM 与量子仪器'],
-  '05-noise-channels.md': ['CPTP 量子信道的三种等价表示：Stinespring 扩张、Kraus 算符和与 Choi 矩阵'],
-  '06-algorithmic-primitives.md': ['量子算法核心原语之间的依赖关系与拼装路径'],
-  '07-algorithms.md': ['经典与量子核心复杂度类的包含关系与代表性问题定位'],
-  '08-applications.md': ['变分算法中量子测量与经典参数更新的循环'],
-  '09-hardware.md': ['量子计算机从程序到控制、读出和反馈的系统链'],
-  '11-resources-benchmarks.md': ['从应用目标逐层估算逻辑与物理资源'],
-  '12-security-network-frontiers.md': ['机内互连、远距离网络与量子互联网的范围区别', '量子网络从物理链路到应用服务的分层'],
-  '13-quantum-information.md': ['以数据处理不等式为总枢纽的量子信息核心不等式关系图'],
-  '14-compilation-control.md': ['算法线路到物理执行的九层表示与编译控制流程', '门校准的依赖顺序与漂移回归路径', '实时纠错从模拟读出到流式译码与条件反馈的路径'],
-  '15-practice-research.md': ['从纸笔小例到硬件实验的四级验证阶梯与排错回退路径'],
-  '16-advanced-algorithms-verification.md': ['隐藏子群算法从查询到经典恢复的共同骨架', '从矩阵编码到奇异值变换的两条构造路径', '大型量子模拟结果的四类交叉证据'],
-  '17-computation-models.md': ['六大计算模型之间的理论模拟联系与不能直接等同的边界', '模拟量子模拟器从可算区外推的四类互补核查', '审读计算模型性能声明的七步核查流程'],
-  '18-channels-capacities-complexity.md': ['量子态纯化、信道表示、钻石范数与通信容量之间的逻辑脉络', '混态纠缠资源理论中的免费操作、蒸馏稀释与度量层级', '交互式量子证明中验证者与证明者的消息往返与判决流程', '同时消息模型中双方发送量子指纹并由裁判执行交换测试的流程'],
-  '19-engineering-architecture.md': ['校准参数依赖有向无环图与快照原子晋级流程'],
-  '20-quantum-sensing-metrology.md': ['量子传感协议从信号特征到纠缠极限与退相干策略的选型路径'],
-  '21-stabilizer-classical-simulation.md': ['评估量子线路能否突破全部经典模拟引擎的四关判别流程'],
-  'quantum-mechanics/01-experiments-states.md': ['延迟选择量子擦除的因果顺序与经典符合分组流程'],
-  'quantum-mechanics/02-observables-dynamics.md': ['量子系统时间演化的五条计算路径选择'],
-  'quantum-mechanics/03-levels-control.md': ['Ramsey 干涉与 Hahn 自旋回波的脉冲时序及测量目标对照'],
-  'quantum-mechanics/04-wavefunctions-models.md': ['连续量子模型在计算机上的两条离散化路径与收敛核验'],
-};
+function stripTocCodePrefix(title) {
+  return String(title || '')
+    .replace(/^(?:Q?\d{1,2})\s*[｜|]\s*/, '')
+    .replace(/^附录\s*[A-G]\s*[｜|：:]\s*/, '')
+    .trim();
+}
 
 const APPENDIX_ORDER = [
   'prerequisites.md',
@@ -275,6 +301,21 @@ function stripBlocksForHeadingScan(text) {
   );
 }
 
+function glueMathTail(frag, punct) {
+  const baseCount = (frag.html.match(/<span class="base">/g) || []).length;
+  if (baseCount <= 1 || frag.latex.length <= 32) {
+    return `<span class="math-tail">${frag.html}${punct}</span>`;
+  }
+  if (frag.html.includes('<span class="base">') && frag.html.endsWith('</span></span></span>')) {
+    const glued = frag.html.replace(
+      /<\/span><\/span><\/span>$/,
+      `<span class="math-punct-keep">${punct}</span></span></span></span>`
+    );
+    return `<span class="math-inline">${glued}</span>`;
+  }
+  return `<span class="math-tail">${frag.html}${punct}</span>`;
+}
+
 function protectMath(text, filePath, mathErrors, stats) {
   const fragments = [];
   const pattern = /(^[ \t]*```[^\n]*\n[\s\S]*?^[ \t]*```[^\n]*$)|(`+)[^\n]*?\2|\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)|(?<!\\)\$(?!\$)((?:\\.|[^$\n])+?)(?<!\\)\$/gm;
@@ -299,7 +340,7 @@ function protectMath(text, filePath, mathErrors, stats) {
       }
       stats.formulas++;
       const id = fragments.length;
-      fragments.push(display ? html : `<span class="math-inline">${html}</span>`);
+      fragments.push({ html, display, latex });
       if (!display) return `<span data-handbook-math="${id}"></span>`;
 
       const lineStart = src.lastIndexOf('\n', offset - 1) + 1;
@@ -344,7 +385,32 @@ function protectMath(text, filePath, mathErrors, stats) {
   );
   return {
     protectedText,
-    restore: html => html.replace(/<(div|span) data-handbook-math="(\d+)"><\/\1>/g, (_, _tag, id) => fragments[+id]),
+    restore: html => {
+      let out = html.replace(
+        /<(strong|em)><span data-handbook-math="(\d+)"><\/span><\/\1>([，。；：、！？）》」』】”’\].,;:!?)]+)/g,
+        (full, tag, id, punct) => {
+          const frag = fragments[+id];
+          if (!frag || frag.display) return full;
+          const baseCount = (frag.html.match(/<span class="base">/g) || []).length;
+          if (baseCount <= 1 || frag.latex.length <= 32) {
+            return `<span class="math-tail"><${tag}>${frag.html}</${tag}>${punct}</span>`;
+          }
+          return `<${tag}>${glueMathTail(frag, punct)}</${tag}>`;
+        }
+      );
+      out = out.replace(
+        /<span data-handbook-math="(\d+)"><\/span>([，。；：、！？）》」』】”’\].,;:!?)]+)/g,
+        (full, id, punct) => {
+          const frag = fragments[+id];
+          if (!frag || frag.display) return full;
+          return glueMathTail(frag, punct);
+        }
+      );
+      return out.replace(/<(div|span) data-handbook-math="(\d+)"><\/\1>/g, (_, _tag, id) => {
+        const frag = fragments[+id];
+        return frag.display ? frag.html : `<span class="math-inline">${frag.html}</span>`;
+      });
+    },
   };
 }
 
@@ -374,26 +440,31 @@ function enrichSemanticHtml(html, docId, inlineAnchorMap) {
     const cls = classifyBlockquote(inner);
     return `<blockquote class="${cls}">${inner}</blockquote>`;
   });
-  // Highlight worked-example headings
+  // Highlight worked-example headings & advanced optional-reading badges
   out = out.replace(/<(h[34]) id="([^"]+)">([\s\S]*?)<\/\1>/g, (full, tag, id, inner) => {
     const plain = inner.replace(/<[^>]+>/g, '').trim();
     if (/^(?:\d+(?:\.\d+)*\s*)?(?:算例|手算例|例\s*[0-9A-Za-z一二三四五])|算例[：:]/.test(plain)) {
       return `<${tag} id="${id}" class="worked-heading">${inner}</${tag}>`;
     }
-    if (/进阶回看/.test(plain)) {
+    if (/进阶(?:回看|选读|深潜)/.test(plain)) {
       return `<${tag} id="${id}">${inner} <span class="advanced-badge">选读</span></${tag}>`;
     }
     return full;
   });
   out = out.replace(/<(h2) id="([^"]+)">([\s\S]*?)<\/h2>/g, (full, _tag, id, inner) => {
     const plain = inner.replace(/<[^>]+>/g, '').trim();
-    if (/进阶回看/.test(plain)) {
+    if (/进阶(?:回看|选读|深潜)/.test(plain)) {
       return `<h2 id="${id}">${inner} <span class="advanced-badge">选读</span></h2>`;
     }
     return full;
   });
   // Highlight worked-example lead paragraphs
   out = out.replace(/<p><strong>(算例|反例|手算)([^<]*)<\/strong>/g, '<p class="worked-lead"><strong>$1$2</strong>');
+  // Prevent short inline <code> followed by closing/kinsoku punctuation from detaching to next line start
+  out = out.replace(
+    /(<code(?:\s[^>]*)?>[^<\n]{1,28}<\/code>)([，。；：、！？）》」』】”’\].,;:!?)]+)/g,
+    '<span class="math-tail">$1$2</span>'
+  );
   // Wrap standalone tables in table-scroll
   out = out.replace(/<table>/g, '<div class="table-scroll"><table>').replace(/<\/table>/g, '</table></div>');
   return out;
@@ -405,50 +476,6 @@ function collectElementIds(html) {
     ids.add(m[1]);
   }
   return ids;
-}
-
-function splitLargeChapterByH2(ch, partKicker, partId, maxBytes) {
-  const fullHtml = `
-<section class="chapter-section" id="${esc(ch.docId)}" data-chapter-id="${esc(ch.docId)}" data-part-ref="${esc(partId)}">
-  <div class="chapter-eyebrow">${esc(partKicker)} · ${esc(ch.code)}</div>
-  ${ch.bodyHtml}
-</section>`;
-  if (Buffer.byteLength(fullHtml) <= maxBytes) {
-    return [fullHtml];
-  }
-  // Split at top-level <h2 id="..."> boundaries (safe for exercises.md where each chapter's solutions begin with <h2>)
-  const blocks = ch.bodyHtml.split(/(?=<h2\s+id=")/);
-  if (blocks.length <= 1) return [fullHtml];
-
-  const groups = [];
-  let cur = [];
-  let curBytes = 0;
-  for (const blk of blocks) {
-    const bLen = Buffer.byteLength(blk);
-    if (cur.length > 0 && curBytes + bLen > maxBytes) {
-      groups.push(cur.join(''));
-      cur = [blk];
-      curBytes = bLen;
-    } else {
-      cur.push(blk);
-      curBytes += bLen;
-    }
-  }
-  if (cur.length > 0) groups.push(cur.join(''));
-
-  return groups.map((groupHtml, idx) => {
-    if (idx === 0) {
-      return `
-<section class="chapter-section" id="${esc(ch.docId)}" data-chapter-id="${esc(ch.docId)}" data-part-ref="${esc(partId)}">
-  <div class="chapter-eyebrow">${esc(partKicker)} · ${esc(ch.code)}</div>
-  ${groupHtml}
-</section>`;
-    }
-    return `
-<section class="chapter-section chapter-continuation" data-chapter-id="${esc(ch.docId)}" data-part-ref="${esc(partId)}">
-  ${groupHtml}
-</section>`;
-  });
 }
 
 function wrapChunkDocument({ title, katexCssUrl, pdfCssUrl, innerHtml, hiddenAnchorHtml }) {
@@ -476,6 +503,7 @@ function wrapChunkDocument({ title, katexCssUrl, pdfCssUrl, innerHtml, hiddenAnc
       --font-body: "STHeiti", "Heiti SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
     }
     .pdf-body-root > :first-child { break-before: auto !important; page-break-before: auto !important; }
+    .pdf-body-root > :last-child { break-after: auto !important; page-break-after: auto !important; }
     .pdf-outline-anchor-refs { top: 0; left: 0; }
   </style>
 </head>
@@ -489,7 +517,8 @@ ${bodyContent}
 
 async function main() {
   const buildStartMs = Date.now();
-  await fs.rm(tmpDir, { recursive: true, force: true });
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'qch-pdf-'));
+  const tmpAssetsDir = path.join(tmpDir, 'assets');
   await fs.mkdir(tmpAssetsDir, { recursive: true });
   await fs.mkdir(distDir, { recursive: true });
 
@@ -615,7 +644,7 @@ async function main() {
   let mermaidPage = null;
 
   async function ensureBrowser() {
-    if (!browser) browser = await chromium.launch(browserOptions);
+    if (!browser) browser = await launchChromium();
     return browser;
   }
 
@@ -702,7 +731,7 @@ async function main() {
     for (const match of [...text.matchAll(/```mermaid\n([\s\S]*?)```/g)]) {
       diagramCount++;
       stats.diagrams++;
-      const diagramTitle = diagramTitles[relSource]?.[diagramCount - 1] || `结构与逻辑流程图 ${diagramCount}`;
+      const diagramTitle = resolveDiagramTitle(relSource, diagramCount - 1, match[1]);
       const svgUrl = await resolveMermaidSvgUrl(match[1]);
       const figureHtml = `\n\n<figure class="flowchart"><img src="${esc(svgUrl)}" alt="${esc(diagramTitle)}"><figcaption><span class="fig-badge">图 ${diagramCount}</span>${esc(diagramTitle)}</figcaption></figure>\n\n`;
       text = text.replace(match[0], figureHtml);
@@ -776,7 +805,10 @@ async function main() {
       : path.join(here, 'node_modules/katex/dist/katex.min.css');
     const katexCssUrl = pathToFileURL(katexCssPath).href;
     const pdfCssUrl = pathToFileURL(path.join(here, 'pdf.css')).href;
-    const coverSvgUrl = pathToFileURL(path.join(source, 'assets/cover-banner-static.svg')).href;
+    const rawCoverBannerSvg = await fs.readFile(path.join(source, 'assets/cover-banner-static.svg'), 'utf8');
+    const coverBannerTmpPath = path.join(tmpAssetsDir, 'cover-banner-pdf.svg');
+    await fs.writeFile(coverBannerTmpPath, refreshCoverBannerMetrics(rawCoverBannerSvg), 'utf8');
+    const coverSvgUrl = pathToFileURL(coverBannerTmpPath).href;
 
     // 1. Render all Markdown documents (KaTeX output: 'html')
     const mdStartMs = Date.now();
@@ -861,7 +893,7 @@ async function main() {
         <code>左共轭 ⟨u|v⟩</code> · <code>高位在左大端序 |q₁q₀⟩</code> · <code>算符从右向左作用 VU|ψ⟩</code> · <code>根保真度 F(ρ,σ)</code> · <code>显式底数 log₂ / ln</code>
       </div>
       <div class="cover-colophon">
-        <div>量子计算手册编写组 · 零外网本地排版（KaTeX + 矢量 SVG + 3 级 Unicode 书签）<br>全书原稿、离线阅读版与 Python 验算脚本均可本地离线复算</div>
+        <div>量子计算手册编写组 · 零外网本地排版（KaTeX + 矢量 SVG + 3 级 Unicode 书签）<br>无障碍屏幕朗读请优先使用配套原生 MathML 3 EPUB 3 版本；验算脚本见仓库 <code>codes/</code></div>
         <div style="text-align:right">出版日期：${esc(edition)}<br>格式：ISO A4 Portrait</div>
       </div>
     </div>
@@ -869,8 +901,9 @@ async function main() {
 </body>
 </html>`;
 
-    // 3. Build 3-level clean Unicode outline manifest structure + Chunk plan
-    const allOutlineAnchorIds = new Set(['toc-page', 'front-readme']);
+    // 3. Build 3-level clean Unicode outline manifest structure + 8-chunk plan
+    const frontH2s = headingsByFile.get(readmePath).filter(h => h.level === 2);
+    const allOutlineAnchorIds = new Set(['toc-page', 'front-readme', ...frontH2s.map(h => h.shortId)]);
     const manifestParts = renderedParts.map(part => {
       allOutlineAnchorIds.add(part.id);
       return {
@@ -892,30 +925,95 @@ async function main() {
       };
     });
 
-    const tocGroupsHtml = renderedParts.map(part => {
-      const itemsHtml = part.chapters.map(ch =>
-        `<li class="toc-item"><a href="#${esc(ch.docId)}"><span class="toc-code">${esc(ch.code)}</span><span class="toc-name">${esc(ch.rawTitle)}</span></a></li>`
-      ).join('\n');
-      return `<div class="toc-group"><a class="toc-part-title" href="#${esc(part.id)}">${esc(part.title)}</a><ul class="toc-list">${itemsHtml}</ul></div>`;
-    }).join('\n');
+    const buildTocContent = (pageNumbers = {}, totalBodyPages = 0) => {
+      const tocEntries = [];
+      const fmtPage = id => {
+        const p = pageNumbers[id];
+        return Number.isInteger(p) && p > 0 ? String(p) : '';
+      };
+
+      const frontPage = pageNumbers['front-readme'] ?? null;
+      tocEntries.push({
+        id: 'front-readme',
+        kind: 'frontmatter',
+        code: '导读',
+        title: frontTitle,
+        printedPage: frontPage,
+      });
+
+      const frontGroupHtml = `
+      <div class="toc-group">
+        <a class="toc-part-title" href="#front-readme"><span class="toc-part-name">导读与全书约定</span><span class="toc-part-page">${esc(fmtPage('front-readme'))}</span></a>
+        <ul class="toc-list">
+          <li class="toc-item"><a href="#front-readme"><span class="toc-code">导读</span><span class="toc-name">阅读路线、全书地图与统一数学契约</span><span class="toc-leader" aria-hidden="true"></span><span class="toc-page">${esc(fmtPage('front-readme'))}</span></a></li>
+        </ul>
+      </div>`;
+
+      const partGroupsHtml = renderedParts.map(part => {
+        tocEntries.push({
+          id: part.id,
+          kind: 'part',
+          code: part.label,
+          title: cleanMarkdownHeading(part.title),
+          printedPage: pageNumbers[part.id] ?? null,
+        });
+        const itemsHtml = part.chapters.map(ch => {
+          const cleanTitle = stripTocCodePrefix(ch.rawTitle);
+          tocEntries.push({
+            id: ch.docId,
+            kind: 'chapter',
+            code: ch.code,
+            title: cleanTitle,
+            printedPage: pageNumbers[ch.docId] ?? null,
+          });
+          return `<li class="toc-item"><a href="#${esc(ch.docId)}"><span class="toc-code">${esc(ch.code)}</span><span class="toc-name">${esc(cleanTitle)}</span><span class="toc-leader" aria-hidden="true"></span><span class="toc-page">${esc(fmtPage(ch.docId))}</span></a></li>`;
+        }).join('\n');
+        return `<div class="toc-group"><a class="toc-part-title" href="#${esc(part.id)}"><span class="toc-part-name">${esc(part.title)}</span><span class="toc-part-page">${esc(fmtPage(part.id))}</span></a><ul class="toc-list">${itemsHtml}</ul></div>`;
+      }).join('\n');
+
+      const totalPagesNote = totalBodyPages > 0 ? `1–${totalBodyPages}` : '1 起连续编号';
+      const contentHtml = `
+<section class="pdf-toc-page" id="toc-page">
+  <div class="toc-header">
+    <h1>全书目录</h1>
+    <span class="toc-meta">${mainPartCount} 篇 ${mainChapterCount} 章 · ${appendixFiles.length} 附录 · ${labFiles.length} 实验册 · ${esc(edition)} 版</span>
+  </div>
+  <div class="toc-grid">
+${frontGroupHtml}
+${partGroupsHtml}
+  </div>
+  <div class="toc-footer-note">
+    <strong>页码与无障碍阅读导引：</strong>封面标为 <code>Cover</code>，目录页使用罗马页码（<code>i</code> 起），导读及全部正文采用连续阿拉伯印刷页码（<code>${esc(totalPagesNote)}</code>）并与正文页脚完全一致。本 PDF 专注高保真印刷排版；屏幕阅读器与无障碍朗读请优先选用配套<strong>原生 MathML 3 EPUB 3</strong> 版本，离线验算脚本见仓库 <code>codes/</code>。
+  </div>
+</section>`;
+      return { contentHtml, tocEntries };
+    };
 
     const colophonHtml = `
     <div class="book-colophon">
       <strong>全书完 · 量子计算手册</strong><br>
       版本 ${esc(edition)} · 全书共收录 ${mainChapterCount} 章正文、${appendixFiles.length} 篇附录与 ${labFiles.length} 篇实验册，共预渲染 ${stats.formulas.toLocaleString('en-US')} 个公式与 ${stats.diagrams + stats.images} 幅矢量图表。<br>
-      本电子版采用零外网离线流水线构建；配套可运行 Python 教学脚本与第三方开源源码摘录见仓库 <code>codes/</code> 目录。
+      本电子版采用零外网离线流水线构建；无障碍屏幕朗读请优先使用配套原生 MathML 3 EPUB 3 版本；可运行 Python 教学脚本与第三方开源源码摘录见仓库 <code>codes/</code> 目录。
     </div>`;
 
     const buildPartDividerHtml = part => {
       const partListHtml = part.chapters.map(ch =>
-        `<li><a href="#${esc(ch.docId)}"><span class="part-ch-num">${esc(ch.code)}</span><span>${esc(ch.rawTitle)}</span></a></li>`
+        `<li><a href="#${esc(ch.docId)}"><span class="part-ch-num">${esc(ch.code)}</span><span>${esc(stripTocCodePrefix(ch.rawTitle))}</span></a></li>`
       ).join('\n');
+      let subtitle;
+      if (part.id === 'part-appendices') {
+        subtitle = `本篇共收录 ${part.chapters.length} 篇工具书附录；每篇另起新页，供先修自测、符号查阅、全书题答与开源核验对照。`;
+      } else if (part.id === 'part-labs') {
+        subtitle = `本篇共收录 ${part.chapters.length} 篇离线实验手册；每篇另起新页，配套代码与合成声音均可在本地零外网复算。`;
+      } else {
+        subtitle = `本篇共收录 ${part.chapters.length} 章完整内容；每章另起新页，公式与图表均按统一符号契约核验。`;
+      }
       return `
 <section class="part-divider" id="${esc(part.id)}" data-part-id="${esc(part.id)}" data-part-title="${esc(part.title)}">
   <div class="part-kicker">${esc(part.kicker)}</div>
   <h1 class="part-title">${esc(part.title)}</h1>
   <div class="part-rule"><span class="r1"></span><span class="r2"></span><span class="r3"></span></div>
-  <p class="part-subtitle">本篇共收录 ${part.chapters.length} 节完整内容；每章独立成页，公式与图表均按统一符号契约核验。</p>
+  <p class="part-subtitle">${esc(subtitle)}</p>
   <ul class="part-chapter-list">${partListHtml}</ul>
 </section>`;
     };
@@ -926,135 +1024,143 @@ async function main() {
   ${ch.bodyHtml}
 </section>`;
 
-    // Helper: pack an ordered list of HTML sections into lightweight chunks <= targetBytes
-    const rawChunks = [];
-    const pushPackedChunks = (baseId, baseTitle, sectionItems, targetBytes = TARGET_CHUNK_BYTES) => {
-      const groups = [];
-      let cur = [];
-      let curBytes = 0;
-      for (const secHtml of sectionItems) {
-        const bLen = Buffer.byteLength(secHtml);
-        if (cur.length > 0 && curBytes + bLen > targetBytes) {
-          groups.push(cur.join('\n'));
-          cur = [secHtml];
-          curBytes = bLen;
-        } else {
-          cur.push(secHtml);
-          curBytes += bLen;
-        }
-      }
-      if (cur.length > 0) groups.push(cur.join('\n'));
-      groups.forEach((html, idx) => {
-        const suffix = groups.length > 1 ? `-${String.fromCharCode(97 + idx)}` : '';
-        rawChunks.push({
-          id: `${baseId}${suffix}`,
-          title: `${baseTitle}${groups.length > 1 ? ` (${idx + 1}/${groups.length})` : ''}`,
-          contentHtml: html,
-        });
-      });
-    };
-
-    // Chunk 00: 2-column TOC + Frontmatter (handbook/README.md)
-    rawChunks.push({
-      id: 'chunk-00-toc-front',
-      title: '量子计算手册 · 目录与导读',
-      contentHtml: `
-<section class="pdf-toc-page" id="toc-page">
-  <div class="toc-header">
-    <h1>全书目录</h1>
-    <span class="toc-meta">${mainPartCount} 篇 ${mainChapterCount} 章 · ${appendixFiles.length} 附录 · ${labFiles.length} 实验册 · ${esc(edition)} 版</span>
-  </div>
-  <div class="toc-grid">${tocGroupsHtml}</div>
-</section>
-
+    const frontSectionHtml = `
 <section class="frontmatter-section" id="front-readme" data-frontmatter="front-readme">
   <div class="chapter-eyebrow">FRONT MATTER · 导读、阅读路线与统一约定</div>
   ${frontHtml}
-</section>`,
-    });
+</section>`;
 
-    // Chunks 01..05: Parts 1..5 (auto-subchunked at chapter boundaries to stay <= ~5 MB each)
-    for (let pIdx = 0; pIdx < renderedParts.length; pIdx++) {
-      const part = renderedParts[pIdx];
-      if (!part.isAppendix) {
-        const num = String(pIdx + 1).padStart(2, '0');
-        const items = [
-          buildPartDividerHtml(part),
-          ...part.chapters.map(ch => buildChapterSectionHtml(part, ch)),
-        ];
-        pushPackedChunks(`chunk-${num}-${part.id}`, `量子计算手册 · ${part.title}`, items, TARGET_CHUNK_BYTES);
-      } else if (part.id === 'part-appendices') {
-        const dividerHtml = buildPartDividerHtml(part);
-        const preItems = [dividerHtml];
-        const postItems = [];
-        let exercisesCh = null;
-        for (const ch of part.chapters) {
-          if (ch.docId === 'app-exercises') {
-            exercisesCh = ch;
-          } else if (!exercisesCh) {
-            preItems.push(buildChapterSectionHtml(part, ch));
-          } else {
-            postItems.push(buildChapterSectionHtml(part, ch));
-          }
+    // Pack the entire book body into 7 large chunks in exact reading order (8 total with Pass-2 TOC),
+    // keeping Appendix D (exercises.md) completely unsplit to eliminate artificial mid-chapter orphan pages
+    // and slashing duplicated embedded CJK font subsets across Chrome renders.
+    const bodyRawChunks = [];
+    const mainParts = renderedParts.filter(p => !p.isAppendix);
+    const appendicesPart = renderedParts.find(p => p.id === 'part-appendices');
+    const labsPart = renderedParts.find(p => p.id === 'part-labs');
+
+    const partBundleHtml = part => [
+      buildPartDividerHtml(part),
+      ...part.chapters.map(ch => buildChapterSectionHtml(part, ch)),
+    ].join('\n');
+
+    if (mainParts.length > 0) {
+      bodyRawChunks.push({
+        id: 'chunk-01-front-part1',
+        title: `量子计算手册 · 导读与${mainParts[0].title}`,
+        contentHtml: `${frontSectionHtml}\n${partBundleHtml(mainParts[0])}`,
+      });
+    } else {
+      bodyRawChunks.push({
+        id: 'chunk-01-front',
+        title: '量子计算手册 · 导读',
+        contentHtml: frontSectionHtml,
+      });
+    }
+    if (mainParts.length > 1) {
+      bodyRawChunks.push({
+        id: 'chunk-02-part2',
+        title: `量子计算手册 · ${mainParts[1].title}`,
+        contentHtml: partBundleHtml(mainParts[1]),
+      });
+    }
+    if (mainParts.length > 2) {
+      bodyRawChunks.push({
+        id: 'chunk-03-part3',
+        title: `量子计算手册 · ${mainParts[2].title}`,
+        contentHtml: partBundleHtml(mainParts[2]),
+      });
+    }
+    if (mainParts.length >= 5) {
+      bodyRawChunks.push({
+        id: 'chunk-04-part4-part5',
+        title: `量子计算手册 · ${mainParts[3].title} / ${mainParts[4].title}`,
+        contentHtml: `${partBundleHtml(mainParts[3])}\n${partBundleHtml(mainParts[4])}`,
+      });
+      for (let extraIdx = 5; extraIdx < mainParts.length; extraIdx++) {
+        bodyRawChunks.push({
+          id: `chunk-04-extra-${extraIdx + 1}`,
+          title: `量子计算手册 · ${mainParts[extraIdx].title}`,
+          contentHtml: partBundleHtml(mainParts[extraIdx]),
+        });
+      }
+    } else if (mainParts.length === 4) {
+      bodyRawChunks.push({
+        id: 'chunk-04-part4',
+        title: `量子计算手册 · ${mainParts[3].title}`,
+        contentHtml: partBundleHtml(mainParts[3]),
+      });
+    }
+
+    let postAppendixItems = [];
+    if (appendicesPart) {
+      const preItems = [buildPartDividerHtml(appendicesPart)];
+      let exercisesCh = null;
+      for (const ch of appendicesPart.chapters) {
+        if (ch.docId === 'app-exercises') {
+          exercisesCh = ch;
+        } else if (!exercisesCh) {
+          preItems.push(buildChapterSectionHtml(appendicesPart, ch));
+        } else {
+          postAppendixItems.push(buildChapterSectionHtml(appendicesPart, ch));
         }
-        // Chunk 06: Appendices A-C (prerequisites, notation, glossary)
-        pushPackedChunks('chunk-06-appendices-pre', '量子计算手册 · 附录（先修、符号、术语）', preItems, TARGET_CHUNK_BYTES);
-        // Chunk 07: Appendix D (exercises.md — split cleanly at H2 boundaries <= 4.2 MB each)
-        if (exercisesCh) {
-          const exParts = splitLargeChapterByH2(exercisesCh, part.kicker, part.id, EXERCISES_CHUNK_BYTES);
-          exParts.forEach((exHtml, idx) => {
-            const suffix = exParts.length > 1 ? `-${String.fromCharCode(97 + idx)}` : '';
-            rawChunks.push({
-              id: `chunk-07-exercises${suffix}`,
-              title: `量子计算手册 · 附录 D 题答${exParts.length > 1 ? ` (${idx + 1}/${exParts.length})` : ''}`,
-              contentHtml: exHtml,
-            });
-          });
-        }
-        // Chunk 08: Appendices E-G (references, software-practice, audit-log)
-        if (postItems.length) {
-          pushPackedChunks('chunk-08-appendices-post', '量子计算手册 · 附录（参考文献、软件实践、审校记录）', postItems, TARGET_CHUNK_BYTES);
-        }
-      } else if (part.id === 'part-labs') {
-        const labItems = [
-          buildPartDividerHtml(part),
-          ...part.chapters.map((ch, idx) => {
-            const sec = buildChapterSectionHtml(part, ch);
-            // Append final colophon right inside the last lab section so it never causes a trailing blank page
-            if (idx === part.chapters.length - 1) {
-              const closeIdx = sec.lastIndexOf('</section>');
-              return closeIdx >= 0 ? sec.slice(0, closeIdx) + colophonHtml + '\n</section>' : sec + colophonHtml;
-            }
-            return sec;
-          }),
-        ];
-        pushPackedChunks('chunk-09-labs', '量子计算手册 · 离线动手实验册', labItems, TARGET_CHUNK_BYTES);
+      }
+      bodyRawChunks.push({
+        id: 'chunk-05-appendices-a-c',
+        title: '量子计算手册 · 附录 A–C（先修、符号、术语）',
+        contentHtml: preItems.join('\n'),
+      });
+      if (exercisesCh) {
+        bodyRawChunks.push({
+          id: 'chunk-06-appendix-d-exercises',
+          title: '量子计算手册 · 附录 D 全书题答',
+          contentHtml: buildChapterSectionHtml(appendicesPart, exercisesCh),
+        });
       }
     }
 
-    // Pass 1: Collect every element ID residing in each chunk
-    for (const chunk of rawChunks) {
-      chunk.localAnchorIds = collectElementIds(chunk.contentHtml);
+    const tailItems = [...postAppendixItems];
+    if (labsPart) {
+      tailItems.push(buildPartDividerHtml(labsPart));
+      labsPart.chapters.forEach((ch, idx) => {
+        const sec = buildChapterSectionHtml(labsPart, ch);
+        if (idx === labsPart.chapters.length - 1) {
+          const closeIdx = sec.lastIndexOf('</section>');
+          tailItems.push(closeIdx >= 0 ? sec.slice(0, closeIdx) + colophonHtml + '\n</section>' : sec + colophonHtml);
+        } else {
+          tailItems.push(sec);
+        }
+      });
+    } else if (tailItems.length > 0) {
+      const last = tailItems.pop();
+      const closeIdx = last.lastIndexOf('</section>');
+      tailItems.push(closeIdx >= 0 ? last.slice(0, closeIdx) + colophonHtml + '\n</section>' : last + colophonHtml);
+    }
+    if (tailItems.length > 0) {
+      bodyRawChunks.push({
+        id: 'chunk-07-appendices-e-g-labs',
+        title: '量子计算手册 · 附录 E–G 与离线实验册',
+        contentHtml: tailItems.join('\n'),
+      });
     }
 
-    // Pass 2: Rewrite ALL visible internal href="#target" links (TOC, intra-chunk, and cross-chunk)
-    // to sentinel URI https://qch.local/#<target> so Chrome emits exact PDF link rectangles that
-    // postprocess-pdf.py converts to true internal GoTo links pointing to exact merged (page, y) targets.
+    // Pass 1 prep: Collect every element ID in body chunks and rewrite all internal links to sentinels
     const globalLinkTargets = new Set();
     let internalLinkCount = 0;
-    for (const chunk of rawChunks) {
-      chunk.contentHtml = chunk.contentHtml.replace(/href="#([^"]+)"/g, (_full, rawTarget) => {
+    const rewriteSentinelLinks = html =>
+      html.replace(/href="#([^"]+)"/g, (_full, rawTarget) => {
         const target = safeDecode(rawTarget);
         globalLinkTargets.add(target);
         internalLinkCount++;
         return `href="${CROSS_LINK_PREFIX}${encodeURIComponent(target)}"`;
       });
+
+    for (const chunk of bodyRawChunks) {
+      chunk.localAnchorIds = collectElementIds(chunk.contentHtml);
+      chunk.contentHtml = rewriteSentinelLinks(chunk.contentHtml);
     }
 
-    // Pass 3: Build per-chunk hidden anchor list (all outline targets + all internal link targets in this chunk)
-    // and write standalone HTML files to /tmp/qch-pdf-build/
-    const chunksMeta = [];
-    for (const chunk of rawChunks) {
+    const bodyChunksMeta = [];
+    for (const chunk of bodyRawChunks) {
       const chunkAnchors = [];
       for (const aid of chunk.localAnchorIds) {
         if (allOutlineAnchorIds.has(aid) || globalLinkTargets.has(aid)) {
@@ -1072,7 +1178,7 @@ async function main() {
       const htmlPath = path.join(tmpDir, `${chunk.id}.html`);
       const pdfPath = path.join(tmpDir, `${chunk.id}.pdf`);
       await fs.writeFile(htmlPath, fullDocHtml, 'utf8');
-      chunksMeta.push({
+      bodyChunksMeta.push({
         id: chunk.id,
         title: chunk.title,
         htmlPath,
@@ -1119,7 +1225,7 @@ async function main() {
         printBackground: true,
         displayHeaderFooter: false,
         preferCSSPageSize: true,
-        tagged: true,
+        tagged: false,
       });
       await ctx.close();
     }
@@ -1128,14 +1234,14 @@ async function main() {
       const t0 = Date.now();
       const ctx = await b.newContext();
       const page = await ctx.newPage();
-      page.setDefaultTimeout(180000);
+      page.setDefaultTimeout(240000);
       await page.route(/^https?:\/\//i, route => {
         externalRequests.push(`${chunk.id}: ${route.request().url()}`);
         route.abort();
       });
       page.on('pageerror', err => pageErrors.push(`${chunk.id}: ${err.message}`));
 
-      await page.goto(pathToFileURL(chunk.htmlPath).href, { waitUntil: 'load', timeout: 180000 });
+      await page.goto(pathToFileURL(chunk.htmlPath).href, { waitUntil: 'load', timeout: 240000 });
       const audit = await page.evaluate(async () => {
         await document.fonts.ready;
         await Promise.all([...document.images].map(img => (
@@ -1146,14 +1252,14 @@ async function main() {
           .map(img => img.getAttribute('src') || img.alt);
 
         const rootEl = document.querySelector('.pdf-body-root');
-        const maxW = rootEl ? rootEl.clientWidth : 665;
+        const maxW = rootEl ? rootEl.clientWidth : 680;
         let scaledEquations = 0;
         let compactedTables = 0;
 
         for (const box of document.querySelectorAll('.katex-display')) {
           const inner = box.querySelector('.katex');
           if (!inner) continue;
-          const avail = Math.max(120, box.clientWidth - 16);
+          const avail = Math.max(120, box.clientWidth - 14);
           const needed = inner.scrollWidth;
           if (needed > avail + 2) {
             const ratio = Math.max(0.56, (avail - 2) / needed);
@@ -1182,8 +1288,7 @@ async function main() {
         printBackground: true,
         displayHeaderFooter: false,
         preferCSSPageSize: true,
-        tagged: true,
-        margin: { top: '20mm', right: '17mm', bottom: '20mm', left: '17mm' },
+        tagged: false,
       });
       await ctx.close();
 
@@ -1194,8 +1299,8 @@ async function main() {
       for (const bi of audit.brokenImages) brokenImagesAll.push(`${chunk.id}: ${bi}`);
     }
 
-    // Run cover + chunk workers in parallel (bounded concurrency)
-    const queue = [...chunksMeta];
+    // Pass 1: Print cover + all 7 body chunks in parallel (bounded concurrency)
+    const queue = [...bodyChunksMeta];
     const workers = [printCover()];
     for (let w = 0; w < PRINT_CONCURRENCY; w++) {
       workers.push((async () => {
@@ -1206,6 +1311,47 @@ async function main() {
       })());
     }
     await Promise.all(workers);
+
+    // Pass 2: Probe exact 1-based printed body page numbers from body chunk PDFs, then render TOC chunk
+    const pyScript = path.join(here, 'postprocess-pdf.py');
+    const probeInputPath = path.join(tmpDir, 'probe-chunks.json');
+    await fs.writeFile(
+      probeInputPath,
+      JSON.stringify({ chunks: bodyChunksMeta.map(c => c.pdfPath) }, null, 2),
+      'utf8'
+    );
+    const probeStdout = execFileSync(
+      'python3',
+      [pyScript, '--probe-pages', probeInputPath],
+      { encoding: 'utf8', cwd: root, maxBuffer: 16 * 1024 * 1024 }
+    );
+    const probeResult = JSON.parse(probeStdout);
+    const bodyPageNumbers = probeResult.pageNumbers || {};
+    const totalBodyPages = probeResult.totalBodyPages || 0;
+
+    const { contentHtml: tocRawHtml, tocEntries } = buildTocContent(bodyPageNumbers, totalBodyPages);
+    const tocSentineledHtml = rewriteSentinelLinks(tocRawHtml);
+    const tocFullHtml = wrapChunkDocument({
+      title: '量子计算手册 · 全书目录',
+      katexCssUrl,
+      pdfCssUrl,
+      innerHtml: tocSentineledHtml,
+      hiddenAnchorHtml: '<a href="#toc-page">a</a>',
+    });
+    const tocHtmlPath = path.join(tmpDir, 'chunk-00-toc.html');
+    const tocPdfPath = path.join(tmpDir, 'chunk-00-toc.pdf');
+    await fs.writeFile(tocHtmlPath, tocFullHtml, 'utf8');
+    const tocChunkMeta = {
+      id: 'chunk-00-toc',
+      title: '量子计算手册 · 全书目录',
+      htmlPath: tocHtmlPath,
+      pdfPath: tocPdfPath,
+      htmlBytes: Buffer.byteLength(tocFullHtml),
+      anchorCount: 1,
+    };
+    await printChunk(tocChunkMeta);
+
+    const chunksMeta = [tocChunkMeta, ...bodyChunksMeta];
 
     if (externalRequests.length > 0) {
       throw new Error(`Zero-external-request policy violated (${externalRequests.length}): ${externalRequests.slice(0, 5).join(', ')}`);
@@ -1224,8 +1370,12 @@ async function main() {
       edition,
       generatedAt: new Date().toISOString(),
       mode: 'chunked',
+      tagged: false,
+      accessibilityNote: '本 PDF 专注高保真印刷排版；无障碍屏幕朗读请优先使用配套原生 MathML 3 EPUB 3 版本。',
       crossLinkPrefix: CROSS_LINK_PREFIX,
       cover: coverPdfPath,
+      tocChunkId: tocChunkMeta.id,
+      tocEntries,
       stats: {
         ...stats,
         scaledEquations: totalScaledEquations,
@@ -1244,7 +1394,11 @@ async function main() {
         anchorCount: c.anchorCount,
         elapsedMs: c.elapsedMs,
       })),
-      frontmatter: { id: 'front-readme', title: frontTitle },
+      frontmatter: {
+        id: 'front-readme',
+        title: frontTitle,
+        sections: frontH2s.map(h2 => ({ id: h2.shortId, title: h2.title })),
+      },
       parts: manifestParts,
     };
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2), 'utf8');
@@ -1281,7 +1435,6 @@ async function main() {
 
     if (!skipPostprocess) {
       const pyStartMs = Date.now();
-      const pyScript = path.join(here, 'postprocess-pdf.py');
       execFileSync('python3', [
         pyScript,
         '--cover', coverPdfPath,
@@ -1295,10 +1448,15 @@ async function main() {
         postprocessSec: +(pyElapsedMs / 1000).toFixed(2),
         totalBuildSec: +(totalElapsedMs / 1000).toFixed(2),
       }, null, 2));
+    } else {
+      console.log(JSON.stringify({ stage: 'skip-postprocess', tmpDir, manifestPath }, null, 2));
     }
   } finally {
     if (browser) await browser.close();
     if (mermaidServer) await new Promise(resolve => mermaidServer.close(resolve));
+    if (!skipPostprocess && process.env.PDF_KEEP_TMP !== '1') {
+      await fs.rm(tmpDir, { recursive: true, force: true });
+    }
   }
 }
 

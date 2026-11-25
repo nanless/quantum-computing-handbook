@@ -1,11 +1,11 @@
 Traceback (most recent call last):
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 110, in <module>
+  File "<REPO_ROOT>/codes/systems/sdk73/sequence_entanglement.py", line 110, in <module>
     ideal=[trial(730120+10*i) for i in range(400)]
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 110, in <listcomp>
+  File "<REPO_ROOT>/codes/systems/sdk73/sequence_entanglement.py", line 110, in <listcomp>
     ideal=[trial(730120+10*i) for i in range(400)]
            ^^^^^^^^^^^^^^^^^^
-  File "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk73/sequence_entanglement.py", line 98, in trial
+  File "<REPO_ROOT>/codes/systems/sdk73/sequence_entanglement.py", line 98, in trial
     if fidelity==1: assert abs(true_overlap-1)<1e-10
                            ^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError

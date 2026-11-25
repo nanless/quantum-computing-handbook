@@ -1,15 +1,16 @@
 # 算法实验：把输出概率、成本和证明边界一起核对
 
-本册涵盖第 06、07、08、16、17、18 章的算法核验，以及第 21 章的稳定子表、矩阵乘积态（MPS）与含噪 Pauli 传播三大经典模拟引擎实验。每组都从小规模可计算的对象开始，保留“先求振幅，再取模平方”“同一访问模型比较成本”的原则。全部代码仅依赖 Python 3 标准库并采用固定输入，可在本地离线复算；输出为经典精确模拟值，用于核对算法原理而非替代硬件实测。
+本册涵盖第 06、07、08、16、17、18 章的主干与高阶算法核验，以及第 21 章的稳定子表、矩阵乘积态（MPS）/ 二维 PEPS 与含噪 Pauli 传播三大经典模拟引擎实验。每组都从小规模可计算的对象开始，保留“先求振幅，再取模平方”“同一访问模型比较成本”的原则。全部代码仅依赖 Python 3 标准库并采用固定输入，可在本地离线复算；输出为经典精确模拟值，用于核对算法原理而非替代硬件实测。
 
 从仓库根目录运行：
 
 ```sh
 python3 codes/algorithms/experiments.py all
+python3 codes/algorithms/v4_algorithms_lab.py all
 python3 codes/algorithms/simulation_engines_lab.py
 ```
 
-[源码](../../codes/algorithms/experiments.py)中每组都有断言；[期望输出归档](../../codes/algorithms/expected-results.json)保存第 06–18 章六组实验的实际运行结果，第 21 章三引擎独立脚本见[simulation_engines_lab.py](../../codes/algorithms/simulation_engines_lab.py)。脚本用整数对应的二进制串编号计算基，最高位显示在左；第 08 组的下标 2 表示 `010`。不要使用会关闭断言的 Python `-O` 选项。
+[主干源码](../../codes/algorithms/experiments.py)中每组都有断言，[期望输出归档](../../codes/algorithms/expected-results.json)保存第 06–18 章六组基础实验的确定性输出；高阶算法与 QSVT 专题验证脚本见[高阶算法核验程序](../../codes/algorithms/v4_algorithms_lab.py)，第 21 章三引擎独立脚本见[经典模拟三引擎程序](../../codes/algorithms/simulation_engines_lab.py)。脚本用整数对应的二进制串编号计算基，最高位显示在左；第 08 组的下标 2 表示 `010`。不要使用会关闭断言的 Python `-O` 选项。
 
 ![左图显示 Grover 的成功率随整数迭代次数上下振荡；右图显示相位 63/64 的四位 QPE 峰落在输出 0，圆周误差仅 1/64](../assets/algorithm-lab-checks.svg)
 
@@ -22,11 +23,11 @@ python3 codes/algorithms/simulation_engines_lab.py
 **步骤。** 不直接调用闭式正弦比值，而用
 
 $$
-A_y=\frac1M\sum_{k=0}^{M-1}e^{2\pi ik(\phi-y/M)},
+A_y=\frac1Q\sum_{k=0}^{Q-1}e^{2\pi ik(\phi-y/Q)},
 \qquad p_y=|A_y|^2.
 $$
 
-这里 $M=2^t$，$y=0,\ldots,M-1$。求和中的每项先是复振幅；必须求和后才取模平方。逐个振幅取平方再相加，会把本题要观察的干涉抹掉。
+这里 $Q=2^t$，$y=0,\ldots,Q-1$（全书统一以 $Q=2^t$ 记相位网格点数，以区别于搜索目标数 $M$）。求和中的每项先是复振幅；必须求和后才取模平方。逐个振幅取平方再相加，会把本题要观察的干涉抹掉。
 
 **答案。** $t=2$ 时，四项为
 
@@ -41,7 +42,7 @@ $$
 
 **检验。** 运行 `python3 codes/algorithms/experiments.py 06`。程序对所有一、二、三控制位的精确网格相位检查对应峰概率为 1；非网格分布则与四项解析式独立比较。
 
-**扩展题与答案。** 四位相位寄存器有四个受控幂，为什么输出成本里是 15 次基本受控 $U$？因为幂次数为 $1,2,4,8$，只能逐次调用基本门时总数为 15。若另外给了能便宜构造这些幂的数学结构，才可能改用另一资源账。代码的直接求和本身耗费 $M^2$ 级经典运算，是教学模拟，不是高效量子实现。
+**扩展题与答案。** 四位相位寄存器有四个受控幂，为什么输出成本里是 15 次基本受控 $U$？因为幂次数为 $1,2,4,8$，只能逐次调用基本门时总数为 15。若另外给了能便宜构造这些幂的数学结构，才可能改用另一资源账。代码的直接求和本身耗费 $Q^2$ 级经典运算，是教学模拟，不是高效量子实现。
 
 ## 实验 07-A：逐振幅检查过度旋转
 
@@ -180,41 +181,71 @@ $$
 
 **扩展题与答案。** 擦除率 $1/4$ 时，怎样由 Bob 输出模拟环境？Bob 对未擦除分支以 $1/3$ 保留原态，其他情况给环境旗标。总保留概率 $(3/4)(1/3)=1/4$。这是对未知态的随机保留/擦除，没有复制未知态。
 
+## 高阶算法与 QSVT 专题核验
+
+完成上述六组主干实验后，[高阶算法核验程序](../../codes/algorithms/v4_algorithms_lab.py)（纯 Python 3 标准库、零第三方依赖、不联网，请勿使用 `-O` 关闭断言）集中验算第二篇与第 16 章的核心高阶算法构造、线性化临界边界与双约定 QSVT 块编码。在仓库根目录可一键全跑或按章单跑：
+
+```sh
+python3 codes/algorithms/v4_algorithms_lab.py all
+python3 codes/algorithms/v4_algorithms_lab.py 06   # 可选 06 / 07 / 08 / 16
+```
+
+### 1. 第 06 章：显式 6 门 PREPARE–SELECT、4 项 QROM、固定点放大与量子计数
+
+- **显式 6 门 `PREPARE / SELECT` 块编码**：对 $H = 0.6X + 0.8Z$（归一化因子 $\alpha = 1.4$），令辅助比特制备角 $\theta = 2\arccos\sqrt{3/7} \approx 1.714144\,\mathrm{rad}$，按电路次序 $\mathrm{PREPARE} \to \mathrm{CZ} \to X_a \to \mathrm{CNOT} \to X_a \to \mathrm{PREPARE}^\dagger$ 显式构造 $4\times 4$ 酉矩阵 $U_{\mathrm{BE}}$。脚本同时断言 $U_{\mathrm{BE}}^\dagger U_{\mathrm{BE}} = I_4$，且左上 $2\times 2$ 子块与 $H/\alpha$ 的最大元误差仅 $1.11 \times 10^{-16}$。
+- **4 项 QROM 一元迭代门级查表（Babbush 等，*PRX* 2018）**：穷举全部 $2^4 = 16$ 张 4 比特经典查找表，分别验证**无外控 4 比特版**（仅用 2 对临时逻辑与 = 8 个 $T$ 门 + 2 次 0-$T$ CNOT 复用翻转）与**带外控 6 比特版**（严格 $L - 1 = 3$ 对临时逻辑与 = 12 个 $T$ 门），断言所有工作辅助位在查询后精确反计算清零、输出态无任何垃圾纠缠残留。
+- **固定点振幅放大与量子计数**：在 $\delta = 0.2$、$L = 3, 7$ 下用 Chebyshev 闭式解与显式二维反射矩阵连乘双路核对成功概率（$L=3, a=0.5 \Rightarrow 0.994161$；$L=7, a=0.25 \Rightarrow 0.961549$，均严格满足 $\ge 1 - \delta^2 = 0.96$），并对照精确最小阶数 $4.1733$ 与充分条件 $4.6052$；在 $N=16, M=4$ 量子计数中验证 $t=4$（峰值对概率 $0.6885$、估值 $\hat M = 4.94$）与 $t=5$（峰值对概率 $0.6852$、估值 $\hat M = 3.56$）。
+
+### 2. 第 07 章：LCHS 耗散核、Carleman 线性化临界边界、Shor / ECDLP 与泊松条件数
+
+- **量子微分方程 LCHS 1D 耗散核**：对 $\mathrm{d}u/\mathrm{d}t = -\gamma u$（$\gamma = 1.0, t = 1.5$，精确解 $u_* = e^{-1.5} \approx 0.22313016$），对比原始柯西核 $1/[\pi(1+k^2)]$ 在截断 $K = 10, 50, 200$ 下的求积收敛（$K=50, M=2000$ 时误差 $6.99\times 10^{-5}$），与 An–Childs–Lin（2024）改进速降核（$\beta = 0.8$，同网格下误差骤降至 $8.18\times 10^{-6}$，精度提升近一个量级）。
+- **Carleman 线性化 $2\times 2$ 截断（收敛 vs 爆破边界）**：对非线性方程 $\mathrm{d}u/\mathrm{d}t = -u + \varepsilon u^2$（$u_0 = 1, t = 1$），双路验证矩阵指数级数与解析闭式。当非线性比 $R = \varepsilon u_0 = 0.2 < 1$ 时，精确解 $0.421119$ 与二阶截断 $0.414388$ 误差仅 $0.0067$；而当 $R = 1.5 > 1$（真实解在 $t_* = \ln 3 \approx 1.0986$ 处有限时间爆破，$t=1$ 时已飙升至 $7.099294$），二阶截断却错误衰减至 $0.716696$，直观暴露 $R < 1$ 耗散支配前提不可跨越。
+- **Shor / ECDLP / 泊松方程核验**：同步验证 Shor $N = 35, a = 2$ 的周期 $r=12$、连分数 `[0, 11, 1, 41, 1, 3]` 与 Dirichlet 峰 $p_{171} \approx 0.6839$，椭圆曲线 $E(\mathbb{F}_7): y^2 = x^3 + x + 1$ 的 5 阶群表与离散对数 $d=3$，以及 $m=100$ 一维泊松离散矩阵条件数 $\kappa \approx 4133.64$。
+
+### 3. 第 08 章与第 16 章：变分应用全栈与显式 $4\times 4$ 负谱 QSVT
+
+- **第 08 章应用核验（`08`）**：一并验证 $\mathrm{H}_2$ 2 比特 UCCSD（$E_{\mathrm{FCI}} = -1.1456$）与 4 轨道 SQD+S-CORE 单调变分阶梯（$-1.1246 > -1.1456 > -1.1532 > -1.1601$）、$K_3$ QAOA $p=1$ 精确最优割值 $2.0$、WS-QAOA 倾斜混合器与 one-hot $XY$-mixer 汉明重守恒、3 物品背包临界罚项 $P > 2$、2 比特离散看涨期权小角度编码 $O(c^2)$ 偏差标度与 VaR/CVaR（$10.0$ vs $36.0$）、QNG Bloch 度规、数据再上传 $L=2$ 傅里叶展开及 DLA 二比特反例（盲套公式 $P_{\mathfrak g}(O)=0$ 而真实方差为 $1/3$）。
+- **第 16 章显式 $4\times 4$ 负谱 QSVT（`16`）**：在含负特征值矩阵 $A = \bigl(\begin{smallmatrix}0.2 & 0.3\\0.3 & -0.4\end{smallmatrix}\bigr)$ 上合成奇多项式 $P(x) = 0.3 T_1(x) + 0.2 T_3(x) = 0.8x^3 - 0.3x$，同时核验 `pyqsp` 对称 $W(A)$ 约定（$\operatorname{Im}[U_W]_{0:2,0:2} = P(A)$，最大元误差 $9.71\times 10^{-17}$，并在 $[-1,1]$ 101 点网格复验）与 PennyLane 反射 $R(A)$ 约定（$\operatorname{Re}[U_R]_{0:2,0:2} = P(A)$，误差 $5.37\times 10^{-14}$），再以 $8\times 8$ 相干实部提取器精确恢复 $P(A)$ 并核算后选择成功概率 $p_{\mathrm{succ}} = 0.00444112$。
+
+**更多二阶专题反例核验脚本**：同目录下另有四份纯标准库专题脚本（均已纳入 `python3 codes/run_all.py`），涵盖 Hadamard 测试虚部符号、MLAE 混叠、共享参数移位链式求导、小成功率后选择放大、退火链强度阈值（[接口边界核验](../../codes/algorithms/round70_checks.py)），垃圾位偏迹与 Simon 满秩（[反计算与满秩核验](../../codes/algorithms/round71_checks.py)），经典阴影纯度偏差与 Fock 截断（[阴影与截断核验](../../codes/algorithms/round72_checks.py)）以及补码 QPE、负谱非网格 HHL 与 4 维超立方体 SKW 行走（[负谱与量子行走核验](../../codes/algorithms/round73_checks.py)），参数清单详见[算法代码总说明](../../codes/algorithms/README.md)。
+
 ## 实验 21-A：稳定子表、MPS 与含噪 Pauli 传播三引擎
 
-配套[第 21 章：稳定子形式、经典模拟引擎与量子优势边界](../21-stabilizer-classical-simulation.md)。[三引擎验算脚本](../../codes/algorithms/simulation_engines_lab.py)仅用 Python 3 标准库实现三大现代经典模拟迷你引擎，并与独立的态矢量及密度矩阵参考引擎在容差 $10^{-12}$ 内逐格交叉断言。
+配套[第 21 章：稳定子形式、经典模拟引擎与量子优势边界](../21-stabilizer-classical-simulation.md)。[经典模拟三引擎脚本](../../codes/algorithms/simulation_engines_lab.py)仅用 Python 3 标准库实现三大经典模拟迷你引擎，并与独立态矢量及密度矩阵参考引擎在容差 $10^{-12}$ 内逐格断言（实测三引擎最大误差均 $\le 2.22\times 10^{-15}$）。建议按以下三段“先预测 $\to$ 跑验证 $\to$ 改参数看边界”的节奏完成分步探究：
 
-**问题一（Aaronson–Gottesman 稳定子表与魔法态分解）。** 从 $|00\rangle$ 出发施加 $H_0$ 与 $\mathrm{CNOT}_{01}$，核对 Bell 态的去稳定子与稳定子行，以及测 $Z_0$ 后再测 $Z_1$ 的确定性关联；再检验单份魔法态 $|T\rangle = T|+\rangle$ 的赤道稳定子展度 $\xi(|T\rangle)$，以及两份魔法态 $|T\rangle^{\otimes 2}$ 为何只需 2 项稳定子态线性组合。
+### 21-A1｜Aaronson–Gottesman 稳定子表、相位更新与魔法态展度
 
-**答案。** Bell 态对应稳定子 $\langle +XX, +ZZ\rangle$ 与去稳定子 $\langle +ZI, +IX\rangle$，测 $Z_0$ 得随机结果 $m \in \{0, 1\}$ 后，$Z_1$ 必确定性地给出同一结果 $m$。单份 $|T\rangle$ 按赤道分解 $(e^{i\pi/8}|+\rangle + e^{-i\pi/8}|+i\rangle)/(2\cos(\pi/8))$ 给出最优稳定子展度 $\xi(|T\rangle) = 4 - 2\sqrt{2} \approx 1.171573$（指数率 $\log_2 \xi(|T\rangle) \approx 0.228447$）；两份 $|T\rangle^{\otimes 2}$ 可直接写成两个纠缠稳定子态的 2 项叠加，证明精确稳定子秩显著低于朴素 $2^t$。脚本还对 12 组 4 比特随机 Clifford 加中段测量电路的全量 256 个 Pauli 期望值做逐格断言（误差 $< 10^{-12}$），并自动验证 3 比特 GHZ 练习。
+1. **核心核验**：从 $|00\rangle$ 施加 $H_0$ 与 $\mathrm{CNOT}_{01}$，核对 Bell 态的去稳定子 $\langle +ZI, +IX\rangle$、稳定子 $\langle +XX, +ZZ\rangle$ 及测 $Z_0$ 后 $Z_1$ 必然同值的确定性关联；再检验单份魔法态 $|T\rangle = T|+\rangle$ 按赤道分解 $(e^{i\pi/8}|+\rangle + e^{-i\pi/8}|+i\rangle)/(2\cos(\pi/8))$ 给出的最优稳定子展度 $\xi(|T\rangle) = 4 - 2\sqrt{2} \approx 1.171573$（指数率 $\log_2\xi \approx 0.228447$），以及两份 $|T\rangle^{\otimes 2}$ 仅需 2 项纠缠稳定子态线性组合即可精确表达（远低于朴素 $2^t$）。脚本同步对 12 组 4 比特随机 Clifford + 中段测量电路的全部 256 个 Pauli 期望做逐格断言（最大误差 $2.22\times 10^{-15}$）并验证 3 比特 GHZ 练习。
+2. **分步参数探究**：试在 `StabilizerTableau` 上于 $H_0 \to \mathrm{CNOT}_{01}$ 后依次追加 $S_0$ 与 $H_1$，先手推二元辛表 $(x\mid z)$ 与相位位 $r$ 的逐行异或翻转，再对照脚本断言；观察为何纯 Clifford 门只做多项式时间位运算，而每掺入一个 $T$ 门都迫使稳定子分解项数按 $\xi(|T\rangle)^t \approx 2^{0.228 t}$ 指数攀升。
 
-**问题二（3 比特 MPS 逐键精确 SVD 与截断误差）。** 对 $|\mathrm{GHZ}_3\rangle$ 与 $|W_3\rangle = (|001\rangle + |010\rangle + |100\rangle)/\sqrt{3}$ 构造开放边界左正则矩阵乘积态（MPS），检查键维与纠缠熵；把 $|W_3\rangle$ 的键 1 截断至 $\chi_{\max} = 1$，核对丢弃奇异值平方和 $\varepsilon_{\mathrm{trunc}}$ 与重归一化根保真度 $F$ 的精确关系。
+### 21-A2｜一维 MPS 键维截断与二维 PEPS / BP-TN 拓扑边界
 
-**答案。** $|\mathrm{GHZ}_3\rangle$ 与 $|W_3\rangle$ 的两道键维均为 $(\chi_1, \chi_2) = (2, 2)$。$|W_3\rangle$ 在键 1 的奇异值为 $\sqrt{2/3}$ 与 $\sqrt{1/3}$，冯·诺依曼纠缠熵为 $h_2(1/3) \approx 0.918296\,\mathrm{bit}$；压到 $\chi_{\max} = 1$ 时截断误差精确为 $\varepsilon_{\mathrm{trunc}} = 1/3$，重归一化截断态的根保真度为 $F = \sqrt{2/3} \approx 0.816497$，平方重叠 $F^2 = 1 - \varepsilon_{\mathrm{trunc}} = 2/3$。脚本额外对 10 组随机 3 比特复振幅态检验左正则条件 $\sum_s (A^s)^\dagger A^s = I$、全态收缩还原与截断恒等式。
+1. **核心核验**：对 $|\mathrm{GHZ}_3\rangle$ 与 $|W_3\rangle = (|001\rangle + |010\rangle + |100\rangle)/\sqrt{3}$ 构造开放边界左正则矩阵乘积态（MPS），核对两道键维均为 $(\chi_1, \chi_2) = (2, 2)$ 且全态收缩还原误差为 `0.0`（10 组随机 3 比特复振幅态还原最大误差 $2.48\times 10^{-16}$）。$|W_3\rangle$ 在键 1 的奇异值为 $\sqrt{2/3}$ 与 $\sqrt{1/3}$，冯·诺依曼纠缠熵为 $h_2(1/3) \approx 0.918296\,\mathrm{bit}$；强行截断至 $\chi_{\max} = 1$ 时截断误差精确为 $\varepsilon_{\mathrm{trunc}} = 1/3$，重归一化根保真度 $F = \sqrt{2/3} \approx 0.816497$（$F^2 = 1 - \varepsilon_{\mathrm{trunc}} = 2/3$）；同等截断作用在 $|\mathrm{GHZ}_3\rangle$（键 1 纠缠熵 $1\,\mathrm{bit}$）上则给出更大损失 $\varepsilon_{\mathrm{trunc}} = 1/2$、$F = 1/\sqrt{2} \approx 0.707107$。
+2. **二维 PEPS 与 BP-TN 参数探究**：顺着[第 21 章 §5.5](../21-stabilizer-classical-simulation.md#55-进阶选读面积律-vs-体积律2d-pepsbp-tn-与超图张量收缩)从一维面积律跃迁到 $L_x\times L_y$ 二维网格：
+   - 比较精确收缩二维五阶 PEPS 张量 $T^{[r,c], s}_{u,d,l,r}$ 的树宽复杂度 $O(D^{O(\mathrm{tw})})$（方形格 $\mathrm{tw}\sim\min(L_x, L_y)$）与置信传播张量网络（BP-TN）局域消息传递的单点复杂度 $O(D^{z+1})$；
+   - 对比 **Heavy-Hex 重六角格（最短闭合环 12 条边）** 与 **二维方形晶格（最短闭合环 4 条边）**：为何标准 BP-TN 在 Heavy-Hex 浅中深度下极准，而在方形格上必须启用团簇/环路修正 BP-TN（cluster / loop-corrected BP-TN）？
+   - 复核一维开放边界砖墙电路的时空边界张量收缩判据：为何单比特门（哪怕含 468 个非 Clifford $T$ 门）可无损吸收进相邻格点/键张量而不增加张量网络收缩宽度？
 
-**问题三（含噪海森堡 Pauli 传播与稀疏 Pauli 动力学）。** 对初态 $|0+\rangle$ 施加 2 层 $[\mathrm{CNOT}_{01} \to R_x(\pi/6)^{\otimes 2} \to \mathcal{D}_{p=0.2}^{\otimes 2}]$，观测 $Z_0 I_1$。分别求精确期望值、在反向传播第 1 层先乘退极化衰减 $(1 - p)^w$ 再按权重 $w \le 1$ 截断的近似值，以及被裁项的 $\ell_1$ 误差上界。
+### 21-A3｜含噪海森堡 Pauli 传播参数扫描与 $\ell_1$ 截断误差界
 
-**答案。** 闭式解析与精确密度矩阵均给出
+1. **两比特手算与断言**：对初态 $|0+\rangle$ 施加 2 层 $[\mathrm{CNOT}_{01} \to R_x(\theta)^{\otimes 2} \to \mathcal{D}_p^{\otimes 2}]$，观测 $Z_0 I_1$。取 $\theta = \pi/6, p = 0.2$ 时，解析与精确密度矩阵一致给出
+   $$
+   \langle Z_0 I_1\rangle = (1 - p)^2 \cos^2\theta - (1 - p)^3 \sin^2\theta = 0.48 - 0.128 = 0.352.
+   $$
+   在反向传播第 1 层乘退极化衰减 $(1 - p)^w$ 后截断为 $w \le 1$，得近似值 `0.480`，实际截断误差 `0.128` 严格满足不依赖初态的 $\ell_1$ 算符范数上界 `0.256`（脚本同步校验练习参数 $\theta = \pi/4, p = 0.5$：精确值 `0.0625`，$\ell_1$ 上界 `0.088388`）。
+2. **三比特噪声率扫描探究**：脚本对 3 比特 3 层含噪砖墙电路在 $p \in \{0.00, 0.05, 0.15, 0.30\}$ 下逐格对照密度矩阵（最大误差 $1.11\times 10^{-15}$），观测 $Z_0 I_1 I_2$ 在权重截断 $w \le 2$ 下的误差曲线如下：
 
-$$
-\langle Z_0 I_1\rangle = (1 - p)^2 \cos^2\theta - (1 - p)^3 \sin^2\theta = 0.48 - 0.128 = 0.352.
-$$
+| 退极化率 $p$ | 精确期望 $\langle Z_0 I_1 I_2\rangle$ | $w \le 2$ 截断估值 | 实际截断误差 | $\ell_1$ 算符范数上界 |
+|---:|---:|---:|---:|---:|
+| `0.00` | `0.740375` | `0.752864` | `0.012488` | `0.956122` |
+| `0.05` | `0.636307` | `0.645486` | `0.009180` | `0.702837` |
+| `0.15` | `0.457642` | `0.462352` | `0.004710` | `0.360601` |
+| `0.30` | `0.256763` | `0.258232` | `0.001469` | `0.112487` |
 
-权重截断 $w \le 1$ 给出近似值 $0.48$，实际截断误差 $0.128$ 严格满足 $\ell_1$ 算符范数上界 $0.256$。脚本还检验了 $\theta = \pi/4, p = 0.5$ 的练习参数，并对 3 比特 3 层含噪砖墙电路在 $p \in \{0, 0.05, 0.15, 0.30\}$ 下的多组观测量与精确密度矩阵逐格对照（最大误差 $< 10^{-12}$）。
+   试在脚本中把旋转角 $\theta$ 调大（如向 $\pi/4$ 靠近，制造更密集的高权重 Pauli 分裂）或收紧截断阈值 $w_{\max} = 1$，观察无噪（$p=0$）时 $\ell_1$ 上界如何迅速松弛、而适度噪声如何以 $(1 - p)^w$ 指数绞杀高权重分支并让截断误差骤降近一个量级。
 
 运行 `python3 codes/algorithms/simulation_engines_lab.py`。这三个迷你引擎用于透明演示数据结构与误差上界，不等同于面向百比特以上电路的 C++/SIMD/GPU 生产模拟器。
 
-## 开源复现与工业研究入口
+## 开源生态与完整 SDK 实跑入口
 
-以下项目入口初始核查于 2026-09-26，于 2026-11-25 复核目录与口径。许可证、固定提交和实际存档文件以[统一 vendor 清单](../../codes/vendor/manifest.json)为准；源码摘录不等于完整可安装环境，进一步复现应在隔离环境中按固定版本安装。
-
-| 算法/工作流 | 官方源码或文档 | 能复现或检查什么 | 需要注意的边界 |
-|---|---|---|---|
-| Grover、相位/幅度估计、VQE、QAOA | [Qiskit Algorithms 社区仓库](https://github.com/qiskit-community/qiskit-algorithms) | 算法接口、查询组织、优化调用；注意迁移后的真实组织路径 | 接口受版本兼容约束，小规模演示不等于实用优势 |
-| 可微 VQE/QAOA、QSP/QSVT | [PennyLane](https://github.com/PennyLaneAI/pennylane)、[QSVT 接口](https://docs.pennylane.ai/en/stable/code/api/pennylane.QSVT.html) | 块编码、投影相位、奇偶性和电路基序 | 不能把任意非厄米矩阵直接当作普通 $P(A)$ |
-| 化学 SQD | [Qiskit SQD](https://github.com/Qiskit/qiskit-addon-sqd)、[氮分子教程](https://quantum.cloud.ibm.com/docs/en/tutorials/sample-based-quantum-diagonalization) | 样本恢复、子空间构造、费米哈密顿量的经典对角化 | 超过全矩阵精确对角化不等于超过全部强经典化学方法 |
-| 容错算法资源 | [Qualtran](https://github.com/quantumlib/Qualtran) | 从算法部件分解资源，核对查询与逻辑门之间的转换 | 一个抽象调用不等于一个物理时钟周期 |
-| 退火/QUBO 的经典基线 | [dimod](https://github.com/dwavesystems/dimod)、[嵌入文档](https://docs.dwavequantum.com/en/latest/quantum_research/embedding_intro.html) | BQM/QUBO 建模、样本能量、小规模精确求解，另核对设备嵌入 | 经典建模工具本身不构成硬件优势证据 |
-| 稳定子、张量网络与 Pauli 传播模拟 | [Stim](https://github.com/quantumlib/Stim)、[quimb](https://github.com/jcmgray/quimb)、[pauli-prop](https://github.com/Qiskit/pauli-prop) | 稳定子电路快速采样、MPS/MPO 收缩与含噪可观测量反向传播（实跑见[完整 SDK 实验册](sdk-validation.md)） | 各自存在明确经典可解孤岛边界，高非 Clifford 度或深纠缠体积律仍会触发指数开销 |
-
-这里的工业关联指公开研究流程（化学能量估算、容错资源分解、约束优化、经典模拟基线与量子模型开发）；若要评估生产部署与端到端性能，还需对照同任务质量的强经典基线与完整运行成本。
+算法开源生态总表（Qiskit Algorithms、PennyLane、Qiskit SQD、Qualtran、dimod、Stim、quimb、pauli-prop 等许可证、固定提交与源码精读）统一维护于[附录 F：算法、工业实践与开源代码对照](../appendices/software-practice.md)；隔离环境实跑输出、上游缺陷与验证边界见[完整 SDK 实验册](sdk-validation.md)。

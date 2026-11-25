@@ -2,7 +2,7 @@
   <title id="v3-15-wilson-wald-drift-title">Wald 置信区间覆盖率崩溃 vs Wilson 区间与时间漂移隐匿演示</title>
   <desc id="v3-15-wilson-wald-drift-desc">左面板精确计算 N=100 名义 95% 置信水平下 Wald、Wilson 与 Clopper-Pearson 覆盖率曲线，标注 p=0.05 跌至 87.75% 与 p=0.03 跌至 80.22%；右面板对比汇总直方图与 10 批线性时间漂移轨迹及朴素/聚类标准误 1.59 倍差距。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
     .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
@@ -46,43 +46,7 @@
     .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
     .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
     
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .card{fill:#162330;stroke:#395066}
-      .subcard{fill:#1d2e3d;stroke:#3d566d}
-      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
-      .ink{fill:#eef6ff}
-      .muted{fill:#b4c8da}
-      .accent{fill:#6ed0f7}
-      .warn{fill:#ff8585}
-      .gold{fill:#f2c15a}
-      .purple{fill:#c0adff}
-      .green{fill:#6dd4aa}
-      .axis{stroke:#b9d0e2}
-      .axishead{fill:#b9d0e2}
-      .grid{stroke:#304659}
-      .divider{stroke:#4a637a}
-      .s-accent{stroke:#6ed0f7}
-      .s-warn{stroke:#ff8585}
-      .s-gold{stroke:#f2c15a}
-      .s-purple{stroke:#c0adff}
-      .s-green{stroke:#6dd4aa}
-      .s-muted{stroke:#8ca5ba}
-      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
-      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
-      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
-      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
-      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
-      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
-      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
-      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
-      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
-      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
-      .wire{stroke:#c9deee}
-      .ctrl{fill:#eef6ff}
-      .dot-ring{stroke:#162330}
-      
-    }
+    
   </style>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title ink" x="34" y="44">Wald 区间覆盖率崩塌与汇总柱图掩盖线性时间漂移</text>

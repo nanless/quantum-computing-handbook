@@ -8,13 +8,12 @@ on:
       - "tools/reader/**"
       - "codes/**"
       - "dist/**"
+      - "work/research/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -23,9 +22,17 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,10 +41,33 @@ jobs:
           cache: "npm"
           cache-dependency-path: "tools/reader/package-lock.json"
 
-      - name: Install reader build dependencies
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('tools/reader/package-lock.json') }}
+
+      - name: Install reader dependencies, CJK fonts, and Chromium
         run: |
           npm ci --prefix tools/reader --ignore-scripts --no-audit --no-fund
-          npm exec --prefix tools/reader -- playwright install --with-deps chromium
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-wqy-zenhei
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" != "true" ]; then
+            npm exec --prefix tools/reader -- playwright install --with-deps chromium
+          else
+            npm exec --prefix tools/reader -- playwright install-deps chromium
+          fi
+
+      - name: Run offline stdlib experiments and integrity checks
+        run: PYTHONDONTWRITEBYTECODE=1 python3 codes/run_all.py
+
+      - name: Run manuscript quality, examples, and review gates
+        run: |
+          node tools/reader/check-v3-quality.mjs
+          node tools/reader/check-qm-examples.mjs
+          node tools/reader/check-qm-review.mjs
+          node tools/reader/check-network-examples.mjs
 
       - name: Build offline-first reader
         run: node tools/reader/build.mjs
@@ -46,39 +76,57 @@ jobs:
         run: node tools/reader/verify.mjs
 
       - name: Stage GitHub Pages artifact
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
+          shopt -s nullglob
           rm -rf _pages
-          mkdir -p _pages
+          mkdir -p _pages _pages/dist
           cp -a reader/. _pages/
+          find _pages -path '*/vendor' -prune -o -type d -name '__pycache__' -prune -exec rm -rf {} +
+          find _pages -path '*/vendor' -prune -o -type f \( -name '*.pyc' -o -name '.DS_Store' \) -delete
+          rm -rf _pages/research _pages/STYLE.html
           touch _pages/.nojekyll
 
-          if [ -d dist ] && ls dist/*.pdf dist/*.epub >/dev/null 2>&1; then
-            mkdir -p _pages/dist
-            cp -a dist/*.pdf _pages/dist/ 2>/dev/null || true
-            cp -a dist/*.epub _pages/dist/ 2>/dev/null || true
-            node -e '
-              const fs = require("node:fs");
-              const path = require("node:path");
-              const files = fs.readdirSync("_pages/dist")
-                .filter(f => /\.(pdf|epub)$/i.test(f))
-                .sort();
-              const rows = files.map(f => {
-                const mb = (fs.statSync(path.join("_pages/dist", f)).size / (1024 * 1024)).toFixed(2);
-                return `<li><a href="./${f}">${f}</a> <span>(${mb} MiB)</span></li>`;
-              }).join("\n");
-              const html = `<!doctype html>
-              <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-              <title>电子书下载 · 量子计算手册</title>
-              <style>body{font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}</style>
-              </head><body>
-              <h1>量子计算手册 · 电子书下载</h1>
-              <p>以下离线出版物与当前在线阅读版同源构建：</p>
-              <ul>${rows}</ul>
-              <p><a href="../index.html">← 返回在线阅读版首页</a></p>
-              </body></html>`;
-              fs.writeFileSync("_pages/dist/index.html", html);
-            '
-          fi
+          for f in dist/*.pdf; do
+            cp -a "$f" _pages/dist/
+          done
+          for f in dist/*.epub; do
+            cp -a "$f" _pages/dist/
+          done
+
+          node -e '
+            const fs = require("node:fs");
+            const path = require("node:path");
+            const repo = process.env.GITHUB_REPOSITORY || "";
+            const releaseUrl = repo ? `https://github.com/${repo}/releases/latest` : "";
+            const files = fs.readdirSync("_pages/dist")
+              .filter(f => /\.(pdf|epub)$/i.test(f))
+              .sort();
+            const rows = files.map(f => {
+              const mb = (fs.statSync(path.join("_pages/dist", f)).size / (1024 * 1024)).toFixed(2);
+              const kind = f.endsWith(".pdf") ? "A4 印刷级合订本 PDF" : "原生 MathML 3 EPUB 3 电子书";
+              return `<li><a href="./${f}">${f}</a> <span>(${kind} · ${mb} MiB)</span></li>`;
+            }).join("\n");
+            const listBlock = files.length
+              ? `<ul>\n${rows}\n</ul>`
+              : `<p>当前 Pages 产物中未内嵌大体积 PDF/EPUB 文件，请通过下方 GitHub Releases 获取完整发行包。</p>`;
+            const releaseBlock = releaseUrl
+              ? `<section class="card"><h2>GitHub Releases 完整离线发行包</h2><p>获取带 SHA-256 校验清单（<code>SHA256SUMS.txt</code>）的最新版 A4 PDF、EPUB 3、整站离线阅读版 ZIP 与自编离线代码复算包 ZIP：</p><p><a href="${releaseUrl}" rel="noopener noreferrer">前往 GitHub Releases 最新版本下载 →</a></p></section>`
+              : "";
+            const html = `<!doctype html>
+          <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+          <title>电子书与离线包下载 · 量子计算手册</title>
+          <style>body{font-family:"Noto Sans CJK SC",system-ui,-apple-system,sans-serif;max-width:760px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}.card{margin:24px 0;padding:16px 20px;border:1px solid #d7d1c5;border-radius:10px;background:#f3efe6}h2{margin-top:0;font-size:1.15rem}</style>
+          </head><body>
+          <h1>量子计算手册 · 电子书与离线包下载</h1>
+          <p>本站托管的离线出版物文件：</p>
+          ${listBlock}
+          ${releaseBlock}
+          <p><a href="../index.html">← 返回在线阅读版首页</a></p>
+          </body></html>\n`;
+            fs.writeFileSync("_pages/dist/index.html", html);
+          '
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -89,6 +137,10 @@ jobs:
           path: "_pages"
 
   deploy:
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

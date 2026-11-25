@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">二能级受界 GRAPE 脉冲波形、1 ns 低通滤波与 3–7 MHz 失谐敏感性</title>
+  <desc id="desc">左面板展示 40 ns、80 时间槽、幅度盒约束 ±0.12 rad/ns 下二能级 GRAPE 优化的 x/y 两路控制波形及其经 1 ns 离散一阶低通滤波后的变形。右面板展示同一优化波形在失谐 Δ/(2π) ∈ [3, 7] MHz 扫描下的平均门保真度 F_avg，显示仅在设定点 5 MHz 尖锐最优。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">二能级受界 GRAPE 波形、1 ns 离散滤波与失谐敏感性</text>
+  <text class="subtitle" x="34" y="77">40 ns、80 时间槽（Δt = 0.5 ns）、盒约束 ±0.12 rad/ns、设定失谐 Δ/2π = 5 MHz（两能级无耗散合成模型）</text>
+  <rect class="panel" x="28" y="96" width="514" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 528 Q 541 97 541 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="541" y2="134"/>
+  <text class="sec" x="44" y="120">分段常值控制波形（原始 vs 1 ns 采样一阶滤波）</text>
+  <rect class="panel" x="558" y="96" width="414" height="456" rx="14"/>
+  <path class="phead" d="M 572 97 H 958 Q 971 97 971 110 V 134 H 559 V 110 Q 559 97 572 97 Z"/>
+  <line class="grid" x1="559" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="574" y="120">同一波形在 3–7 MHz 失谐下的平均门保真度</text>
+  <line class="c1" stroke-width="2.2" x1="46" y1="158" x2="66" y2="158"/>
+  <text class="xs c1-txt" x="71" y="162">u<tspan dy="3" font-size="74%">x</tspan><tspan dy="-3">&#8203;</tspan> 原始</text>
+  <line class="c2" stroke-width="2.2" stroke-dasharray="6 3" x1="128" y1="158" x2="148" y2="158"/>
+  <text class="xs c2-txt" x="153" y="162">u<tspan dy="3" font-size="74%">y</tspan><tspan dy="-3">&#8203;</tspan> 原始</text>
+  <line class="c3" stroke-width="1.9" x1="210" y1="158" x2="230" y2="158"/>
+  <text class="xs c3-txt" x="235" y="162">u<tspan dy="3" font-size="74%">x</tspan><tspan dy="-3">&#8203;</tspan> 1 ns 滤后</text>
+  <line class="c4" stroke-width="1.9" stroke-dasharray="5 2 1.5 2" x1="322" y1="158" x2="342" y2="158"/>
+  <text class="xs c4-txt" x="347" y="162">u<tspan dy="3" font-size="74%">y</tspan><tspan dy="-3">&#8203;</tspan> 1 ns 滤后</text>
+  <line class="guide" x1="436" y1="158" x2="454" y2="158"/>
+  <text class="xs" x="459" y="162">±0.12 盒界</text>
+  <line class="guide" x1="104" y1="412.45" x2="524" y2="412.45"/>
+  <text class="xs" x="96" y="416.45" text-anchor="end">-0.12</text>
+  <line class="grid" x1="104" y1="360.72" x2="524" y2="360.72"/>
+  <text class="xs" x="96" y="364.72" text-anchor="end">-0.06</text>
+  <line class="grid" x1="104" y1="309" x2="524" y2="309"/>
+  <text class="xs" x="96" y="313" text-anchor="end">0.00</text>
+  <line class="grid" x1="104" y1="257.28" x2="524" y2="257.28"/>
+  <text class="xs" x="96" y="261.28" text-anchor="end">+0.06</text>
+  <line class="guide" x1="104" y1="205.55" x2="524" y2="205.55"/>
+  <text class="xs" x="96" y="209.55" text-anchor="end">+0.12</text>
+  <line class="grid" x1="104" y1="184" x2="104" y2="434"/>
+  <text class="sm" x="104" y="452" text-anchor="middle">0</text>
+  <line class="grid" x1="209" y1="184" x2="209" y2="434"/>
+  <text class="sm" x="209" y="452" text-anchor="middle">10</text>
+  <line class="grid" x1="314" y1="184" x2="314" y2="434"/>
+  <text class="sm" x="314" y="452" text-anchor="middle">20</text>
+  <line class="grid" x1="419" y1="184" x2="419" y2="434"/>
+  <text class="sm" x="419" y="452" text-anchor="middle">30</text>
+  <line class="grid" x1="524" y1="184" x2="524" y2="434"/>
+  <text class="sm" x="524" y="452" text-anchor="middle">40</text>
+  <line class="axis" x1="104" y1="434" x2="531" y2="434"/>
+  <polygon class="axis-fill" points="531,434 524,437.36 524,430.64"/>
+  <line class="axis" x1="104" y1="434" x2="104" y2="176"/>
+  <polygon class="axis-fill" points="104,176 107.36,183 100.64,183"/>
+  <text class="lbl" x="314" y="476" text-anchor="middle">时间 t (ns)</text>
+  <text class="lbl" x="48" y="309" text-anchor="middle" transform="rotate(-90 48 309)">控制角频率 u (rad/ns)</text>
+  <path class="c1" stroke-width="1.75" d="M 104 205.55 L 109.25 205.55 L 109.25 229.7 L 114.5 229.7 L 114.5 270.23 L 119.75 270.23 L 119.75 224.21 L 125 224.21 L 125 214.68 L 130.25 214.68 L 130.25 205.55 L 135.5 205.55 L 135.5 212.62 L 140.75 212.62 L 140.75 261.93 L 146 261.93 L 146 205.55 L 151.25 205.55 L 151.25 256.9 L 156.5 256.9 L 156.5 273.6 L 161.75 273.6 L 161.75 250.52 L 167 250.52 L 167 212.77 L 172.25 212.77 L 172.25 205.55 L 177.5 205.55 L 177.5 223.58 L 182.75 223.58 L 182.75 242.79 L 188 242.79 L 188 252.3 L 193.25 252.3 L 193.25 232.33 L 198.5 232.33 L 198.5 230.24 L 203.75 230.24 L 203.75 231.97 L 209 231.97 L 209 214.71 L 214.25 214.71 L 214.25 282.7 L 219.5 282.7 L 219.5 230.58 L 224.75 230.58 L 224.75 289.8 L 230 289.8 L 230 248.82 L 235.25 248.82 L 235.25 288.76 L 240.5 288.76 L 240.5 289.86 L 245.75 289.86 L 245.75 205.8 L 251 205.8 L 251 256.45 L 256.25 256.45 L 256.25 265.91 L 261.5 265.91 L 261.5 259.54 L 266.75 259.54 L 266.75 258.26 L 272 258.26 L 272 227.76 L 277.25 227.76 L 277.25 279.86 L 282.5 279.86 L 282.5 205.55 L 287.75 205.55 L 287.75 235.02 L 293 235.02 L 293 264.87 L 298.25 264.87 L 298.25 263.48 L 303.5 263.48 L 303.5 216.76 L 308.75 216.76 L 308.75 295.11 L 314 295.11 L 314 253.66 L 319.25 253.66 L 319.25 271.87 L 324.5 271.87 L 324.5 206.13 L 329.75 206.13 L 329.75 235.37 L 335 235.37 L 335 261.82 L 340.25 261.82 L 340.25 273.42 L 345.5 273.42 L 345.5 279.78 L 350.75 279.78 L 350.75 258.85 L 356 258.85 L 356 276.4 L 361.25 276.4 L 361.25 290.59 L 366.5 290.59 L 366.5 261.42 L 371.75 261.42 L 371.75 269.38 L 377 269.38 L 377 248.76 L 382.25 248.76 L 382.25 243.05 L 387.5 243.05 L 387.5 293.56 L 392.75 293.56 L 392.75 240.14 L 398 240.14 L 398 226.25 L 403.25 226.25 L 403.25 205.55 L 408.5 205.55 L 408.5 289.82 L 413.75 289.82 L 413.75 220.19 L 419 220.19 L 419 246.93 L 424.25 246.93 L 424.25 205.55 L 429.5 205.55 L 429.5 236.62 L 434.75 236.62 L 434.75 237.2 L 440 237.2 L 440 216.11 L 445.25 216.11 L 445.25 236.84 L 450.5 236.84 L 450.5 219.99 L 455.75 219.99 L 455.75 257.57 L 461 257.57 L 461 211.28 L 466.25 211.28 L 466.25 262.13 L 471.5 262.13 L 471.5 222.56 L 476.75 222.56 L 476.75 232.8 L 482 232.8 L 482 228.26 L 487.25 228.26 L 487.25 291.85 L 492.5 291.85 L 492.5 222.51 L 497.75 222.51 L 497.75 222.38 L 503 222.38 L 503 287.63 L 508.25 287.63 L 508.25 260.91 L 513.5 260.91 L 513.5 271.17 L 518.75 271.17 L 518.75 302.98 L 524 302.98"/>
+  <path class="c2" stroke-width="1.75" stroke-dasharray="6 3" d="M 104 311.3 L 109.25 311.3 L 109.25 382.3 L 114.5 382.3 L 114.5 352.29 L 119.75 352.29 L 119.75 389.19 L 125 389.19 L 125 398.18 L 130.25 398.18 L 130.25 371.37 L 135.5 371.37 L 135.5 409.43 L 140.75 409.43 L 140.75 395.48 L 146 395.48 L 146 354.45 L 151.25 354.45 L 151.25 373.25 L 156.5 373.25 L 156.5 281.25 L 161.75 281.25 L 161.75 304.57 L 167 304.57 L 167 327.63 L 172.25 327.63 L 172.25 354.16 L 177.5 354.16 L 177.5 402.44 L 182.75 402.44 L 182.75 255.27 L 188 255.27 L 188 263.12 L 193.25 263.12 L 193.25 386.05 L 198.5 386.05 L 198.5 283.86 L 203.75 283.86 L 203.75 381.2 L 209 381.2 L 209 389.91 L 214.25 389.91 L 214.25 387.28 L 219.5 387.28 L 219.5 311.83 L 224.75 311.83 L 224.75 357.21 L 230 357.21 L 230 249.83 L 235.25 249.83 L 235.25 390.19 L 240.5 390.19 L 240.5 293.72 L 245.75 293.72 L 245.75 250.8 L 251 250.8 L 251 227.58 L 256.25 227.58 L 256.25 363.88 L 261.5 363.88 L 261.5 312.22 L 266.75 312.22 L 266.75 268.83 L 272 268.83 L 272 287.07 L 277.25 287.07 L 277.25 384.54 L 282.5 384.54 L 282.5 219.34 L 287.75 219.34 L 287.75 334.36 L 293 334.36 L 293 326.22 L 298.25 326.22 L 298.25 403.06 L 303.5 403.06 L 303.5 412.35 L 308.75 412.35 L 308.75 380.07 L 314 380.07 L 314 272.05 L 319.25 272.05 L 319.25 332.27 L 324.5 332.27 L 324.5 214.24 L 329.75 214.24 L 329.75 333.8 L 335 333.8 L 335 250.41 L 340.25 250.41 L 340.25 313.02 L 345.5 313.02 L 345.5 252.4 L 350.75 252.4 L 350.75 357.62 L 356 357.62 L 356 335.46 L 361.25 335.46 L 361.25 346.89 L 366.5 346.89 L 366.5 323.98 L 371.75 323.98 L 371.75 314.76 L 377 314.76 L 377 258.67 L 382.25 258.67 L 382.25 333.46 L 387.5 333.46 L 387.5 218.69 L 392.75 218.69 L 392.75 221.75 L 398 221.75 L 398 230.06 L 403.25 230.06 L 403.25 267.75 L 408.5 267.75 L 408.5 295.96 L 413.75 295.96 L 413.75 214.04 L 419 214.04 L 419 355.76 L 424.25 355.76 L 424.25 328.05 L 429.5 328.05 L 429.5 309.29 L 434.75 309.29 L 434.75 265.51 L 440 265.51 L 440 275.63 L 445.25 275.63 L 445.25 221.6 L 450.5 221.6 L 450.5 273.14 L 455.75 273.14 L 455.75 359.4 L 461 359.4 L 461 219.49 L 466.25 219.49 L 466.25 212.73 L 471.5 212.73 L 471.5 362.05 L 476.75 362.05 L 476.75 238.24 L 482 238.24 L 482 300.74 L 487.25 300.74 L 487.25 338.86 L 492.5 338.86 L 492.5 287.16 L 497.75 287.16 L 497.75 346.09 L 503 346.09 L 503 227.64 L 508.25 227.64 L 508.25 255.03 L 513.5 255.03 L 513.5 345.47 L 518.75 345.47 L 518.75 215.68 L 524 215.68"/>
+  <path class="c3" stroke-width="1.55" d="M 104 268.3 L 109.25 268.3 L 109.25 253.11 L 114.5 253.11 L 114.5 259.85 L 119.75 259.85 L 119.75 245.82 L 125 245.82 L 125 233.57 L 130.25 233.57 L 130.25 222.55 L 135.5 222.55 L 135.5 218.64 L 140.75 218.64 L 140.75 235.67 L 146 235.67 L 146 223.82 L 151.25 223.82 L 151.25 236.84 L 156.5 236.84 L 156.5 251.3 L 161.75 251.3 L 161.75 251 L 167 251 L 167 235.96 L 172.25 235.96 L 172.25 223.99 L 177.5 223.99 L 177.5 223.83 L 182.75 223.83 L 182.75 231.29 L 188 231.29 L 188 239.56 L 193.25 239.56 L 193.25 236.71 L 198.5 236.71 L 198.5 234.17 L 203.75 234.17 L 203.75 233.3 L 209 233.3 L 209 225.98 L 214.25 225.98 L 214.25 248.3 L 219.5 248.3 L 219.5 241.33 L 224.75 241.33 L 224.75 260.4 L 230 260.4 L 230 255.84 L 235.25 255.84 L 235.25 268.79 L 240.5 268.79 L 240.5 277.08 L 245.75 277.08 L 245.75 249.03 L 251 249.03 L 251 251.95 L 256.25 251.95 L 256.25 257.45 L 261.5 257.45 L 261.5 258.27 L 266.75 258.27 L 266.75 258.27 L 272 258.27 L 272 246.26 L 277.25 246.26 L 277.25 259.48 L 282.5 259.48 L 282.5 238.26 L 287.75 238.26 L 287.75 236.99 L 293 236.99 L 293 247.96 L 298.25 247.96 L 298.25 254.06 L 303.5 254.06 L 303.5 239.39 L 308.75 239.39 L 308.75 261.31 L 314 261.31 L 314 258.3 L 319.25 258.3 L 319.25 263.64 L 324.5 263.64 L 324.5 241.01 L 329.75 241.01 L 329.75 238.79 L 335 238.79 L 335 247.85 L 340.25 247.85 L 340.25 257.91 L 345.5 257.91 L 345.5 266.51 L 350.75 266.51 L 350.75 263.5 L 356 263.5 L 356 268.57 L 361.25 268.57 L 361.25 277.24 L 366.5 277.24 L 366.5 271.01 L 371.75 271.01 L 371.75 270.37 L 377 270.37 L 377 261.87 L 382.25 261.87 L 382.25 254.46 L 387.5 254.46 L 387.5 269.85 L 392.75 269.85 L 392.75 258.16 L 398 258.16 L 398 245.6 L 403.25 245.6 L 403.25 229.84 L 408.5 229.84 L 408.5 253.44 L 413.75 253.44 L 413.75 240.36 L 419 240.36 L 419 242.94 L 424.25 242.94 L 424.25 228.23 L 429.5 228.23 L 429.5 231.53 L 434.75 231.53 L 434.75 233.76 L 440 233.76 L 440 226.82 L 445.25 226.82 L 445.25 230.76 L 450.5 230.76 L 450.5 226.52 L 455.75 226.52 L 455.75 238.74 L 461 238.74 L 461 227.93 L 466.25 227.93 L 466.25 241.39 L 471.5 241.39 L 471.5 233.98 L 476.75 233.98 L 476.75 233.52 L 482 233.52 L 482 231.45 L 487.25 231.45 L 487.25 255.22 L 492.5 255.22 L 492.5 242.35 L 497.75 242.35 L 497.75 234.49 L 503 234.49 L 503 255.4 L 508.25 255.4 L 508.25 257.57 L 513.5 257.57 L 513.5 262.92 L 518.75 262.92 L 518.75 278.68 L 524 278.68"/>
+  <path class="c4" stroke-width="1.55" stroke-dasharray="5 2 1.5 2" d="M 104 309.9 L 109.25 309.9 L 109.25 338.39 L 114.5 338.39 L 114.5 343.86 L 119.75 343.86 L 119.75 361.7 L 125 361.7 L 125 376.05 L 130.25 376.05 L 130.25 374.21 L 135.5 374.21 L 135.5 388.07 L 140.75 388.07 L 140.75 390.98 L 146 390.98 L 146 376.61 L 151.25 376.61 L 151.25 375.29 L 156.5 375.29 L 156.5 338.29 L 161.75 338.29 L 161.75 325.02 L 167 325.02 L 167 326.05 L 172.25 326.05 L 172.25 337.11 L 177.5 337.11 L 177.5 362.81 L 182.75 362.81 L 182.75 320.5 L 188 320.5 L 188 297.92 L 193.25 297.92 L 193.25 332.6 L 198.5 332.6 L 198.5 313.42 L 203.75 313.42 L 203.75 340.09 L 209 340.09 L 209 359.69 L 214.25 359.69 L 214.25 370.55 L 219.5 370.55 L 219.5 347.44 L 224.75 347.44 L 224.75 351.29 L 230 351.29 L 230 311.37 L 235.25 311.37 L 235.25 342.38 L 240.5 342.38 L 240.5 323.24 L 245.75 323.24 L 245.75 294.74 L 251 294.74 L 251 268.31 L 256.25 268.31 L 256.25 305.92 L 261.5 305.92 L 261.5 308.39 L 266.75 308.39 L 266.75 292.83 L 272 292.83 L 272 290.56 L 277.25 290.56 L 277.25 327.54 L 282.5 327.54 L 282.5 284.97 L 287.75 284.97 L 287.75 304.4 L 293 304.4 L 293 312.99 L 298.25 312.99 L 298.25 348.43 L 303.5 348.43 L 303.5 373.58 L 308.75 373.58 L 308.75 376.13 L 314 376.13 L 314 335.18 L 319.25 335.18 L 319.25 334.03 L 324.5 334.03 L 324.5 286.9 L 329.75 286.9 L 329.75 305.35 L 335 305.35 L 335 283.74 L 340.25 283.74 L 340.25 295.26 L 345.5 295.26 L 345.5 278.39 L 350.75 278.39 L 350.75 309.57 L 356 309.57 L 356 319.76 L 361.25 319.76 L 361.25 330.43 L 366.5 330.43 L 366.5 327.89 L 371.75 327.89 L 371.75 322.73 L 377 322.73 L 377 297.52 L 382.25 297.52 L 382.25 311.66 L 387.5 311.66 L 387.5 275.08 L 392.75 275.08 L 392.75 254.1 L 398 254.1 L 398 244.64 L 403.25 244.64 L 403.25 253.73 L 408.5 253.73 L 408.5 270.34 L 413.75 270.34 L 413.75 248.19 L 419 248.19 L 419 290.52 L 424.25 290.52 L 424.25 305.28 L 429.5 305.28 L 429.5 306.86 L 434.75 306.86 L 434.75 290.59 L 440 290.59 L 440 284.7 L 445.25 284.7 L 445.25 259.87 L 450.5 259.87 L 450.5 265.09 L 455.75 265.09 L 455.75 302.2 L 461 302.2 L 461 269.65 L 466.25 269.65 L 466.25 247.26 L 471.5 247.26 L 471.5 292.42 L 476.75 292.42 L 476.75 271.1 L 482 271.1 L 482 282.76 L 487.25 282.76 L 487.25 304.83 L 492.5 304.83 L 492.5 297.88 L 497.75 297.88 L 497.75 316.85 L 503 316.85 L 503 281.75 L 508.25 281.75 L 508.25 271.24 L 513.5 271.24 L 513.5 300.44 L 518.75 300.44 L 518.75 267.09 L 524 267.09"/>
+  <rect class="note" x="44" y="496" width="482" height="40" rx="9"/>
+  <text class="xs" x="285" y="520" text-anchor="middle">未限斜率：相邻槽最大跳变 0.1916 rad/ns；过 1 ns 滤波后 1−g 由 6.63×10<tspan dy="-4.5" font-size="74%">−12</tspan><tspan dy="4.5">&#8203;</tspan> 弹至 5.56×10<tspan dy="-4.5" font-size="74%">−4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="640" y1="434" x2="948" y2="434"/>
+  <text class="xs" x="632" y="438" text-anchor="end">0.975</text>
+  <line class="grid" x1="640" y1="388.39" x2="948" y2="388.39"/>
+  <text class="xs" x="632" y="392.39" text-anchor="end">0.980</text>
+  <line class="grid" x1="640" y1="342.77" x2="948" y2="342.77"/>
+  <text class="xs" x="632" y="346.77" text-anchor="end">0.985</text>
+  <line class="grid" x1="640" y1="297.16" x2="948" y2="297.16"/>
+  <text class="xs" x="632" y="301.16" text-anchor="end">0.990</text>
+  <line class="grid" x1="640" y1="251.54" x2="948" y2="251.54"/>
+  <text class="xs" x="632" y="255.54" text-anchor="end">0.995</text>
+  <line class="grid" x1="640" y1="205.93" x2="948" y2="205.93"/>
+  <text class="xs" x="632" y="209.93" text-anchor="end">1.000</text>
+  <line class="grid" x1="668.29" y1="174" x2="668.29" y2="434"/>
+  <text class="sm" x="668.29" y="452" text-anchor="middle">3</text>
+  <line class="grid" x1="731.14" y1="174" x2="731.14" y2="434"/>
+  <text class="sm" x="731.14" y="452" text-anchor="middle">4</text>
+  <line class="guide" x1="794" y1="205.93" x2="794" y2="434"/>
+  <text class="sm" x="794" y="452" text-anchor="middle">5</text>
+  <line class="grid" x1="856.86" y1="174" x2="856.86" y2="434"/>
+  <text class="sm" x="856.86" y="452" text-anchor="middle">6</text>
+  <line class="grid" x1="919.71" y1="174" x2="919.71" y2="434"/>
+  <text class="sm" x="919.71" y="452" text-anchor="middle">7</text>
+  <line class="axis" x1="640" y1="434" x2="955" y2="434"/>
+  <polygon class="axis-fill" points="955,434 948,437.36 948,430.64"/>
+  <line class="axis" x1="640" y1="434" x2="640" y2="166"/>
+  <polygon class="axis-fill" points="640,166 643.36,173 636.64,173"/>
+  <text class="lbl" x="794" y="476" text-anchor="middle">失谐 Δ / (2π) (MHz)</text>
+  <text class="lbl" x="580" y="304" text-anchor="middle" transform="rotate(-90 580 304)">平均门保真度 F<tspan dy="3" font-size="74%">avg</tspan><tspan dy="-3">&#8203;</tspan>（无量纲）</text>
+  <path class="c1" stroke-width="2.5" d="M 668.29 380.67 L 731.14 249.96 L 794 205.93 L 856.86 249.96 L 919.71 380.62"/>
+  <circle class="c1-fill" cx="668.29" cy="380.67" r="5.2"/>
+  <circle class="c1-fill" cx="731.14" cy="249.96" r="5.2"/>
+  <circle class="c1-fill" cx="794" cy="205.93" r="5.2"/>
+  <circle class="c1-fill" cx="856.86" cy="249.96" r="5.2"/>
+  <circle class="c1-fill" cx="919.71" cy="380.62" r="5.2"/>
+  <text class="xsb c1-txt" x="794" y="192.93" text-anchor="middle">设定点 5 MHz：F<tspan dy="3" font-size="74%">avg</tspan><tspan dy="-3">&#8203;</tspan> ≈ 1.0000</text>
+  <text class="xs c1-txt" x="723.14" y="238.96" text-anchor="end">0.9952</text>
+  <text class="xs c1-txt" x="864.86" y="238.96" text-anchor="start">0.9952</text>
+  <text class="xs c1-txt" x="678.29" y="398.67" text-anchor="start">0.9808</text>
+  <text class="xs c1-txt" x="909.71" y="398.62" text-anchor="end">0.9809</text>
+  <rect class="pill-bg" x="716" y="346" width="156" height="48" rx="8"/>
+  <text class="xsb c3-txt" x="794" y="366" text-anchor="middle">5 MHz 经 1 ns 滤波</text>
+  <text class="xs" x="794" y="384" text-anchor="middle">F<tspan dy="3" font-size="74%">avg</tspan><tspan dy="-3">&#8203;</tspan> = 0.99926</text>
+  <rect class="pill" x="574" y="496" width="382" height="40" rx="9"/>
+  <text class="xs" x="765" y="520" text-anchor="middle">纵轴放大至 [0.975, 1.000]；三能级泄漏另见下一节</text>
+</svg>

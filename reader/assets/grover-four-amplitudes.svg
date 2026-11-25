@@ -3,7 +3,7 @@
   <desc id="desc">按 00、01、10、11 顺序绘出无量纲概率振幅。初态四项均为二分之一；oracle 仅使目标 11 变成负二分之一；这时平均振幅为四分之一，扩散后前三项都为零，11 为一。纵轴是振幅而非概率，负振幅位于零线以下。</desc>
   <style>
     .bg{fill:#f7faf6}.card{fill:#fffefa;stroke:#c7d8ca;stroke-width:2}.ink{fill:#1e4238}.muted{fill:#5d7265}.rule{stroke:#809e88;stroke-width:2}.bar{fill:#5a9c79}.negative{fill:#b5664d}.onneg{fill:#fff}.final{fill:#377d68}.arrow{stroke:#47785c;stroke-width:3;fill:none;marker-end:url(#arrowhead)}.arrowhead{fill:#47785c}.head{font:600 25px 'PingFang SC',system-ui,sans-serif}.label{font:600 19px 'PingFang SC',system-ui,sans-serif}.body{font:17px 'PingFang SC',system-ui,sans-serif}.small{font:15px 'PingFang SC',system-ui,sans-serif}.number{font:600 18px 'SFMono-Regular',Consolas,monospace}
-    @media(prefers-color-scheme:dark){.bg{fill:#152620}.card{fill:#1b3027;stroke:#678b73}.ink{fill:#eaf5ec}.muted{fill:#bad0c1}.rule{stroke:#a4c5ac}.bar{fill:#83c5a0}.negative{fill:#df9c7f}.final{fill:#9dddb4}.arrow{stroke:#a5d7b2}.arrowhead{fill:#a5d7b2}}
+    
   </style>
   <defs><marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="arrowhead" d="M0 0L10 5L0 10Z"/></marker></defs>
   <rect class="bg" width="1120" height="510" rx="20"/>

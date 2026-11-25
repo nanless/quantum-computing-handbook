@@ -2,7 +2,10 @@
 
 算法论文里的量子线路看起来总是干干净净：纸上画着理想的 Hadamard 门 $H$、任意角度旋转门 $R_z(\theta)$，以及可以跨过整排量子比特直接相连的 $\mathrm{CNOT}$。然而真正把这段程序送进稀释制冷机或真空腔时，硬件能听懂的语言却苛刻得多——它只认识屈指可数的几个原生操作，比特之间只有稀疏的物理连线，控制线还会彼此共用、互相串扰，而真正作用在量子比特上的根本不是方块和线条，而是几纳秒到几百纳秒长的微波、激光或电压模拟脉冲。
 
-这一章紧承[Q3：从能级到物理量子比特](quantum-mechanics/03-levels-control.md)与[第 09 章：硬件平台](09-hardware.md)，把“纸上的算法线路”到“芯片上的模拟波形、读出判决与容错逻辑操作”之间这条漫长链条一层层摊开，并为后面的[第 10 章：量子纠错](10-error-correction.md)、[第 11 章：资源估算](11-resources-benchmarks.md)与[第 19 章：可维护系统工程](19-engineering-architecture.md)搭好编译器与控制层桥梁。如果你是第一次通读本章，可以先顺着第 1–4 节看懂中间表示、单/双比特门综合、ZX 演算优化、虚拟 Z 与 SABRE 路由调度，再翻到第 13 节看一个 Bell 电路的端到端落地；如果想看清“原生指令怎样变成抗泄漏、抗噪声的模拟波形”，精读第 5–7 节；关心门表征、读出缓解、动态反馈、线路切割与容错逻辑编译的读者，重点看第 8–12 节。
+这一章紧承[Q3：从能级到物理量子比特](quantum-mechanics/03-levels-control.md)与[第 09 章：硬件平台](09-hardware.md)，把“纸上的算法线路”到“芯片上的模拟波形、读出判决与容错逻辑操作”之间这条链条一层层摊开，并为后面的[第 10 章：量子纠错](10-error-correction.md)、[第 11 章：资源估算](11-resources-benchmarks.md)与[第 19 章：可维护系统工程](19-engineering-architecture.md)搭好编译器与控制层桥梁。
+
+- **首遍必读（★）**：§1、§2.1、§2.5、§3–§6、§8–§10 与 §13（中间表示、单比特综合与 `gridsynth`、虚拟 Z、SABRE 路由调度、DRAG/DD 与随机编译 Pass、读出缓解、动态反馈与 Bell 落地清单）；
+- **进阶选读（☆）**：§2.2–§2.4（KAK/Weyl 室、ZX 演算与 Solovay–Kitaev）、§7（二/三能级 GRAPE）、§11（线路切割）与 §12（Litinski 容错编译）——可按研究方向按需深入。
 
 ---
 
@@ -13,15 +16,16 @@
 下面这张流程图把从算法需求到物理执行的九层表示串成一条完整链路，末端的读出与漂移监测还会反向触发校准与脉冲更新：
 
 ```mermaid
-flowchart LR
-  A["1. 算法与误差容限"] --> B["2. 逻辑线路"]
-  B --> C["3. 门综合与逻辑优化"]
-  C --> D["4. 布局与路由"]
-  D --> E["5. 目标机 ISA 线路"]
-  E --> F["6. 资源约束调度"]
-  F --> G["7. 校准与脉冲绑定"]
-  G --> H["8. 模拟控制与物理演化"]
-  H --> I["9. 读出、判决、解码与反馈"]
+%% title: 算法线路到物理执行的九层表示与编译控制流程
+flowchart TB
+  A["第 1 层｜算法与误差容限"] --> B["第 2 层｜逻辑线路"]
+  B --> C["第 3 层｜<br/>门综合与逻辑优化"]
+  C --> D["第 4 层｜布局与路由"]
+  D --> E["第 5 层｜目标机 ISA 线路"]
+  E --> F["第 6 层｜资源约束调度"]
+  F --> G["第 7 层｜校准与脉冲绑定"]
+  G --> H["第 8 层｜<br/>模拟控制与物理演化"]
+  H --> I["第 9 层｜<br/>读出、判决、解码与反馈"]
   I -. "漂移或回归异常" .-> G
 ```
 
@@ -247,13 +251,13 @@ $$
 
 把 $R_x(\pi/2) = e^{-i\pi/4}\mathrm{SX}$ 代回，即得 $H = e^{i\pi/4} R_z(\pi/2)\,\mathrm{SX}\,R_z(\pi/2)$。因为两侧的 $R_z(\pi/2)$ 可以零时长软件实现（见第 3 节），在超导芯片上执行一个 Hadamard 门，物理上只需发射**一次** $\mathrm{SX}$ 微波脉冲；而任意一般单比特酉门，最多也只需发射**两次** $\mathrm{SX}$ 微波脉冲！
 
-### 2.2 两比特最优门综合：KAK（Cartan）分解与 Weyl 室几何
+### 2.2 进阶选读：两比特最优门综合：KAK（Cartan）分解与 Weyl 室几何
 
-单比特门彻底解决了，紧接着就是现代编译器（如 Qiskit `TwoQubitBasisDecomposer`、TKET、Cirq）里最核心的引擎：**给定任意一个 $4\times 4$ 两比特酉门 $U \in \mathrm{SU}(4)$，究竟最少需要多少个 $\mathrm{CNOT}$ 才能拼出它？**
+单比特门分解告一段落，紧接着就是现代编译器（如 Qiskit `TwoQubitBasisDecomposer`、TKET、Cirq）里的核心引擎：**给定任意一个 $4\times 4$ 两比特酉门 $U \in \mathrm{SU}(4)$，究竟最少需要多少个 $\mathrm{CNOT}$ 才能拼出它？**
 
 许多同学背过一条经验结论“$\mathrm{SWAP}$ 需要 3 个 $\mathrm{CNOT}$”，但往往答不上来三个更关键的问题：为什么 $\mathrm{iSWAP}$ 只要 **2 个** $\mathrm{CNOT}$？为什么看似只有半个交换角的 $\sqrt{\mathrm{SWAP}}$ 反而还要 **3 个** $\mathrm{CNOT}$？以及，会不会存在某个极其扭曲的 $4\times 4$ 酉门需要 4 个甚至 10 个 $\mathrm{CNOT}$？
 
-答案干净得像几何魔术：**任何两比特酉门，绝不需要超过 3 个 $\mathrm{CNOT}$！** 直觉就像把单比特 Euler 分解升级到两比特：$\mathrm{SU}(4)$ 一共有 $4^2 - 1 = 15$ 个实自由度，其中左右两头各贴一层两比特局域单比特门（$k_1 \otimes k_2$ 与 $k_3 \otimes k_4$，共 $4 \times 3 = 12$ 个自由度），剥掉这些不改变纠缠能力的单比特旋转后，**任意两比特门的本质非局域相互作用只剩下区区 $15 - 12 = 3$ 个实参数**，全部整整齐齐地装在一个三维四面体——**Weyl 室**（Weyl Chamber）里！
+答案非常简洁：**任何两比特酉门，绝不需要超过 3 个 $\mathrm{CNOT}$！** 直觉就像把单比特 Euler 分解升级到两比特：$\mathrm{SU}(4)$ 一共有 $4^2 - 1 = 15$ 个实自由度，其中左右两头各贴一层两比特局域单比特门（$k_1 \otimes k_2$ 与 $k_3 \otimes k_4$，共 $4 \times 3 = 12$ 个自由度），剥掉这些不改变纠缠能力的单比特旋转后，**任意两比特门的本质非局域相互作用只剩下区区 $15 - 12 = 3$ 个实参数**，全部整整齐齐地装在一个三维四面体——**Weyl 室**（Weyl Chamber）里！
 
 **定理（两比特 KAK / Cartan 分解，Zhang–Vala–Sastry–Whaley 2003；Vidal–Dawson 2004；Vatan–Williams 2004）**：任意两比特特殊酉算符 $U \in \mathrm{SU}(4)$ 均可写成
 
@@ -285,9 +289,13 @@ $$
 有了这张几何地图，开篇的三个困惑迎刃而解：
 
 1. **为什么任意 $\mathrm{SU}(4)$ 至多只需 3 个 $\mathrm{CNOT}$？** Vatan 与 Williams（2004）证明，用 3 个固定 $\mathrm{CNOT}$ 交替夹住 4 层共计 15 个有效单比特旋转参数，恰好覆盖整个 15 维流形 $\mathrm{SU}(4)$（且当目标门落在 $k_z=0$ 平面或特殊点时自动退化为 2、1 或 0 个 $\mathrm{CNOT}$）。
-2. **为什么 $\mathrm{iSWAP}$ 只要 2 个 $\mathrm{CNOT}$，而 $\mathrm{SWAP}$ 与 $\sqrt{\mathrm{SWAP}}$ 不论用 $\mathrm{CNOT}$ 还是 $\mathrm{iSWAP}$ 都必须 3 个？** 单个 $\mathrm{CNOT}$ 加上任意单比特门只能到达单个点 $A_1(\frac{\pi}{4}, 0, 0)$；**2 个 $\mathrm{CNOT}$ 或 2 个 $\mathrm{iSWAP}$ 配合局域单比特门，都恰好能无缝扫满整个赤道底面 $k_z = 0$**（包括坐标 $(\frac{\pi}{4}, \frac{\pi}{4}, 0)$ 的 $\mathrm{iSWAP}$、$\mathrm{CNOT}/\mathrm{CZ}$、$B$ 门以及全部连续角度 $R_{ZZ}(\theta)$ 族），却一步也离不开 $k_z = 0$ 平面！背后的严格判据只需两行 Makhlin 不变量：在 Bell 魔术基 $Q$ 下，任意单比特局域层 $k_a\otimes k_b \in \mathrm{SU}(2)\otimes\mathrm{SU}(2)$ 都是实正交阵 $O \in \mathrm{SO}(4)$，而规范生成门 $A_{\mathrm{CNOT}} = \exp(i\frac{\pi}{4}XX)$ 与 $A_{\mathrm{iSWAP}} = \exp(i\frac{\pi}{4}(XX+YY))$ 在魔术基下均对角化为 $D$，且 $D_{\mathrm{CNOT}}^2 = i\,\mathrm{diag}(1,1,-1,-1)$、$D_{\mathrm{iSWAP}}^2 = \mathrm{diag}(1,-1,-1,1)$（至多相差一个常数因子 $i$，平方 $D^2 O_2^T D^2 O_2$ 均为实阵）。因此任意含 2 个 $\mathrm{CNOT}$ 或 2 个 $\mathrm{iSWAP}$ 的两比特线路 $U_B = O_1 D O_2 D O_3$ 均满足 $\operatorname{Tr}(m) = \operatorname{Tr}(D^2 O_2^T D^2 O_2) \in \mathbb{R}$，强迫 **$g_1(U) = \frac{1}{16}(\operatorname{Tr} m)^2 \in \mathbb{R}_{\ge 0}$**！而在整个 Weyl 室内，$g_1 = (\cos 2k_x\cos 2k_y\cos 2k_z + i\sin 2k_x\sin 2k_y\sin 2k_z)^2$，凡 $k_z \ne 0$ 必有 $\operatorname{Im}(g_1) \ne 0$ 或 $g_1 < 0$——例如 $\sqrt{\mathrm{SWAP}}$ 的 $g_1 = -i/4 \notin \mathbb{R}_{\ge 0}$、$\mathrm{SWAP}$ 的 $g_1 = -1 < 0$（即便允许末尾重标比特即乘以 $\mathrm{SWAP}$，$\mathrm{SWAP}\cdot\sqrt{\mathrm{SWAP}} = \sqrt{\mathrm{SWAP}}^\dagger$ 仍有 $g_1 = +i/4 \notin \mathbb{R}_{\ge 0}$）。故 2-$\mathrm{CNOT}$ 与 2-$\mathrm{iSWAP}$ 均被锁死在 $k_z = 0$ 底面，合成 $\mathrm{SWAP}$ 与 $\sqrt{\mathrm{SWAP}}$ 必须动用第 3 个双比特门（区别于 $B$ 门等特殊门族：2 个 $B$ 门即可覆盖全部 $\mathrm{SU}(4)$）。反过来，如果硬件原生门本身是连续 $R_{ZZ}(\theta)$（如离子阱与 IBM Heron 分数门）或连续 $\mathrm{iSWAP}$ 族（Google 超导处理器），编译器就能用更浅的脉冲直达底面与棱上的目标点。
+2. **为什么 $\mathrm{iSWAP}$ 只要 2 个 $\mathrm{CNOT}$，而 $\mathrm{SWAP}$ 与 $\sqrt{\mathrm{SWAP}}$ 不论用 $\mathrm{CNOT}$ 还是 $\mathrm{iSWAP}$ 都必须 3 个？** 单个 $\mathrm{CNOT}$ 加上任意单比特门只能到达单个点 $A_1(\frac{\pi}{4}, 0, 0)$；**2 个 $\mathrm{CNOT}$ 或 2 个 $\mathrm{iSWAP}$ 配合局域单比特门，都恰好能无缝扫满整个赤道底面 $k_z = 0$**（包括坐标 $(\frac{\pi}{4}, \frac{\pi}{4}, 0)$ 的 $\mathrm{iSWAP}$、$\mathrm{CNOT}/\mathrm{CZ}$、$B$ 门以及全部连续角度 $R_{ZZ}(\theta)$ 族），却一步也离不开 $k_z = 0$ 平面。
+   
+   背后的严格判据只需两行 Makhlin 不变量：在 Bell 魔术基 $Q$ 下，任意单比特局域层 $k_a\otimes k_b \in \mathrm{SU}(2)\otimes\mathrm{SU}(2)$ 都是实正交阵 $O \in \mathrm{SO}(4)$，而规范生成门 $A_{\mathrm{CNOT}} = \exp(i\frac{\pi}{4}XX)$ 与 $A_{\mathrm{iSWAP}} = \exp(i\frac{\pi}{4}(XX+YY))$ 在魔术基下均对角化为 $D$，且 $D_{\mathrm{CNOT}}^2 = i\,\mathrm{diag}(1,1,-1,-1)$、$D_{\mathrm{iSWAP}}^2 = \mathrm{diag}(1,-1,-1,1)$（至多差常数因子 $i$，平方 $D^2 O_2^T D^2 O_2$ 均为实阵）。
+   
+   因此任意含 2 个 $\mathrm{CNOT}$ 或 2 个 $\mathrm{iSWAP}$ 的两比特线路 $U_B = O_1 D O_2 D O_3$ 均满足 $\operatorname{Tr}(m) = \operatorname{Tr}(D^2 O_2^T D^2 O_2) \in \mathbb{R}$，强迫 **$g_1(U) = \frac{1}{16}(\operatorname{Tr} m)^2 \in \mathbb{R}_{\ge 0}$**！而在整个 Weyl 室内，$g_1 = (\cos 2k_x\cos 2k_y\cos 2k_z + i\sin 2k_x\sin 2k_y\sin 2k_z)^2$，凡 $k_z \ne 0$ 必有 $\operatorname{Im}(g_1) \ne 0$ 或 $g_1 < 0$（如 $\sqrt{\mathrm{SWAP}}$ 的 $g_1 = -i/4$、$\mathrm{SWAP}$ 的 $g_1 = -1$，即便末尾乘以 $\mathrm{SWAP}$ 重标比特仍得 $g_1 = +i/4 \notin \mathbb{R}_{\ge 0}$）。故合成 $\mathrm{SWAP}$ 与 $\sqrt{\mathrm{SWAP}}$ 必须动用第 3 个双比特门（区别于 $B$ 门：2 个 $B$ 门可覆盖全部 $\mathrm{SU}(4)$）。反过来，硬件若原生支持连续 $R_{ZZ}(\theta)$ 或连续 $\mathrm{iSWAP}$ 族，编译器就能用更浅的脉冲直达底面与棱上的目标点。
 
-**零跳步验证：为什么 $\mathrm{iSWAP}$ 可以省掉 1 个 $\mathrm{CNOT}$，只用 2 个 $\mathrm{CNOT}$ 精确实现？**
+**完整验证：为什么 $\mathrm{iSWAP}$ 可以省掉 1 个 $\mathrm{CNOT}$，只用 2 个 $\mathrm{CNOT}$ 精确实现？**
 
 初看定义 $\mathrm{iSWAP} = \mathrm{diag}(1, i, i, 1)\,\mathrm{SWAP}$ 似乎要先做一个 $\mathrm{SWAP}$（3 个 $\mathrm{CNOT}$）再加一个 $\mathrm{CZ}$（1 个 $\mathrm{CNOT}$），总共要 4 个 $\mathrm{CNOT}$。但因为 $\mathrm{iSWAP}$ 落在 Weyl 室底面 $k_z=0$，下面这个仅含 **2 个 $\mathrm{CNOT}$** 的线路（矩阵从右向左作用，大端序 $|q_0 q_1\rangle$）与 $\mathrm{iSWAP}$ 逐矩阵元精确相等（连全局相位都完全为 $1$）：
 
@@ -323,7 +331,7 @@ $$
 
 四个基态的输出依次为 $|00\rangle, i|10\rangle, i|01\rangle, |11\rangle$，与 $\mathrm{iSWAP}$ 的定义矩阵分毫不差！相比朴素拼法，双比特门直接砍半。
 
-### 2.3 ZX 演算（ZX-calculus）直觉入门与 $T$-count 优化
+### 2.3 进阶选读：ZX 演算（ZX-calculus）直觉入门与 $T$-count 优化
 
 单比特 Euler 和两比特 KAK 都是“切局部小块”的手术刀。可当整条线路拉长到几百个门时，两个原本可以抵消或合并的门（尤其是容错时代最昂贵的非 Clifford **$T$ 门**），常常被一连串 $\mathrm{CNOT}$ 与 $H$ 门隔在相距很远的不同导线上。传统的局部模板匹配（peephole optimization）每次只盯紧邻的 2–3 个门，根本看不穿中间的跨线纠缠。
 
@@ -346,7 +354,7 @@ ZX 演算之所以能超越局部模板，靠的是四条既直观又完备的�
 3. **双代数律与拷贝律（Bialgebra & Copy）**：一对绿蜘蛛与一对红蜘蛛组成的完全二分 $2\times 2$ 格子可以坍缩成一条红连绿单桥，并且基态 $|0\rangle$ 撞上红蜘蛛会沿各输出腿复制；它们在图上刻画了 $X$ 基与 $Z$ 基的量子互补性，能大面积消除冗余 $\mathrm{CNOT}$ 回路。
 4. **身份消除与欧拉分解**：0 相位的 2 腿绿/红蜘蛛就是恒等导线可直接擦除；任意 $H$ 盒可拆成三颗 $\pi/2$ 蜘蛛的欧拉展开，方便把全图归约为统一的图态（graph-like diagram）。
 
-**零跳步小例：跨 $\mathrm{CNOT}$ 融合与相位传送，把 $T$-count 从 2 压成 0！**
+**完整小例：跨 $\mathrm{CNOT}$ 融合与相位传送，把 $T$-count 从 2 压成 0**
 
 先看一个最简洁的 5 门 2 比特电路（时间从左向右）：
 
@@ -354,7 +362,7 @@ $$
 \mathrm{CNOT}_{01} \longrightarrow (I \otimes T) \longrightarrow \mathrm{CNOT}_{10} \longrightarrow (I \otimes T) \longrightarrow \mathrm{CNOT}_{01}.
 $$
 
-在传统门电路视图里，两个 $T$ 门虽都在 $q_1$ 上，却被反向双比特门 $\mathrm{CNOT}_{10}$ 死死隔开，普通相邻门合并器完全束手无策。把它翻译成 ZX 图，奇迹瞬间发生：$\mathrm{CNOT}_{10}$ 的控制端落在 $q_1$ 上，而控制端在 ZX 图里正是一颗 **0 相位绿蜘蛛**！于是导线 $q_1$ 上排着“绿 $\pi/4$ — 绿 $0$ — 绿 $\pi/4$”三颗直接相连的同色蜘蛛——套用**蜘蛛融合律**，三者融成一颗相位为 $\pi/4 + 0 + \pi/4 = \pi/2$ 的绿蜘蛛，再拆回门电路就是免费 Clifford 门 $S$：
+在传统门电路视图里，两个 $T$ 门虽都在 $q_1$ 上，却被反向双比特门 $\mathrm{CNOT}_{10}$ 隔开，普通相邻门合并器完全束手无策。把它翻译成 ZX 图，关键化简立刻显现：$\mathrm{CNOT}_{10}$ 的控制端落在 $q_1$ 上，而控制端在 ZX 图里正是一颗 **0 相位绿蜘蛛**！于是导线 $q_1$ 上排着“绿 $\pi/4$ — 绿 $0$ — 绿 $\pi/4$”三颗直接相连的同色蜘蛛——套用**蜘蛛融合律**，三者融成一颗相位为 $\pi/4 + 0 + \pi/4 = \pi/2$ 的绿蜘蛛，再拆回门电路就是免费 Clifford 门 $S$：
 
 $$
 \mathrm{CNOT}_{01}\,(I\otimes T)\,\mathrm{CNOT}_{10}\,(I\otimes T)\,\mathrm{CNOT}_{01}
@@ -379,15 +387,17 @@ $$
 
 不仅昂贵的 $T$-count 从 **$2$ 骤降到 $0$**，连双比特 $\mathrm{CNOT}$ 数也顺带从 $4$ 个减到了 $2$ 个！
 
-**工程边界不可忽略**：ZX 图化简后得到的是带有丰富连边的一般图态张量，要把这张图无辅助比特地重新翻译回按时间切片执行的酉电路——称为**线路提取（circuit extraction）**——必须保证化简全程维持**广义流条件**（gflow 或 Pauli flow，衔接[第 17 章](17-computation-models.md)基于测量的量子计算）。此外，PyZX 等优化器在大力削减 $T$-count 时，线路提取阶段有时会轻微增加双比特 $\mathrm{CNOT}$ 门数：对容错编译器（第 12 节）这是巨额净赚，但在双比特门最贵的 NISQ 芯片上，则必须配合后续 KAK 与 CNOT 化简 pass 权衡取舍。
+**工程边界不可忽略**：ZX 图化简后得到的是带有丰富连边的一般图态张量，要把这张图无辅助比特地重新翻译回按时间切片执行的酉电路——称为**线路提取（circuit extraction）**——必须保证化简全程维持**广义流条件**（gflow 或 Pauli flow，衔接[第 17 章](17-computation-models.md)基于测量的量子计算）。
 
-### 2.4 离散容错门集的近似综合：Solovay–Kitaev 递归直觉与三次壁垒的打破
+此外，PyZX 等优化器在大力削减 $T$-count 时，线路提取阶段有时会轻微增加双比特 $\mathrm{CNOT}$ 门数：对容错编译器（第 12 节）这是巨额净赚，但在双比特门最贵的 NISQ 芯片上，则必须配合后续 KAK 与 CNOT 化简 pass 权衡取舍。
+
+### 2.4 进阶选读：离散容错门集的近似综合：Solovay–Kitaev 递归直觉与三次壁垒的打破
 
 在含噪中等规模硬件上，我们可以自由调节连续角 $R_z(\theta)$ 的软件相位。但进入容错量子计算（见[第 10 章](10-error-correction.md)）后，情况彻底变了：表面码等主流纠错码只能用有限的离散门集（最经典的是 Clifford+$T$，即 $\{H, S, T, \mathrm{CNOT}\}$）做容错逻辑操作，不再允许任意连续角。于是编译器面临一个新问题：给定任意目标单比特门 $U \in \mathrm{SU}(2)$ 和算符范数误差容限 $\varepsilon > 0$，如何用尽量短的离散门序列 $\tilde U$ 满足 $\|U - \tilde U\|_\infty \le \varepsilon$？
 
 先看看如果不动脑筋直接暴力搜索会发生什么。三维群流形 $\mathrm{SU}(2)$ 的体积随半径按三次方缩放，要铺满精度为 $\varepsilon$ 的网格（$\varepsilon$-网），至少需要 $\Theta(\varepsilon^{-3})$ 个格点；把目标精度从 $10^{-2}$ 压到 $10^{-6}$，暴力枚举的搜索规模要暴增 $10^{12}$ 倍，彻底撞上指数墙。
 
-**Solovay–Kitaev 定理**给出了一个震撼的回答：只要有限通用门集 $\mathcal G \subset \mathrm{SU}(2)$ 在群中稠密，就不必花多项式于 $1/\varepsilon$ 的门数，而只需**误差倒数的多对数级** $O(\log_2^c(1/\varepsilon))$ 个门，并且存在经典多项式时间算法把这串门构造出来。
+**Solovay–Kitaev 定理**给出了突破性的回答：只要有限通用门集 $\mathcal G \subset \mathrm{SU}(2)$ 在群中稠密，就不必花多项式于 $1/\varepsilon$ 的门数，而只需**误差倒数的多对数级** $O(\log_2^c(1/\varepsilon))$ 个门，并且存在经典多项式时间算法把这串门构造出来。
 
 为什么一个看似离散的拼图问题能做到指数级加速？我们可以用走路修正偏差的直觉来拆解 Dawson 与 Nielsen（2006）给出的经典递归构造：假设你想把一枚指针转到一个极细微的目标角度 $\varepsilon$，手里却只有步长约为 $\sqrt\varepsilon$ 的粗尺子。单靠直走永远凑不准，可如果你沿着两个不同方向走一个闭合小方框——先朝东走 $\sqrt\varepsilon$、再朝北走 $\sqrt\varepsilon$、再朝西退 $\sqrt\varepsilon$、再朝南退 $\sqrt\varepsilon$——在平坦平面上你会精准回到原点，但在**弯曲的球面**（非交换群 $\mathrm{SU}(2)$）上，这四步合起来会留下一个大小恰为 $(\sqrt\varepsilon)^2 = \varepsilon$ 的微小错位！
 
@@ -463,7 +473,17 @@ $$
 
 尽管 Kuperberg（2023）的通用定理已经极其接近对数下界，真实容错量子编译器（面向 Clifford+$T$ 门集）却很少直接跑 Solovay–Kitaev。原因很现实：在表面码等容错架构里，Clifford 门（$H, S, \mathrm{CNOT}$）可以通过横向操作或晶格手术低代价实现，真正烧掉绝大部分物理比特与时间的，是非 Clifford 的 **$T$ 门**（需要庞大的魔法态蒸馏或培育工厂，见[第 10 章](10-error-correction.md)与[第 11 章](11-resources-benchmarks.md)）。我们想要的不仅是对数级标度，而是**连常数因子都压到理论极致的最小 $T$ 门数**。
 
-针对特定门集 Clifford+$T$，代数数论提供了一把精确手术刀。Kliuchnikov、Maslov 与 Mosca（2013）证明：单比特 Clifford+$T$ 能精确拼出的所有矩阵，恰好等价于元素落在代数数环 $\mathbb{Z}[\frac{1}{\sqrt 2}, i]$ 上的酉矩阵，而且合成它所需的最小 $T$ 门数完全由矩阵元分母里 $2$ 的最小幂次决定。在此基础上，**Ross 与 Selinger**（2016，工具名 `gridsynth`）把“寻找最省 $T$ 门且与目标 $R_z(\theta)$ 距离不超过 $\varepsilon$ 的精确矩阵”转化成二维平面上的**格点枚举问题**（grid problem），再配合数论范数方程求解，在多项式期望时间内给出了无辅助比特、确定性酉逼近的最优 $T$ 门标度：
+针对特定门集 Clifford+$T$，代数数论提供了一把精确手术刀。Kliuchnikov、Maslov 与 Mosca（2013）证明：单比特 Clifford+$T$ 能精确拼出的所有矩阵，恰好等价于元素落在代数数环 $\mathbb{Z}[\frac{1}{\sqrt 2}, i]$ 上的酉矩阵，而且合成它所需的最小 $T$ 门数完全由矩阵元分母里 $\sqrt 2$ 的最小幂次（最小分母指数 $\mathrm{sde}$）决定。
+
+**为什么叫 `gridsynth`？看清 $\sqrt 2$ 分母与平面格点的直觉**：令 $\omega \equiv e^{i\pi/4} = \frac{1+i}{\sqrt 2}$（满足 $\omega^2 = i$），逐项写出单块 $HT$ 及其平方 $(HT)^2$：
+
+$$
+HT = \frac{1}{\sqrt 2}\begin{pmatrix} 1 & \omega \\ 1 & -\omega \end{pmatrix},
+\qquad
+(HT)^2 = \frac{1}{(\sqrt 2)^2}\begin{pmatrix} 1+\omega & \omega-\omega^2 \\ 1-\omega & \omega+\omega^2 \end{pmatrix}.
+$$
+
+由于 $H$ 带来分母 $\sqrt 2$、而连续 Clifford+$T$ 词可化为 $HT$ 与 $SHT$ 的交替串，每追加一个 $T$ 门块，矩阵元分母中的 $\sqrt 2$ 幂次 $\mathrm{sde}$ 至多加 $1$，从而把最小 $T$-count 精确锁死在 $\mathrm{sde}$ 上。在此基础上，**Ross 与 Selinger**（2016，工具名 `gridsynth`）把逼近 $R_z(\theta) = \mathrm{diag}(e^{-i\theta/2}, e^{i\theta/2})$ 等价转化为：在复平面单位圆盘边缘一条面积 $\sim \varepsilon^2$ 的极窄弯月形凸区域内，枚举环 $\mathbb{Z}[\omega]$ 上的格点 $u$（即 **grid problem**），并求解范数方程 $|u|^2 + |t|^2 = 1$ 以补出矩阵第二列 $t$。该算法在多项式期望时间内给出了无辅助比特、确定性酉逼近的最优 $T$ 门标度：
 
 $$
 \text{T-count}\big(R_z(\theta), \varepsilon\big) = 3\log_2\!\left(\frac{1}{\varepsilon}\right) + O\!\left(\log_2\log_2\frac{1}{\varepsilon}\right).
@@ -495,12 +515,10 @@ $$
 | 硬件路线与代表平台 | 典型原生单比特门 | 典型原生双比特纠缠门 | 关键编译与相位帧特征 |
 | :--- | :--- | :--- | :--- |
 | **超导（IBM Eagle，127 比特，前代历史对照）** | `RZ(θ)`、`SX`、`X` | `ECR`（回波交叉共振，方向固定） | `RZ` 为零时长虚拟 Z；`ECR` 需配合固定方向共轭与回波 |
-| **超导（IBM Heron r2，133–156 比特）** | `RZ(θ)`、`SX`、`X`；可选分数门 `RX(θ)`（任意实角） | `CZ`（可调耦合器，约 68 ns）；可选分数门 `RZZ(θ)`（严格限 $0 < \theta < \pi/2$） | 可调耦合器大幅压低静态 $ZZ$ 串扰；`CZ` 与 `RZ` 严格对易，帧传播极简；超出范围的 $R_{ZZ}$ 角须经局域门折算 |
+| **超导（IBM Heron r1–r3，133/156 比特；Nighthawk r1–r3，120/520 可编程比特）** | `RZ(θ)`、`SX`、`X`；可选分数门 `RX(θ)`（任意实角） | `CZ`（可调耦合器，约 68 ns）；可选分数门 `RZZ(θ)`（严格限 $0 < \theta < \pi/2$） | Heron r1 为 133 比特、r2/r3 为 156 比特（重六角格）；Nighthawk 升级为度-4 方格拓扑（r1/r2 为 120 比特，2026-11 发布 r3 为 520 可编程比特 [厂商公告]），大幅压低路由 SWAP；`CZ` 与 `RZ` 严格对易 |
 | **超导（Google Sycamore / Willow）** | `PhasedXZ`（微波包络加相位） | `CZ`、Sycamore / 连续 `iSWAP` 族 | 连续双比特门族适合用更浅深度合成模拟与 QAOA 线路 |
 | **离子阱（Quantinuum H 系列 / Helios）** | 任意轴赤道旋转 $U_{1q}(\theta, \phi)$ + 虚拟 Z | `ZZPhase(θ)`（任意角 $R_{ZZ}(\theta)$） | 借助离子搬运实现全连接，但搬运时长与再冷却是主要调度成本 |
-| **中性原子（QuEra / Atom Computing / Pasqal）** | 全局/局域拉曼旋转 + 虚拟 Z | Rydberg 阻塞原生 `CZ` 与原生 `CCZ` | 光镊可动态重排阵列几何减少 SWAP，但原子移动带来加热与丢失风险 |
-
-（演进注记：在拓扑演进上，IBM 在 2025 年底至 2026 年推出的 **Nighthawk** 处理器由前代重六边形晶格升级为高连通度的方格晶格架构，单比特平均连接度从约 $2.3$ 抬升至接近 $4$，大幅压低了二维网格算法的路由 SWAP 开销；但可调耦合器下 `CZ` / 分数门角度限制与虚拟 Z 帧传播原则一脉相承。）
+| **中性原子（QuEra / Atom Computing / Pasqal）** | 全局/局域拉曼旋转 + 虚拟 Z | Rydberg 阻塞原生 `CZ` 与原生 `CCZ` | 光镊可动态重排阵列几何减少 SWAP，但受 AOD 行列不可交叉与搬运加热约束 |
 
 几乎所有主流物理平台都在单比特原生门里把 `RZ(θ)` 做成了**零时长、无物理脉冲**的操作，也就是 McKay 等（2017）系统总结的**虚拟 Z 门（Virtual-Z）**。
 
@@ -641,7 +659,7 @@ $$
 
 完整程序 [routing_mapping.py](../codes/systems/routing_mapping.py) 在高位在左基序 $|q_0 q_1 q_2\rangle$ 下逐一检验了全部 8 个计算基态，并用随机归一化复振幅叠加态交叉核对（最大振幅差为 $0$），同时演示了遗漏输出重排时的反例。当然，如果这片电路的输出量子态还要原封不动地交给下一个写死物理引脚的硬件模块，那就还是老老实实需要那次恢复 SWAP。
 
-### 4.2 工业级路由引擎：SABRE 与 LightSABRE（附 4 比特零跳步手算例）
+### 4.2 工业级路由引擎：SABRE 与 LightSABRE（附 4 比特完整手算例）
 
 三比特直线可以手算，面对上百比特、上万个门的真实线路，寻找最优初始布局与最少 SWAP 序列都已被证明是 NP-hard 问题。现代主流编译器（如 Qiskit 默认路由引擎）广泛采用的是 Li、Ding 与 Xie（2019）提出的 **SABRE（SWAP-based Bidirectional Heuristic Search）** 及其新一代高性能实现 **LightSABRE**（Zou et al., 2024）。
 
@@ -683,7 +701,7 @@ $$
 
    经过一去一回，整条线路中频繁交互的比特群落自然就被“揉”到芯片上的紧邻区域里了。
 
-**零跳步手算例：4 比特线形耦合图上，前瞻项 $W$ 怎样打破平局？**
+**完整手算例：4 比特线形耦合图上，前瞻项 $W$ 怎样打破平局？**
 
 设芯片为 4 比特直线 $0 - 1 - 2 - 3$（物理边集 $E_G = \{(0,1), (1,2), (2,3)\}$，最短距离 $D[u][v] = |u - v|$），当前映射为恒等映射 $\pi(q_k) = k$，所有物理比特初始 $\mathrm{decay}(u) = 1.0$。假设前沿层与前瞻扩展集分别为
 
@@ -705,9 +723,11 @@ $$
 
 看看前瞻项的决定性作用：如果只盯着眼前的前沿层（$W = 0$），$\mathrm{SWAP}(0, 1)$ 与 $\mathrm{SWAP}(1, 2)$ 都把 $(q_0, q_2)$ 拉成相邻（得分同为 $1.00$），**彻底打平**！一旦打开前瞻权重 $W = 0.5$，编译器立刻发现 $\mathrm{SWAP}(1, 2)$ 在把 $q_2$ 推向 $q_0$ 的同时，顺手把位于位置 $1$ 的 $q_1$ 挪到了位置 $2$，正好让下一层的 $\mathrm{CNOT}(q_1, q_3)$ 一步就位（距离从 $2$ 变成 $1$）——最终 $2.00 < 2.25$，果断选择 $\mathrm{SWAP}(1, 2)$，整条线路少花一次完整 SWAP（省下 3 个 CNOT）！
 
-到了 2024–2026 年，Qiskit 1.2 至 2.x 将 SABRE 核心彻底用 Rust 重写并演进为 **LightSABRE**（Zou et al., 2024）：它用常数时间的**增量相对评分**取代全表重扫——以上例的 $\mathrm{SWAP}(1, 2)$ 为例，它只涉及物理位 $1, 2$ 上的逻辑比特 $q_1, q_2$，因此不需要重算与它们无关的门 $(q_0, q_3)$，只需算受影响边的距离差值 $\Delta D_F = (1 - 2) = -1$、$\Delta D_{\mathrm{ext}} = (1 - 2) = -1$，立刻得 $\Delta H = -1 + 0.5 \times (-1/2) = -1.25$，直接从 $H_0 = 3.25$ 一步减出 $2.00$！此外，LightSABRE 还加入了防止启发式局部卡死的**泄压阀**（release valve：若连续多步插 SWAP 后仍没有任何门可从 $F$ 中剥离，便暂时撤掉前瞻与衰减干扰，强制沿最短路把当前最近的一对门推到相邻），并支持多线程并行尝试几十上百组随机种子择优输出，在百万门级大电路上相较早期 Qiskit 0.20 版本的 SABRE 实现约两百倍编译提速，并在标准基准上进一步削减 SWAP 数。
+到了 2024–2026 年，Qiskit 1.2 至 2.x 将 SABRE 核心用 Rust 重写并演进为 **LightSABRE**（Zou et al., 2024）：它用常数时间的**增量相对评分**取代全表重扫——以上例 $\mathrm{SWAP}(1, 2)$ 为例，只需算受影响边的距离差值 $\Delta D_F = 1 - 2 = -1$、$\Delta D_{\mathrm{ext}} = 1 - 2 = -1$，立得 $\Delta H = -1 + 0.5\times(-1/2) = -1.25$，直接从 $H_0 = 3.25$ 一步减出 $2.00$。
 
-还需要牢记一点边界：SABRE 是带随机性的启发式算法，不能保证全局最少 SWAP；而且原生无权图距离 $D[u][v]$ 把每一条物理连边看得一样好，没有区分不同耦合器的双比特门错误率。因此在高优化级别下，工程编译器通常会先结合**噪声感知初始布局**（如 VF2++ 子图匹配或 Mapomatic），把边权替换成 $-\ln F_{\mathrm{edge}}$ 来优先挑选高质量比特子区。
+此外，LightSABRE 加入了防止启发式卡死的**泄压阀**（连续插 SWAP 无法剥离前沿层门时强制沿最短路推进），并支持多线程并行尝试多组随机种子择优输出，在百万门级大电路上较早期 Qiskit 0.20 提速约两百倍。
+
+还需要牢记两点边界：第一，SABRE 是启发式算法，高优化级别常结合 VF2++ / Mapomatic 等噪声感知布局（把边权换为 $-\ln F_{\mathrm{edge}}$）；第二，在**中性原子分区架构**（见[第 09 章 §4.3](09-hardware.md)）中，编译器不再插物理 `SWAP`，而是将原子编队通过声光偏转器（AOD）在存储区与纠缠区之间动态搬运——其路由优化目标转为在**AOD 行列同步平移、行不交叉且列不交叉**的矩形刚性约束下，最小化搬运步数与运动加热，配合全局 Rydberg 脉冲并行执行横向逻辑门。
 
 ### 4.3 资源约束、关键路径与串扰感知调度
 
@@ -793,7 +813,7 @@ $$
 这里各个变量的单位和符号必须交代得一清二楚：
 
 - 全书统一采用**计算基约定** $Z = |0\rangle\langle 0| - |1\rangle\langle 1|$，失谐 $\Delta = \omega_d - \omega_0$ 表示**驱动角频率减去比特跃迁角频率**，单位为 $\mathrm{rad/s}$ 或 $\mathrm{rad/ns}$；
-- $\Omega_x, \Omega_y$ 是有符号的同相与正交驱动角频率包络（单位同样是 $\mathrm{rad/s}$ 或 $\mathrm{rad/ns}$，不是 Hz 也不是伏特）；若沿用[Q3 第 6.2 节](quantum-mechanics/03-levels-control.md#62-彻底消除跨章失谐符号坑计算基与能量基的等价对照表)中的驱动场相位 $\phi$，则 $\Omega_x = \Omega\cos\phi$、$\Omega_y = -\Omega\sin\phi$（与第 3.1 节的 Bloch 赤道旋转轴方位角 $\varphi$ 满足严格反号关系 $\varphi = -\phi$）；
+- $\Omega_x, \Omega_y$ 是有符号的同相与正交驱动角频率包络（单位同样是 $\mathrm{rad/s}$ 或 $\mathrm{rad/ns}$，不是 Hz 也不是伏特）；若沿用[Q3 第 6.2 节](quantum-mechanics/03-levels-control.md#62-计算基与能量基的失谐符号等价对照表)中的驱动场相位 $\phi$，则 $\Omega_x = \Omega\cos\phi$、$\Omega_y = -\Omega\sin\phi$（与第 3.1 节的 Bloch 赤道旋转轴方位角 $\varphi$ 满足严格反号关系 $\varphi = -\phi$）；
 - **能量基文献换算提示**：不少原子物理与核磁共振教材采用能量基 $Z_E = |1\rangle\langle 1| - |0\rangle\langle 0| = -Z$ 与 $Y_E = -Y$，并把失谐记作 $\delta_E = \omega_0 - \omega_d = -\Delta$。因为 $\Delta Z = (-\delta_E)(-Z_E) = \delta_E Z_E$ 且 $(-\sin\phi)Y = (+\sin\phi)Y_E$，两套记法写出的每一个矩阵元完全相同。跨教材查阅公式时，先核对 $H_0$ 写的是 $-\frac{\hbar\omega_0}{2}Z$ 还是 $+\frac{\hbar\omega_0}{2}Z_E$，就不会抄错正负号。
 
 当驱动精准共振（$\Delta = 0$）且只开同相通道（$\Omega_y = 0$）时，持续时间为 $T$ 的常幅矩形脉冲生成
@@ -804,51 +824,18 @@ $$
 
 在这个最简理想模型里，旋转角 $\theta$ 恰等于脉冲包络的面积 $\int_0^T \Omega_x(t)\,dt$。
 
-### 5.2 手算算例：从拉比频率到门时长，以及失谐怎样歪掉旋转轴
+### 5.2 失谐误差算例：1 MHz 频率漂移如何歪掉 $50\ \mathrm{ns}$ $\pi$ 脉冲
 
-假设某超导量子比特的共振驱动拉比频率测得为 $\Omega_x / (2\pi) = 10\ \mathrm{MHz}$，换算成角频率就是 $\Omega_x = 2\pi \times 10^7\ \mathrm{rad/s} = 2\pi \times 0.01\ \mathrm{rad/ns}$。要实现理想翻转门 $X_\pi = R_x(\pi)$，脉冲面积必须等于 $\pi$，故所需矩形脉冲时长为
-
-$$
-T_\pi = \frac{\pi}{\Omega_x} = \frac{\pi}{2\pi \times 10^7\ \mathrm{s}^{-1}} = 50\ \mathrm{ns},
-$$
-
-相应的 $X_{\pi/2} = R_x(\pi/2)$ 门时长为 $25\ \mathrm{ns}$。
-
-现在看看如果比特频率漂移了 $1\ \mathrm{MHz}$（即失谐 $\Delta/(2\pi) = 1\ \mathrm{MHz}$，$\Delta/\Omega_x = 0.1$），却依然沿用共振校准的 $T = 50\ \mathrm{ns}$ 矩形脉冲，会发生什么。
-
-定义有效拉比角频率 $\Omega_{\mathrm{eff}} = \sqrt{\Omega_x^2 + \Delta^2}$，以及单位方向向量 $\hat n = (\Omega_x/\Omega_{\mathrm{eff}},\, 0,\, \Delta/\Omega_{\mathrm{eff}})$。利用单位轴 Pauli 算符满足 $(\hat n \cdot \vec\sigma)^2 = I$，把矩阵指数精确展开：
+直接引用[Q3 第 6.4 节](quantum-mechanics/03-levels-control.md)推导的共振与失谐 Rabi 公式：对拉比频率 $\Omega_x/(2\pi) = 10\ \mathrm{MHz}$，共振 $X_\pi$ 矩形脉冲时长 $T_\pi = \pi/\Omega_x = 50\ \mathrm{ns}$（$X_{\pi/2}$ 为 $25\ \mathrm{ns}$）。若芯片频率漂移 $\Delta/(2\pi) = 1\ \mathrm{MHz}$（$\Delta/\Omega_x = 0.1$），则 $\Omega_{\mathrm{eff}}/\Omega_x = \sqrt{1 + 0.1^2} = \sqrt{1.01} \approx 1.004988$，沿用 $T = 50\ \mathrm{ns}$ 脉冲时，由 $|0\rangle$ 翻到 $|1\rangle$ 的布居数转移概率跌至
 
 $$
-\begin{aligned}
-U(T)
-&= \exp\!\left[-i\frac{\Omega_{\mathrm{eff}} T}{2}(\hat n \cdot \vec\sigma)\right]
- = \cos\!\left(\frac{\Omega_{\mathrm{eff}} T}{2}\right) I
- - i\sin\!\left(\frac{\Omega_{\mathrm{eff}} T}{2}\right) \frac{\Delta Z + \Omega_x X}{\Omega_{\mathrm{eff}}} \\
-&= \begin{bmatrix}
-\cos(\Omega_{\mathrm{eff}} T/2) - i\frac{\Delta}{\Omega_{\mathrm{eff}}}\sin(\Omega_{\mathrm{eff}} T/2) &
--i\frac{\Omega_x}{\Omega_{\mathrm{eff}}}\sin(\Omega_{\mathrm{eff}} T/2) \\
--i\frac{\Omega_x}{\Omega_{\mathrm{eff}}}\sin(\Omega_{\mathrm{eff}} T/2) &
-\cos(\Omega_{\mathrm{eff}} T/2) + i\frac{\Delta}{\Omega_{\mathrm{eff}}}\sin(\Omega_{\mathrm{eff}} T/2)
-\end{bmatrix}.
-\end{aligned}
-$$
-
-从初态 $|0\rangle$ 出发，演化后跃迁到 $|1\rangle$ 的复振幅正是左下角矩阵元 $\langle 1|U(T)|0\rangle = -i(\Omega_x/\Omega_{\mathrm{eff}})\sin(\Omega_{\mathrm{eff}} T/2)$。对其取模平方，得到跃迁概率：
-
-$$
-P_1(T) = \big|\langle 1|U(T)|0\rangle\big|^2
-= \frac{\Omega_x^2}{\Omega_x^2 + \Delta^2}\sin^2\!\left(\frac{\sqrt{\Omega_x^2 + \Delta^2}\, T}{2}\right).
-$$
-
-把 $\Delta/\Omega_x = 0.1$ 与 $\Omega_x T = \pi$ 代入（注意 $\Omega_{\mathrm{eff}}/\Omega_x = \sqrt{1 + 0.1^2} = \sqrt{1.01} \approx 1.004988$）：
-
-$$
-P_1(T) = \frac{1}{1.01}\sin^2\!\left(\frac{\pi\sqrt{1.01}}{2}\right)
-\approx 0.990099 \times (0.999969)^2
+P_1(T)
+= \frac{\Omega_x^2}{\Omega_x^2 + \Delta^2}\sin^2\!\left(\frac{\Omega_{\mathrm{eff}} T}{2}\right)
+= \frac{1}{1.01}\sin^2\!\left(\frac{\pi\sqrt{1.01}}{2}\right)
 \approx 0.99004.
 $$
 
-单看输入 $|0\rangle$ 的布居数转移，就已经偏离理想值 $1$ 约 $0.996\%$！同时也能看到为什么幅度再准都救不了频率漂移：只要 $\Delta \ne 0$，旋转轴就会从 $X$ 轴往 $Z$ 轴倾歪，不管怎么延长脉冲时间，前置系数 $\Omega_x^2 / (\Omega_x^2 + \Delta^2) \approx 0.9901$ 始终锁死了最大翻转概率的天花板。另外要分清口径：上面的 $P_1(T)$ 只是针对单一初态 $|0\rangle$ 的态转移概率，不能等同于对整个 Bloch 球均匀平均后的平均门保真度 $F_{\mathrm{avg}}$。
+仅单初态转移就偏离理想值约 $0.996\%$，且因旋转轴向 $Z$ 轴倾歪，最大翻转概率被锁死在 $1/1.01 \approx 0.9901$（注：$P_1(T)$ 是单初态转移概率，不能等同于全 Bloch 球平均门保真度 $F_{\mathrm{avg}}$）。要同时对付频率漂移与弱非谐 $|2\rangle$ 泄漏，必须引入下一节的 DRAG、动态解耦与最优控制。
 
 ---
 
@@ -1079,11 +1066,15 @@ $$
 
   剩余误差跌到仅 $7.8 \times 10^{-7}$——**单靠把其中两发 $X$ 脉冲的软件相位旋转 $90^\circ$ 改成 $Y$，脉冲误差就被压低了近四个数量级**！
 
-最后记住一条重要的实验边界：Ezzell 等（2023）在 IBM 超导处理器上系统实测了 10 大类共 60 种动态解耦序列，发现因为真实微波脉冲有有限脉宽（几十纳秒）、残留泄漏与控制串扰，**绝不是往空闲期里塞越多 $\pi$ 脉冲越好**。脉冲过密时，脉冲自身累积的误差会反超节省下来的低频退相位；合理拉宽间距的 XY4 或通用鲁棒序列（UR）往往比高度嵌套的复杂序列更稳健。
+最后记住一条重要的实验边界：Ezzell 等（2023）在 IBM 超导处理器上系统实测了 10 大类共 60 种动态解耦序列，发现因为真实微波脉冲有有限脉宽（几十纳秒）、残留泄漏与控制串扰，**并不是往空闲期里塞越多 $\pi$ 脉冲越好**。脉冲过密时，脉冲自身累积的误差会反超节省下来的低频退相位；合理拉宽间距的 XY4 或通用鲁棒序列（UR）往往比高度嵌套的复杂序列更稳健。
+
+**编译器里的免费抗相干武器：Pauli 随机编译（RC）Pass**
+
+除了在空闲窗口插 DD 脉冲，工业编译器（如 Qiskit `EstimatorV2` 后端与 True-Q）还在第 6–7 编译阶段标配了 **Pauli Twirling / 随机编译（Randomized Compiling, RC）Pass**（Wallman & Emerson, *PRA* 2016）：在每层双比特硬门（如 `CZ`/`CNOT`）前后插入随机单比特 Pauli 层及其共轭补偿，并将它们直接合并进相邻单比特旋转层——**零额外电路深度**，却能把双比特门相干过旋转与寄生 $ZZ$ 串扰平均打散为对角随机 Pauli 噪声（防止误差按深度 $m^2$ 相干累积），同时与 TREX、PEC、ZNE 等缓解手段无缝协同（完整数学推导见[第 11 章 §4.1](11-resources-benchmarks.md)）。
 
 ---
 
-## 7. 数值最优控制：二能级与三能级 GRAPE 及泄漏子空间验收
+## 7. 进阶选读：数值最优控制：二能级与三能级 GRAPE 及泄漏子空间验收
 
 DRAG 只需要调两三个物理参数，最适合单比特门；可一旦面对短时长双比特纠缠门、非标准耦合哈密顿量，或者要求同时抵抗失谐与高能级泄漏，靠纸笔猜解析包络就不够用了。此时就需要**数值最优控制**——其中最经典、应用最广的算法就是 Khaneja 等（2005）提出的 **GRAPE（Gradient Ascent Pulse Engineering，梯度上升脉冲工程）**。
 
@@ -1155,7 +1146,7 @@ $$
 
 注意分母必须从二维的 $2$ 改成三维的 $3$。运行配套脚本[三能级 GRAPE 优化脚本](../codes/systems/sdk73/grape_three.py)（固定种子 `73014`，受界 L-BFGS-B），经过 16 次迭代将三维误差压至 $1 - g_3 \approx 9.57 \times 10^{-10}$（独立 SciPy 整矩阵指数连乘核验最大差 $8.10 \times 10^{-14}$）。
 
-**如何公正验收带有泄漏风险的三能级门？零跳步推导非酉计算子空间平均目标重叠**
+**如何公正验收带有泄漏风险的三能级门？推导非酉计算子空间平均目标重叠**
 
 虽然完整的三维演化矩阵 $U_3$ 始终是酉矩阵，我们真正关心的往往是“把计算子空间 $\{|0\rangle, |1\rangle\}$ 里的任意纯态 $|\psi\rangle$ 送进去，输出态落在目标计算态 $V|\psi\rangle$ 上的概率有多大”。把 $U_3$ 截断到左上角 $2 \times 2$ 块，记为
 
@@ -1220,36 +1211,15 @@ $$
 
 ## 8. 门校准、表征工具与门集层析（GST）的定位
 
-就算理论波形设计得无懈可击，芯片上的物理参数每天都在缓慢漂移：谐振腔频率会因两能级缺陷（TLS）跳变，微波线衰减会随温漂微调，单独校准好的门在并行运行时也会因串扰偏离原位。因此，物理层需要一整套**校准与表征**流程持续监测并修正控制参数。
+就算理论波形设计得严丝合缝，芯片上的物理参数每天都在缓慢漂移：谐振腔频率会因两能级缺陷（TLS）跳变，微波线衰减会随温漂微调，单独校准好的门在并行运行时也会因串扰偏离原位。因此，物理层需要持续运转的**校准与表征**流程。
 
-### 8.1 从 Rabi、Ramsey 到自动校准依赖图
+### 8.1 编译器如何消费带时间戳的校准快照
 
-在两能级近似下，单比特底层校准围绕四类基础物理实验展开（详细物理推导见[Q3 第 6–7 节](quantum-mechanics/03-levels-control.md#6-从实验室微波驱动到-rabi-振荡)）：
-
-- **Rabi 振荡实验**：固定时长扫驱动幅度（或固定幅度扫时长），观察激发态占据概率随脉冲面积振荡，用来锁定 $X_\pi$ 与 $X_{\pi/2}$ 脉冲幅度；
-- **Ramsey 干涉实验**：在两发 $\pi/2$ 脉冲之间留出自由演化时间，通过干涉条纹频率精准测出失谐 $\Delta$，并由包络衰减估计 $T_2^*$；
-- **自旋回波实验**：在自由演化中点插入 $\pi$ 脉冲抵消准静态失谐，测出 $T_{2,\mathrm{echo}}$；
-- **DRAG 参数扫描**：利用放大相干误差的脉冲序列（如 AllXY 或重复 $X_\pi - Y_{\pi/2}$ 链）直接扫出实机最优的 $\beta$ 与残余失谐补偿。
-
-真实芯片上的校准远不是把“理论角度”一次性换成“DAC 电压”就完事了，各个参数之间存在严格的先后依赖关系——一旦上游频率微调，下游的读出判决阈值、单比特幅度、双比特门与中途测量都可能连带失效：
-
-```mermaid
-flowchart TD
-  A["时钟同步、线性响应与电延迟"] --> B["量子比特与读出腔频率"]
-  B --> C["读出幅度、积分核与判决阈值"]
-  B --> D["单比特幅度、失谐、相位与 DRAG"]
-  C --> E["两比特门与中途测量校准"]
-  D --> E
-  E --> F["同时门、串扰与泄漏测试"]
-  F --> G["门层与应用级回归测试"]
-  G -->|"漂移或回归异常"| B
-```
-
-正因如此，工程级校准数据库必须保存带时间戳的快照、适用物理比特编号、依赖图（DAG）和不确定度，而不是只留一张孤零零的“最新平均保真度表”（自动化校准依赖图与原子晋级见[第 19 章第 6 节](19-engineering-architecture.md#6-制造良率自动校准依赖图与变更控制)）。
+底层的单比特物理体检（$T_1$ 反转恢复、Rabi 振荡、Ramsey 干涉、Hahn 回波与 DRAG 扫描）见[Q3 第 6–7 节](quantum-mechanics/03-levels-control.md#6-从实验室微波驱动到-rabi-振荡)，上游频率变更沿校准依赖有向无环图（DAG）触发回归与快照原子晋级的系统架构见[第 19 章第 6.2 节](19-engineering-architecture.md#6-制造良率自动校准依赖图与变更控制)。站在编译器视角，脉冲绑定与噪声感知路由依赖的是一份**带时间戳、适用物理比特编号、拟合不确定度与依赖版本号的校准快照**，而非一张孤立的“历史平均保真度表”。
 
 日常讨论中还要分清四个容易混用的动作：**校准**（calibration）主动改写控制参数；**表征**（characterization）估计未知态、噪声或门过程模型；**验证**（verification）检查某个预先规定的性质是否达标；**基准测试**（benchmarking）用统一工作负载横向比较系统能力。它们常常共用同一批测量数据，回答的问题却截然不同。
 
-顺带提一条截至 2026 年的软件接口变迁：看懂 OpenPulse 波形语义并不意味着云端处理器默认对普通用户开放底层脉冲编程权限。例如 Qiskit 2.0（2025 年 3 月底发布、4 月初正式公告）移除了历史 `qiskit.pulse` 模块，Qiskit Experiments 0.9 也随之移除了脉冲校准实验类；主流云平台逐步把底层脉冲校准留在后端固件内部，向上开放高度校准的原生门集与可选分数门（例如 IBM Heron 的任意角 `RX(θ)` 与限角 $0 < \theta < \pi/2$ 的 `RZZ(θ)`）。因此查阅早期脉冲校准教程时，务必将物理原理与历史软件接口版本区分开。
+顺带提一条截至 2026 年的软件接口变迁：看懂 OpenPulse 波形语义并不意味着云端处理器默认开放底层脉冲编程权限。例如 Qiskit 2.0（2025 年 3 月底发布）移除了历史 `qiskit.pulse` 模块，Qiskit Experiments 0.9 也随之移除脉冲校准实验类。主流云平台逐步把底层脉冲校准封装进后端固件，向上提供高度校准的原生门集与可选分数门（如 IBM Heron/Nighthawk 的 `RX(θ)` 与限角 $0 < \theta < \pi/2$ 的 `RZZ(θ)`），查阅早期教程时须区分物理原理与软件接口版本。
 
 ### 8.2 表征工具定位与路由速查（QST / QPT / RB / GST）
 
@@ -1331,7 +1301,9 @@ $$
 单比特混淆矩阵只有 $2 \times 2$，到了 $n$ 比特系统，完整混淆矩阵尺寸高达 $2^n \times 2^n$——仅仅 $n = 20$ 比特就需要存储超过 $10^{12}$ 个矩阵元，既标定不出来也存不进内存。2021 年以来，百比特级芯片上的读出缓解主要走两条可扩展路线：
 
 1. **M3（Matrix-free Measurement Mitigation，Nation et al., 2021）**：即使有 100 个比特，一次实验跑 $N_{\mathrm{shots}} = 10^4$ 次采样，实际观测到的非零比特串集合 $\mathcal{S}$ 顶多只有 $|\mathcal{S}| \le 10^4 \ll 2^{100}$ 个！M3 只在这片极稀疏的约化子空间 $\mathcal{S}$ 上，用无矩阵（matrix-free）Krylov 迭代法（如 BiCGSTAB）求解张量积或局域相关读出方程，彻底绕开了 $2^n$ 内存墙。
-2. **TREX（Twirled Readout Error Extinction，van den Berg et al., 2022）**：如果你的目标不是还原整张概率直方图，而是估计 Pauli 可观测量期望值 $\langle O \rangle$（比如 VQE 能量），TREX 提供了一种异常优雅的无偏方案——在最终测量前，对每个比特独立随机施加 $I$ 或 $X$ 门（测量前 Pauli 随机化），并在经典后处理里把被翻转比特的读数再翻回来。这番随机化把任意复杂、不对称甚至带相关的读出信道严格对角化为一个简单的乘性衰减系数 $\langle O \rangle_{\mathrm{noisy}} = \gamma_O \langle O \rangle_{\mathrm{ideal}}$，只需一次低成本标定测出 $\gamma_O$ 相除即可无偏恢复期望值（目前已成为 Qiskit `EstimatorV2` 的标准一档缓解选项）。
+2. **TREX（Twirled Readout Error Extinction，van den Berg et al., 2022）**：如果你的目标不是还原整张概率直方图，而是估计 Pauli 可观测量期望值 $\langle O \rangle$（比如 VQE 能量），TREX 提供了简洁的无偏方案——在最终测量前对每个比特独立随机施加 $I$ 或 $X$ 门，并在经典后处理里把被翻转比特的读数再翻回来。
+   
+   这番随机化把任意复杂、不对称甚至带相关的读出信道严格对角化为一个简单的乘性衰减系数 $\langle O \rangle_{\mathrm{noisy}} = \gamma_O \langle O \rangle_{\mathrm{ideal}}$，只需一次低成本标定测出 $\gamma_O$ 相除即可无偏恢复期望值（已成为 Qiskit `EstimatorV2` 的标准缓解选项）。
 
 最后强调一条物理边界：混淆矩阵和 M3/TREX 都只处理**经典读出判决**。一旦涉及中途测量，我们还必须评估测量的量子非破坏性（QND）、测量诱导的高能级泄漏、对旁观比特的串扰、谐振腔光子清空死时间与主动复位质量（各平台完整物理读出链见[第 19 章第 2–3 节](19-engineering-architecture.md#2-五类平台的控制链)）。
 
@@ -1390,6 +1362,7 @@ $$
 进入容错量子纠错（见[第 10 章](10-error-correction.md)）后，实时控制链还要接上一台流式解码器。每一轮稳定子测量都会吐出原始模拟读出，经判决转化为**探测事件（detector events，即相邻两轮检查结果发生变化、标示疑似出错时空位置的差分信号）**，送入流式解码器，进而更新经典内存里的 **Pauli 帧（Pauli frame，软件跟踪的待修正 Pauli 算符）** 或触发非 Clifford 逻辑门的条件分支：
 
 ```mermaid
+%% title: 实时纠错从模拟读出到流式解码与条件反馈的路径
 flowchart LR
   A["模拟读出信号"] --> B["0 / 1 / 丢失判决"]
   B --> C["提取探测事件"]
@@ -1400,13 +1373,15 @@ flowchart LR
   F --> G
 ```
 
-从编译器与控制器接口视角看，实时解码器必须同时满足**稳态吞吐不低于纠错症状产生率**（否则非 Clifford 逻辑门反应时间发生 Terhal 指数积压）以及**端到端响应时延及其高分位尾延迟低于逻辑等待预算**（不能靠攒大批量数据或偷看过多未来轮次来伪装高吞吐）两项硬约束——关于积压增长率推导、主流解码器基准对照与 FIFO 排队违约分析，详见[第 11 章第 7.3 节](11-resources-benchmarks.md)与[第 19 章](19-engineering-architecture.md)。真实硬件实证亦印证了通信与解码耦合的挑战：2026 年发表在 *Nature Communications* 上的一项超导 8 比特稳定性实时纠错实验，在 9 个测量轮次后测得端到端完整响应为 $9.6\,\mu\mathrm{s}$（其中解码耗时 $6.5\,\mu\mathrm{s}$、通信与控制耗时 $3.1\,\mu\mathrm{s}$），证明微秒级全链路闭环已可落地，但面向大码距实用容错仍须同步压缩传输与解码尾延迟。
+从编译器与控制器接口视角看，实时解码器必须同时满足两项硬约束：**稳态吞吐不低于纠错症状产生率**（防止非 Clifford 门反应时间发生 Terhal 指数积压），以及**端到端响应时延及其高分位尾延迟低于逻辑等待预算**（详见[第 11 章 §7.3](11-resources-benchmarks.md)与[第 19 章 §8](19-engineering-architecture.md)）。
+
+真实硬件实证亦印证了通信与解码耦合的挑战：L. Caune、L. Skorić、N. S. Blunt 等（Riverlane & Rigetti，*Nature Communications* 2026-06 [同行评审]）在超导 8 比特稳定性实时纠错实验中，9 个测量轮次后测得端到端完整响应为 $9.6\,\mu\mathrm{s}$（其中解码耗时 $6.5\,\mu\mathrm{s}$、通信与控制耗时 $3.1\,\mu\mathrm{s}$），证明微秒级全链路闭环已可落地，但面向大码距实用容错仍须同步压缩传输与解码尾延迟。
 
 ---
 
-## 11. 跨芯片编译入口：线路切割（Circuit Cutting）与准概率重构
+## 11. 进阶选读：跨芯片编译入口：线路切割（Circuit Cutting）与准概率重构
 
-<span id="11-跨芯片编译入口电路切割circuit-cutting与准概率重构"></span>如果一条算法电路需要 40 个量子比特，或者要求两个相距很远的子模块做少数几次跨区双比特门，而手头每块高保真芯片子区只有 20 个比特，编译器还能怎么办？除了在硬件上铺设跨芯片光子/微波量子链路（见[第 19 章第 7 节](19-engineering-architecture.md#7-模块化互连与线路切割)），编译软件还提供了一条“用经典采样时间换物理芯片宽度”的纯软件入口——**线路切割**（亦称电路切割，Circuit Cutting / Circuit Knitting）。本节为全书线路切割算法的统一主讲源。
+<span id="11-跨芯片编译入口线路切割circuit-cutting与准概率重构"></span><span id="11-跨芯片编译入口电路切割circuit-cutting与准概率重构"></span>如果一条算法电路需要 40 个量子比特，或者要求两个相距很远的子模块做少数几次跨区双比特门，而手头每块高保真芯片子区只有 20 个比特，编译器还能怎么办？除了在硬件上铺设跨芯片光子/微波量子链路（见[第 19 章第 7 节](19-engineering-architecture.md#7-模块化互连与线路切割)），编译软件还提供了一条“用经典采样时间换物理芯片宽度”的纯软件入口——**线路切割**（亦称电路切割，Circuit Cutting / Circuit Knitting）。本节为全书线路切割算法的统一主讲源。
 
 ### 11.1 准概率分解与采样开销 $\gamma^{2k}$
 
@@ -1444,32 +1419,32 @@ $$
 - **正确保序重构**：$1.5 \times 0.4 + (-0.5) \times (-0.2) = 0.6 + 0.1 = \mathbf{0.7}$；
 - **错序拼接（仅交换结果顺序，未同步交换系数）**：$1.5 \times (-0.2) + (-0.5) \times 0.4 = -0.3 - 0.2 = \mathbf{-0.5}$。
 
-两个数都规规矩矩落在合法物理区间 $[-1, 1]$ 内，单纯检查“结果没越界”根本抓不到这个错！因此在工程流水线中，每个子实验的分区标签、作业 ID、可观测量与系数对应关系必须全程绑定，绝不能按任务完成先后盲目拼接（源码阅读练习与复算脚本见[软件实践附录 §8.7](appendices/software-practice.md#87-线路切割采样权重与重构顺序必须同时保留)）。
+两个数都规规矩矩落在合法物理区间 $[-1, 1]$ 内，单纯检查“结果没越界”根本抓不到这个错！因此在工程流水线中，每个子实验的分区标签、作业 ID、可观测量与系数对应关系必须全程绑定，绝不能按任务完成先后盲目拼接（源码阅读练习与复算脚本见[软件实践附录 §8.7](appendices/software-practice.md#87-线路切割异步作业返回乱序陷阱与权重绑定)）。
 
 定位边界也很明确：线路切割以**指数级采样开销**换取更小的单芯片宽度与更浅的物理深度，特别适合分子碎片分区或弱连接图 QAOA 这类只有少量跨区弱耦合切口的近期问题；它不能替代真正的跨模块物理纠缠链路去支撑任意大规模容错计算。
 
 ---
 
-## 12. 容错逻辑编译入口：Litinski Clifford 消除、Pauli 乘积测量与 NISQ/FTQC 编译分界
+## 12. 进阶选读：容错逻辑编译入口：Litinski Clifford 消除、Pauli 乘积测量与 NISQ/FTQC 编译分界
 
-前面十一节主要盯着“物理门、物理连线与物理脉冲”展开；一旦跨过纠错阈值、进入逻辑比特时代（衔接[第 10 章](10-error-correction.md)与[第 11 章](11-resources-benchmarks.md)），编译器面临的游戏规则会发生一次彻底翻转——**不再围绕物理 CNOT 和 SWAP 转，而是围绕魔法态消耗、晶格手术路由与 Pauli 乘积测量（PPM）转**！这一节带你一步推开容错逻辑编译的大门。
+前面十一节主要盯着“物理门、物理连线与物理脉冲”展开；一旦跨过纠错阈值、进入逻辑比特时代（衔接[第 10 章](10-error-correction.md)与[第 11 章](11-resources-benchmarks.md)），编译器面临的游戏规则会发生一次翻转——**不再围绕物理 CNOT 和 SWAP 转，而是围绕魔法态消耗、晶格手术路由（或中性原子横向门调度）与 Pauli 乘积测量（PPM）转**。这一节带你推开容错逻辑编译的大门。
 
-### 12.1 NISQ 物理编译 vs FTQC 逻辑编译：为什么重心彻底翻转？
+### 12.1 NISQ 物理编译 vs FTQC 逻辑编译：优化重心的转变
 
 把两代编译器的核心对象、代价函数与瓶颈摆在同一张表上，就能立刻看清为什么不能拿 NISQ 编译器直接套用到表面码容错机上：
 
-| 对比维度 | NISQ 物理编译（第 1–9 节） | FTQC 逻辑编译（表面码 / qLDPC 架构） |
+| 对比维度 | NISQ 物理编译（第 1–9 节） | FTQC 逻辑编译（表面码 / qLDPC / 中性原子横向架构） |
 | :--- | :--- | :--- |
-| **昂贵操作与代价重心** | 双比特物理门（`CNOT`/`CZ`/`iSWAP`）最贵；任意连续 `RZ(θ)` 几乎零成本 | 非 Clifford 门（$T$ / Toffoli / 任意角合成的 $T$ 串）最贵，占绝大部分魔法态工厂时空体积；Clifford 门在软件帧里几乎“免费” |
-| **比特路由方式** | 沿耦合图插入物理 `SWAP`（每步 3 CNOT）或粒子搬运 | 表面码补丁间开辟**晶格手术（lattice surgery）路由走廊**，防止多条逻辑测量路径在二维芯片平面交叉冲突 |
+| **昂贵操作与代价重心** | 双比特物理门（`CNOT`/`CZ`/`iSWAP`）最贵；任意连续 `RZ(θ)` 几乎零成本 | 非 Clifford 门（$T$ / Toffoli / 任意角合成的 $T$ 串）最贵，占绝大部分魔法态工厂时空体积；Clifford 门在软件帧或横向操作中成本极低 |
+| **比特路由方式** | 沿耦合图插入物理 `SWAP`（每步 3 CNOT）或 AOD 分区搬运 | 表面码补丁间开辟**晶格手术路由走廊**防交叉；中性原子平台借 AOD 编队做块间**横向门 + 跨块关联解码（AFT）** 以省去 $O(d)$ 轮等待（[第 10 章 §7.3](10-error-correction.md)） |
 | **核心优化目标** | 压低物理双比特门数、缩短电路深度、规避强串扰并发 | 压低 $T$-count / $T$-depth（如 ZX 演算 + `gridsynth`）、最小化逻辑**时空体积** $V_{\mathrm{ST}} = (\text{物理比特数}) \times (\text{逻辑周期数})$ |
-| **底层执行原语** | 原生单/双比特门脉冲、DRAG 整形、动态解耦 | 逻辑态初始化、**多体 Pauli 乘积测量（PPM）**、魔法态注入与缓冲池调度 |
+| **底层执行原语** | 原生单/双比特门脉冲、DRAG 整形、动态解耦与 RC Pass | 逻辑态初始化、**多体 Pauli 乘积测量（PPM）**、块间横向门与魔法态缓冲池调度 |
 | **反馈与解码瓶颈** | 微秒级单比特动态电路反馈延迟（6 项预算） | 实时流式解码吞吐与非 Clifford 门条件分支的**反应时间** $\tau_{\mathrm{react}}$（决定逻辑时钟上限） |
-| **前沿编译新难题** | 连续分数门合成与漂移感知重编译 | 高编码率 **qLDPC 码**的比特复用在一个码块内，缺少独立补丁边界，如何在不破坏距离前提下高效编译定向逻辑门与可寻址 PPM 仍是 2025–2026 研究热点 |
+| **前沿编译新难题** | 连续分数门合成与漂移感知重编译 | 高编码率 **qLDPC 码**的比特复用在一个码块内，如何在不破坏距离前提下高效编译定向逻辑门与可寻址 PPM 仍是 2025–2026 研究热点 |
 
-### 12.2 零跳步手算：Litinski Clifford 消除与 Pauli 乘积测量（PPM）
+### 12.2 Litinski Clifford 消除与 Pauli 乘积测量（PPM）
 
-在表面码晶格手术架构里，执行单个逻辑 `CNOT` 也要消耗 $2d$ 个纠错周期；如果先老老实实执行成百上千个 Clifford 门，岂不是白白浪费大量时间？Litinski（2019, *Quantum* 3, 128, *A Game of Surface Codes*）给出了一招极其凌厉的编译器变换——**把所有 Clifford 门一路向右（朝线路末尾）推过全部 $T$ 门，最后整块吸收进末端的测量基里，让电路里的 Clifford 门彻底“凭空消失”**！
+在表面码晶格手术架构里，执行单个逻辑 `CNOT` 也要消耗 $2d$ 个纠错周期；如果先老老实实执行成百上千个 Clifford 门，岂不是白白浪费大量时间？Litinski（2019, *Quantum* 3, 128, *A Game of Surface Codes*）给出了编译器经典变换——**把所有 Clifford 门一路向右（朝线路末尾）推过全部 $T$ 门，最后整块吸收进末端的测量基里，使电路中的 Clifford 门全部消去**。
 
 它的数学心脏只有一条共轭恒等式。把任意 $n$ 比特 Pauli 串 $P \in \{I, X, Y, Z\}^{\otimes n}$ 生成的旋转门记作
 
@@ -1492,7 +1467,7 @@ $$
 
 而当 $C$ 一路被推到电路最末尾、撞上测量可观测量 $M$（比如计算基测量 $Z_j$）时，在末态 $C|\phi\rangle$ 上测 $M$ 的期望与结果分布完全等价于**不执行 $C$，直接在 $|\phi\rangle$ 上测量变换后的多体 Pauli 算符 $M' = C^\dagger M C$**——这正是晶格手术原生支持的**Pauli 乘积测量（Pauli Product Measurement, PPM）**！
 
-**零跳步 2 比特手算例：把 `T`–`CNOT`–`H` 线路彻底化为纯 $\pi/8$ 多体旋转与 PPM**
+**2 比特手算例：把 `T`–`CNOT`–`H` 线路化为纯 $\pi/8$ 多体旋转与 PPM**
 
 考虑如下 2 比特 Clifford+$T$ 线路（时间顺序从左到右，大端序 $|q_0 q_1\rangle$）：
 
@@ -1540,9 +1515,11 @@ $$
 (Z_0)_{\pi/8} \longrightarrow (Z_0 Z_1)_{\pi/8} \longrightarrow (X_0 X_1)_{\pi/8} \longrightarrow \text{PPM}(X_0 X_1,\; Z_0 Z_1).
 $$
 
-对任意 2 比特输入态 $|\psi\rangle$，这套重写线路的 4 路联合测量结果概率分布与原电路逐项精确相等！每个多体 $\pi/8$ 旋转（如 $(X_0 X_1)_{\pi/8}$）在表面码芯片上需消耗一枚来自魔法态工厂的 $|m\rangle = T|+\rangle$：先通过一次跨补丁多体晶格手术测量 $P \otimes Z_a$（结果 $m_1 \in \{+1, -1\}$）并读出辅助位 $X_a$（结果 $m_2 \in \{+1, -1\}$）。当 $m_1 = +1$（$50\%$ 概率）时，数据态只差由 $m_2$ 决定的纯 Pauli 因子 $I$ 或 $P$，可直接吸收进经典 Pauli 帧；**但当 $m_1 = -1$（另外 $50\%$ 概率）时，数据态得到的是反向旋转 $P_{-\pi/8}$，所需修正是非 Pauli 的 Clifford $\pi/4$ 旋转 $P_{\pi/4} = \exp\!\big(-i\frac{\pi}{4}P\big)$（或其与 $P$ 的乘积），无法由纯 Pauli 帧在软件中无代价吸收**。这项条件 Clifford $\pi/4$ 修正必须通过以下三种机制之一落实（最后再更新 Pauli 帧）：① 追加一次条件 Clifford $P_{\pi/4}$ 晶格手术；② 将 $P_{\pi/4}$ 沿软件前推并动态改写后续互不对易旋转的测量轴 $Q \mapsto P_{\pi/4}^\dagger Q P_{\pi/4}$（这正是下文串行等待解码反应时间 $\tau_{\mathrm{react}}$ 的根源）；或 ③ 在 Litinski 自动修正块中引入第二枚辅助比特，依据解出的 $m_1$ 实时自适应切换单比特测量基（同样受制于 $\tau_{\mathrm{react}}$）。
+对任意 2 比特输入态 $|\psi\rangle$，这套重写线路的 4 路联合测量结果概率分布与原电路逐项精确相等！每个多体 $\pi/8$ 旋转（如 $(X_0 X_1)_{\pi/8}$）在表面码芯片上需消耗一枚来自魔法态工厂的 $|m\rangle = T|+\rangle$：先通过一次跨补丁多体晶格手术测量 $P \otimes Z_a$（结果 $m_1 \in \{+1, -1\}$）并读出辅助位 $X_a$（结果 $m_2 \in \{+1, -1\}$）。
 
-**边界清醒提示**：Litinski 变换把 Clifford 门完全“变没”了，但代价是原本局域的单比特 $T$ 门膨胀成了跨越多个逻辑补丁的**高权重多体 Pauli 旋转**（如 $X_0 X_1$ 乃至几十比特的 Pauli 串）。在二维平面芯片上，如果两个相邻的 $\pi/8$ 旋转需要穿行同一条路由走廊，就会发生空间拥堵；同时若某些多体旋转互不对易（如上例的 $Z_0$ 与 $X_0 X_1$），它们必须串行等待前一步的解码反应时间 $\tau_{\mathrm{react}}$。因此现代容错编译器需要在“全量 Litinski 消除”与“适度保留局域 Clifford 以换取更短路由走廊与更高并行度”之间做时空体积权衡。
+当 $m_1 = +1$（$50\%$ 概率）时，数据态只差由 $m_2$ 决定的纯 Pauli 因子 $I$ 或 $P$，可直接吸收进经典 Pauli 帧；**但当 $m_1 = -1$（另外 $50\%$ 概率）时，数据态得到的是反向旋转 $P_{-\pi/8}$，所需修正是非 Pauli 的 Clifford $\pi/4$ 旋转 $P_{\pi/4} = \exp\!\big(-i\frac{\pi}{4}P\big)$（或其与 $P$ 的乘积），无法由纯 Pauli 帧在软件中无代价吸收**。这项条件 Clifford $\pi/4$ 修正必须通过以下三种机制之一落实（最后再更新 Pauli 帧）：① 追加一次条件 Clifford $P_{\pi/4}$ 晶格手术；② 将 $P_{\pi/4}$ 沿软件前推并动态改写后续互不对易旋转的测量轴 $Q \mapsto P_{\pi/4}^\dagger Q P_{\pi/4}$（这正是下文串行等待解码反应时间 $\tau_{\mathrm{react}}$ 的根源）；或 ③ 在 Litinski 自动修正块中引入第二枚辅助比特，依据解出的 $m_1$ 实时自适应切换单比特测量基（同样受制于 $\tau_{\mathrm{react}}$）。
+
+**边界清醒提示**：Litinski 变换把 Clifford 门完全“变没”了，但代价是原本局域的单比特 $T$ 门膨胀成了跨越多个逻辑补丁的高权重多体 Pauli 旋转。在二维平面芯片上，若相邻 $\pi/8$ 旋转争夺同一路由走廊就会引发空间拥堵，而互不对易的多体旋转（如上例的 $Z_0$ 与 $X_0 X_1$）必须串行等待解码反应时间 $\tau_{\mathrm{react}}$，因此编译器需在全量消除与适度保留局域 Clifford 之间权衡时空体积。
 
 > **练 14-B（Litinski 推门符号检验与动态反馈弛豫）**
 > 1. 设单比特线路按时间顺序（从左到右）先执行相位门 $S = \mathrm{diag}(1, i)$，再执行旋转 $X_{\pi/8} = \exp(-i\frac{\pi}{8} X)$。写出把 $S$ 推到 $X_{\pi/8}$ 之后（即矩阵式 $X_{\pi/8} S = S\, P'_{\pi/8}$）所得到的精确生成元 $P'$，并指出若误用 $S X S^\dagger$ 会犯什么错。
@@ -1605,6 +1582,23 @@ VQE 和 QAOA 等变分算法会反复执行**拓扑结构完全相同、仅旋�
 
 ---
 
+## 本章一页速记卡
+
+| 核心概念 / 工具 | 核心公式 / 规则 | 参数 / 单位 / 适用条件 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **单比特与容错离散综合** | $U=e^{i\delta}R_z(\alpha)R_y(\beta)R_z(\gamma)$；`gridsynth` $T\text{-count}\approx 3\log_2(1/\varepsilon)$ | 任意 1Q 至多 2 个物理 $\mathrm{SX}$；`gridsynth` 仅限 Clifford+$T$ | 把无条件 $\mathrm{SX}$ 与受控 $\mathrm{SX}$ 的全局相位 $e^{i\pi/4}$ 混用 |
+| **虚拟 Z 相位帧传播** | $R_\varphi(\theta)R_z(\alpha)=R_z(\alpha)R_{\varphi-\alpha}(\theta)$ | Bloch 赤道轴角 $\varphi=-\phi$（对应载波 $\cos(\omega_d t+\phi)$） | 帧更新加减号写反；跨非对角双比特门漏传相位帧 |
+| **路由、调度与 RC Pass** | SABRE $H_{\mathrm{decay}}$ 含前沿 $F$ 与前瞻 $E_{\mathrm{ext}}$；串扰错峰 vs $T_1/T_2$；Pauli RC 零深度 | 省恢复 SWAP 须按最终映射重排比特串；中性原子受 AOD 不交叉约束 | 漏排输出映射造成无噪 $100\%$ 软件错；忽略共享控制总线 |
+| **DRAG 与动态解耦（DD）** | $Q(t)=-\frac{\beta}{\alpha}\dot I(t)$；$F_{\mathrm{Hahn}}(z)=16\sin^4(z/4)$；未知态选 XY4 | $\beta=1$ 消一阶泄漏，需配虚拟 Z 或恒定失谐消 AC Stark 相移 | 只设 $\beta=1$ 不补相位；空闲期塞过密 $\pi$ 脉冲引入净误差 |
+| **读出混淆求逆与反馈** | $\operatorname{Var}(\hat p_{0,\mathrm{mit}})=\frac{\operatorname{Var}(\hat q_0)}{(1-e_0-e_1)^2}$；$t_{\mathrm{fb}}=\sum_{k=1}^6 t_k$ | 混淆矩阵 $M$ 列随机；大系统用 M3/TREX；在线反馈受限于 6 项硬件延迟 | 以为矩阵求逆免费降噪；用云端 API 延迟混谈微秒级 FPGA 反馈 |
+
+**首遍通关自测三句话**：
+1. 我能说出单比特门为何至多只需两次 $\mathrm{SX}$ 微波脉冲，以及虚拟 Z 门相位帧符号写反的后果；
+2. 我能算清线形三比特路由省掉恢复 SWAP 后的输出重排，并理解共享通道、串扰调度、XY4 动态解耦与 Pauli RC Pass 的各自定位；
+3. 我能列出动态电路六项反馈延迟预算，并区分编译随机种子可复现与真机物理统计相容这两层边界。
+
+---
+
 ## 自检题
 
 1. 在三节点线形连接上实现端点 CNOT，为什么可能需要额外双比特门？
@@ -1631,7 +1625,7 @@ VQE 和 QAOA 等变分算法会反复执行**拓扑结构完全相同、仅旋�
 | 共享控制通道资源约束调度 | [共享资源调度验算脚本](../codes/systems/resource_schedule.py) | 检验前驱依赖、共享资源互斥及 $1100\ \mathrm{ns}$ 与 $1300\ \mathrm{ns}$ 对照 |
 | 二能级受界 GRAPE 与 1 ns 滤波 | [二能级受界 GRAPE 脚本](../codes/systems/sdk/grape_control.py) | QuTiP / `qutip-qtrl` 优化波形、失谐敏感性扫描与[二能级结果归档](../codes/systems/sdk/grape-results.json) |
 | 三能级 GRAPE、泄漏验收与 2-设计核验 | [三能级 GRAPE 脚本](../codes/systems/sdk73/grape_three.py)与[三能级泄漏验收脚本](../codes/systems/round73_checks.py)（`--case 14`） | 三能级优化、非后选择平均重叠 $\bar f_{\mathrm{comp}}$ 与[三能级结果归档](../codes/systems/sdk73/grape-three-results.json) |
-| 线路切割权重与保序重构练习 | [线路切割源码核验脚本](../codes/practice/source_reading_checks.py) | 衔接[软件实践附录 §8.7](appendices/software-practice.md#87-线路切割采样权重与重构顺序必须同时保留)与[P15-G](labs/practice.md#p15-g负权重不是负概率线路切割的代价怎样算) |
+| 线路切割权重与保序重构练习 | [线路切割源码核验脚本](../codes/practice/source_reading_checks.py) | 衔接[软件实践附录 §8.7](appendices/software-practice.md#87-线路切割异步作业返回乱序陷阱与权重绑定)与[P15-G](labs/practice.md#p15-g负权重不是负概率线路切割的代价怎样算) |
 
 ### 权威教材、规范与一手文献
 
@@ -1639,5 +1633,5 @@ VQE 和 QAOA 等变分算法会反复执行**拓扑结构完全相同、仅旋�
 - **ZX 演算与容错逻辑编译**：B. Coecke & R. Duncan, *Interacting quantum observables: categorical algebra and diagrammatics*, *New J. Phys.* **13**, 043016 (2011)；A. Kissinger & J. van de Wetering, *Reducing the number of non-Clifford gates in quantum circuits*, *Phys. Rev. A* **102**, 022406 (2020)；J. van de Wetering, *ZX-calculus for the working quantum computer scientist*, `arXiv:2012.13966` (2020)；D. Litinski, *A game of surface codes: Large-scale quantum computing with lattice surgery*, *Quantum* **3**, 128 (2019)。
 - **虚拟 Z、路由与串扰调度**：D. C. McKay et al., *Efficient Z gates for quantum computing*, *Phys. Rev. A* **96**, 022330 (2017)；G. Li, Y. Ding & Y. Xie, *Tackling the qubit mapping problem for NISQ-era quantum devices* (SABRE), *ASPLOS* (2019)；H. Zou et al., *LightSABRE: A lightweight and enhanced SABRE algorithm*, `arXiv:2409.08368` (2024)；P. Murali et al., *Software mitigation of crosstalk on noisy intermediate-scale quantum computers*, *ASPLOS* (2020)。
 - **脉冲整形、动态解耦与最优控制**：F. Motzoi et al., *Simple pulses for elimination of leakage in weakly nonlinear qubits* (DRAG), *Phys. Rev. Lett.* **103**, 110501 (2009)；J. M. Gambetta et al., *Analytic control methods for high-fidelity unitary operations in a weakly nonlinear oscillator*, *Phys. Rev. A* **83**, 012308 (2011)；Z. Chen et al., *Measuring and suppressing quantum state leakage in a superconducting qubit*, *Phys. Rev. Lett.* **116**, 020501 (2016)；Ł. Cywiński et al., *How to enhance dephasing time in superconducting qubits*, *Phys. Rev. B* **77**, 174509 (2008)；N. Ezzell et al., *Dynamical decoupling for superconducting qubits: A performance survey*, *Phys. Rev. Applied* **20**, 064027 (2023)；N. Khaneja et al., *Optimal control of coupled spin dynamics* (GRAPE), *J. Magn. Reson.* **172**, 296–305 (2005)；T. Caneva, T. Calarco & S. Montangero, *Chopped random-basis quantum optimization* (CRAB), *Phys. Rev. A* **84**, 022326 (2011)；S. Machnes et al., *Tunable, flexible, and efficient optimization of control pulses for practical qubits* (GOAT), *Phys. Rev. Lett.* **120**, 150401 (2018)；C. J. Wood & J. M. Gambetta, *Quantification and characterization of leakage errors*, *Phys. Rev. A* **97**, 032306 (2018)。
-- **表征、读出缓解与动态反馈**：R. Blume-Kohout et al., *Demonstration of qubit operations below a rigorous fault tolerance threshold with gate set tomography*, *Nat. Commun.* **8**, 14485 (2017)；E. Nielsen et al., *Gate Set Tomography*, *Quantum* **5**, 557 (2021)；P. D. Nation et al., *Scalable mitigation of measurement errors on quantum computers* (M3), *PRX Quantum* **2**, 040326 (2021)；E. van den Berg, Z. K. Minev & K. Temme, *Model-free readout-error mitigation for quantum expectation values* (TREX), *Phys. Rev. A* **105**, 032620 (2022)；[Demonstrating real-time and low-latency quantum error correction with superconducting qubits](https://www.nature.com/articles/s41467-026-73331-6), *Nature Communications* (2026)。
+- **表征、读出缓解与动态反馈**：R. Blume-Kohout et al., *Demonstration of qubit operations below a rigorous fault tolerance threshold with gate set tomography*, *Nat. Commun.* **8**, 14485 (2017)；E. Nielsen et al., *Gate Set Tomography*, *Quantum* **5**, 557 (2021)；P. D. Nation et al., *Scalable mitigation of measurement errors on quantum computers* (M3), *PRX Quantum* **2**, 040326 (2021)；E. van den Berg, Z. K. Minev & K. Temme, *Model-free readout-error mitigation for quantum expectation values* (TREX), *Phys. Rev. A* **105**, 032620 (2022)；L. Caune, L. Skorić, N. S. Blunt et al. (Riverlane & Rigetti), [Demonstrating real-time and low-latency quantum error correction with superconducting qubits](https://www.nature.com/articles/s41467-026-73331-6), *Nature Communications* (2026-06)。
 - **线路切割与开放标准**：T. Peng et al., *Simulating large quantum circuits on a small quantum computer*, *Phys. Rev. Lett.* **125**, 150504 (2020)；K. Mitarai & K. Fujii, *Constructing a virtual two-qubit gate by sampling single-qubit operations*, *New J. Phys.* **23**, 023021 (2021)；L. Brenner, C. Piveteau & D. Sutter, *Optimal wire cutting with classical communication*, `arXiv:2302.03366` (2023)；C. Piveteau & D. Sutter, *Circuit knitting with classical communication*, *IEEE Trans. Inf. Theory* **70**, 2734–2745 (2024；2023 在线)；H. Harada, K. Wada & N. Yamamoto, *Doubly optimal parallel wire cutting without ancilla qubits*, *PRX Quantum* **5**, 040308 (2024)；A. W. Cross et al., *OpenQASM 3: A broader and deeper quantum assembly language*, *ACM Trans. Quantum Comput.* **3**(3), Article 12 (2022)；[OpenQASM 3 Specification](https://openqasm.com/)；[QIR Specification](https://github.com/qir-alliance/qir-spec/blob/main/specification/README.md)；[MLIR / Catalyst & CUDA-Q Docs](https://docs.pennylane.ai/projects/catalyst/)；[IBM Quantum Transpilation Guides](https://quantum.cloud.ibm.com/docs/en/guides/transpile)。

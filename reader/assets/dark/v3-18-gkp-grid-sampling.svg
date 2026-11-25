@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">GKP 相空间网格稳定子与量子采样复杂度反证链</title>
+  <desc id="desc">左面板在 [q̂, p̂] = i（ℏ = 1）相空间精确绘制方形 GKP 晶格：逻辑 |0_L⟩ 位于 q = 2s√π（蓝圆），|1_L⟩ 位于 q = (2s+1)√π（红菱），稳定子平移 S_p, S_q 步长 2√π 围出面积 4π = 2×2πℏ 的单逻辑比特晶胞，原点周围标出可纠错 Voronoi 域 [−√π/2, √π/2]²。右面板展示 BosonSampling/IQP/RCS 经 Stockmeyer 计数与反集中推向 PH 坍塌的反证链，并标出恒定门噪声抹平 Porter–Thomas 散斑涨落与 #P 难干涉信号（分布坍向均匀态）的经典边界。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.halo{stroke:#ffffff;fill:none}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.6;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.c4-soft{fill:#fdf2dc;stroke:#b57614;stroke-width:1.4}
+.c5{stroke:#744ea6;fill:none}
+.c5-fill{fill:#744ea6}
+.c5-txt{fill:#5b3987}
+.c5-soft{fill:#efe8fa;stroke:#744ea6;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.10}
+.area1{fill:#1b6ca8;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.11}
+.area4{fill:#b57614;fill-opacity:.12}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .halo{stroke:#16222e}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
+  .c5{stroke:#b999f0}
+  .c5-fill{fill:#b999f0}
+  .c5-txt{fill:#d0b8fa}
+  .c5-soft{fill:#2d2045;stroke:#b999f0}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.14}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .area4{fill:#f0ba5a;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
+  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-amber" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke4" x1="0" y1="0" x2="0" y2="9"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="32" y="52">GKP 相空间网格稳定子与量子采样复杂度反证链</text>
+  <text class="subtitle" x="32" y="77">左：[q, p] = i 方形 GKP 晶格、稳定子位移与 Voronoi 纠错域；右：采样优越性四步反证链与噪声边界</text>
+  <rect class="panel" x="28" y="96" width="456" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 470 Q 483 97 483 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="483" y2="134"/>
+  <text class="sec" x="44" y="120">方形 GKP 相空间晶格（[q, p] = i，ℏ = 1）</text>
+  <rect class="panel" x="500" y="96" width="472" height="456" rx="14"/>
+  <path class="phead" d="M 514 97 H 958 Q 971 97 971 110 V 134 H 501 V 110 Q 501 97 514 97 Z"/>
+  <line class="grid" x1="501" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="516" y="120">量子采样复杂度反证链与恒定门噪声边界</text>
+  <line class="grid" x1="158" y1="169.8" x2="158" y2="412.8"/>
+  <line class="grid" x1="139.1" y1="402" x2="398.3" y2="402"/>
+  <text class="xs" x="158" y="428.8" text-anchor="middle">−2√π</text>
+  <text class="xs" x="132.1" y="405.5" text-anchor="end">−2√π</text>
+  <line class="grid" x1="212" y1="169.8" x2="212" y2="412.8"/>
+  <line class="grid" x1="139.1" y1="348" x2="398.3" y2="348"/>
+  <text class="xs" x="212" y="428.8" text-anchor="middle">−√π</text>
+  <text class="xs" x="132.1" y="351.5" text-anchor="end">−√π</text>
+  <line class="guide" x1="266" y1="169.8" x2="266" y2="412.8"/>
+  <line class="guide" x1="139.1" y1="294" x2="398.3" y2="294"/>
+  <text class="xs" x="266" y="428.8" text-anchor="middle">0</text>
+  <text class="xs" x="132.1" y="297.5" text-anchor="end">0</text>
+  <line class="grid" x1="320" y1="169.8" x2="320" y2="412.8"/>
+  <line class="grid" x1="139.1" y1="240" x2="398.3" y2="240"/>
+  <text class="xs" x="320" y="428.8" text-anchor="middle">√π</text>
+  <text class="xs" x="132.1" y="243.5" text-anchor="end">√π</text>
+  <line class="grid" x1="374" y1="169.8" x2="374" y2="412.8"/>
+  <line class="grid" x1="139.1" y1="186" x2="398.3" y2="186"/>
+  <text class="xs" x="374" y="428.8" text-anchor="middle">2√π</text>
+  <text class="xs" x="132.1" y="189.5" text-anchor="end">2√π</text>
+  <rect class="area1" x="266" y="186" width="108" height="108"/>
+  <rect class="c1" stroke-width="1.5" stroke-dasharray="5 4" x="266" y="186" width="108" height="108"/>
+  <rect class="c3-soft" x="239" y="267" width="54" height="54"/>
+  <rect fill="url(#hatch-green)" x="239" y="267" width="54" height="54"/>
+  <line class="axis" x1="139.1" y1="412.8" x2="408.3" y2="412.8"/>
+  <polygon class="axis-fill" points="408.3,412.8 401.3,416.16 401.3,409.44"/>
+  <line class="axis" x1="139.1" y1="412.8" x2="139.1" y2="159.8"/>
+  <polygon class="axis-fill" points="139.1,159.8 142.46,166.8 135.74,166.8"/>
+  <text class="sm" x="268.7" y="446.8" text-anchor="middle">位置正交分量 q（单位：√π）</text>
+  <text class="sm" x="54" y="291.3" text-anchor="middle" transform="rotate(-90 54 291.3)">动量正交分量 p（单位：√π）</text>
+  <line class="c1" stroke-width="2.8" x1="266" y1="294" x2="367" y2="294"/>
+  <polygon class="c1-fill" points="369,294 362,297.36 362,290.64"/>
+  <line class="c1" stroke-width="2.8" x1="266" y1="294" x2="266" y2="193"/>
+  <polygon class="c1-fill" points="266,191 269.36,198 262.64,198"/>
+  <line class="c2" stroke-width="2.4" x1="158" y1="348" x2="205" y2="348"/>
+  <polygon class="c2-fill" points="207,348 200.5,351.12 200.5,344.88"/>
+  <line class="c2" stroke-width="2.4" x1="158" y1="294" x2="158" y2="247"/>
+  <polygon class="c2-fill" points="158,245 161.12,251.5 154.88,251.5"/>
+  <circle class="c1-fill" cx="158" cy="402" r="4.8"/>
+  <circle class="c1-fill" cx="158" cy="348" r="4.8"/>
+  <circle class="c1-fill" cx="158" cy="294" r="4.8"/>
+  <circle class="c1-fill" cx="158" cy="240" r="4.8"/>
+  <circle class="c1-fill" cx="158" cy="186" r="4.8"/>
+  <polygon class="c2-fill" points="212,396.6 217.4,402 212,407.4 206.6,402"/>
+  <polygon class="c2-fill" points="212,342.6 217.4,348 212,353.4 206.6,348"/>
+  <polygon class="c2-fill" points="212,288.6 217.4,294 212,299.4 206.6,294"/>
+  <polygon class="c2-fill" points="212,234.6 217.4,240 212,245.4 206.6,240"/>
+  <polygon class="c2-fill" points="212,180.6 217.4,186 212,191.4 206.6,186"/>
+  <circle class="c1-fill" cx="266" cy="402" r="4.8"/>
+  <circle class="c1-fill" cx="266" cy="348" r="4.8"/>
+  <circle class="c1-fill" cx="266" cy="294" r="4.8"/>
+  <circle class="c1-fill" cx="266" cy="240" r="4.8"/>
+  <circle class="c1-fill" cx="266" cy="186" r="4.8"/>
+  <polygon class="c2-fill" points="320,396.6 325.4,402 320,407.4 314.6,402"/>
+  <polygon class="c2-fill" points="320,342.6 325.4,348 320,353.4 314.6,348"/>
+  <polygon class="c2-fill" points="320,288.6 325.4,294 320,299.4 314.6,294"/>
+  <polygon class="c2-fill" points="320,234.6 325.4,240 320,245.4 314.6,240"/>
+  <polygon class="c2-fill" points="320,180.6 325.4,186 320,191.4 314.6,186"/>
+  <circle class="c1-fill" cx="374" cy="402" r="4.8"/>
+  <circle class="c1-fill" cx="374" cy="348" r="4.8"/>
+  <circle class="c1-fill" cx="374" cy="294" r="4.8"/>
+  <circle class="c1-fill" cx="374" cy="240" r="4.8"/>
+  <circle class="c1-fill" cx="374" cy="186" r="4.8"/>
+  <text class="xsb c1-txt" x="320" y="209.76" text-anchor="middle">晶胞面积 4π</text>
+  <text class="xs c1-txt" x="320" y="225.96" text-anchor="middle">= 2×2πℏ (1 比特)</text>
+  <text class="xsb c1-txt" x="337.28" y="312.36" text-anchor="middle">S<tspan dy="2.8" font-size="74%">p</tspan><tspan dy="-2.8">&#8203;</tspan> (移 2√π)</text>
+  <text class="xsb c1-txt" x="258.44" y="214.08" text-anchor="end">S<tspan dy="2.8" font-size="74%">q</tspan><tspan dy="-2.8">&#8203;</tspan> (移 2√π)</text>
+  <text class="xsb c2-txt" x="185" y="333.96" text-anchor="middle">X̄ (√π)</text>
+  <text class="xsb c2-txt" x="166.64" y="267">Z̄ (√π)</text>
+  <text class="xsb c3-txt" x="317.3" y="370.68" text-anchor="middle">Voronoi 纠错域</text>
+  <text class="xs c3-txt" x="317.3" y="386.88" text-anchor="middle">|δq|, |δp| &lt; √π/2 ≈ 0.886</text>
+  <line class="c3" stroke-width="1.2" x1="286.52" y1="321" x2="306.5" y2="358.8"/>
+  <circle class="c1-fill" cx="62" cy="151" r="4.5"/>
+  <text class="xs" x="72" y="155">|0<tspan dy="2.8" font-size="74%">L</tspan><tspan dy="-2.8">&#8203;</tspan>⟩ (q = 2s√π)</text>
+  <polygon class="c2-fill" points="182,145.8 187.2,151 182,156.2 176.8,151"/>
+  <text class="xs" x="192" y="155">|1<tspan dy="2.8" font-size="74%">L</tspan><tspan dy="-2.8">&#8203;</tspan>⟩ (q = (2s+1)√π)</text>
+  <rect class="c3-soft" x="330" y="145" width="14" height="12" rx="2"/>
+  <text class="xs" x="350" y="155">Voronoi 可纠错窗</text>
+  <rect class="pill" x="44" y="458" width="424" height="80" rx="10"/>
+  <text class="xsb" x="58" y="479">Weyl-BCH 三组对易相因子（严禁混写 4πi / 2πi / πi）：</text>
+  <text class="xs" x="58" y="501">• 稳定子对易：[S<tspan dy="2.8" font-size="74%">q</tspan><tspan dy="-2.8">&#8203;</tspan>, S<tspan dy="2.8" font-size="74%">p</tspan><tspan dy="-2.8">&#8203;</tspan>] = 0（e<tspan dy="-4" font-size="72%">4πi</tspan><tspan dy="4">&#8203;</tspan>=1）；逻辑保子空间：[Z̄, S<tspan dy="2.8" font-size="74%">p</tspan><tspan dy="-2.8">&#8203;</tspan>] = 0（e<tspan dy="-4" font-size="72%">2πi</tspan><tspan dy="4">&#8203;</tspan>=1）</text>
+  <text class="xs c2-txt" x="58" y="523">• 逻辑反对易：Z̄ X̄ = e<tspan dy="-4" font-size="72%">iπ</tspan><tspan dy="4">&#8203;</tspan> X̄ Z̄ = −X̄ Z̄（连续相空间切出离散 Pauli 代数）</text>
+  <rect class="c1-soft" x="516" y="148" width="440" height="58" rx="10"/>
+  <circle class="c1-fill" cx="538" cy="170" r="11"/>
+  <text class="badge-txt" x="538" y="174" text-anchor="middle">1</text>
+  <text class="smb" x="558" y="172">假设存在经典多项式近似采样器</text>
+  <text class="xs" x="558" y="193">对 BosonSampling（积和式）/ IQP / RCS 输出分布，以总变差距离 ε 采样</text>
+  <line class="axis" x1="600" y1="207" x2="600" y2="225"/>
+  <polygon class="axis-fill" points="600,226 597.12,220 602.88,220"/>
+  <text class="xsb" x="614" y="220">Stockmeyer 近似计数定理</text>
+  <rect class="c3-soft" x="516" y="228" width="440" height="58" rx="10"/>
+  <circle class="c3-fill" cx="538" cy="250" r="11"/>
+  <text class="badge-txt" x="538" y="254" text-anchor="middle">2</text>
+  <text class="smb" x="558" y="252">Stockmeyer 计数落入 BPP<tspan dy="-4" font-size="72%">NP</tspan><tspan dy="4">&#8203;</tspan>（PH 第 3 层）</text>
+  <text class="xs" x="558" y="273">借隐匿性将单串输出概率 p<tspan dy="2.8" font-size="74%">x</tspan><tspan dy="-2.8">&#8203;</tspan> 估计至平均加性误差 O(ε / 2<tspan dy="-4" font-size="72%">n</tspan><tspan dy="4">&#8203;</tspan>)</text>
+  <line class="axis" x1="600" y1="287" x2="600" y2="305"/>
+  <polygon class="axis-fill" points="600,306 597.12,300 602.88,300"/>
+  <text class="xsb" x="614" y="300">反集中性（Anti-concentration）</text>
+  <rect class="note" x="516" y="308" width="440" height="58" rx="10"/>
+  <circle class="c4-fill" cx="538" cy="330" r="11"/>
+  <text class="badge-txt" x="538" y="334" text-anchor="middle">3</text>
+  <text class="smb" x="558" y="332">反集中 + 平均情形 #P-难猜想（PGC / RCS）</text>
+  <text class="xs" x="558" y="353">多数串满足 p<tspan dy="2.8" font-size="74%">x</tspan><tspan dy="-2.8">&#8203;</tspan> ≥ Ω(2<tspan dy="-4" font-size="72%">−n</tspan><tspan dy="4">&#8203;</tspan>) ⇒ 加性误差转为乘性相对误差，攻破 #P-难</text>
+  <line class="axis" x1="600" y1="367" x2="600" y2="385"/>
+  <polygon class="axis-fill" points="600,386 597.12,380 602.88,380"/>
+  <text class="xsb" x="614" y="380">Toda 定理（PH ⊆ P<tspan dy="-4" font-size="72%">#P</tspan><tspan dy="4">&#8203;</tspan>）</text>
+  <rect class="c2-soft" x="516" y="388" width="440" height="58" rx="10"/>
+  <circle class="c2-fill" cx="538" cy="410" r="11"/>
+  <text class="badge-txt" x="538" y="414" text-anchor="middle">4</text>
+  <text class="smb" x="558" y="412">矛盾：整座多项式谱系 PH 坍塌至第 3 层！</text>
+  <text class="xs" x="558" y="433">被复杂度理论视为极不可能 ⇒ 无噪理想采样不存在经典多项式算法</text>
+  <rect class="pill" x="516" y="466" width="440" height="74" rx="10"/>
+  <text class="smb c2-txt" x="528" y="487">物理边界：恒定门噪声斩断第 ③ 步（Aharonov 等, STOC 2023）</text>
+  <text class="xs" x="528" y="508">• 恒定门噪声抹平 Porter–Thomas 散斑涨落与 #P 难干涉信号（分布坍向均匀态）</text>
+  <text class="xs" x="528" y="528">• 均匀态仍平凡满足反集中，被摧毁的是 #P 难性；含噪 RCS 具经典多项式算法</text>
+</svg>

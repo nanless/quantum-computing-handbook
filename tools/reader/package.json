@@ -3,6 +3,23 @@
   "private": true,
   "type": "module",
   "description": "Build and verify an offline reading edition of the quantum handbook",
-  "scripts": {"build": "node build.mjs", "verify": "node verify.mjs"},
-  "dependencies": {"katex": "0.16.22", "marked": "15.0.12", "mermaid": "11.6.0", "playwright": "1.61.1"}
+  "scripts": {
+    "build": "node build.mjs",
+    "verify": "node verify.mjs",
+    "lint": "npm run lint:quality && npm run check:qm && npm run check:net",
+    "lint:quality": "node check-v3-quality.mjs",
+    "check:qm": "node check-qm-examples.mjs && node check-qm-review.mjs",
+    "check:net": "node check-network-examples.mjs",
+    "build:pdf": "node build-pdf.mjs",
+    "build:epub": "node build-epub.mjs",
+    "build:ebooks": "npm run build:pdf && npm run build:epub",
+    "build:release": "node build-release.mjs",
+    "check:all": "npm run lint && npm run build && npm run verify"
+  },
+  "dependencies": {
+    "katex": "0.16.22",
+    "marked": "15.0.12",
+    "mermaid": "11.6.0",
+    "playwright": "1.61.1"
+  }
 }

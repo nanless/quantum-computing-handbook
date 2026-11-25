@@ -2,7 +2,7 @@
   <title id="title">CHSH 合作博弈规则、最优测量角与赢率上限对比</title>
   <desc id="desc">左面板展示 CHSH 合作博弈流程（裁判向隔绝的 Alice、Bob 发随机比特 x, y，赢条件 a ⊕ b = x·y）及量子最优策略的四组 Bloch x–z 测量轴（Alice 取 0 与 π/2，Bob 取 +π/4 与 −π/4）。右面板以精确柱状图对比随机猜 50.00%（S=0）、经典局域隐变量上限 75.00%（S=2）与共享 Bell 态量子策略 cos²(π/8) ≈ 85.36%（Tsirelson 界 S = 2√2）。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -57,52 +57,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .subpanel{fill:#1b2a38;stroke:#3b5369}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb{fill:#d7e7f5}
-  .axis,.wire{stroke:#cde0f2}
-  .axis-fill,.ctrl{fill:#cde0f2}
-  .cwire{stroke:#9bb6ce}
-  .targ{fill:#16222e;stroke:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide,.unit-circle{stroke:#738fa8}
-  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
-  .area1{fill:#6bc2f5;fill-opacity:.15}
-  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
-  .wall{fill:#8ca5bc;stroke:#cde0f2}
-  .mirror{stroke:#cde0f2}
-  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
-  .det-body{fill:#163d31;stroke:#5dd1a8}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
-  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

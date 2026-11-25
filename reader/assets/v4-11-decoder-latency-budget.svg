@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">容错实时解码单轮延迟预算与物理比特资源分解</title>
+  <desc id="desc">左面板以瀑布条分解超导表面码单轮 1.0 μs 延迟预算（物理读出 300 ns、信号传输 140 ns、症状匹配 340 ns 及 p99 重尾风险、条件前馈 120 ns，合计 0.90 μs &lt; 1.0 μs），并区分单轮吞吐与端到端反应时间 τ_react；右面板按第 11 章精确数据对比三种表面码架构（Litinski 方案 A、面积压缩方案 B 与 Gidney 2025 轭联+培育）的数据、路由与魔法态物理比特占比。</desc>
+  <style>
+:root{color-scheme:light}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">容错实时解码单轮延迟预算与物理比特资源分解</text>
+  <text class="subtitle" x="22.0" y="52.0">左：超导表面码 τ_cyc ≈ 1.0 μs 吞吐预算瀑布与 p99 重尾风险；右：表面码数据、路由与魔法态工厂物理比特占比</text>
+  <rect class="panel" x="20.0" y="64.0" width="456.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="454.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="475.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">(a) 单轮 ~1 μs 解码延迟预算瀑布（吞吐 vs 重尾）</text>
+  <line class="grid" x1="114.0" y1="114.0" x2="114.0" y2="302.0"/>
+  <line class="axis" x1="114.0" y1="302.0" x2="114.0" y2="307.0"/>
+  <text class="sm" x="114.0" y="321.0" text-anchor="middle">0.0</text>
+  <line class="grid" x1="173.5" y1="114.0" x2="173.5" y2="302.0"/>
+  <line class="axis" x1="173.5" y1="302.0" x2="173.5" y2="307.0"/>
+  <text class="sm" x="173.5" y="321.0" text-anchor="middle">0.2</text>
+  <line class="grid" x1="233.0" y1="114.0" x2="233.0" y2="302.0"/>
+  <line class="axis" x1="233.0" y1="302.0" x2="233.0" y2="307.0"/>
+  <text class="sm" x="233.0" y="321.0" text-anchor="middle">0.4</text>
+  <line class="grid" x1="292.4" y1="114.0" x2="292.4" y2="302.0"/>
+  <line class="axis" x1="292.4" y1="302.0" x2="292.4" y2="307.0"/>
+  <text class="sm" x="292.4" y="321.0" text-anchor="middle">0.6</text>
+  <line class="grid" x1="351.9" y1="114.0" x2="351.9" y2="302.0"/>
+  <line class="axis" x1="351.9" y1="302.0" x2="351.9" y2="307.0"/>
+  <text class="sm" x="351.9" y="321.0" text-anchor="middle">0.8</text>
+  <line class="grid" x1="411.4" y1="114.0" x2="411.4" y2="302.0"/>
+  <line class="axis" x1="411.4" y1="302.0" x2="411.4" y2="307.0"/>
+  <text class="sm" x="411.4" y="321.0" text-anchor="middle">1.0</text>
+  <text class="sm" x="458.0" y="321.0" text-anchor="end">μs</text>
+  <line class="c2" x1="411.4" y1="112.0" x2="411.4" y2="302.0" stroke-width="2" stroke-dasharray="6 4"/>
+  <text class="smb c2-txt" x="415.4" y="108.0" text-anchor="end">红线 τ_cyc = 1.0 μs</text>
+  <text class="lblb" x="106.0" y="137.5" text-anchor="end">物理读出</text>
+  <rect class="c3-soft" x="114.0" y="122.0" width="89.2" height="22.0" rx="4.0"/>
+  <text class="sm" x="209.2" y="137.5">300 ns（读出腔/解调）</text>
+  <text class="lblb" x="106.0" y="173.5" text-anchor="end">信号传输</text>
+  <rect class="c4-soft" x="203.2" y="158.0" width="41.6" height="22.0" rx="4.0"/>
+  <line class="guide" x1="203.2" y1="144.0" x2="203.2" y2="158.0"/>
+  <text class="sm" x="250.9" y="173.5">140 ns（温区/总线）</text>
+  <text class="lblb" x="106.0" y="209.5" text-anchor="end">症状匹配</text>
+  <rect class="c1-soft" x="244.9" y="194.0" width="101.1" height="22.0" rx="4.0"/>
+  <line class="guide" x1="244.9" y1="180.0" x2="244.9" y2="194.0"/>
+  <text class="smb c1-txt" x="295.4" y="209.5" text-anchor="middle">340 ns（均值）</text>
+  <rect class="c2-soft" x="346.0" y="194.0" width="92.2" height="22.0" rx="4.0" stroke-dasharray="4 3"/>
+  <text class="smb c2-txt" x="392.1" y="209.5" text-anchor="middle">p99 重尾</text>
+  <text class="lblb" x="106.0" y="245.5" text-anchor="end">条件前馈</text>
+  <rect class="c5-soft" x="346.0" y="230.0" width="35.7" height="22.0" rx="4.0"/>
+  <line class="guide" x1="346.0" y1="216.0" x2="346.0" y2="230.0"/>
+  <text class="sm" x="340.0" y="245.5" text-anchor="end">120 ns（逻辑帧/脉冲）</text>
+  <line class="guide" x1="381.7" y1="252.0" x2="381.7" y2="268.0"/>
+  <text class="lblb c1-txt" x="106.0" y="283.5" text-anchor="end">单轮合计</text>
+  <rect class="c1-fill" x="114.0" y="268.0" width="267.7" height="22.0" rx="4.0"/>
+  <text class="badge-txt" x="247.8" y="283.5" text-anchor="middle">0.90 μs &lt; 1.0 μs（+100 ns 余量）</text>
+  <line class="axis" x1="114.0" y1="302.0" x2="456.0" y2="302.0"/>
+  <rect class="note" x="30.0" y="334.0" width="436.0" height="90.0" rx="7.0"/>
+  <text class="smb" x="40.0" y="353.0">吞吐底线：均值 t̄_dec &lt; τ_cyc ≈ 1 μs，否则触发 Terhal 指数积压</text>
+  <text class="sm" x="40.0" y="373.0">端到端反应时间：τ_react = τ_readout + τ_comm + τ_dec,win + τ_fb</text>
+  <text class="sm" x="40.0" y="393.0">实测参照：Willow 流式平均 63 μs（周期 1.1 μs）；目标 ≤ 10 μs</text>
+  <text class="sm c2-txt" x="40.0" y="413.0">尾延迟陷阱：均值达标不等于 p99/max 尾延迟不击穿 τ_react 预算</text>
+  <rect class="panel" x="488.0" y="64.0" width="452.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="489.0" y="65.0" width="450.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="489.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="500.0" y="84.0">(b) 表面码物理比特占比分解（数据 + 路由 + 工厂）</text>
+  <rect class="c1-fill" x="502.0" y="104.0" width="12.0" height="12.0" rx="2.5"/>
+  <text class="sm" x="519.0" y="114.5">数据比特（含冷存）</text>
+  <rect class="c3-fill" x="644.0" y="104.0" width="12.0" height="12.0" rx="2.5"/>
+  <text class="sm" x="661.0" y="114.5">晶格路由（含热存）</text>
+  <rect class="c4-fill" x="786.0" y="104.0" width="12.0" height="12.0" rx="2.5"/>
+  <text class="sm" x="803.0" y="114.5">魔法态工厂/培育</text>
+  <text class="smb" x="502.0" y="143.0">方案 A（速度优先，d=23，20 座工厂，共 1.07M 比特）</text>
+  <rect class="c1-fill" x="502.0" y="150.0" width="84.1" height="28.0" rx="3.0"/>
+  <rect class="c3-fill" x="586.1" y="150.0" width="101.4" height="28.0" rx="0.0"/>
+  <rect class="none" x="586.1" y="150.0" width="101.4" height="28.0" rx="0.0" fill="url(#hatch-c3)"/>
+  <rect class="c4-fill" x="687.5" y="150.0" width="238.5" height="28.0" rx="3.0"/>
+  <text class="badge-txt" x="544.1" y="168.0" text-anchor="middle">19.8%</text>
+  <text class="badge-txt" x="636.8" y="168.0" text-anchor="middle">23.9%</text>
+  <text class="badge-txt" x="806.7" y="168.0" text-anchor="middle">56.3% (600k)</text>
+  <text class="smb" x="502.0" y="205.0">方案 B（面积压缩，d=25，4 座工厂，共 671k，时长 5×）</text>
+  <rect class="c1-fill" x="502.0" y="212.0" width="157.9" height="28.0" rx="3.0"/>
+  <rect class="c3-fill" x="659.9" y="212.0" width="190.3" height="28.0" rx="0.0"/>
+  <rect class="none" x="659.9" y="212.0" width="190.3" height="28.0" rx="0.0" fill="url(#hatch-c3)"/>
+  <rect class="c4-fill" x="850.2" y="212.0" width="75.8" height="28.0" rx="3.0"/>
+  <text class="badge-txt" x="581.0" y="230.0" text-anchor="middle">37.2%</text>
+  <text class="badge-txt" x="755.1" y="230.0" text-anchor="middle">44.9%</text>
+  <text class="badge-txt" x="888.1" y="230.0" text-anchor="middle">17.9%</text>
+  <text class="smb" x="502.0" y="267.0">Gidney 2025 RSA-2048（轭联存储 + 培育，共 898k 比特）</text>
+  <rect class="c1-fill" x="502.0" y="274.0" width="259.9" height="28.0" rx="3.0"/>
+  <rect class="c3-fill" x="761.9" y="274.0" width="83.6" height="28.0" rx="0.0"/>
+  <rect class="none" x="761.9" y="274.0" width="83.6" height="28.0" rx="0.0" fill="url(#hatch-c3)"/>
+  <rect class="c4-fill" x="845.6" y="274.0" width="80.4" height="28.0" rx="3.0"/>
+  <text class="badge-txt" x="632.0" y="292.0" text-anchor="middle">61.3%</text>
+  <text class="badge-txt" x="803.7" y="292.0" text-anchor="middle">19.7%</text>
+  <text class="badge-txt" x="885.8" y="292.0" text-anchor="middle">19.0%</text>
+  <line class="axis" x1="502.0" y1="314.0" x2="926.0" y2="314.0"/>
+  <line class="axis" x1="502.0" y1="314.0" x2="502.0" y2="319.0"/>
+  <text class="sm" x="502.0" y="332.0" text-anchor="middle">0%</text>
+  <line class="axis" x1="608.0" y1="314.0" x2="608.0" y2="319.0"/>
+  <text class="sm" x="608.0" y="332.0" text-anchor="middle">25%</text>
+  <line class="axis" x1="714.0" y1="314.0" x2="714.0" y2="319.0"/>
+  <text class="sm" x="714.0" y="332.0" text-anchor="middle">50%</text>
+  <line class="axis" x1="820.0" y1="314.0" x2="820.0" y2="319.0"/>
+  <text class="sm" x="820.0" y="332.0" text-anchor="middle">75%</text>
+  <line class="axis" x1="926.0" y1="314.0" x2="926.0" y2="319.0"/>
+  <text class="sm" x="926.0" y="332.0" text-anchor="middle">100%</text>
+  <rect class="subpanel" x="500.0" y="342.0" width="428.0" height="82.0" rx="7.0"/>
+  <text class="smb" x="510.0" y="361.0">① 传统双级 15-to-1 蒸馏工厂可占活跃物理比特的 56%（方案 A）</text>
+  <text class="sm" x="510.0" y="381.0">② 缩减工厂数会拉长运行时长 5×，迫使存储区码距 d: 23 → 25</text>
+  <text class="sm" x="510.0" y="401.0">③ 魔法态培育 (MSC) + 轭联冷存把数据区占比提至 61.3%</text>
+  <text class="sm" x="510.0" y="417.0">注：三组均对应理论均匀噪声估算，尚未计入芯片良率与关联突发错。</text>
+  <text class="sm" x="22.0" y="450.0">数据口径：第 11 章 §7.3、§8.2–§8.3（p = 10⁻³、τ_cyc = 1 μs、单瓦片 2d²；非等比例硬件流程示意与精确占比对照）。</text>
+</svg>

@@ -2,7 +2,7 @@
   <title id="title">Bloch 球上的六个基准量子态（右手坐标系）</title>
   <desc id="desc">采用标准右手三维正交投影（俯角 19°、方位角 34°）绘制单位 Bloch 球：+Z 朝上，+X 朝前左，+Y 朝前右，从 +Z 俯视 +X 到 +Y 为逆时针方向；四个赤道基准态 |+⟩、|−⟩、|+i⟩、|−i⟩ 严格落在赤道椭圆上，纯态在球面、混态在球内。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f8fafc}
     .sphere{stroke:#2e6f95;stroke-width:3;fill:#dff4ff;fill-opacity:.50}
     .equator-front{stroke:#2e6f95;stroke-width:2.2;fill:none}
@@ -23,26 +23,7 @@
     .label-back{font:500 18px 'PingFang SC',system-ui,sans-serif;fill:#3e566d}
     .small{font:400 16.5px 'PingFang SC',system-ui,sans-serif;fill:#3e566d}
     .note{fill:#fff7dc;stroke:#c18b21;stroke-width:1.5}
-    @media(prefers-color-scheme:dark){
-      .bg{fill:#101820}
-      .sphere{fill:#164968;fill-opacity:.54;stroke:#7ed4ff}
-      .equator-front{stroke:#7ed4ff}
-      .equator-back{stroke:#5ba6cc}
-      .meridian-front{stroke:#6f93ad}
-      .meridian-back{stroke:#527187}
-      .axis{stroke:#d7e8f5}
-      .axis-neg{stroke:#7e9bb3}
-      .axishead{fill:#d7e8f5}
-      .phi-arc{stroke:#6bc2f5}
-      .phi-head{fill:#6bc2f5}
-      .phi-lbl{fill:#8fd4fa}
-      .origin{fill:#101820;stroke:#d7e8f5}
-      .point-front{fill:#f07171;stroke:#101820}
-      .point-back{fill:#101820;stroke:#f07171}
-      .title,.label{fill:#eef6ff}
-      .label-back,.small{fill:#bdd0e1}
-      .note{fill:#3b3218;stroke:#d6aa4b}
-    }
+    
   </style>
   <rect class="bg" width="900" height="620" rx="28"/>
   <text class="title" x="38" y="52">单量子比特的 Bloch 球（右手坐标系）</text>

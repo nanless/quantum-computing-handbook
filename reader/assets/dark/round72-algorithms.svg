@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">连续时间行走完美转移、对称 QSP 多项式合成与 Fock 截断误差</title>
+  <desc id="desc">三联科学图：左图展示三顶点路径连续时间量子行走在 t* = π/√2 实现 100% 完美转移；中图对比归档四相位对称 QSP 重建的 Im U₀₀ 与目标三次奇多项式 0.3T₁ + 0.2T₃ = 0.8x³ − 0.3x；右图以对数纵轴对照 |α|² = 1 相干态在不同 Fock 截断维数 d 下的遗漏尾概率 ε 与迹距离 √ε。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">连续时间行走完美转移、对称 QSP 合成与 Fock 截断误差</text>
+  <text class="subtitle" x="34" y="77">左：P₃ 路径相干转移（t* = π/√2 达 100%）；中：四相位 QSP 合成 0.8x³ − 0.3x；右：|α|² = 1 相干态截断尾界</text>
+  <rect class="panel" x="28" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 320 Q 333 97 333 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="333" y2="134"/>
+  <text class="sec" x="44" y="120">A. 三顶点路径连续时间行走</text>
+  <line class="c1" stroke-width="2.0" x1="39" y1="158" x2="55" y2="158"/>
+  <text class="xs c1-txt" x="59" y="162">顶点 0</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="6 3" x1="104" y1="158" x2="120" y2="158"/>
+  <text class="xs c2-txt" x="124" y="162">顶点 1</text>
+  <line class="c3" stroke-width="2.0" stroke-dasharray="5 2 1.5 2" x1="169" y1="158" x2="185" y2="158"/>
+  <text class="xs c3-txt" x="189" y="162">顶点 2</text>
+  <line class="guide" x1="238" y1="158" x2="254" y2="158"/>
+  <text class="xs" x="258" y="162">t* = π/√2</text>
+  <line class="grid" x1="84" y1="432" x2="316" y2="432"/>
+  <text class="xs" x="77" y="436" text-anchor="end">0.0</text>
+  <line class="grid" x1="84" y1="389.59" x2="316" y2="389.59"/>
+  <text class="xs" x="77" y="393.59" text-anchor="end">0.2</text>
+  <line class="grid" x1="84" y1="347.17" x2="316" y2="347.17"/>
+  <text class="xs" x="77" y="351.17" text-anchor="end">0.4</text>
+  <line class="grid" x1="84" y1="304.76" x2="316" y2="304.76"/>
+  <text class="xs" x="77" y="308.76" text-anchor="end">0.6</text>
+  <line class="grid" x1="84" y1="262.34" x2="316" y2="262.34"/>
+  <text class="xs" x="77" y="266.34" text-anchor="end">0.8</text>
+  <line class="grid" x1="84" y1="219.93" x2="316" y2="219.93"/>
+  <text class="xs" x="77" y="223.93" text-anchor="end">1.0</text>
+  <line class="grid" x1="84" y1="186" x2="84" y2="432"/>
+  <text class="xs" x="84" y="449" text-anchor="middle">0</text>
+  <line class="grid" x1="136.22" y1="186" x2="136.22" y2="432"/>
+  <text class="xs" x="136.22" y="449" text-anchor="middle">1</text>
+  <line class="grid" x1="188.44" y1="186" x2="188.44" y2="432"/>
+  <text class="xs" x="188.44" y="449" text-anchor="middle">2</text>
+  <line class="grid" x1="240.66" y1="186" x2="240.66" y2="432"/>
+  <text class="xs" x="240.66" y="449" text-anchor="middle">3</text>
+  <line class="grid" x1="292.87" y1="186" x2="292.87" y2="432"/>
+  <text class="xs" x="292.87" y="449" text-anchor="middle">4</text>
+  <line class="guide" x1="200" y1="219.93" x2="200" y2="432"/>
+  <line class="axis" x1="84" y1="432" x2="322" y2="432"/>
+  <polygon class="axis-fill" points="322,432 315.5,435.12 315.5,428.88"/>
+  <line class="axis" x1="84" y1="432" x2="84" y2="178"/>
+  <polygon class="axis-fill" points="84,178 87.12,184.5 80.88,184.5"/>
+  <text class="sm" x="200" y="472" text-anchor="middle">时间 t（无量纲模型单位）</text>
+  <text class="sm" x="44" y="309" text-anchor="middle" transform="rotate(-90 44 309)">位置概率 p(t)</text>
+  <path class="c1" stroke-width="2.2" d="M 84 219.93 L 85.66 220.14 L 87.31 220.78 L 88.97 221.85 L 90.63 223.33 L 92.29 225.21 L 93.94 227.5 L 95.6 230.18 L 97.26 233.24 L 98.91 236.65 L 100.57 240.41 L 102.23 244.5 L 103.89 248.89 L 105.54 253.56 L 107.2 258.5 L 108.86 263.67 L 110.51 269.06 L 112.17 274.64 L 113.83 280.39 L 115.49 286.27 L 117.14 292.26 L 118.8 298.34 L 120.46 304.48 L 122.11 310.65 L 123.77 316.83 L 125.43 323 L 127.09 329.12 L 128.74 335.18 L 130.4 341.15 L 132.06 347.02 L 133.71 352.76 L 135.37 358.36 L 137.03 363.79 L 138.69 369.05 L 140.34 374.12 L 142 378.98 L 143.66 383.63 L 145.31 388.06 L 146.97 392.26 L 148.63 396.23 L 150.29 399.95 L 151.94 403.44 L 153.6 406.69 L 155.26 409.69 L 156.91 412.47 L 158.57 415.01 L 160.23 417.32 L 161.89 419.42 L 163.54 421.31 L 165.2 422.99 L 166.86 424.48 L 168.51 425.8 L 170.17 426.94 L 171.83 427.93 L 173.49 428.77 L 175.14 429.48 L 176.8 430.07 L 178.46 430.55 L 180.11 430.94 L 181.77 431.24 L 183.43 431.48 L 185.09 431.66 L 186.74 431.78 L 188.4 431.87 L 190.06 431.93 L 191.71 431.97 L 193.37 431.99 L 195.03 432 L 196.69 432 L 198.34 432 L 200 432 L 201.66 432 L 203.31 432 L 204.97 432 L 206.63 431.99 L 208.29 431.97 L 209.94 431.93 L 211.6 431.87 L 213.26 431.78 L 214.91 431.66 L 216.57 431.48 L 218.23 431.24 L 219.89 430.94 L 221.54 430.55 L 223.2 430.07 L 224.86 429.48 L 226.51 428.77 L 228.17 427.93 L 229.83 426.94 L 231.49 425.8 L 233.14 424.48 L 234.8 422.99 L 236.46 421.31 L 238.11 419.42 L 239.77 417.32 L 241.43 415.01 L 243.09 412.47 L 244.74 409.69 L 246.4 406.69 L 248.06 403.44 L 249.71 399.95 L 251.37 396.23 L 253.03 392.26 L 254.69 388.06 L 256.34 383.63 L 258 378.98 L 259.66 374.12 L 261.31 369.05 L 262.97 363.79 L 264.63 358.36 L 266.29 352.76 L 267.94 347.02 L 269.6 341.15 L 271.26 335.18 L 272.91 329.12 L 274.57 323 L 276.23 316.83 L 277.89 310.65 L 279.54 304.48 L 281.2 298.34 L 282.86 292.26 L 284.51 286.27 L 286.17 280.39 L 287.83 274.64 L 289.49 269.06 L 291.14 263.67 L 292.8 258.5 L 294.46 253.56 L 296.11 248.89 L 297.77 244.5 L 299.43 240.41 L 301.09 236.65 L 302.74 233.24 L 304.4 230.18 L 306.06 227.5 L 307.71 225.21 L 309.37 223.33 L 311.03 221.85 L 312.69 220.78 L 314.34 220.14 L 316 219.93"/>
+  <path class="c2" stroke-width="2.0" stroke-dasharray="6 3" d="M 84 432 L 85.66 431.79 L 87.31 431.15 L 88.97 430.09 L 90.63 428.62 L 92.29 426.75 L 93.94 424.5 L 95.6 421.87 L 97.26 418.91 L 98.91 415.62 L 100.57 412.04 L 102.23 408.19 L 103.89 404.11 L 105.54 399.82 L 107.2 395.37 L 108.86 390.78 L 110.51 386.1 L 112.17 381.36 L 113.83 376.6 L 115.49 371.87 L 117.14 367.19 L 118.8 362.6 L 120.46 358.15 L 122.11 353.86 L 123.77 349.78 L 125.43 345.93 L 127.09 342.34 L 128.74 339.06 L 130.4 336.09 L 132.06 333.47 L 133.71 331.22 L 135.37 329.35 L 137.03 327.88 L 138.69 326.82 L 140.34 326.18 L 142 325.97 L 143.66 326.18 L 145.31 326.82 L 146.97 327.88 L 148.63 329.35 L 150.29 331.22 L 151.94 333.47 L 153.6 336.09 L 155.26 339.06 L 156.91 342.34 L 158.57 345.93 L 160.23 349.78 L 161.89 353.86 L 163.54 358.15 L 165.2 362.6 L 166.86 367.19 L 168.51 371.87 L 170.17 376.6 L 171.83 381.36 L 173.49 386.1 L 175.14 390.78 L 176.8 395.37 L 178.46 399.82 L 180.11 404.11 L 181.77 408.19 L 183.43 412.04 L 185.09 415.62 L 186.74 418.91 L 188.4 421.87 L 190.06 424.5 L 191.71 426.75 L 193.37 428.62 L 195.03 430.09 L 196.69 431.15 L 198.34 431.79 L 200 432 L 201.66 431.79 L 203.31 431.15 L 204.97 430.09 L 206.63 428.62 L 208.29 426.75 L 209.94 424.5 L 211.6 421.87 L 213.26 418.91 L 214.91 415.62 L 216.57 412.04 L 218.23 408.19 L 219.89 404.11 L 221.54 399.82 L 223.2 395.37 L 224.86 390.78 L 226.51 386.1 L 228.17 381.36 L 229.83 376.6 L 231.49 371.87 L 233.14 367.19 L 234.8 362.6 L 236.46 358.15 L 238.11 353.86 L 239.77 349.78 L 241.43 345.93 L 243.09 342.34 L 244.74 339.06 L 246.4 336.09 L 248.06 333.47 L 249.71 331.22 L 251.37 329.35 L 253.03 327.88 L 254.69 326.82 L 256.34 326.18 L 258 325.97 L 259.66 326.18 L 261.31 326.82 L 262.97 327.88 L 264.63 329.35 L 266.29 331.22 L 267.94 333.47 L 269.6 336.09 L 271.26 339.06 L 272.91 342.34 L 274.57 345.93 L 276.23 349.78 L 277.89 353.86 L 279.54 358.15 L 281.2 362.6 L 282.86 367.19 L 284.51 371.87 L 286.17 376.6 L 287.83 381.36 L 289.49 386.1 L 291.14 390.78 L 292.8 395.37 L 294.46 399.82 L 296.11 404.11 L 297.77 408.19 L 299.43 412.04 L 301.09 415.62 L 302.74 418.91 L 304.4 421.87 L 306.06 424.5 L 307.71 426.75 L 309.37 428.62 L 311.03 430.09 L 312.69 431.15 L 314.34 431.79 L 316 432"/>
+  <path class="c3" stroke-width="2.2" stroke-dasharray="5 2 1.5 2" d="M 84 432 L 85.66 432 L 87.31 432 L 88.97 432 L 90.63 431.99 L 92.29 431.97 L 93.94 431.93 L 95.6 431.87 L 97.26 431.78 L 98.91 431.66 L 100.57 431.48 L 102.23 431.24 L 103.89 430.94 L 105.54 430.55 L 107.2 430.07 L 108.86 429.48 L 110.51 428.77 L 112.17 427.93 L 113.83 426.94 L 115.49 425.8 L 117.14 424.48 L 118.8 422.99 L 120.46 421.31 L 122.11 419.42 L 123.77 417.32 L 125.43 415.01 L 127.09 412.47 L 128.74 409.69 L 130.4 406.69 L 132.06 403.44 L 133.71 399.95 L 135.37 396.23 L 137.03 392.26 L 138.69 388.06 L 140.34 383.63 L 142 378.98 L 143.66 374.12 L 145.31 369.05 L 146.97 363.79 L 148.63 358.36 L 150.29 352.76 L 151.94 347.02 L 153.6 341.15 L 155.26 335.18 L 156.91 329.12 L 158.57 323 L 160.23 316.83 L 161.89 310.65 L 163.54 304.48 L 165.2 298.34 L 166.86 292.26 L 168.51 286.27 L 170.17 280.39 L 171.83 274.64 L 173.49 269.06 L 175.14 263.67 L 176.8 258.5 L 178.46 253.56 L 180.11 248.89 L 181.77 244.5 L 183.43 240.41 L 185.09 236.65 L 186.74 233.24 L 188.4 230.18 L 190.06 227.5 L 191.71 225.21 L 193.37 223.33 L 195.03 221.85 L 196.69 220.78 L 198.34 220.14 L 200 219.93 L 201.66 220.14 L 203.31 220.78 L 204.97 221.85 L 206.63 223.33 L 208.29 225.21 L 209.94 227.5 L 211.6 230.18 L 213.26 233.24 L 214.91 236.65 L 216.57 240.41 L 218.23 244.5 L 219.89 248.89 L 221.54 253.56 L 223.2 258.5 L 224.86 263.67 L 226.51 269.06 L 228.17 274.64 L 229.83 280.39 L 231.49 286.27 L 233.14 292.26 L 234.8 298.34 L 236.46 304.48 L 238.11 310.65 L 239.77 316.83 L 241.43 323 L 243.09 329.12 L 244.74 335.18 L 246.4 341.15 L 248.06 347.02 L 249.71 352.76 L 251.37 358.36 L 253.03 363.79 L 254.69 369.05 L 256.34 374.12 L 258 378.98 L 259.66 383.63 L 261.31 388.06 L 262.97 392.26 L 264.63 396.23 L 266.29 399.95 L 267.94 403.44 L 269.6 406.69 L 271.26 409.69 L 272.91 412.47 L 274.57 415.01 L 276.23 417.32 L 277.89 419.42 L 279.54 421.31 L 281.2 422.99 L 282.86 424.48 L 284.51 425.8 L 286.17 426.94 L 287.83 427.93 L 289.49 428.77 L 291.14 429.48 L 292.8 430.07 L 294.46 430.55 L 296.11 430.94 L 297.77 431.24 L 299.43 431.48 L 301.09 431.66 L 302.74 431.78 L 304.4 431.87 L 306.06 431.93 L 307.71 431.97 L 309.37 431.99 L 311.03 432 L 312.69 432 L 314.34 432 L 316 432"/>
+  <circle class="c3-fill" cx="200" cy="219.93" r="4.8"/>
+  <text class="xsb c3-txt" x="200" y="207.93" text-anchor="middle">t* = π/√2：p₂ = 1.00</text>
+  <rect class="pill" x="40" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="181" y="520" text-anchor="middle">相干干涉在 t* ≈ 2.22 实现 100% 端到端转移</text>
+  <rect class="panel" x="347" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 361 97 H 639 Q 652 97 652 110 V 134 H 348 V 110 Q 348 97 361 97 Z"/>
+  <line class="grid" x1="348" y1="134" x2="652" y2="134"/>
+  <text class="sec" x="363" y="120">B. 对称 QSP 三次奇多项式</text>
+  <line class="c1" stroke-width="2.2" x1="364" y1="158" x2="384" y2="158"/>
+  <text class="xs c1-txt" x="389" y="162">目标 0.3T₁ + 0.2T₃</text>
+  <line class="c2" stroke-width="1.8" x1="513" y1="154" x2="521" y2="162"/>
+  <line class="c2" stroke-width="1.8" x1="521" y1="154" x2="513" y2="162"/>
+  <text class="xs c2-txt" x="527" y="162">QSP 独立相位重建</text>
+  <line class="grid" x1="408" y1="396.86" x2="636" y2="396.86"/>
+  <text class="xs" x="401" y="400.86" text-anchor="end">-0.4</text>
+  <line class="grid" x1="408" y1="352.93" x2="636" y2="352.93"/>
+  <text class="xs" x="401" y="356.93" text-anchor="end">-0.2</text>
+  <line class="guide" x1="408" y1="309" x2="636" y2="309"/>
+  <text class="xs" x="401" y="313" text-anchor="end">0.0</text>
+  <line class="grid" x1="408" y1="265.07" x2="636" y2="265.07"/>
+  <text class="xs" x="401" y="269.07" text-anchor="end">+0.2</text>
+  <line class="grid" x1="408" y1="221.14" x2="636" y2="221.14"/>
+  <text class="xs" x="401" y="225.14" text-anchor="end">+0.4</text>
+  <line class="grid" x1="414.45" y1="186" x2="414.45" y2="432"/>
+  <text class="xs" x="414.45" y="449" text-anchor="middle">-1</text>
+  <line class="grid" x1="468.23" y1="186" x2="468.23" y2="432"/>
+  <text class="xs" x="468.23" y="449" text-anchor="middle">-0.5</text>
+  <line class="guide" x1="522" y1="186" x2="522" y2="432"/>
+  <text class="xs" x="522" y="449" text-anchor="middle">0</text>
+  <line class="grid" x1="575.77" y1="186" x2="575.77" y2="432"/>
+  <text class="xs" x="575.77" y="449" text-anchor="middle">0.5</text>
+  <line class="grid" x1="629.55" y1="186" x2="629.55" y2="432"/>
+  <text class="xs" x="629.55" y="449" text-anchor="middle">1</text>
+  <line class="axis" x1="408" y1="432" x2="642" y2="432"/>
+  <polygon class="axis-fill" points="642,432 635.5,435.12 635.5,428.88"/>
+  <line class="axis" x1="408" y1="432" x2="408" y2="178"/>
+  <polygon class="axis-fill" points="408,178 411.12,184.5 404.88,184.5"/>
+  <text class="sm" x="522" y="472" text-anchor="middle">信号变量 x（无量纲）</text>
+  <text class="sm" x="362" y="309" text-anchor="middle" transform="rotate(-90 362 309)">矩阵元虚部 Im U₀₀</text>
+  <path class="c1" stroke-width="2.3" d="M 414.45 418.82 L 416.25 411.28 L 418.04 404.03 L 419.83 397.05 L 421.62 390.36 L 423.42 383.94 L 425.21 377.79 L 427 371.9 L 428.79 366.28 L 430.58 360.9 L 432.38 355.78 L 434.17 350.89 L 435.96 346.25 L 437.75 341.84 L 439.55 337.66 L 441.34 333.71 L 443.13 329.98 L 444.92 326.46 L 446.72 323.14 L 448.51 320.04 L 450.3 317.13 L 452.09 314.43 L 453.89 311.91 L 455.68 309.57 L 457.47 307.42 L 459.26 305.44 L 461.06 303.63 L 462.85 301.99 L 464.64 300.51 L 466.43 299.19 L 468.23 298.02 L 470.02 296.99 L 471.81 296.11 L 473.6 295.36 L 475.4 294.74 L 477.19 294.26 L 478.98 293.89 L 480.77 293.64 L 482.57 293.5 L 484.36 293.47 L 486.15 293.54 L 487.94 293.71 L 489.74 293.98 L 491.53 294.33 L 493.32 294.76 L 495.11 295.27 L 496.91 295.86 L 498.7 296.51 L 500.49 297.23 L 502.28 298 L 504.08 298.83 L 505.87 299.71 L 507.66 300.63 L 509.45 301.59 L 511.25 302.59 L 513.04 303.61 L 514.83 304.66 L 516.62 305.73 L 518.42 306.81 L 520.21 307.9 L 522 309 L 523.79 310.1 L 525.58 311.19 L 527.38 312.27 L 529.17 313.34 L 530.96 314.39 L 532.75 315.41 L 534.55 316.41 L 536.34 317.37 L 538.13 318.29 L 539.92 319.17 L 541.72 320 L 543.51 320.77 L 545.3 321.49 L 547.09 322.14 L 548.89 322.73 L 550.68 323.24 L 552.47 323.67 L 554.26 324.02 L 556.06 324.29 L 557.85 324.46 L 559.64 324.53 L 561.43 324.5 L 563.23 324.36 L 565.02 324.11 L 566.81 323.74 L 568.6 323.26 L 570.4 322.64 L 572.19 321.89 L 573.98 321.01 L 575.77 319.98 L 577.57 318.81 L 579.36 317.49 L 581.15 316.01 L 582.94 314.37 L 584.74 312.56 L 586.53 310.58 L 588.32 308.43 L 590.11 306.09 L 591.91 303.57 L 593.7 300.87 L 595.49 297.96 L 597.28 294.86 L 599.08 291.54 L 600.87 288.02 L 602.66 284.29 L 604.45 280.34 L 606.25 276.16 L 608.04 271.75 L 609.83 267.11 L 611.62 262.22 L 613.42 257.1 L 615.21 251.72 L 617 246.1 L 618.79 240.21 L 620.58 234.06 L 622.38 227.64 L 624.17 220.95 L 625.96 213.97 L 627.75 206.72 L 629.55 199.18"/>
+  <line class="c2" stroke-width="1.8" x1="410.65" y1="415.02" x2="418.25" y2="422.62"/>
+  <line class="c2" stroke-width="1.8" x1="418.25" y1="415.02" x2="410.65" y2="422.62"/>
+  <line class="c2" stroke-width="1.8" x1="424.1" y1="365.26" x2="431.7" y2="372.86"/>
+  <line class="c2" stroke-width="1.8" x1="431.7" y1="365.26" x2="424.1" y2="372.86"/>
+  <line class="c2" stroke-width="1.8" x1="437.54" y1="329.91" x2="445.14" y2="337.51"/>
+  <line class="c2" stroke-width="1.8" x1="445.14" y1="329.91" x2="437.54" y2="337.51"/>
+  <line class="c2" stroke-width="1.8" x1="450.98" y1="306.92" x2="458.58" y2="314.52"/>
+  <line class="c2" stroke-width="1.8" x1="458.58" y1="306.92" x2="450.98" y2="314.52"/>
+  <line class="c2" stroke-width="1.8" x1="464.43" y1="294.22" x2="472.03" y2="301.82"/>
+  <line class="c2" stroke-width="1.8" x1="472.03" y1="294.22" x2="464.43" y2="301.82"/>
+  <line class="c2" stroke-width="1.8" x1="477.87" y1="289.76" x2="485.47" y2="297.36"/>
+  <line class="c2" stroke-width="1.8" x1="485.47" y1="289.76" x2="477.87" y2="297.36"/>
+  <line class="c2" stroke-width="1.8" x1="491.31" y1="291.47" x2="498.91" y2="299.07"/>
+  <line class="c2" stroke-width="1.8" x1="498.91" y1="291.47" x2="491.31" y2="299.07"/>
+  <line class="c2" stroke-width="1.8" x1="504.76" y1="297.31" x2="512.36" y2="304.91"/>
+  <line class="c2" stroke-width="1.8" x1="512.36" y1="297.31" x2="504.76" y2="304.91"/>
+  <line class="c2" stroke-width="1.8" x1="518.2" y1="305.2" x2="525.8" y2="312.8"/>
+  <line class="c2" stroke-width="1.8" x1="525.8" y1="305.2" x2="518.2" y2="312.8"/>
+  <line class="c2" stroke-width="1.8" x1="531.64" y1="313.09" x2="539.24" y2="320.69"/>
+  <line class="c2" stroke-width="1.8" x1="539.24" y1="313.09" x2="531.64" y2="320.69"/>
+  <line class="c2" stroke-width="1.8" x1="545.09" y1="318.93" x2="552.69" y2="326.53"/>
+  <line class="c2" stroke-width="1.8" x1="552.69" y1="318.93" x2="545.09" y2="326.53"/>
+  <line class="c2" stroke-width="1.8" x1="558.53" y1="320.64" x2="566.13" y2="328.24"/>
+  <line class="c2" stroke-width="1.8" x1="566.13" y1="320.64" x2="558.53" y2="328.24"/>
+  <line class="c2" stroke-width="1.8" x1="571.97" y1="316.18" x2="579.57" y2="323.78"/>
+  <line class="c2" stroke-width="1.8" x1="579.57" y1="316.18" x2="571.97" y2="323.78"/>
+  <line class="c2" stroke-width="1.8" x1="585.42" y1="303.48" x2="593.02" y2="311.08"/>
+  <line class="c2" stroke-width="1.8" x1="593.02" y1="303.48" x2="585.42" y2="311.08"/>
+  <line class="c2" stroke-width="1.8" x1="598.86" y1="280.49" x2="606.46" y2="288.09"/>
+  <line class="c2" stroke-width="1.8" x1="606.46" y1="280.49" x2="598.86" y2="288.09"/>
+  <line class="c2" stroke-width="1.8" x1="612.3" y1="245.14" x2="619.9" y2="252.74"/>
+  <line class="c2" stroke-width="1.8" x1="619.9" y1="245.14" x2="612.3" y2="252.74"/>
+  <line class="c2" stroke-width="1.8" x1="625.75" y1="195.38" x2="633.35" y2="202.98"/>
+  <line class="c2" stroke-width="1.8" x1="633.35" y1="195.38" x2="625.75" y2="202.98"/>
+  <rect class="pill-bg" x="415" y="194" width="118" height="44" rx="7"/>
+  <text class="xsb c1-txt" x="474" y="212" text-anchor="middle">P(x) = 0.8x³ − 0.3x</text>
+  <text class="xs" x="474" y="229" text-anchor="middle">最大偏差 1.9e-16</text>
+  <rect class="pill" x="359" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="500" y="520" text-anchor="middle">四对称相位将多项式编码在虚部 Im U₀₀</text>
+  <rect class="panel" x="666" y="96" width="306" height="456" rx="14"/>
+  <path class="phead" d="M 680 97 H 958 Q 971 97 971 110 V 134 H 667 V 110 Q 667 97 680 97 Z"/>
+  <line class="grid" x1="667" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="682" y="120">C. 相干态 Fock 截断误差</text>
+  <line class="c1" stroke-width="2.0" x1="686" y1="158" x2="706" y2="158"/>
+  <circle class="c1-fill" cx="696" cy="158" r="3.5"/>
+  <text class="xs c1-txt" x="712" y="162">遗漏尾概率 ε</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="5 3" x1="808" y1="158" x2="828" y2="158"/>
+  <rect class="c2-fill" x="814.5" y="154.5" width="7" height="7" rx="1"/>
+  <text class="xs c2-txt" x="834" y="162">迹距离 √ε</text>
+  <line class="grid" x1="736" y1="195.22" x2="956" y2="195.22"/>
+  <text class="xs" x="729" y="199.22" text-anchor="end">10<tspan dy="-4.5" font-size="74%">0</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="736" y1="241.35" x2="956" y2="241.35"/>
+  <text class="xs" x="729" y="245.35" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="736" y1="287.48" x2="956" y2="287.48"/>
+  <text class="xs" x="729" y="291.48" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="736" y1="333.6" x2="956" y2="333.6"/>
+  <text class="xs" x="729" y="337.6" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-9</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="736" y1="379.73" x2="956" y2="379.73"/>
+  <text class="xs" x="729" y="383.73" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-12</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="736" y1="425.85" x2="956" y2="425.85"/>
+  <text class="xs" x="729" y="429.85" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-15</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="743.33" y1="186" x2="743.33" y2="432"/>
+  <text class="xs" x="743.33" y="449" text-anchor="middle">2</text>
+  <line class="grid" x1="802" y1="186" x2="802" y2="432"/>
+  <text class="xs" x="802" y="449" text-anchor="middle">6</text>
+  <line class="grid" x1="860.67" y1="186" x2="860.67" y2="432"/>
+  <text class="xs" x="860.67" y="449" text-anchor="middle">10</text>
+  <line class="grid" x1="919.33" y1="186" x2="919.33" y2="432"/>
+  <text class="xs" x="919.33" y="449" text-anchor="middle">14</text>
+  <line class="grid" x1="948.67" y1="186" x2="948.67" y2="432"/>
+  <text class="xs" x="948.67" y="449" text-anchor="middle">16</text>
+  <line class="axis" x1="736" y1="432" x2="962" y2="432"/>
+  <polygon class="axis-fill" points="962,432 955.5,435.12 955.5,428.88"/>
+  <line class="axis" x1="736" y1="432" x2="736" y2="178"/>
+  <polygon class="axis-fill" points="736,178 739.12,184.5 732.88,184.5"/>
+  <text class="sm" x="846" y="472" text-anchor="middle">Fock 截断维数 d（整数）</text>
+  <text class="sm" x="681" y="309" text-anchor="middle" transform="rotate(-90 681 309)">无量纲误差（对数刻度）</text>
+  <path class="c1" stroke-width="2.1" d="M 743.33 204.11 L 758 212.06 L 772.67 221.69 L 787.33 232.69 L 802 244.83 L 816.67 257.95 L 831.33 271.94 L 846 286.69 L 860.67 302.13 L 875.33 318.19 L 890 334.83 L 904.67 352 L 919.33 369.65 L 934 387.76 L 948.67 406.3"/>
+  <path class="c2" stroke-width="2.0" stroke-dasharray="6 3" d="M 743.33 199.67 L 758 203.64 L 772.67 208.46 L 787.33 213.96 L 802 220.03 L 816.67 226.59 L 831.33 233.58 L 846 240.96 L 860.67 248.68 L 875.33 256.71 L 890 265.03 L 904.67 273.61 L 919.33 282.44 L 934 291.49 L 948.67 300.76"/>
+  <circle class="c1-fill" cx="743.33" cy="204.11" r="3.4"/>
+  <circle class="c1-fill" cx="758" cy="212.06" r="3.4"/>
+  <circle class="c1-fill" cx="772.67" cy="221.69" r="3.4"/>
+  <circle class="c1-fill" cx="787.33" cy="232.69" r="3.4"/>
+  <circle class="c1-fill" cx="802" cy="244.83" r="3.4"/>
+  <circle class="c1-fill" cx="816.67" cy="257.95" r="3.4"/>
+  <circle class="c1-fill" cx="831.33" cy="271.94" r="3.4"/>
+  <circle class="c1-fill" cx="846" cy="286.69" r="3.4"/>
+  <circle class="c1-fill" cx="860.67" cy="302.13" r="3.4"/>
+  <circle class="c1-fill" cx="875.33" cy="318.19" r="3.4"/>
+  <circle class="c1-fill" cx="890" cy="334.83" r="3.4"/>
+  <circle class="c1-fill" cx="904.67" cy="352" r="3.4"/>
+  <circle class="c1-fill" cx="919.33" cy="369.65" r="3.4"/>
+  <circle class="c1-fill" cx="934" cy="387.76" r="3.4"/>
+  <circle class="c1-fill" cx="948.67" cy="406.3" r="3.4"/>
+  <rect class="c2-fill" x="740.23" y="196.57" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="754.9" y="200.54" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="769.57" y="205.36" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="784.23" y="210.86" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="798.9" y="216.93" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="813.57" y="223.49" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="828.23" y="230.48" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="842.9" y="237.86" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="857.57" y="245.58" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="872.23" y="253.61" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="886.9" y="261.93" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="901.57" y="270.51" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="916.23" y="279.34" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="930.9" y="288.39" width="6.2" height="6.2" rx="1"/>
+  <rect class="c2-fill" x="945.57" y="297.66" width="6.2" height="6.2" rx="1"/>
+  <rect class="pill-bg" x="744" y="368" width="114" height="44" rx="7"/>
+  <text class="xsb" x="801" y="386" text-anchor="middle">|α|² = 1 相干态</text>
+  <text class="xs c2-txt" x="801" y="403" text-anchor="middle">迹距离 = √(尾概率)</text>
+  <rect class="pill" x="678" y="496" width="282" height="40" rx="8"/>
+  <text class="xs" x="819" y="520" text-anchor="middle">d = 16：ε = 1.9e-14，迹距离 √ε = 1.4e-07</text>
+</svg>

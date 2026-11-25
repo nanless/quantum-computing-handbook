@@ -105,7 +105,7 @@
         "-Wextra",
         "-I",
         "/private/tmp/quantum-round72-liboqs/build/include",
-        "/Users/francis7999/.codex/.chatgpt-projects/g-p-6ab21b113ea081918a428a0f15b5b5eb/quantum-computing-handbook/codes/systems/sdk/liboqs_roundtrip.c",
+        "<REPO_ROOT>/codes/systems/sdk/liboqs_roundtrip.c",
         "/private/tmp/quantum-round72-liboqs/build/lib/liboqs.a",
         "-o",
         "/private/tmp/quantum-round72-liboqs/build/round72-roundtrip"

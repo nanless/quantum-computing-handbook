@@ -2,7 +2,7 @@
   <title id="title">带负谱非网格 HHL 有限相位误差与 16 顶点离散量子行走搜索</title>
   <desc id="desc">三联科学图基于本地精确模拟归档数据：左图对比非网格带负特征值 (−1.1, 2.3) 的 HHL 线路在相位寄存器位数 t = 3..6 下仅选标志位与同时要求相位归零两类成功概率；中图展示条件混态根保真度与残留非零相位垃圾占比；右图展示 4 维超立方体（16 顶点）SKW 离散量子行走的标记顶点概率，在第 4 步达最早峰值 25/64，第 8 步过步回落至 1/256。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -48,46 +48,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
 .hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
 .hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .grid-minor{stroke:#213344}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#1c2c3b;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
-  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
-  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
-  .hollow-c2{fill:#16222e;stroke:#f28872}
-  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
-  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
-  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
-}
+
   </style>
   <defs>
     <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>

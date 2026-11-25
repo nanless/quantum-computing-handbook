@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 648" role="img" aria-labelledby="v3-09-entangling-gates-six-platforms-title v3-09-entangling-gates-six-platforms-desc">
+  <title id="v3-09-entangling-gates-six-platforms-title">六大硬件平台双比特物理纠缠门核心机制对照</title>
+  <desc id="v3-09-entangling-gates-six-platforms-desc">六宫格示意图并排展示超导 CR/可调耦合器、离子阱 MS 声子边带、中性原子里德堡阻塞、光子 HOM 聚束、硅自旋海森堡交换与拓扑 Kitaev 链端点零模的双比特纠缠物理机制。</desc>
+  <style>
+    :root{color-scheme:dark}
+    .bg{fill:#f8fafc}
+    .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
+    .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
+    .pill{fill:#ffffff;fill-opacity:.96;stroke:#8fa6ba;stroke-width:1.2}
+    .ink{fill:#13263a}
+    .muted{fill:#496176}
+    .accent{fill:#0e6b8a}
+    .warn{fill:#b93c3c}
+    .gold{fill:#9c6510}
+    .purple{fill:#5b42a6}
+    .green{fill:#1d7557}
+    .axis{stroke:#2b465e;stroke-width:1.6;fill:none}
+    .axishead{fill:#2b465e}
+    .grid{stroke:#dce6ef;stroke-width:1;stroke-dasharray:4 4;fill:none}
+    .divider{stroke:#c6d5e2;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+    .s-accent{stroke:#0e6b8a;fill:none}
+    .s-warn{stroke:#c04040;fill:none}
+    .s-gold{stroke:#a8640b;fill:none}
+    .s-purple{stroke:#5b42a6;fill:none}
+    .s-green{stroke:#1d7557;fill:none}
+    .s-muted{stroke:#688299;fill:none}
+    .f-accent{fill:#bae6fd;fill-opacity:.48;stroke:#0e6b8a;stroke-width:1.8}
+    .f-warn{fill:#fecaca;fill-opacity:.50;stroke:#c04040;stroke-width:1.8}
+    .f-gold{fill:#fde68a;fill-opacity:.52;stroke:#a8640b;stroke-width:1.8}
+    .f-purple{fill:#ddd6fe;fill-opacity:.50;stroke:#5b42a6;stroke-width:1.8}
+    .f-green{fill:#bbf7d0;fill-opacity:.50;stroke:#1d7557;stroke-width:1.8}
+    .b-accent{fill:#0e6b8a;fill-opacity:.82;stroke:#0a5068;stroke-width:1.4}
+    .b-warn{fill:#c04040;fill-opacity:.82;stroke:#962b2b;stroke-width:1.4}
+    .b-gold{fill:#c47a14;fill-opacity:.82;stroke:#8f5609;stroke-width:1.4}
+    .b-purple{fill:#6448b5;fill-opacity:.82;stroke:#483287;stroke-width:1.4}
+    .b-green{fill:#1d7557;fill-opacity:.82;stroke:#13543e;stroke-width:1.4}
+    .wire{stroke:#1d3b54;stroke-width:2.0;fill:none}
+    .ctrl{fill:#13263a}
+    .dot-ring{stroke:#ffffff;stroke-width:1.5}
+    .title{font:700 19.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .subtitle{font:400 13.2px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .h2{font:600 14px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .lbl{font:500 12.8px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .sm{font:400 12px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .xs{font:400 11px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
+    .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
+    
+    
+.bg{fill:#101820}
+      .card{fill:#162330;stroke:#395066}
+      .subcard{fill:#1d2e3d;stroke:#3d566d}
+      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
+      .ink{fill:#eef6ff}
+      .muted{fill:#b4c8da}
+      .accent{fill:#6ed0f7}
+      .warn{fill:#ff8585}
+      .gold{fill:#f2c15a}
+      .purple{fill:#c0adff}
+      .green{fill:#6dd4aa}
+      .axis{stroke:#b9d0e2}
+      .axishead{fill:#b9d0e2}
+      .grid{stroke:#304659}
+      .divider{stroke:#4a637a}
+      .s-accent{stroke:#6ed0f7}
+      .s-warn{stroke:#ff8585}
+      .s-gold{stroke:#f2c15a}
+      .s-purple{stroke:#c0adff}
+      .s-green{stroke:#6dd4aa}
+      .s-muted{stroke:#8ca5ba}
+      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
+      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
+      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
+      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
+      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
+      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
+      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
+      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
+      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
+      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
+      .wire{stroke:#c9deee}
+      .ctrl{fill:#eef6ff}
+      .dot-ring{stroke:#162330}
+
+  </style>
+  <rect class="bg" width="1000" height="648" rx="20"/>
+  <text class="title ink" x="34" y="44">六大硬件平台双比特物理纠缠门核心机制对照</text>
+  <text class="subtitle muted" x="34" y="68">非等比例物理机理示意图：并排呈现六条硬件路线的耦合媒介、原生纠缠门哈密顿量与关键解耦边界</text>
+  <rect class="card" x="32" y="84" width="304" height="246" rx="12"/>
+  <text class="h2 accent" x="46" y="108">(1) 超导：CR / 可调耦合器</text>
+  <text class="xs muted" x="46" y="128">原生 ECR(ZX) / CZ · 20–160 ns</text>
+  <rect class="subcard" x="40" y="266" width="288" height="54" rx="7"/>
+  <text class="xs accent" style="font-weight:600" x="48" y="286">g<tspan dy="3" font-size="9.2">eff</tspan><tspan dy="-3">&#8203;</tspan>(ω<tspan dy="3" font-size="9.2">c</tspan><tspan dy="-3">&#8203;</tspan>) = g<tspan dy="3" font-size="9.2">12</tspan><tspan dy="-3">&#8203;</tspan> + g<tspan dy="3" font-size="9.2">1c</tspan><tspan dy="-3">&#8203;</tspan>g<tspan dy="3" font-size="9.2">2c</tspan><tspan dy="-3">&#8203;</tspan>(1/Δ<tspan dy="3" font-size="9.2">1c</tspan><tspan dy="-3">&#8203;</tspan>+1/Δ<tspan dy="3" font-size="9.2">2c</tspan><tspan dy="-3">&#8203;</tspan>)/2</text>
+  <text class="xs muted" x="48" y="309">关断 g<tspan dy="3" font-size="9.2">eff</tspan><tspan dy="-3">&#8203;</tspan>=0 抑 ZZ；CR 门依赖非谐性 α<tspan dy="3" font-size="9.2">c</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <path class="s-muted" style="stroke-width:1.4;stroke-dasharray:4 3" d="M74.0 180.0Q136.0 152.0 198.0 180.0"/>
+  <text class="xs muted" x="136.0" y="156.0" text-anchor="middle">直接耦合 g<tspan dy="3" font-size="9.2">12</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="wire" x1="92.0" y1="202.0" x2="120.0" y2="202.0"/>
+  <line class="wire" x1="152.0" y1="202.0" x2="180.0" y2="202.0"/>
+  <rect class="f-accent" x="56.0" y="184.0" width="36" height="36" rx="8"/>
+  <text class="lbl ink" x="74.0" y="207.0" text-anchor="middle">Q<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <path class="f-purple" d="M136.0 182.0L156.0 202.0L136.0 222.0L116.0 202.0Z"/>
+  <text class="xs purple" style="font-weight:700" x="136.0" y="206.0" text-anchor="middle">Q<tspan dy="3" font-size="9.2">c</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs purple" x="136.0" y="240.0" text-anchor="middle">磁通调 ω<tspan dy="3" font-size="9.2">c</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <rect class="f-accent" x="180.0" y="184.0" width="36" height="36" rx="8"/>
+  <text class="lbl ink" x="198.0" y="207.0" text-anchor="middle">Q<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.2" x1="234.0" y1="234.0" x2="320.0" y2="234.0"/>
+  <line class="axis" style="stroke-width:1.2" x1="234.0" y1="234.0" x2="234.0" y2="152.0"/>
+  <path class="s-warn" style="stroke-width:2.0" d="M242.00 166.80L245.00 168.70L248.00 170.58L251.00 172.43L254.00 174.25L257.00 176.03L260.00 177.75L263.00 179.39L266.00 180.91L269.00 182.25L272.00 183.34L275.00 184.06L278.00 184.32L281.00 184.06L284.00 183.34L287.00 182.25L290.00 180.91L293.00 179.39L296.00 177.75L299.00 176.03L302.00 174.25L305.00 172.43L308.00 170.58L311.00 168.70L314.00 166.80"/>
+  <path class="s-accent" style="stroke-width:2.0" d="M242.00 217.20L245.00 215.30L248.00 213.42L251.00 211.57L254.00 209.75L257.00 207.97L260.00 206.25L263.00 204.61L266.00 203.09L269.00 201.75L272.00 200.66L275.00 199.94L278.00 199.68L281.00 199.94L284.00 200.66L287.00 201.75L290.00 203.09L293.00 204.61L296.00 206.25L299.00 207.97L302.00 209.75L305.00 211.57L308.00 213.42L311.00 215.30L314.00 217.20"/>
+  <text class="xs warn" x="278.0" y="162.0" text-anchor="middle">|20⟩</text>
+  <text class="xs accent" x="278.0" y="226.0" text-anchor="middle">|11⟩ → −|11⟩</text>
+  <rect class="card" x="348" y="84" width="304" height="246" rx="12"/>
+  <text class="h2 gold" x="362" y="108">(2) 离子阱：Mølmer–Sørensen 门</text>
+  <text class="xs muted" x="362" y="128">原生 X₁X₂ 门 · 10–100 μs</text>
+  <rect class="subcard" x="356" y="266" width="288" height="54" rx="7"/>
+  <text class="xs gold" style="font-weight:600" x="364" y="286">H<tspan dy="3" font-size="9.2">MS</tspan><tspan dy="-3">&#8203;</tspan> ∝ (X<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan>+X<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>)(a e<tspan dy="-4.5" font-size="9.2">−iδt</tspan><tspan dy="4.5">&#8203;</tspan> + a† e<tspan dy="-4.5" font-size="9.2">iδt</tspan><tspan dy="4.5">&#8203;</tspan>)</text>
+  <text class="xs muted" x="364" y="309">t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>=2πK/|δ| 令 α(t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>)=0 闭合，一阶免疫热声子</text>
+  <circle class="f-gold" cx="388.0" cy="202.0" r="14"/>
+  <text class="lbl gold" style="font-weight:700" x="388.0" y="207.0" text-anchor="middle">+</text>
+  <circle class="f-gold" cx="476.0" cy="202.0" r="14"/>
+  <text class="lbl gold" style="font-weight:700" x="476.0" y="207.0" text-anchor="middle">+</text>
+  <path class="s-muted" style="stroke-width:1.8" d="M402.00 202.00L408.00 195.00L416.00 209.00L424.00 195.00L432.00 209.00L440.00 195.00L448.00 209.00L456.00 195.00L462.00 202.00"/>
+  <text class="xs muted" x="432.0" y="232.0" text-anchor="middle">集体声子模 ω<tspan dy="3" font-size="9.2">m</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="s-warn" style="stroke-width:1.8;stroke-dasharray:4 2" x1="370.0" y1="158.0" x2="388.0" y2="186.0"/>
+  <line class="s-accent" style="stroke-width:1.8;stroke-dasharray:4 2" x1="494.0" y1="158.0" x2="476.0" y2="186.0"/>
+  <text class="xs warn" x="366.0" y="154.0">红边带 ω<tspan dy="3" font-size="9.2">r</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs accent" x="502.0" y="154.0" text-anchor="end">蓝边带 ω<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.1" x1="530.0" y1="226.0" x2="634.0" y2="226.0"/>
+  <line class="axis" style="stroke-width:1.1" x1="582.0" y1="236.0" x2="582.0" y2="148.0"/>
+  <circle class="f-gold" cx="582.0" cy="193.0" r="33.0"/>
+  <circle class="ctrl" cx="582.0" cy="226.0" r="3.6"/>
+  <path class="gold" d="M586.00 160.00L579.00 162.25L579.00 157.75Z"/>
+  <text class="xs gold" style="font-weight:700" x="582.0" y="197.0" text-anchor="middle">面积∝θ</text>
+  <text class="xs ink" x="614.0" y="244.0" text-anchor="middle">α(t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>)=0</text>
+  <rect class="card" x="664" y="84" width="304" height="246" rx="12"/>
+  <text class="h2 green" x="678" y="108">(3) 中性原子：里德堡阻塞</text>
+  <text class="xs muted" x="678" y="128">全局并行 CZ · 200–300 ns</text>
+  <rect class="subcard" x="672" y="266" width="288" height="54" rx="7"/>
+  <text class="xs green" style="font-weight:600" x="680" y="286">V(R) = C<tspan dy="3" font-size="9.2">6</tspan><tspan dy="-3">&#8203;</tspan>/R<tspan dy="-4.5" font-size="9.2">6</tspan><tspan dy="4.5">&#8203;</tspan>,  R<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan> = (C<tspan dy="3" font-size="9.2">6</tspan><tspan dy="-3">&#8203;</tspan>/ħΩ)<tspan dy="-4.5" font-size="9.2">1/6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs muted" x="680" y="309">强阻塞 R≪R<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan> 禁 |rr⟩，|11⟩↔|W⟩ 快 √2 倍</text>
+  <circle class="f-green" style="fill-opacity:.22;stroke-dasharray:5 3" cx="732.0" cy="198.0" r="44"/>
+  <circle class="b-green" cx="716.0" cy="198.0" r="7.5"/>
+  <circle class="b-green" cx="748.0" cy="198.0" r="7.5"/>
+  <line class="axis" style="stroke-width:1.2" x1="716.0" y1="214.0" x2="748.0" y2="214.0"/>
+  <text class="xs ink" x="732.0" y="229.0" text-anchor="middle">R &lt; R<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs green" style="font-weight:600" x="732.0" y="170.0" text-anchor="middle">阻塞圈 R<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="wire" x1="814.0" y1="238.0" x2="880.0" y2="238.0"/>
+  <text class="xs ink" x="886.0" y="242.0">|11⟩</text>
+  <line class="wire" x1="814.0" y1="198.0" x2="880.0" y2="198.0"/>
+  <text class="xs green" style="font-weight:600" x="886.0" y="202.0">|W⟩</text>
+  <line class="s-muted" style="stroke-width:1.4;stroke-dasharray:4 3" x1="814.0" y1="168.0" x2="880.0" y2="168.0"/>
+  <line class="s-warn" style="stroke-width:2.2" x1="814.0" y1="148.0" x2="880.0" y2="148.0"/>
+  <text class="xs warn" style="font-weight:700" x="886.0" y="152.0">|rr⟩ 阻塞!</text>
+  <line class="s-green" style="stroke-width:2.0" x1="846.0" y1="234.0" x2="846.0" y2="202.0"/>
+  <path class="green" d="M846.00 200.00L848.25 207.00L843.75 207.00Z"/>
+  <text class="xs green" style="font-weight:700" x="840.0" y="222.0" text-anchor="end">√2Ω</text>
+  <line class="s-warn" style="stroke-width:1.5" x1="826.0" y1="168.0" x2="826.0" y2="150.0"/>
+  <text class="xs warn" x="832.0" y="163.0">+C<tspan dy="3" font-size="9.2">6</tspan><tspan dy="-3">&#8203;</tspan>/R<tspan dy="-4.5" font-size="9.2">6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <rect class="card" x="32" y="346" width="304" height="246" rx="12"/>
+  <text class="h2 purple" x="46" y="370">(4) 光子：HOM 双光子聚束</text>
+  <text class="xs muted" x="46" y="390">概率性融合测量 · ~ns 光路</text>
+  <rect class="subcard" x="40" y="528" width="288" height="54" rx="7"/>
+  <text class="xs purple" style="font-weight:600" x="48" y="548">|1,1⟩ → i(|2,0⟩ + |0,2⟩)/√2 （双透射+双反射=0）</text>
+  <text class="xs muted" x="48" y="571">无直接相互作用；靠 50:50 分束器与探测反作用</text>
+  <rect class="f-purple" x="144.0" y="453.0" width="52" height="10" rx="3" transform="rotate(-35 170.0 458.0)"/>
+  <line class="s-accent" style="stroke-width:2.2" x1="76.0" y1="422.0" x2="170.0" y2="458.0"/>
+  <line class="s-accent" style="stroke-width:2.2" x1="76.0" y1="494.0" x2="170.0" y2="458.0"/>
+  <circle class="b-accent" cx="108.0" cy="434.0" r="5"/>
+  <circle class="b-accent" cx="108.0" cy="482.0" r="5"/>
+  <text class="xs ink" x="48.0" y="424.0">|1<tspan dy="3" font-size="9.2">a</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <text class="xs ink" x="48.0" y="499.0">|1<tspan dy="3" font-size="9.2">b</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <line class="s-purple" style="stroke-width:2.2" x1="170.0" y1="458.0" x2="258.0" y2="422.0"/>
+  <line class="s-purple" style="stroke-width:2.2" x1="170.0" y1="458.0" x2="258.0" y2="494.0"/>
+  <circle class="b-purple" cx="228.0" cy="434.0" r="4.5"/>
+  <circle class="b-purple" cx="240.0" cy="429.0" r="4.5"/>
+  <text class="xs purple" style="font-weight:700" x="264.0" y="426.0">|2,0⟩</text>
+  <text class="xs purple" style="font-weight:700" x="264.0" y="498.0">|0,2⟩</text>
+  <text class="xs warn" style="font-weight:700" x="262.0" y="462.0">× |1,1⟩ 相消</text>
+  <text class="xs muted" x="170.0" y="512.0" text-anchor="middle">50:50 分束器</text>
+  <rect class="card" x="348" y="346" width="304" height="246" rx="12"/>
+  <text class="h2 accent" x="362" y="370">(5) 硅自旋：海森堡交换</text>
+  <text class="xs muted" x="362" y="390">√SWAP / 原生 CZ · 20–200 ns</text>
+  <rect class="subcard" x="356" y="528" width="288" height="54" rx="7"/>
+  <text class="xs accent" style="font-weight:600" x="364" y="548">H<tspan dy="3" font-size="9.2">ex</tspan><tspan dy="-3">&#8203;</tspan> = J(t) S<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan>·S<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> = J(SWAP/2 − I/4)</text>
+  <text class="xs muted" x="364" y="571">ΔE<tspan dy="3" font-size="9.2">Z</tspan><tspan dy="-3">&#8203;</tspan>≪J 得 √SWAP；|ΔE<tspan dy="3" font-size="9.2">Z</tspan><tspan dy="-3">&#8203;</tspan>|≫J 抑翻转得 CZ</text>
+  <g transform="translate(0 46)">
+  <path class="s-muted" style="stroke-width:1.6;stroke-dasharray:5 3" d="M376.80 420.09L380.65 420.16L384.50 420.29L388.35 420.50L392.20 420.83L396.05 421.34L399.90 422.09L403.75 423.15L407.60 424.57L411.45 426.41L415.30 428.69L419.15 431.37L423.00 434.36L426.85 437.51L430.70 440.62L434.55 443.45L438.40 445.75L442.25 447.28L446.10 447.89L449.95 447.48L453.80 446.04L457.65 443.66L461.50 440.45L465.35 436.59L469.20 432.23L473.05 427.54L476.90 422.71L480.75 417.93L484.60 413.45L488.45 409.52L492.30 406.44L496.15 404.47L500.00 403.79L503.85 404.47L507.70 406.44L511.55 409.52L515.40 413.45L519.25 417.93L523.10 422.71L526.95 427.54L530.80 432.23L534.65 436.59L538.50 440.45L542.35 443.66L546.20 446.04L550.05 447.48L553.90 447.89L557.75 447.28L561.60 445.75L565.45 443.45L569.30 440.62L573.15 437.51L577.00 434.36L580.85 431.37L584.70 428.69L588.55 426.41L592.40 424.57L596.25 423.15L600.10 422.09L603.95 421.34L607.80 420.83L611.65 420.50L615.50 420.29L619.35 420.16L623.20 420.09"/>
+  <path class="s-accent" style="stroke-width:2.4" d="M376.80 420.09L380.65 420.16L384.50 420.29L388.35 420.50L392.20 420.83L396.05 421.34L399.90 422.09L403.75 423.15L407.60 424.57L411.45 426.41L415.30 428.69L419.15 431.37L423.00 434.36L426.85 437.51L430.70 440.63L434.55 443.46L438.40 445.77L442.25 447.33L446.10 448.00L449.95 447.70L453.80 446.49L457.65 444.48L461.50 441.89L465.35 438.98L469.20 436.01L473.05 433.19L476.90 430.72L480.75 428.68L484.60 427.13L488.45 426.02L492.30 425.31L496.15 424.91L500.00 424.79L503.85 424.91L507.70 425.31L511.55 426.02L515.40 427.13L519.25 428.68L523.10 430.72L526.95 433.19L530.80 436.01L534.65 438.98L538.50 441.89L542.35 444.48L546.20 446.49L550.05 447.70L553.90 448.00L557.75 447.33L561.60 445.77L565.45 443.46L569.30 440.63L573.15 437.51L577.00 434.36L580.85 431.37L584.70 428.69L588.55 426.41L592.40 424.57L596.25 423.15L600.10 422.09L603.95 421.34L607.80 420.83L611.65 420.50L615.50 420.29L619.35 420.16L623.20 420.09"/>
+  <line class="s-warn" style="stroke-width:2.4" x1="446.8" y1="445.0" x2="446.8" y2="418.0"/>
+  <path class="warn" d="M446.80 415.00L449.05 422.00L444.55 422.00Z"/>
+  <circle class="warn dot-ring" cx="446.8" cy="434.0" r="4.6"/>
+  <line class="s-purple" style="stroke-width:2.4" x1="553.2" y1="417.0" x2="553.2" y2="444.0"/>
+  <path class="purple" d="M553.20 447.00L550.95 440.00L555.45 440.00Z"/>
+  <circle class="purple dot-ring" cx="553.2" cy="430.0" r="4.6"/>
+  <rect class="f-gold" x="472.0" y="356.0" width="56" height="22" rx="5"/>
+  <text class="xs gold" style="font-weight:700" x="500.0" y="371.0" text-anchor="middle">势垒栅</text>
+  <line class="s-gold" style="stroke-width:1.5" x1="500.0" y1="378.0" x2="500.0" y2="397.0"/>
+  <path class="gold" d="M500.00 400.00L497.60 393.50L502.40 393.50Z"/>
+  <text class="xs muted" x="546.0" y="396.0">虚线:高势垒</text>
+  <text class="xs accent" style="font-weight:600" x="500.0" y="470.0" text-anchor="middle">实线拉低势垒 → 开启交换 J(t)</text>
+  </g>
+  <rect class="card" x="664" y="346" width="304" height="246" rx="12"/>
+  <text class="h2 warn" x="678" y="370">(6) 拓扑候选：Kitaev 链零模</text>
+  <text class="xs muted" x="678" y="390">理论非阿贝尔编织 / 宇称读出 ~3.7 μs</text>
+  <rect class="subcard" x="672" y="528" width="288" height="54" rx="7"/>
+  <text class="xs warn" style="font-weight:600" x="680" y="548">H = it ∑ γ<tspan dy="3" font-size="9.2">j,B</tspan><tspan dy="-3">&#8203;</tspan>γ<tspan dy="3" font-size="9.2">j+1,A</tspan><tspan dy="-3">&#8203;</tspan>（甜点 μ=0, t=Δ）</text>
+  <text class="xs muted" x="680" y="571">端点零模脱钩 P<tspan dy="3" font-size="9.2">12</tspan><tspan dy="-3">&#8203;</tspan>=−iγ<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan>γ<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>；编织仅 Clifford</text>
+  <g transform="translate(0 44)">
+  <rect class="subcard" x="688.0" y="412.0" width="48" height="32" rx="14"/>
+  <text class="xs muted" x="712.0" y="460.0" text-anchor="middle">位点 1</text>
+  <rect class="subcard" x="756.0" y="412.0" width="48" height="32" rx="14"/>
+  <text class="xs muted" x="780.0" y="460.0" text-anchor="middle">位点 2</text>
+  <rect class="subcard" x="824.0" y="412.0" width="48" height="32" rx="14"/>
+  <text class="xs muted" x="848.0" y="460.0" text-anchor="middle">位点 3</text>
+  <rect class="subcard" x="892.0" y="412.0" width="48" height="32" rx="14"/>
+  <text class="xs muted" x="916.0" y="460.0" text-anchor="middle">位点 4</text>
+  <line class="s-accent" style="stroke-width:3.0" x1="724.0" y1="428.0" x2="768.0" y2="428.0"/>
+  <line class="s-accent" style="stroke-width:3.0" x1="792.0" y1="428.0" x2="836.0" y2="428.0"/>
+  <line class="s-accent" style="stroke-width:3.0" x1="860.0" y1="428.0" x2="904.0" y2="428.0"/>
+  <circle class="b-warn" cx="700.0" cy="428.0" r="7.5"/>
+  <circle class="f-accent" cx="724.0" cy="428.0" r="5.5"/>
+  <circle class="f-accent" cx="768.0" cy="428.0" r="5.5"/>
+  <circle class="f-accent" cx="792.0" cy="428.0" r="5.5"/>
+  <circle class="f-accent" cx="836.0" cy="428.0" r="5.5"/>
+  <circle class="f-accent" cx="860.0" cy="428.0" r="5.5"/>
+  <circle class="f-accent" cx="904.0" cy="428.0" r="5.5"/>
+  <circle class="b-warn" cx="928.0" cy="428.0" r="7.5"/>
+  <path class="s-warn" style="stroke-width:1.8;stroke-dasharray:5 3" d="M700.0 416.0Q816.0 364.0 928.0 416.0"/>
+  <text class="xs warn" style="font-weight:700" x="816.0" y="380.0" text-anchor="middle">非局域端点零模（劈裂 ∝ e<tspan dy="-4.5" font-size="9.2">−L/ξ</tspan><tspan dy="4.5">&#8203;</tspan>）</text>
+  <text class="xs warn" style="font-weight:700" x="700.0" y="403.0" text-anchor="middle">γ<tspan dy="3" font-size="9.2">1,A</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs warn" style="font-weight:700" x="928.0" y="403.0" text-anchor="middle">γ<tspan dy="3" font-size="9.2">N,B</tspan><tspan dy="-3">&#8203;</tspan></text>
+  </g>
+  <text class="sm muted" x="34" y="622">注：六张机理图均为非等比例示意图；各平台原生门集、相干预算与可扩展工程瓶颈见第 09 章 §4.7 与第 19 章。</text>
+</svg>

@@ -2,7 +2,7 @@
   <title id="title">量子精密测量标度极限与 Ramsey 干涉灵敏度工作点</title>
   <desc id="desc">左面板在统一纵轴（固定总探测时长 T 下的归一化频率不确定度 T·Δω；无噪单轮等价于 Δφ，双对数 N = 1 至 10⁴）精确对比：无噪标准量子极限 SQL（N⁻¹/²）、无噪海森堡极限 HL（N⁻¹）、Kitagawa-Ueda 单轴扭转 OAT（∝ N⁻⁵/⁶）、强相干光区（N ≥ 10，n̄ ≫ sinh²r）6 dB 光学压缩（0.5 N⁻¹/²）、独立马尔可夫退相位（γT = 2）下 Huelga 最优 GHZ 与含噪独立比特重合曲线（在 N=1 与单比特精确重合为 2√e，全程严格位于 HL 上方），以及保留完整分母的 Escher 精确含噪终极界（N=1 等于 2√e，大 N 渐近比 GHZ 低 √e 倍）。右面板绘制单比特 Ramsey 条纹 P(+|φ) 与经典 Fisher 信息 F_C(φ; V=0.90)，标出最大斜率点 φ = π/2 与盲点 φ = 0。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -53,51 +53,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .halo{stroke:#16222e}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
-  .c5{stroke:#b999f0}
-  .c5-fill{fill:#b999f0}
-  .c5-txt{fill:#d0b8fa}
-  .c5-soft{fill:#2d2045;stroke:#b999f0}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .forbid{fill:#f28872;fill-opacity:.14}
-  .area1{fill:#6bc2f5;fill-opacity:.16}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .area4{fill:#f0ba5a;fill-opacity:.15}
-  .data-node{fill:#16222e;stroke:#d7e7f5}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
-  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
@@ -176,8 +132,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <line class="c2" stroke-width="1.1" x1="331.41" y1="219.33" x2="301.16" y2="244.41"/>
   <text class="xs" x="421.93" y="241.45" text-anchor="middle">Escher 精确界（大 N 差 √e）</text>
   <line class="guide" x1="429.88" y1="250.44" x2="429.88" y2="289.86"/>
-  <text class="xsb c5-txt" x="424" y="340" text-anchor="middle" transform="rotate(14 424 340)">6 dB 压缩 (n̄≫sinh²r)</text>
-  <text class="xsb c4-txt" x="444" y="388" text-anchor="middle" transform="rotate(23 444 388)">OAT 斜率 −5/6</text>
+  <text class="xsb c5-txt" x="493" y="357" text-anchor="end" transform="rotate(14 493 357)">6 dB 压缩 (n̄≫sinh²r)</text>
+  <text class="xsb c4-txt" x="444" y="391" text-anchor="middle" transform="rotate(23 444 391)">OAT 斜率 −5/6</text>
   <text class="xsb c3-txt" x="254.77" y="390.19" text-anchor="start">无噪 HL 斜率 −1</text>
   <rect class="pill" x="42" y="484" width="462" height="54" rx="9"/>
   <text class="xsb" x="273" y="505" text-anchor="middle">统一口径 T·Δω：N=1 含噪 GHZ、单比特与 Escher 严格重合（2√e）；全段 ≥ HL</text>

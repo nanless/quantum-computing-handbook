@@ -4,7 +4,7 @@
 
 这一章分三幕展开：第一幕先打通“读图—算矩阵—拆门”的基本功，涵盖单双比特门、受控-$U$ 门的 ABC 分解定理、Toffoli 两级分解与多控制门 $C^n\text{-}U$ 的逆计算级联，再由 Bell 态制备引出不可克隆与不可删除两条禁令；第二幕串联量子隐形传态、与其镜像对偶的超密编码、延迟测量原理与相位回踢；第三幕收束到通用门集、双比特 KAK 上界、Solovay–Kitaev 近似直觉，以及 Clifford 群与稳定子表的入门手算。
 
-读本章只需先熟悉[第 01 章](01-math.md)的矩阵乘法与张量积、[第 02 章](02-single-qubit.md)的单比特旋转门与 ZYZ 分解，以及[第 03 章](03-multiple-qubits.md)的 Bell 态与偏迹。全章沿用本书统一约定：**高位在左（大端序）**，两比特基态依次排为 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$，三比特基态依次排为 $|000\rangle, |001\rangle, \dots, |111\rangle$。
+读本章只需先熟悉[第 01 章](01-math.md)的矩阵乘法与张量积、[第 02 章](02-single-qubit.md)的单比特旋转门与 ZYZ 分解，以及[第 03 章](03-multiple-qubits.md)的 Bell 态与偏迹。初次阅读建议按两轨推进：**★ 首遍主线**聚焦 §1–§2、§4–§8（读图、核心门、两条禁令、隐形传态、超密编码、延迟测量与相位回踢）；**☆ 进阶选读**（文中已标明）涵盖 §3（ABC / Toffoli / $C^n\text{-}U$ 门分解）、§9（KAK 与 Solovay–Kitaev）与 §10（Clifford 群阶数与稳定子模拟）。全章沿用本书统一约定：**高位在左（大端序）**，两比特基态依次排为 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$，三比特基态依次排为 $|000\rangle, |001\rangle, \dots, |111\rangle$。
 
 ---
 
@@ -69,28 +69,9 @@ $$
 
 ### 1.2 基序、列视角与并行门
 
-面对两比特电路，先锁死四维列向量的排列顺序：
+两比特四个计算基态 $|00\rangle, |01\rangle, |10\rangle, |11\rangle$ 沿用[第 01 章第 7.1 节](01-math.md)的大端序标准列向量：左边第一位对应电路最上方横线（与 Qiskit 等小端序软件的位序映射见[符号表](appendices/notation.md)）。
 
-$$
-|00\rangle = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix},\quad
-|01\rangle = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix},\quad
-|10\rangle = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix},\quad
-|11\rangle = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}.
-$$
-
-左边第一位对应电路最上面的横线（第一个张量因子）。使用 Qiskit 等软件时，打印出的测量位串常按小端序显示（把第一条线 $q_0$ 写在字符串最右边），跨书与软件核对时务必先确认端序映射。
-
-读一个 $2^n \times 2^n$ 的门矩阵，有一个省力的**列视角**：**矩阵的第 $j$ 列，就是把第 $j$ 个计算基态送进这个门后吐出来的输出列向量。** 只要知道门对全部计算基态分别做了什么，就能立刻写出整张矩阵，也就能按线性算出它对任意叠加态的输出。
-
-如果同一时刻，第一条线上执行门 $A$、第二条线上执行门 $B$，两者在电路图上上下并排，在数学上用**张量积** $A \otimes B$ 表示；若第二条线这一拍什么都不做，就补上单位矩阵 $I$，写成 $A \otimes I$。例如从 $|00\rangle = |0\rangle \otimes |0\rangle$ 出发，只对第一个比特做 $H$，按张量积乘法法则 $(A \otimes B)(|u\rangle \otimes |v\rangle) = (A|u\rangle) \otimes (B|v\rangle)$ 展开：
-
-$$
-(H \otimes I)|00\rangle
-= (H|0\rangle) \otimes (I|0\rangle)
-= \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |0\rangle
-= \frac{|00\rangle + |10\rangle}{\sqrt{2}}
-= \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}.
-$$
+读一个 $2^n \times 2^n$ 的门矩阵，最省力的是**列视角**：**矩阵的第 $j$ 列，就是把第 $j$ 个计算基态送进这个门后的输出列向量。** 同一拍里上下并排的单比特门用张量积 $A \otimes B$ 表示（空闲线补单位阵 $I$）；例如对 $|00\rangle$ 仅在第一比特施 $H$，由混合乘积律直接得 $(H\otimes I)|00\rangle = (H|0\rangle)\otimes(I|0\rangle) = |+\rangle|0\rangle = \frac{1}{\sqrt{2}}[1, 0, 1, 0]^T$。
 
 这里顺手区分两个常被混用的指标：**门数**（gate count）是电路里所有门的总个数，**电路深度**（circuit depth）是把可同时并行的门压在同一拍后，总共需要多少个时间步。把 $H$ 同时作用在 10 个比特上，门数是 10，但深度只有 1。
 
@@ -100,7 +81,7 @@ $$
 
 ### 2.1 单比特基础门复习与电路化简恒等式
 
-[第 02 章第 5.2 节](02-single-qubit.md#52-相位门-s-与-t以及常用单比特门速查表)已经完整列出 $I, X, Y, Z, H, S, T$ 与旋转门 $R_x, R_y, R_z$ 的 $2 \times 2$ 矩阵和 Bloch 球几何。读电路时只要牢记两点相位直觉：第一，$S = \operatorname{diag}(1, i)$ 绕 $z$ 轴转 $\pi/2$、$T = \operatorname{diag}(1, e^{i\pi/4})$ 绕 $z$ 轴转 $\pi/4$（因 $T = e^{i\pi/8}\operatorname{diag}(e^{-i\pi/8}, e^{i\pi/8})$，传统教材常称 $T$ 门为“$\pi/8$ 门”，切勿把历史别名与 $\pi/4$ 旋转角混为一谈），且满足 $T^2 = S,\; S^2 = Z$；第二，给 $|1\rangle$ 乘相对相位虽不改计算基概率，但一旦后面接 $H$ 门干涉，相位差就会立刻变成实打实的概率差。
+[第 02 章第 5.2 节](02-single-qubit.md#52-相位门-s-与-t以及常用单比特门速查表)已经完整列出 $I, X, Y, Z, H, S, T$ 与旋转门 $R_x, R_y, R_z$ 的 $2 \times 2$ 矩阵和 Bloch 球几何。读电路时只要牢记两点相位直觉：第一，$S = \operatorname{diag}(1, i)$ 绕 $z$ 轴转 $\pi/2$、$T = \operatorname{diag}(1, e^{i\pi/4})$ 绕 $z$ 轴转 $\pi/4$（因 $T = e^{i\pi/8}\operatorname{diag}(e^{-i\pi/8}, e^{i\pi/8})$，传统教材常称 $T$ 门为“$\pi/8$ 门”，不要把历史别名与 $\pi/4$ 旋转角混为一谈），且满足 $T^2 = S,\; S^2 = Z$；第二，给 $|1\rangle$ 乘相对相位虽不改计算基概率，但一旦后面接 $H$ 门干涉，相位差就会立刻变成实打实的概率差。
 
 在多门线路里，比背单门矩阵更有用的是**共轭换基与线路化简恒等式**。下面这张速查表把本章反复用到的单双比特恒等式收在一起（每一条都可用 $2\times 2$ 或 $4\times 4$ 矩阵直接验算）：
 
@@ -302,7 +283,7 @@ Toffoli（1980）证明，**仅靠这一个 CCNOT 门加上常数辅助位，就
 
 因为 NAND 门配合扇出在经典数字电路里已经是通用的，所以**任何经典算法都能改写成可逆量子线路，在量子计算机上模拟出来**。
 
-但改写时藏着一个让量子算法立刻失效的大坑——**中间垃圾位（garbage bits）**。
+但改写时藏着一个让量子算法立刻失效的陷阱——**中间垃圾位（garbage bits）**。
 
 计算复杂函数 $f(x)$ 时，可逆子电路 $U_f$ 往往需要许多辅助比特暂存中间结果，记为 $g(x)$：
 
@@ -338,51 +319,51 @@ $$
 
 ---
 
-## 3. 核心门分解：受控-$U$ 的 ABC 定理、Toffoli 与多控制门 $C^n\text{-}U$
+## 3. 进阶选读：核心门分解——受控-$U$ 的 ABC 定理、Toffoli 与多控制门 $C^n\text{-}U$
 
-真实量子硬件只提供寥寥几种单比特门加上一种双比特门（如 CNOT 或 CZ）。那么面对算法里随处可见的受控旋转门 $C\text{-}R_y(\theta)$、受控 Hadamard 门 $C\text{-}H$、三比特 Toffoli 门，乃至 Grover 扩散算子和 Shor 模算术必需的多控制门 $C^n\text{-}U$，编译器究竟是怎么把它们一步步拆解落地的？本节用零跳步手算打通这条核心构造链。
+真实量子硬件只提供寥寥几种单比特门加上一种双比特门（如 CNOT 或 CZ）。那么面对算法里随处可见的受控旋转门 $C\text{-}R_y(\theta)$、受控 Hadamard 门 $C\text{-}H$、三比特 Toffoli 门，乃至 Grover 扩散算子和 Shor 模算术必需的多控制门 $C^n\text{-}U$，编译器究竟是怎么把它们一步步拆解落地的？本节用逐步手算打通这条核心构造链。
 
 ### 3.1 受控全局相位与受控-$U$ 门的 ABC 分解定理
 
-先回收[第 02 章第 5.3 节](02-single-qubit.md#53-进阶回看矩阵指数mathrmsu2tomathrmso3-双重覆盖与-2pi-负号)埋下的伏笔：单个门乘上全局相位 $e^{i\alpha}$ 在单比特上不可测，但一旦给它加上控制线变成受控门
+先回收[第 02 章第 5.3 节](02-single-qubit.md#53-进阶回看矩阵指数mathrmsu2tomathrmso3-双重覆盖与-2pi-负号)埋下的伏笔：单个门乘上全局相位 $e^{i\delta}$ 在单比特上不可测，但一旦给它加上控制线变成受控门
 
 $$
 C(U) = |0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes U =
 \begin{bmatrix} I & 0 \\ 0 & U \end{bmatrix},
 $$
 
-情况就会彻底反转！因为 $e^{i\alpha}$ 只挂在控制位等于 $1$ 的后两行上，所以给目标门乘上全局相位 $e^{i\alpha}$ 再加控制，**严格等价于在控制线上多加一个单比特相位门 $P(\alpha) = \operatorname{diag}(1, e^{i\alpha})$**：
+情况就会彻底反转。因为 $e^{i\delta}$ 只挂在控制位等于 $1$ 的后两行上，所以给目标门乘上全局相位 $e^{i\delta}$ 再加控制，**严格等价于在控制线上多加一个单比特相位门 $P(\delta) = \operatorname{diag}(1, e^{i\delta})$**：
 
 $$
-C(e^{i\alpha} U)
-= |0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes (e^{i\alpha} U)
-= \bigl(P(\alpha) \otimes I\bigr)\, C(U),
+C(e^{i\delta} U)
+= |0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes (e^{i\delta} U)
+= \bigl(P(\delta) \otimes I\bigr)\, C(U),
 \qquad
-P(\alpha) = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\alpha} \end{bmatrix}.
+P(\delta) = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\delta} \end{bmatrix}.
 $$
 
-例如在[第 02 章](02-single-qubit.md)已验算过 $C(-I) = Z \otimes I$（$\alpha = \pi$）：把 $|+\rangle_C|0\rangle_T$ 送入 $C(e^{i\alpha}I)$ 后控制位变成 $\frac{|0\rangle + e^{i\alpha}|1\rangle}{\sqrt{2}}$，再对控制位做 $H$ 门，得到 $\frac{1+e^{i\alpha}}{2}|0\rangle + \frac{1-e^{i\alpha}}{2}|1\rangle$，测得 $1$ 的概率为
+例如在[第 02 章](02-single-qubit.md)已验算过 $C(-I) = Z \otimes I$（$\delta = \pi$）：把 $|+\rangle_C|0\rangle_T$ 送入 $C(e^{i\delta}I)$ 后控制位变成 $\frac{|0\rangle + e^{i\delta}|1\rangle}{\sqrt{2}}$，再对控制位做 $H$ 门，得到 $\frac{1+e^{i\delta}}{2}|0\rangle + \frac{1-e^{i\delta}}{2}|1\rangle$，测得 $1$ 的概率为
 
 $$
-p(1) = \left|\frac{1 - e^{i\alpha}}{2}\right|^2
-= \frac{(1-\cos\alpha)^2 + \sin^2\alpha}{4}
-= \frac{2 - 2\cos\alpha}{4}
-= \sin^2\!\left(\frac{\alpha}{2}\right).
+p(1) = \left|\frac{1 - e^{i\delta}}{2}\right|^2
+= \frac{(1-\cos\delta)^2 + \sin^2\delta}{4}
+= \frac{2 - 2\cos\delta}{4}
+= \sin^2\!\left(\frac{\delta}{2}\right).
 $$
 
-当 $\alpha = 0$ 时必得 $0$，当 $\alpha = \pi/2$ 时概率为 $1/2$，当 $\alpha = \pi$ 时必得 $1$！写量子编译器时绝不能先抹掉单比特门的全局相位，再把该门变成受控门。
+当 $\delta = 0$ 时必得 $0$，当 $\delta = \pi/2$ 时概率为 $1/2$，当 $\delta = \pi$ 时必得 $1$。写量子编译器时绝不能先抹掉单比特门的全局相位，再把该门变成受控门。
 
-更重要的是，这条公式正是 **受控-$U$ 门 ABC 分解定理**（Barenco et al., 1995；Nielsen & Chuang, Corollary 4.2 & Lemma 4.3）的最后一块拼图：**任意单比特酉门 $U \in \mathrm{U}(2)$ 对应的受控门 $C(U)$，只需 2 个 CNOT 门和至多 4 个单比特门就能精确实现！**
+更重要的是，这条公式正是 **受控-$U$ 门 ABC 分解定理**（Barenco et al., 1995；Nielsen & Chuang, Corollary 4.2 & Lemma 4.3）的最后一块拼图：**任意单比特酉门 $U \in \mathrm{U}(2)$ 对应的受控门 $C(U)$，只需 2 个 CNOT 门和至多 4 个单比特门就能精确实现。**
 
 下面一步不跳地证明它：
 
-**第一步：引用 ZYZ 分解。** 由[第 02 章第 5.4 节](02-single-qubit.md#54-进阶回看单比特通用欧拉分解zyz-证明与-xyx--zxz-对照)，任意 $U \in \mathrm{U}(2)$ 都可写成
+**第一步：引用 ZYZ 分解。** 严格沿用[第 02 章第 5.4 节](02-single-qubit.md#54-进阶回看单比特通用欧拉分解zyz-证明与-xyxzxz-对照)统一宣示的参数符号，任意 $U \in \mathrm{U}(2)$ 都可写成
 
 $$
-U = e^{i\alpha} R_z(\beta)\,R_y(\gamma)\,R_z(\delta),
+U = e^{i\delta} R_z(\alpha)\,R_y(\beta)\,R_z(\gamma),
 $$
 
-其中 $\alpha, \beta, \gamma, \delta \in \mathbb{R}$。
+其中 $\delta, \alpha, \gamma \in \mathbb{R}$ 且 $\beta \in [0, \pi]$。
 
 **第二步：证两条 $X$ 共轭翻号引理。** 回忆 $R_y(\theta) = \cos(\theta/2)\,I - i\sin(\theta/2)\,Y$ 与 $R_z(\theta) = \cos(\theta/2)\,I - i\sin(\theta/2)\,Z$。因为 $X^2 = I$、$XYX = -Y$（由 $XY=iZ,\; iZX = i(iY) = -Y$）且 $XZX = -Z$（由 $XZ = -iY,\; -iYX = -i(-iZ) = -Z$），用 $X$ 夹住旋转门立刻翻转转角符号：
 
@@ -396,9 +377,9 @@ $$
 **第三步：构造三个 $\mathrm{SU}(2)$ 门 $A, B, C$。** 令
 
 $$
-A := R_z(\beta)\,R_y\!\left(\frac{\gamma}{2}\right), \qquad
-B := R_y\!\left(-\frac{\gamma}{2}\right)\,R_z\!\left(-\frac{\delta+\beta}{2}\right), \qquad
-C := R_z\!\left(\frac{\delta-\beta}{2}\right).
+A := R_z(\alpha)\,R_y\!\left(\frac{\beta}{2}\right), \qquad
+B := R_y\!\left(-\frac{\beta}{2}\right)\,R_z\!\left(-\frac{\gamma+\alpha}{2}\right), \qquad
+C := R_z\!\left(\frac{\gamma-\alpha}{2}\right).
 $$
 
 **第四步：逐行双重验算。**
@@ -408,37 +389,37 @@ $$
 $$
 \begin{aligned}
 ABC
-&= R_z(\beta)\,\underbrace{R_y\!\left(\frac{\gamma}{2}\right) R_y\!\left(-\frac{\gamma}{2}\right)}_{I}\,R_z\!\left(-\frac{\delta+\beta}{2}\right) R_z\!\left(\frac{\delta-\beta}{2}\right) \\
-&= R_z(\beta)\,R_z\!\left(\frac{-\delta-\beta+\delta-\beta}{2}\right)
- = R_z(\beta)\,R_z(-\beta) = I.
+&= R_z(\alpha)\,\underbrace{R_y\!\left(\frac{\beta}{2}\right) R_y\!\left(-\frac{\beta}{2}\right)}_{I}\,R_z\!\left(-\frac{\gamma+\alpha}{2}\right) R_z\!\left(\frac{\gamma-\alpha}{2}\right) \\
+&= R_z(\alpha)\,R_z\!\left(\frac{-\gamma-\alpha+\gamma-\alpha}{2}\right)
+ = R_z(\alpha)\,R_z(-\alpha) = I.
 \end{aligned}
 $$
 
-- 验 $e^{i\alpha} A X B X C = U$：先插入 $X^2 = I$ 把 $X B X$ 拆开并用翻号引理：
+- 验 $e^{i\delta} A X B X C = U$：先插入 $X^2 = I$ 把 $X B X$ 拆开并用翻号引理：
 
 $$
 X B X
-= \bigl(X R_y(-\gamma/2) X\bigr)\,\bigl(X R_z(-(\delta+\beta)/2) X\bigr)
-= R_y\!\left(\frac{\gamma}{2}\right)\,R_z\!\left(\frac{\delta+\beta}{2}\right).
+= \bigl(X R_y(-\beta/2) X\bigr)\,\bigl(X R_z(-(\gamma+\alpha)/2) X\bigr)
+= R_y\!\left(\frac{\beta}{2}\right)\,R_z\!\left(\frac{\gamma+\alpha}{2}\right).
 $$
 
-再左乘 $e^{i\alpha} A$、右乘 $C$，同轴旋转角直接相加：
+再左乘 $e^{i\delta} A$、右乘 $C$，同轴旋转角直接相加：
 
 $$
 \begin{aligned}
-e^{i\alpha} A (X B X) C
-&= e^{i\alpha} R_z(\beta)\,\underbrace{R_y\!\left(\frac{\gamma}{2}\right) R_y\!\left(\frac{\gamma}{2}\right)}_{R_y(\gamma)}\,\underbrace{R_z\!\left(\frac{\delta+\beta}{2}\right) R_z\!\left(\frac{\delta-\beta}{2}\right)}_{R_z(\delta)} \\
-&= e^{i\alpha} R_z(\beta)\,R_y(\gamma)\,R_z(\delta) = U.
+e^{i\delta} A (X B X) C
+&= e^{i\delta} R_z(\alpha)\,\underbrace{R_y\!\left(\frac{\beta}{2}\right) R_y\!\left(\frac{\beta}{2}\right)}_{R_y(\beta)}\,\underbrace{R_z\!\left(\frac{\gamma+\alpha}{2}\right) R_z\!\left(\frac{\gamma-\alpha}{2}\right)}_{R_z(\gamma)} \\
+&= e^{i\delta} R_z(\alpha)\,R_y(\beta)\,R_z(\gamma) = U.
 \end{aligned}
 $$
 
-**第五步：拼出 2-CNOT 电路。** 在目标线上从左到右依次执行 $C \to \mathrm{CNOT}_{1\to 2} \to B \to \mathrm{CNOT}_{1\to 2} \to A$，同时在控制线上施加单比特相位门 $P(\alpha) = \operatorname{diag}(1, e^{i\alpha})$（总矩阵写作 $(P(\alpha)\otimes I)(I\otimes A)\mathrm{CNOT}(I\otimes B)\mathrm{CNOT}(I\otimes C)$）：
+**第五步：拼出 2-CNOT 电路。** 在目标线上从左到右依次执行 $C \to \mathrm{CNOT}_{1\to 2} \to B \to \mathrm{CNOT}_{1\to 2} \to A$，同时在控制线上施加单比特相位门 $P(\delta) = \operatorname{diag}(1, e^{i\delta})$（总矩阵写作 $(P(\delta)\otimes I)(I\otimes A)\mathrm{CNOT}(I\otimes B)\mathrm{CNOT}(I\otimes C)$）：
 
 - **若控制位为 $|0\rangle$**：两个 CNOT 都不翻转目标位，控制位相位门乘 $1$，目标位净演化为 $A B C = I$；
-- **若控制位为 $|1\rangle$**：两个 CNOT 都在目标位施加 $X$，控制位相位门乘 $e^{i\alpha}$，目标位净演化为 $e^{i\alpha} A X B X C = U$！
+- **若控制位为 $|1\rangle$**：两个 CNOT 都在目标位施加 $X$，控制位相位门乘 $e^{i\delta}$，目标位净演化为 $e^{i\delta} A X B X C = U$。
 
 **具体数字手算：用 2 个 CNOT 拼出受控 Hadamard 门 $C(H)$。**
-由[第 02 章](02-single-qubit.md)已知 $H = e^{i\pi/2} R_z(0)\,R_y(\pi/2)\,R_z(\pi)$（核对：$\alpha = \frac{\pi}{2},\; \beta = 0,\; \gamma = \frac{\pi}{2},\; \delta = \pi$，乘开得 $i \cdot \frac{1}{\sqrt{2}}\begin{bmatrix}1&-1\\1&1\end{bmatrix}\begin{bmatrix}-i&0\\0&i\end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix} = H$）。直接代入公式：
+由[第 02 章](02-single-qubit.md)已知 $H = e^{i\pi/2} R_z(0)\,R_y(\pi/2)\,R_z(\pi)$（核对：$\delta = \frac{\pi}{2},\; \alpha = 0,\; \beta = \frac{\pi}{2},\; \gamma = \pi$，乘开得 $i \cdot \frac{1}{\sqrt{2}}\begin{bmatrix}1&-1\\1&1\end{bmatrix}\begin{bmatrix}-i&0\\0&i\end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix} = H$）。直接代入公式：
 
 $$
 A = R_y\!\left(\frac{\pi}{4}\right), \qquad
@@ -447,7 +428,7 @@ C = R_z\!\left(\frac{\pi}{2}\right), \qquad
 P\!\left(\frac{\pi}{2}\right) = S.
 $$
 
-立刻复核两条等式：$ABC = R_y(\frac{\pi}{4})R_y(-\frac{\pi}{4})R_z(-\frac{\pi}{2})R_z(\frac{\pi}{2}) = I$；而 $i A X B X C = i R_y(\frac{\pi}{4}) R_y(\frac{\pi}{4}) R_z(\frac{\pi}{2}) R_z(\frac{\pi}{2}) = i R_y(\frac{\pi}{2}) R_z(\pi) = H$！只要控制线放一个 $S$ 门、目标线放 $C, B, A$ 和 2 个 CNOT，就零误差造出了受控 $H$ 门。
+立刻复核两条等式：$ABC = R_y(\frac{\pi}{4})R_y(-\frac{\pi}{4})R_z(-\frac{\pi}{2})R_z(\frac{\pi}{2}) = I$；而 $i A X B X C = i R_y(\frac{\pi}{4}) R_y(\frac{\pi}{4}) R_z(\frac{\pi}{2}) R_z(\frac{\pi}{2}) = i R_y(\frac{\pi}{2}) R_z(\pi) = H$。只要控制线放一个 $S$ 门、目标线放 $C, B, A$ 和 2 个 CNOT，就零误差造出了受控 $H$ 门。
 
 ### 3.2 Toffoli 门的两级精确分解：5 个双比特门与 6-CNOT / 7-$T$
 
@@ -502,7 +483,7 @@ $$
 \mathrm{CCZ}|a, b, c\rangle = (-1)^{a\cdot b\cdot c}|a, b, c\rangle.
 $$
 
-奇迹来自一条简单的布尔代数恒等式（对任意 $a, b, c \in \{0, 1\}$ 逐个代入 8 组取值立即可验）：
+关键来自一条简洁的布尔代数恒等式（对任意 $a, b, c \in \{0, 1\}$ 逐个代入 8 组取值立即可验）：
 
 $$
 4\,a\cdot b\cdot c = a + b + c - (a\oplus b) - (a\oplus c) - (b\oplus c) + (a\oplus b\oplus c).
@@ -525,7 +506,7 @@ $$
 \end{aligned}
 $$
 
-这条相位多项式解释彻底揭开了“为何不借辅助比特时精确实现 Toffoli 恰好需要 7 个 $T/T^\dagger$ 门与 6 个 CNOT 门”的数学奥秘：Shende & Markov（2009）证明了无辅助情况下 6 个 CNOT 已是理论下界，Gosset 等人（2014）证明了无辅助情况下 7 个 $T$ 门也是理论下界。只有当允许借用 1 个干净辅助比特 $|0\rangle$ 并配合中段测量与经典 Clifford 反馈时，才能将 Toffoli 的 $T$ 门代价降到 **4 个 $T$ 门**（Jones, 2013；Gidney, 2018）——这正是容错算法资源估算中常见“每个 Toffoli 按 4 个 $T$ 门计价”的由来。
+这条相位多项式解释直接揭示了“为何不借辅助比特时精确实现 Toffoli 恰好需要 7 个 $T/T^\dagger$ 门与 6 个 CNOT 门”的数学奥秘：Shende & Markov（2009）证明了无辅助情况下 6 个 CNOT 已是理论下界，Gosset 等人（2014）证明了无辅助情况下 7 个 $T$ 门也是理论下界。只有当允许借用 1 个干净辅助比特 $|0\rangle$ 并配合中段测量与经典 Clifford 反馈时，才能将 Toffoli 的 $T$ 门代价降到 **4 个 $T$ 门**（Jones, 2013；Gidney, 2018）——这正是容错算法资源估算中常见“每个 Toffoli 按 4 个 $T$ 门计价”的由来。
 
 ### 3.3 多控制门 $C^n\text{-}U$：V 形辅助级联与逆计算
 
@@ -653,29 +634,50 @@ $$
 
 - 不可克隆**不禁止**根据已知的经典制备说明书再造一份一模一样的态（那是按图纸重新生产，不是拿一个未知样本去复印）；
 - 它也**不禁止**只复制彼此正交的态集合（如经典 $\{|0\rangle, |1\rangle\}$），或做保真度严格小于 $1$ 的近似克隆，或以小于 $1$ 的成功率做概率克隆。它禁止的是对任意未知态做确定、完美的通用克隆。
+- **混态推广预告（不可广播定理）**：在[第 05 章](05-noise-channels.md)引入一般混态密度矩阵与量子信道后，即使把严格复制 $\rho \mapsto \rho \otimes \rho$ 放宽为只要求两端局部约化态均还原为 $\rho$（$\operatorname{Tr}_B(\sigma_{AB}) = \rho$ 且 $\operatorname{Tr}_A(\sigma_{AB}) = \rho$，称为“广播”），Barnum 等人（1996）证明：**一组候选混态 $\{\rho_j\}$ 可被同一量子信道广播，当且仅当它们两两对易**（即共享同一组正交本征基，退化为经典概率分布；完整讨论见[第 13 章](13-quantum-information.md)）。
 
 ### 4.3 不可删除定理（No-Deleting Theorem）与合法复位
 
 不可克隆的“时间反演孪生兄弟”叫**不可删除定理**（Pati & Braunstein, 2000）。初学者一听名字常纳闷：“量子芯片不是每次跑完都能把比特复位回 $|0\rangle$ 吗？怎么叫不可删除？”
 
-关键在于定义里的“**无痕**”二字。不可删除定理问的是：如果手里有两份完全相同的未知态 $|\psi\rangle|\psi\rangle$ 和一个初始辅助态 $|A\rangle$，能不能用一个封闭酉操作保留第一份，把第二份清成固定态 $|0\rangle$，同时让辅助系统停在某个（可能依赖输入的）末态 $|A_\psi\rangle$？写出一般变换：
+关键在于定义里的“**无痕**”二字。不可删除定理问的是：如果手里有两份完全相同的未知态 $|\psi\rangle|\psi\rangle$ 和一个初始辅助态 $|A\rangle$，能不能用一个封闭酉操作保留第一份，把第二份清成固定态 $|0\rangle$，同时让辅助系统停在某个（可能依赖输入的）末态 $|A_\psi\rangle$？即使允许随输入变化的全局相位 $e^{i\theta_\psi}$，将其吸收进归一化态 $|A'_\psi\rangle := e^{i\theta_\psi}|A_\psi\rangle$ 后，一般变换写作
 
 $$
-U|\psi\rangle|\psi\rangle|A\rangle = |\psi\rangle|0\rangle|A_\psi\rangle.
+U|\psi\rangle|\psi\rangle|A\rangle = |\psi\rangle|0\rangle|A'_\psi\rangle.
 $$
 
-拿任意两态 $|\psi\rangle, |\phi\rangle$（记 $c = \langle\phi|\psi\rangle$，先设 $c \neq 0$）对比输入与输出的内积：
+用 $U$ 的**线性性**直接证明（不需要借助任何连续性假设，对任意正交与非正交态同步成立）：
 
-- 输入端内积：$\langle\phi|\psi\rangle\langle\phi|\psi\rangle\langle A|A\rangle = c^2$；
-- 输出端内积：$\langle\phi|\psi\rangle\langle 0|0\rangle\langle A_\phi|A_\psi\rangle = c\,\langle A_\phi|A_\psi\rangle$。
+1. **展开一般叠加态**：对正交基 $|0\rangle, |1\rangle$，有 $U|00\rangle|A\rangle = |00\rangle|A'_0\rangle$ 与 $U|11\rangle|A\rangle = |10\rangle|A'_1\rangle$；另记对称交叉项的像为 $|\Phi\rangle := U(|01\rangle + |10\rangle)|A\rangle$。对任意叠加态 $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$（$\alpha, \beta \neq 0$），按线性把左右两端展开对比：
 
-酉演化保内积要求 $c^2 = c\,\langle A_\phi|A_\psi\rangle$。两边约去非零因子 $c$（由连续性对正交态亦成立），立刻得出比“不能停在固定态”深刻得多的精确结论：
+   $$
+   \alpha^2|00\rangle|A'_0\rangle + \beta^2|10\rangle|A'_1\rangle + \alpha\beta|\Phi\rangle
+   = \alpha|00\rangle|A'_\psi\rangle + \beta|10\rangle|A'_\psi\rangle.
+   $$
 
-$$
-\langle A_\phi|A_\psi\rangle = \langle\phi|\psi\rangle.
-$$
+2. **按前两比特的正交基逐项匹配**：把 $|\Phi\rangle$ 按前两比特计算基展开为 $|00\rangle|\phi_{00}\rangle + |10\rangle|\phi_{10}\rangle + |01\rangle|\phi_{01}\rangle + |11\rangle|\phi_{11}\rangle$。右端在 $|01\rangle, |11\rangle$ 分量上恒为零，故 $|\phi_{01}\rangle = |\phi_{11}\rangle = 0$；比较 $|00\rangle$ 与 $|10\rangle$ 系数并分别除以非零的 $\alpha$ 与 $\beta$，得
 
-盯紧这条等式：对一切输入态 $|\phi\rangle, |\psi\rangle$，辅助末态间的内积竟然与原态内积**分毫不差**！这说明映射 $|\psi\rangle \mapsto |A_\psi\rangle$ 本身就是一个**等距映射**（isometry）——第二份未知量子态不但不可能被无痕销毁，**连部分删减或压缩都做不到，只能把整份未知态的完整信息原封不动地搬移到辅助系统里**（如果硬要求辅助态停在固定态 $|A_{\mathrm{fixed}}\rangle$，左边是 $1$ 而右边是 $c$，对 $0 < |c| < 1$ 直接矛盾）。
+   $$
+   |A'_\psi\rangle = \alpha|A'_0\rangle + \beta|\phi_{00}\rangle
+   = \alpha|\phi_{10}\rangle + \beta|A'_1\rangle.
+   $$
+
+   由于上式对一切非零 $(\alpha, \beta)$ 恒成立，必有 $|\phi_{00}\rangle = |A'_1\rangle$、$|\phi_{10}\rangle = |A'_0\rangle$，于是映射必然严格线性：
+
+   $$
+   |A'_\psi\rangle = \alpha|A'_0\rangle + \beta|A'_1\rangle.
+   $$
+
+3. **由归一化锁定正交性与等距性**：对 $|\psi\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$ 和 $|\psi\rangle = \frac{|0\rangle + i|1\rangle}{\sqrt{2}}$，条件 $\||A'_\psi\rangle\|^2 = 1$ 分别强制 $\operatorname{Re}\langle A'_0|A'_1\rangle = 0$ 与 $\operatorname{Im}\langle A'_0|A'_1\rangle = 0$，即 $\langle A'_0|A'_1\rangle = 0$。从而对任意两个输入态 $|\phi\rangle = \phi_0|0\rangle + \phi_1|1\rangle$ 与 $|\psi\rangle = \psi_0|0\rangle + \psi_1|1\rangle$，辅助末态的内积恒等于原态内积：
+
+   $$
+   \langle A'_\phi|A'_\psi\rangle
+   = \phi_0^*\psi_0\langle A'_0|A'_0\rangle + \phi_1^*\psi_1\langle A'_1|A'_1\rangle
+   = \phi_0^*\psi_0 + \phi_1^*\psi_1
+   = \langle\phi|\psi\rangle.
+   $$
+
+盯紧这条等式：映射 $|\psi\rangle \mapsto |A'_\psi\rangle$ 是一个严格的线性**等距映射**（isometry）——第二份未知量子态不但不可能被无痕销毁（若停在固定态 $|A_{\mathrm{fixed}}\rangle$，左边恒为 $1$ 而右边可取 $0$，直接矛盾），**连部分删减或压缩都做不到，只能把整份未知态的完整信息原封不动地搬移到辅助系统里**。
 
 把这和量子硬件里合法的**复位**（reset）对比一下，一切豁然开朗。拿系统 $S$ 和一个初态为 $|0\rangle_E$ 的环境比特 $E$ 做一次 SWAP：
 
@@ -695,7 +697,7 @@ Bennett 等人（1993）给出的**量子隐形传态**协议证明：只要消�
 
 ![量子传态的三步：共享 Bell 态、Alice 测量并发两位经典消息、Bob 按四种结果校正；消息未到时 Bob 的态仍为 I/2](assets/teleportation-map.svg)
 
-### 5.1 三比特张量积零跳步展开与四分支校正表
+### 5.1 三比特张量积逐步展开与四分支校正表
 
 全节严格固定三比特排列顺序为 **$Q, A, B$**（Alice 持有前两位 $Q, A$，Bob 持有第三位 $B$，共 $2^3 = 8$ 个计算基态）。不要背结论，拿草稿纸一步步把三比特张量积乘开！
 
@@ -746,7 +748,7 @@ $$
 p(01) = \left|\frac{\beta}{2}\right|^2 + \left|\frac{\alpha}{2}\right|^2 = \frac{|\alpha|^2 + |\beta|^2}{4} = \frac{1}{4}.
 $$
 
-其他三支同理全都是 $\frac{1}{4}$——**Alice 测得任何结果的概率与 $\alpha, \beta$ 完全无关**，因此测量不会偷看任何关于 $|\psi\rangle$ 的信息。得知结果确实是 `01` 后，要把该分支除以 $\sqrt{p(01)} = \frac{1}{2}$ 归一化，Bob 才得到长度为 $1$ 的**条件态** $\beta|0\rangle + \alpha|1\rangle = X|\psi\rangle$。千万别把“测量前分支带系数 $1/2$”和“测量后已归一化的条件态”混在一起。
+其他三支同理全都是 $\frac{1}{4}$——**Alice 测得任何结果的概率与 $\alpha, \beta$ 完全无关**，因此测量不会偷看任何关于 $|\psi\rangle$ 的信息。得知结果确实是 `01` 后，要把该分支除以 $\sqrt{p(01)} = \frac{1}{2}$ 归一化，Bob 才得到长度为 $1$ 的**条件态** $\beta|0\rangle + \alpha|1\rangle = X|\psi\rangle$。不要把“测量前分支带系数 $1/2$”和“测量后已归一化的条件态”混在一起。
 
 **第四步：Alice 通过经典信道发送两位结果 $(m, n)$（$m$ 是 $Q$ 的结果，$n$ 是 $A$ 的结果），Bob 按表施加本地门校正**：
 
@@ -824,7 +826,7 @@ $$
 \end{aligned}
 $$
 
-看看这个令人拍案叫绝的结果：
+看看这个清晰的结构结果：
 
 1. Alice 测得 $QA = (m, n)$ 时，四种结果的概率仍各为 $\frac{1}{4}$；条件态恰好是 $(I_R \otimes X_B^n Z_B^m)|\Phi^+\rangle_{RB}$。
 2. Bob 收到 $(m, n)$ 后按同一张表施加 $Z_B^m X_B^n$（对 `11` 支，$Z_B X_B |\Psi^-\rangle_{RB} = \frac{|0\rangle(Z X|1\rangle) - |1\rangle(Z X|0\rangle)}{\sqrt{2}} = \frac{|00\rangle - |1\rangle(-|1\rangle)}{\sqrt{2}} = |\Phi^+\rangle_{RB}$），**四支无一例外地还原为同一个 $|\Phi^+\rangle_{RB}$！**
@@ -857,7 +859,7 @@ $$
 
 看这个矩阵：对角线还是 $3/4$ 和 $1/4$，**如果只拿计算基（$Z$ 基）验收，你会误以为传态完美成功！** 可非对角相干项已经彻底归零，转去测 $Y$ 基立刻露馅：$\langle Y\rangle$ 从 $\frac{\sqrt{3}}{2}$ 跌到 $0$，$Y$ 基测得 $+1$ 的概率从 $0.9330$ 跌到 $0.5$。漏掉一位相位校正消息，相当于对 Bob 的量子比特施加了一次彻底的**纯退相位**。
 
-> **情形 B 要点（读出错判带来的随机 Pauli 残差）**：如果两位消息都传到了，但 Alice 的读出器存在不对称错判（例如真 $0$ 报 $1$ 的概率为 $0.12$、真 $1$ 报 $0$ 的概率为 $0.23$，且两位在给定真值后独立出错），记报反位为 $e_m, e_n \in \{0,1\}$。因为 Bob 施加的残留算符 $Z^{e_m} X^{e_n}$ 仅依赖翻转位 $(e_m, e_n)$ 而与真值 $(m, n)$ 无关，且真值 $m, n$ 各自独立等概率取 $0/1$，对真值求和后不对称性恰好精确平均为边缘错判率 $e = \frac{0.12+0.23}{2} = 0.175$，四种残差分支 $(I, X, Z, ZX)$ 的权重分别为 $(1-e)^2,\; e(1-e),\; e(1-e),\; e^2$。其中 $X$ 翻转 $Z$ 的符号而 $Z$ 不改，故 $\langle Z\rangle$ 缩放到 $1-2e = 0.65$ 倍（从 $0.5$ 降至 $0.325$）；而 $X, Z$ 各自翻转 $Y$，同时 $ZX = +iY$ 与 $Y$ 对易（翻两次回原号），故 $\langle Y\rangle$ 缩放到 $(1-2e)^2 = 0.4225$ 倍（从 $0.8660$ 降至 $0.3659$）。关键教训是：**在实时反馈电路里，事后用逆混淆矩阵修经典报表，无法撤回已经在 Bob 量子比特上执行过的错误物理门**。完整矩阵演算与脚本验证见[不对称读出复算说明](../codes/foundations/round73-README.md)、[完整 SDK 实验册](labs/sdk-validation.md)与 `codes/foundations/round73_checks.py`，其一般数学框架（随机 Pauli 信道）将在[第 05 章](05-noise-channels.md)系统展开。
+> **情形 B 要点（实时反馈中的读出错判残差）**：若 Alice 的读出器存在[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)的不对称错判（$\alpha=0.12,\; \beta=0.23$，两位独立），因真值 $(m,n)$ 等概率均匀分布，不对称性在系综中平均为有效错判率 $e = \frac{\alpha+\beta}{2} = 0.175$，导致 Bob 额外吃到权重为 $(1-e)^2,\; e(1-e),\; e(1-e),\; e^2$ 的随机残差门 $(I, X, Z, ZX)$：$\langle Z\rangle$ 缩至 $1-2e = 0.65$ 倍（$0.325$），$\langle Y\rangle$ 缩至 $(1-2e)^2 = 0.4225$ 倍（$0.3659$）。关键教训是：**在实时反馈电路里，事后用逆混淆矩阵修经典报表，无法撤回已经在 Bob 量子比特上执行过的错误物理门**（随机 Pauli 信道框架见[第 05 章](05-noise-channels.md)，本地脚本核验入口见[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)）。
 
 ---
 
@@ -867,37 +869,18 @@ $$
 
 如果没有预共享纠缠，单个量子比特本身至多可靠传递 1 个经典比特（这是[第 13 章](13-quantum-information.md) Holevo 界的直接结论）。但借上预先共享的纠缠，Bennett 与 Wiesner（1992）发明的**超密编码**（Superdense Coding）确实做到了用 1 个量子比特承载 2 个经典位。
 
-### 6.1 四分支编码与解码零跳步手算
+### 6.1 四分支编码与解码逐步手算
 
 初始时，Alice 持有 $A$，Bob 持有 $B$，联合态为 $|\Phi^+\rangle_{AB} = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$。Alice 想发送两位经典消息 $(b_1, b_0) \in \{00, 01, 10, 11\}$。
 
-**第一步：Alice 只在自己的比特 $A$ 上施加一个本地单比特门**，把 $|\Phi^+\rangle_{AB}$ 变成四个彼此正交的 Bell 态之一（固定 `11` 为先 $X$ 后 $Z$，即 $Z_A X_A$）：
+**第一步：Alice 只在自己的比特 $A$ 上施加一个本地单比特门**，把 $|\Phi^+\rangle_{AB}$ 映到四个两两正交的 Bell 态之一（固定 `11` 为先 $X$ 后 $Z$，即 $Z_A X_A$）：
 
-- 想发 `00`：施加 $I_A \otimes I_B$，得
+- `00`：$(I_A \otimes I_B)|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} = |\Phi^+\rangle$；
+- `01`：$(X_A \otimes I_B)|\Phi^+\rangle = \frac{|10\rangle + |01\rangle}{\sqrt{2}} = |\Psi^+\rangle$；
+- `10`：$(Z_A \otimes I_B)|\Phi^+\rangle = \frac{|00\rangle - |11\rangle}{\sqrt{2}} = |\Phi^-\rangle$；
+- `11`：$(Z_A X_A \otimes I_B)|\Phi^+\rangle = \frac{-|10\rangle + |01\rangle}{\sqrt{2}} = \frac{|01\rangle - |10\rangle}{\sqrt{2}} = |\Psi^-\rangle$。
 
-$$
-(I_A \otimes I_B)\frac{|00\rangle + |11\rangle}{\sqrt{2}} = \frac{|00\rangle + |11\rangle}{\sqrt{2}} = |\Phi^+\rangle.
-$$
-
-- 想发 `01`：施加 $X_A \otimes I_B$，只翻第一位，得
-
-$$
-(X_A \otimes I_B)\frac{|00\rangle + |11\rangle}{\sqrt{2}} = \frac{|10\rangle + |01\rangle}{\sqrt{2}} = |\Psi^+\rangle.
-$$
-
-- 想发 `10`：施加 $Z_A \otimes I_B$，给第一位为 $1$ 的项加负号，得
-
-$$
-(Z_A \otimes I_B)\frac{|00\rangle + |11\rangle}{\sqrt{2}} = \frac{|00\rangle - |11\rangle}{\sqrt{2}} = |\Phi^-\rangle.
-$$
-
-- 想发 `11`：先施加 $X_A \otimes I_B$ 得 $\frac{|10\rangle + |01\rangle}{\sqrt{2}}$，再施加 $Z_A \otimes I_B$ 只给第一位为 $1$ 的 $|10\rangle$ 加负号，得
-
-$$
-(Z_A X_A \otimes I_B)|\Phi^+\rangle = \frac{-|10\rangle + |01\rangle}{\sqrt{2}} = \frac{|01\rangle - |10\rangle}{\sqrt{2}} = |\Psi^-\rangle.
-$$
-
-四个目标态两两正交（例如 $\langle\Phi^+|\Phi^-\rangle = \frac{1 - 1}{2} = 0$，$\Phi$ 类与 $\Psi$ 类占据的基态完全不重叠，内积也为 $0$），因此只要能同时拿到两个比特，原则上就能以概率 $1$ 区分它们。
+四个目标态两两正交，因此只要能同时拿到两个比特，原则上就能以概率 $1$ 区分它们。
 
 **第二步：Alice 把自己的那个量子比特 $A$ 通过量子信道送给 Bob。** 现在 Bob 手里同时握着 $A$ 和 $B$。
 
@@ -926,7 +909,11 @@ $$
 | **接收端（Bob）操作** | 按经典消息做单比特门 $I, X, Z, ZX$ | 收到 $A$ 后做 $\mathrm{CNOT}_{A\to B}$、$H_A$ 再测计算基（Bell 测量） |
 | **容易误解的边界** | 经典消息未到前本地恒为 $I/2$，无超光速传讯 | 若无预共享 ebit，单发 1 个量子比特不能可靠传 2 位经典消息 |
 
-仔细看表里的第 5、6 行：两个协议连用的积木都是完全对称的——一个是“发送端做 Bell 测量、接收端做 Pauli 门”，另一个正好反过来，是“发送端做 Pauli 门、接收端做 Bell 测量”！
+仔细看表里的第 5、6 行：两个协议连用的积木都是完全对称的——一个是“发送端做 Bell 测量、接收端做 Pauli 门”，另一个正好反过来，是“发送端做 Pauli 门、接收端做 Bell 测量”。
+
+![Toffoli 门 6-CNOT 7-T 分解与超密编码对偶电路](assets/v4-04-toffoli-superdense.svg)
+
+上图将第 3.2 节的 Toffoli 门标准 Clifford+$T$（6-CNOT / 7-$T$）电路与第 5–6 节隐形传态 / 超密编码的镜像对偶结构并排对照，便于总览本章的核心线路骨架（可打开[原尺寸 Toffoli 分解与超密编码对偶图](assets/v4-04-toffoli-superdense.svg)清晰查看每一步门序）。
 
 ---
 
@@ -1002,7 +989,7 @@ $$
 
 原版接下来是“中途测 $Q, A$，若 $A=1$ 则对 $B$ 做 $X$，再若 $Q=1$ 则对 $B$ 做 $Z$”（此后不再对 $Q, A$ 施加任何门，完全满足延迟测量前提）。把这两个经典条件门原封不动换成两个**量子受控门**：先施加 $\mathrm{CNOT}_{A\to B}$，再施加 $\mathrm{CZ}_{Q\to B}$，把对 $Q, A$ 的测量推迟到末尾！
 
-把四条分支逐一送过这两个门，看看奇迹怎么发生：
+把四条分支逐一送过这两个门，看四支如何化简：
 
 1. **先做 $\mathrm{CNOT}_{A\to B}$**（只对第二位 $A=1$ 的分支给 $B$ 左乘 $X$，用 $X^2 = I$）：
    - $|00\rangle_{QA}|\psi\rangle_B \longmapsto |00\rangle_{QA}|\psi\rangle_B$；
@@ -1094,7 +1081,7 @@ $$
 
 看看发生了什么：原本只会翻转目标位的 CNOT，只要把目标位提前准备成 $|-\rangle$，就自动变成了**给控制位施加相位翻转 $Z$**！在[第 06 章](06-algorithmic-primitives.md)里，Deutsch–Jozsa、Bernstein–Vazirani 和 Grover 搜索的预言机 $U_f|x\rangle|y\rangle = |x\rangle|y \oplus f(x)\rangle$，就是把辅助位设成 $|-\rangle$，借这一招把函数值 $f(x) \in \{0, 1\}$ 精准踢成输入分支的相位因子 $(-1)^{f(x)}$！
 
-**千万别漏掉“本征态”前提！** 看看反例：仍取 $U = Z$，把目标位换成 $|+\rangle$（它不是 $Z$ 的本征态，因为 $Z|+\rangle = |-\rangle$）。这时
+**不要漏掉“本征态”前提！** 看看反例：仍取 $U = Z$，把目标位换成 $|+\rangle$（它不是 $Z$ 的本征态，因为 $Z|+\rangle = |-\rangle$）。这时
 
 $$
 \mathrm{CZ}\bigl(|+\rangle_C |+\rangle_T\bigr)
@@ -1105,7 +1092,7 @@ $$
 
 ---
 
-## 9. 通用门集、KAK 双比特上界与 Solovay–Kitaev 直觉
+## 9. 进阶选读：通用门集、KAK 双比特上界与 Solovay–Kitaev 直觉
 
 经典数字电路里，只要有 NAND 门就能搭出任何逻辑电路。量子计算里，单比特门的旋转角度是连续的，多比特酉矩阵更是无穷无尽——我们能不能只挑**区区几种固定基础门**，像搭积木一样拼出任何想要的量子算法？这就叫**门集的通用性（universality）**。
 
@@ -1122,7 +1109,7 @@ $$
 U = (A_1 \otimes A_2)\,\exp\!\bigl[i(c_x\, X \otimes X + c_y\, Y \otimes Y + c_z\, Z \otimes Z)\bigr]\,(B_1 \otimes B_2),
 $$
 
-  其中 $A_1, A_2, B_1, B_2 \in \mathrm{SU}(2)$ 是四个单比特门，$(c_x, c_y, c_z) \in \mathbb{R}^3$ 是刻画非局域纠缠核心的三个实坐标（称为 Weyl 室坐标）。数一下自由度就能产生震撼的直觉：$\mathrm{SU}(4)$ 总共只有 $4^2 - 1 = 15$ 个独立实参数；前后 4 个单比特门各占 $3$ 个参数，一共拿走 $12$ 个局域自由度，剩下真正制造纠缠的“核心引擎”竟然只剩 $(c_x, c_y, c_z)$ **区区 3 个实数**！而中间的相互作用项 $\exp[i(c_x X\otimes X + c_y Y\otimes Y + c_z Z\otimes Z)]$ 可以用至多 **3 个 CNOT** 和单比特旋转门精确合成（总计至多 3 个 CNOT + 15 个单比特基础旋转）。于是乘积门（$0$ CNOT）、受控-$U$ 门（$\le 2$ CNOT）和 SWAP（$3$ CNOT，刚好触及上界）全部被装进了同一张图景里，硬件编译器里的双比特门最优综合算法将在[第 14 章](14-compilation-control.md)详细展开。
+  其中 $A_1, A_2, B_1, B_2 \in \mathrm{SU}(2)$ 是四个单比特门，$(c_x, c_y, c_z) \in \mathbb{R}^3$ 是刻画非局域纠缠核心的三个实坐标（称为 Weyl 室坐标）。数一下自由度就能形成直观认识：$\mathrm{SU}(4)$ 总共只有 $4^2 - 1 = 15$ 个独立实参数；前后 4 个单比特门各占 $3$ 个参数，一共拿走 $12$ 个局域自由度，剩下真正制造纠缠的“核心引擎”只剩 $(c_x, c_y, c_z)$ 三个实数！而中间的相互作用项 $\exp[i(c_x X\otimes X + c_y Y\otimes Y + c_z Z\otimes Z)]$ 可以用至多 **3 个 CNOT** 和单比特旋转门精确合成（总计至多 3 个 CNOT + 15 个单比特基础旋转）。于是乘积门（$0$ CNOT）、受控-$U$ 门（$\le 2$ CNOT）和 SWAP（$3$ CNOT，刚好触及上界）全部被装进了同一张图景里，硬件编译器里的双比特门最优综合算法将在[第 14 章](14-compilation-control.md)详细展开。
 
 - **离散近似通用**：现实容错硬件不可能对连续无穷多种旋转角度逐一保护，我们希望门集只有**有限个离散门**。有限长度序列只有可数多个，而单比特连续酉矩阵有不可数多个，因此离散门集追求的是**近似通用**：给定任意小的误差 $\epsilon > 0$，总能用有限个门拼出线路，使它与目标门的距离小于 $\epsilon$。最标准的离散通用门集是 **$\{H, T, \mathrm{CNOT}\}$**。
 
@@ -1130,7 +1117,7 @@ $$
 
 | 目标操作 | 核心分解定理 / 构造 | 关键门资源开销 |
 | :--- | :--- | :--- |
-| 任意单比特门 $U \in \mathrm{U}(2)$ | 欧拉 ZYZ 分解（[第 02 章](02-single-qubit.md)） | 3 个单轴旋转 + 全局相位 $e^{i\alpha}$ |
+| 任意单比特门 $U \in \mathrm{U}(2)$ | 欧拉 ZYZ 分解（[第 02 章](02-single-qubit.md)） | 3 个单轴旋转 + 全局相位 $e^{i\delta}$ |
 | 任意受控单比特门 $C(U)$ | ABC 分解定理（第 3.1 节） | 至多 **2 个 CNOT** + 4 个单比特门 |
 | 任意两比特门 $U \in \mathrm{SU}(4)$ | KAK / Cartan 分解（本节） | 至多 **3 个 CNOT** + 至多 15 个单比特旋转 |
 | 三比特 Toffoli 门（CCNOT） | 相位多项式分解（第 3.2 节） | 无辅助：**6 CNOT + 7 $T/T^\dagger$**（均最优）；1 辅助 + 测量：**4 $T$** |
@@ -1173,7 +1160,7 @@ $$
 
 算得 $\theta \approx 1.0961\,\mathrm{rad} \approx 62.80^\circ$，旋转轴方向为 $\hat{n} \propto \bigl(\cos\frac{\pi}{8},\; \sin\frac{\pi}{8},\; \cos\frac{\pi}{8}\bigr)$。数论可以严格证明，**$\theta / \pi$ 是一个无理数**！想象在一个圆周上每次往前跨出“无理数倍整圈”的步子：你永远不会精准踩回起点，只要多走几步，落脚点就会把整条圆周铺得密密麻麻，离圆上任何目标角度都可以任意接近。
 
-接下来怎么从绕单条轴 $\hat{n}$ 的任意旋转，覆盖到整个 $\mathrm{SU}(2)$？这里要特别避开一处经典教材（Nielsen & Chuang §4.5.3 官方勘误）曾踩过的细微雷区：用 $H$ 门共轭得到第二条旋转轴 $\hat{m}$（严格定义为 $H(\hat{n}\cdot\vec{\sigma})H^\dagger = \hat{m}\cdot\vec{\sigma}$，由 $HXH=Z,\; HZH=X,\; HYH=-Y$ 得 $\hat{m} \propto \bigl(\cos\frac{\pi}{8},\; -\sin\frac{\pi}{8},\; \cos\frac{\pi}{8}\bigr)$）时，两条轴的锐夹角是
+接下来怎么从绕单条轴 $\hat{n}$ 的任意旋转，覆盖到整个 $\mathrm{SU}(2)$？这里要特别避开一处经典教材（Nielsen & Chuang §4.5.3 官方勘误）曾踩过的细微陷阱：用 $H$ 门共轭得到第二条旋转轴 $\hat{m}$（严格定义为 $H(\hat{n}\cdot\vec{\sigma})H^\dagger = \hat{m}\cdot\vec{\sigma}$，由 $HXH=Z,\; HZH=X,\; HYH=-Y$ 得 $\hat{m} \propto \bigl(\cos\frac{\pi}{8},\; -\sin\frac{\pi}{8},\; \cos\frac{\pi}{8}\bigr)$）时，两条轴的锐夹角是
 
 $$
 \psi = \arccos|\hat{n}\cdot\hat{m}|
@@ -1192,6 +1179,8 @@ $$
 ---
 
 ## 10. Clifford 群、稳定子表与 Gottesman–Knill 定理手算
+
+> **进阶选读提示**：本节介绍 Clifford 群的有限群结构与稳定子经典模拟直觉，为第 10 章量子纠错和第 21 章经典模拟引擎铺路；首遍学习电路协议时可先读核心结论。
 
 既然 $\{H, T, \mathrm{CNOT}\}$ 已经通用，读者马上会追问：如果把 $T$ 门拿掉，只留 $\{H, S, \mathrm{CNOT}\}$，这套门集明明能制造高度纠缠的 Bell 态与 GHZ 态，为什么偏偏不通用，甚至连普通笔记本电脑都能轻松模拟几千个比特？
 
@@ -1240,95 +1229,70 @@ $$
 
 记住 CNOT 的两条核心传播规则（“$X$ 顺传、$Z$ 逆传”）——它不仅驱动稳定子表，也是[第 10 章](10-error-correction.md)量子纠错里分析错误传播的第一工具。
 
-### 10.2 用稳定子表手算 3 比特 GHZ 态制备与测量坍缩
+**Clifford 群的有限阶数：为什么缺了 $T$ 门永远不通用？**
 
-现在亲手填一张**稳定子表（stabilizer tableau）**，亲眼见证不用存 $2^n$ 个复振幅，怎么把纠缠态的演化与测量算得分毫不差！
+只用三行计数，就能算出单比特 Clifford 群（除去无观测影响的全局相位 $\mathrm{U}(1)$）一共有多少个元素：任何单比特 Clifford 门 $U$ 都被它对两个生成元 $(X, Z)$ 的共轭像完全决定（因 $Y = -iZX$ 的像随之唯一确定，而两个矩阵对 $X, Z$ 的共轭作用相同当且仅当它们只差一个全局相位）：
 
-1. **用稳定子唯一钉死量子态**：如果算符 $g$ 满足 $g|\psi\rangle = +|\psi\rangle$（即 $|\psi\rangle$ 是 $g$ 的 $+1$ 本征态），就称 $g$ **稳定**了 $|\psi\rangle$。单比特态 $|0\rangle$ 满足 $Z|0\rangle = +|0\rangle$，被 $+Z$ 唯一确定；$n$ 比特初态 $|0\rangle^{\otimes n}$ 则被 $n$ 个彼此对易的独立生成元 $\langle +Z_1, +Z_2, \dots, +Z_n\rangle$ 唯一确定（除去全局相位）。
-2. **Heisenberg 更新规则**：若 $g|\psi\rangle = |\psi\rangle$，经门 $U$ 演化后有
-
-$$
-(U g U^\dagger)\bigl(U|\psi\rangle\bigr) = U g |\psi\rangle = U|\psi\rangle.
-$$
-
-   所以**新态 $U|\psi\rangle$ 的稳定子生成元，就是把原生成元逐个做共轭 $g \mapsto U g U^\dagger$**！
-3. **二元辛矩阵编码（Aaronson & Gottesman, 2004）**：对任意 $n$ 比特厄米 Pauli 串，每个比特 $j$ 上的 $I, X, Z, Y$ 分别用两位二进制 $(x_j, z_j) \in \{(0,0), (1,0), (0,1), (1,1)\}$ 表示，整条串编码为 $2n$ 个二进制位 $(x_1,\dots,x_n \mid z_1,\dots,z_n)$ 再加 $1$ 个符号位 $r \in \{0, 1\}$（$0$ 表示 $+1$，$1$ 表示 $-1$）。仅追踪 $n$ 个稳定子生成元需一张 $n \times (2n+1)$ 的二进制表，当 $n = 1000$ 时占约 $2\times 10^6$ 比特（约 $250\,\mathrm{KB}$）；完整的 CHP 算法再加上 $n$ 行去稳定子，总共占 $2n(2n+1)$ 比特，当 $n = 1000$ 时也只需约 $4\times 10^6$ 比特（约 $500\,\mathrm{KB}$），而不是存储 $2^{1000}$ 个复振幅！
-
-**零跳步手算：3 比特 GHZ 态制备（$|000\rangle \xrightarrow{H_1} \xrightarrow{\mathrm{CNOT}_{1\to 2}} \xrightarrow{\mathrm{CNOT}_{2\to 3}} \frac{|000\rangle+|111\rangle}{\sqrt{2}}$）与测量坍缩。**
-
-- **初态 $|000\rangle$**：三个生成元是 $\langle +ZII,\; +IZI,\; +IIZ\rangle$，对应的 $3 \times (6 + 1)$ 二进制稳定子表为
+1. $U X U^\dagger$ 可以任选 $6$ 个带符号 Pauli 轴之一：$\pm X,\; \pm Y,\; \pm Z$（**$6$ 种**选择）；
+2. 因为 $X$ 与 $Z$ 反对易，酉共轭必保持反对易性，所以 $U Z U^\dagger$ 只能选与 $U X U^\dagger$ 垂直的其余 $4$ 个带符号轴之一（**$4$ 种**选择）；
+3. 乘法原理立得单比特商群阶数：
 
 $$
-\left[\begin{array}{ccc|ccc|c}
-x_1 & x_2 & x_3 & z_1 & z_2 & z_3 & r \\
-\hline
-0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 1 & 0
-\end{array}\right]
-\quad\longleftrightarrow\quad
-\begin{aligned}
-g_1 &= +ZII, \\
-g_2 &= +IZI, \\
-g_3 &= +IIZ.
-\end{aligned}
+\left|\mathcal{C}_1 / \mathrm{U}(1)\right| = 6 \times 4 = 24 \;\cong\; S_4.
 $$
 
-- **第 1 步：施加 $H_1$**。按共轭表，仅对第 1 位互换 $x_1 \leftrightarrow z_1$（$Z_1 \mapsto X_1$），其余行不变：
+几何上，这 24 个操作恰好是 Bloch 球内接**正八面体**（顶点位于六根 Pauli 轴 $\pm x, \pm y, \pm z$，等价于外切正方体）的全部 24 个三维刚体旋转对称，与置换正方体四条体对角线的对称群 $S_4$ 同构！直接核对两个生成元 $H, S$ 的核心群关系：除了 $H^2 = I$ 与 $S^4 = I$ 之外，组合门 $H S^\dagger$ 满足 $(H S^\dagger)^3 = e^{-i\pi/4}I$，其共轭作用恰好把三根坐标轴循环轮换（即绕体对角线 $(+1, +1, +1)/\sqrt{3}$ 逆时针转 $120^\circ$）：
 
 $$
-g_1 = +XII,\qquad g_2 = +IZI,\qquad g_3 = +IIZ.
+(H S^\dagger) X (H S^\dagger)^\dagger = +Y,
+\qquad
+(H S^\dagger) Y (H S^\dagger)^\dagger = +Z,
+\qquad
+(H S^\dagger) Z (H S^\dagger)^\dagger = +X.
 $$
 
-- **第 2 步：施加 $\mathrm{CNOT}_{1\to 2}$**。按“$X$ 顺传（$X_1 \mapsto X_1 X_2$）、$Z$ 逆传（$Z_2 \mapsto Z_1 Z_2$）”，即在二进制表里逐行做比特异或 $x_2 \leftarrow x_2 \oplus x_1$ 与 $z_1 \leftarrow z_1 \oplus z_2$：
-  - $g_1: +XII \longmapsto +XXI$；
-  - $g_2: +IZI \longmapsto +ZZI$；
-  - $g_3: +IIZ \longmapsto +IIZ$（第 1、2 位都是 $I$，不动）。
-
-- **第 3 步：施加 $\mathrm{CNOT}_{2\to 3}$**。同理 $X_2 \mapsto X_2 X_3$、$Z_3 \mapsto Z_2 Z_3$（$x_3 \leftarrow x_3 \oplus x_2$，$z_2 \leftarrow z_2 \oplus z_3$）：
-  - $g_1: +XXI \longmapsto +XXX$；
-  - $g_2: +ZZI \longmapsto +ZZI$；
-  - $g_3: +IIZ \longmapsto +IZZ$。
-
-  此时 3 比特 GHZ 态的稳定子表定格为
+（若改取 $SH$，同样满足 $(SH)^3 = e^{i\pi/4}I$，则反向循环 $X \mapsto +Z \mapsto +Y \mapsto +X$。）推广到 $n$ 个量子比特，用同样“逐对选取独立反对易 Pauli 生成元”的辛计数法，可得 $n$ 比特 Clifford 商群的精确有限阶数：
 
 $$
-\left[\begin{array}{ccc|ccc|c}
-1 & 1 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 1 & 0
-\end{array}\right]
-\quad\longleftrightarrow\quad
-\langle +XXX,\; +ZZI,\; +IZZ\rangle.
+\left|\mathcal{C}_n / \mathrm{U}(1)\right| = 2^{n^2 + 2n}\prod_{j=1}^{n}(4^j - 1)
+\quad\Longrightarrow\quad
+n=1:\; 24,\quad
+n=2:\; 11{,}520,\quad
+n=3:\; 92{,}897{,}280.
 $$
 
-  **独立回验**：把这三个生成元直接作用在 $|\mathrm{GHZ}\rangle = \frac{|000\rangle + |111\rangle}{\sqrt{2}}$ 上：
-  - $XXX|\mathrm{GHZ}\rangle = \frac{|111\rangle + |000\rangle}{\sqrt{2}} = +|\mathrm{GHZ}\rangle$；
-  - $ZZI|\mathrm{GHZ}\rangle = \frac{(+1)(+1)|000\rangle + (-1)(-1)|111\rangle}{\sqrt{2}} = +|\mathrm{GHZ}\rangle$；
-  - $IZZ|\mathrm{GHZ}\rangle = \frac{(+1)(+1)|000\rangle + (-1)(-1)|111\rangle}{\sqrt{2}} = +|\mathrm{GHZ}\rangle$。全部精确得 $+1$！
+现在答案一目了然：**对任意固定比特数 $n$，Clifford 群都是一个封闭的有限群**——在单比特 Bloch 球上无论怎样串联 $H$ 和 $S$，永远只能在这 24 个离散朝向里打转，既无法精确实现、也无法任意逼近 $R_z(\pi/4)$ 等连续旋转，因此绝不通用。直到引入一个跳出正八面体对称的 $T$ 门（见 §9.2 与 §10.3），才把 24 个离散点打散并稠密铺满整个 $\mathrm{SU}(2)$。
 
-- **第 4 步：纯靠查表完成测量与坍缩！** 现在在计算基测量第 1 个比特（即测算符 $Z_1 = ZII$）：
-  1. 检查 $ZII$ 与当前三行的对易性：$ZII$ 与 $g_2 = +ZZI$、$g_3 = +IZZ$ 都对易，但与 $g_1 = +XXX$ 在第 1 位上 $ZX = -XZ$，所以**反对易**！
-  2. 只要被测 Pauli 算符与稳定子表中至少一行反对易，测量结果必以 **$50\% / 50\%$ 均匀随机**出现 $+1$（对应比特 $0$）或 $-1$（对应比特 $1$）。（若有多行反对易，先把第一行乘到其他反对易行上消成仅剩一行反对易。）
-  3. 抛一枚经典硬币，假设测得比特 $1$（本征值 $-1$）。表更新只需一步：**把唯一的反对易行 $g_1 = +XXX$ 直接替换成 $-ZII$**！新稳定子表变为
+### 10.2 进阶选读：用稳定子生成元手算 3 比特 GHZ 态制备与测量坍缩
 
-$$
-\langle -ZII,\; +ZZI,\; +IZZ\rangle.
-$$
+如果算符 $g$ 满足 $g|\psi\rangle = +|\psi\rangle$（即 $|\psi\rangle$ 是 $g$ 的 $+1$ 本征态），就称 $g$ **稳定**了 $|\psi\rangle$。$n$ 比特初态 $|0\rangle^{\otimes n}$ 被 $n$ 个两两对易的独立生成元 $\langle +Z_1, +Z_2, \dots, +Z_n\rangle$ 唯一确定（除去全局相位）。经酉门 $U$ 演化后，由 $(U g U^\dagger)(U|\psi\rangle) = U g |\psi\rangle = U|\psi\rangle$ 可知：**新态 $U|\psi\rangle$ 的稳定子生成元，就是把原生成元逐个做共轭 $g \mapsto U g U^\dagger$**。
 
-  4. 紧接着再测第 2 个比特（算符 $Z_2 = IZI$）：检查发现 $IZI$ 与新的三行**全部对易**！这意味着结果不再随机，而是由稳定子群确定性锁定：把前两行相乘，得
+因为每条 $n$ 比特 Pauli 串只需 $2n$ 个二进制位加 $1$ 个符号位即可编码，追踪 $n$ 个稳定子（及用于加速测量的 $n$ 个去稳定子）只需 $2n(2n+1)$ 比特——当 $n = 1000$ 时仅占约 $500\,\mathrm{KB}$ 内存，而不是存储 $2^{1000}$ 个复振幅！（完整的二元辛矩阵编码与 0-based CHP 算法实现见[第 21 章](21-stabilizer-classical-simulation.md)。）
 
-$$
-(-ZII)(+ZZI) = -(Z^2 \otimes Z \otimes I) = -IZI.
-$$
+**逐步手算：3 比特 GHZ 态制备（$|000\rangle \xrightarrow{H_1} \xrightarrow{\mathrm{CNOT}_{1\to 2}} \xrightarrow{\mathrm{CNOT}_{2\to 3}} \frac{|000\rangle+|111\rangle}{\sqrt{2}}$）与测量坍缩。**
 
-  因为 $-IZI$ 就在稳定子群里（说明测后态满足 $(-IZI)|\psi'\rangle = |\psi'\rangle \implies IZI|\psi'\rangle = -|\psi'\rangle$），所以**无需抛硬币，第 2 比特必然以 100% 概率测得 $1$**！（同理 $(-IZI)(+IZZ) = -IIZ$，第 3 比特也必然测得 $1$，测后态精确坍缩成 $|111\rangle$！）
+- **初态 $|000\rangle$**：三个生成元为 $\langle +ZII,\; +IZI,\; +IIZ\rangle$。
+- **第 1 步（施加 $H_1$）**：按共轭表把第 1 位 $Z \mapsto X$，得 $\langle +XII,\; +IZI,\; +IIZ\rangle$。
+- **第 2 步（施加 $\mathrm{CNOT}_{1\to 2}$）**：按“$X$ 顺传（$X_1 \mapsto X_1 X_2$）、$Z$ 逆传（$Z_2 \mapsto Z_1 Z_2$）”更新三行，得 $\langle +XXI,\; +ZZI,\; +IIZ\rangle$。
+- **第 3 步（施加 $\mathrm{CNOT}_{2\to 3}$）**：同理 $X_2 \mapsto X_2 X_3$、$Z_3 \mapsto Z_2 Z_3$，最终 3 比特 GHZ 态的稳定子生成元定格为
 
-看清 **Gottesman–Knill 定理**（Gottesman, 1998）的威力了吗？
+  $$
+  \langle +XXX,\; +ZZI,\; +IZZ\rangle.
+  $$
 
-> 任何只包含计算基初态制备、Clifford 门 $\{H, S, \mathrm{CNOT}\}$、Pauli 测量与经典条件反馈的量子电路，哪怕规模达到几千个比特、生成了高度纠缠的 Bell 态或 GHZ 态，**都可以在普通经典计算机上用多项式时间高效精确模拟**——仅凭几行二进制异或，就精确重现了纠缠关联与非局域坍缩！
+  **独立回验**：把三个算符直接作用在 $|\mathrm{GHZ}\rangle = \frac{|000\rangle + |111\rangle}{\sqrt{2}}$ 上，$XXX|\mathrm{GHZ}\rangle = +|\mathrm{GHZ}\rangle$、$ZZI|\mathrm{GHZ}\rangle = +|\mathrm{GHZ}\rangle$、$IZZ|\mathrm{GHZ}\rangle = +|\mathrm{GHZ}\rangle$，全部精确得 $+1$。
 
-这条定理给了初学者一记极其清醒的认知冲击：**仅仅拥有叠加和纠缠，并不足以带来超越经典计算的指数加速。** 本章学过的 Bell 态制备、隐形传态和超密编码全都是 Clifford 电路。
+- **第 4 步（纯靠生成元更新完成测量坍缩）**：在计算基测量第 1 个比特（算符 $Z_1 = ZII$）：
+  1. 检查对易性：$ZII$ 与 $+ZZI, +IZZ$ 对易，但与 $+XXX$ 在第 1 位反对易（$ZX = -XZ$）。
+  2. 只要被测算符与至少一个生成元反对易，测量结果必以 **$50\% / 50\%$ 均匀随机**出现 $+1$（比特 `0`）或 $-1$（比特 `1`）。（若有多行反对易，先把第一行乘到其余反对易行上消至仅剩一行反对易。）
+  3. 假设测得比特 `1`（本征值 $-1$），只需**把唯一的反对易生成元 $+XXX$ 替换成 $-ZII$**，新生成元集变为 $\langle -ZII,\; +ZZI,\; +IZZ\rangle$。
+  4. 紧接着测第 2 比特（$IZI$）：它与全部三个生成元对易，结果确定性锁定；把前两行相乘得 $(-ZII)(+ZZI) = -IZI$，说明 $-IZI$ 就在稳定子群里，因此**第 2 比特必然以 100% 概率测得 `1`**（同理 $(-IZI)(+IZZ) = -IIZ$，第 3 比特也必然测得 `1`，态精确坍缩成 $|111\rangle$）。
+
+这就是 **Gottesman–Knill 定理**（Gottesman, 1998）的核心结论：
+
+> 任何只包含计算基初态制备、Clifford 门 $\{H, S, \mathrm{CNOT}\}$、Pauli 测量与经典条件反馈的量子电路，哪怕规模达到几千个比特、生成了高度纠缠的 Bell 态或 GHZ 态，**都可以在普通经典计算机上用多项式时间高效精确模拟**——仅凭算符共轭与群生成元更新，就精确重现了纠缠关联与非局域坍缩！
+
+这条定理划出了一道清晰的边界：**仅仅拥有叠加和纠缠，并不足以带来超越经典计算的指数加速。** 本章学过的 Bell 态制备、隐形传态和超密编码全都是 Clifford 电路。
 
 ### 10.3 为什么加一个 $T$ 门稳定子表就裂开了？
 
@@ -1352,12 +1316,29 @@ $$
 
 - **误区 1：电路图和矩阵按同一方向读。** 电路图从左到右表示时间，矩阵乘法必须从右到左作用在态矢量上；先 $H$ 后 $Z$ 写成 $ZH$，不是 $HZ$。
 - **误区 2：CNOT 是量子复印机，或者它先“偷看”了控制位。** CNOT 只在计算基输入时呈现抄写效果；面对叠加态，它严格按线性同时演化各分支并制造纠缠，绝非先测量控制位。
-- **误区 3：单比特门可忽略的全局相位，变成受控门后照样可以删。** 错！$C(e^{i\alpha}U) = (\operatorname{diag}(1, e^{i\alpha})\otimes I)C(U)$，全局相位加控制后会转成控制线上的可测相位门（也是 ABC 分解中控制线 $P(\alpha)$ 的来源）。
+- **误区 3：单比特门可忽略的全局相位，变成受控门后照样可以删。** 错。$C(e^{i\delta}U) = (\operatorname{diag}(1, e^{i\delta})\otimes I)C(U)$，全局相位加控制后会转成控制线上的可测相位门（也是 ABC 分解中控制线 $P(\delta)$ 的来源）。
 - **误区 4：经典可逆计算里的垃圾位丢掉就好，或者不可删除定理禁止合法复位。** 在量子叠加输入下，不经逆计算清零的垃圾位会纠缠主寄存器并摧毁干涉；而合法复位通过把原态信息等距搬入环境（如 SWAP 后丢弃环境）实现，并未在封闭系统内无痕销毁。
 - **误区 5：隐形传态可以超光速通信，或超密编码无需预共享纠缠。** 两位经典消息未到前 Bob 局部态恒为 $I/2$，无超光速传讯；超密编码的 1 qubit 传 2 cbits 严格消耗预先共享的 1 ebit。
 - **误区 6：延迟测量不需要前提，且硬件上永远比动态电路好。** 延迟测量要求寄存器 $A$ 在中段测量后不再施加非对角门或复位复用；且远距离传态无法改做跨城双比特门，芯片内动态电路也有复用辅助比特的优势。
 - **误区 7：Clifford 共轭厄米 Pauli 串可能出 $\pm i$，或任意两条不平行轴也能用三因子欧拉分解。** 厄米性保证 $UPU^\dagger$ 只带实符号 $\pm 1$；非正交双轴（如 $T$ 与 $HTH$ 生成的夹角 $32.65^\circ$ 两轴）需有限次交替旋转（Lowenthal 广义分解），三因子 ZYZ 仅对正交轴普遍成立。
 - **误区 8：只要有叠加和纠缠就能指数加速。** Clifford 电路能制备大规模高度纠缠态（如 $n$ 比特 GHZ 态），但仍可由多项式规模稳定子表在经典计算机上高效精确模拟。
+
+---
+
+## 本章一页速记卡
+
+**概念主链**：线路左到右 vs 矩阵右到左 $\to$ CNOT / CZ / SWAP / Toffoli 与逆计算 $\to$ ABC / Toffoli / $C^n\text{-}U$ 门分解 $\to$ 不可克隆 / 不可删除禁令 $\to$ 隐形传态与超密编码对偶 $\to$ 延迟测量、相位回踢、通用门集与 Clifford 群。
+
+| 核心结构 / 定理 | 关键公式与资源 / 条件边界 |
+| :--- | :--- |
+| 核心双三比特门 | $\mathrm{CZ}=(I\otimes H)\mathrm{CNOT}(I\otimes H)$；$\mathrm{SWAP}=3\;\mathrm{CNOT}$；Toffoli 无辅助最少 $6\;\mathrm{CNOT}+7\;T/T^\dagger$ |
+| 受控-$U$ 的 ABC 分解 | $U=e^{i\delta}R_z(\alpha)R_y(\beta)R_z(\gamma) \implies C(U)$ 需 $2\;\mathrm{CNOT}$ + 控制线 $P(\delta)$ |
+| 不可克隆 / 不可删除 | 未知非正交态不可复制，混态仅两两对易可广播；封闭演化下副本只能等距搬入辅助态，不能无痕删除 |
+| 传态 vs 超密编码 | 传态：$1\;\mathrm{ebit}+2\;\mathrm{cbits}\ge 1\;\mathrm{qubit}$；超密编码：$1\;\mathrm{ebit}+1\;\mathrm{qubit}\ge 2\;\mathrm{cbits}$ |
+| 延迟测量与相位回踢 | 测后仅做经典控制方可延迟测量；$C(U)\lvert+\rangle\lvert u\rangle = \frac{\lvert0\rangle+e^{i\theta}\lvert1\rangle}{\sqrt{2}}\lvert u\rangle$ 须目标为本征态 |
+| 通用门集与 Clifford 群 | $\lvert\mathcal C_1/\mathrm{U}(1)\rvert = 24\cong S_4$，$\lvert\mathcal C_2/\mathrm{U}(1)\rvert = 11{,}520$（可经典多项式模拟）；加 $T$ 门方通用 |
+
+**三句自检要点**：① 逆计算必须在复制结果后按反序倒跑 $U_f^\dagger$ 清除垃圾位，否则破坏干涉；② 单比特门的全局相位变成受控门后会成为可测控制线相位；③ 实时反馈读出错判会在目标位留下真实物理残差门，事后经典求逆无法撤回。
 
 ---
 
@@ -1380,7 +1361,7 @@ $$
 ### 进阶就地练习（独立标签，附自检回验）
 
 - **练 04-A（受控-$R_y(\theta)$ 的 ABC 分解与单向 CNOT 造 SWAP）**：
-  (a) 给定单比特门 $U = R_y(\theta)$（即 $\alpha = \beta = \delta = 0,\; \gamma = \theta$），按第 3.1 节 ABC 分解定理写出 $A, B, C$ 与控制线相位门 $P(\alpha)$，并逐行验算 $ABC = I$ 以及 $A X B X C = R_y(\theta)$；
+  (a) 给定单比特门 $U = R_y(\theta)$（即 $\delta = \alpha = \gamma = 0,\; \beta = \theta$），按第 3.1 节 ABC 分解定理写出 $A, B, C$ 与控制线相位门 $P(\delta)$，并逐行验算 $ABC = I$ 以及 $A X B X C = R_y(\theta)$；
   (b) 若硬件仅提供单向 $\mathrm{CNOT}_{1\to 2}$ 与单比特 $H$ 门，结合第 2.2 节的方向翻转恒等式，写出仅用 $\mathrm{CNOT}_{1\to 2}$ 和 $H$ 门实现 $\mathrm{SWAP}$ 的完整线路，并用 $|01\rangle$ 逐拍回验。
   *自检要点*：(a) $A = R_y(\theta/2),\; B = R_y(-\theta/2),\; C = I,\; P(0) = I$，因 $X R_y(-\theta/2) X = R_y(+\theta/2)$，两段合并得 $R_y(\theta)$；(b) $\mathrm{SWAP} = \mathrm{CNOT}_{1\to 2}(H\otimes H)\mathrm{CNOT}_{1\to 2}(H\otimes H)\mathrm{CNOT}_{1\to 2}$，对 $|01\rangle$ 经全部 5 步依次演变为 $|01\rangle \xrightarrow{\mathrm{CNOT}_{1\to 2}} |01\rangle \xrightarrow{H\otimes H} |+\rangle|-\rangle \xrightarrow{\mathrm{CNOT}_{1\to 2}} |-\rangle|-\rangle \xrightarrow{H\otimes H} |11\rangle \xrightarrow{\mathrm{CNOT}_{1\to 2}} |10\rangle$。
 
@@ -1397,8 +1378,7 @@ $$
 
 - **三比特传态 8 振幅全流程检验**：`python3 codes/foundations/foundations_lab.py --case 04`（核对四分支各占 $1/4$、四组校正精确还原输入，以及未收消息时 Bob 局部态为 $I/2$）；
 - **受控全局相位反例验证**：`python3 codes/foundations/diagnostic_lab.py --case 04`（对比 $C(I)$ 与 $C(-I) = Z \otimes I$ 的确定性区分）；
-- **四比特参考比特纠缠传态（纠缠交换）**：`python3 codes/foundations/round71_checks.py --case 04`（16 振幅逐分支验证联合关联转移）；
-- **动态反馈读出错判的概率分支验证**：`python3 codes/foundations/round73_checks.py --case 04`，详细算例与读出错判复算见[不对称读出复算说明](../codes/foundations/round73-README.md)与[完整 SDK 实验册](labs/sdk-validation.md)（另可在[本地动态电路模拟说明](../codes/foundations/round72-README.md)查看带中途测量与实时条件门的 Qiskit Aer 合成模拟脚本，注意打印端序 `c1c0` 与本书 `QA` 相反）。
+- **四比特纠缠交换、动态反馈读出错判与本地 SDK 动态电路模拟**：完整核验脚本、16 振幅逐分支检验及 Qiskit Aer 中段测量与实时条件门对照（注意软件打印端序 `c1c0` 与本书 `QA` 相反）统一收录在[基础实验册](labs/foundations.md)、[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 延伸阅读起点
 
@@ -1406,7 +1386,7 @@ $$
 - **经典原始论文**：
   - C. H. Bennett (1973), *Logical Reversibility of Computation*, *IBM J. Res. Dev.* 17(6), 525–532（经典可逆计算与逆计算）；
   - T. Toffoli (1980), *Reversible Computing*, LNCS 85, 632–644（Toffoli 门与经典可逆通用性）；
-  - W. K. Wootters & W. H. Zurek (1982), [A single quantum cannot be cloned](https://doi.org/10.1038/299802a0), *Nature* 299, 802–803；D. Dieks (1982), *Communication by EPR devices*, *Phys. Lett. A* 92(6), 271–272（不可克隆定理）；
+  - W. K. Wootters & W. H. Zurek (1982), [A single quantum cannot be cloned](https://doi.org/10.1038/299802a0), *Nature* 299, 802–803；D. Dieks (1982), *Communication by EPR devices*, *Phys. Lett. A* 92(6), 271–272；H. Barnum et al. (1996), *Noncommuting mixed states cannot be broadcast*, *Phys. Rev. Lett.* 76, 2818–2821（不可克隆与不可广播定理）；
   - A. K. Pati & S. L. Braunstein (2000), [Impossibility of deleting an unknown quantum state](https://doi.org/10.1038/35004532), *Nature* 404, 164–165；
   - C. H. Bennett & S. J. Wiesner (1992), *Communication via one- and two-particle operators on Einstein-Podolsky-Rosen states*, *Phys. Rev. Lett.* 69, 2881（超密编码）；
   - C. H. Bennett et al. (1993), [Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels](https://doi.org/10.1103/PhysRevLett.70.1895), *Phys. Rev. Lett.* 70, 1895（量子隐形传态）；

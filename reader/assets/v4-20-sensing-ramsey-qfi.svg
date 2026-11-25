@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">Ramsey 相位干涉、量子费舍尔信息标度与原子钟/重力仪机制</title>
+  <desc id="desc">左面板展示 Ramsey π/2–τ–π/2 脉冲时序及精确计算的含噪条纹 P_+(φ; V=0.85) 与经典 Fisher 信息 F_C(φ; V) = V²sin²φ/(1−V²cos²φ)，标出最大斜率灵敏点 φ=π/2（达到 F_Q=V²）与盲点 φ=0, π；右面板以双对数坐标对比标准量子极限 SQL (1/√N)、单轴扭转自旋压缩 OAT (N⁻⁵/⁶) 与海森堡极限 HL (1/N)，并拆解 ⁸⁷Sr 光晶格原子钟阿兰偏差与 ⁸⁷Rb 冷原子重力仪 Δφ = −k_eff g T² 灵敏度机制。</desc>
+  <style>
+:root{color-scheme:light}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">Ramsey 干涉条纹、QFI 精度标度与原子钟 / 重力仪机制</text>
+  <text class="subtitle" x="22.0" y="52.0">左：Ramsey π/2–τ–π/2 脉冲时序与条纹斜率 / Fisher 信息；右：SQL vs 海森堡标度与原子钟阿兰偏差 / 重力仪机理</text>
+  <rect class="panel" x="20.0" y="64.0" width="456.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="454.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="475.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">(a) Ramsey π/2–τ–π/2 脉冲时序与条纹斜率 / F_C</text>
+  <rect class="subpanel" x="32.0" y="99.0" width="432.0" height="54.0" rx="7.0"/>
+  <text class="lblb" x="44.0" y="130.0">|0⟩</text>
+  <line class="axis" x1="63.0" y1="126.0" x2="77.0" y2="126.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
+  <rect class="c1-soft" x="80.0" y="110.0" width="48.0" height="30.0" rx="5.0"/>
+  <text class="lblb c1-txt" x="104.0" y="129.0" text-anchor="middle">π/2</text>
+  <line class="c3" x1="128.0" y1="126.0" x2="294.0" y2="126.0" stroke-width="1.7" stroke-dasharray="4 3"/>
+  <text class="smb c3-txt" x="211.0" y="117.0" text-anchor="middle">自由演化 τ（积累 φ = Δω·τ）</text>
+  <text class="sm" x="211.0" y="145.0" text-anchor="middle">(|0⟩ + e^(iφ)|1⟩) / √2</text>
+  <rect class="c1-soft" x="296.0" y="110.0" width="48.0" height="30.0" rx="5.0"/>
+  <text class="lblb c1-txt" x="320.0" y="129.0" text-anchor="middle">π/2</text>
+  <line class="axis" x1="344.0" y1="126.0" x2="360.0" y2="126.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
+  <rect class="c3-soft" x="363.0" y="110.0" width="90.0" height="30.0" rx="5.0"/>
+  <text class="smb c3-txt" x="408.0" y="129.0" text-anchor="middle">Z 读出 P₊(φ)</text>
+  <line class="c3" x1="36.0" y1="168.0" x2="56.0" y2="168.0" stroke-width="2.2"/>
+  <text class="sm c3-txt" x="61.0" y="172.0">P₊(φ; V=0.85)</text>
+  <line class="c2" x1="166.0" y1="168.0" x2="186.0" y2="168.0" stroke-width="2.2"/>
+  <text class="sm c2-txt" x="191.0" y="172.0">经典 Fisher F_C(φ)</text>
+  <line class="c4" x1="316.0" y1="168.0" x2="336.0" y2="168.0" stroke-width="1.8" stroke-dasharray="4 3"/>
+  <text class="sm c4-txt" x="341.0" y="172.0">QFI 上界 V²=0.723</text>
+  <line class="grid" x1="72.0" y1="184.0" x2="72.0" y2="340.0"/>
+  <line class="axis" x1="72.0" y1="340.0" x2="72.0" y2="344.0"/>
+  <text class="sm" x="72.0" y="357.0" text-anchor="middle">0</text>
+  <line class="grid" x1="168.5" y1="184.0" x2="168.5" y2="340.0"/>
+  <line class="axis" x1="168.5" y1="340.0" x2="168.5" y2="344.0"/>
+  <text class="sm" x="168.5" y="357.0" text-anchor="middle">π/2</text>
+  <line class="grid" x1="265.0" y1="184.0" x2="265.0" y2="340.0"/>
+  <line class="axis" x1="265.0" y1="340.0" x2="265.0" y2="344.0"/>
+  <text class="sm" x="265.0" y="357.0" text-anchor="middle">π</text>
+  <line class="grid" x1="361.5" y1="184.0" x2="361.5" y2="340.0"/>
+  <line class="axis" x1="361.5" y1="340.0" x2="361.5" y2="344.0"/>
+  <text class="sm" x="361.5" y="357.0" text-anchor="middle">3π/2</text>
+  <line class="grid" x1="458.0" y1="184.0" x2="458.0" y2="340.0"/>
+  <line class="axis" x1="458.0" y1="340.0" x2="458.0" y2="344.0"/>
+  <text class="sm" x="458.0" y="357.0" text-anchor="middle">2π</text>
+  <line class="grid" x1="72.0" y1="340.0" x2="458.0" y2="340.0"/>
+  <line class="axis" x1="68.0" y1="340.0" x2="72.0" y2="340.0"/>
+  <text class="sm" x="64.0" y="344.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="72.0" y1="267.8" x2="458.0" y2="267.8"/>
+  <line class="axis" x1="68.0" y1="267.8" x2="72.0" y2="267.8"/>
+  <text class="sm" x="64.0" y="271.8" text-anchor="end">0.5</text>
+  <line class="grid" x1="72.0" y1="195.6" x2="458.0" y2="195.6"/>
+  <line class="axis" x1="68.0" y1="195.6" x2="72.0" y2="195.6"/>
+  <text class="sm" x="64.0" y="199.6" text-anchor="end">1.0</text>
+  <text class="smb" x="265.0" y="373.0" text-anchor="middle">相对相位 φ (rad)</text>
+  <line class="c4" x1="72.0" y1="235.6" x2="458.0" y2="235.6" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <line class="axis" x1="72.0" y1="184.0" x2="72.0" y2="340.0"/>
+  <line class="axis" x1="72.0" y1="340.0" x2="458.0" y2="340.0"/>
+  <polyline class="guide" points="72.00,195.56 75.22,195.65 78.43,195.95 81.65,196.44 84.87,197.13 88.08,198.02 91.30,199.09 94.52,200.35 97.73,201.80 100.95,203.43 104.17,205.23 107.38,207.21 110.60,209.35 113.82,211.65 117.03,214.11 120.25,216.71 123.47,219.45 126.68,222.33 129.90,225.33 133.12,228.44 136.33,231.67 139.55,234.99 142.77,238.40 145.98,241.90 149.20,245.46 152.42,249.09 155.63,252.76 158.85,256.48 162.07,260.23 165.28,264.00 168.50,267.78 171.72,271.56 174.93,275.33 178.15,279.08 181.37,282.79 184.58,286.47 187.80,290.10 191.02,293.66 194.23,297.15 197.45,300.57 200.67,303.89 203.88,307.11 207.10,310.23 210.32,313.23 213.53,316.10 216.75,318.85 219.97,321.45 223.18,323.90 226.40,326.21 229.62,328.35 232.83,330.32 236.05,332.13 239.27,333.76 242.48,335.20 245.70,336.47 248.92,337.54 252.13,338.42 255.35,339.11 258.57,339.60 261.78,339.90 265.00,340.00 268.22,339.90 271.43,339.60 274.65,339.11 277.87,338.42 281.08,337.54 284.30,336.47 287.52,335.20 290.73,333.76 293.95,332.13 297.17,330.32 300.38,328.35 303.60,326.21 306.82,323.90 310.03,321.45 313.25,318.85 316.47,316.10 319.68,313.23 322.90,310.23 326.12,307.11 329.33,303.89 332.55,300.57 335.77,297.15 338.98,293.66 342.20,290.10 345.42,286.47 348.63,282.79 351.85,279.08 355.07,275.33 358.28,271.56 361.50,267.78 364.72,264.00 367.93,260.23 371.15,256.48 374.37,252.76 377.58,249.09 380.80,245.46 384.02,241.90 387.23,238.40 390.45,234.99 393.67,231.67 396.88,228.44 400.10,225.33 403.32,222.33 406.53,219.45 409.75,216.71 412.97,214.11 416.18,211.65 419.40,209.35 422.62,207.21 425.83,205.23 429.05,203.43 432.27,201.80 435.48,200.35 438.70,199.09 441.92,198.02 445.13,197.13 448.35,196.44 451.57,195.95 454.78,195.65 458.00,195.56" stroke-width="1.2"/>
+  <polyline class="c3" points="72.00,206.39 75.22,206.47 78.43,206.73 81.65,207.14 84.87,207.73 88.08,208.48 91.30,209.39 94.52,210.47 97.73,211.70 100.95,213.08 104.17,214.61 107.38,216.29 110.60,218.11 113.82,220.07 117.03,222.16 120.25,224.37 123.47,226.70 126.68,229.14 129.90,231.69 133.12,234.34 136.33,237.08 139.55,239.91 142.77,242.81 145.98,245.78 149.20,248.81 152.42,251.89 155.63,255.01 158.85,258.17 162.07,261.36 165.28,264.56 168.50,267.78 171.72,270.99 174.93,274.19 178.15,277.38 181.37,280.54 184.58,283.67 187.80,286.75 191.02,289.78 194.23,292.75 197.45,295.65 200.67,298.47 203.88,301.21 207.10,303.86 210.32,306.41 213.53,308.85 216.75,311.19 219.97,313.40 223.18,315.49 226.40,317.44 229.62,319.26 232.83,320.94 236.05,322.48 239.27,323.86 242.48,325.09 245.70,326.16 248.92,327.07 252.13,327.83 255.35,328.41 258.57,328.83 261.78,329.08 265.00,329.17 268.22,329.08 271.43,328.83 274.65,328.41 277.87,327.83 281.08,327.07 284.30,326.16 287.52,325.09 290.73,323.86 293.95,322.48 297.17,320.94 300.38,319.26 303.60,317.44 306.82,315.49 310.03,313.40 313.25,311.19 316.47,308.85 319.68,306.41 322.90,303.86 326.12,301.21 329.33,298.47 332.55,295.65 335.77,292.75 338.98,289.78 342.20,286.75 345.42,283.67 348.63,280.54 351.85,277.38 355.07,274.19 358.28,270.99 361.50,267.78 364.72,264.56 367.93,261.36 371.15,258.17 374.37,255.01 377.58,251.89 380.80,248.81 384.02,245.78 387.23,242.81 390.45,239.91 393.67,237.08 396.88,234.34 400.10,231.69 403.32,229.14 406.53,226.70 409.75,224.37 412.97,222.16 416.18,220.07 419.40,218.11 422.62,216.29 425.83,214.61 429.05,213.08 432.27,211.70 435.48,210.47 438.70,209.39 441.92,208.48 445.13,207.73 448.35,207.14 451.57,206.73 454.78,206.47 458.00,206.39" stroke-width="2.2"/>
+  <polyline class="c2" points="72.00,340.00 75.22,338.98 78.43,336.00 81.65,331.35 84.87,325.39 88.08,318.55 91.30,311.24 94.52,303.80 97.73,296.51 100.95,289.56 104.17,283.05 107.38,277.06 110.60,271.60 113.82,266.67 117.03,262.25 120.25,258.31 123.47,254.81 126.68,251.71 129.90,248.97 133.12,246.57 136.33,244.47 139.55,242.65 142.77,241.08 145.98,239.74 149.20,238.61 152.42,237.68 155.63,236.93 158.85,236.36 162.07,235.96 165.28,235.72 168.50,235.64 171.72,235.72 174.93,235.96 178.15,236.36 181.37,236.93 184.58,237.68 187.80,238.61 191.02,239.74 194.23,241.08 197.45,242.65 200.67,244.47 203.88,246.57 207.10,248.97 210.32,251.71 213.53,254.81 216.75,258.31 219.97,262.25 223.18,266.67 226.40,271.60 229.62,277.06 232.83,283.05 236.05,289.56 239.27,296.51 242.48,303.80 245.70,311.24 248.92,318.55 252.13,325.39 255.35,331.35 258.57,336.00 261.78,338.98 265.00,340.00 268.22,338.98 271.43,336.00 274.65,331.35 277.87,325.39 281.08,318.55 284.30,311.24 287.52,303.80 290.73,296.51 293.95,289.56 297.17,283.05 300.38,277.06 303.60,271.60 306.82,266.67 310.03,262.25 313.25,258.31 316.47,254.81 319.68,251.71 322.90,248.97 326.12,246.57 329.33,244.47 332.55,242.65 335.77,241.08 338.98,239.74 342.20,238.61 345.42,237.68 348.63,236.93 351.85,236.36 355.07,235.96 358.28,235.72 361.50,235.64 364.72,235.72 367.93,235.96 371.15,236.36 374.37,236.93 377.58,237.68 380.80,238.61 384.02,239.74 387.23,241.08 390.45,242.65 393.67,244.47 396.88,246.57 400.10,248.97 403.32,251.71 406.53,254.81 409.75,258.31 412.97,262.25 416.18,266.67 419.40,271.60 422.62,277.06 425.83,283.05 429.05,289.56 432.27,296.51 435.48,303.80 438.70,311.24 441.92,318.55 445.13,325.39 448.35,331.35 451.57,336.00 454.78,338.98 458.00,340.00" stroke-width="2.3"/>
+  <line class="c1" x1="136.6" y1="235.9" x2="200.4" y2="299.7" stroke-width="2.0"/>
+  <circle class="c3-fill" cx="168.5" cy="267.8" r="3.6"/>
+  <circle class="c2-fill" cx="168.5" cy="235.6" r="3.8"/>
+  <circle class="c2-fill" cx="265.0" cy="340.0" r="3.6"/>
+  <text class="smb c2-txt" x="248.0" y="200.0" text-anchor="middle">灵敏点 φ=π/2（最大斜率，F_C=F_Q）</text>
+  <line class="c2" x1="184.0" y1="206.0" x2="171.5" y2="230.6" stroke-width="1.2"/>
+  <text class="smb c2-txt" x="265.0" y="298.0" text-anchor="middle">盲点 φ=π (F_C=0)</text>
+  <line class="c2" x1="265.0" y1="303.0" x2="265.0" y2="335.0" stroke-width="1.2"/>
+  <rect class="note" x="32.0" y="384.0" width="432.0" height="40.0" rx="7.0"/>
+  <text class="smb" x="42.0" y="401.0">F_C(φ;V) = V²sin²φ / (1−V²cos²φ)，在 φ = π/2 榨干全部 QFI = V²</text>
+  <text class="sm" x="42.0" y="418.0">注：虚灰线为理想 V=1 条纹；φ = 0, π 处一阶斜率为 0，对微相移失明。</text>
+  <rect class="panel" x="488.0" y="64.0" width="452.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="489.0" y="65.0" width="450.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="489.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="500.0" y="84.0">(b) QFI 精度标度（SQL vs HL）与原子钟 / 重力仪机制</text>
+  <line class="grid" x1="550.0" y1="106.0" x2="550.0" y2="256.0"/>
+  <line class="axis" x1="550.0" y1="256.0" x2="550.0" y2="260.0"/>
+  <text class="sm" x="550.0" y="273.0" text-anchor="middle">1</text>
+  <line class="grid" x1="643.0" y1="106.0" x2="643.0" y2="256.0"/>
+  <line class="axis" x1="643.0" y1="256.0" x2="643.0" y2="260.0"/>
+  <text class="sm" x="643.0" y="273.0" text-anchor="middle">10</text>
+  <line class="grid" x1="736.0" y1="106.0" x2="736.0" y2="256.0"/>
+  <line class="axis" x1="736.0" y1="256.0" x2="736.0" y2="260.0"/>
+  <text class="sm" x="736.0" y="273.0" text-anchor="middle">10²</text>
+  <line class="grid" x1="829.0" y1="106.0" x2="829.0" y2="256.0"/>
+  <line class="axis" x1="829.0" y1="256.0" x2="829.0" y2="260.0"/>
+  <text class="sm" x="829.0" y="273.0" text-anchor="middle">10³</text>
+  <line class="grid" x1="922.0" y1="106.0" x2="922.0" y2="256.0"/>
+  <line class="axis" x1="922.0" y1="256.0" x2="922.0" y2="260.0"/>
+  <text class="sm" x="922.0" y="273.0" text-anchor="middle">10⁴</text>
+  <line class="grid" x1="550.0" y1="112.8" x2="922.0" y2="112.8"/>
+  <line class="axis" x1="546.0" y1="112.8" x2="550.0" y2="112.8"/>
+  <text class="sm" x="542.0" y="116.8" text-anchor="end">10⁰</text>
+  <line class="grid" x1="550.0" y1="146.9" x2="922.0" y2="146.9"/>
+  <line class="axis" x1="546.0" y1="146.9" x2="550.0" y2="146.9"/>
+  <text class="sm" x="542.0" y="150.9" text-anchor="end">10⁻¹</text>
+  <line class="grid" x1="550.0" y1="181.0" x2="922.0" y2="181.0"/>
+  <line class="axis" x1="546.0" y1="181.0" x2="550.0" y2="181.0"/>
+  <text class="sm" x="542.0" y="185.0" text-anchor="end">10⁻²</text>
+  <line class="grid" x1="550.0" y1="215.1" x2="922.0" y2="215.1"/>
+  <line class="axis" x1="546.0" y1="215.1" x2="550.0" y2="215.1"/>
+  <text class="sm" x="542.0" y="219.1" text-anchor="end">10⁻³</text>
+  <line class="grid" x1="550.0" y1="249.2" x2="922.0" y2="249.2"/>
+  <line class="axis" x1="546.0" y1="249.2" x2="550.0" y2="249.2"/>
+  <text class="sm" x="542.0" y="253.2" text-anchor="end">10⁻⁴</text>
+  <text class="sm" x="544.0" y="103.0" text-anchor="end">Δφ (rad)</text>
+  <text class="smb" x="736.0" y="288.0" text-anchor="middle">探针数 N（双对数坐标）</text>
+  <polygon class="area2" points="550.00,112.82 922.00,249.18 922.00,256.00 550.00,256.00"/>
+  <line class="axis" x1="550.0" y1="106.0" x2="550.0" y2="256.0"/>
+  <line class="axis" x1="550.0" y1="256.0" x2="922.0" y2="256.0"/>
+  <polyline class="c3" points="550.00,112.82 922.00,181.00" stroke-width="2.2" stroke-dasharray="6 3.5"/>
+  <polyline class="c4" points="550.00,112.82 922.00,226.45" stroke-width="2.0" stroke-dasharray="5 2.5 1.5 2.5"/>
+  <polyline class="c1" points="550.00,112.82 922.00,249.18" stroke-width="2.4"/>
+  <text class="smb c3-txt" x="918.0" y="156.0" text-anchor="end">SQL（独立探针）：1/√N</text>
+  <text class="smb c4-txt" x="918.0" y="198.0" text-anchor="end">自旋压缩 OAT：N⁻⁵/⁶</text>
+  <text class="smb c1-txt" x="704.0" y="218.0" text-anchor="end">海森堡极限 HL：1/N</text>
+  <line class="c1" x1="707.0" y1="213.0" x2="765.5" y2="195.9" stroke-width="1.3"/>
+  <text class="sm c2-txt" x="558.0" y="246.0">QCRB 禁区 (&lt; 1/N)</text>
+  <rect class="c1-soft" x="500.0" y="298.0" width="210.0" height="126.0" rx="8.0"/>
+  <text class="lblb c1-txt" x="510.0" y="317.0">⁸⁷Sr 光晶格原子钟</text>
+  <text class="smb" x="510.0" y="337.0">阿兰偏差（QPN 极限）：</text>
+  <text class="mono" x="510.0" y="356.0">σ_y = ξ_R / (ω₀√(N T_R τ))</text>
+  <text class="sm" x="510.0" y="377.0">• 白频噪斜率 ∝ τ⁻¹/²</text>
+  <text class="sm" x="510.0" y="396.0">• 死时间引起 Dick 混叠</text>
+  <text class="sm c1-txt" x="510.0" y="415.0">• N=10⁴, 1s ⇒ 4.1×10⁻¹⁸</text>
+  <rect class="c4-soft" x="720.0" y="298.0" width="208.0" height="126.0" rx="8.0"/>
+  <text class="lblb c4-txt" x="730.0" y="317.0">⁸⁷Rb 冷原子重力仪</text>
+  <text class="smb" x="730.0" y="337.0">Mach–Zehnder 拉曼序列：</text>
+  <text class="mono" x="730.0" y="356.0">π/2 — T — π — T — π/2</text>
+  <text class="sm" x="730.0" y="377.0">• 净相位 Δφ = −k_eff·g·T²</text>
+  <text class="sm" x="730.0" y="396.0">• 二阶差分抵消初位与初速</text>
+  <text class="sm c4-txt" x="730.0" y="415.0">• T=0.1s ⇒ 1.58×10⁶ rad</text>
+  <text class="sm" x="22.0" y="450.0">公式与算例口径：第 20 章 §2.3、§3.3、§6.1 与 §8.1（V=0.85 时 F_Q=V²=0.7225；⁸⁷Sr 钟 4.06×10⁻¹⁸；⁸⁷Rb T=0.1 s 得 1.58×10⁶ rad）。</text>
+</svg>

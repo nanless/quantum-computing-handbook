@@ -1,0 +1,85 @@
+name: CI Quality Gates and Reader Verification
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "handbook/**"
+      - "tools/reader/**"
+      - "codes/**"
+      - "work/research/**"
+      - "Makefile"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "handbook/**"
+      - "tools/reader/**"
+      - "codes/**"
+      - "work/research/**"
+      - "Makefile"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "ci-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: "tools/reader/package-lock.json"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('tools/reader/package-lock.json') }}
+
+      - name: Install reader dependencies, CJK fonts, and Chromium
+        run: |
+          npm ci --prefix tools/reader --ignore-scripts --no-audit --no-fund
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-wqy-zenhei
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" != "true" ]; then
+            npm exec --prefix tools/reader -- playwright install --with-deps chromium
+          else
+            npm exec --prefix tools/reader -- playwright install-deps chromium
+          fi
+
+      - name: Run offline stdlib experiments and integrity checks
+        run: PYTHONDONTWRITEBYTECODE=1 python3 codes/run_all.py
+
+      - name: Run manuscript quality, examples, and review gates
+        run: |
+          node tools/reader/check-v3-quality.mjs
+          node tools/reader/check-qm-examples.mjs
+          node tools/reader/check-qm-review.mjs
+          node tools/reader/check-network-examples.mjs
+
+      - name: Build offline-first reader
+        run: node tools/reader/build.mjs
+
+      - name: Verify reader layout, formulas, audio, SVG, and interactive lab
+        run: node tools/reader/verify.mjs

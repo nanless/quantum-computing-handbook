@@ -2,7 +2,7 @@
   <title id="title">对称双势阱隧穿能级劈裂与自由高斯波包色散展宽</title>
   <desc id="desc">左面板上部由精确有限差分求解绘制四次对称双势阱 V(ξ) = (ξ²−a²)²/(8a²)（a = 2.4）、偶基态波函数 ψ₊(ξ)（无节点）与奇第一激发态 ψ₋(ξ)（原点过零）及隧穿劈裂 ΔE；中部对数图对比 a = 3.0–5.0 精确劈裂与 Garg、Landau-Lifshitz 两条 WKB 曲线；底部标出 NH₃ 与 Fluxonium Φ₀/2 甜点。右面板绘制自由高斯波包在无量纲时间 τ = 0, 1, 2, 3 的精确概率密度 |ψ(x,t)|² 及宽度展宽 σ(t)/σ₀ = √(1+τ²)。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -53,51 +53,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
 .hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .phead{fill:#1c2d3d}
-  .halo{stroke:#16222e}
-  .title,.sec,.lblb{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide{stroke:#738fa8}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
-  .c5{stroke:#b999f0}
-  .c5-fill{fill:#b999f0}
-  .c5-txt{fill:#d0b8fa}
-  .c5-soft{fill:#2d2045;stroke:#b999f0}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .forbid{fill:#f28872;fill-opacity:.14}
-  .area1{fill:#6bc2f5;fill-opacity:.16}
-  .area3{fill:#5dd1a8;fill-opacity:.14}
-  .area4{fill:#f0ba5a;fill-opacity:.15}
-  .data-node{fill:#16222e;stroke:#d7e7f5}
-  .badge-txt{fill:#0f1720}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
-  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

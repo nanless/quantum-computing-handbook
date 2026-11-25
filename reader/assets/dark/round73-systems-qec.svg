@@ -1,0 +1,340 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">固定 7 轮旋转表面码双基对照：普通 MWPM 与相关匹配（18 工况点）</title>
+  <desc id="desc">基于 Stim 与 PyMatching 同样本配对实跑数据绘制 X 基与 Z 基固定 7 轮存储、码距 d = 3, 5, 7、电路级噪声 p = 0.001, 0.003, 0.006 共 18 个工况点（每点 10,000 次抽样）的完整存储失败率，实线为普通匹配，虚线为相关匹配，36 项错误率均附 Bonferroni 同时 95% 区间（α = 0.05/36）。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">固定 7 轮旋转表面码双基对照：普通 MWPM 与相关匹配</text>
+  <text class="subtitle" x="34" y="77">同样本配对解码（18 工况点 × 10,000 次抽样）；误差棒为 36 项错误率 Bonferroni 同时 95% 区间（α = 0.05/36）</text>
+  <rect class="panel" x="28" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 478 Q 491 97 491 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="491" y2="134"/>
+  <text class="sec" x="44" y="120">X 基存储（7 轮，主检相位破坏）</text>
+  <line class="grid-minor" x1="102" y1="388" x2="472" y2="388"/>
+  <line class="grid-minor" x1="102" y1="314.4" x2="472" y2="314.4"/>
+  <line class="grid-minor" x1="102" y1="240.8" x2="472" y2="240.8"/>
+  <line class="grid-minor" x1="102" y1="167.2" x2="472" y2="167.2"/>
+  <line class="grid" x1="102" y1="424.8" x2="472" y2="424.8"/>
+  <text class="sm" x="94" y="428.8" text-anchor="end">0.00</text>
+  <line class="grid" x1="102" y1="351.2" x2="472" y2="351.2"/>
+  <text class="sm" x="94" y="355.2" text-anchor="end">0.02</text>
+  <line class="grid" x1="102" y1="277.6" x2="472" y2="277.6"/>
+  <text class="sm" x="94" y="281.6" text-anchor="end">0.04</text>
+  <line class="grid" x1="102" y1="204" x2="472" y2="204"/>
+  <text class="sm" x="94" y="208" text-anchor="end">0.06</text>
+  <line class="grid" x1="137.81" y1="158" x2="137.81" y2="434"/>
+  <text class="sm" x="137.81" y="452" text-anchor="middle">0.001</text>
+  <line class="grid" x1="257.16" y1="158" x2="257.16" y2="434"/>
+  <text class="sm" x="257.16" y="452" text-anchor="middle">0.003</text>
+  <line class="grid" x1="436.19" y1="158" x2="436.19" y2="434"/>
+  <text class="sm" x="436.19" y="452" text-anchor="middle">0.006</text>
+  <line class="axis" x1="102" y1="434" x2="479" y2="434"/>
+  <polygon class="axis-fill" points="479,434 472,437.36 472,430.64"/>
+  <line class="axis" x1="102" y1="434" x2="102" y2="150"/>
+  <polygon class="axis-fill" points="102,150 105.36,157 98.64,157"/>
+  <text class="lbl" x="287" y="476" text-anchor="middle">电路级噪声参数 p（无量纲）</text>
+  <text class="lbl" x="50" y="296" text-anchor="middle" transform="rotate(-90 50 296)">完整 7 轮存储失败率 k / N</text>
+  <line class="c1" stroke-width="1.35" x1="131.84" y1="419.35" x2="131.84" y2="406.19"/>
+  <line class="c1" stroke-width="1.25" x1="128.34" y1="419.35" x2="135.34" y2="419.35"/>
+  <line class="c1" stroke-width="1.25" x1="128.34" y1="406.19" x2="135.34" y2="406.19"/>
+  <line class="c1" stroke-width="1.35" x1="251.19" y1="373.12" x2="251.19" y2="341.42"/>
+  <line class="c1" stroke-width="1.25" x1="247.69" y1="373.12" x2="254.69" y2="373.12"/>
+  <line class="c1" stroke-width="1.25" x1="247.69" y1="341.42" x2="254.69" y2="341.42"/>
+  <line class="c1" stroke-width="1.35" x1="430.23" y1="232" x2="430.23" y2="175.87"/>
+  <line class="c1" stroke-width="1.25" x1="426.73" y1="232" x2="433.73" y2="232"/>
+  <line class="c1" stroke-width="1.25" x1="426.73" y1="175.87" x2="433.73" y2="175.87"/>
+  <path class="c1" stroke-width="2.0" d="M 131.84 414.13 L 251.19 358.56 L 430.23 205.1"/>
+  <circle class="c1-fill" cx="131.84" cy="414.13" r="4.3"/>
+  <circle class="c1-fill" cx="251.19" cy="358.56" r="4.3"/>
+  <circle class="c1-fill" cx="430.23" cy="205.1" r="4.3"/>
+  <line class="c1" stroke-width="1.35" x1="143.77" y1="418.3" x2="143.77" y2="404.31"/>
+  <line class="c1" stroke-width="1.25" x1="140.27" y1="418.3" x2="147.27" y2="418.3"/>
+  <line class="c1" stroke-width="1.25" x1="140.27" y1="404.31" x2="147.27" y2="404.31"/>
+  <line class="c1" stroke-width="1.35" x1="263.13" y1="381.21" x2="263.13" y2="351.72"/>
+  <line class="c1" stroke-width="1.25" x1="259.63" y1="381.21" x2="266.63" y2="381.21"/>
+  <line class="c1" stroke-width="1.25" x1="259.63" y1="351.72" x2="266.63" y2="351.72"/>
+  <line class="c1" stroke-width="1.35" x1="442.16" y1="252.02" x2="442.16" y2="198.51"/>
+  <line class="c1" stroke-width="1.25" x1="438.66" y1="252.02" x2="445.66" y2="252.02"/>
+  <line class="c1" stroke-width="1.25" x1="438.66" y1="198.51" x2="445.66" y2="198.51"/>
+  <path class="c1" stroke-width="2.0" stroke-dasharray="6 4" d="M 143.77 412.66 L 263.13 367.76 L 442.16 226.45"/>
+  <rect class="c1-fill" x="139.97" y="408.86" width="7.6" height="7.6" rx="1"/>
+  <rect class="c1-fill" x="259.33" y="363.96" width="7.6" height="7.6" rx="1"/>
+  <rect class="c1-fill" x="438.36" y="222.65" width="7.6" height="7.6" rx="1"/>
+  <line class="c2" stroke-width="1.35" x1="131.84" y1="424.79" x2="131.84" y2="420.51"/>
+  <line class="c2" stroke-width="1.25" x1="128.34" y1="424.79" x2="135.34" y2="424.79"/>
+  <line class="c2" stroke-width="1.25" x1="128.34" y1="420.51" x2="135.34" y2="420.51"/>
+  <line class="c2" stroke-width="1.35" x1="251.19" y1="413.02" x2="251.19" y2="395.63"/>
+  <line class="c2" stroke-width="1.25" x1="247.69" y1="413.02" x2="254.69" y2="413.02"/>
+  <line class="c2" stroke-width="1.25" x1="247.69" y1="395.63" x2="254.69" y2="395.63"/>
+  <line class="c2" stroke-width="1.35" x1="430.23" y1="309.13" x2="430.23" y2="264.21"/>
+  <line class="c2" stroke-width="1.25" x1="426.73" y1="309.13" x2="433.73" y2="309.13"/>
+  <line class="c2" stroke-width="1.25" x1="426.73" y1="264.21" x2="433.73" y2="264.21"/>
+  <path class="c2" stroke-width="2.0" d="M 131.84 424.06 L 251.19 405.66 L 430.23 287.9"/>
+  <polygon class="c2-fill" points="131.84,419.16 136.35,427.89 127.33,427.89"/>
+  <polygon class="c2-fill" points="251.19,400.76 255.7,409.49 246.69,409.49"/>
+  <polygon class="c2-fill" points="430.23,283 434.73,291.73 425.72,291.73"/>
+  <line class="c2" stroke-width="1.35" x1="143.77" y1="424.79" x2="143.77" y2="420.51"/>
+  <line class="c2" stroke-width="1.25" x1="140.27" y1="424.79" x2="147.27" y2="424.79"/>
+  <line class="c2" stroke-width="1.25" x1="140.27" y1="420.51" x2="147.27" y2="420.51"/>
+  <line class="c2" stroke-width="1.35" x1="263.13" y1="418.3" x2="263.13" y2="404.31"/>
+  <line class="c2" stroke-width="1.25" x1="259.63" y1="418.3" x2="266.63" y2="418.3"/>
+  <line class="c2" stroke-width="1.25" x1="259.63" y1="404.31" x2="266.63" y2="404.31"/>
+  <line class="c2" stroke-width="1.35" x1="442.16" y1="335.09" x2="442.16" y2="294.88"/>
+  <line class="c2" stroke-width="1.25" x1="438.66" y1="335.09" x2="445.66" y2="335.09"/>
+  <line class="c2" stroke-width="1.25" x1="438.66" y1="294.88" x2="445.66" y2="294.88"/>
+  <path class="c2" stroke-width="2.0" stroke-dasharray="6 4" d="M 143.77 424.06 L 263.13 412.66 L 442.16 316.24"/>
+  <polygon class="c2-fill" points="143.77,428.96 148.28,420.24 139.27,420.24"/>
+  <polygon class="c2-fill" points="263.13,417.56 267.64,408.83 258.62,408.83"/>
+  <polygon class="c2-fill" points="442.16,321.14 446.67,312.42 437.65,312.42"/>
+  <line class="c3" stroke-width="1.35" x1="131.84" y1="424.8" x2="131.84" y2="422.12"/>
+  <line class="c3" stroke-width="1.25" x1="128.34" y1="424.8" x2="135.34" y2="424.8"/>
+  <line class="c3" stroke-width="1.25" x1="128.34" y1="422.12" x2="135.34" y2="422.12"/>
+  <line class="c3" stroke-width="1.35" x1="251.19" y1="421.6" x2="251.19" y2="410.55"/>
+  <line class="c3" stroke-width="1.25" x1="247.69" y1="421.6" x2="254.69" y2="421.6"/>
+  <line class="c3" stroke-width="1.25" x1="247.69" y1="410.55" x2="254.69" y2="410.55"/>
+  <line class="c3" stroke-width="1.35" x1="430.23" y1="354.41" x2="430.23" y2="318.22"/>
+  <line class="c3" stroke-width="1.25" x1="426.73" y1="354.41" x2="433.73" y2="354.41"/>
+  <line class="c3" stroke-width="1.25" x1="426.73" y1="318.22" x2="433.73" y2="318.22"/>
+  <path class="c3" stroke-width="2.0" d="M 131.84 424.8 L 251.19 417.44 L 430.23 337.58"/>
+  <polygon class="c3-fill" points="131.84,419.9 136.74,424.8 131.84,429.7 126.94,424.8"/>
+  <polygon class="c3-fill" points="251.19,412.54 256.09,417.44 251.19,422.34 246.29,417.44"/>
+  <polygon class="c3-fill" points="430.23,332.68 435.13,337.58 430.23,342.48 425.33,337.58"/>
+  <line class="c3" stroke-width="1.35" x1="143.77" y1="424.8" x2="143.77" y2="422.12"/>
+  <line class="c3" stroke-width="1.25" x1="140.27" y1="424.8" x2="147.27" y2="424.8"/>
+  <line class="c3" stroke-width="1.25" x1="140.27" y1="422.12" x2="147.27" y2="422.12"/>
+  <line class="c3" stroke-width="1.35" x1="263.13" y1="422.96" x2="263.13" y2="413.58"/>
+  <line class="c3" stroke-width="1.25" x1="259.63" y1="422.96" x2="266.63" y2="422.96"/>
+  <line class="c3" stroke-width="1.25" x1="259.63" y1="413.58" x2="266.63" y2="413.58"/>
+  <line class="c3" stroke-width="1.35" x1="442.16" y1="391.1" x2="442.16" y2="364.63"/>
+  <line class="c3" stroke-width="1.25" x1="438.66" y1="391.1" x2="445.66" y2="391.1"/>
+  <line class="c3" stroke-width="1.25" x1="438.66" y1="364.63" x2="445.66" y2="364.63"/>
+  <path class="c3" stroke-width="2.0" stroke-dasharray="6 4" d="M 143.77 424.8 L 263.13 419.65 L 442.16 379.17"/>
+  <polygon class="hollow-c3" points="143.77,419.9 148.67,424.8 143.77,429.7 138.87,424.8"/>
+  <polygon class="hollow-c3" points="263.13,414.75 268.03,419.65 263.13,424.55 258.23,419.65"/>
+  <polygon class="hollow-c3" points="442.16,374.27 447.06,379.17 442.16,384.07 437.26,379.17"/>
+  <rect class="pill-bg" x="112" y="160" width="234" height="106" rx="9"/>
+  <line class="c1" stroke-width="2.0" x1="122" y1="180" x2="146" y2="180"/>
+  <circle class="c1-fill" cx="134" cy="180" r="4.3"/>
+  <text class="xs c1-txt" x="152" y="184">d=3 普通</text>
+  <line class="c1" stroke-width="2.0" stroke-dasharray="5 3" x1="226" y1="180" x2="250" y2="180"/>
+  <rect class="c1-fill" x="234.2" y="176.2" width="7.6" height="7.6" rx="1"/>
+  <text class="xs c1-txt" x="256" y="184">d=3 相关</text>
+  <line class="c2" stroke-width="2.0" x1="122" y1="204" x2="146" y2="204"/>
+  <polygon class="c2-fill" points="134,199.1 138.51,207.82 129.49,207.82"/>
+  <text class="xs c2-txt" x="152" y="208">d=5 普通</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="5 3" x1="226" y1="204" x2="250" y2="204"/>
+  <polygon class="c2-fill" points="238,208.9 242.51,200.18 233.49,200.18"/>
+  <text class="xs c2-txt" x="256" y="208">d=5 相关</text>
+  <line class="c3" stroke-width="2.0" x1="122" y1="228" x2="146" y2="228"/>
+  <polygon class="c3-fill" points="134,223.1 138.9,228 134,232.9 129.1,228"/>
+  <text class="xs c3-txt" x="152" y="232">d=7 普通</text>
+  <line class="c3" stroke-width="2.0" stroke-dasharray="5 3" x1="226" y1="228" x2="250" y2="228"/>
+  <polygon class="hollow-c3" points="238,223.1 242.9,228 238,232.9 233.1,228"/>
+  <text class="xs c3-txt" x="256" y="232">d=7 相关</text>
+  <text class="xs" x="122" y="254">横轴微移仅防误差棒重叠（同一 p）</text>
+  <rect class="pill" x="44" y="496" width="432" height="40" rx="9"/>
+  <text class="xs" x="260" y="520" text-anchor="middle">实线 = 普通 MWPM · 虚线 = 相关匹配（enable_correlations）</text>
+  <rect class="panel" x="508" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 522 97 H 958 Q 971 97 971 110 V 134 H 509 V 110 Q 509 97 522 97 Z"/>
+  <line class="grid" x1="509" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="524" y="120">Z 基存储（7 轮，主检位翻转）</text>
+  <line class="grid-minor" x1="582" y1="388" x2="952" y2="388"/>
+  <line class="grid-minor" x1="582" y1="314.4" x2="952" y2="314.4"/>
+  <line class="grid-minor" x1="582" y1="240.8" x2="952" y2="240.8"/>
+  <line class="grid-minor" x1="582" y1="167.2" x2="952" y2="167.2"/>
+  <line class="grid" x1="582" y1="424.8" x2="952" y2="424.8"/>
+  <text class="sm" x="574" y="428.8" text-anchor="end">0.00</text>
+  <line class="grid" x1="582" y1="351.2" x2="952" y2="351.2"/>
+  <text class="sm" x="574" y="355.2" text-anchor="end">0.02</text>
+  <line class="grid" x1="582" y1="277.6" x2="952" y2="277.6"/>
+  <text class="sm" x="574" y="281.6" text-anchor="end">0.04</text>
+  <line class="grid" x1="582" y1="204" x2="952" y2="204"/>
+  <text class="sm" x="574" y="208" text-anchor="end">0.06</text>
+  <line class="grid" x1="617.81" y1="158" x2="617.81" y2="434"/>
+  <text class="sm" x="617.81" y="452" text-anchor="middle">0.001</text>
+  <line class="grid" x1="737.16" y1="158" x2="737.16" y2="434"/>
+  <text class="sm" x="737.16" y="452" text-anchor="middle">0.003</text>
+  <line class="grid" x1="916.19" y1="158" x2="916.19" y2="434"/>
+  <text class="sm" x="916.19" y="452" text-anchor="middle">0.006</text>
+  <line class="axis" x1="582" y1="434" x2="959" y2="434"/>
+  <polygon class="axis-fill" points="959,434 952,437.36 952,430.64"/>
+  <line class="axis" x1="582" y1="434" x2="582" y2="150"/>
+  <polygon class="axis-fill" points="582,150 585.36,157 578.64,157"/>
+  <text class="lbl" x="767" y="476" text-anchor="middle">电路级噪声参数 p（无量纲）</text>
+  <text class="lbl" x="530" y="296" text-anchor="middle" transform="rotate(-90 530 296)">完整 7 轮存储失败率 k / N</text>
+  <line class="c1" stroke-width="1.35" x1="611.84" y1="420.63" x2="611.84" y2="408.59"/>
+  <line class="c1" stroke-width="1.25" x1="608.34" y1="420.63" x2="615.34" y2="420.63"/>
+  <line class="c1" stroke-width="1.25" x1="608.34" y1="408.59" x2="615.34" y2="408.59"/>
+  <line class="c1" stroke-width="1.35" x1="731.19" y1="387.29" x2="731.19" y2="359.61"/>
+  <line class="c1" stroke-width="1.25" x1="727.69" y1="387.29" x2="734.69" y2="387.29"/>
+  <line class="c1" stroke-width="1.25" x1="727.69" y1="359.61" x2="734.69" y2="359.61"/>
+  <line class="c1" stroke-width="1.35" x1="910.23" y1="268.53" x2="910.23" y2="217.3"/>
+  <line class="c1" stroke-width="1.25" x1="906.73" y1="268.53" x2="913.73" y2="268.53"/>
+  <line class="c1" stroke-width="1.25" x1="906.73" y1="217.3" x2="913.73" y2="217.3"/>
+  <path class="c1" stroke-width="2.0" d="M 611.84 415.97 L 731.19 374.75 L 910.23 244.11"/>
+  <circle class="c1-fill" cx="611.84" cy="415.97" r="4.3"/>
+  <circle class="c1-fill" cx="731.19" cy="374.75" r="4.3"/>
+  <circle class="c1-fill" cx="910.23" cy="244.11" r="4.3"/>
+  <line class="c1" stroke-width="1.35" x1="623.77" y1="416.13" x2="623.77" y2="400.61"/>
+  <line class="c1" stroke-width="1.25" x1="620.27" y1="416.13" x2="627.27" y2="416.13"/>
+  <line class="c1" stroke-width="1.25" x1="620.27" y1="400.61" x2="627.27" y2="400.61"/>
+  <line class="c1" stroke-width="1.35" x1="743.13" y1="374.1" x2="743.13" y2="342.65"/>
+  <line class="c1" stroke-width="1.25" x1="739.63" y1="374.1" x2="746.63" y2="374.1"/>
+  <line class="c1" stroke-width="1.25" x1="739.63" y1="342.65" x2="746.63" y2="342.65"/>
+  <line class="c1" stroke-width="1.35" x1="922.16" y1="261.66" x2="922.16" y2="209.46"/>
+  <line class="c1" stroke-width="1.25" x1="918.66" y1="261.66" x2="925.66" y2="261.66"/>
+  <line class="c1" stroke-width="1.25" x1="918.66" y1="209.46" x2="925.66" y2="209.46"/>
+  <path class="c1" stroke-width="2.0" stroke-dasharray="6 4" d="M 623.77 409.71 L 743.13 359.66 L 922.16 236.75"/>
+  <rect class="c1-fill" x="619.97" y="405.91" width="7.6" height="7.6" rx="1"/>
+  <rect class="c1-fill" x="739.33" y="355.86" width="7.6" height="7.6" rx="1"/>
+  <rect class="c1-fill" x="918.36" y="232.95" width="7.6" height="7.6" rx="1"/>
+  <line class="c2" stroke-width="1.35" x1="611.84" y1="424.8" x2="611.84" y2="422.12"/>
+  <line class="c2" stroke-width="1.25" x1="608.34" y1="424.8" x2="615.34" y2="424.8"/>
+  <line class="c2" stroke-width="1.25" x1="608.34" y1="422.12" x2="615.34" y2="422.12"/>
+  <line class="c2" stroke-width="1.35" x1="731.19" y1="418.83" x2="731.19" y2="405.25"/>
+  <line class="c2" stroke-width="1.25" x1="727.69" y1="418.83" x2="734.69" y2="418.83"/>
+  <line class="c2" stroke-width="1.25" x1="727.69" y1="405.25" x2="734.69" y2="405.25"/>
+  <line class="c2" stroke-width="1.35" x1="910.23" y1="313.2" x2="910.23" y2="268.97"/>
+  <line class="c2" stroke-width="1.25" x1="906.73" y1="313.2" x2="913.73" y2="313.2"/>
+  <line class="c2" stroke-width="1.25" x1="906.73" y1="268.97" x2="913.73" y2="268.97"/>
+  <path class="c2" stroke-width="2.0" d="M 611.84 424.8 L 731.19 413.39 L 910.23 292.32"/>
+  <polygon class="c2-fill" points="611.84,419.9 616.35,428.62 607.33,428.62"/>
+  <polygon class="c2-fill" points="731.19,408.49 735.7,417.21 726.69,417.21"/>
+  <polygon class="c2-fill" points="910.23,287.42 914.73,296.14 905.72,296.14"/>
+  <line class="c2" stroke-width="1.35" x1="623.77" y1="424.8" x2="623.77" y2="421.26"/>
+  <line class="c2" stroke-width="1.25" x1="620.27" y1="424.8" x2="627.27" y2="424.8"/>
+  <line class="c2" stroke-width="1.25" x1="620.27" y1="421.26" x2="627.27" y2="421.26"/>
+  <line class="c2" stroke-width="1.35" x1="743.13" y1="421.12" x2="743.13" y2="409.56"/>
+  <line class="c2" stroke-width="1.25" x1="739.63" y1="421.12" x2="746.63" y2="421.12"/>
+  <line class="c2" stroke-width="1.25" x1="739.63" y1="409.56" x2="746.63" y2="409.56"/>
+  <line class="c2" stroke-width="1.35" x1="922.16" y1="340.78" x2="922.16" y2="301.7"/>
+  <line class="c2" stroke-width="1.25" x1="918.66" y1="340.78" x2="925.66" y2="340.78"/>
+  <line class="c2" stroke-width="1.25" x1="918.66" y1="301.7" x2="925.66" y2="301.7"/>
+  <path class="c2" stroke-width="2.0" stroke-dasharray="6 4" d="M 623.77 424.43 L 743.13 416.7 L 922.16 322.5"/>
+  <polygon class="c2-fill" points="623.77,429.33 628.28,420.61 619.27,420.61"/>
+  <polygon class="c2-fill" points="743.13,421.6 747.64,412.88 738.62,412.88"/>
+  <polygon class="c2-fill" points="922.16,327.4 926.67,318.67 917.65,318.67"/>
+  <line class="c3" stroke-width="1.35" x1="611.84" y1="424.8" x2="611.84" y2="422.12"/>
+  <line class="c3" stroke-width="1.25" x1="608.34" y1="424.8" x2="615.34" y2="424.8"/>
+  <line class="c3" stroke-width="1.25" x1="608.34" y1="422.12" x2="615.34" y2="422.12"/>
+  <line class="c3" stroke-width="1.35" x1="731.19" y1="422.96" x2="731.19" y2="413.58"/>
+  <line class="c3" stroke-width="1.25" x1="727.69" y1="422.96" x2="734.69" y2="422.96"/>
+  <line class="c3" stroke-width="1.25" x1="727.69" y1="413.58" x2="734.69" y2="413.58"/>
+  <line class="c3" stroke-width="1.35" x1="910.23" y1="372.8" x2="910.23" y2="341.01"/>
+  <line class="c3" stroke-width="1.25" x1="906.73" y1="372.8" x2="913.73" y2="372.8"/>
+  <line class="c3" stroke-width="1.25" x1="906.73" y1="341.01" x2="913.73" y2="341.01"/>
+  <path class="c3" stroke-width="2.0" d="M 611.84 424.8 L 731.19 419.65 L 910.23 358.19"/>
+  <polygon class="c3-fill" points="611.84,419.9 616.74,424.8 611.84,429.7 606.94,424.8"/>
+  <polygon class="c3-fill" points="731.19,414.75 736.09,419.65 731.19,424.55 726.29,419.65"/>
+  <polygon class="c3-fill" points="910.23,353.29 915.13,358.19 910.23,363.09 905.33,358.19"/>
+  <line class="c3" stroke-width="1.35" x1="623.77" y1="424.8" x2="623.77" y2="422.12"/>
+  <line class="c3" stroke-width="1.25" x1="620.27" y1="424.8" x2="627.27" y2="424.8"/>
+  <line class="c3" stroke-width="1.25" x1="620.27" y1="422.12" x2="627.27" y2="422.12"/>
+  <line class="c3" stroke-width="1.35" x1="743.13" y1="424.55" x2="743.13" y2="418.56"/>
+  <line class="c3" stroke-width="1.25" x1="739.63" y1="424.55" x2="746.63" y2="424.55"/>
+  <line class="c3" stroke-width="1.25" x1="739.63" y1="418.56" x2="746.63" y2="418.56"/>
+  <line class="c3" stroke-width="1.35" x1="922.16" y1="398.3" x2="922.16" y2="374.33"/>
+  <line class="c3" stroke-width="1.25" x1="918.66" y1="398.3" x2="925.66" y2="398.3"/>
+  <line class="c3" stroke-width="1.25" x1="918.66" y1="374.33" x2="925.66" y2="374.33"/>
+  <path class="c3" stroke-width="2.0" stroke-dasharray="6 4" d="M 623.77 424.8 L 743.13 422.96 L 922.16 387.63"/>
+  <polygon class="hollow-c3" points="623.77,419.9 628.67,424.8 623.77,429.7 618.87,424.8"/>
+  <polygon class="hollow-c3" points="743.13,418.06 748.03,422.96 743.13,427.86 738.23,422.96"/>
+  <polygon class="hollow-c3" points="922.16,382.73 927.06,387.63 922.16,392.53 917.26,387.63"/>
+  <rect class="note" x="592" y="160" width="246" height="106" rx="9"/>
+  <text class="xsb" x="604" y="179">关键配对结论（同一批原始抽样）</text>
+  <text class="xs c3-txt" x="604" y="199">• d=5,7 高噪区：相关匹配降错 3–5 成</text>
+  <text class="xs" x="612" y="216">如 X 基 d=7, p=0.006：237 → 124</text>
+  <text class="xs c2-txt" x="604" y="236">• d=3 Z 基三点：相关匹配反向略增</text>
+  <text class="xs" x="612" y="253">如 p=0.003：136 → 177（净退 41）</text>
+  <rect class="pill" x="524" y="496" width="432" height="40" rx="9"/>
+  <text class="xs" x="740" y="520" text-anchor="middle">小码距 d = 3 Z 基三点相关匹配计数反高于普通匹配</text>
+</svg>

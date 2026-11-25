@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">振幅放大几何旋转与显式 6 门 PREPARE/SELECT 块编码电路</title>
+  <desc id="desc">左面板展示振幅放大在 {|B⟩, |G⟩} 二维平面内通过 S_χ 与 S₀ 两次反射合成 +2θ 净旋转的精确几何（θ=18° 时两步直达 |G⟩）；右面板给出 H = 0.6X + 0.8Z 的 6 门显式 PREPARE/SELECT 块编码电路、投影子块矩阵与成功概率 51.0% 验算。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#ffffff;stroke:#d4cfc3;stroke-width:1.35}
+.subpanel{fill:#f5f2ea;stroke:#d8d3c6;stroke-width:1.15}
+.phead{fill:#edf3ef}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12.5px;font-weight:400;fill:#4a5f59}
+.sec{font-size:13.8px;font-weight:700;fill:#14453d}
+.lbl{font-size:12.5px;font-weight:500;fill:#1f3832}
+.lblb{font-size:12.5px;font-weight:700;fill:#122b25}
+.sm{font-size:12px;font-weight:400;fill:#435852}
+.smb{font-size:12px;font-weight:600;fill:#1b332d}
+.xs{font-size:11.5px;font-weight:500;fill:#485e58}
+.xsb{font-size:11.5px;font-weight:700;fill:#19312b}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:700;fill:#122b25}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#122b25}
+.axis{stroke:#243d37;stroke-width:1.6;fill:none}
+.axis-fill{fill:#243d37}
+.wire{stroke:#243d37;stroke-width:1.8;fill:none}
+.cwire{stroke:#5a706a;stroke-width:1.35;fill:none}
+.ctrl{fill:#14453d}
+.targ{fill:#ffffff;stroke:#14453d;stroke-width:1.9}
+.grid{stroke:#e3ded2;stroke-width:1;fill:none}
+.guide{stroke:#7e928c;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#687f78;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1f5a92;fill:none}
+.c1-fill{fill:#1f5a92}
+.c1-txt{fill:#174775}
+.c1-soft{fill:#e6f0fa;stroke:#1f5a92;stroke-width:1.4}
+.c2{stroke:#b3542d;fill:none}
+.c2-fill{fill:#b3542d}
+.c2-txt{fill:#96411e}
+.c2-soft{fill:#fbeae3;stroke:#b3542d;stroke-width:1.4}
+.c3{stroke:#14453d;fill:none}
+.c3-fill{fill:#14453d}
+.c3-txt{fill:#14453d}
+.c3-soft{fill:#e3f2ec;stroke:#14453d;stroke-width:1.4}
+.c4{stroke:#b07016;fill:none}
+.c4-fill{fill:#b07016}
+.c4-txt{fill:#8a550c}
+.c4-soft{fill:#fcf2db;stroke:#b07016;stroke-width:1.4}
+.c5{stroke:#644696;fill:none}
+.c5-fill{fill:#644696}
+.c5-txt{fill:#4e347a}
+.c5-soft{fill:#f0eaf9;stroke:#644696;stroke-width:1.4}
+.note{fill:#fdf6e6;stroke:#c89232;stroke-width:1.25}
+.pill{fill:#f4f0e6;stroke:#b7b0a2;stroke-width:1.15}
+.pill-bg{fill:#FAF8F3;fill-opacity:.95;stroke:#b7b0a2;stroke-width:1.1}
+.area1{fill:#1f5a92;fill-opacity:.13}
+.area2{fill:#b3542d;fill-opacity:.14}
+.area3{fill:#14453d;fill-opacity:.13}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.cc-r{fill:#b3542d;fill-opacity:.23;stroke:#b3542d;stroke-width:1.5}
+.cc-g{fill:#1c7a5e;fill-opacity:.22;stroke:#14453d;stroke-width:1.5}
+.cc-b{fill:#1f5a92;fill-opacity:.22;stroke:#1f5a92;stroke-width:1.5}
+.qnode{fill:#ffffff;stroke:#14453d;stroke-width:1.6}
+.qnode-err{fill:#b3542d;stroke:#ffffff;stroke-width:1.8}
+.qnode-hi{fill:#14453d;stroke:#ffffff;stroke-width:1.6}
+
+.bg{fill:#111917}
+  .panel{fill:#182420;stroke:#2f443d}
+  .subpanel{fill:#1d2b26;stroke:#354d45}
+  .phead{fill:#1c2b26}
+  .title,.sec,.lblb,.math-txt,.gate-txt{fill:#edf6f2}
+  .subtitle,.sm,.xs{fill:#a4bdb5}
+  .lbl,.smb,.xsb{fill:#d9ebe5}
+  .axis,.wire{stroke:#cde2db}
+  .axis-fill,.ctrl{fill:#d9ebe5}
+  .cwire{stroke:#8ea9a0}
+  .targ{fill:#182420;stroke:#d9ebe5}
+  .grid{stroke:#283b35}
+  .guide,.unit-circle{stroke:#708c83}
+  .c1{stroke:#74bdf5}
+  .c1-fill{fill:#74bdf5}
+  .c1-txt{fill:#96d0fa}
+  .c1-soft{fill:#17354d;stroke:#74bdf5}
+  .c2{stroke:#eb8863}
+  .c2-fill{fill:#eb8863}
+  .c2-txt{fill:#f5a789}
+  .c2-soft{fill:#47251a;stroke:#eb8863}
+  .c3{stroke:#5ed1ad}
+  .c3-fill{fill:#5ed1ad}
+  .c3-txt{fill:#84e3c5}
+  .c3-soft{fill:#163b31;stroke:#5ed1ad}
+  .c4{stroke:#f0bf5e}
+  .c4-fill{fill:#f0bf5e}
+  .c4-txt{fill:#f5cf84}
+  .c4-soft{fill:#3b2e14;stroke:#f0bf5e}
+  .c5{stroke:#b89ef2}
+  .c5-fill{fill:#b89ef2}
+  .c5-txt{fill:#cebbf7}
+  .c5-soft{fill:#2c2145;stroke:#b89ef2}
+  .note{fill:#2e2514;stroke:#d19c3d}
+  .pill{fill:#1f2e29;stroke:#476158}
+  .pill-bg{fill:#182420;fill-opacity:.95;stroke:#476158}
+  .area1{fill:#74bdf5;fill-opacity:.18}
+  .area2{fill:#eb8863;fill-opacity:.19}
+  .area3{fill:#5ed1ad;fill-opacity:.17}
+  .badge-txt{fill:#111917}
+  .cc-r{fill:#eb8863;fill-opacity:.28;stroke:#eb8863}
+  .cc-g{fill:#5ed1ad;fill-opacity:.25;stroke:#5ed1ad}
+  .cc-b{fill:#74bdf5;fill-opacity:.26;stroke:#74bdf5}
+  .qnode{fill:#182420;stroke:#d9ebe5}
+  .qnode-err{fill:#eb8863;stroke:#111917}
+  .qnode-hi{fill:#5ed1ad;stroke:#111917}
+
+  </style>
+  <rect class="bg" width="960" height="460" rx="16"/>
+  <text class="title" x="22" y="34">振幅放大二维镜面旋转几何与 6 门 PREPARE/SELECT 块编码</text>
+  <text class="subtitle" x="22" y="54">左：振幅放大在 {|B⟩, |G⟩} 平面由两次反射合成 +2θ 净旋转；右：H = 0.6X + 0.8Z 显式 6 门 LCU 块编码电路</text>
+  <rect class="panel" x="20.0" y="68.0" width="428.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 32.0 69.0 H 436.0 Q 447.0 69.0 447.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
+  <line class="grid" x1="21.0" y1="99.0" x2="447.0" y2="99.0"/>
+  <text class="sec" x="33.0" y="89.5">1. 振幅放大几何：{|B⟩, |G⟩} 平面旋转 +2θ</text>
+  <path class="unit-circle" d="M 240.96 384.77 L 244.44 376.36 L 247.48 367.77 L 250.07 359.03 L 252.20 350.18 L 253.86 341.22 L 255.05 332.19 L 255.76 323.11 L 256.00 314.00 L 255.76 304.89 L 255.05 295.81 L 253.86 286.78 L 252.20 277.82 L 250.07 268.97 L 247.48 260.23 L 244.44 251.64 L 240.96 243.23 L 237.04 235.01 L 232.69 227.00 L 227.93 219.23 L 222.77 211.73 L 217.22 204.50 L 211.31 197.57 L 205.04 190.96 L 198.43 184.69 L 191.50 178.78 L 184.27 173.23 L 176.77 168.07 L 169.00 163.31 L 160.99 158.96 L 152.77 155.04 L 144.36 151.56 L 135.77 148.52 L 127.03 145.93 L 118.18 143.80 L 109.22 142.14 L 100.19 140.95 L 91.11 140.24 L 82.00 140.00 L 72.89 140.24 L 63.81 140.95"/>
+  <line class="axis" stroke-width="1.60" x1="64.00" y1="314.00" x2="287.60" y2="314.00"/>
+  <polygon class="axis-fill" points="292.00,314.00 284.00,317.60 284.00,310.40"/>
+  <line class="axis" stroke-width="1.60" x1="82.00" y1="382.00" x2="82.00" y2="120.40"/>
+  <polygon class="axis-fill" points="82.00,116.00 85.60,124.00 78.40,124.00"/>
+  <text class="smb" x="296" y="318">|B⟩ (坏态)</text>
+  <text class="smb" x="92" y="125">|G⟩ (目标态)</text>
+  <text class="xs" x="72" y="330" text-anchor="end">O</text>
+  <line class="c2" stroke-width="1.60" stroke-dasharray="4 3" x1="247.48" y1="265.23" x2="247.48" y2="358.92"/>
+  <polygon class="c2-fill" points="247.48,362.77 244.28,355.77 250.68,355.77"/>
+  <path class="c3" stroke-width="2.2" d="M 203.74 274.45 L 202.28 270.22 L 200.68 266.05 L 198.93 261.94 L 197.05 257.89 L 195.02 253.91 L 192.85 250.00 L 190.55 246.17 L 188.12 242.42 L 185.55 238.76 L 182.87 235.20 L 180.05 231.72 L 177.12 228.35 L 174.08 225.08 L 170.92 221.92 L 167.65 218.88 L 164.28 215.95 L 160.80 213.13"/>
+  <polygon class="c3-fill" points="157.24,210.45 165.30,212.31 160.99,217.82"/>
+  <path class="c1" stroke-width="1.4" d="M 136.00 314.00 L 135.93 311.17 L 135.70 308.36 L 135.34 305.55 L 134.82 302.77 L 134.16 300.02 L 133.36 297.31"/>
+  <path class="c2" stroke-width="1.4" d="M 133.36 330.69 L 134.16 327.98 L 134.82 325.23 L 135.34 322.45 L 135.70 319.64 L 135.93 316.83 L 136.00 314.00"/>
+  <text class="xs c1-txt" x="144" y="308">+θ</text>
+  <text class="xs c2-txt" x="144" y="330">−θ</text>
+  <line class="c1" stroke-width="2.50" x1="82.00" y1="314.00" x2="243.30" y2="261.59"/>
+  <polygon class="c1-fill" points="247.48,260.23 240.99,266.13 238.76,259.28"/>
+  <line class="c2" stroke-width="2.20" stroke-dasharray="6 3" x1="82.00" y1="314.00" x2="243.30" y2="366.41"/>
+  <polygon class="c2-fill" points="247.48,367.77 238.76,368.72 240.99,361.87"/>
+  <line class="c3" stroke-width="2.60" x1="82.00" y1="314.00" x2="181.69" y2="176.79"/>
+  <polygon class="c3-fill" points="184.27,173.23 182.48,181.82 176.66,177.59"/>
+  <line class="c4" stroke-width="2.20" stroke-dasharray="5 4" x1="82.00" y1="314.00" x2="82.00" y2="144.40"/>
+  <polygon class="c4-fill" points="82.00,140.00 85.60,148.00 78.40,148.00"/>
+  <circle class="c1-fill" cx="247.5" cy="260.2" r="4.2"/>
+  <circle class="c2-fill" cx="247.5" cy="367.8" r="4.0"/>
+  <circle class="c3-fill" cx="184.3" cy="173.2" r="4.6"/>
+  <circle class="c4-fill" cx="82.0" cy="140.0" r="4.2"/>
+  <rect class="pill-bg" x="94" y="137" width="184" height="20" rx="5"/>
+  <text class="xsb c4-txt" x="186" y="151" text-anchor="middle">Q²|ψ₀⟩ = |G⟩ (5θ=90°, p₂=1)</text>
+  <text class="xsb c3-txt" x="200" y="170">Q|ψ₀⟩ (3θ = 54°)</text>
+  <text class="xs c3-txt" x="200" y="186">p₁ = sin²3θ ≈ 65.5%</text>
+  <rect class="pill-bg" x="206" y="210" width="128" height="24" rx="7"/>
+  <text class="xsb c3-txt" x="270" y="226" text-anchor="middle">Q = S₀S_χ：净转 +2θ</text>
+  <text class="xsb c1-txt" x="257" y="258">|ψ₀⟩ (θ = 18°)</text>
+  <text class="xs c1-txt" x="257" y="274">p₀ = sin²θ ≈ 9.5%</text>
+  <text class="xsb c2-txt" x="257" y="366">S_χ|ψ₀⟩ (−θ)</text>
+  <text class="xs c2-txt" x="257" y="382">① 沿 |B⟩ 反射</text>
+  <rect class="note" x="34.0" y="404.0" width="400.0" height="30.0" rx="8"/>
+  <text class="xsb" x="234.0" y="423.2" text-anchor="middle">每步净转 +2θ；最优步数 k ≈ ⌊π/(4θ)⌋，超步将过冲回落</text>
+  <rect class="panel" x="460.0" y="68.0" width="480.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 472.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 461.0 V 80.0 Q 461.0 69.0 472.0 69.0 Z"/>
+  <line class="grid" x1="461.0" y1="99.0" x2="939.0" y2="99.0"/>
+  <text class="sec" x="473.0" y="89.5">2. H = 0.6X + 0.8Z 显式 6 门 PREPARE/SELECT 电路</text>
+  <rect class="c3" stroke-width="1.2" stroke-dasharray="4 3" x="526" y="114" width="76" height="132" rx="7"/>
+  <text class="xsb c3-txt" x="564" y="131" text-anchor="middle">PREPARE</text>
+  <rect class="c1" stroke-width="1.2" stroke-dasharray="4 3" x="612" y="114" width="154" height="132" rx="7"/>
+  <text class="xsb c1-txt" x="689" y="131" text-anchor="middle">SELECT = diag(X, Z)</text>
+  <rect class="c2" stroke-width="1.2" stroke-dasharray="4 3" x="776" y="114" width="82" height="132" rx="7"/>
+  <text class="xsb c2-txt" x="817" y="131" text-anchor="middle">PREPARE†</text>
+  <line class="wire" x1="516" y1="166" x2="862" y2="166"/>
+  <line class="wire" x1="516" y1="218" x2="862" y2="218"/>
+  <text class="smb" x="510" y="170" text-anchor="end">|0⟩_a</text>
+  <text class="smb" x="510" y="222" text-anchor="end">|ψ⟩_s</text>
+  <text class="xsb c2-txt" x="868" y="170">⟨0|_a 投影</text>
+  <text class="xsb c3-txt" x="868" y="222">(H/α)|ψ⟩</text>
+  <rect class="c3-soft" x="537.0" y="153.0" width="54.0" height="26.0" rx="5"/>
+  <text class="xsb c3-txt" x="564.0" y="170.5" text-anchor="middle">Ry(θ)</text>
+  <line class="wire" x1="634.0" y1="166.0" x2="634.0" y2="218.0"/>
+  <circle class="ctrl" cx="634.0" cy="166.0" r="4.4"/>
+  <circle class="ctrl" cx="634.0" cy="218.0" r="4.4"/>
+  <text class="xs c1-txt" x="634" y="238" text-anchor="middle">CZ</text>
+  <rect class="c1-soft" x="655.5" y="154.0" width="25.0" height="24.0" rx="5"/>
+  <text class="gate-txt c1-txt" x="668.0" y="170.5" text-anchor="middle">X</text>
+  <line class="wire" x1="706.0" y1="166.0" x2="706.0" y2="209.5"/>
+  <circle class="ctrl" cx="706.0" cy="166.0" r="4.0"/>
+  <circle class="targ" cx="706.0" cy="218.0" r="8.5"/>
+  <line class="wire" x1="699.5" y1="218.0" x2="712.5" y2="218.0"/>
+  <line class="wire" x1="706.0" y1="211.5" x2="706.0" y2="224.5"/>
+  <text class="xs c1-txt" x="706" y="238" text-anchor="middle">CNOT</text>
+  <rect class="c1-soft" x="731.5" y="154.0" width="25.0" height="24.0" rx="5"/>
+  <text class="gate-txt c1-txt" x="744.0" y="170.5" text-anchor="middle">X</text>
+  <rect class="c2-soft" x="787.0" y="153.0" width="60.0" height="26.0" rx="5"/>
+  <text class="xsb c2-txt" x="817.0" y="170.5" text-anchor="middle">Ry(−θ)</text>
+  <rect class="subpanel" x="474" y="260" width="220" height="134" rx="9"/>
+  <text class="xsb c3-txt" x="584" y="280" text-anchor="middle">投影块 ⟨0|_a U |0⟩_a = H / α</text>
+  <text class="xs" x="584" y="300" text-anchor="middle">= (3/7)X + (4/7)Z</text>
+  <rect class="c1-soft" x="514" y="312" width="68" height="32" rx="4"/>
+  <text class="math-txt c1-txt" x="548.0" y="333.0" text-anchor="middle">+4/7</text>
+  <rect class="c3-soft" x="584" y="312" width="68" height="32" rx="4"/>
+  <text class="math-txt c3-txt" x="618.0" y="333.0" text-anchor="middle">+3/7</text>
+  <rect class="c3-soft" x="514" y="346" width="68" height="32" rx="4"/>
+  <text class="math-txt c3-txt" x="548.0" y="367.0" text-anchor="middle">+3/7</text>
+  <rect class="c1-soft" x="584" y="346" width="68" height="32" rx="4"/>
+  <text class="math-txt c1-txt" x="618.0" y="367.0" text-anchor="middle">−4/7</text>
+  <rect class="subpanel" x="706" y="260" width="220" height="134" rx="9"/>
+  <text class="xsb c1-txt" x="718" y="280">参数设定与成功概率验算</text>
+  <text class="xs" x="718" y="303">1-范数缩放：α = 0.6 + 0.8 = 1.4</text>
+  <text class="xs" x="718" y="323">振幅分配：cos²(θ/2)=3/7, sin²=4/7</text>
+  <text class="xs" x="718" y="343">旋转角：θ = 2·atan(2/√3) ≈ 98.21°</text>
+  <text class="xsb c2-txt" x="718" y="364">成功概率：p₀ = 1/α² ≈ 51.0%</text>
+  <text class="xs" x="718" y="383">（因 H² = (0.36+0.64)I = I 恒定）</text>
+  <rect class="note" x="474.0" y="404.0" width="452.0" height="30.0" rx="8"/>
+  <text class="xsb" x="700.0" y="423.2" text-anchor="middle">6 门显式构造把抽象块编码落成硬件门，可直接衔接量子化与 QSVT</text>
+</svg>

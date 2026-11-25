@@ -2,12 +2,12 @@
   <title id="title">表面码中空间错误链与时间读出错误的检测事件</title>
   <desc id="desc">左图为概念性纠错症状图，红色数据错误链与蓝色候选修正链连接同一对橙色检测事件，合并为可收缩闭环。右图为同一个检查在三轮的读数零、一、零；中间一次读出错误使相邻两处时间边界出现检测事件。图不表示特定器件的精确布线或含孔补丁的全部边界规则。</desc>
   <style>
-    :root{color-scheme:light dark}
+    :root{color-scheme:light}
     .bg{fill:#f7faf9}.panel{fill:#fff;stroke:#b9d2ca;stroke-width:1.5}.head{fill:#eaf3f0}
     .title{font:600 27px system-ui,sans-serif;fill:#183934}.subtitle{font:400 16px system-ui,sans-serif;fill:#49645e}.section{font:600 20px system-ui,sans-serif;fill:#183934}.label{font:500 16px system-ui,sans-serif;fill:#294c45}.small{font:400 14px system-ui,sans-serif;fill:#49645e}
     .grid{stroke:#b6c7c2;stroke-width:3;fill:none}.edge{stroke:#bd5745;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}.repair{stroke:#26779b;stroke-width:7;stroke-dasharray:14 9;stroke-linecap:round;stroke-linejoin:round;fill:none}.boundary{stroke:#8a9d98;stroke-width:2;stroke-dasharray:7 7;fill:none}
     .check{fill:#fff;stroke:#527a70;stroke-width:3}.event{fill:#e6a13b;stroke:#8f5522;stroke-width:3}.data{fill:#fff;stroke:#344d46;stroke-width:2}.time{stroke:#57776e;stroke-width:3;fill:none}.readout{fill:#e8f2ef;stroke:#7b9d92;stroke-width:1.5}.fault{fill:#fae9e2;stroke:#bd5745;stroke-width:2}
-    @media(prefers-color-scheme:dark){.bg{fill:#101a18}.panel{fill:#172521;stroke:#497469}.head{fill:#203a33}.title,.section{fill:#edf7f2}.subtitle,.label,.small{fill:#c4ded2}.grid{stroke:#59766e}.edge{stroke:#f18b74}.repair{stroke:#79c8e7}.boundary{stroke:#77958a}.check,.data{fill:#172521;stroke:#a0c9b5}.event{fill:#f6ba5b;stroke:#ffdb9b}.time{stroke:#a0c9b5}.readout{fill:#264039;stroke:#86aa99}.fault{fill:#4b302b;stroke:#f18b74}}
+    
   </style>
   <rect class="bg" width="1200" height="670" rx="24"/>
   <text class="title" x="40" y="53">表面码解码：空间中的数据错误与时间中的读出错误</text>

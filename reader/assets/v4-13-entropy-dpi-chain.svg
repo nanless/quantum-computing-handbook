@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">数据处理不等式（DPI）总枢纽：熵族、强次可加性与信道容量主链</title>
+  <desc id="desc">左面板展示以夹心量子 Rényi 散度广义数据处理不等式（DPI）为总枢纽的逻辑主链：由 α=1/2、α→1 与 α→∞ 三分支分别导出根保真度单调、Umegaki 相对熵 D(ρ‖σ) 与互信息 I(A:B)、强次可加性 SSA、Holevo 界 χ、量子 Pinsker 界及有限长最小熵，并向上衔接第 18 章四类信道容量。右面板以精确 Python 计算绘制单比特退极化信道 ε_p 下 Holevo χ(p)、最优 Helstrom 互信息 I(X:Y)、相对熵 D(ε_p(ρ)‖I/2) 与 Pinsker 下界随噪声 p ∈ [0,1] 的单调收缩曲线。</desc>
+  <style>
+:root{color-scheme:light}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">数据处理不等式（DPI）总枢纽：熵族、SSA、Holevo 界与容量主链</text>
+  <text class="subtitle" x="22.0" y="52.0">左：广义 DPI 连接 D(ρ‖σ) → I(A:B) → SSA → Holevo χ → 信道容量；右：退极化信道 ε_p 数值单调验证</text>
+  <rect class="panel" x="20.0" y="64.0" width="542.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="540.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="561.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">(a) 广义 DPI 总枢纽逻辑推导网（CPTP 信道 ε 单调链）</text>
+  <rect class="pill" x="32.0" y="100.0" width="518.0" height="25.0" rx="6.0"/>
+  <text class="smb" x="291.0" y="117.0" text-anchor="middle">Rényi 熵族序：S₀ ≥ H_max(α=½) ≥ S(ρ)(α=1) ≥ S₂ ≥ H_min(α→∞)</text>
+  <rect class="c1-soft" x="58.0" y="134.0" width="466.0" height="43.0" rx="8.0" stroke-width="2"/>
+  <text class="lblb c1-txt" x="291.0" y="152.0" text-anchor="middle">总枢纽：夹心 Rényi 散度广义数据处理不等式 (DPI)</text>
+  <text class="sm" x="291.0" y="169.0" text-anchor="middle">D_α(ρ ‖ σ) ≥ D_α(ε(ρ) ‖ ε(σ))   （夹心 Rényi 散度，任意 CPTP 信道 ε，α ∈ [½, ∞]）</text>
+  <line class="c1" x1="104.0" y1="177.0" x2="104.0" y2="198.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
+  <text class="smb c1-txt" x="96.0" y="192.0" text-anchor="end">α = ½</text>
+  <line class="c1" x1="291.0" y1="177.0" x2="291.0" y2="198.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
+  <text class="smb c1-txt" x="300.0" y="192.0">α → 1</text>
+  <line class="c1" x1="478.0" y1="177.0" x2="478.0" y2="198.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
+  <text class="smb c1-txt" x="486.0" y="192.0">α → ∞</text>
+  <rect class="c4-soft" x="32.0" y="200.0" width="144.0" height="44.0" rx="7.0"/>
+  <text class="smb c4-txt" x="104.0" y="218.0" text-anchor="middle">根保真度单调</text>
+  <text class="sm" x="104.0" y="236.0" text-anchor="middle">F(ε(ρ),ε(σ)) ≥ F</text>
+  <rect class="c3-soft" x="188.0" y="200.0" width="206.0" height="44.0" rx="7.0" stroke-width="1.8"/>
+  <text class="smb c3-txt" x="291.0" y="218.0" text-anchor="middle">相对熵 D(ρ‖σ) 与互信息</text>
+  <text class="sm" x="291.0" y="236.0" text-anchor="middle">I(A:B) = D(ρ_AB ‖ ρ_A⊗ρ_B)</text>
+  <rect class="c5-soft" x="406.0" y="200.0" width="144.0" height="44.0" rx="7.0"/>
+  <text class="smb c5-txt" x="478.0" y="218.0" text-anchor="middle">最大相对熵 D_max</text>
+  <text class="sm" x="478.0" y="236.0" text-anchor="middle">H_min 有限长 QKD</text>
+  <line class="c3" x1="291.0" y1="244.0" x2="291.0" y2="255.0" stroke-width="1.6"/>
+  <line class="c3" x1="114.0" y1="255.0" x2="468.0" y2="255.0" stroke-width="1.6"/>
+  <line class="c3" x1="114.0" y1="255.0" x2="114.0" y2="267.0" stroke-width="1.6" marker-end="url(#arr-c3)"/>
+  <line class="c3" x1="291.0" y1="255.0" x2="291.0" y2="267.0" stroke-width="1.6" marker-end="url(#arr-c3)"/>
+  <line class="c3" x1="468.0" y1="255.0" x2="468.0" y2="267.0" stroke-width="1.6" marker-end="url(#arr-c3)"/>
+  <rect class="c1-soft" x="32.0" y="269.0" width="164.0" height="46.0" rx="7.0"/>
+  <text class="smb c1-txt" x="114.0" y="287.0" text-anchor="middle">强次可加性 (SSA)</text>
+  <text class="sm" x="114.0" y="305.0" text-anchor="middle">ε=Tr_C ⇒ I(A:BC)≥I(A:B)</text>
+  <rect class="c2-soft" x="208.0" y="269.0" width="166.0" height="46.0" rx="7.0"/>
+  <text class="smb c2-txt" x="291.0" y="287.0" text-anchor="middle">Holevo 界 χ</text>
+  <text class="sm" x="291.0" y="305.0" text-anchor="middle">测 cq 态 ⇒ I(X:Y) ≤ χ</text>
+  <rect class="c4-soft" x="386.0" y="269.0" width="164.0" height="46.0" rx="7.0"/>
+  <text class="smb c4-txt" x="468.0" y="287.0" text-anchor="middle">量子 Pinsker 界</text>
+  <text class="sm" x="468.0" y="305.0" text-anchor="middle">D(ρ‖σ) ≥ (2/ln2) T²</text>
+  <line class="c1" x1="114.0" y1="315.0" x2="114.0" y2="335.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
+  <line class="c2" x1="291.0" y1="315.0" x2="291.0" y2="335.0" stroke-width="1.6" marker-end="url(#arr-c2)"/>
+  <rect class="subpanel" x="32.0" y="337.0" width="518.0" height="86.0" rx="8.0"/>
+  <text class="lblb c1-txt" x="291.0" y="356.0" text-anchor="middle">向上衔接第 18 章：四类量子信道容量（均受 DPI 单调锁死）</text>
+  <text class="sm" x="44.0" y="377.0">• 经典容量 C（HSW）：Holevo 信息 χ 的正则化渐近极限</text>
+  <text class="sm" x="44.0" y="396.0">• 纠缠辅助容量 C_E（BSST）：SSA 直接保证 max I(R:B) 单字母可加</text>
+  <text class="sm" x="44.0" y="415.0">• 量子容量 Q（LSD）与私密容量 P：串接前后处理均满足 Cap(D∘ε∘A) ≤ Cap(ε)</text>
+  <rect class="panel" x="574.0" y="64.0" width="366.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="575.0" y="65.0" width="364.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="575.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="586.0" y="84.0">(b) 退极化 ε_p 数值验证（DPI 单调衰减）</text>
+  <line class="grid" x1="626.0" y1="114.0" x2="626.0" y2="292.0"/>
+  <line class="axis" x1="626.0" y1="292.0" x2="626.0" y2="296.0"/>
+  <text class="sm" x="626.0" y="309.0" text-anchor="middle">0.0</text>
+  <line class="grid" x1="685.2" y1="114.0" x2="685.2" y2="292.0"/>
+  <line class="axis" x1="685.2" y1="292.0" x2="685.2" y2="296.0"/>
+  <text class="sm" x="685.2" y="309.0" text-anchor="middle">0.2</text>
+  <line class="grid" x1="744.4" y1="114.0" x2="744.4" y2="292.0"/>
+  <line class="axis" x1="744.4" y1="292.0" x2="744.4" y2="296.0"/>
+  <text class="sm" x="744.4" y="309.0" text-anchor="middle">0.4</text>
+  <line class="grid" x1="803.6" y1="114.0" x2="803.6" y2="292.0"/>
+  <line class="axis" x1="803.6" y1="292.0" x2="803.6" y2="296.0"/>
+  <text class="sm" x="803.6" y="309.0" text-anchor="middle">0.6</text>
+  <line class="grid" x1="862.8" y1="114.0" x2="862.8" y2="292.0"/>
+  <line class="axis" x1="862.8" y1="292.0" x2="862.8" y2="296.0"/>
+  <text class="sm" x="862.8" y="309.0" text-anchor="middle">0.8</text>
+  <line class="grid" x1="922.0" y1="114.0" x2="922.0" y2="292.0"/>
+  <line class="axis" x1="922.0" y1="292.0" x2="922.0" y2="296.0"/>
+  <text class="sm" x="922.0" y="309.0" text-anchor="middle">1.0</text>
+  <line class="grid" x1="626.0" y1="292.0" x2="922.0" y2="292.0"/>
+  <line class="axis" x1="622.0" y1="292.0" x2="626.0" y2="292.0"/>
+  <text class="sm" x="618.0" y="296.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="626.0" y1="239.6" x2="922.0" y2="239.6"/>
+  <line class="axis" x1="622.0" y1="239.6" x2="626.0" y2="239.6"/>
+  <text class="sm" x="618.0" y="243.6" text-anchor="end">0.2</text>
+  <line class="grid" x1="626.0" y1="187.3" x2="922.0" y2="187.3"/>
+  <line class="axis" x1="622.0" y1="187.3" x2="626.0" y2="187.3"/>
+  <text class="sm" x="618.0" y="191.3" text-anchor="end">0.4</text>
+  <line class="grid" x1="626.0" y1="134.9" x2="922.0" y2="134.9"/>
+  <line class="axis" x1="622.0" y1="134.9" x2="626.0" y2="134.9"/>
+  <text class="sm" x="618.0" y="138.9" text-anchor="end">0.6</text>
+  <text class="sm" x="622.0" y="108.0" text-anchor="end">bit</text>
+  <text class="smb" x="774.0" y="325.0" text-anchor="middle">退极化噪声参数 p</text>
+  <line class="axis" x1="626.0" y1="114.0" x2="626.0" y2="292.0"/>
+  <line class="axis" x1="626.0" y1="292.0" x2="922.0" y2="292.0"/>
+  <polyline class="c1" points="626.00,134.71 629.70,146.13 633.40,154.32 637.10,161.32 640.80,167.55 644.50,173.23 648.20,178.47 651.90,183.34 655.60,187.92 659.30,192.24 663.00,196.32 666.70,200.20 670.40,203.90 674.10,207.43 677.80,210.80 681.50,214.04 685.20,217.15 688.90,220.14 692.60,223.01 696.30,225.78 700.00,228.45 703.70,231.02 707.40,233.51 711.10,235.91 714.80,238.23 718.50,240.48 722.20,242.65 725.90,244.75 729.60,246.79 733.30,248.76 737.00,250.66 740.70,252.51 744.40,254.30 748.10,256.03 751.80,257.71 755.50,259.34 759.20,260.91 762.90,262.43 766.60,263.91 770.30,265.34 774.00,266.72 777.70,268.06 781.40,269.35 785.10,270.60 788.80,271.81 792.50,272.98 796.20,274.10 799.90,275.19 803.60,276.24 807.30,277.25 811.00,278.22 814.70,279.16 818.40,280.06 822.10,280.92 825.80,281.75 829.50,282.54 833.20,283.30 836.90,284.03 840.60,284.72 844.30,285.38 848.00,286.00 851.70,286.60 855.40,287.16 859.10,287.69 862.80,288.19 866.50,288.65 870.20,289.09 873.90,289.49 877.60,289.86 881.30,290.21 885.00,290.52 888.70,290.80 892.40,291.05 896.10,291.28 899.80,291.47 903.50,291.63 907.20,291.76 910.90,291.87 914.60,291.94 918.30,291.99 922.00,292.00" stroke-width="2.3"/>
+  <polyline class="c3" points="626.00,187.52 629.70,190.44 633.40,193.29 637.10,196.09 640.80,198.83 644.50,201.52 648.20,204.16 651.90,206.75 655.60,209.28 659.30,211.77 663.00,214.21 666.70,216.60 670.40,218.94 674.10,221.23 677.80,223.48 681.50,225.69 685.20,227.85 688.90,229.97 692.60,232.05 696.30,234.08 700.00,236.07 703.70,238.02 707.40,239.93 711.10,241.80 714.80,243.64 718.50,245.43 722.20,247.18 725.90,248.90 729.60,250.57 733.30,252.21 737.00,253.81 740.70,255.38 744.40,256.91 748.10,258.40 751.80,259.86 755.50,261.29 759.20,262.67 762.90,264.03 766.60,265.34 770.30,266.63 774.00,267.88 777.70,269.10 781.40,270.28 785.10,271.43 788.80,272.55 792.50,273.63 796.20,274.68 799.90,275.70 803.60,276.69 807.30,277.64 811.00,278.56 814.70,279.45 818.40,280.31 822.10,281.14 825.80,281.94 829.50,282.70 833.20,283.44 836.90,284.14 840.60,284.81 844.30,285.46 848.00,286.07 851.70,286.65 855.40,287.20 859.10,287.72 862.80,288.21 866.50,288.67 870.20,289.10 873.90,289.50 877.60,289.87 881.30,290.21 885.00,290.52 888.70,290.80 892.40,291.06 896.10,291.28 899.80,291.47 903.50,291.63 907.20,291.76 910.90,291.87 914.60,291.94 918.30,291.99 922.00,292.00" stroke-width="2.0" stroke-dasharray="6 3.5"/>
+  <polyline class="c2" points="626.00,242.60 629.70,243.89 633.40,245.15 637.10,246.40 640.80,247.63 644.50,248.84 648.20,250.03 651.90,251.20 655.60,252.36 659.30,253.49 663.00,254.61 666.70,255.70 670.40,256.78 674.10,257.85 677.80,258.89 681.50,259.92 685.20,260.93 688.90,261.92 692.60,262.89 696.30,263.85 700.00,264.79 703.70,265.71 707.40,266.61 711.10,267.50 714.80,268.37 718.50,269.23 722.20,270.06 725.90,270.88 729.60,271.69 733.30,272.48 737.00,273.25 740.70,274.00 744.40,274.74 748.10,275.46 751.80,276.17 755.50,276.86 759.20,277.53 762.90,278.19 766.60,278.84 770.30,279.46 774.00,280.07 777.70,280.67 781.40,281.25 785.10,281.81 788.80,282.36 792.50,282.89 796.20,283.41 799.90,283.91 803.60,284.40 807.30,284.87 811.00,285.32 814.70,285.76 818.40,286.19 822.10,286.60 825.80,286.99 829.50,287.37 833.20,287.74 836.90,288.08 840.60,288.42 844.30,288.74 848.00,289.04 851.70,289.33 855.40,289.61 859.10,289.86 862.80,290.11 866.50,290.34 870.20,290.55 873.90,290.75 877.60,290.94 881.30,291.11 885.00,291.26 888.70,291.40 892.40,291.53 896.10,291.64 899.80,291.73 903.50,291.82 907.20,291.88 910.90,291.93 914.60,291.97 918.30,291.99 922.00,292.00" stroke-width="2.1"/>
+  <polyline class="c4" points="626.00,244.79 629.70,245.97 633.40,247.12 637.10,248.27 640.80,249.40 644.50,250.51 648.20,251.61 651.90,252.69 655.60,253.76 659.30,254.82 663.00,255.86 666.70,256.88 670.40,257.89 674.10,258.89 677.80,259.87 681.50,260.84 685.20,261.79 688.90,262.73 692.60,263.65 696.30,264.55 700.00,265.45 703.70,266.32 707.40,267.19 711.10,268.04 714.80,268.87 718.50,269.69 722.20,270.49 725.90,271.28 729.60,272.06 733.30,272.82 737.00,273.56 740.70,274.29 744.40,275.01 748.10,275.71 751.80,276.39 755.50,277.06 759.20,277.72 762.90,278.36 766.60,278.99 770.30,279.60 774.00,280.20 777.70,280.78 781.40,281.35 785.10,281.90 788.80,282.44 792.50,282.96 796.20,283.47 799.90,283.97 803.60,284.45 807.30,284.91 811.00,285.36 814.70,285.80 818.40,286.22 822.10,286.62 825.80,287.01 829.50,287.39 833.20,287.75 836.90,288.10 840.60,288.43 844.30,288.75 848.00,289.05 851.70,289.34 855.40,289.61 859.10,289.87 862.80,290.11 866.50,290.34 870.20,290.55 873.90,290.75 877.60,290.94 881.30,291.11 885.00,291.26 888.70,291.40 892.40,291.53 896.10,291.64 899.80,291.73 903.50,291.82 907.20,291.88 910.90,291.93 914.60,291.97 918.30,291.99 922.00,292.00" stroke-width="1.9" stroke-dasharray="2.5 3"/>
+  <circle class="c1-fill" cx="626.0" cy="134.7" r="3.5"/>
+  <circle class="c3-fill" cx="626.0" cy="187.5" r="3.5"/>
+  <circle class="c2-fill" cx="626.0" cy="242.6" r="3.5"/>
+  <rect class="pill-bg" x="722.0" y="114.0" width="198.0" height="94.0" rx="6.0"/>
+  <line class="c1" x1="732.0" y1="128.0" x2="756.0" y2="128.0" stroke-width="2.2" />
+  <text class="sm" x="762.0" y="132.0">Holevo χ(p)  {|0⟩,|+⟩}</text>
+  <line class="c3" x1="732.0" y1="150.0" x2="756.0" y2="150.0" stroke-width="2.2" stroke-dasharray="6 3.5"/>
+  <text class="sm" x="762.0" y="154.0">Helstrom 互信息 I(X:Y)</text>
+  <line class="c2" x1="732.0" y1="172.0" x2="756.0" y2="172.0" stroke-width="2.2" />
+  <text class="sm" x="762.0" y="176.0">相对熵 D(ε_p(ρ) ‖ I/2)</text>
+  <line class="c4" x1="732.0" y1="194.0" x2="756.0" y2="194.0" stroke-width="2.2" stroke-dasharray="2.5 3"/>
+  <text class="sm" x="762.0" y="198.0">Pinsker 下界 (2/ln2)T²</text>
+  <rect class="note" x="586.0" y="338.0" width="342.0" height="85.0" rx="7.0"/>
+  <text class="smb" x="596.0" y="357.0">精确数值回验（单比特退极化 ε_p，单位 bit）：</text>
+  <text class="sm" x="596.0" y="376.0">p=0：χ = 0.601 ≥ I_opt = 0.399（Holevo 界严格成立）</text>
+  <text class="sm" x="596.0" y="395.0">p=0：D = 0.189 ≥ Pinsker 0.180（对角态紧密夹逼）</text>
+  <text class="sm c1-txt" x="596.0" y="414.0">p→1：四量均随噪声单调压降至 0，完整印证 DPI。</text>
+  <text class="sm" x="22.0" y="450.0">数值口径：第 13 章 §4.1–§5.1；右图系综 {|0⟩,|+⟩}（等先验）算 χ 与 I(X:Y)，对角态 ρ=diag(3/4,1/4) 与 σ=I/2 算 D 与 Pinsker（对数以 2 为底）。</text>
+</svg>

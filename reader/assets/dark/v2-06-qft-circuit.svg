@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v2-06-qft-circuit-title v2-06-qft-circuit-desc">
+  <title id="v2-06-qft-circuit-title">3 比特量子傅里叶变换（QFT₃）完整量子线路图</title>
+  <desc id="v2-06-qft-circuit-desc">展示大端序 3 比特 QFT 线路：依次在 q₂、q₁、q₀ 上施加 H 门与受控相位门 R₂、R₃，末尾通过 SWAP 反转高低位，附相位门定义与门复杂度说明。</desc>
+  <style>
+    :root{color-scheme:dark}
+    .bg{fill:#f8fafc}
+    .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
+    .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
+    .pill{fill:#ffffff;fill-opacity:.94;stroke:#8fa6ba;stroke-width:1.2}
+    .ink{fill:#13263a}
+    .muted{fill:#496176}
+    .accent{fill:#0e6b8a}
+    .warn{fill:#b93c3c}
+    .gold{fill:#9c6510}
+    .purple{fill:#5b42a6}
+    .green{fill:#1d7557}
+    .axis{stroke:#2b465e;stroke-width:1.8;fill:none}
+    .axishead{fill:#2b465e}
+    .grid{stroke:#d8e3ec;stroke-width:1;stroke-dasharray:4 4;fill:none}
+    .divider{stroke:#c6d5e2;stroke-width:1.3;stroke-dasharray:5 5;fill:none}
+    .unit-circle{stroke:#5d7890;stroke-width:1.8;stroke-dasharray:6 5;fill:none}
+    .region{fill:#bae6fd;fill-opacity:.48;stroke:#0e6b8a;stroke-width:2.4}
+    .region-alt{fill:#fde68a;fill-opacity:.44;stroke:#a8640b;stroke-width:2.4}
+    .vec-a{stroke:#0e6b8a;stroke-width:2.8;fill:none}
+    .vec-a-head{fill:#0e6b8a}
+    .vec-b{stroke:#c04040;stroke-width:2.6;stroke-dasharray:8 4;fill:none}
+    .vec-b-head{fill:#c04040}
+    .vec-c{stroke:#5b42a6;stroke-width:3.0;fill:none}
+    .vec-c-head{fill:#5b42a6}
+    .wire{stroke:#1d3b54;stroke-width:2.2;fill:none}
+    .gate{fill:#e6f4fa;stroke:#0e6b8a;stroke-width:2}
+    .gate-alt{fill:#fef3d6;stroke:#a8640b;stroke-width:2}
+    .gate-inv{fill:#ede9fe;stroke:#5b42a6;stroke-width:2}
+    .node-a{fill:#0e6b8a;stroke:#0a5068;stroke-width:2}
+    .node-a-txt{fill:#ffffff}
+    .ctrl{fill:#13263a}
+    .fixed{fill:#c04040;stroke:#ffffff;stroke-width:1.6}
+    .title{font:700 20px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .subtitle{font:400 14px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .h2{font:600 14.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .lbl{font:500 13.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .sm{font:400 13px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .mono{font:500 12.8px 'SFMono-Regular',Menlo,Consolas,monospace}
+    .gate-txt{font:700 15px Georgia,'Times New Roman',serif}
+    
+    
+.bg{fill:#101820}
+      .card{fill:#162330;stroke:#395066}
+      .subcard{fill:#1d2e3d;stroke:#3d566d}
+      .pill{fill:#14212c;fill-opacity:.94;stroke:#6d8ba3}
+      .ink{fill:#eef6ff}
+      .muted{fill:#b4c8da}
+      .accent{fill:#6ed0f7}
+      .warn{fill:#ff8585}
+      .gold{fill:#f2c15a}
+      .purple{fill:#c0adff}
+      .green{fill:#6dd4aa}
+      .axis{stroke:#b9d0e2}
+      .axishead{fill:#b9d0e2}
+      .grid{stroke:#32485c}
+      .divider{stroke:#4a637a}
+      .unit-circle{stroke:#8aa5bc}
+      .region{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
+      .region-alt{fill:#5a4318;fill-opacity:.58;stroke:#f2c15a}
+      .vec-a{stroke:#6ed0f7}
+      .vec-a-head{fill:#6ed0f7}
+      .vec-b{stroke:#ff8585}
+      .vec-b-head{fill:#ff8585}
+      .vec-c{stroke:#c0adff}
+      .vec-c-head{fill:#c0adff}
+      .wire{stroke:#c9deee}
+      .gate{fill:#19425a;stroke:#6ed0f7}
+      .gate-alt{fill:#493818;stroke:#f2c15a}
+      .gate-inv{fill:#342859;stroke:#c0adff}
+      .node-a{fill:#1b5c7a;stroke:#6ed0f7;stroke-width:2.2}
+      .node-a-txt{fill:#eef6ff}
+      .ctrl{fill:#eef6ff}
+      .fixed{fill:#ff8585;stroke:#162330}
+
+  </style>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title ink" x="38" y="52">3 比特量子傅里叶变换（QFT₃）完整量子线路与相位分解</text>
+  <text class="subtitle muted" x="38" y="76">大端序 |x⟩ = |x₂x₁x₀⟩（x = 4x₂ + 2x₁ + x₀）；时间自左向右（非等比例门时长），末尾 SWAP 校正高低位反转</text>
+  <rect class="card" x="36" y="94" width="928" height="278" rx="12"/>
+  <line class="axis" x1="772" y1="116" x2="934" y2="116"/>
+  <path class="axishead" d="M934.00 116.00L925.00 118.75L925.00 113.25Z"/>
+  <text class="sm muted" x="850" y="110" text-anchor="middle">时间从左向右</text>
+  <line class="divider" x1="410" y1="138" x2="410" y2="342"/>
+  <line class="divider" x1="568" y1="138" x2="568" y2="342"/>
+  <line class="divider" x1="658" y1="138" x2="658" y2="342"/>
+  <text class="sm accent" x="288" y="132" text-anchor="middle">阶段 ①：构造 q₂ 相位</text>
+  <text class="sm accent" x="490" y="132" text-anchor="middle">阶段 ②：构造 q₁</text>
+  <text class="sm accent" x="614" y="132" text-anchor="middle">阶段 ③</text>
+  <text class="sm purple" x="702" y="132" text-anchor="middle">SWAP 反转</text>
+  <line class="wire" x1="152.0" y1="174.0" x2="738.0" y2="174.0"/>
+  <text class="lbl ink" x="50" y="179.0">q₂ (高位) |x₂⟩</text>
+  <line class="wire" x1="152.0" y1="244.0" x2="738.0" y2="244.0"/>
+  <text class="lbl ink" x="50" y="249.0">q₁ (中位) |x₁⟩</text>
+  <line class="wire" x1="152.0" y1="314.0" x2="738.0" y2="314.0"/>
+  <text class="lbl ink" x="50" y="319.0">q₀ (低位) |x₀⟩</text>
+  <rect class="gate" x="181.0" y="155.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="204.0" y="180.0" text-anchor="middle">H</text>
+  <line class="wire" x1="286.0" y1="244.0" x2="286.0" y2="193.0"/>
+  <circle class="ctrl" cx="286.0" cy="244.0" r="6.0"/>
+  <rect class="gate-alt" x="263.0" y="155.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="286.0" y="179.0" text-anchor="middle">R<tspan dy="3" font-size="11">2</tspan></text>
+  <line class="wire" x1="366.0" y1="314.0" x2="366.0" y2="193.0"/>
+  <circle class="ctrl" cx="366.0" cy="314.0" r="6.0"/>
+  <rect class="gate-alt" x="343.0" y="155.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="366.0" y="179.0" text-anchor="middle">R<tspan dy="3" font-size="11">3</tspan></text>
+  <rect class="gate" x="431.0" y="225.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="454.0" y="250.0" text-anchor="middle">H</text>
+  <line class="wire" x1="528.0" y1="314.0" x2="528.0" y2="263.0"/>
+  <circle class="ctrl" cx="528.0" cy="314.0" r="6.0"/>
+  <rect class="gate-alt" x="505.0" y="225.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="528.0" y="249.0" text-anchor="middle">R<tspan dy="3" font-size="11">2</tspan></text>
+  <rect class="gate" x="591.0" y="295.0" width="46.0" height="38.0" rx="7"/>
+  <text class="gate-txt ink" x="614.0" y="320.0" text-anchor="middle">H</text>
+  <line class="wire" x1="702.0" y1="174.0" x2="702.0" y2="314.0"/>
+  <line class="wire" style="stroke-width:2.6" x1="693.0" y1="165.0" x2="711.0" y2="183.0"/>
+  <line class="wire" style="stroke-width:2.6" x1="693.0" y1="183.0" x2="711.0" y2="165.0"/>
+  <line class="wire" style="stroke-width:2.6" x1="693.0" y1="305.0" x2="711.0" y2="323.0"/>
+  <line class="wire" style="stroke-width:2.6" x1="693.0" y1="323.0" x2="711.0" y2="305.0"/>
+  <text class="lbl ink" x="752" y="179.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
+  <text class="lbl ink" x="752" y="249.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₁x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
+  <text class="lbl ink" x="752" y="319.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₂x₁x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
+  <text class="sm muted" x="50" y="358">符号说明：● = 控制端（仅 |1⟩ 触发）  |  [H] = Hadamard 门  |  [Rₖ] = 受控相位门  |  ×—× = SWAP（省略则输出位序颠倒）</text>
+  <rect class="card" x="36" y="386" width="298" height="134" rx="12"/>
+  <text class="h2 ink" x="50" y="411">受控相位门 Rₖ 定义（相位单位：rad）</text>
+  <text class="mono accent" x="50" y="437">Rₖ = diag(1, e<tspan dy="-5" font-size="10">2πi/2ᵏ</tspan><tspan dy="5">&#8203;</tspan>)</text>
+  <text class="mono ink" x="50" y="461">R₂ = diag(1, i) = S（φ = π/2 rad）</text>
+  <text class="mono ink" x="50" y="484">R₃ = diag(1, e<tspan dy="-5" font-size="10">iπ/4</tspan><tspan dy="5">&#8203;</tspan>) = T（φ = π/4 rad）</text>
+  <text class="sm muted" x="50" y="507">受控 Rₖ 为对角门，控制端与目标端数学对称</text>
+  <rect class="card" x="346" y="386" width="304" height="134" rx="12"/>
+  <text class="h2 ink" x="360" y="411">二进制小数相位与整体变换</text>
+  <text class="mono ink" x="360" y="437">0.x₂x₁x₀ := x₂/2 + x₁/4 + x₀/8</text>
+  <text class="mono accent" x="360" y="461">QFT₈|x⟩ = (1/√8) ∑ᵧ e<tspan dy="-5" font-size="10">2πixy/8</tspan><tspan dy="5">&#8203;</tspan>|y⟩</text>
+  <text class="sm ink" x="360" y="485">逆变换 QFT₃⁻¹：倒序执行并将 Rₖ 换为 Rₖ†</text>
+  <text class="sm muted" x="360" y="507">测量仅给出单一样本，无法直接读出全部系数</text>
+  <rect class="card" x="662" y="386" width="302" height="134" rx="12"/>
+  <text class="h2 ink" x="676" y="411">门开销与精确核验</text>
+  <text class="sm ink" x="676" y="437">n = 3 精确门数：3 H + 3 CRₖ + 1 SWAP</text>
+  <text class="sm ink" x="676" y="461">一般 n 位：n(n+1)/2 门，另含 ⌊n/2⌋ 个 SWAP</text>
+  <text class="sm muted" x="676" y="485">有限硬件门集合成小角度旋转门数另计</text>
+  <text class="sm green" x="676" y="507">8×8 酉矩阵已逐元素核验（误差 &lt; 10⁻¹²）</text>
+  <text class="sm muted" x="38" y="544">注：图示按逻辑时间自左向右排列；若将此线路嵌入相位估计或 Shor 找阶，常与经典测量次序合并以省去显式 SWAP。</text>
+</svg>

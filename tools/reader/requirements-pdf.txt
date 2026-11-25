@@ -1,0 +1,4 @@
+# Locked Python dependencies for tools/reader/postprocess-pdf.py
+# Verified with Python 3.11-3.13 on macOS ARM64 & Ubuntu x86_64
+PyMuPDF==1.27.2.3
+pypdf==6.21.2

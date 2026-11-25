@@ -2,7 +2,7 @@
   <title id="title">Stern–Gerlach 三级级联实验与经典预贴标签假说对照</title>
   <desc id="desc">上栏展示 8000 个未偏振银原子依次通过竖直 SGz（挡住 z−，留 4000 个 |z+⟩）、水平 SGx（挡住 x−，留 2000 个 |x+⟩）与末级竖直 SGz 的完整原子束与挡板；下栏左图以柱图正面对比经典预贴标签假说预言（100% z+, 0% z−）与量子理论预言（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基原理与相干重聚对照。</desc>
   <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
 .bg{fill:#f8fafc}
 .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
@@ -67,63 +67,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 .hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
 .hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
 .hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
-@media(prefers-color-scheme:dark){
-  .bg{fill:#0f1720}
-  .panel{fill:#16222e;stroke:#354c61}
-  .subpanel{fill:#1b2a38;stroke:#3b5369}
-  .phead{fill:#1c2d3d}
-  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
-  .subtitle,.sm,.xs{fill:#b7cde0}
-  .lbl,.smb,.xsb{fill:#d7e7f5}
-  .axis{stroke:#cde0f2}
-  .axis-fill{fill:#cde0f2}
-  .grid{stroke:#293e52}
-  .guide,.unit-circle{stroke:#738fa8}
-  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
-  .c1{stroke:#6bc2f5}
-  .c1-fill{fill:#6bc2f5}
-  .c1-txt{fill:#8fd4fa}
-  .c1-soft{fill:#173a52;stroke:#6bc2f5}
-  .c2{stroke:#f28872}
-  .c2-fill{fill:#f28872}
-  .c2-txt{fill:#f8a896}
-  .c2-soft{fill:#48241e;stroke:#f28872}
-  .c3{stroke:#5dd1a8}
-  .c3-fill{fill:#5dd1a8}
-  .c3-txt{fill:#84e0bf}
-  .c3-soft{fill:#163d31;stroke:#5dd1a8}
-  .c4{stroke:#f0ba5a}
-  .c4-fill{fill:#f0ba5a}
-  .c4-txt{fill:#f5cc82}
-  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
-  .c5{stroke:#b79ef5}
-  .c5-fill{fill:#b79ef5}
-  .c5-txt{fill:#cbb8fa}
-  .c5-soft{fill:#2d2147;stroke:#b79ef5}
-  .note{fill:#332914;stroke:#d6a240}
-  .pill{fill:#203142;stroke:#4f6b85}
-  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
-  .area1{fill:#6bc2f5;fill-opacity:.17}
-  .area2{fill:#f28872;fill-opacity:.18}
-  .area3{fill:#5dd1a8;fill-opacity:.18}
-  .area4{fill:#f0ba5a;fill-opacity:.17}
-  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
-  .wall{fill:#8ca5bc;stroke:#cde0f2}
-  .badge-txt{fill:#0f1720}
-  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
-  .hm-pos2{fill:#3a92cc;stroke:#16222e}
-  .hm-pos3{fill:#b87a24;stroke:#16222e}
-  .hm-neg3{fill:#b84b3a;stroke:#16222e}
-  .hm-zero{fill:#213243;stroke:#354c61}
-  .hm-hi{stroke:#f0ba5a}
-  .hm-inv{fill:#ffffff}
-  .hm-dark{fill:#eef6ff}
-  .hm-muted{fill:#8fa9c2}
-  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
-  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
-  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
-  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
-}
+
   </style>
   <defs>
     <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>

@@ -4,7 +4,7 @@
   <defs>
     <style>
       .bg{fill:#f7f9fc}.ink{fill:#172638}.muted{fill:#566578}.a{fill:#e5f4f0;stroke:#2f8575}.b{fill:#eaf0fc;stroke:#4e70ae}.out{fill:#fff;stroke:#bcc9d8}.line{stroke:#64788e;stroke-width:2;fill:none;marker-end:url(#arrow)}.head{font:600 19px system-ui,sans-serif}.label{font:15px system-ui,sans-serif}.bit{font:600 22px ui-monospace,SFMono-Regular,Consolas,monospace}.small{font:13px system-ui,sans-serif}
-      @media (prefers-color-scheme: dark){.bg{fill:#121c2a}.ink{fill:#edf4ff}.muted{fill:#b2c1d2}.a{fill:#143b37;stroke:#57b9a5}.b{fill:#1c2d50;stroke:#819fe3}.out{fill:#1d2c3d;stroke:#708096}.line{stroke:#a4b7ca}}
+      
     </style>
     <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 8 4 0 8Z" fill="#64788e"/></marker>
   </defs>

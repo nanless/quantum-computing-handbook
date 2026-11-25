@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">量子信道容量阶梯与核心计算复杂度类包含谱系</title>
+  <desc id="desc">左面板以精确解析公式绘出单比特擦除信道四类容量阶梯 Q = P = max(0,1−2ε) ≤ C = 1−ε ≤ C_E = 2(1−ε)、单比特退相位量子容量 Q_deph(p) = 1 − h₂(p) 与纯损耗玻色信道 PLOB 双向上界 −log₂(ε)（η = 1 − ε），并标出 ε = 1/2 处可降解/反降解相变点；右面板以嵌套层级展示 P ⊆ BPP ⊆ BQP ⊆ QCMA ⊆ QMA ⊆ QIP = PSPACE ⊆ MIP* = RE。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#FFFFFF;stroke:#D3CCC0;stroke-width:1.35}
+.subpanel{fill:#F4F0E8;stroke:#D8D1C4;stroke-width:1.15}
+.phead{fill:#EFECE2}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12px;font-weight:400;fill:#435B55}
+.sec{font-size:13.5px;font-weight:700;fill:#14453d}
+.lbl{font-size:12px;font-weight:500;fill:#1A3530}
+.lblb{font-size:12px;font-weight:700;fill:#14453d}
+.sm{font-size:11.5px;font-weight:400;fill:#435B55}
+.smb{font-size:11.5px;font-weight:600;fill:#1A3530}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#14453d}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;fill:#1A3530}
+.axis{stroke:#1A3530;stroke-width:1.5;fill:none}
+.axis-fill{fill:#1A3530}
+.grid{stroke:#E2DDD2;stroke-width:1;fill:none}
+.guide{stroke:#7A8E88;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#14453d;fill:none}
+.c1-fill{fill:#14453d}
+.c1-txt{fill:#14453d}
+.c1-soft{fill:#E2F2EC;stroke:#14453d;stroke-width:1.4}
+.c2{stroke:#C44B31;fill:none}
+.c2-fill{fill:#C44B31}
+.c2-txt{fill:#A43821}
+.c2-soft{fill:#FCE8E2;stroke:#C44B31;stroke-width:1.4}
+.c3{stroke:#1B6CA8;fill:none}
+.c3-fill{fill:#1B6CA8}
+.c3-txt{fill:#155485}
+.c3-soft{fill:#E2F0FA;stroke:#1B6CA8;stroke-width:1.4}
+.c4{stroke:#B57614;fill:none}
+.c4-fill{fill:#B57614}
+.c4-txt{fill:#8C580B}
+.c4-soft{fill:#FDF3DC;stroke:#B57614;stroke-width:1.4}
+.c5{stroke:#6B4EA8;fill:none}
+.c5-fill{fill:#6B4EA8}
+.c5-txt{fill:#51358A}
+.c5-soft{fill:#EFE9FB;stroke:#6B4EA8;stroke-width:1.4}
+.note{fill:#FAF3E0;stroke:#C48B22;stroke-width:1.25}
+.pill{fill:#F3EFE6;stroke:#A8B5B0;stroke-width:1.15}
+.pill-bg{fill:#FFFFFF;fill-opacity:.94;stroke:#A8B5B0;stroke-width:1.1}
+.area1{fill:#14453d;fill-opacity:.14}
+.area2{fill:#C44B31;fill-opacity:.13}
+.area3{fill:#1B6CA8;fill-opacity:.13}
+.area4{fill:#B57614;fill-opacity:.14}
+.bar-neutral{fill:#E5E0D5;stroke:#5D706B;stroke-width:1.3}
+.badge-txt{fill:#FAF8F3;font-size:11.5px;font-weight:700}
+.hatch-stroke1{stroke:#14453d;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#C44B31;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1B6CA8;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#111917}
+  .panel{fill:#172320;stroke:#314842}
+  .subpanel{fill:#1C2B27;stroke:#3A544D}
+  .phead{fill:#1F312C}
+  .title,.sec,.lblb,.math-txt{fill:#d9ebe5}
+  .subtitle,.sm{fill:#9FBAB2}
+  .lbl,.smb,.mono{fill:#CFE3DC}
+  .axis{stroke:#C4DCD4}
+  .axis-fill{fill:#C4DCD4}
+  .grid{stroke:#283C36}
+  .guide{stroke:#6F8F86}
+  .c1{stroke:#5DD1A8}
+  .c1-fill{fill:#5DD1A8}
+  .c1-txt{fill:#84E2C0}
+  .c1-soft{fill:#153B30;stroke:#5DD1A8}
+  .c2{stroke:#F28872}
+  .c2-fill{fill:#F28872}
+  .c2-txt{fill:#F8AA99}
+  .c2-soft{fill:#48241E;stroke:#F28872}
+  .c3{stroke:#6BC2F5}
+  .c3-fill{fill:#6BC2F5}
+  .c3-txt{fill:#92D4FA}
+  .c3-soft{fill:#173A52;stroke:#6BC2F5}
+  .c4{stroke:#F0BA5A}
+  .c4-fill{fill:#F0BA5A}
+  .c4-txt{fill:#F6CE86}
+  .c4-soft{fill:#3C2F14;stroke:#F0BA5A}
+  .c5{stroke:#B99CF5}
+  .c5-fill{fill:#B99CF5}
+  .c5-txt{fill:#D0BAFA}
+  .c5-soft{fill:#2D2147;stroke:#B99CF5}
+  .note{fill:#312814;stroke:#D6A240}
+  .pill{fill:#1E302B;stroke:#4B6B62}
+  .pill-bg{fill:#172320;fill-opacity:.94;stroke:#4B6B62}
+  .area1{fill:#5DD1A8;fill-opacity:.18}
+  .area2{fill:#F28872;fill-opacity:.17}
+  .area3{fill:#6BC2F5;fill-opacity:.17}
+  .area4{fill:#F0BA5A;fill-opacity:.17}
+  .bar-neutral{fill:#263833;stroke:#87A69D}
+  .badge-txt{fill:#111917}
+  .hatch-stroke1{stroke:#5DD1A8;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#F28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#6BC2F5;stroke-opacity:.45}
+
+  </style>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="axis-fill"/>
+    </marker>
+    <marker id="arr-c1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c1-fill"/>
+    </marker>
+    <marker id="arr-c2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c2-fill"/>
+    </marker>
+    <marker id="arr-c3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M1,1.5 L8.5,5 L1,8.5 Z" class="c3-fill"/>
+    </marker>
+    <pattern id="hatch-c1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+    <pattern id="hatch-c3" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="460" rx="14"/>
+  <rect class="c1-fill" x="20" y="8" width="320" height="3" rx="1.5"/>
+  <rect class="c3-fill" x="348" y="8" width="290" height="3" rx="1.5"/>
+  <rect class="c4-fill" x="646" y="8" width="294" height="3" rx="1.5"/>
+  <text class="title" x="22.0" y="33.0">量子信道容量阶梯与核心计算复杂度类谱系</text>
+  <text class="subtitle" x="22.0" y="52.0">左：擦除/退相位容量阶梯 Q ≤ P ≤ C ≤ C_E 与纯损耗 PLOB 上界实算；右：P ⊆ BPP ⊆ BQP ⊆ QMA ⊆ PSPACE ⊆ MIP* = RE</text>
+  <rect class="panel" x="20.0" y="64.0" width="464.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="21.0" y="65.0" width="462.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="21.0" y1="93.0" x2="483.0" y2="93.0"/>
+  <text class="sec" x="32.0" y="84.0">(a) 信道容量阶梯（擦除/退相位）与 PLOB 上界</text>
+  <line class="grid" x1="70.0" y1="112.0" x2="70.0" y2="306.0"/>
+  <line class="axis" x1="70.0" y1="306.0" x2="70.0" y2="310.0"/>
+  <text class="sm" x="70.0" y="323.0" text-anchor="middle">0</text>
+  <line class="grid" x1="169.0" y1="112.0" x2="169.0" y2="306.0"/>
+  <line class="axis" x1="169.0" y1="306.0" x2="169.0" y2="310.0"/>
+  <text class="sm" x="169.0" y="323.0" text-anchor="middle">0.25</text>
+  <line class="grid" x1="268.0" y1="112.0" x2="268.0" y2="306.0"/>
+  <line class="axis" x1="268.0" y1="306.0" x2="268.0" y2="310.0"/>
+  <text class="sm" x="268.0" y="323.0" text-anchor="middle">0.50</text>
+  <line class="grid" x1="367.0" y1="112.0" x2="367.0" y2="306.0"/>
+  <line class="axis" x1="367.0" y1="306.0" x2="367.0" y2="310.0"/>
+  <text class="sm" x="367.0" y="323.0" text-anchor="middle">0.75</text>
+  <line class="grid" x1="466.0" y1="112.0" x2="466.0" y2="306.0"/>
+  <line class="axis" x1="466.0" y1="306.0" x2="466.0" y2="310.0"/>
+  <text class="sm" x="466.0" y="323.0" text-anchor="middle">1</text>
+  <line class="grid" x1="70.0" y1="306.0" x2="466.0" y2="306.0"/>
+  <line class="axis" x1="66.0" y1="306.0" x2="70.0" y2="306.0"/>
+  <text class="sm" x="62.0" y="310.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="70.0" y1="261.9" x2="466.0" y2="261.9"/>
+  <line class="axis" x1="66.0" y1="261.9" x2="70.0" y2="261.9"/>
+  <text class="sm" x="62.0" y="265.9" text-anchor="end">0.5</text>
+  <line class="grid" x1="70.0" y1="217.8" x2="466.0" y2="217.8"/>
+  <line class="axis" x1="66.0" y1="217.8" x2="70.0" y2="217.8"/>
+  <text class="sm" x="62.0" y="221.8" text-anchor="end">1.0</text>
+  <line class="grid" x1="70.0" y1="173.7" x2="466.0" y2="173.7"/>
+  <line class="axis" x1="66.0" y1="173.7" x2="70.0" y2="173.7"/>
+  <text class="sm" x="62.0" y="177.7" text-anchor="end">1.5</text>
+  <line class="grid" x1="70.0" y1="129.6" x2="466.0" y2="129.6"/>
+  <line class="axis" x1="66.0" y1="129.6" x2="70.0" y2="129.6"/>
+  <text class="sm" x="62.0" y="133.6" text-anchor="end">2.0</text>
+  <text class="sm" x="66.0" y="106.0" text-anchor="end">bit/use</text>
+  <text class="smb" x="268.0" y="341.0" text-anchor="middle">擦除/损耗率 ε（透射率 η = 1 − ε；退相位 p = ε）</text>
+  <line class="guide" x1="268.0" y1="112.0" x2="268.0" y2="306.0"/>
+  <text class="sm c1-txt" x="262.0" y="125.0" text-anchor="end">可降解 ε ≤ ½</text>
+  <line class="axis" x1="70.0" y1="112.0" x2="70.0" y2="306.0"/>
+  <line class="axis" x1="70.0" y1="306.0" x2="466.0" y2="306.0"/>
+  <polyline class="c5" points="70.00,129.64 73.96,131.40 77.92,133.16 81.88,134.93 85.84,136.69 89.80,138.45 93.76,140.22 97.72,141.98 101.68,143.75 105.64,145.51 109.60,147.27 113.56,149.04 117.52,150.80 121.48,152.56 125.44,154.33 129.40,156.09 133.36,157.85 137.32,159.62 141.28,161.38 145.24,163.15 149.20,164.91 153.16,166.67 157.12,168.44 161.08,170.20 165.04,171.96 169.00,173.73 172.96,175.49 176.92,177.25 180.88,179.02 184.84,180.78 188.80,182.55 192.76,184.31 196.72,186.07 200.68,187.84 204.64,189.60 208.60,191.36 212.56,193.13 216.52,194.89 220.48,196.65 224.44,198.42 228.40,200.18 232.36,201.95 236.32,203.71 240.28,205.47 244.24,207.24 248.20,209.00 252.16,210.76 256.12,212.53 260.08,214.29 264.04,216.05 268.00,217.82 271.96,219.58 275.92,221.35 279.88,223.11 283.84,224.87 287.80,226.64 291.76,228.40 295.72,230.16 299.68,231.93 303.64,233.69 307.60,235.45 311.56,237.22 315.52,238.98 319.48,240.75 323.44,242.51 327.40,244.27 331.36,246.04 335.32,247.80 339.28,249.56 343.24,251.33 347.20,253.09 351.16,254.85 355.12,256.62 359.08,258.38 363.04,260.15 367.00,261.91 370.96,263.67 374.92,265.44 378.88,267.20 382.84,268.96 386.80,270.73 390.76,272.49 394.72,274.25 398.68,276.02 402.64,277.78 406.60,279.55 410.56,281.31 414.52,283.07 418.48,284.84 422.44,286.60 426.40,288.36 430.36,290.13 434.32,291.89 438.28,293.65 442.24,295.42 446.20,297.18 450.16,298.95 454.12,300.71 458.08,302.47 462.04,304.24 466.00,306.00" stroke-width="2.1"/>
+  <polyline class="c2" points="156.18,112.00 160.06,117.59 163.93,122.95 167.80,128.09 171.68,133.03 175.55,137.78 179.42,142.37 183.29,146.79 187.17,151.07 191.04,155.21 194.91,159.21 198.78,163.10 202.66,166.87 206.53,170.53 210.40,174.09 214.27,177.55 218.15,180.92 222.02,184.20 225.89,187.40 229.77,190.52 233.64,193.57 237.51,196.54 241.38,199.45 245.26,202.30 249.13,205.08 253.00,207.80 256.87,210.46 260.75,213.07 264.62,215.63 268.49,218.13 272.37,220.59 276.24,223.00 280.11,225.37 283.98,227.69 287.86,229.98 291.73,232.22 295.60,234.42 299.47,236.59 303.35,238.72 307.22,240.81 311.09,242.87 314.96,244.90 318.84,246.89 322.71,248.86 326.58,250.79 330.46,252.70 334.33,254.58 338.20,256.43 342.07,258.25 345.95,260.05 349.82,261.82 353.69,263.57 357.56,265.29 361.44,267.00 365.31,268.68 369.18,270.33 373.06,271.97 376.93,273.58 380.80,275.18 384.67,276.75 388.55,278.31 392.42,279.85 396.29,281.37 400.16,282.87 404.04,284.35 407.91,285.82 411.78,287.27 415.65,288.70 419.53,290.12 423.40,291.52 427.27,292.91 431.15,294.28 435.02,295.64 438.89,296.98 442.76,298.31 446.64,299.62 450.51,300.92 454.38,302.21 458.25,303.49 462.13,304.75 466.00,306.00" stroke-width="2.1" stroke-dasharray="6 3.5"/>
+  <polyline class="c3" points="70.00,217.82 73.96,218.70 77.92,219.58 81.88,220.46 85.84,221.35 89.80,222.23 93.76,223.11 97.72,223.99 101.68,224.87 105.64,225.75 109.60,226.64 113.56,227.52 117.52,228.40 121.48,229.28 125.44,230.16 129.40,231.05 133.36,231.93 137.32,232.81 141.28,233.69 145.24,234.57 149.20,235.45 153.16,236.34 157.12,237.22 161.08,238.10 165.04,238.98 169.00,239.86 172.96,240.75 176.92,241.63 180.88,242.51 184.84,243.39 188.80,244.27 192.76,245.15 196.72,246.04 200.68,246.92 204.64,247.80 208.60,248.68 212.56,249.56 216.52,250.45 220.48,251.33 224.44,252.21 228.40,253.09 232.36,253.97 236.32,254.85 240.28,255.74 244.24,256.62 248.20,257.50 252.16,258.38 256.12,259.26 260.08,260.15 264.04,261.03 268.00,261.91 271.96,262.79 275.92,263.67 279.88,264.55 283.84,265.44 287.80,266.32 291.76,267.20 295.72,268.08 299.68,268.96 303.64,269.85 307.60,270.73 311.56,271.61 315.52,272.49 319.48,273.37 323.44,274.25 327.40,275.14 331.36,276.02 335.32,276.90 339.28,277.78 343.24,278.66 347.20,279.55 351.16,280.43 355.12,281.31 359.08,282.19 363.04,283.07 367.00,283.95 370.96,284.84 374.92,285.72 378.88,286.60 382.84,287.48 386.80,288.36 390.76,289.25 394.72,290.13 398.68,291.01 402.64,291.89 406.60,292.77 410.56,293.65 414.52,294.54 418.48,295.42 422.44,296.30 426.40,297.18 430.36,298.06 434.32,298.95 438.28,299.83 442.24,300.71 446.20,301.59 450.16,302.47 454.12,303.35 458.08,304.24 462.04,305.12 466.00,306.00" stroke-width="2.1"/>
+  <polyline class="c1" points="70.00,217.82 73.96,219.58 77.92,221.35 81.88,223.11 85.84,224.87 89.80,226.64 93.76,228.40 97.72,230.16 101.68,231.93 105.64,233.69 109.60,235.45 113.56,237.22 117.52,238.98 121.48,240.75 125.44,242.51 129.40,244.27 133.36,246.04 137.32,247.80 141.28,249.56 145.24,251.33 149.20,253.09 153.16,254.85 157.12,256.62 161.08,258.38 165.04,260.15 169.00,261.91 172.96,263.67 176.92,265.44 180.88,267.20 184.84,268.96 188.80,270.73 192.76,272.49 196.72,274.25 200.68,276.02 204.64,277.78 208.60,279.55 212.56,281.31 216.52,283.07 220.48,284.84 224.44,286.60 228.40,288.36 232.36,290.13 236.32,291.89 240.28,293.65 244.24,295.42 248.20,297.18 252.16,298.95 256.12,300.71 260.08,302.47 264.04,304.24 268.00,306.00 271.96,306.00 275.92,306.00 279.88,306.00 283.84,306.00 287.80,306.00 291.76,306.00 295.72,306.00 299.68,306.00 303.64,306.00 307.60,306.00 311.56,306.00 315.52,306.00 319.48,306.00 323.44,306.00 327.40,306.00 331.36,306.00 335.32,306.00 339.28,306.00 343.24,306.00 347.20,306.00 351.16,306.00 355.12,306.00 359.08,306.00 363.04,306.00 367.00,306.00 370.96,306.00 374.92,306.00 378.88,306.00 382.84,306.00 386.80,306.00 390.76,306.00 394.72,306.00 398.68,306.00 402.64,306.00 406.60,306.00 410.56,306.00 414.52,306.00 418.48,306.00 422.44,306.00 426.40,306.00 430.36,306.00 434.32,306.00 438.28,306.00 442.24,306.00 446.20,306.00 450.16,306.00 454.12,306.00 458.08,306.00 462.04,306.00 466.00,306.00" stroke-width="2.4"/>
+  <polyline class="c4" points="70.00,217.82 73.30,223.95 76.60,228.60 79.90,232.69 83.20,236.41 86.50,239.85 89.80,243.07 93.10,246.11 96.40,248.98 99.70,251.71 103.00,254.31 106.30,256.80 109.60,259.18 112.90,261.46 116.20,263.65 119.50,265.75 122.80,267.77 126.10,269.72 129.40,271.60 132.70,273.40 136.00,275.14 139.30,276.81 142.60,278.43 145.90,279.98 149.20,281.48 152.50,282.92 155.80,284.31 159.10,285.65 162.40,286.93 165.70,288.17 169.00,289.36 172.30,290.50 175.60,291.59 178.90,292.64 182.20,293.65 185.50,294.61 188.80,295.53 192.10,296.41 195.40,297.25 198.70,298.04 202.00,298.80 205.30,299.51 208.60,300.19 211.90,300.82 215.20,301.42 218.50,301.98 221.80,302.50 225.10,302.99 228.40,303.44 231.70,303.85 235.00,304.22 238.30,304.56 241.60,304.87 244.90,305.13 248.20,305.36 251.50,305.56 254.80,305.72 258.10,305.84 261.40,305.93 264.70,305.98 268.00,306.00" stroke-width="2.0" stroke-dasharray="5 2.5 1.5 2.5"/>
+  <circle class="c5-fill" cx="169.0" cy="173.7" r="3.2"/>
+  <circle class="c3-fill" cx="169.0" cy="239.9" r="3.2"/>
+  <circle class="c1-fill" cx="169.0" cy="261.9" r="3.2"/>
+  <circle class="c4-fill" cx="169.0" cy="289.4" r="3.2"/>
+  <circle class="c1-fill" cx="268.0" cy="306.0" r="3.6"/>
+  <circle class="c2-fill" cx="268.0" cy="217.8" r="3.4"/>
+  <rect class="pill-bg" x="274.0" y="113.0" width="190.0" height="104.0" rx="6.0"/>
+  <line class="c2" x1="282.0" y1="126.0" x2="304.0" y2="126.0" stroke-width="2.1" stroke-dasharray="6 3.5"/>
+  <text class="sm" x="310.0" y="130.0">PLOB −log₂(ε)（纯损耗）</text>
+  <line class="c5" x1="282.0" y1="145.0" x2="304.0" y2="145.0" stroke-width="2.1" />
+  <text class="sm" x="310.0" y="149.0">C_E = 2(1−ε)（纠缠辅助）</text>
+  <line class="c3" x1="282.0" y1="164.0" x2="304.0" y2="164.0" stroke-width="2.1" />
+  <text class="sm" x="310.0" y="168.0">C = 1−ε（擦除经典）</text>
+  <line class="c1" x1="282.0" y1="183.0" x2="304.0" y2="183.0" stroke-width="2.1" />
+  <text class="sm" x="310.0" y="187.0">Q = P = (1−2ε)₊（擦除）</text>
+  <line class="c4" x1="282.0" y1="202.0" x2="304.0" y2="202.0" stroke-width="2.1" stroke-dasharray="5 2.5 1.5 2.5"/>
+  <text class="sm" x="310.0" y="206.0">Q_deph = 1−h₂(p)（退相位）</text>
+  <rect class="note" x="32.0" y="355.0" width="440.0" height="69.0" rx="7.0"/>
+  <text class="smb" x="42.0" y="374.0">ε = ¼ 擦除阶梯：Q = P = 0.50 ≤ C = 0.75 ≤ C_E = 1.50 bit/use</text>
+  <text class="sm" x="42.0" y="394.0">ε = ½ 相变点：右区反降解使 Q = P = 0，但预共享纠缠 C_E &gt; 0 仍非零</text>
+  <text class="sm c2-txt" x="42.0" y="414.0">PLOB 上界 −log₂(1−η) 约束无量子中继的纯损耗光纤双向量子容量</text>
+  <rect class="panel" x="496.0" y="64.0" width="444.0" height="370.0" rx="10.0"/>
+  <rect class="phead" x="497.0" y="65.0" width="442.0" height="28.0" rx="9.0"/>
+  <line class="grid" x1="497.0" y1="93.0" x2="939.0" y2="93.0"/>
+  <text class="sec" x="508.0" y="84.0">(b) 量子与交互验证复杂度类包含层级</text>
+  <rect class="c2-soft" x="508.0" y="102.0" width="420.0" height="270.0" rx="8.0"/>
+  <text class="lblb c2-txt" x="520.0" y="123.0">MIP* = RE</text>
+  <text class="sm" x="918.0" y="123.0" text-anchor="end">纠缠多证明者交互验证（含停机问题）</text>
+  <rect class="c5-soft" x="518.0" y="132.0" width="400.0" height="234.0" rx="8.0"/>
+  <text class="lblb c5-txt" x="530.0" y="153.0">QIP = IP = PSPACE</text>
+  <text class="sm" x="908.0" y="153.0" text-anchor="end">多项式空间 / 3 轮量子交互</text>
+  <rect class="c4-soft" x="528.0" y="162.0" width="380.0" height="198.0" rx="8.0"/>
+  <text class="lblb c4-txt" x="540.0" y="183.0">QMA</text>
+  <text class="sm" x="898.0" y="183.0" text-anchor="end">量子见证态 + BQP（k-局域哈密顿量）</text>
+  <rect class="c3-soft" x="538.0" y="192.0" width="360.0" height="162.0" rx="8.0"/>
+  <text class="lblb c3-txt" x="550.0" y="213.0">QCMA</text>
+  <text class="sm" x="888.0" y="213.0" text-anchor="end">经典见证串 + BQP 验证（含 NP）</text>
+  <rect class="c1-soft" x="548.0" y="222.0" width="340.0" height="126.0" rx="8.0"/>
+  <text class="lblb c1-txt" x="560.0" y="243.0">BQP</text>
+  <text class="sm" x="878.0" y="243.0" text-anchor="end">量子多项式时间（Shor · QSVT · 模拟）</text>
+  <rect class="pill-bg" x="564.0" y="258.0" width="308.0" height="82.0" rx="8.0"/>
+  <text class="lblb" x="576.0" y="279.0">BPP</text>
+  <text class="sm" x="862.0" y="279.0" text-anchor="end">经典随机多项式时间</text>
+  <rect class="subpanel" x="584.0" y="294.0" width="268.0" height="38.0" rx="8.0"/>
+  <text class="lblb" x="596.0" y="317.0">P</text>
+  <text class="sm" x="842.0" y="317.0" text-anchor="end">经典确定性多项式时间</text>
+  <rect class="subpanel" x="508.0" y="380.0" width="420.0" height="44.0" rx="7.0"/>
+  <text class="smb" x="518.0" y="398.0">已证 P ⊆ NP ⊆ QCMA ⊆ QMA；BQP 与 NP 相互包含关系仍未决</text>
+  <text class="sm" x="518.0" y="416.0">量子采样优势（RCS / IQP / BosonSampling）依赖 PH 不坍塌假设</text>
+  <text class="sm" x="22.0" y="450.0">数学口径：第 18 章 §5.1–§5.2 与 §7；对数以 2 为底，纯损耗玻色信道透射率 η = 1 − ε，PLOB 上界 −log₂(1−η) 为无中继光纤双向量子容量极限。</text>
+</svg>

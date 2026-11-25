@@ -1,7 +1,0 @@
-{
-  "date": "2026-10-13",
-  "initial_browser_launch": "missing Playwright chromium_headless_shell-1228; command exited 1",
-  "resolution": "used installed Google Chrome through HANDBOOK_CHROMIUM; full browser verification passed",
-  "figure_environment": "created isolated /tmp figure venv, installed pinned matplotlib 3.9.4 and numpy 2.0.2; no repository dependency lock changed",
-  "upstream_execution": "none; public source checked out/read only"
-}

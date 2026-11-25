@@ -1,17 +1,11 @@
 # 13｜量子信息量度：熵、距离与可提取信息
 
-先修：[第 03 章：多量子比特、纠缠与约化态](03-multiple-qubits.md)、[第 05 章：混态、噪声与量子信道](05-noise-channels.md)。
+先修：[第 03 章：多量子比特、纠缠与约化态](03-multiple-qubits.md)、[第 05 章：混态、噪声与量子信道](05-noise-channels.md)。阅读路线：**必读 ★** 第 1 节、第 2.1–2.2 节、第 2.4 节、第 3.1–3.2 节、第 3.4 节、第 4.1 节、第 5 节与第 8 节；**进阶选读 ☆** 第 2.3 节（状态合并）、第 2.5 节（三元互信息）、第 3.3 节（无歧义判别）、第 4.2–4.3 节（夹心 Rényi DPI 与 Petz 恢复）、第 6 节（无广播与量子马尔可夫链）及第 7 节（单次最小/最大熵与有限长 QKD）。
 
-上一章我们在讨论量子密钥分发（QKD）和量子中继网络时，已经多次借用了信息论的定量语言——二元熵 $h_2(x)$、纠缠单配性、中继保真度，以及有限长密钥的统计修正项。学完量子态、量子门、测量与噪声信道之后，现在是时候把这些散落在应用里的标尺全部摆到草稿纸上，建立一套严密自洽的量子信息量度体系。围绕这一体系，有六个最核心的问题：
+上一章在 QKD 与量子网络中已经用到二元熵 $h_2(x)$、纠缠单配性与保真度。本章把这些散落在应用里的标尺摆到草稿纸上，围绕**不确定性与压缩、子系统关联、单次区分与相似、信道单调性、极限传信与单次有限长安全**六大核心问题，建立严密自洽的态级量子信息量度体系（通用基序、对数底数与根保真度约定统一遵循[符号表](appendices/notation.md)）。
 
-1. **不确定性与压缩**：一个量子态本身有多“混合”？拿去无损压缩存储，最少需要多少个量子比特？
-2. **关联**：两个或多个子系统之间藏着多强的关联？经典关联、经典–量子关联与纯量子纠缠有何区别？
-3. **区分与相似**：只给一份样本，单次测量最多能以多高概率猜对它是哪一个态？实际输出的态离理想目标到底有多近？
-4. **单调规律**：施加噪声或测量之后，态之间的统计可区分度为什么绝不会凭空增大？什么时候信息还能无损恢复？
-5. **极限传信**：把经典消息编码进一组量子态发出去，接收方无论怎么设计测量，最多能读出多少比特信息？
-6. **单次与有限长安全**：在只有有限样本的真实量子密码协议里，为什么平均意义上的 von Neumann 熵会失灵，必须升级到最小/最大熵？
-
-先把全章的核心标尺排在一张速查表里（遵循零前向引用的阅读顺序，先立起熵、关联、迹距离与保真度的直觉，再由广义数据处理不等式一统全章）：
+<details>
+<summary>全章核心信息量度速查（按需展开）</summary>
 
 | 核心问题 | 主要量度 | 最小操作含义 | 所在章节 |
 | :--- | :--- | :--- | :--- |
@@ -22,6 +16,8 @@
 | 一组态最多传出多少经典信息？ | Holevo 量 $\chi$ 与可访问信息 $I_{\mathrm{acc}}$ | $\chi$ 约束任意单次测量互信息，也是多份联合解码的渐近极限 | §5 |
 | 混态能否复制？三体关联如何恢复？ | 无广播条件、条件互信息 $I(A:C\mid B)$ | 对易才可广播；$I(A:C\mid B)=0$ 等价于量子马尔可夫链 | §6 |
 | 有限长密码与单次猜测看什么熵？ | 量子 Rényi 熵 $S_\alpha$、平滑最小/最大熵 $H_{\min}^\varepsilon, H_{\max}^\varepsilon$ | $H_{\min}(X\mid E) = -\log_2 p_{\mathrm{guess}}$，直接驱动第 12 章有限长 QKD 安全证明 | §7 |
+
+</details>
 
 ---
 
@@ -43,7 +39,7 @@ $$
 H(X) = -\sum_x p(x)\log_2 p(x),
 $$
 
-其中对零概率项按极限 $\lim_{p\to 0^+} p\log_2 p = 0$ 约定 $0\log_2 0 = 0$。除平均意外程度外，Shannon 熵还有硬核的工程含义：对大量独立同分布（i.i.d.）样本做无损压缩编码，每个符号渐近最少需要的二进制位数正好是 $H(X)\text{ bit}$。
+其中对零概率项按极限 $\lim_{p\to 0^+} p\log_2 p = 0$ 约定 $0\log_2 0 = 0$。除平均意外程度外，Shannon 熵还有直接的工程含义：对大量独立同分布（i.i.d.）样本做无损压缩编码，每个符号渐近最少需要的二进制位数正好是 $H(X)\text{ bit}$。
 
 全书最常碰到的特例是只有两个结果 $X \in \{0,1\}$、概率分别为 $p$ 与 $1-p$（$0 \le p \le 1$）的**二元香农熵**（本书正文记作 $h_2(p)$，部分教材与插图亦写作 $H_2(p)$）：
 
@@ -72,7 +68,7 @@ $$
    h_2(1/4) = \frac{1}{4}\times 2 + \frac{3}{4}\times 0.415037 \approx 0.500000 + 0.311278 = 0.811278\text{ bit}.
    $$
 
-顺手挡住一个初学者常踩的小坑：**熵衡量的是概率分布的分散程度，和结果标签的数值大小毫无关系**。即便一个确定事件输出的是 $10^{100}$，只要它的概率是 $1$，熵依然严格等于 $0$；而 $0.811\text{ bit}$ 也不是说单次实验读出了“$0.811$ 个二进制位”，它度量的是分布整体的平均不确定性。
+顺手厘清一个常见误解：**熵衡量的是概率分布的分散程度，和结果标签的数值大小毫无关系**。即便一个确定事件输出的是 $10^{100}$，只要它的概率是 $1$，熵依然严格等于 $0$；而 $0.811\text{ bit}$ 也不是说单次实验读出了“$0.811$ 个二进制位”，它度量的是分布整体的平均不确定性。
 
 ### 1.2 量子 von Neumann 熵与核心性质
 
@@ -91,7 +87,7 @@ $$
 S(\rho) = -\operatorname{Tr}\bigl(\rho\log_2\rho\bigr) = -\sum_{j=1}^d \lambda_j\log_2\lambda_j \in [0,\ \log_2 d].
 $$
 
-切记：**矩阵对数 $\log_2\rho$ 是在谱分解的特征值上分别取 $\log_2\lambda_j$，绝不是把矩阵里的每个元素逐格取对数**。同样沿用 $0\log_2 0 = 0$。
+注意：**矩阵对数 $\log_2\rho$ 是在谱分解的特征值上分别取 $\log_2\lambda_j$，绝不是把矩阵里的每个元素逐格取对数**。同样沿用 $0\log_2 0 = 0$。
 
 von Neumann 熵在量子信息论里拥有一组干净利落的核心性质：
 
@@ -127,7 +123,7 @@ von Neumann 熵在量子信息论里拥有一组干净利落的核心性质：
   S(\rho) = h_2(1/4) \approx 0.811278\text{ bit}.
   $$
 
-> **工程衔接：从有限测量估算纯度与熵时的非线性陷阱**
+> **工程衔接：从有限测量估算纯度与熵时的非线性偏差**
 >
 > 在真实实验里，我们只能从有限次测量重构态估计 $\widehat\rho$。许多对线性期望严格无偏的估计器（例如[第 16 章](16-advanced-algorithms-verification.md)的随机 Pauli 经典阴影单次快照 $\hat\rho_s = 3|0\rangle\langle 0| - I = \operatorname{diag}(2, -1)$）虽然迹为 $1$ 且期望等于真实 $\rho$，单次却带有负特征值，根本不能直接代进 $\log_2\hat\rho_s$ 计算熵。即使先求 $N$ 轮样本均值 $\widehat\rho$，直接代入二次纯度 $\operatorname{Tr}(\widehat\rho^2)$ 这类非线性公式也会因自乘方差项引入系统性向上偏差（对 $|0\rangle$ 做 $N$ 轮随机 Pauli 测量，插件纯度期望高达 $1 + 1/N$，高于物理上限 $1$！）。消除二次插件偏差需改用不同独立快照的交叉乘积（$U$ 统计量），而强非线性函数 $S(\rho)$ 更需结合物理正半定约束与有限样本不确定度分析——完整的 $U$ 统计量推导与实验验证见[第 16 章](16-advanced-algorithms-verification.md)与[第 15 章](15-practice-research.md)（离线穷举校验见章末实验入口）。
 
@@ -161,7 +157,7 @@ $$
 
 综合信道写为 $\mathcal E_{\mathrm{comp}}(\sigma) = \Pi_{n,\delta}\,\sigma\,\Pi_{n,\delta} + \operatorname{Tr}\bigl[(I-\Pi_{n,\delta})\sigma\bigr]|\phi_0\rangle\langle\phi_0|$。**Schumacher 定理**证明：只要压缩率 $R = m/n > S(\rho)$，当 $n \to \infty$ 时，不仅平均码字保真度趋于 $1$，连同信源与外部参考系统 $R$ 的**纠缠保真度**（entanglement fidelity）也趋于 $1$；反之若 $R < S(\rho)$，任何压缩—解压方案的保真度必然趋于 $0$。对纯态信源而言，只给量子态的盲压缩与知道标签 $x$ 的可见压缩具有完全相同的极限 $S(\rho)$；只要信号态彼此非正交，就有 $S(\rho) < H(X)$，实打实超越经典压缩底线！
 
-#### 零跳步 8 维手算例：把 $\{|0\rangle, |+\rangle\}^{\otimes 3}$ 压进 2 个量子比特
+#### 8 维具体手算例：把 $\{|0\rangle, |+\rangle\}^{\otimes 3}$ 压进 2 个量子比特
 
 空谈 $n \to \infty$ 往往显得抽象。我们来亲手算一个仅仅打包 **$n = 3$ 个量子比特**（$2^3 = 8$ 维）的完整极简教学压缩算例，亲眼看看典型子空间怎样把 3 个量子比特稳稳塞进 2 个量子比特里。
 
@@ -223,7 +219,7 @@ $$
    换算为本书统一的**根保真度**高达 **$\bar F = \sqrt{\bar f} \approx 0.9609$**！
 2. **纠缠保真度**（纯化参考系统口径，检验压缩是否完整保留信源与外界的纠缠）：写出综合信道的 Kraus 算符 $K_0 = \Pi_{\mathrm{top4}}$ 与 4 个非典型替换算符 $K_j = |e_+e_+e_+\rangle\langle e_j|$（$j$ 遍历 4 个非典型特征基）。由于每个非典型 $|e_j\rangle$ 都与 $|e_+e_+e_+\rangle$ 正交，有 $\operatorname{Tr}(\rho^{\otimes 3}K_j) = \lambda_+^3\langle e_j|e_+e_+e_+\rangle = 0$，只剩 $K_0$ 贡献，因此纠缠平方保真度为 $F_e^2 = |\operatorname{Tr}(\rho^{\otimes 3}\Pi_{\mathrm{top4}})|^2 = p_{\mathrm{typ}}^2 \approx 0.887254$，按本书根保真度口径为 **$F_e = p_{\mathrm{typ}} \approx 0.9419$**（严格满足 $\bar f \ge F_e^2$）。仅仅打包 3 个比特，两种保真度就双双站上 $94\%$–$96\%$！
 
-**鲜明反差对照**：如果换成经典正交信源 $\{|0\rangle, |1\rangle\}$（$S(\rho) = 1\text{ bit}$），$\rho^{\otimes 3} = I_8/8$ 的 8 个特征值全都是 $1/8 = 0.125$。强行压进 2 个量子比特（4 维子空间）只能保住 $4/8 = 50\%$ 的权重，纠缠根保真度暴跌至 $F_e = 0.50$（$F_e^2 = 0.25$），平均码字平方重叠也只有 $4/8 = 0.50$，压缩彻底失败。只需一个 8 维手算例，von Neumann 熵决定量子压缩极限的几何本质就彻底明朗了。
+**鲜明反差对照**：如果换成经典正交信源 $\{|0\rangle, |1\rangle\}$（$S(\rho) = 1\text{ bit}$），$\rho^{\otimes 3} = I_8/8$ 的 8 个特征值全都是 $1/8 = 0.125$。强行压进 2 个量子比特（4 维子空间）只能保住 $4/8 = 50\%$ 的权重，纠缠根保真度暴跌至 $F_e = 0.50$（$F_e^2 = 0.25$），平均码字平方重叠也只有 $4/8 = 0.50$，压缩失效。只需一个 8 维手算例，von Neumann 熵决定量子压缩极限的几何本质就清晰明了。
 
 > **就地练习｜练 13-A（非正交信源的 $n=2$ 量子压缩）**
 >
@@ -327,7 +323,7 @@ $$
 \rho_{XA} = \sum_x p_x\,|x\rangle\langle x|_X \otimes \rho_x.
 $$
 
-我们先零跳步算出 cq 态的全部熵性质——这一步推导既为后面第 5 节的 Holevo 定理提前扫清障碍，也直接打通[第 12 章](12-security-network-frontiers.md)的 QKD 安全框架：
+我们先逐步算出 cq 态的全部熵性质——这一步推导既为后面第 5 节的 Holevo 定理提前扫清障碍，也直接打通[第 12 章](12-security-network-frontiers.md)的 QKD 安全框架：
 
 1. **边缘态与联合熵**：$\rho_X = \sum_x p_x |x\rangle\langle x|_X$ 的熵为 $S(X) = H(X)$，$\rho_A = \bar\rho = \sum_x p_x\rho_x$ 的熵为 $S(A) = S(\bar\rho)$。由于不同 $x$ 对应的对角块互相正交，若 $\rho_x$ 的特征值为 $\{\lambda_{x,j}\}$，则 $\rho_{XA}$ 的整体特征值集合就是 $\{p_x\lambda_{x,j}\}$，逐项展开对数立得
 
@@ -364,7 +360,7 @@ $$
 
 **直连第 12 章 QKD 安全定义**：在[第 12 章](12-security-network-frontiers.md)的量子密钥分发结束后，合法密钥 $K$ 是经典比特串，而窃听者 Eve 手里攥着可能与密钥相关的量子存储器 $E$——双方联合态正是一个经典的 **cq 态** $\rho_{KE} = \sum_k p_k |k\rangle\langle k|_K \otimes \rho_E^k$！理想安全密钥态则是与窃听者完全退耦的均匀 cq 态 $\rho_{KE}^{\mathrm{ideal}} = \frac{I_K}{|K|}\otimes \rho_E$。现代**可组合 $\varepsilon$-安全**（Renner, 2005）正是用下一节的迹距离定义为 $T(\rho_{KE}, \rho_{KE}^{\mathrm{ideal}}) \le \varepsilon$；而渐近 Devetak–Winter 秘密密钥率公式 $r = S(K\mid E) - S(K\mid B) = I(K:B) - \chi(K:E)$，一下子就把第 12 章的 Shor–Preskill 界与本章的条件熵、Holevo 量拧成了一股绳！
 
-### 2.3 负条件熵到底意味着什么？量子状态合并（State Merging）
+### 2.3 进阶选读：负条件熵到底意味着什么？量子状态合并（State Merging）
 
 算完 $S(A\mid B) = -1\text{ bit}$，几乎每一位初学者都会忍不住皱眉：“不确定性最低不就是 $0$ 吗？负 $1$ 比特信息到底是什么物理东西，难道不是硬套减法公式凑出来的数学符号游戏？”
 
@@ -424,7 +420,7 @@ $$
 最后补两条重要边界：
 
 - **负条件熵绝不意味着负概率或超光速通信**：状态合并依然需要经典通信通道，只是省下了昂贵的量子传输并盈余出纠缠资源。
-- **$S(A\mid B) < 0$ 是纠缠的充分条件，但不是必要条件**：对所有可分态必有 $S(A\mid B) \ge 0$，因此只要算得 $S(A\mid B) < 0$，就能铁板钉钉断定 $\rho_{AB}$ 一定纠缠；但反过来存在明明纠缠却仍有 $S(A\mid B) \ge 0$ 的混态。例如两比特白噪声 Werner 态 $\rho_p = p|\Phi^+\rangle\langle\Phi^+| + (1-p)\frac{I}{4}$（特征值为 $\frac{1+3p}{4}$ 一重与 $\frac{1-p}{4}$ 三重，约化态恒为 $I/2$，故 $S(B) = 1$）：按[第 03 章](03-multiple-qubits.md)的 PPT 判据，只要 $p > 1/3$ 它就已经纠缠；可它的条件熵 $S(A\mid B) = S(\rho_p) - 1$ 在 $p = 0.5$ 时仍为 $+0.5488\text{ bit} > 0$，一直要到 $p > p_* \approx 0.7476$ 才会跌破 $0$ 变为负数。
+- **$S(A\mid B) < 0$ 是纠缠的充分条件，但不是必要条件**：对所有可分态必有 $S(A\mid B) \ge 0$，因此只要算得 $S(A\mid B) < 0$，就能严格断定 $\rho_{AB}$ 一定纠缠；但反过来存在明明纠缠却仍有 $S(A\mid B) \ge 0$ 的混态。例如两比特白噪声 Werner 态 $\rho_p = p|\Phi^+\rangle\langle\Phi^+| + (1-p)\frac{I}{4}$（本节可见度参数 $p$ 对应[第 12 章](12-security-network-frontiers.md)的 $v = (4f - 1)/3$，且局域酉变换连接 $|\Phi^+\rangle$ 与 $|\Psi^-\rangle$，不改变一切纠缠与熵量度；特征值为 $\frac{1+3p}{4}$ 一重与 $\frac{1-p}{4}$ 三重，约化态恒为 $I/2$，故 $S(B) = 1$）：按[第 03 章](03-multiple-qubits.md)的 PPT 判据，只要 $p > 1/3$ 它就已经纠缠；可它的条件熵 $S(A\mid B) = S(\rho_p) - 1$ 在 $p = 0.5$ 时仍为 $+0.5488\text{ bit} > 0$，一直要到 $p > p_* \approx 0.7476$ 才会跌破 $0$ 变为负数。
 
 ### 2.4 纯二分态的纠缠熵与 LOCC 渐近浓缩
 
@@ -467,7 +463,7 @@ $$
 
 再次提醒边界：**约化熵 $S(\rho_A)$ 只对整体纯态等于纠缠量**。一旦 $\rho_{AB}$ 是混态（比如前面算过的经典相关混态 $\frac{1}{2}|00\rangle\langle 00| + \frac{1}{2}|11\rangle\langle 11|$），$S(\rho_A) = 1\text{ bit}$ 却一丁点纠缠也没有，因为这 $1\text{ bit}$ 混度来自经典随机混合而非量子纠缠。混态纠缠需要连同任务和免费操作一起选量度（如可蒸馏纠缠、形成纠缠与负性），我们在[第 18 章](18-channels-capacities-complexity.md)系统展开。
 
-### 2.5 三元相关：经典复制、经典 XOR、GHZ 态、W 态与纠缠单配
+### 2.5 进阶选读：三元相关：经典复制、经典 XOR、GHZ 态、W 态与纠缠单配
 
 只有两个子系统时，相关性还比较直观；一旦引入第三个子系统 $C$，信息可以呈现出截然不同的分布结构——有的像复印件一样到处冗余，有的像密码锁一样必须凑齐两把钥匙才能解开。
 
@@ -513,7 +509,7 @@ $$
    = \frac{1}{2}|00\rangle\langle 00| + \frac{1}{2}|11\rangle\langle 11|.
    $$
 
-   丢掉任意一个量子比特后，剩下两比特瞬间坍塌成纯经典相关混态，两体纠缠彻底清零！此时 $S(A)=S(B)=S(C)=1$，$S(AB)=S(AC)=S(BC)=1$，故 $I(A:B)=I(A:C)=1$，$I(A:BC)=1+1-0=2$，从而 $I_3 = 1+1-2 = 0$。
+   丢掉任意一个量子比特后，剩下两比特瞬间坍塌成纯经典相关混态，两体纠缠归零！此时 $S(A)=S(B)=S(C)=1$，$S(AB)=S(AC)=S(BC)=1$，故 $I(A:B)=I(A:C)=1$，$I(A:BC)=1+1-0=2$，从而 $I_3 = 1+1-2 = 0$。
 4. **三比特 W 态** $|W\rangle = \frac{1}{\sqrt 3}(|100\rangle + |010\rangle + |001\rangle)$：整体纯态 $S(ABC) = 0$。把 $|W\rangle$ 按 $C$ 的状态分组：
 
    $$
@@ -581,7 +577,7 @@ $$
 
 其中 $0 \preceq \Lambda \preceq I$ 可以是任意广义测量（POVM）中对应某个结果事件的效应算符。这个等式说的是：**无论你采用什么物理测量，同一个测量结果在态 $\rho$ 与态 $\sigma$ 下出现的概率之差，绝对值绝不会超过 $T(\rho,\sigma)$**；而且只要把 $\Lambda$ 选为投影到 $\rho - \sigma$ 所有正特征子空间的投影算符 $\Pi_+$，就能恰好达到这个上限。
 
-#### 零跳步推导：任意两纯态的迹距离
+#### 完整推导：任意两纯态的迹距离
 
 设两个归一化纯态为 $|\psi\rangle, |\phi\rangle$，令复内积 $c = \langle\psi|\phi\rangle$。在它们张成的二维子空间内选取一组正交归一基 $\{|e_0\rangle, |e_1\rangle\}$，使
 
@@ -667,7 +663,7 @@ $$
 
 #### 跨章闭合：兑现 Q1 的 Englert 波粒二象性恒等式
 
-读过[Q1：从实验认识量子态 §6.2](quantum-mechanics/01-experiments-states.md#62-波粒二象性的定量天平englert-互补关系)的读者，此刻可以把两条主线彻底接上了。在 Q1 的不平衡 Mach–Zehnder 干涉仪中，粒子走上路和下路的权重分别是 $w_0$ 和 $w_1 = 1-w_0$，对应的路径探测器条件态是 $\rho_0^{(d)}$ 和 $\rho_1^{(d)}$。Q1 定义了**路径可区分度 $D$**——把最优判别路径的猜对概率 $p_{\mathrm{guess}}^{\max}$ 从 $[1/2, 1]$ 线性拉伸到 $[0, 1]$：
+读过[Q1：从实验认识量子态 §6.2](quantum-mechanics/01-experiments-states.md#62-波粒二象性的定量天平englert-互补关系)的读者，此刻可以把两条主线接上了。在 Q1 的不平衡 Mach–Zehnder 干涉仪中，粒子走上路和下路的权重分别是 $w_0$ 和 $w_1 = 1-w_0$，对应的路径探测器条件态是 $\rho_0^{(d)}$ 和 $\rho_1^{(d)}$。Q1 定义了**路径可区分度 $D$**——把最优判别路径的猜对概率 $p_{\mathrm{guess}}^{\max}$ 从 $[1/2, 1]$ 线性拉伸到 $[0, 1]$：
 
 $$
 D = 2p_{\mathrm{guess}}^{\max} - 1 = \bigl\|w_0\rho_0^{(d)} - w_1\rho_1^{(d)}\bigr\|_1 \in [0, 1].
@@ -757,7 +753,7 @@ $$
 
 不仅远高于误用等先验公式得到的 $0.8536$，也实打实超过了“不测盲猜 $|0\rangle$”的 $0.90$。这说明即便先验已经高度偏向 $|0\rangle$，只要 $\Delta$ 还有负特征值，精心偏向调整过的量子测量依然能额外挤出超过 $5$ 个百分点的准确率。
 
-### 3.3 无歧义态判别（USD）：宁可放弃，绝不猜错
+### 3.3 进阶选读：无歧义态判别（USD）：宁可放弃，绝不猜错
 
 Helstrom 判别要求测量每轮必须给一个明确标签，因此只要两个态非正交，就免不了偶尔判错。但在量子密码或某些高精度判定协议里，你可能更希望换一种规则：**允许测量输出第三种结果“无法判断（$?$）”，但只要给出了确定标签，就必须保证错误率严格为零**。在零错误约束下最大化成功给出确定标签的概率，称为**无歧义态判别**（Unambiguous State Discrimination, USD）。
 
@@ -857,7 +853,7 @@ $$
 
 #### 不等先验的三区段公式与多态线性无关边界
 
-如果两个候选纯态的先验不再相等（设为 $\eta_0, \eta_1$，$\eta_0+\eta_1=1$），还能只把算术–几何平均改成加权形式 $Q = \eta_0 f_0 + \eta_1 f_+ \ge 2\sqrt{\eta_0\eta_1 f_0 f_+} \ge 2\sqrt{\eta_0\eta_1}\,s$ 吗？**千万小心！** 当先验非常偏斜时，让等号成立所需的 $f_0$ 或 $f_+$ 可能会超过 $1$，这在概率上是不可能的！
+如果两个候选纯态的先验不再相等（设为 $\eta_0, \eta_1$，$\eta_0+\eta_1=1$），还能只把算术–几何平均改成加权形式 $Q = \eta_0 f_0 + \eta_1 f_+ \ge 2\sqrt{\eta_0\eta_1 f_0 f_+} \ge 2\sqrt{\eta_0\eta_1}\,s$ 吗？**这里需要留心**：当先验非常偏斜时，让等号成立所需的 $f_0$ 或 $f_+$ 可能会超过 $1$，这在概率上是不可能的！
 
 耶格与希莫尼（Jaeger & Shimony, 1995）把所有先验比 $\eta_1/\eta_0$ 按重叠 $s = |\langle\psi_0|\psi_1\rangle|$ 划分成**三个区段**，给出了不等先验 USD 的完整精确解：
 
@@ -969,7 +965,7 @@ D(\rho\Vert\sigma) = \begin{cases}
 \end{cases}
 $$
 
-支撑集条件 $\operatorname{supp}(\rho) \subseteq \operatorname{supp}(\sigma)$ 译成大白话就是：**凡是 $\sigma$ 判定概率为零的方向，$\rho$ 也必须为零**；只要 $\rho$ 在 $\sigma$ 认为绝不可能发生的方向上放了一丁点权重，单次看到那个结果就能一锤定音推翻 $\sigma$，相对熵便发散为 $+\infty$。
+支撑集条件 $\operatorname{supp}(\rho) \subseteq \operatorname{supp}(\sigma)$ 译成大白话就是：**凡是 $\sigma$ 判定概率为零的方向，$\rho$ 也必须为零**；只要 $\rho$ 在 $\sigma$ 认为绝不可能发生的方向上放了一丁点权重，单次看到那个结果就能直接排除 $\sigma$，相对熵便发散为 $+\infty$。
 
 量子相对熵满足两条基础性质：第一，**Klein 不等式**（非负性）：$D(\rho\Vert\sigma) \ge 0$，且 $D(\rho\Vert\sigma) = 0$ 当且仅当 $\rho = \sigma$；第二，**不对称性**：一般而言 $D(\rho\Vert\sigma) \ne D(\sigma\Vert\rho)$，且不满足三角不等式，因此不是数学意义上的距离。
 
@@ -1026,7 +1022,20 @@ $$
 
 非平衡自由能永不自发增加——它与[第 05 章](05-noise-channels.md)的 Landauer 擦除热力学下限遥相呼应，构成现代量子热力学的核心基石。
 
-### 4.2 广义夹心 Rényi 散度 DPI、Jordan 分解收缩与后选择陷阱
+进一步将这一热力学视角嵌入资源理论框架（衔接[第 18 章第 6 节](18-channels-capacities-complexity.md)资源论三要素），就得到现代**量子热力学资源论（Resource Theory of Athermality）**：
+
+- **免费态**是处于环境逆温度 $\beta$ 的热平衡 Gibbs 态 $\gamma_\beta = e^{-\beta H_S}/Z_S$；
+- **免费操作**是**热操作（Thermal Operations, TO）**：允许接入任意同温热库 $\gamma_B = e^{-\beta H_B}/Z_B$ 并施加严格能量守恒的联合酉演化 $[U, H_S + H_B] = 0$，再偏迹掉热库：
+  $$
+  \mathcal E_{\mathrm{th}}(\rho) = \operatorname{Tr}_B\!\bigl[U(\rho \otimes \gamma_B)U^\dagger\bigr].
+  $$
+- **微观尺度的“多条第二定律”**：Brandão、Horodecki、Ng、Oppenheim 与 Wehner（*PNAS* **112**, 3275–3279, 2015；证据层级 A）证明，在允许催化辅助的单份微观量子态转化 $\rho \to \sigma$ 中，仅满足宏观自由能不增 $F_{\mathrm{th}}(\sigma) \le F_{\mathrm{th}}(\rho)$ 远远不够——由广义量子 Rényi 散度定义的整族广义自由能
+  $$
+  F_\alpha(\rho) = k_B T(\ln 2)\,D_\alpha(\rho\Vert\gamma_\beta) + F_{\mathrm{th}}(\gamma_\beta), \qquad \forall\,\alpha \ge 0
+  $$
+  必须**全部**单调不增（对于能量本征基对角态，这组充要条件等价于几何上的**热优超** thermo-majorization 判据）。在单次确定性做功任务里，最大可提取功由 $D_0 / D_{\min}$ 封顶，最小形成功由 $D_\infty / D_{\max}$ 封底，两者之间存在不可逆鸿沟；唯有在 $n \to \infty$ 的独立同分布宏观极限下，整族 $F_\alpha$ 才集体坍缩回唯一的传统亥姆霍兹自由能 $F_1 = F_{\mathrm{th}}$。此外，能量守恒 $[U, H_S + H_B] = 0$ 迫使热操作满足时间平移协变性，意味着不同能级间的**量子相干性无法靠热操作无中生有**，形成独立于布居热优超的额外相干性约束。
+
+### 4.2 进阶选读：广义夹心 Rényi 散度 DPI、Jordan 分解收缩与后选择辨析
 
 经过一条合法确定性量子信道（CPTP 映射）$\mathcal E$ 后，两个候选态之间的统计可区分度绝不会凭空增大。为了把全章所有单调性、收缩性与不等式严密地挂在同一套无漏洞逻辑框架下，我们需要分清两条并行而互补的证明主干。
 
@@ -1079,14 +1088,14 @@ $$
    F\bigl(\mathcal E(\rho),\ \mathcal E(\sigma)\bigr) \;\ge\; F(\rho,\sigma).
    $$
 
-   （再次提防语言陷阱：噪声后 $F(\mathcal E(\rho),\mathcal E(\sigma))$ 变大绝不是设备变好了，而是噪声把两个原本不同的态一齐抹向了同一团废态！）
+   （再次防备常见误解：噪声后 $F(\mathcal E(\rho),\mathcal E(\sigma))$ 变大绝不是设备变好了，而是噪声把两个原本不同的态一齐抹向了同一团废态。）
 2. **取极限 $\alpha \to 1 \implies$ Umegaki 相对熵 DPI**（Lindblad, 1975；Uhlmann, 1977）：$\lim_{\alpha\to 1}\tilde D_\alpha(\rho\Vert\sigma) = D(\rho\Vert\sigma)$，给出经典的
 
    $$
    D(\rho\Vert\sigma) \;\ge\; D\bigl(\mathcal E(\rho)\,\big\Vert\,\mathcal E(\sigma)\bigr).
    $$
 
-   例如将 $\rho = \operatorname{diag}(3/4,1/4)$ 与 $\sigma = I/2$ 同时送入复位信道 $\mathcal E_{\mathrm{reset}}(\tau) = |0\rangle\langle 0|$，输出完全重合，相对熵从 $0.1887\text{ bit}$ 降成 $0$。从 Umegaki DPI 出发，立刻零跳步推出三条核心定理：
+   例如将 $\rho = \operatorname{diag}(3/4,1/4)$ 与 $\sigma = I/2$ 同时送入复位信道 $\mathcal E_{\mathrm{reset}}(\tau) = |0\rangle\langle 0|$，输出完全重合，相对熵从 $0.1887\text{ bit}$ 降成 $0$。从 Umegaki DPI 出发，立刻逐步推出三条核心定理：
    - **双向等价强次可加性（SSA）**：取偏迹信道 $\mathcal E = \operatorname{Tr}_C$ 作用于 $\rho_{ABC}$ 与 $\rho_A \otimes \rho_{BC}$，立得 $I(A:BC) = D(\rho_{ABC}\Vert\rho_A\otimes\rho_{BC}) \ge D(\rho_{AB}\Vert\rho_A\otimes\rho_B) = I(A:B)$，即 $I(A:C\mid B) \ge 0$；反过来，借 Stinespring 扩张 $\mathcal E(\tau) = \operatorname{Tr}_E[V\tau V^\dagger]$ 把任意 CPTP 信道化归为“酉等距 $+$ 偏迹丢弃环境”，亦可由 SSA 推回 Umegaki DPI，二者本质同源。
    - **两行推出量子 Pinsker 不等式**：取第 3.1 节使迹距离 $T(\rho,\sigma)$ 饱和的 Helstrom 最优二元投影测量信道 $\mathcal M^*(\tau) = \operatorname{Tr}(\Pi_+\tau)|0\rangle\langle 0| + \operatorname{Tr}((I-\Pi_+)\tau)|1\rangle\langle 1|$，它把两态映为两个经典伯努利分布，其经典全变差距离恰好等于 $T(\rho,\sigma)$。先套 Umegaki DPI，再套经典 Pinsker 不等式，两行严密闭合：
 
@@ -1101,7 +1110,11 @@ $$
    - **一行推出 Holevo 界**：对 cq 态施加测量信道 $\mathrm{id}_X \otimes \mathcal M$（第 5.1 节完整展开）。
 3. **取极限 $\alpha \to \infty \implies$ 最大相对熵与最小熵 DPI**：$\tilde D_\infty(\rho\Vert\sigma) = D_{\max}(\rho\Vert\sigma) = \log_2\inf\{\lambda : \rho \preceq \lambda\sigma\}$ 同样服从 DPI，它直接奠定了第 7 节条件最小熵 $H_{\min}(A\mid B)$ 的数据处理不等式与有限长量子密码证明！
 
-#### 后选择陷阱：为什么筛选成功样本会让迹距离反增？
+![量子信息熵族、数据处理不等式与容量主链图](assets/v4-13-entropy-dpi-chain.svg)
+
+图注：一图串起量子 Rényi 熵族（$S_0 \ge H_{\max} \ge S \ge S_2 \ge H_{\min}$）、夹心 Rényi 散度广义数据处理不等式（$\alpha = 1/2, 1, \infty$ 三分支）如何向下导出保真度单调、强次可加性、Holevo 界与单次密码安全界，并向上衔接第 18 章四类量子信道容量。查看[原尺寸 SVG](assets/v4-13-entropy-dpi-chain.svg)。
+
+#### 后选择辨析：为什么筛选成功样本会让迹距离反增？
 
 刚证完 CPTP 迹距离收缩定理，很多同学会立刻撞上一个反常现象：**如果在电路里放一个带成功/失败标记的量子滤波器，只挑出标记为成功的样本来比较，两个条件态之间的迹距离竟然比滤波之前还大了！这难道推翻了收缩定理？**
 
@@ -1138,7 +1151,7 @@ $$
 
 收缩定理安然无恙！这给论文审读立下一条铁律：**凡做后选择筛选，必须同时报出条件指标、接受率与无条件总资源开销**。
 
-### 4.3 Petz 恢复映射与量子 Stein 引理预告
+### 4.3 进阶选读：Petz 恢复映射与量子 Stein 引理预告
 
 什么时候 Umegaki 相对熵 DPI 恰好**取等号**，一点信息也没丢？佩茨（Dénes Petz, 1986/1988/2002）给出了一个两层递进的深刻刻画（设 $\operatorname{supp}(\rho) \subseteq \operatorname{supp}(\sigma)$）：
 
@@ -1184,7 +1197,7 @@ $$
 
 借助第 2.2 节建立的经典–量子（cq）联合态与第 4.2 节的 Umegaki 相对熵 DPI，我们可以**一行之内**把著名的 **Holevo 界**严密证出来！
 
-**第一步：复用第 2.2 节的 cq 联合态。** 把系综 $\mathscr E$ 打包成 $\rho_{XA} = \sum_x p_x |x\rangle\langle x|_X \otimes \rho_x$。我们在第 2.2 节已经零跳步算出 $S(XA) = H(X) + \sum_x p_x S(\rho_x)$，因此
+**第一步：复用第 2.2 节的 cq 联合态。** 把系综 $\mathscr E$ 打包成 $\rho_{XA} = \sum_x p_x |x\rangle\langle x|_X \otimes \rho_x$。我们在第 2.2 节已经逐步算出 $S(XA) = H(X) + \sum_x p_x S(\rho_x)$，因此
 
 $$
 I(X:A)_{\rho_{XA}} = S(X) + S(A) - S(XA) = S(\bar\rho) - \sum_x p_x S(\rho_x) = \chi(\mathscr E).
@@ -1200,15 +1213,15 @@ I(X:Y)
 = \chi(\mathscr E).
 $$
 
-**第三步：收紧维数与信源熵上界（谨防负条件熵陷阱）。** 一方面 $S(\bar\rho) \le \log_2 d$ 且 $\sum_x p_x S(\rho_x) \ge 0$，故 $\chi(\mathscr E) \le \log_2 d$；另一方面，对一般纠缠量子态（qq 态）而言 $S(AB)$ 可以严格小于 $S(B)$，但**因为 $\rho_{XA}$ 是经典–量子（cq）态**，我们在第 2.2 节已严格证明 $S(X\mid A) = S(XA) - S(A) \ge 0$（即 $S(XA) \ge S(A)$ 仅依赖 cq 态结构，绝不与负条件熵冲突！），从而 $\chi(\mathscr E) = S(X) - S(X\mid A) \le H(X)$。合并即得完整的 **Holevo 定理**：
+**第三步：收紧维数与信源熵上界（厘清负条件熵边界）。** 一方面 $S(\bar\rho) \le \log_2 d$ 且 $\sum_x p_x S(\rho_x) \ge 0$，故 $\chi(\mathscr E) \le \log_2 d$；另一方面，对一般纠缠量子态（qq 态）而言 $S(AB)$ 可以严格小于 $S(B)$，但**因为 $\rho_{XA}$ 是经典–量子（cq）态**，我们在第 2.2 节已严格证明 $S(X\mid A) = S(XA) - S(A) \ge 0$（即 $S(XA) \ge S(A)$ 仅依赖 cq 态结构，绝不与负条件熵冲突！），从而 $\chi(\mathscr E) = S(X) - S(X\mid A) \le H(X)$。合并即得完整的 **Holevo 定理**：
 
 $$
 I(X:Y) \;\le\; I_{\mathrm{acc}}(\mathscr E) \;\le\; \chi(\mathscr E) \;\le\; \min\bigl\{H(X),\ \log_2 d\bigr\}.
 $$
 
-这条定理给开头的幻想浇了一盆彻底清醒的冷水：**在没有预共享纠缠的通信模型里，只发送一个 $n$ 量子比特寄存器（$d = 2^n$），无论编码多么精巧、测量多么花哨，接收方最多只能可靠提取出 $\log_2(2^n) = n\text{ bit}$ 经典信息**——一点不比发送 $n$ 个普通经典比特多！（再次核对边界：超密编码传 $2\text{ bit}$ 必须额外消耗 $1$ 个预共享 Bell 对，改变了通信资源模型，与无辅助维数上界并不矛盾。）
+这条定理给开头的幻想浇了一盆清醒的冷水：**在没有预共享纠缠的通信模型里，只发送一个 $n$ 量子比特寄存器（$d = 2^n$），无论编码多么精巧、测量多么花哨，接收方最多只能可靠提取出 $\log_2(2^n) = n\text{ bit}$ 经典信息**——一点不比发送 $n$ 个普通经典比特多！（再次核对边界：超密编码传 $2\text{ bit}$ 必须额外消耗 $1$ 个预共享 Bell 对，改变了通信资源模型，与无辅助维数上界并不矛盾。）
 
-什么时候单次测量就能恰好摸到 $\chi(\mathscr E)$ 的天花板？Ruskai（2002）指出：对单份样本，$I_{\mathrm{acc}}(\mathscr E) = \chi(\mathscr E)$ **当且仅当所有信号态 $\rho_x$ 彼此对易**（即它们可以在同一组正交基下同时对角化，实质上退化为经典编码）。只要信号态之间彼此不对易（对纯态而言即非正交且不重合），单次测量就必然留下严格缺口。
+什么时候单次测量就能恰好摸到 $\chi(\mathscr E)$ 的上界？Ruskai（2002）指出：对单份样本，$I_{\mathrm{acc}}(\mathscr E) = \chi(\mathscr E)$ **当且仅当所有信号态 $\rho_x$ 彼此对易**（即它们可以在同一组正交基下同时对角化，实质上退化为经典编码）。只要信号态之间彼此不对易（对纯态而言即非正交且不重合），单次测量就必然留下严格缺口。
 
 ### 5.2 算例对比：正交编码 vs 非正交 $\{|0\rangle, |+\rangle\}$ 的严格间隙
 
@@ -1285,7 +1298,7 @@ $$
 
 ---
 
-## 6. 无广播定理、强次可加性与量子马尔可夫链
+## 6. 进阶选读：无广播定理、强次可加性与量子马尔可夫链
 
 ### 6.1 无广播定理：不可克隆在混态上的真正推广
 
@@ -1450,7 +1463,7 @@ $$
 
 ---
 
-## 7. 量子 Rényi 熵与平滑最小/最大熵：现代有限长密码的基石
+## 7. 进阶选读：量子 Rényi 熵与平滑最小/最大熵：现代有限长密码的基石
 
 ### 7.1 单次安全为什么不能只看 Shannon / von Neumann 熵？
 
@@ -1476,7 +1489,7 @@ $$
 
 按 $\alpha$ 递增，量子 Rényi 熵严格单调不增：$S_0(\rho) \ge S_{1/2}(\rho) \ge S_1(\rho) \ge S_2(\rho) \ge S_\infty(\rho)$。拿贯穿全章的平均态 $\bar\rho = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|+\rangle\langle +|$（特征值 $\lambda_+ \approx 0.853553,\ \lambda_- \approx 0.146447$）把五个关键节点全部亲手算一遍：
 
-| 阶数 $\alpha$ | 名称与闭式公式 | 对 $\bar\rho$ 的零跳步数值 | 核心物理 / 操作意义 |
+| 阶数 $\alpha$ | 名称与闭式公式 | 对 $\bar\rho$ 的精确数值 | 核心物理 / 操作意义 |
 | :--- | :--- | ---: | :--- |
 | $\alpha \to 0^+$ | 哈特利熵 $S_0(\rho) = \log_2\operatorname{rank}(\rho)$ | $\log_2 2 = 1.0000\text{ bit}$ | 支撑空间维数的对数（最宽松压缩上界） |
 | $\alpha = 1/2$ | **单次最大熵** $H_{\max}(\rho) = 2\log_2\operatorname{Tr}\sqrt{\rho}$ | $2\log_2(\sqrt{\lambda_+}+\sqrt{\lambda_-}) \approx 0.7716\text{ bit}$ | 单次数据压缩所需量子比特数 |
@@ -1518,7 +1531,7 @@ $$
 
 这一行数字一举把第 3 节的 Helstrom 判别、第 5 节的 Holevo 量与现代单次密码熵严丝合缝地焊接在了一起！
 
-### 7.3 平滑熵、剩磁哈希引理与第 12 章有限长 QKD 闭环
+### 7.3 平滑熵、剩余哈希引理与第 12 章有限长 QKD 闭环
 
 光有精确的 $H_{\min}$ 还不够灵活——像上面那个 $10\%$ 全零密钥的例子，哪怕只存在 $10^{-9}$ 的极罕见坏事件，精确 $H_{\min}$ 也会被最坏角落拉低。现代有限长量子信息论（Renner, 2005；Tomamichel, 2016）的妙招是允许在纯化距离（$P(\rho,\tilde\rho) = \sqrt{1 - F(\rho,\tilde\rho)^2}$）不超过极小安全容差 $\varepsilon$ 的邻域球内对态做微小平滑，定义**平滑最小熵**与**平滑最大熵**：
 
@@ -1528,12 +1541,12 @@ H_{\min}^\varepsilon(A\mid B)_\rho = \sup_{\tilde\rho \in \mathcal B^\varepsilon
 H_{\max}^\varepsilon(A\mid B)_\rho = \inf_{\tilde\rho \in \mathcal B^\varepsilon(\rho)} H_{\max}(A\mid B)_{\tilde\rho}.
 $$
 
-由**量子渐近均分性质**（QAEP，Tomamichel–Colbeck–Renner, 2009），对 $n$ 份独立同分布态 $\rho_{AB}^{\otimes n}$，平滑最小/最大熵均按 $O(1/\sqrt n)$ 阶修正收敛到 von Neumann 条件熵 $S(A\mid B)$。把它直接接入[第 12 章第 3.2 节](12-security-network-frontiers.md)的有限长 QKD，两把终极钥匙立刻解锁全部安全证明：
+由**量子渐近均分性质**（QAEP，Tomamichel–Colbeck–Renner, 2009），对 $n$ 份独立同分布态 $\rho_{AB}^{\otimes n}$，平滑最小/最大熵均按 $O(1/\sqrt n)$ 阶修正收敛到 von Neumann 条件熵 $S(A\mid B)$。把它直接接入[第 12 章第 3.2 节](12-security-network-frontiers.md)的有限长 QKD，两项核心工具立刻解锁全部安全证明：
 
-1. **量子剩磁哈希引理**（Quantum Leftover Hash Lemma，Renner, 2005）：对经过信息协调泄露了 $\mathrm{leak}_{\mathrm{EC}}$ 比特的长串 $X$，用二通用哈希函数做隐私放大，可提取的 $\varepsilon$-可组合安全密钥（满足 $T(\rho_{KE}, \frac{I_K}{|K|}\otimes\rho_E) \le \varepsilon$）长度下界为
+1. **量子剩余哈希引理**（Quantum Leftover Hash Lemma，Renner, 2005；Tomamichel, 2016）：对经过信息协调泄露了 $\mathrm{leak}_{\mathrm{EC}}$ 比特的长串 $X$，用二通用哈希函数 $F$ 做隐私放大，其迹距离偏差满足 $T\!\left(\rho_{KEF},\, \frac{I_K}{|K|}\otimes\rho_{EF}\right) \le 2\varepsilon' + \frac{1}{2}\sqrt{2^{\ell - H_{\min}^{\varepsilon'}(X\mid E) + \mathrm{leak}_{\mathrm{EC}}}}$。令总可组合安全参数 $\varepsilon = 2\varepsilon' + \varepsilon_{\mathrm{PA}}$（平滑半径 $\varepsilon'$ 与哈希残余项 $\varepsilon_{\mathrm{PA}}$ 之和），可安全提取的密钥长度严格满足
 
    $$
-   \ell \approx H_{\min}^{\varepsilon'}(X\mid E) - \mathrm{leak}_{\mathrm{EC}} - 2\log_2\frac{1}{\varepsilon_{\mathrm{PA}}}.
+   \ell \le H_{\min}^{\varepsilon'}(X\mid E) - \mathrm{leak}_{\mathrm{EC}} - 2\log_2\frac{1}{2\varepsilon_{\mathrm{PA}}}, \qquad \varepsilon = 2\varepsilon' + \varepsilon_{\mathrm{PA}}.
    $$
 
 2. **带量子存储的熵不确定关系**（Berta 等，*Nature Physics* 2010；Tomamichel & Renner，*PRL* 2011）：在 BB84 协议中，用互补基 $Z$ 与 $X$（最大基重叠 $c = \max_{j,k}|\langle z_j|x_k\rangle|^2 = 1/2 \implies \log_2(1/c) = 1$）测量 $n$ 个量子比特，无论窃听者 Eve 采取多么复杂的一般相干攻击，平滑最小熵与平滑最大熵必满足
@@ -1542,7 +1555,7 @@ $$
    H_{\min}^\varepsilon(Z^n\mid E) + H_{\max}^\varepsilon(X^n\mid B) \;\ge\; n.
    $$
 
-看清这两行公式合在一起的惊人威力：**Alice 和 Bob 根本不需要猜测或假设 Eve 做了什么攻击**——他们只需在互补 $X$ 基抽样测出相位误码率统计上界 $\phi^u$，由此封顶 Bob 在 $X$ 基下的平滑最大熵 $H_{\max}^\varepsilon(X^n\mid B) \lesssim n\,h_2(\phi^u)$，熵不确定关系立刻铁板钉钉给 $Z$ 基密钥相对 Eve 的最小熵托底 $H_{\min}^\varepsilon(Z^n\mid E) \gtrsim n\bigl[1 - h_2(\phi^u)\bigr]$，再送入量子剩磁哈希引理，正好严丝合缝导出第 12 章的有限长安全密钥公式 $\ell \le n_1^z[1 - h_2(\phi_1^u)] - \mathrm{leak}_{\mathrm{EC}} - \Delta(\varepsilon)$！
+看清这两行公式合在一起的核心威力：**Alice 和 Bob 根本不需要猜测或假设 Eve 做了什么攻击**——他们只需在互补 $X$ 基抽样测出相位误码率统计上界 $\phi^u$，由此封顶 Bob 在 $X$ 基下的平滑最大熵 $H_{\max}^\varepsilon(X^n\mid B) \lesssim n\,h_2(\phi^u)$，熵不确定关系立刻严格给 $Z$ 基密钥相对 Eve 的最小熵托底 $H_{\min}^\varepsilon(Z^n\mid E) \gtrsim n\bigl[1 - h_2(\phi^u)\bigr]$，再送入量子剩余哈希引理，正好严丝合缝导出第 12 章的有限长安全密钥公式 $\ell \le n_1^z[1 - h_2(\phi_1^u)] - \mathrm{leak}_{\mathrm{EC}} - \Delta(\varepsilon)$！
 
 > **就地练习｜练 13-B（cq 态的 $H_{\min}(X\mid E)$ 与 $S(X\mid E)$ 对照）**
 >
@@ -1579,7 +1592,7 @@ flowchart TD
     UDPI -->|"cq 态施测量信道"| HOL
     UDPI -->|"Helstrom 测量信道 + 经典 Pinsker"| PIN
     UDPI -->|"取等与近等结构"| QMC
-    DMAX -->|"平滑化 + 剩磁哈希与熵不确定关系"| QKD
+    DMAX -->|"平滑化 + 剩余哈希与熵不确定关系"| QKD
 ```
 
 ### 8.2 指标选择清单、常见误区与通向第 18 章路线图
@@ -1619,6 +1632,26 @@ flowchart TD
 
 ---
 
+## 本章一页速记卡
+
+**核心逻辑主链**（完整推导网络见上方总图与[熵族–DPI 主链图](assets/v4-13-entropy-dpi-chain.svg)）：von Neumann 熵与 Schumacher 压缩 $\longrightarrow$ 负条件熵与状态合并 $\longrightarrow$ 迹距离 / Helstrom / 根保真度 $\longrightarrow$ 夹心 Rényi 散度 DPI（与热力学多条第二定律）$\longrightarrow$ Holevo 界、无广播与平滑最小熵有限长 QKD。
+
+| 概念 / 工具 | 核心公式 | 维数 / 单位 / 适用条件 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **von Neumann 熵** | $S(\rho) = -\operatorname{Tr}(\rho\log_2\rho) = -\sum_j\lambda_j\log_2\lambda_j$ | bit；$\in [0, \log_2 d]$，Schumacher 压缩极限 | 以为 $S(\rho)=0$ 代表任意基测量都确定，或逐元素取对数 |
+| **条件熵与互信息** | $S(A\mid B)=S(AB)-S(B)$；$I(A:B)=S(A)+S(B)-S(AB)$ | bit / ebit；qq 态可负（状态合并净赚纠缠），cq 态恒 $\ge 0$ | 拿混态的局部熵 $S(\rho_A)$ 直接当纠缠量 |
+| **Helstrom 判别与保真度** | $p_{\mathrm{guess}}^{\max}=\frac{1}{2}(1+\|\eta\rho-(1-\eta)\sigma\|_1)$；$1-F\le T\le\sqrt{1-F^2}$ | 无量纲；全书用**根保真度** $F=\operatorname{Tr}\sqrt{\sqrt\rho\sigma\sqrt\rho}$ | 不等先验误套等先验公式，或忽略 $T\le\sqrt{2(1-F)}$ 平方根放大 |
+| **广义 DPI 与热力学资源论** | $\tilde D_\alpha(\rho\Vert\sigma)\ge\tilde D_\alpha(\mathcal E(\rho)\Vert\mathcal E(\sigma))$；$F_\alpha(\rho)=k_B T(\ln 2)D_\alpha(\rho\Vert\gamma_\beta)+F_{\mathrm{th}}(\gamma_\beta)$ | $\alpha\in[1/2,\infty]$；$\alpha=1/2,1,\infty$ 分支分别推出 $F$、$D$、$D_{\max}$ | 忽略热操作能量守恒 $[U,H_S+H_B]=0$ 或混淆后选择非线性过滤与 CPTP |
+| **Holevo 界** | $I(X:Y)\le I_{\mathrm{acc}}\le \chi = S(\bar\rho)-\sum_x p_x S(\rho_x)\le\min\{H(X),\log_2 d\}$ | bit；无预共享纠缠模型，单份仅对易态取等 | 把 $n$ 比特复振幅维数 $2^n$ 误当作可传经典比特数 |
+| **单次最小熵与剩余哈希** | $H_{\min}(X\mid E)=-\log_2 p_{\mathrm{guess}}(X\mid E)$；$\ell\le H_{\min}^{\varepsilon'}-\mathrm{leak}_{\mathrm{EC}}-2\log_2\frac{1}{2\varepsilon_{\mathrm{PA}}}$ | bit；$\varepsilon=2\varepsilon'+\varepsilon_{\mathrm{PA}}$，有限长 QKD 隐私放大基石 | 在有限长密码中拿平均香农/冯·诺依曼熵代替最小熵 |
+
+**首遍通关自测三句话**：
+1. 我能算出简单混合态的 von Neumann 熵，解释为何 Bell 态 $S(A\mid B)=-1$ 对应状态合并净赚 $1\text{ ebit}$ 而经典相关混态不是纠缠；
+2. 我能区分迹距离、根保真度与平方保真度，算清加权 Helstrom 最优猜对率，并说明为何 $\{|0\rangle,|+\rangle\}$ 存在 $I_{\mathrm{acc}} < \chi$ 间隙；
+3. 我能画出夹心 Rényi DPI 统领保真度单调、SSA、Holevo 界与平滑最小熵的主链，并解释有限长 QKD 为何必须使用量子剩余哈希引理。
+
+---
+
 ## 自检题
 
 1. 求 $\rho = \operatorname{diag}(0.8, 0.2)$ 的 von Neumann 熵。
@@ -1638,9 +1671,9 @@ flowchart TD
 
 - **不等先验 Helstrom 与保真度口径核对**：运行 `python3 codes/foundations/foundations_lab.py --case 13`，复算先验 $0.9/0.1$ 下的加权差矩阵特征值、最优猜对率 $0.952769$，以及根保真度与平方保真度的换算。
 - **后选择滤波与整体 CPTP 收缩检验**：运行 `python3 codes/foundations/diagnostic_lab.py --case 13`，对比滤波后条件迹距离 $T_s \approx 0.9363$、贝叶斯加权条件最优成功率 $0.9760$ 与保留双标记后的整体迹距离 $T_{\mathrm{all}} \approx 0.7065 \le 0.8$。
-- **经典马尔可夫链与 XOR 条件互信息**：运行[条件互信息验算脚本](../codes/algorithms/round71_checks.py)（命令 `python3 codes/algorithms/round71_checks.py 13`），从两张联合概率表直接边缘化求各子系统熵，核验 $I(A:C\mid B) = 0$ 与 XOR 的 $I(A:C\mid B) = 1 > I(A:C) = 0$。
-- **经典阴影插件纯度偏差与 $U$ 统计量穷举**：运行[插件纯度偏差验算脚本](../codes/algorithms/round72_checks.py)（命令 `python3 codes/algorithms/round72_checks.py 13`），对 $N = 6$ 轮抽样按二项分布穷举全部结果，核验插件均值 $7/6$ 与交叉乘积无偏均值 $1$。
-- **反计算残余纠缠与计算基同分布反例**：运行[非对角退相干验算脚本](../codes/algorithms/round73_checks.py)（命令 `python3 codes/algorithms/round73_checks.py 13`），从偏迹密度矩阵与纯态重叠两条路径独立复算纯度 $0.6928$、平方重叠 $0.808$、根保真度 $0.8989$ 与 $X$ 期望衰减。
+- **经典马尔可夫链与 XOR 条件互信息**：运行[条件互信息验算脚本](../codes/algorithms/round71_checks.py)（或通过总入口 `python3 codes/run_all.py` 一并执行），从两张联合概率表直接边缘化求各子系统熵，核验 $I(A:C\mid B) = 0$ 与 XOR 的 $I(A:C\mid B) = 1 > I(A:C) = 0$。
+- **经典阴影插件纯度偏差与 $U$ 统计量穷举**：运行[插件纯度偏差验算脚本](../codes/algorithms/round72_checks.py)，对 $N = 6$ 轮抽样按二项分布穷举全部结果，核验插件均值 $7/6$ 与交叉乘积无偏均值 $1$。
+- **反计算残余纠缠与计算基同分布反例**：运行[非对角退相干验算脚本](../codes/algorithms/round73_checks.py)，从偏迹密度矩阵与纯态重叠两条路径独立复算纯度 $0.6928$、平方重叠 $0.808$、根保真度 $0.8989$ 与 $X$ 期望衰减。
 
 ### 参考资料
 
@@ -1648,10 +1681,10 @@ flowchart TD
 - M. M. Wilde, *Quantum Information Theory*, 2nd ed.（Cambridge Univ. Press, 2017；[arXiv:1106.1445](https://arxiv.org/abs/1106.1445)），Ch. 9、Ch. 11、Ch. 12、Ch. 14：von Neumann 熵、Schumacher 压缩、量子状态合并、Holevo 界与近似恢复的系统教材（阅读时注意其采用平方保真度）。
 - C. E. Shannon, *Bell Syst. Tech. J.* **27**, 379–423, 623–656 (1948)；B. Schumacher, “Quantum coding,” *Phys. Rev. A* **51**, 2738–2747 (1995)；M. Fannes, *Commun. Math. Phys.* **31**, 291–294 (1973) 与 K. M. R. Audenaert, *J. Phys. A* **40**, 8127 (2007)：无损压缩极限与熵连续性界。
 - H. Araki & E. H. Lieb, *Commun. Math. Phys.* **18**, 160–170 (1970)；D. Slepian & J. K. Wolf, *IEEE Trans. Inf. Theory* **19**, 471–480 (1973)；M. Horodecki, J. Oppenheim & A. Winter, “Partial quantum information,” *Nature* **436**, 673–676 (2005)，DOI：[10.1038/nature03909](https://doi.org/10.1038/nature03909)（完整证明见 *Commun. Math. Phys.* **269**, 107–136, 2007）；C. H. Bennett 等，*Phys. Rev. A* **53**, 2046–2052 (1996)：Araki–Lieb 不等式、经典与量子状态合并及纯态纠缠浓缩。
-- O. Klein, *Z. Phys.* **72**, 767 (1931)；H. Umegaki, *Kodai Math. Sem. Rep.* **14**, 59–85 (1962)；M. S. Pinsker, *Information and Information Stability of Random Variables and Processes* (1964) 与 F. Hiai, M. Ohya & M. Tsukada, *Pacific J. Math.* **96**, 99–109 (1981)；G. Lindblad, *Commun. Math. Phys.* **40**, 147–151 (1975)；A. Uhlmann, *Commun. Math. Phys.* **54**, 21–32 (1977)；D. Petz, *Q. J. Math.* **39**, 97–108 (1988) 与 [arXiv:quant-ph/0209053](https://arxiv.org/abs/quant-ph/0209053) (2002)：量子相对熵、Pinsker、Umegaki DPI 与 Petz 恢复映射。
+- O. Klein, *Z. Phys.* **72**, 767 (1931)；H. Umegaki, *Kodai Math. Sem. Rep.* **14**, 59–85 (1962)；M. S. Pinsker, *Information and Information Stability of Random Variables and Processes* (1964) 与 F. Hiai, M. Ohya & M. Tsukada, *Pacific J. Math.* **96**, 99–109 (1981)；G. Lindblad, *Commun. Math. Phys.* **40**, 147–151 (1975)；A. Uhlmann, *Commun. Math. Phys.* **54**, 21–32 (1977)；D. Petz, *Q. J. Math.* **39**, 97–108 (1988) 与 [arXiv:quant-ph/0209053](https://arxiv.org/abs/quant-ph/0209053) (2002)；F. Brandão, M. Horodecki, N. Ng, J. Oppenheim & S. Wehner, *The second laws of quantum thermodynamics*, *PNAS* **112**, 3275–3279 (2015)：量子相对熵、Pinsker、Umegaki DPI、Petz 恢复映射与量子热力学资源论。
 - M. Müller-Lennert 等，*J. Math. Phys.* **54**, 122203 (2013)；M. M. Wilde, A. Winter & D. Yang, *Commun. Math. Phys.* **331**, 593–622 (2014)；R. L. Frank & E. H. Lieb, *J. Math. Phys.* **54**, 122201 (2013)：夹心量子 Rényi 散度与广义数据处理不等式。
 - C. W. Helstrom, *Quantum Detection and Estimation Theory*（Academic Press, 1976）；A. S. Holevo, *Probl. Inf. Transm.* **9**, 177–183 (1973) 与 *IEEE Trans. Inf. Theory* **44**, 269–273 (1998)；B. Schumacher & M. D. Westmoreland, *Phys. Rev. A* **56**, 131–138 (1997)；L. B. Levitin, in *Quantum Communications and Measurement*, pp. 439–448 (1995)；M. B. Ruskai, *J. Math. Phys.* **43**, 4358–4375 (2002), [arXiv:quant-ph/0205064](https://arxiv.org/abs/quant-ph/0205064)：最优判别、Holevo 界、HSW 编码定理与等号条件。
 - I. D. Ivanovic, *Phys. Lett. A* **123**, 257–259 (1987)；D. Dieks, *Phys. Lett. A* **126**, 303–306 (1988)；A. Peres, *Phys. Lett. A* **128**, 19 (1988)；G. Jaeger & A. Shimony, *Phys. Lett. A* **197**, 83–87 (1995)；A. Chefles, *Phys. Lett. A* **239**, 339–347 (1998)；C. A. Fuchs & J. van de Graaf, *IEEE Trans. Inf. Theory* **45**(4), 1216–1227 (1999)：无歧义态判别与 Fuchs–van de Graaf 双向不等式。
 - H. Barnum, C. M. Caves, C. A. Fuchs, R. Jozsa & B. Schumacher, *Phys. Rev. Lett.* **76**, 2818 (1996)；A. Kalev & I. Hen, *Phys. Rev. Lett.* **100**, 210502 (2008)；E. H. Lieb & M. B. Ruskai, *J. Math. Phys.* **14**, 1938–1941 (1973)；P. Hayden, R. Jozsa, D. Petz & A. Winter, *Commun. Math. Phys.* **246**, 359–374 (2004)；O. Fawzi & R. Renner, *Commun. Math. Phys.* **340**, 575–611 (2015)：无广播定理、SSA、量子马尔可夫链与近似恢复界。
-- R. Renner, *Security of Quantum Key Distribution*（PhD Thesis, ETH Zurich, 2005，[arXiv:quant-ph/0512258](https://arxiv.org/abs/quant-ph/0512258)）；R. König, R. Renner & C. Schaffner, *IEEE Trans. Inf. Theory* **55**, 4337–4347 (2009)；M. Tomamichel, R. Colbeck & R. Renner, *IEEE Trans. Inf. Theory* **55**, 5840–5847 (2009)；M. Berta 等，*Nature Physics* **6**, 659–662 (2010)；M. Tomamichel & R. Renner, *Phys. Rev. Lett.* **106**, 110506 (2011)；M. Tomamichel, *Quantum Information Processing with Finite Resources*（Springer, 2016，[arXiv:1504.00233](https://arxiv.org/abs/1504.00233)）：平滑最小/最大熵、量子剩磁哈希引理与带量子存储的熵不确定关系。
+- R. Renner, *Security of Quantum Key Distribution*（PhD Thesis, ETH Zurich, 2005，[arXiv:quant-ph/0512258](https://arxiv.org/abs/quant-ph/0512258)）；R. König, R. Renner & C. Schaffner, *IEEE Trans. Inf. Theory* **55**, 4337–4347 (2009)；M. Tomamichel, R. Colbeck & R. Renner, *IEEE Trans. Inf. Theory* **55**, 5840–5847 (2009)；M. Berta 等，*Nature Physics* **6**, 659–662 (2010)；M. Tomamichel & R. Renner, *Phys. Rev. Lett.* **106**, 110506 (2011)；M. Tomamichel, *Quantum Information Processing with Finite Resources*（Springer, 2016，[arXiv:1504.00233](https://arxiv.org/abs/1504.00233)）：平滑最小/最大熵、量子剩余哈希引理与带量子存储的熵不确定关系。
 - W. Dür, G. Vidal & J. I. Cirac, *Phys. Rev. A* **62**, 062314 (2000)；M. Christandl & A. Winter, *J. Math. Phys.* **45**, 829–840 (2004)；M. Koashi & A. Winter, *Phys. Rev. A* **69**, 022309 (2004)；H.-Y. Huang, R. Kueng & J. Preskill, *Nature Physics* **16**, 1050–1057 (2020)，[arXiv:2002.08953](https://arxiv.org/abs/2002.08953)：三比特纠缠分类、压扁纠缠单配性与经典阴影理论。

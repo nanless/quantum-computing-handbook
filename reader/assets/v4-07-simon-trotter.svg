@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
+  <title id="title">Simon 异或陪集结构与 Trotter 误差双对数缩放曲线</title>
+  <desc id="desc">左面板展示 Simon 算法中隐藏串 s = 101 将 8 个 3 比特输入配成 4 组异或陪集，并经 H⊗³ 干涉滤出正交子空间 {000, 010, 101, 111}；右面板在双对数坐标下实算 H = X + Z (t = 1) 的一阶与二阶对称 Trotter 谱范数误差，验证斜率 −1 与 −2 缩放规律。</desc>
+  <style>
+:root{color-scheme:light}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#FAF8F3}
+.panel{fill:#ffffff;stroke:#d4cfc3;stroke-width:1.35}
+.subpanel{fill:#f5f2ea;stroke:#d8d3c6;stroke-width:1.15}
+.phead{fill:#edf3ef}
+.title{font-size:18.5px;font-weight:700;fill:#14453d}
+.subtitle{font-size:12.5px;font-weight:400;fill:#4a5f59}
+.sec{font-size:13.8px;font-weight:700;fill:#14453d}
+.lbl{font-size:12.5px;font-weight:500;fill:#1f3832}
+.lblb{font-size:12.5px;font-weight:700;fill:#122b25}
+.sm{font-size:12px;font-weight:400;fill:#435852}
+.smb{font-size:12px;font-weight:600;fill:#1b332d}
+.xs{font-size:11.5px;font-weight:500;fill:#485e58}
+.xsb{font-size:11.5px;font-weight:700;fill:#19312b}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:700;fill:#122b25}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:12.5px;font-weight:700;fill:#122b25}
+.axis{stroke:#243d37;stroke-width:1.6;fill:none}
+.axis-fill{fill:#243d37}
+.wire{stroke:#243d37;stroke-width:1.8;fill:none}
+.cwire{stroke:#5a706a;stroke-width:1.35;fill:none}
+.ctrl{fill:#14453d}
+.targ{fill:#ffffff;stroke:#14453d;stroke-width:1.9}
+.grid{stroke:#e3ded2;stroke-width:1;fill:none}
+.guide{stroke:#7e928c;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#687f78;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1f5a92;fill:none}
+.c1-fill{fill:#1f5a92}
+.c1-txt{fill:#174775}
+.c1-soft{fill:#e6f0fa;stroke:#1f5a92;stroke-width:1.4}
+.c2{stroke:#b3542d;fill:none}
+.c2-fill{fill:#b3542d}
+.c2-txt{fill:#96411e}
+.c2-soft{fill:#fbeae3;stroke:#b3542d;stroke-width:1.4}
+.c3{stroke:#14453d;fill:none}
+.c3-fill{fill:#14453d}
+.c3-txt{fill:#14453d}
+.c3-soft{fill:#e3f2ec;stroke:#14453d;stroke-width:1.4}
+.c4{stroke:#b07016;fill:none}
+.c4-fill{fill:#b07016}
+.c4-txt{fill:#8a550c}
+.c4-soft{fill:#fcf2db;stroke:#b07016;stroke-width:1.4}
+.c5{stroke:#644696;fill:none}
+.c5-fill{fill:#644696}
+.c5-txt{fill:#4e347a}
+.c5-soft{fill:#f0eaf9;stroke:#644696;stroke-width:1.4}
+.note{fill:#fdf6e6;stroke:#c89232;stroke-width:1.25}
+.pill{fill:#f4f0e6;stroke:#b7b0a2;stroke-width:1.15}
+.pill-bg{fill:#FAF8F3;fill-opacity:.95;stroke:#b7b0a2;stroke-width:1.1}
+.area1{fill:#1f5a92;fill-opacity:.13}
+.area2{fill:#b3542d;fill-opacity:.14}
+.area3{fill:#14453d;fill-opacity:.13}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.cc-r{fill:#b3542d;fill-opacity:.23;stroke:#b3542d;stroke-width:1.5}
+.cc-g{fill:#1c7a5e;fill-opacity:.22;stroke:#14453d;stroke-width:1.5}
+.cc-b{fill:#1f5a92;fill-opacity:.22;stroke:#1f5a92;stroke-width:1.5}
+.qnode{fill:#ffffff;stroke:#14453d;stroke-width:1.6}
+.qnode-err{fill:#b3542d;stroke:#ffffff;stroke-width:1.8}
+.qnode-hi{fill:#14453d;stroke:#ffffff;stroke-width:1.6}
+
+  </style>
+  <rect class="bg" width="960" height="460" rx="16"/>
+  <text class="title" x="22" y="34">Simon 异或陪集干涉结构与 Suzuki–Trotter 误差双对数标度</text>
+  <text class="subtitle" x="22" y="54">左：Simon 隐藏串 s = 101 将输入两两配对并在 H⊗³ 下滤出正交子空间 s⊥；右：一阶 vs 二阶对称 Trotter 实算误差</text>
+  <rect class="panel" x="20.0" y="68.0" width="444.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 32.0 69.0 H 452.0 Q 463.0 69.0 463.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
+  <line class="grid" x1="21.0" y1="99.0" x2="463.0" y2="99.0"/>
+  <text class="sec" x="33.0" y="89.5">1. Simon 异或陪集配对（隐藏串 s = 101）</text>
+  <text class="xsb" x="34" y="121">2-to-1 承诺 f(x) = f(x ⊕ 101)：8 输入配成 4 组异或陪集</text>
+  <rect class="c3-soft" x="34" y="132" width="176" height="40" rx="8"/>
+  <text class="smb c3-txt" x="66" y="156" text-anchor="middle">000</text>
+  <text class="xs c3-txt" x="122" y="156" text-anchor="middle">↔ ⊕101 ↔</text>
+  <text class="smb c3-txt" x="178" y="156" text-anchor="middle">101</text>
+  <line class="c3" stroke-width="1.70" x1="212.00" y1="152.00" x2="236.15" y2="152.00"/>
+  <polygon class="c3-fill" points="240.00,152.00 233.00,155.20 233.00,148.80"/>
+  <rect class="pill" x="242" y="137" width="40" height="30" rx="7"/>
+  <text class="smb c3-txt" x="262" y="156" text-anchor="middle">y₀</text>
+  <rect class="c1-soft" x="34" y="180" width="176" height="40" rx="8"/>
+  <text class="smb c1-txt" x="66" y="204" text-anchor="middle">001</text>
+  <text class="xs c1-txt" x="122" y="204" text-anchor="middle">↔ ⊕101 ↔</text>
+  <text class="smb c1-txt" x="178" y="204" text-anchor="middle">100</text>
+  <line class="c1" stroke-width="1.70" x1="212.00" y1="200.00" x2="236.15" y2="200.00"/>
+  <polygon class="c1-fill" points="240.00,200.00 233.00,203.20 233.00,196.80"/>
+  <rect class="pill" x="242" y="185" width="40" height="30" rx="7"/>
+  <text class="smb c1-txt" x="262" y="204" text-anchor="middle">y₁</text>
+  <rect class="c4-soft" x="34" y="228" width="176" height="40" rx="8"/>
+  <text class="smb c4-txt" x="66" y="252" text-anchor="middle">010</text>
+  <text class="xs c4-txt" x="122" y="252" text-anchor="middle">↔ ⊕101 ↔</text>
+  <text class="smb c4-txt" x="178" y="252" text-anchor="middle">111</text>
+  <line class="c4" stroke-width="1.70" x1="212.00" y1="248.00" x2="236.15" y2="248.00"/>
+  <polygon class="c4-fill" points="240.00,248.00 233.00,251.20 233.00,244.80"/>
+  <rect class="pill" x="242" y="233" width="40" height="30" rx="7"/>
+  <text class="smb c4-txt" x="262" y="252" text-anchor="middle">y₂</text>
+  <rect class="c2-soft" x="34" y="276" width="176" height="40" rx="8"/>
+  <text class="smb c2-txt" x="66" y="300" text-anchor="middle">011</text>
+  <text class="xs c2-txt" x="122" y="300" text-anchor="middle">↔ ⊕101 ↔</text>
+  <text class="smb c2-txt" x="178" y="300" text-anchor="middle">110</text>
+  <line class="c2" stroke-width="1.70" x1="212.00" y1="296.00" x2="236.15" y2="296.00"/>
+  <polygon class="c2-fill" points="240.00,296.00 233.00,299.20 233.00,292.80"/>
+  <rect class="pill" x="242" y="281" width="40" height="30" rx="7"/>
+  <text class="smb c2-txt" x="262" y="300" text-anchor="middle">y₃</text>
+  <rect class="c3-soft" x="294" y="132" width="156" height="92" rx="9"/>
+  <text class="xsb c3-txt" x="372" y="151" text-anchor="middle">H⊗³ 相长干涉 (z·s = 0)</text>
+  <text class="xs" x="372" y="170" text-anchor="middle">满足 z₁ ⊕ z₃ = 0：</text>
+  <text class="xsb" x="372" y="191" text-anchor="middle">000, 010, 101, 111</text>
+  <text class="xs c3-txt" x="372" y="212" text-anchor="middle">每项测量概率均为 1/4</text>
+  <rect class="subpanel" x="294" y="234" width="156" height="86" rx="9"/>
+  <text class="xsb c2-txt" x="372" y="253" text-anchor="middle">H⊗³ 相消干涉 (z·s = 1)</text>
+  <text class="xs" x="372" y="272" text-anchor="middle">满足 z₁ ⊕ z₃ = 1：</text>
+  <text class="xs" x="372" y="291" text-anchor="middle">001, 011, 100, 110</text>
+  <text class="xs c2-txt" x="372" y="310" text-anchor="middle">正负振幅抵消，概率 = 0</text>
+  <rect class="subpanel" x="34" y="332" width="416" height="62" rx="9"/>
+  <text class="xsb c1-txt" x="46" y="352">经典 F₂ 线性方程恢复（仅需 n−1 = 2 个线性独立样本）：</text>
+  <text class="xs" x="46" y="372">测得 010 ⇒ s₂ = 0；测得 101 ⇒ s₁ ⊕ s₃ = 0；结合 s ≠ 000 得 s = 101</text>
+  <text class="xs" x="46" y="388">（量子干涉把指数搜索变成多项式线性消元）</text>
+  <rect class="note" x="34.0" y="404.0" width="416.0" height="30.0" rx="8"/>
+  <text class="xsb" x="242.0" y="423.2" text-anchor="middle">量子仅需 O(n) 次查询；经典生日碰撞下界 Ω(2^(n/2))（指数分离）</text>
+  <rect class="panel" x="478.0" y="68.0" width="462.0" height="376.0" rx="12.0"/>
+  <path class="phead" d="M 490.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 479.0 V 80.0 Q 479.0 69.0 490.0 69.0 Z"/>
+  <line class="grid" x1="479.0" y1="99.0" x2="939.0" y2="99.0"/>
+  <text class="sec" x="491.0" y="89.5">2. 一阶 vs 二阶 Trotter 双对数误差（H = X+Z, t = 1）</text>
+  <line class="c2" stroke-width="2.5" x1="504" y1="118" x2="526" y2="118"/>
+  <circle class="c2-fill" cx="515" cy="118" r="3.4"/>
+  <text class="xsb c2-txt" x="532" y="122">一阶 S₁: O(t²/r)</text>
+  <line class="c3" stroke-width="2.5" x1="650" y1="118" x2="672" y2="118"/>
+  <rect class="c3-fill" x="658" y="115" width="6.5" height="6.5" rx="1"/>
+  <text class="xsb c3-txt" x="678" y="122">二阶 S₂: O(t³/r²)</text>
+  <line class="guide" stroke-width="1.6" x1="802" y1="118" x2="826" y2="118"/>
+  <text class="xs" x="832" y="122">上界 t²/r</text>
+  <line class="grid" x1="548.0" y1="146.2" x2="922.0" y2="146.2"/>
+  <text class="xs" x="540.0" y="150.2" text-anchor="end">10⁰</text>
+  <line class="grid" x1="548.0" y1="187.4" x2="922.0" y2="187.4"/>
+  <text class="xs" x="540.0" y="191.4" text-anchor="end">10⁻¹</text>
+  <line class="grid" x1="548.0" y1="228.5" x2="922.0" y2="228.5"/>
+  <text class="xs" x="540.0" y="232.5" text-anchor="end">10⁻²</text>
+  <line class="grid" x1="548.0" y1="269.7" x2="922.0" y2="269.7"/>
+  <text class="xs" x="540.0" y="273.7" text-anchor="end">10⁻³</text>
+  <line class="grid" x1="548.0" y1="310.8" x2="922.0" y2="310.8"/>
+  <text class="xs" x="540.0" y="314.8" text-anchor="end">10⁻⁴</text>
+  <line class="grid" x1="548.0" y1="352.0" x2="922.0" y2="352.0"/>
+  <text class="xs" x="540.0" y="356.0" text-anchor="end">10⁻⁵</text>
+  <line class="grid" x1="548.0" y1="138.0" x2="548.0" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="548.0" y1="352.0" x2="548.0" y2="357.0"/>
+  <text class="xs" x="548.0" y="371.0" text-anchor="middle">1</text>
+  <line class="grid" x1="604.3" y1="138.0" x2="604.3" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="604.3" y1="352.0" x2="604.3" y2="357.0"/>
+  <text class="xs" x="604.3" y="371.0" text-anchor="middle">2</text>
+  <line class="grid" x1="660.6" y1="138.0" x2="660.6" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="660.6" y1="352.0" x2="660.6" y2="357.0"/>
+  <text class="xs" x="660.6" y="371.0" text-anchor="middle">4</text>
+  <line class="grid" x1="735.0" y1="138.0" x2="735.0" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="735.0" y1="352.0" x2="735.0" y2="357.0"/>
+  <text class="xs" x="735.0" y="371.0" text-anchor="middle">10</text>
+  <line class="grid" x1="791.3" y1="138.0" x2="791.3" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="791.3" y1="352.0" x2="791.3" y2="357.0"/>
+  <text class="xs" x="791.3" y="371.0" text-anchor="middle">20</text>
+  <line class="grid" x1="865.7" y1="138.0" x2="865.7" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="865.7" y1="352.0" x2="865.7" y2="357.0"/>
+  <text class="xs" x="865.7" y="371.0" text-anchor="middle">50</text>
+  <line class="grid" x1="922.0" y1="138.0" x2="922.0" y2="352.0"/>
+  <line class="axis" stroke-width="1.2" x1="922.0" y1="352.0" x2="922.0" y2="357.0"/>
+  <text class="xs" x="922.0" y="371.0" text-anchor="middle">100</text>
+  <path class="guide" stroke-width="1.6" d="M 548.00 146.23 L 922.00 228.54"/>
+  <path class="c2" stroke-width="2.5" d="M 548.00 150.24 L 604.29 164.37 L 660.59 177.25 L 716.88 189.77 L 773.17 202.19 L 829.46 214.59 L 885.76 226.98 L 922.00 234.95"/>
+  <path class="c3" stroke-width="2.6" d="M 548.00 166.95 L 604.29 193.47 L 660.59 218.77 L 716.88 243.68 L 773.17 268.49 L 829.46 293.28 L 885.76 318.06 L 922.00 334.01"/>
+  <circle class="c2-fill" cx="548.0" cy="150.2" r="3.6"/>
+  <circle class="c2-fill" cx="604.3" cy="164.4" r="3.6"/>
+  <circle class="c2-fill" cx="660.6" cy="177.3" r="3.6"/>
+  <circle class="c2-fill" cx="716.9" cy="189.8" r="3.6"/>
+  <circle class="c2-fill" cx="773.2" cy="202.2" r="3.6"/>
+  <circle class="c2-fill" cx="829.5" cy="214.6" r="3.6"/>
+  <circle class="c2-fill" cx="885.8" cy="227.0" r="3.6"/>
+  <circle class="c2-fill" cx="922.0" cy="235.0" r="3.6"/>
+  <rect class="c3-fill" x="544.7" y="163.7" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="601.0" y="190.2" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="657.3" y="215.5" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="713.6" y="240.4" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="769.9" y="265.2" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="826.2" y="290.0" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="882.5" y="314.8" width="6.6" height="6.6" rx="1"/>
+  <rect class="c3-fill" x="918.7" y="330.7" width="6.6" height="6.6" rx="1"/>
+  <rect class="axis" stroke-width="1.4" x="548.0" y="138.0" width="374.0" height="214.0"/>
+  <text class="smb" x="735.0" y="391" text-anchor="middle">Trotter 切片步数 r（对数坐标）</text>
+  <text class="smb" x="496" y="245" transform="rotate(-90 496 245)" text-anchor="middle">算符谱范数误差 ‖e⁻ⁱᴴᵗ − S_p‖₂</text>
+  <rect class="pill-bg" x="742" y="145" width="170" height="42" rx="7"/>
+  <text class="xsb c2-txt" x="827" y="163" text-anchor="middle">一阶 S₁ 实测斜率 -1.00</text>
+  <text class="xs" x="827" y="179" text-anchor="middle">紧贴对易子上界 t²/r</text>
+  <rect class="pill-bg" x="556" y="286" width="186" height="58" rx="7"/>
+  <text class="xsb c3-txt" x="649" y="304" text-anchor="middle">二阶 S₂ 实测斜率 -2.00</text>
+  <text class="xs" x="649" y="321" text-anchor="middle">r=16: S₁≈0.044, S₂≈0.0011</text>
+  <text class="xsb c1-txt" x="649" y="338" text-anchor="middle">r=100 精度提升 255×</text>
+  <rect class="note" x="492.0" y="404.0" width="434.0" height="30.0" rx="8"/>
+  <text class="xsb" x="709.0" y="423.2" text-anchor="middle">S₂ 合并相邻半步仅需 2r+1 门（相对 S₁ 的 2r 仅多 1 门），误差跃升一阶</text>
+</svg>

@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-11-ftqc-resource-budget-title v3-11-ftqc-resource-budget-desc">
+  <title id="v3-11-ftqc-resource-budget-title">表面码指数压错与 RSA-2048 容错资源演进分解</title>
+  <desc id="v3-11-ftqc-resource-budget-desc">左面板绘出表面码逻辑错率随码距 d=3..31 的指数压制曲线并标注 Willow 实测与 10^-10 门槛；右面板线性对比 Gidney-Ekera 2021 的 2000 万物理比特与 Gidney 2025 的 897,864 物理比特并放大拆解冷存储、热存储与计算培育三区占比。</desc>
+  <style>
+    :root{color-scheme:dark}
+    .bg{fill:#f8fafc}
+    .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
+    .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
+    .pill{fill:#ffffff;fill-opacity:.96;stroke:#8fa6ba;stroke-width:1.2}
+    .ink{fill:#13263a}
+    .muted{fill:#496176}
+    .accent{fill:#0e6b8a}
+    .warn{fill:#b93c3c}
+    .gold{fill:#9c6510}
+    .purple{fill:#5b42a6}
+    .green{fill:#1d7557}
+    .axis{stroke:#2b465e;stroke-width:1.6;fill:none}
+    .axishead{fill:#2b465e}
+    .grid{stroke:#dce6ef;stroke-width:1;stroke-dasharray:4 4;fill:none}
+    .divider{stroke:#c6d5e2;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+    .s-accent{stroke:#0e6b8a;fill:none}
+    .s-warn{stroke:#c04040;fill:none}
+    .s-gold{stroke:#a8640b;fill:none}
+    .s-purple{stroke:#5b42a6;fill:none}
+    .s-green{stroke:#1d7557;fill:none}
+    .s-muted{stroke:#688299;fill:none}
+    .f-accent{fill:#bae6fd;fill-opacity:.48;stroke:#0e6b8a;stroke-width:1.8}
+    .f-warn{fill:#fecaca;fill-opacity:.50;stroke:#c04040;stroke-width:1.8}
+    .f-gold{fill:#fde68a;fill-opacity:.52;stroke:#a8640b;stroke-width:1.8}
+    .f-purple{fill:#ddd6fe;fill-opacity:.50;stroke:#5b42a6;stroke-width:1.8}
+    .f-green{fill:#bbf7d0;fill-opacity:.50;stroke:#1d7557;stroke-width:1.8}
+    .b-accent{fill:#0e6b8a;fill-opacity:.82;stroke:#0a5068;stroke-width:1.4}
+    .b-warn{fill:#c04040;fill-opacity:.82;stroke:#962b2b;stroke-width:1.4}
+    .b-gold{fill:#c47a14;fill-opacity:.82;stroke:#8f5609;stroke-width:1.4}
+    .b-purple{fill:#6448b5;fill-opacity:.82;stroke:#483287;stroke-width:1.4}
+    .b-green{fill:#1d7557;fill-opacity:.82;stroke:#13543e;stroke-width:1.4}
+    .wire{stroke:#1d3b54;stroke-width:2.0;fill:none}
+    .ctrl{fill:#13263a}
+    .dot-ring{stroke:#ffffff;stroke-width:1.5}
+    .title{font:700 19.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .subtitle{font:400 13.2px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .h2{font:600 14px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .lbl{font:500 12.8px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .sm{font:400 12px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .xs{font:400 11px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
+    .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
+    
+    
+.bg{fill:#101820}
+      .card{fill:#162330;stroke:#395066}
+      .subcard{fill:#1d2e3d;stroke:#3d566d}
+      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
+      .ink{fill:#eef6ff}
+      .muted{fill:#b4c8da}
+      .accent{fill:#6ed0f7}
+      .warn{fill:#ff8585}
+      .gold{fill:#f2c15a}
+      .purple{fill:#c0adff}
+      .green{fill:#6dd4aa}
+      .axis{stroke:#b9d0e2}
+      .axishead{fill:#b9d0e2}
+      .grid{stroke:#304659}
+      .divider{stroke:#4a637a}
+      .s-accent{stroke:#6ed0f7}
+      .s-warn{stroke:#ff8585}
+      .s-gold{stroke:#f2c15a}
+      .s-purple{stroke:#c0adff}
+      .s-green{stroke:#6dd4aa}
+      .s-muted{stroke:#8ca5ba}
+      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
+      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
+      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
+      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
+      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
+      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
+      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
+      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
+      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
+      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
+      .wire{stroke:#c9deee}
+      .ctrl{fill:#eef6ff}
+      .dot-ring{stroke:#162330}
+
+  </style>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title ink" x="34" y="44">表面码逻辑错率指数压制与 RSA-2048 容错资源演进</text>
+  <text class="subtitle muted" x="34" y="68">左：ε<tspan dy="3" font-size="9.2">L</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.1(p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>)<tspan dy="-4.5" font-size="9.2">(d+1)/2</tspan><tspan dy="4.5">&#8203;</tspan> 随码距 d=3–31 压错曲线与 Willow 实测；右：Gidney 2021 vs 2025 三区物理比特分解</text>
+  <rect class="card" x="32" y="84" width="456" height="446" rx="12"/>
+  <text class="h2 ink" x="48" y="108">(a) 表面码指数压错（d = 3–31）</text>
+  <line class="grid" x1="104.0" y1="128.0" x2="104.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="104.0" y1="442.0" x2="104.0" y2="447.0"/>
+  <text class="xs ink" x="104.0" y="461.0" text-anchor="middle">3</text>
+  <line class="grid" x1="156.0" y1="128.0" x2="156.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="156.0" y1="442.0" x2="156.0" y2="447.0"/>
+  <text class="xs ink" x="156.0" y="461.0" text-anchor="middle">7</text>
+  <line class="grid" x1="208.0" y1="128.0" x2="208.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="208.0" y1="442.0" x2="208.0" y2="447.0"/>
+  <text class="xs ink" x="208.0" y="461.0" text-anchor="middle">11</text>
+  <line class="grid" x1="260.0" y1="128.0" x2="260.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="260.0" y1="442.0" x2="260.0" y2="447.0"/>
+  <text class="xs ink" x="260.0" y="461.0" text-anchor="middle">15</text>
+  <line class="grid" x1="312.0" y1="128.0" x2="312.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="312.0" y1="442.0" x2="312.0" y2="447.0"/>
+  <text class="xs ink" x="312.0" y="461.0" text-anchor="middle">19</text>
+  <line class="grid" x1="364.0" y1="128.0" x2="364.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="364.0" y1="442.0" x2="364.0" y2="447.0"/>
+  <text class="xs ink" x="364.0" y="461.0" text-anchor="middle">23</text>
+  <line class="grid" x1="416.0" y1="128.0" x2="416.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="416.0" y1="442.0" x2="416.0" y2="447.0"/>
+  <text class="xs ink" x="416.0" y="461.0" text-anchor="middle">27</text>
+  <line class="grid" x1="468.0" y1="128.0" x2="468.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="468.0" y1="442.0" x2="468.0" y2="447.0"/>
+  <text class="xs ink" x="468.0" y="461.0" text-anchor="middle">31</text>
+  <line class="grid" x1="104.0" y1="128.0" x2="468.0" y2="128.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="128.0" x2="104.0" y2="128.0"/>
+  <text class="xs ink" x="95.0" y="132.0" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-1</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="104.0" y1="190.8" x2="468.0" y2="190.8"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="190.8" x2="104.0" y2="190.8"/>
+  <text class="xs ink" x="95.0" y="194.8" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="104.0" y1="253.6" x2="468.0" y2="253.6"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="253.6" x2="104.0" y2="253.6"/>
+  <text class="xs ink" x="95.0" y="257.6" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-7</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="104.0" y1="316.4" x2="468.0" y2="316.4"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="316.4" x2="104.0" y2="316.4"/>
+  <text class="xs ink" x="95.0" y="320.4" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-10</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="104.0" y1="379.2" x2="468.0" y2="379.2"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="379.2" x2="104.0" y2="379.2"/>
+  <text class="xs ink" x="95.0" y="383.2" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-13</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="104.0" y1="442.0" x2="468.0" y2="442.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="99.0" y1="442.0" x2="104.0" y2="442.0"/>
+  <text class="xs ink" x="95.0" y="446.0" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">-16</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="s-gold" style="stroke-width:1.6;stroke-dasharray:6 4" x1="104.0" y1="316.4" x2="468.0" y2="316.4"/>
+  <text class="xs gold" style="font-weight:700" x="112.0" y="331.4">10<tspan dy="-4.5" font-size="9.2">-10</tspan><tspan dy="4.5">&#8203;</tspan> 实用算法门槛</text>
+  <line class="s-warn" style="stroke-width:2.0;stroke-dasharray:5 4" x1="104.0" y1="129.5" x2="468.0" y2="129.5"/>
+  <text class="xs warn" style="font-weight:600" x="462.0" y="144.0" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=1（Λ=1，不降反增边界）</text>
+  <path class="s-purple" style="stroke-width:2.5;stroke-dasharray:6 4" d="M104.00 141.83L130.00 148.75L156.00 155.67L182.00 162.58L208.00 169.50L234.00 176.42L260.00 183.33L286.00 190.25L312.00 197.17L338.00 204.08L364.00 211.00L390.00 217.92L416.00 224.83L442.00 231.75L468.00 238.67"/>
+  <circle class="purple dot-ring" cx="104.0" cy="141.8" r="3.0"/>
+  <circle class="purple dot-ring" cx="156.0" cy="155.7" r="3.0"/>
+  <circle class="purple dot-ring" cx="208.0" cy="169.5" r="3.0"/>
+  <circle class="purple dot-ring" cx="260.0" cy="183.3" r="3.0"/>
+  <circle class="purple dot-ring" cx="312.0" cy="197.2" r="3.0"/>
+  <circle class="purple dot-ring" cx="364.0" cy="211.0" r="3.0"/>
+  <circle class="purple dot-ring" cx="416.0" cy="224.8" r="3.0"/>
+  <circle class="purple dot-ring" cx="468.0" cy="238.7" r="3.0"/>
+  <path class="s-accent" style="stroke-width:2.5;stroke-dasharray:7 3 2 3" d="M104.00 157.26L130.00 171.90L156.00 186.53L182.00 201.16L208.00 215.79L234.00 230.42L260.00 245.05L286.00 259.69L312.00 274.32L338.00 288.95L364.00 303.58L390.00 318.21L416.00 332.84L442.00 347.48L468.00 362.11"/>
+  <circle class="accent dot-ring" cx="104.0" cy="157.3" r="3.0"/>
+  <circle class="accent dot-ring" cx="156.0" cy="186.5" r="3.0"/>
+  <circle class="accent dot-ring" cx="208.0" cy="215.8" r="3.0"/>
+  <circle class="accent dot-ring" cx="260.0" cy="245.1" r="3.0"/>
+  <circle class="accent dot-ring" cx="312.0" cy="274.3" r="3.0"/>
+  <circle class="accent dot-ring" cx="364.0" cy="303.6" r="3.0"/>
+  <circle class="accent dot-ring" cx="416.0" cy="332.8" r="3.0"/>
+  <circle class="accent dot-ring" cx="468.0" cy="362.1" r="3.0"/>
+  <path class="s-green" style="stroke-width:2.5" d="M104.00 169.87L130.00 190.80L156.00 211.73L182.00 232.67L208.00 253.60L234.00 274.53L260.00 295.47L286.00 316.40L312.00 337.33L338.00 358.27L364.00 379.20L390.00 400.13L416.00 421.07L442.00 442.00"/>
+  <circle class="green dot-ring" cx="104.0" cy="169.9" r="3.0"/>
+  <circle class="green dot-ring" cx="156.0" cy="211.7" r="3.0"/>
+  <circle class="green dot-ring" cx="208.0" cy="253.6" r="3.0"/>
+  <circle class="green dot-ring" cx="260.0" cy="295.5" r="3.0"/>
+  <circle class="green dot-ring" cx="312.0" cy="337.3" r="3.0"/>
+  <circle class="green dot-ring" cx="364.0" cy="379.2" r="3.0"/>
+  <circle class="green dot-ring" cx="416.0" cy="421.1" r="3.0"/>
+  <path class="s-purple" style="stroke-width:3.0" d="M104.00 152.67L130.00 159.58L156.00 166.61"/>
+  <path class="b-purple" d="M104.0 147.2L109.5 152.7L104.0 158.2L98.5 152.7Z"/>
+  <path class="b-purple" d="M130.0 154.1L135.5 159.6L130.0 165.1L124.5 159.6Z"/>
+  <path class="b-purple" d="M156.0 161.1L161.5 166.6L156.0 172.1L150.5 166.6Z"/>
+  <line class="s-purple" style="stroke-width:1.4;stroke-dasharray:4 3" x1="156.0" y1="173.0" x2="156.0" y2="352.0"/>
+  <rect class="pill" x="112" y="352" width="176" height="48" rx="7"/>
+  <text class="xs purple" style="font-weight:700" x="122" y="371">Willow 实测 d=3→5→7</text>
+  <text class="xs muted" x="122" y="391">Λ=2.14, ε<tspan dy="3" font-size="9.2">7</tspan><tspan dy="-3">&#8203;</tspan>=0.143%</text>
+  <circle class="f-green" cx="286.0" cy="316.4" r="5.5"/>
+  <circle class="f-accent" cx="390.0" cy="318.2" r="5.5"/>
+  <text class="xs purple" style="font-weight:700" x="462.0" y="254.7" text-anchor="end">Λ = 2.14 模型</text>
+  <text class="xs accent" style="font-weight:700" x="462.0" y="278.7" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.2 (d=25 达标)</text>
+  <text class="xs green" style="font-weight:700" x="406.0" y="424.0" text-anchor="end">p/p<tspan dy="3" font-size="9.2">th</tspan><tspan dy="-3">&#8203;</tspan>=0.1 (d=17 达标)</text>
+  <rect class="axis" x="104.0" y="128.0" width="364.0" height="314.0"/>
+  <text class="lbl ink" x="286.0" y="486.0" text-anchor="middle">表面码码距 d（奇数）</text>
+  <text class="lbl ink" x="50" y="285.0" text-anchor="middle" transform="rotate(-90 50 285.0)">逻辑错误率 ε<tspan dy="3" font-size="9.2">L</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>
+  <text class="xs muted" x="48" y="518">注：Willow 实测含预因子差异与约 10<tspan dy="-4.5" font-size="9.2">-10</tspan><tspan dy="4.5">&#8203;</tspan> 稀有突发底板，不可线性外推。</text>
+  <rect class="card" x="504" y="84" width="464" height="446" rx="12"/>
+  <text class="h2 ink" x="520" y="108">(b) RSA-2048 资源演进（p=10<tspan dy="-4.5" font-size="9.2">-3</tspan><tspan dy="4.5">&#8203;</tspan>, τ<tspan dy="3" font-size="9.2">cyc</tspan><tspan dy="-3">&#8203;</tspan>=1 μs）</text>
+  <text class="xs ink" style="font-weight:600" x="524.0" y="142">Gidney–Ekerå 2021 [同行评审] · d=27 · 约 8 小时</text>
+  <rect class="f-warn" x="524.0" y="150" width="422.0" height="32" rx="6"/>
+  <text class="lbl warn" style="font-weight:700" x="735.0" y="171" text-anchor="middle">约 20,000,000 物理比特（2,000 万）</text>
+  <text class="xs ink" style="font-weight:600" x="524.0" y="206">Gidney 2025 [预印本] · 近似 RNS + 轭联码 + MSC · 约 4.96 天</text>
+  <rect class="b-accent" x="524.0" y="214" width="11.61" height="32"/>
+  <rect class="b-gold" x="535.61" y="214" width="3.74" height="32"/>
+  <rect class="b-green" x="539.35" y="214" width="3.59" height="32"/>
+  <text class="lbl green" style="font-weight:700" x="554.9" y="235">897,864 物理比特（线性尺度压缩 22.3×）</text>
+  <line class="s-muted" style="stroke-width:1.2;stroke-dasharray:4 3" x1="524.0" y1="246" x2="524.0" y2="294"/>
+  <path class="s-muted" style="stroke-width:1.2;stroke-dasharray:4 3" d="M542.9 246V261H946.0V294"/>
+  <text class="xs accent" style="font-weight:600" x="735.0" y="283" text-anchor="middle">放大拆解：Gidney 2025 三区精确占比（总计 897,864）</text>
+  <rect class="f-accent" x="524.0" y="294" width="258.7" height="42" rx="4"/>
+  <rect class="f-gold" x="782.7" y="294" width="83.2" height="42"/>
+  <rect class="f-green" x="865.9" y="294" width="80.1" height="42" rx="4"/>
+  <text class="lbl accent" style="font-weight:700" x="653.3" y="320" text-anchor="middle">冷存储 61.3%</text>
+  <text class="xs gold" style="font-weight:700" x="824.3" y="319" text-anchor="middle">热区 19.7%</text>
+  <text class="xs green" style="font-weight:700" x="906.0" y="319" text-anchor="middle">培育 19.0%</text>
+  <rect class="subcard" x="524.0" y="350" width="422.0" height="148" rx="9"/>
+  <rect class="b-accent" x="538.0" y="365.0" width="12" height="12" rx="3"/>
+  <text class="xs ink" style="font-weight:600" x="558.0" y="376.0">冷存储区（轭联表面码）</text>
+  <text class="xs muted" x="730.0" y="376.0">1,280 槽 × 430</text>
+  <text class="mono ink" x="932.0" y="376.0" text-anchor="end">550,400 (61.3%)</text>
+  <rect class="b-gold" x="538.0" y="397.0" width="12" height="12" rx="3"/>
+  <text class="xs ink" style="font-weight:600" x="558.0" y="408.0">热存储区（d=25 表面码）</text>
+  <text class="xs muted" x="730.0" y="408.0">131 块 × 1,352</text>
+  <text class="mono ink" x="932.0" y="408.0" text-anchor="end">177,112 (19.7%)</text>
+  <rect class="b-green" x="538.0" y="429.0" width="12" height="12" rx="3"/>
+  <text class="xs ink" style="font-weight:600" x="558.0" y="440.0">计算与魔法态培育区 (MSC)</text>
+  <text class="xs muted" x="730.0" y="440.0">126 块 × 1,352</text>
+  <text class="mono ink" x="932.0" y="440.0" text-anchor="end">170,352 (19.0%)</text>
+  <line class="divider" x1="538.0" y1="454" x2="932.0" y2="454"/>
+  <text class="xs ink" style="font-weight:700" x="538.0" y="476">合计 897,864 物理比特（留 ~10% 工程余量概括为 &lt;100 万）</text>
+  <text class="xs muted" x="520" y="518">注：理想均匀去极化理论估算，未含宇宙射线突发与百万级良率。</text>
+  <text class="sm muted" x="34" y="554">注：算法分解、轭联编码与魔法态培育协同带来 22.3× 空间压缩，同时以墙钟时长（8 h → 4.96 d）作时空交换。</text>
+</svg>

@@ -4,7 +4,10 @@
 
 本章做两件彼此咬合的事。前半部分教你如何**量一台量子计算机**：从最底层的单个量子门、全芯片并行门层，一路往上走到系统级线路、应用套件和容错逻辑量子比特，把每把尺子的数学原理、量程和盲区拆给你看。后半部分教你如何**算一本端到端容错资源账**：给你一个算法的逻辑比特数和 $T$ 门数，怎么一步步反推出纠错码距、魔法态工厂或培育池排班、每秒几百吉比特的实时解码带宽，一直算到机房插线板上的兆瓦级功耗。
 
-如果你是第一次读这一章，可以先通读第 1、2、4、6 节，先把统一口径和常见陷阱立起来；第 3 节和第 5 节剖析实验室最常用的基准协议；第 7、8 节涉及表面码和容错开销，搭配[第 09 章](09-hardware.md)与[第 10 章](10-error-correction.md)回看会格外透彻。
+**导读与分层路线**：
+
+- ★ **核心主线（初读必看）**：先通读 §1、§2、§3.1–§3.2、§4.1–§4.2、§5、§6、§7.1–§7.2、§7.4 与 §8，把元件—并行层—系统—逻辑四级评测口径与九步容错资源账本立起来；
+- ☆ **进阶选读（二刷深挖）**：带“进阶选读”标记的 §3.3 门集层析（GST）、§4.3 PEC 采样上限推导、§7.3 实时解码三维约束与 §9 批内漂移统计分析，搭配[第 09 章](09-hardware.md)与[第 10 章](10-error-correction.md)回看效果最佳。
 
 ---
 
@@ -402,13 +405,19 @@ $$
 = \frac{d-1}{d}\!\left[\frac{|\alpha_{\mathrm{int}}|}{\alpha_{\mathrm{ref}}}\bigl(1 - \alpha_{\mathrm{ref}}^2\bigr) + \sqrt{(1 - \alpha_{\mathrm{ref}}^2)(1 - \alpha_{\mathrm{int}}^2)}\right].
 $$
 
-在低错区（$1-\alpha \approx \frac{d}{d-1}r \ll 1$），相干交叉偏差按两个小错误率的几何平均 $\delta r \sim 2\sqrt{r_{\mathrm{ref}}\,r_{\mathrm{tar}}}$ 缩放（直观上同轴小旋转满足 $(\theta+\phi)^2/6 = r_{\mathrm{ref}} + r_{\mathrm{tar}} \pm 2\sqrt{r_{\mathrm{ref}}\,r_{\mathrm{tar}}}$），而非裸的 $\sqrt{r_{\mathrm{ref}}}$。拿单比特相干抵消反例检验：取 $d=2$、目标门 $C_{\mathrm{tar}} = S$、参考误差 $R_z(\theta)$（$\theta = 0.1\,\mathrm{rad}$）与目标误差 $R_z(\phi)$（$\phi = -(1+\sqrt{2})\theta$），精确 24-Clifford 平均给出 $\alpha_{\mathrm{ref}} \approx 0.996669$、$\alpha_{\mathrm{int}} \approx 0.993344$、真实错误率 $r_{C_{\mathrm{tar}}}^{\mathrm{true}} \approx 9.667\times 10^{-3}$、点估计 $r_{C_{\mathrm{tar}}}^{\mathrm{est}} \approx 1.668\times 10^{-3}$，真实绝对偏差高达 $7.999\times 10^{-3}$——受限线性支（$1.668\times 10^{-3}$）被击穿 $4.80\times$，而 $E_{\mathrm{Magesan}} \approx 0.406$ 与精确界 $E_{\mathrm{coh}} \approx 8.010\times 10^{-3}$（直接区间 $r_{C_{\mathrm{tar}}}^{\mathrm{true}} \in [2.86\times 10^{-4},\; 9.678\times 10^{-3}]$）均严格包住真实误差。若再结合**酉性基准测试**（URB）独立测出参考门酉性 $u_{\mathrm{ref}}$，区间进一步收紧为 $\bigl|\alpha_{\mathrm{tar}} - \alpha_{\mathrm{ref}}\alpha_{\mathrm{int}}/u_{\mathrm{ref}}\bigr| \le \sqrt{(u_{\mathrm{ref}}-\alpha_{\mathrm{ref}}^2)(u_{\mathrm{ref}}-\alpha_{\mathrm{int}}^2)}/u_{\mathrm{ref}}$（纯退极化参考 $u_{\mathrm{ref}}=\alpha_{\mathrm{ref}}^2$ 时系统误差带精确归零）。因此，未经酉性标定的交错 RB 适合在高质量单比特参考背景中测误差明显更大的双比特门，或用作工程调参的相对参考，不能当作严格的绝对无偏标尺。
+在低错区（$1-\alpha \approx \frac{d}{d-1}r \ll 1$），相干交叉偏差按两个小错误率的几何平均 $\delta r \sim 2\sqrt{r_{\mathrm{ref}}\,r_{\mathrm{tar}}}$ 缩放（直观上同轴小旋转满足 $(\theta+\phi)^2/6 = r_{\mathrm{ref}} + r_{\mathrm{tar}} \pm 2\sqrt{r_{\mathrm{ref}}\,r_{\mathrm{tar}}}$），而非裸的 $\sqrt{r_{\mathrm{ref}}}$。
 
-还有一个更深的理论提醒。当不同 Clifford 门拥有不同噪声矩阵（$\tilde{\mathcal{C}}_i \neq \mathcal{E}\circ\mathcal{C}_i$）时，Proctor 等（2017）指出：如果我们对整套实验门集做一个相似变换（称为**规范变换**，gauge transformation），$\tilde{\mathcal{C}}_i \to \mathcal{S}^{-1}\tilde{\mathcal{C}}_i\mathcal{S}$、$\tilde{\rho}_0 \to \mathcal{S}^{-1}\tilde{\rho}_0$、$\tilde{E} \to \tilde{E}\mathcal{S}$，**所有可能实验的输出概率保持绝对不变**，但单个门相对理想门的平均不保真度却会剧烈跳动。Wallman（2018）随后证明，即便存在门依赖噪声，RB 衰减曲线依然服从 $P(m) = A\alpha^m + B + \epsilon_m$（残差 $|\epsilon_m|$ 指数衰减），且主导底数 $\alpha$ 是一个**规范不变量**，对应于某个特定“物理匹配规范”下的平均门保真度。换句话说，离开规范约定去追问“某个门唯一的绝对平均不保真度”，在数学上本来就是不完备的。
+拿单比特相干抵消反例检验：取 $d=2$、目标门 $C_{\mathrm{tar}} = S$、参考误差 $R_z(\theta)$（$\theta = 0.1\,\mathrm{rad}$）与目标误差 $R_z(\phi)$（$\phi = -(1+\sqrt{2})\theta$），精确 24-Clifford 平均给出 $\alpha_{\mathrm{ref}} \approx 0.996669$、$\alpha_{\mathrm{int}} \approx 0.993344$、真实错误率 $r_{C_{\mathrm{tar}}}^{\mathrm{true}} \approx 9.667\times 10^{-3}$、点估计 $r_{C_{\mathrm{tar}}}^{\mathrm{est}} \approx 1.668\times 10^{-3}$，真实绝对偏差达 $7.999\times 10^{-3}$——受限线性支（$1.668\times 10^{-3}$）被击穿 $4.80\times$，而 $E_{\mathrm{Magesan}} \approx 0.406$ 与精确界 $E_{\mathrm{coh}} \approx 8.010\times 10^{-3}$（直接区间 $r_{C_{\mathrm{tar}}}^{\mathrm{true}} \in [2.86\times 10^{-4},\; 9.678\times 10^{-3}]$）均严格包住真实误差。
 
-### 3.3 门集层析（GST）：如何打破 SPAM 与门误差的循环依赖
+若再结合**酉性基准测试**（URB）独立测出参考门酉性 $u_{\mathrm{ref}}$，区间进一步收紧为 $\bigl|\alpha_{\mathrm{tar}} - \alpha_{\mathrm{ref}}\alpha_{\mathrm{int}}/u_{\mathrm{ref}}\bigr| \le \sqrt{(u_{\mathrm{ref}}-\alpha_{\mathrm{ref}}^2)(u_{\mathrm{ref}}-\alpha_{\mathrm{int}}^2)}/u_{\mathrm{ref}}$（纯退极化参考 $u_{\mathrm{ref}}=\alpha_{\mathrm{ref}}^2$ 时系统误差带精确归零）。因此，未经酉性标定的交错 RB 适合在高质量单比特参考背景中测误差明显更大的双比特门，或用作工程调参的相对参考，不能当作严格的绝对无偏标尺。
 
-前面提到，单靠 RB 看不到相干误差的轴向与具体成因。我们在[第 02 章](02-single-qubit.md)与[第 14 章](14-compilation-control.md)里曾提到，要给量子门做“精细体检”，必须借助**门集层析（Gate Set Tomography, GST）**（Blume-Kohout et al. 2017；Nielsen et al. 2021）。它究竟解决了什么难题？
+还有一个更深的理论提醒。当不同 Clifford 门拥有不同噪声矩阵（$\tilde{\mathcal{C}}_i \neq \mathcal{E}\circ\mathcal{C}_i$）时，Proctor 等（2017）指出：如果我们对整套实验门集做一个相似变换（称为**规范变换**，gauge transformation），$\tilde{\mathcal{C}}_i \to \mathcal{S}^{-1}\tilde{\mathcal{C}}_i\mathcal{S}$、$\tilde{\rho}_0 \to \mathcal{S}^{-1}\tilde{\rho}_0$、$\tilde{E} \to \tilde{E}\mathcal{S}$，**所有可能实验的输出概率保持绝对不变**，但单个门相对理想门的平均不保真度却会剧烈跳动。
+
+Wallman（2018）随后证明，即便存在门依赖噪声，RB 衰减曲线依然服从 $P(m) = A\alpha^m + B + \epsilon_m$（残差 $|\epsilon_m|$ 指数衰减），且主导底数 $\alpha$ 是一个**规范不变量**，对应于某个特定“物理匹配规范”下的平均门保真度。换句话说，离开规范约定去追问“某个门唯一的绝对平均不保真度”，在数学上本来就是不完备的。
+
+### 3.3 进阶选读：门集层析（GST）：如何打破 SPAM 与门误差的循环依赖
+
+<span id="33-门集层析gst如何打破-spam-与门误差的循环依赖"></span>前面提到，单靠 RB 看不到相干误差的轴向与具体成因。我们在[第 02 章](02-single-qubit.md)与[第 14 章](14-compilation-control.md)里曾提到，要给量子门做“精细体检”，必须借助**门集层析（Gate Set Tomography, GST）**（Blume-Kohout et al. 2017；Nielsen et al. 2021）。它究竟解决了什么难题？
 
 回忆传统的层析方法：
 - **量子态层析**（QST）假定你的测量基和旋转门是完美校准的，用来反推未知态 $\rho$；
@@ -439,7 +448,7 @@ $$
 \tilde{G}_{i,ba} = \langle\langle E | F_b^{\mathrm{meas}} G_i F_a^{\mathrm{prep}} | \rho_0 \rangle\rangle = (A G_i B)_{ba}.
 $$
 
-只要 $\tilde{g} = AB$ 可逆，直接做一次矩阵求逆相乘，未知的测量矩阵 $A$ 就奇迹般地消掉了：
+只要 $\tilde{g} = AB$ 可逆，直接做一次矩阵求逆相乘，未知的测量矩阵 $A$ 就恰好消掉了：
 
 $$
 \hat{G}_i \equiv \tilde{g}^{-1}\tilde{G}_i = (AB)^{-1}(A G_i B) = B^{-1} A^{-1} A G_i B = B^{-1} G_i B.
@@ -524,7 +533,7 @@ $$
 = F_p(\mathcal{E})!
 $$
 
-这行恒等式带来了惊人的可扩展性：要估计百比特芯片的并行门层过程保真度 $F_p(\mathcal{E})$，根本不必遍历全部 $4^n$ 个 Pauli，只需从 $\mathcal{P}_n$ 中**均匀随机抽取 $K$ 个 Pauli 通道**测出 $\lambda_{P_1},\dots,\lambda_{P_K}$ 取样本均值！由 Hoeffding 不等式，误差精度 $\epsilon$ 所需的通道数 $K = O(1/\epsilon^2)$ **与量子比特数 $n$ 完全无关**！
+这行恒等式带来了优异的可扩展性：要估计百比特芯片的并行门层过程保真度 $F_p(\mathcal{E})$，根本不必遍历全部 $4^n$ 个 Pauli，只需从 $\mathcal{P}_n$ 中**均匀随机抽取 $K$ 个 Pauli 通道**测出 $\lambda_{P_1},\dots,\lambda_{P_K}$ 取样本均值！由 Hoeffding 不等式，误差精度 $\epsilon$ 所需的通道数 $K = O(1/\epsilon^2)$ **与量子比特数 $n$ 完全无关**！
 
 #### 手算验证：2 比特 `CZ` 层的 Pauli 特征值与过程保真度
 
@@ -548,7 +557,9 @@ $$
 
 ### 4.2 层保真度（LF）与每层门错误率（EPLG）
 
-为了给百比特芯片提供一个只需极少电路数即可例行日常监控的工程指标，IBM 团队（McKay et al. 2023，预印本与技术报告）在 **直接随机基准（Direct RB）**（Proctor et al., *PRL* 123, 030503, 2019——与标准 Clifford RB 最大的区别在于：Direct RB 不把电路编译成庞大的 $n$-比特 Clifford 群门，而是直接按原生门分布逐层采样并配合随机稳定子态制备/测量，从而大幅压低编译开销）的基础上，提出了**层保真度**（Layer Fidelity, LF）与尺寸无关指标**每层门错误率**（Error Per Layered Gate, EPLG）：
+为了给百比特芯片提供一个只需极少电路数即可例行日常监控的工程指标，IBM 团队（McKay et al. 2023，预印本与技术报告）基于 **直接随机基准（Direct RB）**（Proctor et al., *PRL* 123, 030503, 2019）提出了**层保真度**（Layer Fidelity, LF）与尺寸无关指标**每层门错误率**（Error Per Layered Gate, EPLG）。
+
+与标准 Clifford RB 相比，Direct RB 不把电路编译成庞大的 $n$-比特 Clifford 群门，而是直接按原生门分布逐层采样并配合随机稳定子态制备/测量，从而大幅压低编译开销。LF 与 EPLG 的测量按四步展开：
 
 1. **排布连通长链与不相交并行层**：在二维处理器耦合图上挑一条包含 $N$ 个量子比特的连通一维链（共 $n_{2Q} = N-1$ 条相连边；若面向表面码，也可按四色边着色拆成 4 个并行层）。把这 $N-1$ 条边拆成两个互不相交的并行双比特门层：$\ell_1$ 包含全部奇数编号边，$\ell_2$ 包含全部偶数编号边。同一层内没有任何两个双比特门共用量子比特，两端落单的比特作为单比特块同步运行。
 2. **同时直接随机基准（Simultaneous Direct RB）**：测试每一层 $\ell \in \{\ell_1, \ell_2\}$ 时，**整条链上的所有比特必须同时施加随机原生门与目标双比特门层**，以此完整激活全芯片串扰。但在读取和拟合数据时，只对每个互不相交的 2 比特或 1 比特子块 $j$ 单独统计边缘生存概率，各自拟合指数衰减底数 $\alpha_j$。经典拟合复杂度只随比特数 $O(N)$ 线性增长，完全绕开了 $2^N$ 指数墙。
@@ -590,7 +601,7 @@ $$
 | **Cycle Benchmarking（CB）**（Erhard 2019） | 全局 $n$-比特 Pauli 群（随机编译） | 随机抽样的全局 Pauli 特征值 $\lambda_P$ 与整层 $F_p$ | **极强**：全局 Pauli 串直接捕捉任意跨块串扰 | $O(1)$ 通道抽样（与 $n$ 无关） |
 | **Layer Fidelity / EPLG**（McKay 2023） | 不相交子块同时 Direct RB | 乘积层保真度 $LF=\prod F_{p,j}$ 与单边均摊 EPLG | 与 Simultaneous Direct RB 相同（张量积近似） | $O(N)$，工程运维最轻量 |
 
-### 4.3 定量桥梁：层保真度如何决定概率误差抵消（PEC）的采样天花板
+### 4.3 进阶选读：定量桥梁：层保真度如何决定概率误差抵消（PEC）的采样天花板
 
 层保真度不只是一个硬件评分，它还直接锁死了[第 08 章](08-applications.md)里介绍的**概率误差抵消**（PEC）到底能跑多深。
 
@@ -754,7 +765,7 @@ $$
 1. **验证悖论**：一旦宽度与深度真正进入经典算不动的区域（如 53 比特 20 周期），实验者自己也算不出 $P_{\mathrm{ideal}}(x_i)$，只能退回可验证裁切电路做外推；
 2. **经典算法是移动标靶**：Pan 与 Zhang（*PRL* 2022）用大批量张量网络收缩大幅压低了 53 比特模拟时间；Aharonov 等（STOC 2023）更从理论上证明，在恒定每门去极化噪声且不启用纠错的模型下，存在多项式时间经典算法逼近有噪采样分布并在特定条件下欺骗 XEB。
 
-因此，XEB 是优秀的**有噪硬件全芯片校准与诊断标尺**，但绝不能孤立地当作“不可逾越的量子优越性终极判决”。
+因此，XEB 是优秀的**有噪硬件全芯片校准与诊断标尺**，但绝不能孤立地当作“不可逾越的量子优越性最终判决”。
 
 ### 5.3 体积基准与镜像电路：为什么结构化线路会早一个数量级失效
 
@@ -924,7 +935,10 @@ $$
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Google Sycamore**（Acharya 等，*Nature* 2023） | 超导 72Q（使用 17Q 与 49Q） | 表面码逻辑存储（$d=3 \to 5$） | $\varepsilon_3 = 3.028\% \pm 0.023\%$，$\varepsilon_5 = 2.914\% \pm 0.016\%$，$\Lambda \approx 1.04$ | 周期约 $0.92\,\mu\mathrm{s}$；离线 MWPM 与置信传播 | 只有两个码距点，抑制幅度极弱，寿命尚未超过最佳物理比特 |
 | **Google Willow**（Acharya 等，*Nature* 2025，2024-12 在线） | 超导 105Q（最高使用 101Q） | 表面码逻辑存储（$d=3 \to 5 \to 7$）与 $d=29$ 重复码 | $\Lambda = 2.14 \pm 0.02$；$d=5$ 约 $0.31\%$；$d=7$ 达 $\varepsilon_7 = 0.143\% \pm 0.003\%$；寿命达最佳物理比特的 $2.4 \pm 0.3$ 倍 | 周期 $1.1\,\mu\mathrm{s}$；$d=5$ 实测实时流式解码 $10^6$ 轮，平均延迟 $63\,\mu\mathrm{s}$ | 演示对象仍为逻辑存储而非通用逻辑门；在 $d=29$ 重复码上观测到约每小时 $1$ 次（约每 $3\times 10^9$ 周期一次）的稀有相关突发事件，形成约 **$10^{-10}$/周期**的错误底板 |
-| **Harvard / QuEra**（Bluvstein 等，*Nature* 2024；续篇 *Nature* 2025–2026） | 中性原子 280Q—448Q 可重构阵列 | 表面码、色码、3D $[[8,3,2]]$ 码；横向逻辑门与逻辑魔法态蒸馏 | 最高编出 48 个逻辑比特并跑通横向线路与低于阈值 $2.14\times$ 抑制 | 原子搬运与成像在毫秒量级；早期含部分后选择与离线解码 | 时钟节拍比超导慢约 $10^3\times$，连续补原子与深层实时解码尚在全面合龙中 |
+| **AWS Ocelot**（Putterman 等，*Nature* **638**, 927–934, 2025） | 超导 14 器件（5 猫腔 + 5 ATS + 4 辅助 transmon） | 耗散猫比特 + 外层一维重复码（$d=3 \to 5$）逻辑存储 | 平均每周期逻辑存储错率 $\varepsilon_L$ 从 $1.75(2)\%$ 降至 $1.65(3)\%$（$\lvert\alpha\rvert^2 = 1.5$） | 周期 $2.8\text{--}3\,\mu\mathrm{s}$；离线匹配 | 外层一维重复码不纠物理位翻转，**无完整二维渐近阈值**；“省 90% 硬件”属全容错外推，当前仅验证级联存储 |
+| **Google 超导色码**（Lacroix 等，*Nature* **645**, 614–619, 2025） | 超导 Willow 架构 | 二维三角颜色码（$d=3 \to 5$）、全横向 Clifford 门与色码晶格手术 | 低于阈值抑制 **$\Lambda_{3/5} = 1.56$**；横向 Clifford 逻辑 RB 错率约 **$0.0027$**/门；后选择魔法态注入 $>99\%$（保留约 $75\%$）；传态 $86.5\%\text{--}90.7\%$ | 微秒级周期；色码超边/展开解码 | 权重 6 面元与三色超边使 $\Lambda_{3/5}$ 低于同芯片表面码（$2.14$），但为全横向 Clifford 与 MSC 打通硬件路径 |
+| **Google 超导魔法态培育**（Rosenfeld 等，*Science* 2026-10） | 超导 Willow 架构 | $d=3$ 色码原地魔法态培育（MSC）嫁接切换至 $d=5$ 表面码 | 逻辑 $\lvert T\rangle$ 态保真度 **$0.9999(1)$**（较未培育直接注入压错约 **$40\times$**） | 容错回踢层析标定；色码双检与互补间隙后选择 | 后选择保留率约 **$8\%$**；属 $d=3\to 5$ 硬件首次实证，距理论 $d=5\to 15$ 产率与缓冲池规模仍需工程推进 |
+| **Harvard / QuEra**（Bluvstein 等，*Nature* 2024；Sales Rodriguez 等，*Nature* **645**, 620–625, 2025；Bluvstein–Geim–Lukin 等，*Nature* **649**, 39–46, 2026） | 中性原子 280Q—448Q 可重构光镊阵列 | 2024：48 逻辑比特横向线路；2025：5-to-1 逻辑魔法态蒸馏；2026：448 原子通用容错架构与跨块关联解码 | 2026 年在低于阈值区测出 **$2.14\times$** 错误抑制，跑通深度横向逻辑线路与逻辑魔法态蒸馏 | 物理搬运/成像在毫秒量级；结合横向门 + 算法容错（AFT）跨块关联解码 | 单物理周期虽比超导慢约 $10^3\times$，但 AFT 把每门稳定子轮数从 $O(d)$ 压至 $O(1)$（省约 $d\sim 15\text{--}25\times$），有效逻辑时钟差距收窄超过一个数量级；深层连续补原子与实时闭环仍在全面合龙中 |
 | **Microsoft / Quantinuum**（Paetznick 等，*Nature* 2026） | 离子阱 QCCD | 12Q carbon 码（受 Knill 方案启发）、16Q tesseract 色码；逻辑纠缠与短线路 | 相对物理基线实现 $11\times\text{--}800\times$ 逻辑错误率下降（如逻辑 Bell 态错误从约 $0.8\%$ 降至 $0.001\%$） | 结合错误检测与后选择 | 后选择导致接受率随电路深度下降，最高 $800\times$ 改善不可直接外推为任意深度的无后选择通用容错 |
 
 看懂这张表后，评估任何一份“逻辑优于物理”的报告只需要盯着五条底线：第一，至少给出**三个码距点**（如 $d=3, 5, 7$）以验证指数趋势，而不是拿两个码距的偶然波动说事；第二，写清物理基线是芯片最佳物理比特、参与编码的物理比特均值，还是同等资源的未编码线路；第三，分清“逻辑存储”“横向 Clifford 门”“晶格手术”与“非 Clifford 魔法态注入”四个完全不同的台阶——低于阈值存储只是容错计算的入场券；第四，写清是否依赖后选择与接受率；第五，交代解码器是否在线实时运行、有没有偷看未来轮次的纠错症状。
@@ -975,9 +989,9 @@ $$
 p = \frac{1 - (1 - 2q_n)^{1/n}}{2}, \qquad 0 \le q_n < \frac{1}{2}.
 $$
 
-这一区分直接关系到资源预算：如果某个逻辑子程序一旦中途翻过一次就会污染后续非 Clifford 门路径，你的预算口径就对应 $a_n$；如果错误能在纯存储末端抵消，测到的则是 $q_n$。两种口径绝不能混换（可用文末 [`codes/systems/round71_checks.py`](../codes/systems/round71_checks.py) 的 `--case 11` 直接对二项分布全部奇数项求和独立验算）。
+这一区分直接关系到资源预算：如果某个逻辑子程序一旦中途翻过一次就会污染后续非 Clifford 门路径，你的预算口径就对应 $a_n$；如果错误能在纯存储末端抵消，测到的则是 $q_n$。两种口径绝不能混换（可用文末[逻辑存储奇偶翻转与反演验算脚本](../codes/systems/round71_checks.py)的 `--case 11` 直接对二项分布全部奇数项求和独立验算）。
 
-### 7.3 实时解码的三维约束：准确率、吞吐与尾延迟
+### 7.3 进阶选读：实时解码的三维约束：准确率、吞吐与尾延迟
 
 拿到一轮轮纠错症状数据后，经典解码器必须飞快推断出最可能发生的物理错误链。报告解码器性能时，有三个完全不能互相替代的维度：
 
@@ -1027,17 +1041,23 @@ $$
 \tau_{\mathrm{react}} = \tau_{\mathrm{readout}} + \tau_{\mathrm{comm}} + \tau_{\mathrm{decode,window}} + \tau_{\mathrm{feedback}},
 $$
 
-也就是从物理读出开始，经信号搬运、窗口解码到发出条件反馈脉冲的全部延迟（完整硬件控制链与 FIFO 排队分析见[第 14 章](14-compilation-control.md)与[第 19 章 §10.3–§10.4](19-engineering-architecture.md)）。在百万到十亿周期的长算法中，概率只有 $10^{-6}$ 的极端尾延迟必然反复出现；一旦尾延迟频繁击穿 $\tau_{\mathrm{react}}$ 预算（例如 Gidney 2021/2025 资源估算中假定的 $\tau_{\mathrm{react}} = 10\,\mu\mathrm{s}$），不仅拖慢整条关键路径，还会放大逻辑比特的等待时间、倒逼整机提高码距 $d$。
+也就是从物理读出开始，经信号搬运、窗口解码到发出条件反馈脉冲的全部延迟（完整硬件控制链与 FIFO 排队分析见[第 14 章](14-compilation-control.md)与[第 19 章 §8.3–§8.4](19-engineering-architecture.md)）。在百万到十亿周期的长算法中，概率只有 $10^{-6}$ 的极端尾延迟必然反复出现；一旦尾延迟频繁击穿 $\tau_{\mathrm{react}}$ 预算（例如 Gidney 2021/2025 资源估算中假定的 $\tau_{\mathrm{react}} = 10\,\mu\mathrm{s}$），不仅拖慢整条关键路径，还会放大逻辑比特的等待时间、倒逼整机提高码距 $d$。
 
 目前学术界与工业界正从算法和定制硬件两端夹击积压与尾延迟问题（涵盖表面码与 qLDPC 码）：
 
 | 技术路线 | 代表工作（发表年份与证据级别） | 核心机制 | 实测或目标指标 | 工程权衡与局限 |
 | :--- | :--- | :--- | :--- | :--- |
-| **并行窗口解码** | Skoric 等（*Nat. Commun.* 2023 [同行评审]） | 将时空纠错症状图切成带重叠缓冲区的并行时间窗，多核并行解码后拼接边界 | 彻底消除 Terhal 指数积压，把串行减速压为可控多项式开销 | 需要更多并行解码器实例与窗口边界的额外缓冲轮次 |
+| **并行窗口解码** | Skoric 等（*Nat. Commun.* 2023 [同行评审]） | 将时空纠错症状图切成带重叠缓冲区的并行时间窗，多核并行解码后拼接边界 | 根除 Terhal 指数积压，把串行减速压为可控多项式开销 | 需要更多并行解码器实例与窗口边界的额外缓冲轮次 |
 | **超导实时流式解码** | Google Willow（Acharya 等，*Nature* 2025 [同行评审]） | 在 $d=5$ 表面码上接入实时流式匹配解码器连续跑通 $10^6$ 轮 | 周期 $1.1\,\mu\mathrm{s}$ 下无积压吞吐，端到端平均响应时延 $63\,\mu\mathrm{s}$ | $63\,\mu\mathrm{s}$ 距 $10\,\mu\mathrm{s}$ 级理想反应时间仍有约 $6\times$ 优化空间，大码距下的 p99/max 仍待验证 |
 | **定制 FPGA / ASIC 解码器** | Riverlane Collision Clustering（Barber 等，*Nat. Electron.* 2025 [同行评审]） | 面向硅片设计的确定性低访存并行聚类算法 | 1,057 物理比特表面码下达亚微秒每轮吞吐；ASIC 面积 $0.06\,\mathrm{mm}^2$、功耗仅 $8\,\mathrm{mW}$ | 准确率略低于最优相关 MWPM 或神经解码器，以微弱阈值余量换取确定性低延迟与超低功耗 |
 | **IBM Relay-BP（面向 qLDPC）** | Müller 等（`arXiv:2506.01779`）与 Maurer 等（`arXiv:2510.21600`，2025 [预印本]） | 带无序/负记忆强度的中继置信传播 FPGA 硬件解码器（配套 Gross $[[144,12,12]]$ 码） | 单次 BP 迭代约 **$24\,\mathrm{ns}$**，平均每轮解码 **$< 1\,\mu\mathrm{s}$**，克服传统 BP 振荡并替代重型 OSD | 打通了 qLDPC 长期卡脖子的实时解码延迟瓶颈，但芯片物理层的长程非局域布线依然是硬工程挑战 |
 | **神经网络解码器** | Google DeepMind AlphaQubit（Bausch 等，*Nature* 2024 [同行评审]）与 **AlphaQubit 2**（`arXiv:2512.07737`，2025-12 [预印本]） | 循环 Transformer 网络，直接融合模拟软读出与泄漏概率学习硬件相关噪声 | 1 代真机精度超越 MWPM 与张量网络（离线较慢）；**AlphaQubit 2** 在商用 TPU 上压至 **$< 1\,\mu\mathrm{s}/\text{cycle}$**（至 $d=11$ 表面码与 $d=9$ 色码） | 2 代正补齐实时吞吐短板，但面向更大码距与多逻辑比特模块化调度的功耗与泛化仍在验证中 |
+
+下面这张双面板科学图直观拆解了实时解码流水线的端到端反应时间预算 $\tau_{\mathrm{react}}$（对照 $1\,\mu\mathrm{s}$ 吞吐红线与 Terhal 积压），并横向呈现了不同纠错架构的物理比特资源分解：
+
+![容错实时解码流水线延迟预算与物理比特资源分解](assets/v4-11-decoder-latency-budget.svg)
+
+[查看原尺寸科学图](assets/v4-11-decoder-latency-budget.svg)。
 
 ### 7.4 实验统计与计时核算：零失败上界、配对检验与尾延迟分布
 
@@ -1079,7 +1099,9 @@ $$
 
 这个极小的 $p$ 值说明，即便在整张 18 个参数网格点上执行严格的 Bonferroni 多重检验门槛（每点 $\alpha = 0.05/18 \approx 2.78\times 10^{-3}$），相关解码在该高噪声工作点上的改进依然具有压倒性的统计显著性（而为 18 个点 $\times$ 2 种解码器共 36 个错误率构造 $95\%$ 同时置信区间时，则应分别采用 $\alpha = 0.05/36$，两者属于不同统计任务）。
 
-**第三笔账：经验 p99 是样本次序统计量，不是硬截止期限的保证。** 对上述同一工况下 $1{,}000$ 次逐条本地相关解码耗时样本排序（次序统计量 $t_{(\lceil qn\rceil)}$，归档于 [`qec-grid-results.json`](../codes/systems/sdk73/qec-grid-results.json)），经验中位数（p50）为 $14.917\,\mu\mathrm{s}$、p99 为 $38.500\,\mu\mathrm{s}$，而样本最大值已跳到 $59.125\,\mu\mathrm{s}$（近中位数的 $4$ 倍）。统计学上，有限样本的经验 p99 只是第 $990$ 名次序统计量，放到百万轮长程运行时极尾端还会拉得更长，且桌面 Python 本地整体匹配耗时不能直接冒充硬件实时反馈延迟（完整的单服务台 FIFO 队列与 SLA 违约建模详见[第 19 章 §10.3–§10.4](19-engineering-architecture.md)）。上述全部配对计数与精确二项求和均可通过文末 [`codes/systems/round73_checks.py`](../codes/systems/round73_checks.py)（`--case 11`）一键复核。
+**第三笔账：经验 p99 是样本次序统计量，不是硬截止期限的保证。** 对上述同一工况下 $1{,}000$ 次逐条本地相关解码耗时样本排序（次序统计量 $t_{(\lceil qn\rceil)}$，归档于 [`qec-grid-results.json`](../codes/systems/sdk73/qec-grid-results.json)），经验中位数（p50）为 $14.917\,\mu\mathrm{s}$、p99 为 $38.500\,\mu\mathrm{s}$，而样本最大值已跳到 $59.125\,\mu\mathrm{s}$（近中位数的 $4$ 倍）。
+
+统计学上，有限样本的经验 p99 只是第 $990$ 名次序统计量，放到百万轮长程运行时极尾端还会拉得更长，且桌面 Python 本地整体匹配耗时不能直接冒充硬件实时反馈延迟（完整的单服务台 FIFO 队列与 SLA 违约建模详见[第 19 章 §8.3–§8.4](19-engineering-architecture.md)）。上述全部配对计数与精确二项求和均可通过文末[配对 McNemar 检验与耗时分位数验算脚本](../codes/systems/round73_checks.py)（`--case 11`）一键复核。
 
 ---
 
@@ -1093,27 +1115,28 @@ $$
 
 ```mermaid
 flowchart TD
-  S1["1. 冻结应用精度、成功概率与错误预算拆分"] --> S2["2. 统计逻辑比特、T 或 Toffoli 数与 T 深度"]
-  S2 --> S3["3. 选定晶格手术布局与反应时间下限"]
-  S3 --> S4["4. 由逻辑时空体积不动点反推码距 d"]
-  S4 --> S5["5. 设计魔法态工厂规模与时空排班"]
-  S5 -->|工厂缩减拉长耗时则回代重算码距| S4
-  S5 --> S6["6. 汇总整机物理比特（含良率与备用区）"]
-  S6 --> S7["7. 核验纠错症状带宽、解码吞吐与尾延迟"]
-  S7 -->|反应时间变长则回代重算时长与码距| S3
-  S7 --> S8["8. 核算含校准、重试与可用率的墙钟时间"]
-  S8 --> S9["9. 拆解分温区能耗并做参数敏感性分析"]
+  S1["第 1 步｜冻结应用精度、<br/>成功概率与错误预算拆分"] --> S2["第 2 步｜统计逻辑比特、<br/>T / Toffoli 数与 T 深度"]
+  S2 --> S3["第 3 步｜选定晶格手术<br/>布局与反应时间下限"]
+  S3 --> S4["第 4 步｜由逻辑时空体积<br/>不动点反推码距 d"]
+  S4 --> S5["第 5 步｜设计魔法态工厂<br/>规模与时空排班"]
+  S5 -->|"工厂缩减拉长耗时<br/>则回代重算码距"| S4
+  S5 --> S6["第 6 步｜汇总整机<br/>物理比特与良率备用区"]
+  S6 --> S7["第 7 步｜核验纠错症状、<br/>解码吞吐与尾延迟"]
+  S7 -->|"反应时间变长则<br/>回代重算时长与码距"| S3
+  S7 --> S8["第 8 步｜核算含校准、<br/>重试与可用率的墙钟时间"]
+  S8 --> S9["第 9 步｜拆解分温区能耗<br/>并做参数敏感性分析"]
 ```
 
-请特别留意图里那两条往回指的反馈箭头：减少魔法态工厂虽然省了面积，却会拉长计算时间，让数据区在噪声里暴露得更久，可能倒逼码距 $d$ 跳高一档；同样，如果实时解码的反应时间比原计划慢，整条关键路径也会被拉长。因此，负责任的资源报告绝不该只给一个精确到个位的“神奇数字”，而是改变物理错误率、周期时长、反应时间、工厂数量和可用率，给出清晰的敏感性区间。
+请特别留意图里那两条往回指的反馈箭头：减少魔法态工厂虽然省了面积，却会拉长计算时间，让数据区在噪声里暴露得更久，可能倒逼码距 $d$ 跳高一档；同样，如果实时解码的反应时间比原计划慢，整条关键路径也会被拉长。因此，负责任的资源报告绝不该只给一个精确到个位的单点估计，而是改变物理错误率、周期时长、反应时间、工厂数量和可用率，给出清晰的敏感性区间。
 
-### 8.2 近年代表性容错资源估算标杆对照（2019–2025）
+### 8.2 近年代表性容错资源估算标杆对照（2019–2026）
 
-过去几年，容错资源估算领域最震撼的变化并非只来自硬件进步，而是**算法分解、纠错码架构与魔法态工程协同优化**带来的数量级红利。下面四套里程碑工作构成了该领域的必读坐标：
+<span id="82-近年代表性容错资源估算标杆对照20192025"></span>过去几年，容错资源估算领域最显著的变化并非只来自硬件进步，而是**算法分解、纠错码架构与魔法态工程协同优化**带来的数量级红利。下面四套里程碑工作构成了该领域的必读坐标：
 
 1. **Litinski（2019）两篇奠基工作：晶格手术瓦片模型与非对称工厂**（*Quantum* 3, 128 & 205 [同行评审]）：
-   - **第一篇（*A Game of Surface Codes*, *Quantum* 3, 128）**：把每个码距为 $d$ 的旋转表面码逻辑补丁抽象成二维平面上的一块方形**瓦片（tile）**，每块约占 $2d^2$ 个物理比特，以 $d$ 个物理纠错周期为一个逻辑节拍（1 beat）。借助 Pauli 乘积测量（PPM）把所有 Clifford 门推到电路末尾并入经典帧追踪后，算法只剩下由魔法态驱动的非 Clifford 旋转。对 $n$ 个算法逻辑比特，Litinski 给出紧凑型（$1.5n+3$ 块瓦片）、中间型（$2n+4$ 块瓦片）和快速型（$2n+\lceil\sqrt{8n}\rceil+1$ 块瓦片）三种布局权衡；对含 $n$ 比特、$m_x$ 条 $X$ 稳定子、输出 $k$ 个魔法态的蒸馏码，其紧凑蒸馏块占地仅需 **$1.5(m_x+k)+3$** 块瓦片、耗时 $n - m_x$ 步（对 15-to-1 蒸馏，$m_x = 4, k = 1 \implies 10.5 \to 11$ 块瓦片、$11$ 步 $\pi/8$ 旋转）。
-   - **第二篇（*Magic State Distillation: Not as Costly as You Think*, *Quantum* 3, 205）**：进一步提出**非对称三码距 $(d_X, d_Z, d_m)$ 蒸馏工厂**并引入并行注入，把单级 15-to-1 周期压缩至 **$6\,d_m$**；在 $p = 10^{-3}$ 下，单级轻量 $(7,3,3)$ 工厂仅需 **$810$ 个物理比特**，单级高精度 $(15,7,7)$ 工厂约 **$4{,}600$ 个物理比特**，而产出 $10^{-12}$ 级超高纯度魔法态的两级 `(15-to-1)` 级联工厂也压缩到了 **$1\text{--}3$ 万物理比特**量级，彻底打破了早期工厂垄断整机 $90\%$ 面积的旧认知。
+   - **第一篇（*A Game of Surface Codes*, *Quantum* 3, 128）**：把每个码距为 $d$ 的旋转表面码逻辑补丁抽象成二维平面上的一块方形**瓦片（tile）**，每块约占 $2d^2$ 个物理比特，以 $d$ 个物理纠错周期为一个逻辑节拍（1 beat）。借助 Pauli 乘积测量（PPM）把所有 Clifford 门推到电路末尾并入经典帧追踪后，算法只剩下由魔法态驱动的非 Clifford 旋转。
+     - 对 $n$ 个算法逻辑比特，Litinski 给出紧凑型（$1.5n+3$ 块瓦片）、中间型（$2n+4$ 块瓦片）和快速型（$2n+\lceil\sqrt{8n}\rceil+1$ 块瓦片）三种布局权衡；对含 $n$ 比特、$m_x$ 条 $X$ 稳定子、输出 $k$ 个魔法态的蒸馏码，其紧凑蒸馏块占地仅需 **$1.5(m_x+k)+3$** 块瓦片、耗时 $n - m_x$ 步（对 15-to-1 蒸馏，$m_x = 4, k = 1 \implies 10.5 \to 11$ 块瓦片、$11$ 步 $\pi/8$ 旋转）。
+   - **第二篇（*Magic State Distillation: Not as Costly as You Think*, *Quantum* 3, 205）**：进一步提出**非对称三码距 $(d_X, d_Z, d_m)$ 蒸馏工厂**并引入并行注入，把单级 15-to-1 周期压缩至 **$6\,d_m$**；在 $p = 10^{-3}$ 下，单级轻量 $(7,3,3)$ 工厂仅需 **$810$ 个物理比特**，单级高精度 $(15,7,7)$ 工厂约 **$4{,}600$ 个物理比特**，而产出 $10^{-12}$ 级超高纯度魔法态的两级 `(15-to-1)` 级联工厂也压缩到了 **$1\text{--}3$ 万物理比特**量级，改写了早期工厂垄断整机 $90\%$ 面积的旧认知。
 
 2. **Beverland 等（2022）与 Azure Quantum Resource Estimator**（`arXiv:2211.07629` [预印本/开源框架]）：
    构建了跨六组物理硬件假设（纳秒级快门、微秒级慢门及拓扑候选模型）的全栈估算器，系统对比了二维 Fermi–Hubbard 模型、钌催化剂 $\mathrm{CO}_2$ 固碳化学与 RSA-2048 三个实用标杆。它清晰量化了容错实用化的三大硬件支柱——规模、可控性与速度：即使物理错误率同样优秀，如果门时长和周期落在微秒至毫秒级，原本几天能跑完的化学或密码学任务会被拉长 2–3 个数量级变成数年。该工作还提出了绑死目标逻辑错误率 $p_L$ 的系统吞吐标尺 **rQOPS**：
@@ -1123,7 +1146,7 @@ $$
 $$
 
 3. **RSA-2048 整数分解的二十倍空间压缩：Gidney & Ekerå（2021）$\to$ Gidney（2025）**：
-   这两项工作采用完全相同的超导表面码物理假设（二维最近邻方格、电路级均匀去极化物理错误率 $p=10^{-3}$、表面码单周期 $\tau_{\mathrm{cyc}}=1\,\mu\mathrm{s}$、控制系统反应时间 $\tau_{\mathrm{react}}=10\,\mu\mathrm{s}$），是看懂“架构创新怎样改写资源账本”的绝佳教材（Shor 算法的数论复杂度演进见[第 07 章 §3.5](07-algorithms.md)）：
+   这两项工作采用完全相同的超导表面码物理假设（二维最近邻方格、电路级均匀去极化物理错误率 $p=10^{-3}$、表面码单周期 $\tau_{\mathrm{cyc}}=1\,\mu\mathrm{s}$、控制系统反应时间 $\tau_{\mathrm{react}}=10\,\mu\mathrm{s}$），是看懂“架构创新怎样改写资源账本”的绝佳教材（Shor 算法的数论复杂度演进见[第 07 章 §2.5–§2.6](07-algorithms.md)）：
    - **Gidney & Ekerå（2021）**（*Quantum* 5, 433 [同行评审]）：凭借窗式模指数运算与催化态工厂，用 $2.7\times 10^9$ 次 Toffoli、码距 $d=27$，把估算压到**约 2,000 万物理比特、耗时约 8 小时**；
    - **Gidney（2025 年 5 月）**（`arXiv:2505.15917` [预印本]）：一口气叠加三项革新——在 Chevignard 等（CRYPTO 2025）剩余数（RNS）算术思路上构造近似剩余算术，把峰值算法逻辑比特压至 **$1{,}399\text{--}1{,}409$ 个**（Toffoli 数约 $6.5\times 10^9$）；用**轭联表面码**（yoked surface codes）高密度寄存空闲冷逻辑比特；用[第 10 章 §10.3](10-error-correction.md)的**魔法态培育**（MSC）替代庞大传统蒸馏工厂。整机物理比特的三区精确拆解为：
      - **冷存储区（轭联表面码）**：$1{,}280$ 个逻辑槽位 $\times 430 = \mathbf{550{,}400}$ 个物理比特；
@@ -1132,7 +1155,9 @@ $$
      - **三区合计**：$550{,}400 + 177{,}112 + 170{,}352 = \mathbf{897{,}864}$ 个物理比特（留约 $10\%$ 工程余量概括为“不足 100 万”）。单次运行约 $12.07$ 小时、期望约 $9.2$ 次（直接相乘 $12.07\times 9.2/24 \approx 4.63$ 天），计入逻辑失效率放大与重试余量后，原论文报告期望总墙钟时长约 **$4.96$ 天（不到 1 周）**！务必保持清醒：这是理想均匀去极化噪声下的理论预印本架构估算，尚未计入宇宙射线等关联突发误差和百万级器件制造良率，绝不能误读为已经落地的工程样机。
 
 4. **量子化学与新能源材料标杆（FeMoco 固氮酶与锂电催化）**：
-   固氮酶活性中心 **FeMoco** 见证了短短几年内算法端 4–5 个数量级的惊人压缩：从 Reiher 等（2017，*PNAS* [同行评审]）采用 Trotter 展开所需的 $10^{14}\text{--}10^{15}$ 个 $T$ 门，经 Berry 等（2019）与 von Burg 等（2021）转向块编码与量子化（qubitization，详见[第 16 章](16-advanced-algorithms-verification.md)），一直到 **Lee 等**（2021，*PRX Quantum* [同行评审]）引入张量超收缩（THC），把 54 轨道模型压到 $5.3\times 10^9$ 次 Toffoli、$2{,}142$ 个逻辑比特（更真实的 76 轨道模型为 $3.2\times 10^{10}$ 次 Toffoli），映射到 $p=10^{-3},\ \tau_{\mathrm{cyc}}=1\,\mu\mathrm{s}$ 表面码大约需要 **400 万物理比特、运行约 3.5–4 天**。在电池材料方向，Kim 等（2022，*Phys. Rev. Research* [同行评审]）面向融合型光子容错架构（FBQC）评估碳酸乙烯酯电解液降解路径，借助并行魔法态消费把工厂面积压到整机 $2\%$ 以内，估算单次相位估计在 cc-pVDZ 基组下约 1–4 小时、cc-pVTZ 基组下约 35–90 小时。
+   固氮酶活性中心 **FeMoco** 见证了短短几年内算法端 4–5 个数量级的大幅压缩：从 Reiher 等（2017，*PNAS* [同行评审]）采用 Trotter 展开所需的 $10^{14}\text{--}10^{15}$ 个 $T$ 门，经 Berry 等（2019）与 von Burg 等（2021）转向块编码与量子化（qubitization，详见[第 16 章](16-advanced-algorithms-verification.md)），一直到 **Lee 等**（2021，*PRX Quantum* [同行评审]）引入张量超收缩（THC），把 54 轨道模型压到 $5.3\times 10^9$ 次 Toffoli、$2{,}142$ 个逻辑比特（更真实的 76 轨道模型为 $3.2\times 10^{10}$ 次 Toffoli），映射到 $p=10^{-3},\ \tau_{\mathrm{cyc}}=1\,\mu\mathrm{s}$ 表面码大约需要 **400 万物理比特、运行约 3.5–4 天**。
+
+   在电池材料方向，Kim 等（2022，*Phys. Rev. Research* [同行评审]）面向融合型光子容错架构（FBQC）评估碳酸乙烯酯电解液降解路径，借助并行魔法态消费把工厂面积压到整机 $2\%$ 以内，估算单次相位估计在 cc-pVDZ 基组下约 1–4 小时、cc-pVTZ 基组下约 35–90 小时。
 
 | 应用任务与文献（证据级别） | 物理假设（架构 / $p$ / $\tau_{\mathrm{cyc}}$） | 算法逻辑比特 | 非 Clifford 门数 | 关键架构技术 | 物理比特数 | 估算墙钟时间 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -1141,6 +1166,7 @@ $$
 | **FeMoco（54o / 76o）** — Lee 等 2021（[同行评审]） | 2D 表面码 / $10^{-3}$ / $1\,\mu\mathrm{s}$ | $2{,}142$ | $5.3\times 10^9$ / $3.2\times 10^{10}$ Toffoli | 张量超收缩（THC）+ 量子化 | 约 $4.0\times 10^6$ | 约 3.5–4 天 |
 | **钌固碳 / Hubbard / RSA** — Beverland 等 2022（[预印本/开源工具]） | 跨 6 组平台假设（快门/慢门/拓扑） | 数百至数千 | $10^9\text{--}10^{11}$ $T$/Toffoli 级 | Azure QRE、rQOPS、双因子分解 | $10^5\text{--}10^7$（强烈依赖 $p$） | 小时至月级（慢门可达年） |
 | **锂电电解液催化** — Kim 等 2022（[同行评审]） | 光子 FBQC 容错架构 | 视基组定 | 并行多魔法态消费换算 | 工厂占比 $\le 2\%$ 的并行 PPM | 视交错模块配置定 | 1–4 h（pVDZ）/ 35–90 h（pVTZ） |
+| **Bicycle Architecture（qLDPC 模块化架构）** — Yoder 等 2025（`arXiv:2506.03094` [预印本]） | BB qLDPC（Gross / Two-Gross）/ $10^{-3}$ / $1\,\mu\mathrm{s}$ | 按模块 $12$ 逻辑/块 | 通用容错指令集（逻辑 LPU 辅助） | 群移位自同构、跨模块 L-耦合器、Relay-BP | 同等逻辑容量较表面码降约 **$10\times$**（单块 288 物理/12 逻辑） | 逻辑时钟受跨模块测量与串行调度权衡（相对表面码+MSC 以适度时钟换面积） |
 
 下面这张双面板科学图直观定格了表面码随码距的指数压错曲线，以及 RSA-2048 从十亿、两千万到 Gidney 2025 三区 $897{,}864$ 物理比特的演进分解：
 
@@ -1265,11 +1291,13 @@ $$
 | 1 | $3\text{—}4$（等第 1 批） | $12\text{—}13$（等第 4 批） | $15\text{—}16$（等第 5 批） | 16 周期 |
 | 2 | $3\text{—}4$（第 1 批产 2 余 1） | $6\text{—}7$（第 2 批再产 2 凑齐 3） | $9\text{—}10$（第 3 批产 2 凑齐第 5 个） | 10 周期 |
 
-请看 $m = 2$ 这一行：如果只用粗略的连续平均法，说“平均每 1.5 周期产 1 个态，5 个态只要 7.5 周期”，就比真实离散耗时 $10$ 周期少了整整四分之一！更微妙的是，如果我们把三层需求顺序改成 $(3, 1, 1)$（总 $T$ 门数仍是 5），代入 $m=2$ 会算出第 1 层必须等到时刻 $6$ 才能开工（$6\text{—}7$、$7\text{—}8$、$9\text{—}10$），总结束时间虽然还是 $10$ 周期，但数据逻辑比特在开局白白空等的时间完全变了，对数据存储与缓冲区面积的压力也截然不同。你可以直接运行文末 [`codes/systems/factory_schedule.py`](../codes/systems/factory_schedule.py) 核验每次消费前的库存约束；在大型工业算法研究里，通常会用 [Qualtran](https://github.com/quantumlib/Qualtran) 等工具把算法分解后的非 Clifford 门流自动对接到架构排班器上。
+请看 $m = 2$ 这一行：如果只用粗略的连续平均法，说“平均每 1.5 周期产 1 个态，5 个态只要 7.5 周期”，就比真实离散耗时 $10$ 周期少了整整四分之一！更微妙的是，如果我们把三层需求顺序改成 $(3, 1, 1)$（总 $T$ 门数仍是 5），代入 $m=2$ 会算出第 1 层必须等到时刻 $6$ 才能开工（$6\text{—}7$、$7\text{—}8$、$9\text{—}10$），总结束时间虽然还是 $10$ 周期，但数据逻辑比特在开局白白空等的时间完全变了，对数据存储与缓冲区面积的压力也截然不同。
+
+你可以直接运行文末 [`codes/systems/factory_schedule.py`](../codes/systems/factory_schedule.py) 核验每次消费前的库存约束；在大型工业算法研究里，通常会用 [Qualtran](https://github.com/quantumlib/Qualtran) 等工具把算法分解后的非 Clifford 门流自动对接到架构排班器上。
 
 ### 8.5 长期可靠性与整机能耗账本
 
-把机器真正搬进机房运转以后，还有一个常被实验室论文略过的维度：**长期可靠性与整机能耗**。一台刚校准完两小时内门保真度惊艳、可每天要停机重标定四小时的设备，它的长期有效吞吐远低于峰值；报告面向服务的系统能力时，必须把平均无故障时间（MTBF）、平均修复时间（MTTR）、校准占空比和良率漂移一起摊开（完整运维框架见[第 19 章](19-engineering-architecture.md)）。
+把机器真正搬进机房运转以后，还有一个常被实验室论文略过的维度：**长期可靠性与整机能耗**。一台刚校准完两小时内门保真度亮眼、可每天要停机重标定四小时的设备，它的长期有效吞吐远低于峰值；报告面向服务的系统能力时，必须把平均无故障时间（MTBF）、平均修复时间（MTTR）、校准占空比和良率漂移一起摊开（完整运维框架见[第 19 章](19-engineering-architecture.md)）。
 
 算能耗同样不能只盯芯片上那几纳瓦的微波脉冲，必须先画清整机系统边界。统一的能源记账公式写作
 
@@ -1298,13 +1326,13 @@ $$
 P_{\mathrm{wall}} = \frac{\dot{Q}_c}{\eta_{\mathrm{tech}}\,\mathrm{COP}_{\mathrm{Carnot}}},
 $$
 
-其中 $\eta_{\mathrm{tech}} \in (0.01, 0.25)$ 是实际制冷机相对卡诺极限的工程效率。越往下走，排走 1 瓦冷端热量的室温电费越贵得惊人：典型工程墙插比在 **$50\,\mathrm{K}$ 级约 $20\text{--}50\,\mathrm{W}_{\text{电}}/\mathrm{W}_{\text{冷}}$**、**$4\,\mathrm{K}$ 脉管级约 $500\text{--}1{,}000$**、而到 **$10\text{--}20\,\mathrm{mK}$ 混合室级飙升至 $10^6\text{--}10^7$**（各级商用稀释制冷机的精确冷量表、线缆导热与衰减器热预算见[第 19 章 §4](19-engineering-architecture.md)）。因此，百万比特超导机绝不可能沿用百比特“每比特插多根室温同轴线直通 20 mK”的旧方案，必须依赖高倍复用、低温光互连或极低功耗低温电子学。
+其中 $\eta_{\mathrm{tech}} \in (0.01, 0.25)$ 是实际制冷机相对卡诺极限的工程效率。越往下走，排走 1 瓦冷端热量的室温电费代价陡增：典型工程墙插比在 **$50\,\mathrm{K}$ 级约 $20\text{--}50\,\mathrm{W}_{\text{电}}/\mathrm{W}_{\text{冷}}$**、**$4\,\mathrm{K}$ 脉管级约 $500\text{--}1{,}000$**、而到 **$10\text{--}20\,\mathrm{mK}$ 混合室级飙升至 $10^6\text{--}10^7$**（各级商用稀释制冷机的精确冷量表、线缆导热与衰减器热预算见[第 19 章 §4](19-engineering-architecture.md)）。因此，百万比特超导机绝不可能沿用百比特“每比特插多根室温同轴线直通 20 mK”的旧方案，必须依赖高倍复用、低温光互连或极低功耗低温电子学。
 
 2. **控制电子学功耗（$P_{\mathrm{control}}$）**：当前实验室室温微波机架折合每比特功耗约 $1\text{--}10\,\mathrm{W/qubit}$。若不做高度复用而直接堆到 $1.12\times 10^6$ 比特，光控制机架就要吃掉 **$1.1\text{--}11\,\mathrm{MW}$**！把控制芯片挪到 $4\,\mathrm{K}$ 低温 CMOS 里虽能削减长同轴线束，但 $4\,\mathrm{K}$ 级自带 $500\text{--}1{,}000\times$ 制冷倍增惩罚——如果低温芯片每比特耗电 $1\,\mathrm{mW}$，乘以 $1{,}000\times$ 制冷账单照样折合 $1\,\mathrm{W/qubit}$ 室温电耗。只有把低温控制压到亚毫瓦（如 $0.05\text{--}0.2\,\mathrm{mW/qubit}$）并配合高复用度，才真正在总功耗上跑赢室温方案。
 
 3. **经典实时解码集群功耗（$P_{\mathrm{classical}}$）**：为了实时吞下 §8.3 算出的 $560\,\mathrm{Gbit/s}$ 纠错症状流，用通用 CPU/GPU 服务器或传统 FPGA 板卡堆砌，功耗可达数百千瓦至兆瓦级；而如果采用 Riverlane 实测的 Collision Clustering 定制 ASIC（1,057 比特表面码仅耗 $8\,\mathrm{mW}$），线性外推到 $1.12\times 10^6$ 比特（约 $1{,}060$ 个等效解码单元），**核心解码硅片本体功耗竟然只有约 $8.5\,\mathrm{W}$**！当然，诚实算账必须把片外高速 SerDes I/O、多芯片交换矩阵、主控编排与板级供电损耗一并加回来，总计仍会落在数千瓦至数十千瓦量级。
 
-现在把 §8.3 的**第 9 步**彻底合龙：假定机房电源使用效率 $\mathrm{PUE} = 1.2$（即其余设施功率为 IT 与制冷控制之和的 $20\%$），按 $E_{\mathrm{solution}} = P_{\mathrm{tot}}\cdot t_{\mathrm{wall,eff}}$ 计入单次可靠答案的有效墙钟时间 $t_{\mathrm{wall,eff}} = 1{,}426\,\mathrm{s}$（此处 $t_{\mathrm{wall,eff}}$ 已包含单次成功率 $P_{\mathrm{success}} = 0.99$ 与长期可用率 $\eta_{\mathrm{avail}} = 0.85$，相当于按保守口径将维护停机期也按整机均值功率计费；更精细的空闲基荷与边际功耗积分拆分见[第 19 章 §12.2](19-engineering-architecture.md)），两种工程配置的总功率与单解能耗如下：
+现在把 §8.3 的**第 9 步**合龙：假定机房电源使用效率 $\mathrm{PUE} = 1.2$（即其余设施功率为 IT 与制冷控制之和的 $20\%$），按 $E_{\mathrm{solution}} = P_{\mathrm{tot}}\cdot t_{\mathrm{wall,eff}}$ 计入单次可靠答案的有效墙钟时间 $t_{\mathrm{wall,eff}} = 1{,}426\,\mathrm{s}$（此处 $t_{\mathrm{wall,eff}}$ 已包含单次成功率 $P_{\mathrm{success}} = 0.99$ 与长期可用率 $\eta_{\mathrm{avail}} = 0.85$，相当于按保守口径将维护停机期也按整机均值功率计费；更精细的空闲基荷与边际功耗积分拆分见[第 19 章 §11.2](19-engineering-architecture.md)），两种工程配置的总功率与单解能耗如下：
 
 | 工程配置方案（$1.12\times 10^6$ 物理比特） | 制冷 $P_{\mathrm{cryo}}$ | 控制 $P_{\mathrm{control}}$ | 解码与经典 $P_{\mathrm{classical}}$ | 含 PUE 总功率 $P_{\mathrm{tot}}$ | 单次可靠解能耗 $E_{\mathrm{solution}}$ |
 | :--- | ---: | ---: | ---: | ---: | ---: |
@@ -1315,13 +1343,13 @@ $$
 
 ---
 
-## 9. 批内漂移统计陷阱与基准审读专有核查
+## 9. 进阶选读：批内漂移统计陷阱与基准审读专有核查
 
 ### 9.1 为什么一万次采样不一定有一万份独立信息
 
 哪怕硬件、任务和边界全对齐了，最后一步统计分析仍然藏着一个极隐蔽的陷阱：**把一整批随时间漂移的采样数据，当成相互独立的抛硬币来算误差条。**
 
-来算一个直击要害的合成漂移模型。假设实验分 $B = 100$ 批收集数据，每批测 $m = 100$ 次，总共收集了 $Bm = 10{,}000$ 次测量。每批开始时，由于环境慢漂移，整批的成功概率 $P_b$ 独立且等概率地落在 $0.4$ 或 $0.6$（总平均值 $p = 1/2$）；给定该批的 $P_b$ 后，批内 $100$ 次测量彼此独立。如果你直接套用教科书的独立二项标准误 $\sqrt{p(1-p)/N}$，会低估多少不确定度？
+来算一个直观的合成漂移模型。假设实验分 $B = 100$ 批收集数据，每批测 $m = 100$ 次，总共收集了 $Bm = 10{,}000$ 次测量。每批开始时，由于环境慢漂移，整批的成功概率 $P_b$ 独立且等概率地落在 $0.4$ 或 $0.6$（总平均值 $p = 1/2$）；给定该批的 $P_b$ 后，批内 $100$ 次测量彼此独立。如果你直接套用教科书的独立二项标准误 $\sqrt{p(1-p)/N}$，会低估多少不确定度？
 
 我们来一步步推导出精确方差。记第 $b$ 批第 $j$ 次结果为 $X_{bj} \in \{0, 1\}$。无条件来看，每次测量成功的概率都是 $\frac{1}{2}(0.4 + 0.6) = 0.5$，所以单个结果的方差是 $\operatorname{Var}(X_{bj}) = p(1-p) = 0.25$。
 
@@ -1364,7 +1392,9 @@ $$
 N_{\mathrm{eff}} = \frac{10{,}000}{4.96} \approx 2{,}016.13\ \text{条独立样本}!
 $$
 
-原始日志里确实躺着一万条数据，并没有删掉任何记录，但慢漂移让批内信息高度冗余，有效独立信息缩水了将近八成。如果你把总采样固定在 10,000 次，却能在物理上让漂移参数每 $m = 10$ 次独立重置（$B = 1{,}000$ 批），方差放大因子就会从 $4.96$ 骤降到 $1 + 9\times 0.04 = 1.36$。当然，现实中的器件漂移跟着物理时间走，单纯给同一串数据重新画批次框不会消除相关性，真正有效的是交错排列不同实验设置、缩短单批时长，并把重标定成本一并记账（详见文末 [`codes/systems/correlated_shots.py`](../codes/systems/correlated_shots.py) 的精确枚举验算，以及 Ball et al. 2016 对时间相关噪声影响 RB 分布的分析）。
+原始日志里确实躺着一万条数据，并没有删掉任何记录，但慢漂移让批内信息高度冗余，有效独立信息缩水了将近八成。如果你把总采样固定在 10,000 次，却能在物理上让漂移参数每 $m = 10$ 次独立重置（$B = 1{,}000$ 批），方差放大因子就会从 $4.96$ 骤降到 $1 + 9\times 0.04 = 1.36$。
+
+当然，现实中的器件漂移跟着物理时间走，单纯给同一串数据重新画批次框不会消除相关性，真正有效的是交错排列不同实验设置、缩短单批时长，并把重标定成本一并记账（详见文末 [`codes/systems/correlated_shots.py`](../codes/systems/correlated_shots.py) 的精确枚举验算，以及 Ball et al. 2016 对时间相关噪声影响 RB 分布的分析）。
 
 为了保证所有基准和实验结果都能被第三方独立复查，每次实验都应留下完整的**可复现实验清单（manifest）**——包括线路与编译代码、随机种子、原始计数、时间戳、后选择规则、软件固件版本、硬件校准快照和统计脚本（具体字段模板与工程流程见[第 14 章](14-compilation-control.md)与[第 15 章](15-practice-research.md)）。
 
@@ -1376,6 +1406,15 @@ $$
 2. **警惕相干平方根鸿沟与 XEB 欺骗边界**：随机均化协议（RB / CB / EPLG）会把相干误差压成 $O(r)$ 而掩盖高达 $O(\sqrt{r})$ 的钻石距离；线性 XEB 不是分布距离，高分无法排除张量网络截断欺骗，结构化算法表现必须用镜像电路与应用套件独立核验；
 3. **捆绑披露后选择接受率、三码距 $\Lambda$ 与在线尾延迟**：报条件保真度必报原始总尝试数与接受率；报“逻辑胜物理”必看三码距指数趋势（$\Lambda > 1$）与公平物理基线；报实时解码器不能只给离线批量均时，必须核对相对 $\tau_{\mathrm{cyc}}$ 的吞吐与相对 $\tau_{\mathrm{react}}$ 的高分位尾延迟；
 4. **锁死容错资源估算的物理假设与同口径能耗边界**：读取百万比特级架构估算时，先查物理错率 $p$、周期 $\tau_{\mathrm{cyc}}$、反应时间 $\tau_{\mathrm{react}}$ 以及是否计入突发关联噪声与制造良率；跨平台对比能效时，两端必须画在同一含制冷、控制、解码与 PUE 的墙插系统边界内。
+
+---
+
+## 本章一页速记卡
+
+- **四级基准分工**：L1 元件层（RB $r = \frac{d-1}{d}(1-\alpha)$ 免疫 SPAM，但对相干误差存在 $\frac{1}{2}\|\mathcal{E}-\mathcal{I}\|_\diamond \le \sqrt{d(d+1)r}$ 平方根鸿沟；GST 打破 SPAM 循环依赖，受限于规范自由度）$\to$ L2 并行层（CB 以 $O(1)$ Pauli 抽样抓全局串扰；LF/EPLG 用 $F_p$ 乘积监控整芯片并锁死 PEC 采样开销 $\gtrsim LF^{-4D}$）$\to$ L3 系统层（QV 受 $2^n$ 墙限，XEB 非分布距离可被欺骗，镜像电路抓结构化相干失效，$\mathrm{CLOPS}_v \neq \mathrm{CLOPS}_h$）$\to$ L4 逻辑与应用层。
+- **逻辑基准核心口径**：扫描多轮次拟合 $1-2q_n = A(1-2\varepsilon_L)^n$；三码距错误抑制因子 $\Lambda = \varepsilon_L(d)/\varepsilon_L(d+2) > 1$；区分终端读错 $q_n = \frac{1-(1-2p)^n}{2}$ 与中途至少错一次 $a_n = 1-(1-p)^n$；配对解码比较须用 McNemar 精确检验；条件保真度必绑定接受率 $R_{\mathrm{useful}} = R\,a$。
+- **实时解码红线**：负载比 $r_{\mathrm{back}} = T_{\mathrm{dec}}/\tau_{\mathrm{cyc}} < 1$（否则 $k$ 层非 Clifford 门触发 Terhal $r_{\mathrm{back}}^k$ 指数积压），且高分位尾延迟须兜在端到端反应时间 $\tau_{\mathrm{react}}$ 内。
+- **九步容错资源账本与能耗**：错误预算拆分 $\to$ $N_T/D_T$ $\to$ 瓦片布局与时空体积不动点反推 $d$ $\to$ 魔法态工厂/MSC 排班与回代 $\to$ 症状带宽 $B_{\mathrm{syn}}$ $\to$ 墙钟时间与同口径卡诺/PUE 墙插能耗 $E_{\mathrm{solution}}$。
 
 ---
 
@@ -1401,9 +1440,9 @@ $$
 
 本章全部数值模型与归档统计核算均配有可离线运行的纯 Python 验证脚本（完整实验指引见[系统实验册](labs/systems.md)）：
 
-- 逻辑存储奇偶翻转闭式解、至少一次事件与反演验算：[`codes/systems/round71_checks.py`](../codes/systems/round71_checks.py)（运行 `--case 11`）；
-- 零失败 Clopper–Pearson 精确双侧/单侧区间核查：[`codes/systems/round72_checks.py`](../codes/systems/round72_checks.py)（运行 `--case 11`），批量解码耗时原记录及分母口径见归档数据 [`stim-matching-results.json`](../codes/systems/sdk/stim-matching-results.json)；
-- 普通与相关解码器逐条配对 McNemar 精确二项检验及 1,000 次单次耗时尾分布核查：[`codes/systems/round73_checks.py`](../codes/systems/round73_checks.py)（运行 `--case 11`）及归档数据 [`qec-grid-results.json`](../codes/systems/sdk73/qec-grid-results.json)；
+- 逻辑存储奇偶翻转闭式解、至少一次事件与反演验算：[逻辑存储奇偶翻转与反演验算脚本](../codes/systems/round71_checks.py)（运行 `--case 11`）；
+- 零失败 Clopper–Pearson 精确双侧/单侧区间核查：[零失败精确置信区间验算脚本](../codes/systems/round72_checks.py)（运行 `--case 11`），批量解码耗时原记录及分母口径见归档数据 [`stim-matching-results.json`](../codes/systems/sdk/stim-matching-results.json)；
+- 普通与相关解码器逐条配对 McNemar 精确二项检验及 1,000 次单次耗时尾分布核查：[配对 McNemar 检验与耗时分位数验算脚本](../codes/systems/round73_checks.py)（运行 `--case 11`）及归档数据 [`qec-grid-results.json`](../codes/systems/sdk73/qec-grid-results.json)；
 - 离散批次魔法态工厂排班与库存约束验证：[`codes/systems/factory_schedule.py`](../codes/systems/factory_schedule.py)；
 - 批内漂移有效样本数缩水（10,000 $\to$ 2,016）的精确混合二项枚举验算：[`codes/systems/correlated_shots.py`](../codes/systems/correlated_shots.py)；
 - 工业级容错算法分解与资源计数开源工具入口：[Qualtran](https://github.com/quantumlib/Qualtran)（分析输出属于理论成本模型估算，不替代硬件实测）。
@@ -1425,9 +1464,10 @@ $$
 - **逻辑基准与实时解码**：
   - B. M. Terhal, [Quantum error correction for quantum memories](https://doi.org/10.1103/RevModPhys.87.307), *Rev. Mod. Phys.* **87**, 307 (2015) [同行评审]；R. Acharya et al., [Suppressing quantum errors by scaling a surface code logical qubit](https://doi.org/10.1038/s41586-022-05434-1), *Nature* **614**, 676–681 (2023) [同行评审]；R. Acharya et al. (Google Willow), [Quantum error correction below the surface code threshold](https://www.nature.com/articles/s41586-024-08449-y), *Nature* **638**, 920–926 (2025) [同行评审]。
   - L. Skoric et al., [Parallel window decoding enables scalable fault tolerant quantum computation](https://doi.org/10.1038/s41467-023-42482-1), *Nat. Commun.* **14**, 7040 (2023) [同行评审]；J. Bausch et al., [Learning high-accuracy error decoding for quantum processors](https://doi.org/10.1038/s41586-024-08148-8), *Nature* **635**, 834–840 (2024) [同行评审]；Google DeepMind & Google Quantum AI, [AlphaQubit 2](https://arxiv.org/abs/2512.07737) (Dec 2025) [预印本]；B. Barber et al. (Riverlane), [A real-time, scalable, fast and highly resource efficient decoder for a quantum computer](https://arxiv.org/abs/2309.05558), *Nature Electronics* (2025) [同行评审]；T. Müller et al., [Relay-BP](https://arxiv.org/abs/2506.01779) (2025) 及 M. Maurer et al. (`arXiv:2510.21600`, 2025) [预印本]。
-  - D. Bluvstein et al., [Logical quantum processor based on reconfigurable atom arrays](https://doi.org/10.1038/s41586-023-06927-3), *Nature* **626**, 58–65 (2024) [同行评审]；A. Paetznick et al., [Improved quantum processor logical error rates via correction and detection](https://doi.org/10.1038/s41586-026-10628-y), *Nature* **654**, 349–355 (2026) [同行评审]。
+  - D. Bluvstein et al., [Logical quantum processor based on reconfigurable atom arrays](https://doi.org/10.1038/s41586-023-06927-3), *Nature* **626**, 58–65 (2024) [同行评审]；P. Sales Rodriguez et al., *Experimental demonstration of logical magic state distillation*, *Nature* **645**, 620–625 (2025) [同行评审]；H. Zhou et al., *Low-overhead transversal fault tolerance for universal quantum computation*, *Nature* **646**, 303–308 (2025) [同行评审]；D. Bluvstein, A. A. Geim, S. H. Li et al., *A fault-tolerant neutral-atom architecture for universal quantum computation*, *Nature* **649**, 39–46 (2026) [同行评审]。
+  - H. Putterman et al. (AWS Ocelot), [Hardware-efficient quantum error correction via concatenated bosonic qubits](https://www.nature.com/articles/s41586-025-08642-7), *Nature* **638**, 927–934 (2025) [同行评审]；N. Lacroix, A. Bourassa, K. J. Satzinger et al. (Google Quantum AI), *Scaling and logic in the color code on a superconducting quantum processor*, *Nature* **645**, 614–619 (2025) [同行评审]；E. Rosenfeld, C. Gidney, K. J. Satzinger et al., *Magic state cultivation on a superconducting quantum processor*, arXiv:2512.13908 / *Science* (Oct 2026，doi:[10.1126/science.aee7961](https://doi.org/10.1126/science.aee7961)) [同行评审]；A. Paetznick et al., [Improved quantum processor logical error rates via correction and detection](https://doi.org/10.1038/s41586-026-10628-y), *Nature* **654**, 349–355 (2026) [同行评审]。
 - **端到端容错资源估算与整机能效**：
   - A. G. Fowler et al., [Surface codes: Towards practical large-scale quantum computation](https://doi.org/10.1103/PhysRevA.86.032324), *Phys. Rev. A* **86**, 032324 (2012) [同行评审]；D. Litinski, [A Game of Surface Codes](https://doi.org/10.22331/q-2019-03-05-128), *Quantum* **3**, 128 (2019) 与 [Magic State Distillation: Not as Costly as You Think](https://doi.org/10.22331/q-2019-12-02-205), *Quantum* **3**, 205 (2019) [同行评审]。
-  - M. E. Beverland et al., [Assessing requirements to scale to practical quantum advantage](https://arxiv.org/abs/2211.07629) (2022) [预印本 / 开源估算框架]；C. Gidney & M. Ekerå, [How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits](https://doi.org/10.22331/q-2021-04-15-433), *Quantum* **5**, 433 (2021) [同行评审]；C. Gidney, [How to factor 2048 bit RSA integers with less than a million noisy qubits](https://arxiv.org/abs/2505.15917) (2025) [预印本]。
+  - M. E. Beverland et al., [Assessing requirements to scale to practical quantum advantage](https://arxiv.org/abs/2211.07629) (2022) [预印本 / 开源估算框架]；C. Gidney & M. Ekerå, [How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits](https://doi.org/10.22331/q-2021-04-15-433), *Quantum* **5**, 433 (2021) [同行评审]；C. Gidney, [How to factor 2048 bit RSA integers with less than a million noisy qubits](https://arxiv.org/abs/2505.15917) (2025) [预印本]；T. J. Yoder et al., *Tour de gross: A modular quantum computer based on bivariate bicycle codes*, `arXiv:2506.03094` (Jun 2025) [预印本]。
   - M. Reiher et al., [Elucidating reaction mechanisms on quantum computers](https://doi.org/10.1073/pnas.1619152114), *PNAS* **114**, 7555–7560 (2017) [同行评审]；J. Lee et al., [Even more efficient quantum computations of chemistry through tensor hypercontraction](https://doi.org/10.1103/PRXQuantum.2.030305), *PRX Quantum* **2**, 030305 (2021) [同行评审]；I. H. Kim et al., [Fault-tolerant resource estimate for quantum chemical simulations: Case study on Li-ion battery electrolyte molecules](https://doi.org/10.1103/PhysRevResearch.4.023019), *Phys. Rev. Research* **4**, 023019 (2022) [同行评审]。
   - S. Krinner et al., [Engineering cryogenic setups for 100-qubit scale superconducting circuit systems](https://doi.org/10.1140/epjqt/s40507-019-0072-0), *EPJ Quantum Technology* **6**, 2 (2019) [同行评审]；A. Auffèves, [Quantum Technologies Need a Quantum Energy Initiative](https://doi.org/10.1103/PRXQuantum.3.020101), *PRX Quantum* **3**, 020101 (2022) [同行评审]；M. Fellous-Asiani et al., [Optimizing resource efficiencies for scalable full-stack quantum computers](https://doi.org/10.1103/PRXQuantum.4.040319), *PRX Quantum* **4**, 040319 (2023) [同行评审]。

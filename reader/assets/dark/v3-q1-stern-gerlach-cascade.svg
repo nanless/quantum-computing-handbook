@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">Stern–Gerlach 三级级联实验与经典预贴标签假说对照</title>
+  <desc id="desc">上栏展示 8000 个未偏振银原子依次通过竖直 SGz（挡住 z−，留 4000 个 |z+⟩）、水平 SGx（挡住 x−，留 2000 个 |x+⟩）与末级竖直 SGz 的完整原子束与挡板；下栏左图以柱图正面对比经典预贴标签假说预言（100% z+, 0% z−）与量子理论预言（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基原理与相干重聚对照。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.0}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.c5{stroke:#6b4ea8;fill:none}
+.c5-fill{fill:#6b4ea8}
+.c5-txt{fill:#51358a}
+.c5-soft{fill:#efe9fb;stroke:#6b4ea8;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.14}
+.area3{fill:#1e7a5c;fill-opacity:.15}
+.area4{fill:#b57614;fill-opacity:.13}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.4}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.hm-pos1{fill:#1b6ca8;stroke:#ffffff;stroke-width:1.4}
+.hm-pos2{fill:#2d82bf;stroke:#ffffff;stroke-width:1.4}
+.hm-pos3{fill:#f3b562;stroke:#ffffff;stroke-width:1.4}
+.hm-neg3{fill:#d96b57;stroke:#ffffff;stroke-width:1.4}
+.hm-zero{fill:#edf2f7;stroke:#cbd5e1;stroke-width:1.1}
+.hm-hi{fill:none;stroke:#b57614;stroke-width:2.0;stroke-dasharray:4 2}
+.hm-inv{fill:#ffffff;font-size:10.5px;font-weight:700}
+.hm-dark{fill:#13263a;font-size:10.5px;font-weight:700}
+.hm-muted{fill:#64748b;font-size:10.5px;font-weight:500}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .c5{stroke:#b79ef5}
+  .c5-fill{fill:#b79ef5}
+  .c5-txt{fill:#cbb8fa}
+  .c5-soft{fill:#2d2147;stroke:#b79ef5}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.17}
+  .area2{fill:#f28872;fill-opacity:.18}
+  .area3{fill:#5dd1a8;fill-opacity:.18}
+  .area4{fill:#f0ba5a;fill-opacity:.17}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .badge-txt{fill:#0f1720}
+  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
+  .hm-pos2{fill:#3a92cc;stroke:#16222e}
+  .hm-pos3{fill:#b87a24;stroke:#16222e}
+  .hm-neg3{fill:#b84b3a;stroke:#16222e}
+  .hm-zero{fill:#213243;stroke:#354c61}
+  .hm-hi{stroke:#f0ba5a}
+  .hm-inv{fill:#ffffff}
+  .hm-dark{fill:#eef6ff}
+  .hm-muted{fill:#8fa9c2}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">Stern–Gerlach 三级级联实验：Z → X → Z 与经典预贴标签对照</text>
+  <text class="subtitle" x="34" y="76">上：中间插入横向 SGx 筛选会抹去先前的 z+ 记忆；下：经典预贴标签预言 100% : 0% 与量子理论预言 50% : 50% 正面冲突</text>
+  <rect class="panel" x="28" y="94" width="944" height="232" rx="14"/>
+  <path class="phead" d="M 42 95 H 958 Q 971 95 971 108 V 130 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="130" x2="971" y2="130"/>
+  <text class="sec" x="44" y="117">三组级联装置：SGz（竖直）→ SGx（横向）→ SGz（竖直）原子束与挡板</text>
+  <rect class="panel" x="28" y="338" width="534" height="214" rx="14"/>
+  <path class="phead" d="M 42 339 H 548 Q 561 339 561 352 V 374 H 29 V 352 Q 29 339 42 339 Z"/>
+  <line class="grid" x1="29" y1="374" x2="561" y2="374"/>
+  <text class="sec" x="44" y="361">末级 SGz 输出占比对照（以进入第 3 级的 2000 原子为 100%）</text>
+  <rect class="panel" x="578" y="338" width="394" height="214" rx="14"/>
+  <path class="phead" d="M 592 339 H 958 Q 971 339 971 352 V 374 H 579 V 352 Q 579 339 592 339 Z"/>
+  <line class="grid" x1="579" y1="374" x2="971" y2="374"/>
+  <text class="sec" x="594" y="361">互补基机制与无挡板相干重聚对照</text>
+  <rect class="pill" x="44" y="182" width="76" height="50" rx="8"/>
+  <text class="smb" x="82" y="201" text-anchor="middle">银原子源</text>
+  <text class="xs" x="82" y="216" text-anchor="middle">N = 8000</text>
+  <text class="xs" x="82" y="229" text-anchor="middle">未偏振</text>
+  <line class="axis" stroke-width="2.6" x1="120" y1="207" x2="170" y2="207"/>
+  <polygon class="axis-fill" points="170,207 163,210.22 163,203.78"/>
+  <rect class="c1-soft" x="172" y="172" width="84" height="70" rx="9"/>
+  <text class="lblb c1-txt" x="214" y="198" text-anchor="middle">SG<tspan dy="3" font-size="74%">z</tspan><tspan dy="-3">&#8203;</tspan> ①</text>
+  <text class="xs c1-txt" x="214" y="216" text-anchor="middle">竖直磁场</text>
+  <text class="xs" x="214" y="232" text-anchor="middle">按 S<tspan dy="3" font-size="74%">z</tspan><tspan dy="-3">&#8203;</tspan> 分束</text>
+  <path class="c1" stroke-width="2.8" d="M 256 196 L 296 184 L 424 184"/>
+  <polygon class="c1-fill" points="424,184 416.5,187.45 416.5,180.55"/>
+  <text class="smb c1-txt" x="342" y="175" text-anchor="middle">|z+⟩：4000 (N/2)</text>
+  <path class="guide" stroke-width="2.0" d="M 256 218 L 296 244 L 320 244"/>
+  <rect class="wall" x="320" y="230" width="11" height="28" rx="2"/>
+  <text class="xs" x="338" y="248">挡板阻断 z− (4000)</text>
+  <rect class="c4-soft" x="426" y="149" width="88" height="70" rx="9"/>
+  <text class="lblb c4-txt" x="470" y="175" text-anchor="middle">SG<tspan dy="3" font-size="74%">x</tspan><tspan dy="-3">&#8203;</tspan> ②</text>
+  <text class="xs c4-txt" x="470" y="193" text-anchor="middle">横向旋转 90°</text>
+  <text class="xs" x="470" y="209" text-anchor="middle">按 S<tspan dy="3" font-size="74%">x</tspan><tspan dy="-3">&#8203;</tspan> 分束</text>
+  <path class="c4" stroke-width="2.8" d="M 514 174 L 552 164 L 678 164"/>
+  <polygon class="c4-fill" points="678,164 670.5,167.45 670.5,160.55"/>
+  <text class="smb c4-txt" x="596" y="155" text-anchor="middle">|x+⟩：2000 (N/4)</text>
+  <path class="guide" stroke-width="2.0" d="M 514 196 L 552 220 L 576 220"/>
+  <rect class="wall" x="576" y="206" width="11" height="28" rx="2"/>
+  <text class="xs" x="594" y="224">挡板阻断 x− (2000)</text>
+  <rect class="c1-soft" x="680" y="139" width="84" height="70" rx="9"/>
+  <text class="lblb c1-txt" x="722" y="165" text-anchor="middle">SG<tspan dy="3" font-size="74%">z</tspan><tspan dy="-3">&#8203;</tspan> ③</text>
+  <text class="xs c1-txt" x="722" y="183" text-anchor="middle">竖直复测</text>
+  <text class="xs" x="722" y="199" text-anchor="middle">检验 z 成分</text>
+  <path class="c1" stroke-width="2.6" d="M 764 162 L 802 152 L 832 152"/>
+  <polygon class="c1-fill" points="832,152 825,155.22 825,148.78"/>
+  <rect class="c1-soft" x="836" y="137" width="122" height="30" rx="7"/>
+  <text class="xsb c1-txt" x="897" y="156" text-anchor="middle">z+：1000 (50%)</text>
+  <path class="c2" stroke-width="2.8" stroke-dasharray="7 3" d="M 764 186 L 802 204 L 832 204"/>
+  <polygon class="c2-fill" points="832,204 824.5,207.45 824.5,200.55"/>
+  <rect class="c2-soft" x="836" y="189" width="122" height="30" rx="7"/>
+  <text class="xsb c2-txt" x="897" y="208" text-anchor="middle">z−：1000 (50% 复活)</text>
+  <rect class="note" x="44" y="278" width="912" height="34" rx="8"/>
+  <text class="sm" x="500" y="299" text-anchor="middle">条件概率链：8000 未偏振 ─(×1/2)→ 4000 |z+⟩ ─(×1/2)→ 2000 |x+⟩ ─(×1/2)→ 1000 |z+⟩ + 1000 |z−⟩（相对总束各 N/8）</text>
+  <line class="grid" x1="104" y1="508" x2="536" y2="508"/>
+  <text class="sm" x="96" y="512" text-anchor="end">0%</text>
+  <line class="grid" x1="104" y1="452" x2="536" y2="452"/>
+  <text class="sm" x="96" y="456" text-anchor="end">50%</text>
+  <line class="grid" x1="104" y1="396" x2="536" y2="396"/>
+  <text class="sm" x="96" y="400" text-anchor="end">100%</text>
+  <line class="axis" x1="104" y1="508" x2="536" y2="508"/>
+  <line class="axis" x1="104" y1="508" x2="104" y2="388"/>
+  <polygon class="axis-fill" points="104,388 106.99,394.5 101.01,394.5"/>
+  <text class="sm" x="50" y="452" text-anchor="middle" transform="rotate(-90 50 452)">末级条件占比 (%)</text>
+  <rect class="c2-soft" x="156" y="396" width="54" height="112" rx="5"/>
+  <rect fill="url(#hatch-red)" x="156" y="396" width="54" height="112" rx="5" opacity="0.38"/>
+  <text class="xsb c2-txt" x="183" y="391" text-anchor="middle">100% (2000)</text>
+  <rect class="c1-fill" x="222" y="452" width="54" height="56" rx="5"/>
+  <text class="xsb c1-txt" x="249" y="444" text-anchor="middle">50% (1000)</text>
+  <text class="smb" x="216" y="530" text-anchor="middle">末级 z+ 端口</text>
+  <line class="c2" stroke-width="3.2" x1="358" y1="507" x2="412" y2="507"/>
+  <text class="xsb c2-txt" x="385" y="497" text-anchor="middle">0% (0)</text>
+  <rect class="c1-fill" x="424" y="452" width="54" height="56" rx="5"/>
+  <text class="xsb c1-txt" x="451" y="444" text-anchor="middle">50% (1000)</text>
+  <text class="smb" x="418" y="530" text-anchor="middle">末级 z− 端口</text>
+  <rect class="pill-bg" x="344" y="382" width="198" height="44" rx="7"/>
+  <rect class="c2-soft" x="354" y="390" width="14" height="10" rx="2"/>
+  <text class="xs c2-txt" x="374" y="399">经典预贴标签 (100% / 0%)</text>
+  <rect class="c1-fill" x="354" y="408" width="14" height="10" rx="2"/>
+  <text class="xs c1-txt" x="374" y="417">量子理论预言 (50% / 50%)</text>
+  <rect class="c1-soft" x="594" y="388" width="362" height="72" rx="9"/>
+  <text class="smb c1-txt" x="608" y="408">1. 互补基拆散了旧记忆</text>
+  <text class="xs" x="608" y="427">|x+⟩ = (|z+⟩ + |z−⟩)/√2，满足 |⟨z±|x+⟩|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 1/2</text>
+  <text class="xs" x="608" y="445">强制筛选到 x+ 态后，z 方向结果立刻重新均分</text>
+  <rect class="c3-soft" x="594" y="468" width="362" height="72" rx="9"/>
+  <text class="smb c3-txt" x="608" y="488">2. 对照：撤掉 x− 挡板并相干重聚</text>
+  <text class="xs" x="608" y="507">(|x+⟩⟨x+| + |x−⟩⟨x−|)|z+⟩ = I|z+⟩ = |z+⟩</text>
+  <text class="xs" x="608" y="525">4000 原子 100% 重回 z+（与 MZI 路径干涉完全同源）</text>
+</svg>

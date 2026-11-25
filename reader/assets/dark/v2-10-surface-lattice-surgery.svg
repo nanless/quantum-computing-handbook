@@ -1,0 +1,324 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">d = 3 旋转表面码结构与晶格手术联合测量示意</title>
+  <desc id="desc">左面板展示 [[9, 1, 3]] 旋转表面码棋盘格：9 个数据量子比特、4 个 Z 型稳定子面（蓝斜纹，含 2 个四体面与 2 个二体边帽）、4 个 X 型稳定子面（红反斜纹，含 2 个四体面与 2 个二体边帽）以及逻辑算符链 Z̄ = Z₃Z₆Z₉（沿 Z 边界）与 X̄ = X₁X₂X₃（沿 X 边界）。右面板分三步示意两块 d = 3 补丁的晶格手术：先面对面放置 Z 边界、再合并边界开启接缝 Z 稳定子（其乘积等于 Z̄₁Z̄₂）、最后分裂回两块独立补丁。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:14px;font-weight:400;fill:#3e566d}
+.sec{font-size:15px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:13px;font-weight:400;fill:#3e566d}
+.smb{font-size:13px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:2}
+.badge-txt{fill:#ffffff;font-size:13px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">d = 3 旋转表面码结构与晶格手术（Lattice Surgery）</text>
+  <text class="subtitle" x="34" y="79">左：9 数据比特、4 X 稳定子面与 4 Z 稳定子面（[[9, 1, 3]]）；右：合并测联合 Z̄₁Z̄₂ 再分裂的三步流程</text>
+  <rect class="panel" x="28" y="96" width="444" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 458 Q 471 97 471 110 V 135 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="135" x2="471" y2="135"/>
+  <text class="sec" x="44" y="121">d = 3 旋转表面码棋盘格（[[9, 1, 3]]）</text>
+  <rect class="panel" x="488" y="96" width="484" height="456" rx="14"/>
+  <path class="phead" d="M 502 97 H 958 Q 971 97 971 110 V 135 H 489 V 110 Q 489 97 502 97 Z"/>
+  <line class="grid" x1="489" y1="135" x2="971" y2="135"/>
+  <text class="sec" x="504" y="121">晶格手术：合并测 Z̄₁Z̄₂ → 分裂（非等比例示意）</text>
+  <rect class="c1-soft" x="148" y="206" width="92" height="92"/>
+  <rect fill="url(#hatch-blue)" x="148" y="206" width="92" height="92"/>
+  <text class="lblb c1-txt" x="194" y="257" text-anchor="middle">Z₁</text>
+  <rect class="c1-soft" x="240" y="298" width="92" height="92"/>
+  <rect fill="url(#hatch-blue)" x="240" y="298" width="92" height="92"/>
+  <text class="lblb c1-txt" x="286" y="349" text-anchor="middle">Z₂</text>
+  <rect class="c2-soft" x="240" y="206" width="92" height="92"/>
+  <rect fill="url(#hatch-red)" x="240" y="206" width="92" height="92"/>
+  <text class="lblb c2-txt" x="286" y="257" text-anchor="middle">X₁</text>
+  <rect class="c2-soft" x="148" y="298" width="92" height="92"/>
+  <rect fill="url(#hatch-red)" x="148" y="298" width="92" height="92"/>
+  <text class="lblb c2-txt" x="194" y="349" text-anchor="middle">X₂</text>
+  <path class="c1-soft" d="M 240 206 A 46 34 0 0 1 332 206 Z"/><path fill="url(#hatch-blue)" d="M 240 206 A 46 34 0 0 1 332 206 Z"/>
+  <text class="smb c1-txt" x="286" y="196" text-anchor="middle">Z₃</text>
+  <path class="c1-soft" d="M 148 390 A 46 34 0 0 0 240 390 Z"/><path fill="url(#hatch-blue)" d="M 148 390 A 46 34 0 0 0 240 390 Z"/>
+  <text class="smb c1-txt" x="194" y="411" text-anchor="middle">Z₄</text>
+  <path class="c2-soft" d="M 148 206 A 34 46 0 0 0 148 298 Z"/><path fill="url(#hatch-red)" d="M 148 206 A 34 46 0 0 0 148 298 Z"/>
+  <text class="smb c2-txt" x="131" y="257" text-anchor="middle">X₃</text>
+  <path class="c2-soft" d="M 332 298 A 34 46 0 0 1 332 390 Z"/><path fill="url(#hatch-red)" d="M 332 298 A 34 46 0 0 1 332 390 Z"/>
+  <text class="smb c2-txt" x="349" y="349" text-anchor="middle">X₄</text>
+  <line class="c2" stroke-width="5" stroke-dasharray="10 6" stroke-linecap="round" x1="148" y1="206" x2="332" y2="206"/>
+  <line class="c1" stroke-width="5" stroke-linecap="round" x1="332" y1="206" x2="332" y2="390"/>
+  <circle class="data-node" cx="148" cy="206" r="12.5"/>
+  <text class="smb" x="148" y="210.5" text-anchor="middle">1</text>
+  <circle class="data-node" cx="240" cy="206" r="12.5"/>
+  <text class="smb" x="240" y="210.5" text-anchor="middle">2</text>
+  <circle class="data-node" cx="332" cy="206" r="12.5"/>
+  <text class="smb" x="332" y="210.5" text-anchor="middle">3</text>
+  <circle class="data-node" cx="148" cy="298" r="12.5"/>
+  <text class="smb" x="148" y="302.5" text-anchor="middle">4</text>
+  <circle class="data-node" cx="240" cy="298" r="12.5"/>
+  <text class="smb" x="240" y="302.5" text-anchor="middle">5</text>
+  <circle class="data-node" cx="332" cy="298" r="12.5"/>
+  <text class="smb" x="332" y="302.5" text-anchor="middle">6</text>
+  <circle class="data-node" cx="148" cy="390" r="12.5"/>
+  <text class="smb" x="148" y="394.5" text-anchor="middle">7</text>
+  <circle class="data-node" cx="240" cy="390" r="12.5"/>
+  <text class="smb" x="240" y="394.5" text-anchor="middle">8</text>
+  <circle class="data-node" cx="332" cy="390" r="12.5"/>
+  <text class="smb" x="332" y="394.5" text-anchor="middle">9</text>
+  <text class="smb c2-txt" x="168" y="184" text-anchor="middle">逻辑 X̄ = X₁X₂X₃</text>
+  <text class="smb c1-txt" x="380" y="256" text-anchor="middle">逻辑 Z̄</text>
+  <text class="sm c1-txt" x="380" y="274" text-anchor="middle">Z₃Z₆Z₉</text>
+  <text class="sm" x="94" y="348" text-anchor="middle">Z 边界</text>
+  <text class="sm" x="286" y="414" text-anchor="middle">X 边界</text>
+  <rect class="pill" x="44" y="450" width="412" height="86" rx="10"/>
+  <rect class="c1-soft" x="58" y="464" width="18" height="14" rx="2"/>
+  <rect fill="url(#hatch-blue)" x="58" y="464" width="18" height="14" rx="2"/>
+  <text class="sm" x="82" y="476">4 个 Z 稳定子面</text>
+  <rect class="c2-soft" x="196" y="464" width="18" height="14" rx="2"/>
+  <rect fill="url(#hatch-red)" x="196" y="464" width="18" height="14" rx="2"/>
+  <text class="sm" x="220" y="476">4 个 X 稳定子面</text>
+  <circle class="data-node" cx="348" cy="471" r="7"/>
+  <text class="sm" x="362" y="476">9 数据比特</text>
+  <line class="c1" stroke-width="4" x1="58" y1="504" x2="86" y2="504"/>
+  <text class="sm" x="94" y="509">实线：逻辑 Z̄（权 3）</text>
+  <line class="c2" stroke-width="4" stroke-dasharray="8 4" x1="242" y1="504" x2="270" y2="504"/>
+  <text class="sm" x="278" y="509">虚线：逻辑 X̄（权 3）</text>
+  <text class="sm" x="58" y="529">所有 X/Z 稳定子两两对易；X̄ 与 Z̄ 仅交于比特 3（反对易）</text>
+  <rect class="pill" x="504" y="144" width="452" height="118" rx="10"/>
+  <text class="smb" x="518" y="162">① 分离态：两块独立 d = 3 逻辑块（2 逻辑比特）</text>
+  <rect class="c1-soft" x="524" y="180" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="524" y="180" width="23" height="23"/>
+  <rect class="c2-soft" x="547" y="180" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="547" y="180" width="23" height="23"/>
+  <rect class="c2-soft" x="524" y="203" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="524" y="203" width="23" height="23"/>
+  <rect class="c1-soft" x="547" y="203" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="547" y="203" width="23" height="23"/>
+  <path class="c1-soft" d="M 547 180 A 11.5 9.2 0 0 1 570 180 Z"/><path fill="url(#hatch-blue)" d="M 547 180 A 11.5 9.2 0 0 1 570 180 Z"/>
+  <path class="c1-soft" d="M 524 226 A 11.5 9.2 0 0 0 547 226 Z"/><path fill="url(#hatch-blue)" d="M 524 226 A 11.5 9.2 0 0 0 547 226 Z"/>
+  <path class="c2-soft" d="M 524 180 A 9.2 11.5 0 0 0 524 203 Z"/><path fill="url(#hatch-red)" d="M 524 180 A 9.2 11.5 0 0 0 524 203 Z"/>
+  <path class="c2-soft" d="M 570 203 A 9.2 11.5 0 0 1 570 226 Z"/><path fill="url(#hatch-red)" d="M 570 203 A 9.2 11.5 0 0 1 570 226 Z"/>
+  <line class="c1" stroke-width="3.6" x1="570" y1="180" x2="570" y2="226"/>
+  <circle class="data-node" cx="524" cy="180" r="3.6"/>
+  <circle class="data-node" cx="547" cy="180" r="3.6"/>
+  <circle class="data-node" cx="570" cy="180" r="3.6"/>
+  <circle class="data-node" cx="524" cy="203" r="3.6"/>
+  <circle class="data-node" cx="547" cy="203" r="3.6"/>
+  <circle class="data-node" cx="570" cy="203" r="3.6"/>
+  <circle class="data-node" cx="524" cy="226" r="3.6"/>
+  <circle class="data-node" cx="547" cy="226" r="3.6"/>
+  <circle class="data-node" cx="570" cy="226" r="3.6"/>
+  <text class="smb" x="547" y="250.2" text-anchor="middle">块 1（L₁）</text>
+  <rect class="c2-soft" x="616" y="180" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="616" y="180" width="23" height="23"/>
+  <rect class="c1-soft" x="639" y="180" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="639" y="180" width="23" height="23"/>
+  <rect class="c1-soft" x="616" y="203" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="616" y="203" width="23" height="23"/>
+  <rect class="c2-soft" x="639" y="203" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="639" y="203" width="23" height="23"/>
+  <path class="c1-soft" d="M 616 180 A 11.5 9.2 0 0 1 639 180 Z"/><path fill="url(#hatch-blue)" d="M 616 180 A 11.5 9.2 0 0 1 639 180 Z"/>
+  <path class="c1-soft" d="M 639 226 A 11.5 9.2 0 0 0 662 226 Z"/><path fill="url(#hatch-blue)" d="M 639 226 A 11.5 9.2 0 0 0 662 226 Z"/>
+  <path class="c2-soft" d="M 616 203 A 9.2 11.5 0 0 0 616 226 Z"/><path fill="url(#hatch-red)" d="M 616 203 A 9.2 11.5 0 0 0 616 226 Z"/>
+  <path class="c2-soft" d="M 662 180 A 9.2 11.5 0 0 1 662 203 Z"/><path fill="url(#hatch-red)" d="M 662 180 A 9.2 11.5 0 0 1 662 203 Z"/>
+  <line class="c1" stroke-width="3.6" x1="616" y1="180" x2="616" y2="226"/>
+  <circle class="data-node" cx="616" cy="180" r="3.6"/>
+  <circle class="data-node" cx="639" cy="180" r="3.6"/>
+  <circle class="data-node" cx="662" cy="180" r="3.6"/>
+  <circle class="data-node" cx="616" cy="203" r="3.6"/>
+  <circle class="data-node" cx="639" cy="203" r="3.6"/>
+  <circle class="data-node" cx="662" cy="203" r="3.6"/>
+  <circle class="data-node" cx="616" cy="226" r="3.6"/>
+  <circle class="data-node" cx="639" cy="226" r="3.6"/>
+  <circle class="data-node" cx="662" cy="226" r="3.6"/>
+  <text class="smb" x="639" y="250.2" text-anchor="middle">块 2（L₂）</text>
+  <text class="sm" x="694" y="196">面对面放置两块补丁的 Z 边界</text>
+  <text class="sm c1-txt" x="694" y="218">两侧边各承载逻辑 Z̄₁ 与 Z̄₂</text>
+  <text class="sm" x="694" y="240">共 18 数据比特、16 个稳定子</text>
+  <line class="axis" x1="594" y1="263" x2="594" y2="276"/>
+  <polygon class="axis-fill" points="594,278 590.88,271.5 597.12,271.5"/>
+  <rect class="note" x="504" y="280" width="452" height="122" rx="10"/>
+  <text class="smb" x="518" y="298">② 边界合并：开启接缝稳定子（维持 d = 3 轮容错测）</text>
+  <rect class="c1-soft" x="524" y="316" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="524" y="316" width="23" height="23"/>
+  <rect class="c2-soft" x="547" y="316" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="547" y="316" width="23" height="23"/>
+  <rect class="c2-soft" x="524" y="339" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="524" y="339" width="23" height="23"/>
+  <rect class="c1-soft" x="547" y="339" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="547" y="339" width="23" height="23"/>
+  <path class="c1-soft" d="M 547 316 A 11.5 9.2 0 0 1 570 316 Z"/><path fill="url(#hatch-blue)" d="M 547 316 A 11.5 9.2 0 0 1 570 316 Z"/>
+  <path class="c1-soft" d="M 524 362 A 11.5 9.2 0 0 0 547 362 Z"/><path fill="url(#hatch-blue)" d="M 524 362 A 11.5 9.2 0 0 0 547 362 Z"/>
+  <path class="c2-soft" d="M 524 316 A 9.2 11.5 0 0 0 524 339 Z"/><path fill="url(#hatch-red)" d="M 524 316 A 9.2 11.5 0 0 0 524 339 Z"/>
+  <circle class="data-node" cx="524" cy="316" r="3.6"/>
+  <circle class="data-node" cx="547" cy="316" r="3.6"/>
+  <circle class="data-node" cx="570" cy="316" r="3.6"/>
+  <circle class="data-node" cx="524" cy="339" r="3.6"/>
+  <circle class="data-node" cx="547" cy="339" r="3.6"/>
+  <circle class="data-node" cx="570" cy="339" r="3.6"/>
+  <circle class="data-node" cx="524" cy="362" r="3.6"/>
+  <circle class="data-node" cx="547" cy="362" r="3.6"/>
+  <circle class="data-node" cx="570" cy="362" r="3.6"/>
+  <text class="smb" x="547" y="386.2" text-anchor="middle">合并后</text>
+  <rect class="c2-soft" x="593" y="316" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="593" y="316" width="23" height="23"/>
+  <rect class="c1-soft" x="616" y="316" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="616" y="316" width="23" height="23"/>
+  <rect class="c1-soft" x="593" y="339" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="593" y="339" width="23" height="23"/>
+  <rect class="c2-soft" x="616" y="339" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="616" y="339" width="23" height="23"/>
+  <path class="c1-soft" d="M 593 316 A 11.5 9.2 0 0 1 616 316 Z"/><path fill="url(#hatch-blue)" d="M 593 316 A 11.5 9.2 0 0 1 616 316 Z"/>
+  <path class="c1-soft" d="M 616 362 A 11.5 9.2 0 0 0 639 362 Z"/><path fill="url(#hatch-blue)" d="M 616 362 A 11.5 9.2 0 0 0 639 362 Z"/>
+  <path class="c2-soft" d="M 639 316 A 9.2 11.5 0 0 1 639 339 Z"/><path fill="url(#hatch-red)" d="M 639 316 A 9.2 11.5 0 0 1 639 339 Z"/>
+  <circle class="data-node" cx="593" cy="316" r="3.6"/>
+  <circle class="data-node" cx="616" cy="316" r="3.6"/>
+  <circle class="data-node" cx="639" cy="316" r="3.6"/>
+  <circle class="data-node" cx="593" cy="339" r="3.6"/>
+  <circle class="data-node" cx="616" cy="339" r="3.6"/>
+  <circle class="data-node" cx="639" cy="339" r="3.6"/>
+  <circle class="data-node" cx="593" cy="362" r="3.6"/>
+  <circle class="data-node" cx="616" cy="362" r="3.6"/>
+  <circle class="data-node" cx="639" cy="362" r="3.6"/>
+  <text class="smb" x="616" y="386.2" text-anchor="middle">1 逻辑块</text>
+  <rect class="c3-soft" stroke-width="2.0" x="570" y="316" width="23" height="23"/>
+  <rect fill="url(#hatch-green)" x="570" y="316" width="23" height="23"/>
+  <text class="smb c3-txt" x="581.5" y="332" text-anchor="middle">Z</text>
+  <rect class="c2-soft" stroke-width="1.8" x="570" y="339" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="570" y="339" width="23" height="23"/>
+  <text class="sm c2-txt" x="581.5" y="355" text-anchor="middle">X</text>
+  <path class="c3-soft" stroke-width="2" d="M 570 362 A 11.5 9.2 0 0 0 593 362 Z"/>
+  <path fill="url(#hatch-green)" d="M 570 362 A 11.5 9.2 0 0 0 593 362 Z"/>
+  <circle class="data-node" cx="570" cy="316" r="3.4"/>
+  <circle class="data-node" cx="593" cy="316" r="3.4"/>
+  <circle class="data-node" cx="570" cy="339" r="3.4"/>
+  <circle class="data-node" cx="593" cy="339" r="3.4"/>
+  <circle class="data-node" cx="570" cy="362" r="3.4"/>
+  <circle class="data-node" cx="593" cy="362" r="3.4"/>
+  <text class="smb c3-txt" x="676" y="328">新接缝 Z 面乘积 = Z̄₁Z̄₂</text>
+  <text class="sm" x="676" y="349">读出联合本征值 m = ±1（不读单块 Z̄）</text>
+  <text class="sm" x="676" y="370">独立稳定子增至 17 个 → 1 逻辑比特</text>
+  <text class="sm" x="676" y="391">合并 X 面由原两二体 X 帽相乘决定</text>
+  <line class="axis" x1="594" y1="403" x2="594" y2="416"/>
+  <polygon class="axis-fill" points="594,418 590.88,411.5 597.12,411.5"/>
+  <rect class="pill" x="504" y="420" width="452" height="118" rx="10"/>
+  <text class="smb" x="518" y="438">③ 重新分裂：停测接缝 Z，恢复各自独立边界</text>
+  <rect class="c1-soft" x="524" y="456" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="524" y="456" width="23" height="23"/>
+  <rect class="c2-soft" x="547" y="456" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="547" y="456" width="23" height="23"/>
+  <rect class="c2-soft" x="524" y="479" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="524" y="479" width="23" height="23"/>
+  <rect class="c1-soft" x="547" y="479" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="547" y="479" width="23" height="23"/>
+  <path class="c1-soft" d="M 547 456 A 11.5 9.2 0 0 1 570 456 Z"/><path fill="url(#hatch-blue)" d="M 547 456 A 11.5 9.2 0 0 1 570 456 Z"/>
+  <path class="c1-soft" d="M 524 502 A 11.5 9.2 0 0 0 547 502 Z"/><path fill="url(#hatch-blue)" d="M 524 502 A 11.5 9.2 0 0 0 547 502 Z"/>
+  <path class="c2-soft" d="M 524 456 A 9.2 11.5 0 0 0 524 479 Z"/><path fill="url(#hatch-red)" d="M 524 456 A 9.2 11.5 0 0 0 524 479 Z"/>
+  <path class="c2-soft" d="M 570 479 A 9.2 11.5 0 0 1 570 502 Z"/><path fill="url(#hatch-red)" d="M 570 479 A 9.2 11.5 0 0 1 570 502 Z"/>
+  <circle class="data-node" cx="524" cy="456" r="3.6"/>
+  <circle class="data-node" cx="547" cy="456" r="3.6"/>
+  <circle class="data-node" cx="570" cy="456" r="3.6"/>
+  <circle class="data-node" cx="524" cy="479" r="3.6"/>
+  <circle class="data-node" cx="547" cy="479" r="3.6"/>
+  <circle class="data-node" cx="570" cy="479" r="3.6"/>
+  <circle class="data-node" cx="524" cy="502" r="3.6"/>
+  <circle class="data-node" cx="547" cy="502" r="3.6"/>
+  <circle class="data-node" cx="570" cy="502" r="3.6"/>
+  <text class="smb" x="547" y="526.2" text-anchor="middle">块 1（L₁′）</text>
+  <rect class="c2-soft" x="616" y="456" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="616" y="456" width="23" height="23"/>
+  <rect class="c1-soft" x="639" y="456" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="639" y="456" width="23" height="23"/>
+  <rect class="c1-soft" x="616" y="479" width="23" height="23"/>
+  <rect fill="url(#hatch-blue)" x="616" y="479" width="23" height="23"/>
+  <rect class="c2-soft" x="639" y="479" width="23" height="23"/>
+  <rect fill="url(#hatch-red)" x="639" y="479" width="23" height="23"/>
+  <path class="c1-soft" d="M 616 456 A 11.5 9.2 0 0 1 639 456 Z"/><path fill="url(#hatch-blue)" d="M 616 456 A 11.5 9.2 0 0 1 639 456 Z"/>
+  <path class="c1-soft" d="M 639 502 A 11.5 9.2 0 0 0 662 502 Z"/><path fill="url(#hatch-blue)" d="M 639 502 A 11.5 9.2 0 0 0 662 502 Z"/>
+  <path class="c2-soft" d="M 616 479 A 9.2 11.5 0 0 0 616 502 Z"/><path fill="url(#hatch-red)" d="M 616 479 A 9.2 11.5 0 0 0 616 502 Z"/>
+  <path class="c2-soft" d="M 662 456 A 9.2 11.5 0 0 1 662 479 Z"/><path fill="url(#hatch-red)" d="M 662 456 A 9.2 11.5 0 0 1 662 479 Z"/>
+  <circle class="data-node" cx="616" cy="456" r="3.6"/>
+  <circle class="data-node" cx="639" cy="456" r="3.6"/>
+  <circle class="data-node" cx="662" cy="456" r="3.6"/>
+  <circle class="data-node" cx="616" cy="479" r="3.6"/>
+  <circle class="data-node" cx="639" cy="479" r="3.6"/>
+  <circle class="data-node" cx="662" cy="479" r="3.6"/>
+  <circle class="data-node" cx="616" cy="502" r="3.6"/>
+  <circle class="data-node" cx="639" cy="502" r="3.6"/>
+  <circle class="data-node" cx="662" cy="502" r="3.6"/>
+  <text class="smb" x="639" y="526.2" text-anchor="middle">块 2（L₂′）</text>
+  <line class="c3" stroke-width="2" stroke-dasharray="5 4" x1="574" y1="479" x2="612" y2="479"/>
+  <text class="smb c3-txt" x="694" y="472">恢复 2 逻辑比特，且已被投影至</text>
+  <text class="smb c3-txt" x="694" y="493">联合本征子空间 Z̄₁Z̄₂ = m</text>
+  <text class="sm" x="694" y="515">单边 X 边帽随机结果记入 Pauli 帧</text>
+</svg>

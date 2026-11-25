@@ -1,12 +1,11 @@
 # 20｜量子传感与量子精密测量：从 Fisher 信息到海森堡极限
 
-先修：[第 03 章](03-multiple-qubits.md)（GHZ 态与偏迹）、[第 05 章](05-noise-channels.md)（纯退相位信道与 Lindblad 衰减）、[Q3](quantum-mechanics/03-levels-control.md)（Ramsey 干涉与 Hahn 自旋回波）、[第 13 章](13-quantum-information.md)（根保真度与几何距离）；第 6 节光学压缩另需[第 18 章](18-channels-capacities-complexity.md)（无量纲正交分量与单模压缩态）。
+先修：[第 03 章](03-multiple-qubits.md)（GHZ 态与偏迹）、[第 05 章](05-noise-channels.md)（纯退相位信道与 Lindblad 衰减）、[Q3](quantum-mechanics/03-levels-control.md)（Ramsey 干涉与 Hahn 自旋回波）。本章第 3.3 节已自洽给出根保真度定义、第 6.2 节已内置单模正交分量与压缩态微卡片，无需先修第五篇；欲系统扩展至一般混态距离与多模连续变量可延伸阅读[第 13 章](13-quantum-information.md)与[第 18 章第 9 节](18-channels-capacities-complexity.md)。阅读路线：**必读 ★** 第 1–2 节、第 3.2–3.3 节、第 4–5 节、第 6.1 节、第 7 节与第 8.1 节；**进阶选读 ☆** 第 3.1 节（SLD 完整证明）、第 6.2 节（光学压缩与 LIGO O4）、第 8.1.3 节（量子照明）与第 8.2 节（HNLS 纠错传感）。
 
-读完前面十余章，你可能产生过一个再自然不过的念头：量子比特对环境磁场、温度、激光相位和杂散电荷如此敏感，稍微碰一下就退相干，难道不是它最大的缺点吗？在量子计算里确实如此，但在**量子传感与量子精密测量**（quantum sensing and quantum metrology）里，工程师偏偏要把这个“缺点”反过来用——既然量子叠加态的相对相位对微弱外场极其敏感，那把环境里待测的磁场、重力梯度或引力波变成系统的演化相位，再通过精密干涉读出来，最脆弱的量子比特就摇身变成了自然界最锋利的探针。
+读完前面十余章，你可能产生过一个自然的问题：量子比特对环境磁场、温度、激光相位和杂散电荷如此敏感，稍微碰一下就退相干，难道不是它最大的缺点吗？在量子计算里确实如此，但在**量子传感与量子精密测量**（quantum sensing and quantum metrology）里，工程师偏偏要把这个特性反过来用——把待测的磁场、重力梯度或引力波变成系统的演化相位，再通过精密干涉读出来，脆弱的量子比特就变成了极高灵敏度的物理探针。与尚需大规模容错才能落地的通用量子计算不同，量子传感已经在引力波天文台、光晶格原子钟和纳米磁成像领域进入实用或工程验证阶段。
 
-量子信息科学与工程公认有三大支柱：**量子计算**追求可编程的容错通用算法，**量子通信与密码**追求物理层密钥分发与纠缠网络，而**量子传感**追求的是对连续物理参数的极限估计精度。与尚需成千上万逻辑比特才能落地的大规模容错计算不同，量子传感已经在引力波天文台、原子钟时间基准和纳米磁成像等前沿领域进入实际运行或实用验证阶段。
-
-先把全章八节的逻辑路线排成一张速查表，方便随时回头定位：
+<details>
+<summary>全章八节路线速览（按需展开）</summary>
 
 | 章节 | 核心问题 | 关键数学量与物理里程碑 |
 | :--- | :--- | :--- |
@@ -17,7 +16,9 @@
 | §5 | 真实马尔可夫退相位来了，GHZ 的加速还剩多少？ | Huelga（1997）坍塌、最优探询时间 $t_{\mathrm{opt}} = 1/(2N\gamma)$、常数因子 $e$ |
 | §6 | 既然 GHZ 太脆，真实实验靠什么稳定突破 SQL？ | 自旋压缩 Wineland 参数 $\xi_R^2$、光学压缩 $e^{-2r}$ 与 LIGO O3/O4 |
 | §7 | 如何屏蔽慢漂移、专听某个频段的微弱交流信号？ | Ramsey 直流传感 vs Hahn / CPMG-$n$ 滤波函数 $\lvert Y(\omega)\rvert^2$ |
-| §8 | 现实四大物理前沿做到哪了？纠错能救回海森堡极限吗？ | NV 色心、Sr 光钟、原子干涉仪、OPM/SQUID 基线、HNLS 条件 |
+| §8 | 现实物理前沿做到哪了？纠错能救回海森堡极限吗？ | NV 色心、Sr 光钟与核钟、原子重力仪、量子照明、HNLS 条件 |
+
+</details>
 
 ---
 
@@ -142,7 +143,7 @@ $$
 F_C^{(\nu)}(\theta) = \nu\, F_C(\theta).
 $$
 
-### 2.2 Cramér–Rao 下界的零跳步证明与适用边界
+### 2.2 Cramér–Rao 下界的完整证明与适用边界
 
 设 $\hat\theta(x)$ 是关于参数 $\theta$ 的任意**局部无偏估计量**（locally unbiased estimator），即在参数工作点 $\theta$ 附近满足期望等于真值：
 
@@ -179,7 +180,7 @@ $$
 1. **渐近可达，有限样本未必可达**：当样本数 $\nu \to \infty$ 时，极大似然估计量（MLE）的方差渐近饱和 CRLB；但在 $\nu$ 很小（例如只测 3 次或 5 次）的有限样本区，CRLB 往往过于乐观，且可能根本不存在能达到它的无偏估计量。
 2. **有偏估计量可局部“越界”但毫无胜算**：如果故意把估计量硬编码为常数 $\hat\theta(x) \equiv 0.5$，它的方差是 $0$，看似“击败”了 CRLB，但当真值不是 $0.5$ 时均方误差（偏差平方加方差）极差；若含偏置 $b(\theta) = \mathbb{E}_\theta[\hat\theta] - \theta$，正确下界须改写为 $\operatorname{Var}(\hat\theta) \ge \frac{[1 + b'(\theta)]^2}{\nu F_C(\theta)}$。
 
-### 2.3 零跳步手算 Ramsey 干涉：为什么 $\phi = \pi/2$ 最灵敏、$\phi = 0$ 是盲点？
+### 2.3 逐步手算 Ramsey 干涉：为什么 $\phi = \pi/2$ 最灵敏、$\phi = 0$ 是盲点？
 
 拿我们在 [Q3 第 7 节](quantum-mechanics/03-levels-control.md) 熟悉的老朋友——单比特 Ramsey 干涉仪——来把经典 Fisher 信息亲手算到底。
 
@@ -224,7 +225,7 @@ $$
 
 **第二步：解开初学者的经典困惑——既然理想结果恒等于 $1$，为什么实验室都说 $\phi = \pi/2$ 最灵敏、$\phi = 0$ 是盲点？**
 
-先看理想情形（$V = 1$）：在 $\phi \to 0^+$ 时，信号斜率 $\left|\frac{\partial P(+)}{\partial\phi}\right| = \frac{\sin\phi}{2} \to 0$，似乎信号消失了；但与此同时，二项分布噪声标准差 $\sqrt{P(+)(1-P(+))} = \frac{\sin\phi}{2}$ 也以**完全相同的速率**趋向于零，分子分母里的 $\sin^2\phi$ 奇迹般地精确约掉了！然而这种“$0/0 = 1$”的奇迹极度脆弱，只要存在哪怕百分之一的退相干或读出不完美，就会瞬间破功。
+先看理想情形（$V = 1$）：在 $\phi \to 0^+$ 时，信号斜率 $\left|\frac{\partial P(+)}{\partial\phi}\right| = \frac{\sin\phi}{2} \to 0$，似乎信号消失了；但与此同时，二项分布噪声标准差 $\sqrt{P(+)(1-P(+))} = \frac{\sin\phi}{2}$ 也以**完全相同的速率**趋向于零，分子分母里的 $\sin^2\phi$ 正好精确约掉了。然而这种“$0/0 = 1$”的抵消极度脆弱，只要存在哪怕百分之一的退相干或读出不完美，就会立刻失效。
 
 把真实世界的条纹可见度 $V \in (0, 1)$（例如退相位 $V = e^{-\gamma t}$ 或有限读出对比度）写进来：
 
@@ -265,7 +266,7 @@ $$
 
 ## 3. 量子 Fisher 信息（QFI）与量子 Cramér–Rao 界（QCRB）
 
-### 3.1 对称对数导数（SLD）与量子 Cramér–Rao 界的完整推导
+### 3.1 进阶选读：对称对数导数（SLD）与量子 Cramér–Rao 界的完整推导
 
 经典 Fisher 信息 $F_C(\theta)$ 依赖你**选定了哪一套测量基**。对同一个携带参数 $\theta$ 的量子态 $\rho_\theta$，如果你在错误的基上测量（比如在 Ramsey 态 $|\psi(\phi)\rangle = \frac{|0\rangle + e^{i\phi}|1\rangle}{\sqrt{2}}$ 上测 $Z$ 基），得到 $P(0) = P(1) = 1/2$ 与 $\phi$ 完全无关，$F_C = 0$；换到 $X$ 基或 $Y$ 基，就能榨出 $F_C = 1$。
 
@@ -385,7 +386,7 @@ $$
 
    这行式子将在第 4 节直接把 GHZ 态与海森堡极限从纸面上托举出来。
 
-**情形二：一般混态谱分解公式与 $2\times 2$ 零跳步手算。**
+**情形二：一般混态谱分解公式与 $2\times 2$ 完整手算。**
 将混态做谱分解 $\rho_\theta = \sum_k \lambda_k |k\rangle\langle k|$（$\lambda_k \ge 0,\; \sum_k \lambda_k = 1$）。在特征基 $\{|k\rangle\}$ 中取 SLD 方程的 $(j, k)$ 矩阵元：
 
 $$
@@ -437,7 +438,7 @@ $$
 d_B(\rho, \sigma) \equiv \sqrt{2\bigl(1 - F(\rho, \sigma)\bigr)} \in [0, \sqrt{2}].
 $$
 
-我们用纯态幺正演化 $|\psi_{\theta+\delta}\rangle = e^{-i\delta H}|\psi_\theta\rangle$ 零跳步走完二阶泰勒展开：
+我们用纯态幺正演化 $|\psi_{\theta+\delta}\rangle = e^{-i\delta H}|\psi_\theta\rangle$ 逐步走完二阶泰勒展开：
 
 $$
 \langle\psi_\theta|\psi_{\theta+\delta}\rangle = \langle\psi_\theta|\left(I - i\delta H - \frac{\delta^2}{2}H^2 + O(\delta^3)\right)|\psi_\theta\rangle = 1 - i\delta\langle H\rangle - \frac{\delta^2}{2}\langle H^2\rangle + O(\delta^3).
@@ -468,7 +469,19 @@ $$
 
 Braunstein 与 Caves（1994）证明，这一几何等价对所有满秩（或秩不发生突变的）一般混态同样成立：**量子 Fisher 信息本质上就是参数轨迹在 Bures 几何空间里移动“速度”平方的四倍**。我们在配套脚本 [sensing_lab.py](../codes/systems/sensing_lab.py) 中直接对带噪混态（$V = 1.0, 0.9, 0.8$）用 $\delta = 10^{-4}$ 做了矩阵开方验证，$8(1-F)/\delta^2$ 分别精确收敛到 $1.0000, 0.8100, 0.6400$。
 
-> **跨文献保真度口径提醒**：如果一篇传感论文采用的是**平方保真度** $F_{\mathrm{sq}} = F^2$，由于 $1 - F_{\mathrm{sq}} = 1 - F^2 \approx 2(1 - F) \approx \frac{1}{4} F_Q \delta^2$，其展开式里的系数会从 $8$ 变成 $4$。对照文献公式前务必先看清保真度有没有开根号（参见[符号表](appendices/notation.md)与[第 13 章第 3.4 节](13-quantum-information.md#34-根保真度fuchsvan-de-graaf-双向不等式与非对角退相干陷阱)）。
+> **跨文献保真度约定提醒**：如果一篇传感论文采用的是**平方保真度** $F_{\mathrm{sq}} = F^2$，由于 $1 - F_{\mathrm{sq}} = 1 - F^2 \approx 2(1 - F) \approx \frac{1}{4} F_Q \delta^2$，其展开式里的系数会从 $8$ 变成 $4$。对照文献公式前需要先看清保真度有没有开根号（参见[符号表](appendices/notation.md)与[第 13 章第 3.4 节](13-quantum-information.md#34-根保真度fuchsvan-de-graaf-双向不等式与非对角退相干陷阱)）。
+
+把第 2–3 节建立的经典与量子参数估计标尺收成一张对照表，并与下方科学图一并定格全章核心机理：
+
+| 估计层级 | 核心信息量 | 对应精度下界（$\nu$ 次重复） | 典型计算公式与可达条件 |
+| :--- | :--- | :--- | :--- |
+| **固定测量装置（CFI）** | $F_C(\theta) = \sum_x \frac{(\partial_\theta p_x)^2}{p_x}$ | $\Delta\theta \ge \frac{1}{\sqrt{\nu\,F_C(\theta)}}$ | 含可见度 $V$ 的 Ramsey：$F_C(\phi;V) = \frac{V^2\sin^2\phi}{1 - V^2\cos^2\phi}$，在 $\phi=\pi/2$ 取极大值 $V^2$ |
+| **遍历全部 POVM（QFI）** | $F_Q(\rho_\theta) = \operatorname{Tr}(\rho_\theta L_\theta^2)$ | $\Delta\theta \ge \frac{1}{\sqrt{\nu\,F_Q(\rho_\theta)}}$ | 纯态幺正编码 $F_Q = 4(\Delta H)^2 \le (\lambda_{\max}-\lambda_{\min})^2$；在 $L_\theta$ 特征基测量取等 |
+| **Bures 几何等价** | $F_Q(\rho_\theta) = 8\lim_{\delta\to 0}\frac{1 - F(\rho_\theta,\rho_{\theta+\delta})}{\delta^2}$ | $d_B^2 = \frac{1}{4}F_Q\,\delta^2 + O(\delta^3)$ | 需采用根保真度 $F$；若换平方保真度 $F^2$，前置系数 $8$ 变为 $4$ |
+
+![Ramsey 相位干涉、量子费舍尔信息与原子钟重力仪机理](assets/v4-20-sensing-ramsey-qfi.svg)
+
+图注：综合展示单比特 Ramsey 干涉条纹与斜坡灵敏点（$\phi=\pi/2$ vs 盲点 $\phi=0$）、经典/量子 Fisher 信息随可见度 $V$ 的包络关系，以及第 8 节光晶格原子钟与冷原子 Mach–Zehnder 干涉重力仪的核心相位积累机理。查看[原尺寸 SVG](assets/v4-20-sensing-ramsey-qfi.svg)。
 
 ---
 ## 4. 从标准量子极限（SQL）到海森堡极限（HL）
@@ -515,7 +528,7 @@ $$
 F_Q(\rho_{\mathrm{sep}}) \le \sum_m p_m \sum_{j=1}^N F_Q\bigl(\rho_m^{(j)}\bigr) \le \sum_m p_m \sum_{j=1}^N 1 = N.
 $$
 
-换句话说，**任何无纠缠探针都绝不可能打破 $F_Q \le N$ 这道玻璃天花板**！反过来，只要实验上实测出某 $N$ 比特态的 $F_Q > N$，就构成了多体量子纠缠的严格见证（Pezzè & Smerzi, *PRL* 2009）。
+换句话说，**任何无纠缠探针都无法突破 $F_Q \le N$ 这道理论上限**。反过来，只要实验上实测出某 $N$ 比特态的 $F_Q > N$，就构成了多体量子纠缠的严格见证（Pezzè & Smerzi, *PRL* 2009）。
 
 ### 4.2 $N$ 比特 GHZ 态与海森堡极限 $1/N$
 
@@ -543,7 +556,7 @@ $$
 F_Q\bigl(|\mathrm{GHZ}_N\rangle\bigr) = 4\bigl(\langle J_z^2\rangle - \langle J_z\rangle^2\bigr) = 4 \cdot \frac{N^2}{4} = N^2.
 $$
 
-代入 QCRB，给出无噪线性相位估计的终极天花板——**海森堡极限**（Heisenberg Limit, HL；Giovannetti, Lloyd & Maccone, *Science* 2004, *PRL* 2006）：
+代入 QCRB，给出无噪线性相位估计的理论极限——**海森堡极限**（Heisenberg Limit, HL；Giovannetti, Lloyd & Maccone, *Science* 2004, *PRL* 2006）：
 
 $$
 \Delta\phi_{\mathrm{HL}} \ge \frac{1}{\sqrt{\nu}\, N} \qquad\Bigl(\text{单轮 }\nu = 1:\ \Delta\phi \ge \frac{1}{N}\Bigr).
@@ -551,7 +564,7 @@ $$
 
 从 $1/\sqrt{N}$ 跃迁到 $1/N$ 是平方级的精度跃升：若 $N = 100$ 个无噪比特，SQL 单轮误差是 $0.1\ \mathrm{rad}$，而海森堡极限把误差一口气压低到 $0.01\ \mathrm{rad}$——若改用独立探针，要堆 $10{,}000$ 个比特才能追平。
 
-### 4.3 零跳步手算 $N=2, 3$ GHZ 宇称测量 $\langle X^{\otimes N}\rangle = \cos(N\phi)$ 与动态范围收缩
+### 4.3 具体手算 $N=2, 3$ GHZ 宇称测量 $\langle X^{\otimes N}\rangle = \cos(N\phi)$ 与动态范围收缩
 
 有了 $F_Q = N^2$ 的态，实验室究竟测哪个观测量才能把这 $N^2$ 的信息一滴不漏地读出来？答案是**全局宇称观测量**（parity observable）$\Pi_X = X^{\otimes N}$（等价于对每个比特各自施加一发局部 Hadamard 门 $H$，然后在计算基读出 $N$ 位比特串 $b_0 b_1\cdots b_{N-1}$，只统计其中“$1$ 的个数是偶数还是奇数”）。下面我们按全书统一的高位在左（大端序）约定，亲手把 $N = 2$ 和 $N = 3$ 算到一干二净。
 
@@ -636,7 +649,7 @@ $$
 1. 计算它的理想 QFI 与单轮相位估计下界 $\Delta\phi$；
 2. 假设读出前不小心丢失了最右侧第 $4$ 个比特（对其求偏迹 $\rho_{123}(\phi) = \operatorname{Tr}_4|\psi_4(\phi)\rangle\langle\psi_4(\phi)|$），写出剩余 $3$ 比特的约化密度矩阵，并求此时还能提取多少量子 Fisher 信息 $F_Q(\rho_{123})$。
 
-**零跳步解答**：
+**逐步解答**：
 1. 集体生成元 $J_z = \frac{1}{2}\sum_{j=1}^4 Z_j$ 在 $|0000\rangle$ 与 $|1111\rangle$ 上特征值分别为 $+2$ 与 $-2$，均值 $\langle J_z\rangle = 0$，方差 $(\Delta J_z)^2 = \frac{1}{2}(+2)^2 + \frac{1}{2}(-2)^2 = 4$，故 $F_Q = 4(\Delta J_z)^2 = 16 = 4^2$，单轮下界 $\Delta\phi \ge 1/\sqrt{16} = 1/4$（同 $N=4$ 独立比特的 $1/\sqrt{4} = 1/2$ 相比精度翻倍）。
 2. 将密度矩阵 $|\psi_4(\phi)\rangle\langle\psi_4(\phi)|$ 展开为四项，对第 $4$ 比特按基 $\{|0\rangle_4, |1\rangle_4\}$ 求偏迹（利用正交性 $\langle 0|1\rangle = \langle 1|0\rangle = 0$，交叉项立刻归零！）：
 
@@ -658,7 +671,7 @@ $$
 
 ---
 
-## 5. 噪声的冷水：退相位下的 GHZ 态为何输给独立比特？（Huelga 1997 零跳步手算）
+## 5. 噪声的冷水：退相位下的 GHZ 态为何输给独立比特？（Huelga 1997 完整推导）
 
 ### 5.1 局域马尔可夫退相位如何把 GHZ 衰减率放大 $N$ 倍
 
@@ -768,9 +781,9 @@ $$
    (\Delta\omega)_{\mathrm{GHZ}}^{\min} = \sqrt{\frac{2 e \gamma}{N T}} = (\Delta\omega)_{\mathrm{unc}}^{\min}!
    $$
 
-这个结果震撼了整个量子精密测量界：**在零死时间的独立马尔可夫退相位下，大费周章造出来的 $N$ 比特最大纠缠 GHZ 态，即使精准调到它自己的最优探询时长 $t_{\mathrm{opt}}^{\mathrm{GHZ}} = 1/(2N\gamma)$，最终频率精度竟然连一根头发丝也没赢过完全不纠缠的 $N$ 个独立比特，双双落在同一条 $1/\sqrt{N}$ 标度线上！**（注：Huelga 原文定义衰减率使 $\rho_{01} \propto e^{-\gamma_{\mathrm{H}} t / 2}$，故文中写作 $t_{\mathrm{opt}} = 1/(N\gamma_{\mathrm{H}})$ 与 $\Delta\omega = \sqrt{e\gamma_{\mathrm{H}}/(NT)}$；按本书 $\gamma = 1/T_\phi = \gamma_{\mathrm{H}}/2$ 换算后两者完全等价。）
+这个结果成为量子精密测量史上的重要转折：**在零死时间的独立马尔可夫退相位下，大费周章造出来的 $N$ 比特最大纠缠 GHZ 态，即使精准调到它自己的最优探询时长 $t_{\mathrm{opt}}^{\mathrm{GHZ}} = 1/(2N\gamma)$，最终频率精度也未能超过完全不纠缠的 $N$ 个独立比特，双双落在同一条 $1/\sqrt{N}$ 标度线上。**（注：Huelga 原文定义衰减率使 $\rho_{01} \propto e^{-\gamma_{\mathrm{H}} t / 2}$，故文中写作 $t_{\mathrm{opt}} = 1/(N\gamma_{\mathrm{H}})$ 与 $\Delta\omega = \sqrt{e\gamma_{\mathrm{H}}/(NT)}$；按本书 $\gamma = 1/T_\phi = \gamma_{\mathrm{H}}/2$ 换算后两者完全等价。）
 
-**那么文献中常提到的“常数因子 $e$”究竟落在哪里？** 把它和 Escher–de Matos Filho–Davidovich（*Nature Physics* 2011）及 Demkowicz-Dobrzański–Kołodyński–Guţă（*Nat. Commun.* 2012）证明的**含噪普适最终界**摆在一起，一清二楚：
+**那么文献中常提到的“常数因子 $e$”究竟落在哪里？** 把它和 Escher–de Matos Filho–Davidovich（*Nature Physics* 2011）及 Demkowicz-Dobrzański–Kołodyński–Guţă（*Nat. Commun.* 2012）证明的**含噪普适下界**摆在一起，一清二楚：
 
 对任意 $N$ 比特纠缠初态（不止是 GHZ，涵盖全部自旋压缩态与部分纠缠态），在单比特相干衰减因子 $\eta = e^{-\gamma t}$ 的独立马尔可夫纯退相位信道下，单轮总 QFI 严格受限于通道扩张上界
 
@@ -784,7 +797,7 @@ $$
 F_{\mathrm{tot}}^{\mathrm{any}}(\omega; t) < \frac{N T\, t}{e^{2\gamma t} - 1} < \frac{N T}{2\gamma}, \qquad \lim_{t \to 0^+}\frac{N T\, t}{e^{2\gamma t} - 1} = \frac{N T}{2\gamma}.
 $$
 
-这就给出了马尔可夫退相位下**一切量子态的终极精密测量下界**：
+这就给出了马尔可夫退相位下**一切量子态的理论精密测量下界**：
 
 $$
 (\Delta\omega)_{\mathrm{ult}} \ge \sqrt{\frac{2\gamma}{N T}}.
@@ -796,13 +809,13 @@ $$
 \frac{(\Delta\omega)_{\mathrm{unc}}^{\min\;2}}{(\Delta\omega)_{\mathrm{ult}}^{2}} = \frac{(\Delta\omega)_{\mathrm{GHZ}}^{\min\;2}}{(\Delta\omega)_{\mathrm{ult}}^{2}} = \frac{2 e \gamma / (N T)}{2\gamma / (N T)} = e \approx 2.7183, \qquad \frac{(\Delta\omega)_{\mathrm{unc}}^{\min}}{(\Delta\omega)_{\mathrm{ult}}} = \sqrt{e} \approx 1.6487!
 $$
 
-结论极其清醒：在独立马尔可夫退相位下，**不仅 GHZ 彻底沦回 SQL（与独立比特打成平手），而且全世界任何高度巧妙的纠缠态（如最优自旋压缩态）也永远改不了 $1/\sqrt{N}$ 标度律，最多只能把频率方差压低一个常数因子 $e$（把标准差 $\Delta\omega$ 改善常数倍 $\sqrt{e} \approx 1.65$）！**
+结论极其清醒：在独立马尔可夫退相位下，**不仅 GHZ 回落至 SQL（与独立比特打成平手），而且任何纠缠态（如最优自旋压缩态）也无法改变 $1/\sqrt{N}$ 标度律，最多只能把频率方差压低一个常数因子 $e$（把标准差 $\Delta\omega$ 改善常数倍 $\sqrt{e} \approx 1.65$）。**
 
 ### 5.3 数值对照、有限死时间反杀与三条绕行边界
 
 取一组干净的参数 $\gamma = 1\ \mathrm{s}^{-1}$、总时间 $T = 100\ \mathrm{s}$，把不同 $N$ 下的精确数值（全部由 [sensing_lab.py](../codes/systems/sensing_lab.py) 黄金分割独立寻优验证）排成一表：
 
-| 探针数 $N$ | GHZ 最优时间 $t_{\mathrm{opt}}^{\mathrm{GHZ}}\ (\mathrm{s})$ | 独立比特最优 $\Delta\omega_{\mathrm{unc}}\ (\mathrm{rad/s})$ | 含噪 GHZ 最优 $\Delta\omega_{\mathrm{GHZ}}\ (\mathrm{rad/s})$ | 若误用 $t = 0.5\ \mathrm{s}$ 时 GHZ 误差 $(\mathrm{rad/s})$ | 马尔可夫终极下界 $\Delta\omega_{\mathrm{ult}}\ (\mathrm{rad/s})$ |
+| 探针数 $N$ | GHZ 最优时间 $t_{\mathrm{opt}}^{\mathrm{GHZ}}\ (\mathrm{s})$ | 独立比特最优 $\Delta\omega_{\mathrm{unc}}\ (\mathrm{rad/s})$ | 含噪 GHZ 最优 $\Delta\omega_{\mathrm{GHZ}}\ (\mathrm{rad/s})$ | 若误用 $t = 0.5\ \mathrm{s}$ 时 GHZ 误差 $(\mathrm{rad/s})$ | 马尔可夫理论下界 $\Delta\omega_{\mathrm{ult}}\ (\mathrm{rad/s})$ |
 | ---: | ---: | ---: | ---: | ---: | ---: |
 | $1$ | $0.50000$ | $0.2332$ | $0.2332$ | $0.2332$ | $0.1414$ |
 | $4$ | $0.12500$ | $0.1166$ | $0.1166$ | $0.2612$ | $0.0707$ |
@@ -824,7 +837,7 @@ $$
 
 ## 6. 扛得住噪声的量子增强：自旋压缩与光学压缩
 
-### 6.1 自旋压缩态与单轴扭转直觉：Wineland 压缩参数 $\xi_R^2$ 零跳步手算
+### 6.1 自旋压缩态与单轴扭转直觉：Wineland 压缩参数 $\xi_R^2$ 逐步手算
 
 为什么 GHZ 态像一只薄玻璃杯，碰掉一个原子就粉身碎骨？因为它把全部量子相干性孤注一掷地压在了 $|0\cdots 0\rangle$ 与 $|1\cdots 1\rangle$ 这一对极端态上。有没有一种**温和的纠缠态**，既能把测量方向的量子涨落压扁到 SQL 以下，又不像 GHZ 那样丢一个原子就满盘皆输？
 
@@ -845,7 +858,7 @@ $$
 - 相干自旋态（SQL）：$(\Delta J_\perp)^2 = N/4$、$|\langle\vec J\rangle| = N/2 \implies \xi_R^2 = \frac{N \cdot (N/4)}{(N/2)^2} = 1$；
 - **只要 $\xi_R^2 < 1$**，相位方差就比同原子数 SQL 缩小到 $\xi_R^2$ 倍（常用分贝 $-10\log_{10}(\xi_R^2)\ \mathrm{dB}$ 表示压缩深度），同时 $\xi_R^2 < 1$ 也是多体量子纠缠的充分判据！
 
-#### 零跳步手算：$N = 2$ 单轴扭转在 $\theta = \pi/6$ 处的精确 Wineland 参数
+#### 具体手算：$N = 2$ 单轴扭转在 $\theta = \pi/6$ 处的精确 Wineland 参数
 
 为了亲手摸到“剪切椭圆”是怎么压出 $\xi_R^2 < 1$ 的，我们不用黑箱公式，直接在 $N = 2$ 的对称三重态（总自旋 $J = 1$）三维子空间
 
@@ -939,11 +952,17 @@ $$
 
 在 [sensing_lab.py](../codes/systems/sensing_lab.py) 中我们独立优化了 $N = 10, 100, 1000$ 的单轴扭转压缩深度：$N = 10$ 时最优 $\xi_R^2 \approx 0.310$（$5.09\ \mathrm{dB}$），$N = 100$ 时达 $0.0629$（$12.01\ \mathrm{dB}$），$N = 1000$ 时达 $0.0120$（$19.23\ \mathrm{dB}$），渐近服从 $\xi_R^2 \propto N^{-2/3}$、即 $\Delta\phi \propto N^{-5/6}$。尽管标度不如理想 GHZ 的 $N^{-1}$，但温和压缩态对单原子丢失和退相位具有高得多的容忍度——2024 年 JILA 团队（Robinson, Miklos, Ye 等，*Nature Physics* 20, 208, 2024）已利用腔 QED 与量子非破坏测量，在两团 $^{87}\mathrm{Sr}$ 光晶格钟系综的直接同步比对中实现超越量子投影噪声极限的 $10^{-17}$ 级频率稳定度。
 
-### 6.2 光学正交压缩 $e^{-2r}$、光学损耗硬顶与 LIGO O3/O4 频率依赖压缩光
+> **自洽微卡片：单模光场的无量纲正交分量与压缩态（无需先修第五篇）**
+>
+> 1. **正交分量 $(\hat q, \hat p)$**：对单模量子光场（湮灭/产生算符 $\hat a, \hat a^\dagger$，满足 $[\hat a, \hat a^\dagger] = 1$），定义无量纲振幅正交分量 $\hat q = \frac{\hat a + \hat a^\dagger}{\sqrt{2}}$ 与相位正交分量 $\hat p = \frac{\hat a - \hat a^\dagger}{i\sqrt{2}}$，满足正则对易关系 $[\hat q, \hat p] = i$（取 $\hbar = 1$ 约定）与海森堡不确定关系 $\Delta\hat q\,\Delta\hat p \ge \frac{1}{2}$。
+> 2. **真空态与相干激光态**：电磁真空态 $|0\rangle$ 与平均光子数为 $\bar n = |\alpha|^2$ 的相干激光态 $|\alpha\rangle$ 均具有各向同性的最小不确定圆斑：$\operatorname{Var}(\hat q) = \operatorname{Var}(\hat p) = \frac{1}{2}$，协方差矩阵均为 $V_{\mathrm{vac}} = \frac{1}{2}I_2$。
+> 3. **单模压缩真空态 $|r\rangle = \hat S(r)|0\rangle$**：压缩算符 $\hat S(r) = \exp\!\bigl[\frac{r}{2}(\hat a^2 - \hat a^{\dagger 2})\bigr]$（$r > 0$）通过 Bogoliubov 变换把正交算符缩放为 $\hat q \mapsto e^{-r}\hat q$、$\hat p \mapsto e^{+r}\hat p$，因此在保持乘积 $\Delta\hat q\,\Delta\hat p = \frac{1}{2}$ 不变的前提下，把一条正交方差压窄至 $\frac{1}{2}e^{-2r}$、另一条正交方差拉宽至 $\frac{1}{2}e^{+2r}$（其完整多模相空间与 Wigner 函数见[第 18 章第 9 节](18-channels-capacities-complexity.md)）。
 
-回到 [第 18 章第 9 节](18-channels-capacities-complexity.md) 的连续变量语言（无量纲正交分量 $[\hat q, \hat p] = i$，真空态协方差 $V = \frac{1}{2}I_2$）。在迈克耳孙或马赫–曾德尔激光干涉仪中，为什么经典强激光（相干态 $|\alpha\rangle$，平均光子数 $\bar n = |\alpha|^2 \gg 1$）仍会撞上标准量子极限 $\Delta\phi_{\mathrm{SQL}} = \frac{1}{\sqrt{\bar n}}$？
+### 6.2 进阶选读：光学正交压缩 $e^{-2r}$、光学损耗硬顶与 LIGO O3/O4 频率依赖压缩光
 
-卡尔顿·凯夫斯（Carlton M. Caves, *PRD* 1981）给出了一个石破天惊的物理诊断：**限制干涉仪散粒噪声的，并不是主激光本身，而是从干涉仪另一个“空置暗口”（unused dark port）偷偷漏进来的电磁真空涨落 $|0\rangle$！**
+有了上面三行自洽微卡片（与[第 18 章第 9 节](18-channels-capacities-complexity.md)无量纲正交分量 $[\hat q, \hat p] = i$、真空态协方差 $V = \frac{1}{2}I_2$ 完全一致），现在来看迈克耳孙或马赫–曾德尔激光干涉仪的核心问题：为什么经典强激光（相干态 $|\alpha\rangle$，平均光子数 $\bar n = |\alpha|^2 \gg 1$）仍会撞上标准量子极限 $\Delta\phi_{\mathrm{SQL}} = \frac{1}{\sqrt{\bar n}}$？
+
+卡尔顿·凯夫斯（Carlton M. Caves, *PRD* 1981）给出了一个发人深省的物理诊断：**限制干涉仪散粒噪声的，并不是主激光本身，而是从干涉仪另一个“空置暗口”（unused dark port）偷偷漏进来的电磁真空涨落 $|0\rangle$！**
 
 既然祸根是暗口进入的真空圆斑 $\operatorname{Var}(\hat q) = \operatorname{Var}(\hat p) = \frac{1}{2}$，那干脆把一个**单模压缩真空态** $|r\rangle$（$r > 0$，参见[第 18 章第 9.3 节](18-channels-capacities-complexity.md)）从暗口注入进去！它的协方差矩阵为
 
@@ -969,7 +988,7 @@ $$
 0.80 \times 0.10 + 0.20 = 0.28 \quad\Longrightarrow\quad -10\log_{10}(0.28) \approx 5.53\ \mathrm{dB}.
 $$
 
-更严酷的是，哪怕把注入压缩推到无穷大（$r \to \infty,\; e^{-2r} \to 0$），输出噪声方差也永远下不去 $1 - \eta_{\mathrm{opt}} = 0.20$ 这条硬底板，对应最高天花板仅 $-10\log_{10}(0.20) \approx 6.99\ \mathrm{dB}$！这就是为什么大型光学精密测量工程把“把光路损耗从 $20\%$ 抠到 $5\%$”看得比“把压缩源多榨出 $3\ \mathrm{dB}$”还重要。
+更严酷的是，哪怕把注入压缩推到无穷大（$r \to \infty,\; e^{-2r} \to 0$），输出噪声方差也永远下不去 $1 - \eta_{\mathrm{opt}} = 0.20$ 这条硬底板，对应最高理论上限仅 $-10\log_{10}(0.20) \approx 6.99\ \mathrm{dB}$！这就是为什么大型光学精密测量工程把“把光路损耗从 $20\%$ 抠到 $5\%$”看得比“把压缩源多榨出 $3\ \mathrm{dB}$”还重要。
 
 **现实世界最响亮的量子传感凯歌：LIGO 引力波探测器的 O3 与 O4 观测轮。**
 
@@ -980,7 +999,7 @@ $$
 
 ![SQL、海森堡极限、退相位 GHZ 坍塌与自旋/光学压缩的标度对比](assets/v3-20-sensing-limits.svg)
 
-图注：双对数坐标下比较四类探针随规模 $N$ 变化的精度标度——标准量子极限 SQL（$\propto N^{-1/2}$，斜率 $-1/2$）、理想无噪海森堡极限 HL（$\propto N^{-1}$，斜率 $-1$）、独立马尔可夫退相位下的 GHZ 坍塌曲线（固定总时长 $T$、在最优时间 $t_{\mathrm{opt}}=1/(2N\gamma)$ 处斜率彻底回落至 $-1/2$ 并与独立比特重合，较含噪终极下界差常数因子 $\sqrt{e}$），以及单轴扭转自旋压缩（$\propto N^{-5/6}$）与光学正交压缩（常数倍 $e^{-r}$ 下移）。查看[原尺寸图](assets/v3-20-sensing-limits.svg)。
+图注：双对数坐标下比较四类探针随规模 $N$ 变化的精度标度——标准量子极限 SQL（$\propto N^{-1/2}$，斜率 $-1/2$）、理想无噪海森堡极限 HL（$\propto N^{-1}$，斜率 $-1$）、独立马尔可夫退相位下的 GHZ 坍塌曲线（固定总时长 $T$、在最优时间 $t_{\mathrm{opt}}=1/(2N\gamma)$ 处斜率回落至 $-1/2$ 并与独立比特重合，较含噪理论下界差常数因子 $\sqrt{e}$），以及单轴扭转自旋压缩（$\propto N^{-5/6}$）与光学正交压缩（常数倍 $e^{-r}$ 下移）。查看[原尺寸图](assets/v3-20-sensing-limits.svg)。
 
 ---
 ## 7. DC 传感、AC 锁相传感与量子噪声谱学
@@ -998,7 +1017,7 @@ $$
 - 缓慢漂移的直流背景噪声在前后半个周期里被 $\pi$ 脉冲反复反号，几乎完全抵消；
 - 与脉冲翻转节拍**精准合拍**的交流信号，每当自身正弦波过零变号时，恰好撞上一发 $\pi$ 脉冲再给相位翻一次号——**负负得正！** 交流信号原本一正一负会相互抵消，经脉冲“同步整流”后反而一轮接一轮地同向累加起来！
 
-### 7.2 零跳步手算 CPMG 整流相位 $\frac{2}{\pi}$ 与滤波函数峰值 $|Y(\omega_0)|^2 = \frac{4}{\pi^2}$
+### 7.2 逐步手算 CPMG 整流相位 $\frac{2}{\pi}$ 与滤波函数峰值 $|Y(\omega_0)|^2 = \frac{4}{\pi^2}$
 
 设传感器哈密顿量为 $H(t) = \frac{\hbar\gamma_e}{2} B(t)\, Z$。如 [第 14 章第 6.2 节](14-compilation-control.md) 所推导，每次理想 $\pi$ 脉冲把算符 $Z$ 翻号一次，因此在总时长 $T = n\tau$ 内累积的净相对相位由方波**开关函数** $s(t) \in \{+1, -1\}$ 决定：
 
@@ -1012,7 +1031,7 @@ $$
 \omega_0 = \frac{\pi}{\tau} = \frac{\pi n}{T} \qquad\Longleftrightarrow\qquad f_0 = \frac{1}{2\tau} = \frac{n}{2T}.
 $$
 
-**第一步：零跳步计算共振锁相交流信号的累积相位。**
+**第一步：逐步计算共振锁相交流信号的累积相位。**
 取频率锁在共振点 $\omega_{\mathrm{ac}} = \omega_0 = \pi/\tau$、且初相与方波同相（$\varphi_0 = 0$）的交流磁场 $B(t) = B_{\mathrm{ac}}\cos\!\left(\frac{\pi t}{\tau}\right)$。仔细核对符号：在 $[0, \tau/2)$ 上 $\cos(\pi t/\tau) > 0$ 且 $s(t) = +1$；在 $(\tau/2, 3\tau/2)$ 上 $\cos(\pi t/\tau) < 0$ 且 $s(t) = -1$——**每到余弦波过零变号的瞬间，$s(t)$ 同步变号，乘积处处非负！**
 
 $$
@@ -1078,31 +1097,124 @@ $$
    = \gamma_e^2 T^2 \int_0^\infty \frac{d\omega}{2\pi}\, S_B(\omega)\, |Y(\omega)|^2.
    $$
 
-   立即用**静态高斯磁场** $B(t) \equiv B_0 \sim \mathcal{N}(0, \sigma_B^2)$ 与 Ramsey 序列（$s(t) \equiv 1,\; |Y(0)|^2 = 1$）做最小检验：此时双边谱为 $S_B(\omega) = 2\pi\sigma_B^2\delta(\omega)$，利用偶对称 $\delta(\omega)$ 在半轴 $[0, \infty)$ 上的积分 $\int_0^\infty \delta(\omega)\,d\omega = \frac{1}{2}$ 代入上式，立得 $\chi(T) = \gamma_e^2 T^2 \sigma_B^2 \cdot \frac{1}{2} = \frac{1}{2}\gamma_e^2\sigma_B^2 T^2$，与直接计算高斯退相干 $W(T) = |\langle e^{i\gamma_e B_0 T}\rangle| = e^{-\frac{1}{2}\gamma_e^2\sigma_B^2 T^2}$ 丝毫不差！（注：部分工程文献改用单边谱 $S_B^{\text{单边}}(\omega) = 2 S_B(\omega)$，此时半轴积分式前会出现 $\frac{1}{2}$；跨文献比对前务必先核对单双边谱口径。）借助上式，每当 $\omega_0$ 扫过某类核自旋（例如金刚石晶格内的单个 $^{13}\mathrm{C}$ 核自旋或样品表面的质子 $^{1}\mathrm{H}$ 簇）的拉莫尔进动频率时，探针相干性就会出现一个尖锐的**共振谷**，由此直接反演出纳米尺度样品的核磁共振谱，甚至定位单个核自旋的三维坐标！
-2. **留神方波的高次奇谐波陷阱**：矩形开关函数 $s(t)$ 的傅里叶级数不只包含基频 $\omega_0$，还自带频率为 $3\omega_0, 5\omega_0, 7\omega_0, \dots$ 的奇次谐波，对应 $|Y(k\omega_0)|^2 = \frac{4}{(k\pi)^2}$（功率分别是基频的 $\frac{1}{9}, \frac{1}{25}, \frac{1}{49}, \dots$）。在做精确噪声谱重建时，如果把高次谐波当成“全是基频漏进来的信号”，高频谱密度会被系统性高估，需要采用 Alvarez–Suter 矩阵反演或切趾滤波（apodized sequences）把谐波效应解耦干净。
+   立即用**静态高斯磁场** $B(t) \equiv B_0 \sim \mathcal{N}(0, \sigma_B^2)$ 与 Ramsey 序列（$s(t) \equiv 1,\; |Y(0)|^2 = 1$）做最小检验：此时双边谱为 $S_B(\omega) = 2\pi\sigma_B^2\delta(\omega)$，利用偶对称 $\delta(\omega)$ 在半轴 $[0, \infty)$ 上的积分 $\int_0^\infty \delta(\omega)\,d\omega = \frac{1}{2}$ 代入上式，立得 $\chi(T) = \gamma_e^2 T^2 \sigma_B^2 \cdot \frac{1}{2} = \frac{1}{2}\gamma_e^2\sigma_B^2 T^2$，与直接计算高斯退相干 $W(T) = |\langle e^{i\gamma_e B_0 T}\rangle| = e^{-\frac{1}{2}\gamma_e^2\sigma_B^2 T^2}$ 丝毫不差！（注：部分工程文献改用单边谱 $S_B^{\text{单边}}(\omega) = 2 S_B(\omega)$，此时半轴积分式前会出现 $\frac{1}{2}$；跨文献比对前需要先核对单双边谱定义。）借助上式，每当 $\omega_0$ 扫过某类核自旋（例如金刚石晶格内的单个 $^{13}\mathrm{C}$ 核自旋或样品表面的质子 $^{1}\mathrm{H}$ 簇）的拉莫尔进动频率时，探针相干性就会出现一个尖锐的**共振谷**，由此直接反演出纳米尺度样品的核磁共振谱，甚至定位单个核自旋的三维坐标！
+2. **留神方波的高次奇谐波干扰**：矩形开关函数 $s(t)$ 的傅里叶级数不只包含基频 $\omega_0$，还自带频率为 $3\omega_0, 5\omega_0, 7\omega_0, \dots$ 的奇次谐波，对应 $|Y(k\omega_0)|^2 = \frac{4}{(k\pi)^2}$（功率分别是基频的 $\frac{1}{9}, \frac{1}{25}, \frac{1}{49}, \dots$）。在做精确噪声谱重建时，如果把高次谐波当成“全是基频漏进来的信号”，高频谱密度会被系统性高估，需要采用 Alvarez–Suter 矩阵反演或切趾滤波（apodized sequences）把谐波效应解耦干净。
 
 ---
 
-## 8. 四大物理传感前沿、量子纠错传感（HNLS）与审读口径
+## 8. 物理传感前沿、量子纠错传感（HNLS）与审读要点
 
-### 8.1 四大物理传感平台与顶级非纠缠基线对照
+### 8.1 物理传感前沿平台、阿兰偏差、重力仪与量子照明
 
-学完理论极限后，必须把目光拉回真实实验室。下面这张表把当代量子传感的四条领跑前沿，与两类常常被新手忽视却极其强悍的**非纠缠 / 传统量子基线**（SERF 原子磁力计与 SQUID）并排摆在一起，专门让你看清“灵敏度—体积—温度—应用场景”的真实生态位：
+学完理论极限后，必须把目光拉回真实实验室。下面这张表把当代量子传感的领跑前沿，与两类常常被新手忽视却极其强悍的**非纠缠 / 传统量子基线**（SERF 原子磁力计与 SQUID）并排摆在一起，专门让你看清“灵敏度—体积—温度—应用场景”的真实生态位：
 
 | 平台与机制 | 代表性实测指标（及证据来源） | 工作温度与环境 | 空间尺度 / 探测体积 | 不可替代的核心优势与主要瓶颈 |
 | :--- | :--- | :--- | :--- | :--- |
 | **金刚石 NV 色心磁力计**（电子自旋 ODMR + CPMG） | 单 NV 室温交流约数至数十 $\mathrm{nT/\sqrt{Hz}}$，直流约百 $\mathrm{nT/\sqrt{Hz}}$；块体集成系综可达数十 $\mathrm{pT/\sqrt{Hz}}$ 乃至亚 $\mathrm{pT/\sqrt{Hz}}$（Degen 等，*RMP* 2017） | 室温大气，无需磁屏蔽或制冷 | 单个色心纳米级（距表面 $5\text{–}10\ \mathrm{nm}$）；系综微米至毫米级 | 室温固态、生物相容、纳米级空间分辨与单分子 NMR；瓶颈在单 NV 荧光收集效率低与表面电荷噪声 |
-| **光学晶格原子钟**（$^{87}\mathrm{Sr}$ / $^{171}\mathrm{Yb}$ 光跃迁） | JILA $^{87}\mathrm{Sr}$ 钟总系统相对频率不确定度达 **$8.1\times 10^{-19}$**（Aeppli 等，*PRL* 133, 023401, 2024）；双自旋压缩 Sr 系综同步比对达 $10^{-17}$ 级突破 QPN（Robinson 等，*Nat. Phys.* 20, 208, 2024） | 超高真空激光冷却（$\mu\mathrm{K}$ 级原子云，室温腔体） | 亚毫米光学晶格（数千至数万原子） | 人类迄今最精密的物理测量仪器，可分辨亚毫米高度差的广义相对论引力红移；瓶颈在黑体辐射频移标定与便携工程化 |
-| **冷原子干涉重力仪 / 梯度仪**（拉曼/布拉格脉冲 $\Delta\phi = k_{\mathrm{eff}} g T^2$） | 户外实战级量子重力梯度仪成功在室外道路环境测绘出地下隐藏隧道（Stray 等，*Nature* 602, 590, 2022） | 车载便携超高真空冷原子系统 | 厘米至分米级自由落体基线 | 绝对重力标定、无机械弹簧长期零点漂移，面向地下测绘与无 GPS 惯性导航；瓶颈在振动噪声抑制与低采样率 |
-| **LIGO 压缩光引力波天文台**（频率依赖光学压缩） | O4 观测轮 300 m 滤波腔实现宽带量子降噪：Hanford **$4.0\ \mathrm{dB}$**、Livingston **$5.8\ \mathrm{dB}$**（$1\ \mathrm{kHz}$ 附近），并合探测率提升最高 $65\%$（Ganapathy 等，*PRX* 13, 041021, 2023） | 室温超高真空 4 km 干涉臂 | 公里级宏观光路 | 全天候生产级运行的量子增强典范；瓶颈在光学损耗天花板与热/地震本底噪声 |
+| **光学晶格原子钟与 $^{229}\mathrm{Th}$ 核钟**（$^{87}\mathrm{Sr}$ / $^{171}\mathrm{Yb}$ / $^{229}\mathrm{Th}$） | JILA $^{87}\mathrm{Sr}$ 钟总系统相对频率不确定度达 **$8.1\times 10^{-19}$**（Aeppli 等，*PRL* 2024）；双自旋压缩 Sr 比对达 $10^{-17}$ 级突破 QPN（Robinson 等，*Nat. Phys.* 2024）；$^{229}\mathrm{Th}$ 固态核跃迁 VUV 光梳直接锁频至 Sr 光钟（Zhang 等，*Nature* 2024） | 超高真空激光冷却（光钟）；固态 $\mathrm{CaF_2}$ 晶体（核钟） | 亚毫米光学晶格（$10^3\text{–}10^4$ 原子）或毫米级掺杂晶体 | 人类迄今最精密的物理测量仪器，可分辨亚毫米引力红移并探查 $\alpha$ 漂移；瓶颈在黑体辐射频移标定与便携工程化 |
+| **冷原子干涉重力仪 / 梯度仪**（拉曼/布拉格脉冲 $\Delta\phi = -k_{\mathrm{eff}} g T^2$） | 户外实战级量子重力梯度仪成功在室外道路环境测绘出地下隐藏隧道（Stray 等，*Nature* 602, 590, 2022） | 车载便携超高真空冷原子系统 | 厘米至分米级自由落体基线 | 绝对重力标定、无机械弹簧长期零点漂移，面向地下测绘与无 GPS 惯性导航；瓶颈在振动噪声抑制与低采样率 |
+| **LIGO 压缩光引力波天文台**（频率依赖光学压缩） | O4 观测轮 300 m 滤波腔实现宽带量子降噪：Hanford **$4.0\ \mathrm{dB}$**、Livingston **$5.8\ \mathrm{dB}$**（$1\ \mathrm{kHz}$ 附近），并合探测率提升最高 $65\%$（Ganapathy 等，*PRX* 13, 041021, 2023） | 室温超高真空 4 km 干涉臂 | 公里级宏观光路 | 全天候生产级运行的量子增强典范；瓶颈在光学损耗上限与热/地震本底噪声 |
 | **强基线：SERF 光学泵浦原子磁力计（OPM）** | 约 $1\ \mathrm{fT/\sqrt{Hz}}$ 至亚 $\mathrm{fT/\sqrt{Hz}}$（如梯度仪约 $160\ \mathrm{aT/\sqrt{Hz}}$，Kominis & Romalis 等） | 碱金属气室加热至 $150\text{–}200\,^\circ\mathrm{C}$，**需多层磁屏蔽近零场** | 毫米至厘米级气室（$\sim 10^{13}$ 独立原子，无多体纠缠） | 无需液氦即追平甚至超越 SQUID，已用于可穿戴脑磁图（MEG）；瓶颈在近零场要求与较小带宽 |
 | **强基线：SQUID 超导量子干涉仪** | 约 $1\text{–}10\ \mathrm{fT/\sqrt{Hz}}$，宽带宽覆盖直流至兆赫兹 | 液氦低温（$\sim 4.2\ \mathrm{K}$）或液氮高温超导 | 毫米至厘米级拾取线圈 | 成熟可靠的极弱磁场黄金基准（脑磁/心磁与材料磁性测量）；瓶颈在昂贵笨重的低温杜瓦与较远工作距离 |
 
-这张表最值得反复琢磨的对比，是 **SERF OPM（$\sim\mathrm{fT/\sqrt{Hz}}$）与单个金刚石 NV（$\sim\mathrm{nT/\sqrt{Hz}}$）之间相差整整六个数量级的数字**。新手读到这里常会脱口而出：“那 NV 磁力计不是被传统原子气室完爆了吗？”——完全错了！SERF OPM 的极高灵敏度靠的是把 $\sim 10^{13}$ 颗原子装进厘米级气室里做宏观平均，它根本无法贴近 $10\ \mathrm{nm}$ 外的一颗生物蛋白或芯片单根晶体管；而磁偶极场按距离的**三次方反比** $1/r^3$ 衰减，把探头从 $1\ \mathrm{cm}$ 贴近到 $10\ \mathrm{nm}$（距离缩小 $10^6$ 倍），同一个核自旋产生的局域磁场强度会暴涨 $10^{18}$ 倍！**离开探测体积、工作距离、磁场工作范围与带宽去空谈 $\mathrm{T/\sqrt{Hz}}$，是精密测量领域最常见的伪比较。**
+这张表最值得反复琢磨的对比，是 **SERF OPM（$\sim\mathrm{fT/\sqrt{Hz}}$）与单个金刚石 NV（$\sim\mathrm{nT/\sqrt{Hz}}$）之间相差整整六个数量级的数字**。新手读到这里常会发问：“那 NV 磁力计是不是被传统原子气室完全超越了？”——并非如此！SERF OPM 的极高灵敏度靠的是把 $\sim 10^{13}$ 颗原子装进厘米级气室里做宏观平均，它无法贴近 $10\ \mathrm{nm}$ 外的一颗生物蛋白或芯片单根晶体管；而磁偶极场按距离的**三次方反比** $1/r^3$ 衰减，把探头从 $1\ \mathrm{cm}$ 贴近到 $10\ \mathrm{nm}$（距离缩小 $10^6$ 倍），同一个核自旋产生的局域磁场强度会暴涨 $10^{18}$ 倍。**离开探测体积、工作距离、磁场工作范围与带宽去空谈 $\mathrm{T/\sqrt{Hz}}$，是精密测量领域最常见的伪比较。**
 
-### 8.2 量子纠错辅助传感：HNLS 条件与 2 比特纠错探针手算
+下面用三组紧凑推导与算例，把原子钟稳定性指标、冷原子重力仪 $T^2$ 相位以及高损耗量子照明的真实物理边界讲透。
 
-现在回到第 5 节留下的终极悬念：Huelga（1997）证明了局域马尔可夫退相位会把 GHZ 的海森堡极限打回 SQL，那么把 [第 10 章](10-error-correction.md) 的**量子纠错**（QEC）搬进传感器里，能把海森堡极限（时间标度 $1/T$ 与探针数标度 $1/N$）重新救回来吗？
+#### 8.1.1 原子钟阿兰偏差 $\sigma_y(\tau)$、Dick 效应与 $^{229}\mathrm{Th}$ 固态核钟
+
+阅读原子钟论文时，首要区分两个不同指标：**系统不确定度（accuracy，准确度）** 衡量时钟中心频率离理想无扰原子跃迁频率偏了多少（如 JILA $^{87}\mathrm{Sr}$ 钟 $8.1\times 10^{-19}$）；**频率不稳定度（instability，精密度）** 衡量时钟在平均时间 $\tau$ 内走得有多稳，核心统计量是 **阿兰偏差（Allan deviation）$\sigma_y(\tau)$**（Allan, 1966）。
+
+定义相对频率偏差 $y(t) = \frac{\nu(t) - \nu_0}{\nu_0}$（无量纲），将时间切为等长 $\tau$ 的连续块，第 $k$ 块的平均相对频偏记作 $\bar y_k$。为什么不用普通样本方差？因为在真实时钟普遍存在的 $1/f$ 闪烁频率噪声与随机游走频率漂移下，普通样本方差随观测总时长无限发散；而取相邻两块差分的**两样本阿兰方差**：
+
+$$
+\sigma_y^2(\tau) \equiv \frac{1}{2}\left\langle\bigl(\bar y_{k+1} - \bar y_k\bigr)^2\right\rangle
+$$
+
+天然收敛，并且双对数曲线 $\sigma_y(\tau)$ 的斜率直接诊断噪声类型：白频率噪声呈 $\tau^{-1/2}$ 下降，闪烁频率地板呈 $\tau^0$ 平台，随机游走漂移则呈 $\tau^{+1/2}$ 上翘。
+
+把第 3–4 节的 Ramsey QFI 直接代入：对跃迁角频率为 $\omega_0 = 2\pi\nu_0$、单轮探询时间为 $T_R$、循环周期为 $T_c = T_R + T_d$（含制备与读出死时间 $T_d$）的 $N$ 原子光钟，总平均时间 $\tau$ 内重复 $\nu = \tau/T_c$ 轮，每轮相位不确定度为 $\Delta\phi_1 = \xi_R/\sqrt{N}$（$\xi_R$ 为第 6.1 节 Wineland 自旋压缩参数，$\xi_R=1$ 对应 SQL），换算成相对频偏 $\Delta y = \frac{\Delta\phi_1}{\omega_0 T_R \sqrt{\nu}}$，立即得到**量子投影噪声（QPN）极限下的阿兰偏差**：
+
+$$
+\sigma_y^{\mathrm{QPN}}(\tau) = \frac{\xi_R}{\omega_0 \sqrt{N\, T_R\, \tau}}\sqrt{\frac{T_c}{T_R}}.
+$$
+
+拿 $^{87}\mathrm{Sr}$ 钟态跃迁（见 [Q4 第 7.3 节](quantum-mechanics/04-wavefunctions-models.md)，$\nu_0 \approx 4.292\times 10^{14}\ \mathrm{Hz} \implies \omega_0 \approx 2.697\times 10^{15}\ \mathrm{rad/s}$）代入一组典型参数：$N = 10^4$ 原子、$T_R = 1.0\ \mathrm{s}$、$T_c = 1.2\ \mathrm{s}$、无压缩 $\xi_R = 1$：
+
+$$
+\sigma_y^{\mathrm{QPN}}(1\ \mathrm{s})
+= \frac{1}{2.697\times 10^{15}\times 10^2}\sqrt{1.2}
+\approx 4.06\times 10^{-18},
+\qquad
+\sigma_y^{\mathrm{QPN}}(100\ \mathrm{s}) \approx 4.06\times 10^{-19}.
+$$
+
+在真实光钟里，死时间 $T_d$ 还会引发额外的 **Dick 效应**（Dick, 1987）：周期性间断采样会把本地探测激光器在 $1/T_c$ 整数倍频率处的高频相位噪声混叠（aliasing）进低频频偏误差，使实测 $\sigma_y(\tau)$ 停留在 QPN 上方；实验上常通过交错双钟零死时间运行或超稳低温硅腔来压制它。
+
+而在计时物理的前沿，2024 年 JILA 与维也纳工业大学团队（Zhang 等，*Nature* **633**, 63–70, 2024；证据层级 A）实现了 **$^{229}\mathrm{Th}$ 固态核钟**的关键跨越：利用真空紫外（VUV）光频梳，首次将掺杂于 $\mathrm{CaF_2}$ 晶体中的 $^{229}\mathrm{Th}$ 原子核低能同质异能跃迁（波长 $\sim 148.38\ \mathrm{nm}$）直接锁频比对到 $^{87}\mathrm{Sr}$ 光晶格钟。由于原子核尺寸比电子云小五个量级，对外界电磁杂散场天然极不敏感，且固态晶体可容纳远高于光晶格的核数量，不仅有望孕育便携式高精度固态核钟，对精细结构常数 $\alpha$ 漂移与超轻暗物质的灵敏度也比电子跃迁高出数个量级。
+
+#### 8.1.2 冷原子干涉重力仪 $\pi/2\text{–}\pi\text{–}\pi/2$ 脉冲 $\Delta\phi = -k_{\mathrm{eff}} g T^2$ 推导与 $^{87}\mathrm{Rb}$ 算例
+
+为什么表格中冷原子干涉重力仪的相位按探询间隔的**平方 $T^2$** 增长，而不是普通 Ramsey 钟的线性 $T$？一步步从 Kasevich–Chu（*PRL* 1991）Mach–Zehnder 序列算透。
+
+让一团竖直自由落体的冷原子（如 $^{87}\mathrm{Rb}$）在时刻 $t = 0,\; T,\; 2T$ 依次经受三发对向传播的受激拉曼激光脉冲 $\pi/2\text{–}\pi\text{–}\pi/2$（有效波矢 $k_{\mathrm{eff}} = k_1 - k_2 \approx \frac{4\pi}{\lambda}$，每次跃迁赋予动量踢 $\hbar k_{\mathrm{eff}}$）：
+
+1. $t = 0$ 的 $\pi/2$ 脉冲把原子波包分束为两条竖直高度不同的路径（下臂留守初动量，上臂获动量踢并吸收激光局部相位 $+\phi(0)$）；
+2. $t = T$ 的 $\pi$ 脉冲像反射镜一样把两臂的动量与内态互换（上臂吐出相位 $-\phi(T)$，下臂吸收相位 $+\phi(T)$，两臂相位差改变 $-2\phi(T)$）；
+3. $t = 2T$ 的 $\pi/2$ 脉冲把重新汇合的两臂合束干涉（引入相位 $+\phi(2T)$）。
+
+因此两臂净干涉相位差恰好是激光局部相位 $\phi(t) = k_{\mathrm{eff}} z(t)$ 的二阶前向差分：
+
+$$
+\Delta\phi = \phi(0) - 2\phi(T) + \phi(2T).
+$$
+
+在竖直重力加速度 $g$ 下，原子自由落体轨迹满足 $z(t) = z_0 + v_0 t - \frac{1}{2}g t^2$（取向上为 $+z$ 方向）。逐项代入 $t = 0, T, 2T$：
+
+$$
+\begin{aligned}
+\Delta\phi
+&= k_{\mathrm{eff}}\Bigl[z_0 - 2\bigl(z_0 + v_0 T - \tfrac{1}{2}g T^2\bigr) + \bigl(z_0 + 2v_0 T - 2g T^2\bigr)\Bigr] \\
+&= k_{\mathrm{eff}}\Bigl[(1 - 2 + 1)z_0 + (-2 + 2)v_0 T + (1 - 2)g T^2\Bigr] \\
+&= -k_{\mathrm{eff}}\, g\, T^2.
+\end{aligned}
+$$
+
+初位置 $z_0$ 与初速度 $v_0$ 精确抵消，只留下纯粹正比于加速度 $g$ 与 $T^2$ 的巨大相位信号！代入 $^{87}\mathrm{Rb}$ D2 线真实参数（$\lambda = 780\ \mathrm{nm}$，$g = 9.80665\ \mathrm{m/s^2}$，脉冲间隔 $T = 0.1\ \mathrm{s}$，总自由落体时长 $2T = 0.2\ \mathrm{s}$、下落高度 $\frac{1}{2}g(2T)^2 \approx 0.196\ \mathrm{m}$）：
+
+$$
+k_{\mathrm{eff}} = \frac{4\pi}{780\times 10^{-9}\ \mathrm{m}} \approx 1.611\times 10^7\ \mathrm{m^{-1}},
+\qquad
+|\Delta\phi| = k_{\mathrm{eff}} g T^2 \approx 1.580\times 10^6\ \mathrm{rad}!
+$$
+
+仅仅 $20\ \mathrm{cm}$ 的自由落体就积累了逾 **158 万弧度**的干涉相位！如果单次原子数为 $N \sim 10^6$（SQL 相位分辨率 $\delta\phi \sim 10^{-3}\ \mathrm{rad}$），单次测量相对重力灵敏度即达 $\delta g/g = \delta\phi / |\Delta\phi| \approx 6.33\times 10^{-10}$（即 $\delta g \approx 6.2\ \mathrm{nm/s^2} \approx 0.62\ \mu\mathrm{Gal}$）。但也正因为 $|\Delta\phi|$ 如此巨大，拉曼反射镜哪怕晃动微米级也会引入海量振动相位噪声 $\phi_{\mathrm{vib}}$——这正是 Stray 等（*Nature* 2022）采用**上下双原子云共用同一束拉曼激光做差分重力梯度仪**的巧思所在：地面振动对上下两团原子完全共模，两路相位一减即被精准抵消，从而把冷原子重力仪从隔振实验室搬上了真实室外道路。
+
+#### 8.1.3 进阶选读：量子照明（Quantum Illumination）的 6 dB 纠缠破缺优势与远程雷达祛魅
+
+读完第 5 节（Huelga 退相位打回 SQL）和第 6.2 节（光学损耗卡死压缩上限），很容易产生一个看似合理的直觉：“在高损耗、强热噪声环境下，量子纠缠大概毫无用处。”**量子照明（Quantum Illumination, QI）** 给出了一个最反直觉的著名反例（Lloyd, *Science* 2008；Tan–Erkmen–Giovannetti–Guha–Lloyd–Maccone–Pirandola–Shapiro, *PRL* **101**, 253601, 2008；证据层级 A）。
+
+考虑一个极低信噪比的二元假设检验（衔接[第 18 章第 4.1 节](18-channels-capacities-complexity.md)量子 Chernoff 界）：在强热背景（每模式平均热光子数 $N_B \gg 1$）中探测一个极弱反射目标（反射率 $\kappa \ll 1$；$H_0$ 为无目标 $\kappa = 0$，$H_1$ 为有目标 $\kappa > 0$）。发射端共使用 $M$ 个时间–带宽模式，每模式信号平均光子数受限于 $N_S \ll 1$：
+
+- **经典最优相干态探测**：直接发射相干激光脉冲，在强背景 $N_B \gg 1$ 下最小错误概率指数受限于
+  $$
+  P_{\mathrm{err}}^{\mathrm{cl}} \lesssim \frac{1}{2}\exp\!\left(-\frac{M\kappa N_S}{4 N_B}\right).
+  $$
+- **量子照明（TMSV 纠缠探测）**：制备 $M$ 对双模压缩真空态（TMSV，见[第 18 章第 9.4 节](18-channels-capacities-complexity.md)），把信号模（signal）射向目标区域，把闲频模（idler）留在本地低损存储器中；目标反射回来的微弱回波与强热背景混合后，**原本的信号–闲频量子纠缠在回波端已经完全被破坏（信道属于纠缠破缺信道，返回态严格可分！）**。但只要接收端对回波与本地保留的闲频模执行**最优联合量子测量**，量子 Chernoff 界给出错误概率指数：
+  $$
+  P_{\mathrm{err}}^{\mathrm{QI}} \lesssim \frac{1}{2}\exp\!\left(-\frac{M\kappa N_S}{N_B}\right).
+  $$
+
+对比两条指数：$\frac{M\kappa N_S}{N_B} \big/ \frac{M\kappa N_S}{4 N_B} = 4$，换算分贝为 $10\log_{10} 4 \approx 6.02\ \mathrm{dB}$——即便纠缠在传输途中已被彻底摧毁，保留在二阶相敏交叉关联 $\langle\hat a_S \hat a_I\rangle$ 中的非经典印记，依然在错误概率指数上比同能量最优经典探测高出 **6 dB（因子 4）**！
+
+但必须立刻给新闻界盛传的“量子反隐身雷达”做好工程祛魅，看清横在理论 6 dB 与远程雷达之间的两道硬门槛：
+
+1. **闲频光子存储瓶颈**：接收端必须把闲频模在目标往返飞行时间 $2R/c$ 内几乎无损耗地保存下来。若目标距离 $R = 15\ \mathrm{km}$，往返延迟高达 $100\ \mu\mathrm{s}$——同时满足 $100\ \mu\mathrm{s}$ 存储时间、极低损耗与宽带多模式（$M \sim 10^6$）的量子存储器目前远未实现；
+2. **联合接收机瓶颈与实验定位**：拿满 6 dB 需要高难度非线性联合接收机（如和频生成 SFG 接收机），现有可实现的相位共轭或参量放大接收机至多拿到 **3 dB**（因子 2），而且必须提前锁死目标精确距离门与多普勒频移窗。在微波频段，**Barzanjeh 等（*Science Advances* 6, eabb0451, 2020；证据层级 A）**已用约瑟夫森参量转换器（JPC）在室温约 $1\ \mathrm{m}$ 自由空间演示了微波量子照明相对经典噪声雷达的信噪比优势；结合其短距、低辐射功率（$N_S \ll 1$）特点，学界普遍认为量子照明的现实前景在**短距低剂量生物医学成像、隐蔽近距测距与材料无损检测**，而非数百公里的远程军用反隐身雷达。
+
+### 8.2 进阶选读：量子纠错辅助传感：HNLS 条件与 2 比特纠错探针手算
+
+现在回到第 5 节留下的核心问题：Huelga（1997）证明了局域马尔可夫退相位会把 GHZ 的海森堡极限打回 SQL，那么把 [第 10 章](10-error-correction.md) 的**量子纠错**（QEC）搬进传感器里，能把海森堡极限（时间标度 $1/T$ 与探针数标度 $1/N$）重新救回来吗？
 
 直觉上，这里藏着一个两难悖论：量子纠错的本职工作是把外部扰动全部当成“错误”抹掉，把态拉回编码子空间——可是在量子传感里，待测信号本身也是外部哈密顿量 $\omega H$ 引起的微小扰动！**如果在抹掉噪声的同时，把待测信号也一并当成错误给纠没了，传感器就彻底聋了。**
 
@@ -1141,7 +1253,7 @@ $$
 
    按矩阵内积验证正交性：$\operatorname{Tr}(Z I) = 0$ 且 $\operatorname{Tr}(Z X) = \operatorname{Tr}(i Y) = 0$，说明 $H = \frac{1}{2}Z$ 严格正交于 $\mathcal{S}$，$H \notin \mathcal{S}$，**HNLS 完美成立**！
 
-**零跳步构造 2 比特最小纠错传感码**：
+**具体构造 2 比特最小纠错传感码**：
 取比特 $1$（左位，高位）作暴露在磁场与 $X_1$ 翻转噪声下的探针，比特 $2$（右位，低位）作受保护的无噪辅助比特（例如金刚石 NV 旁长寿的核自旋）。取二维编码子空间投影算符 $P = |\bar 0\rangle\langle\bar 0| + |\bar 1\rangle\langle\bar 1|$，逻辑基定为
 
 $$
@@ -1157,7 +1269,7 @@ $$
   Z_1|\bar 0\rangle = Z_1|00\rangle = +|00\rangle = +|\bar 0\rangle, \qquad Z_1|\bar 1\rangle = Z_1|11\rangle = -|11\rangle = -|\bar 1\rangle \quad\Longrightarrow\quad P Z_1 P = |\bar 0\rangle\langle\bar 0| - |\bar 1\rangle\langle\bar 1| = \bar Z!
   $$
 
-  于是逻辑叠加态 $\frac{|\bar 0\rangle + |\bar 1\rangle}{\sqrt{2}}$ 在纠错保护下无衰减地积累完整相位 $e^{i\omega T}$！不过务必保持工程清醒：现实实验中纠错症状提取必须远快于噪声率（$dt \ll 1/\gamma$），且辅助比特自身若有不可忽略的噪声或测量开销，就会把理想海森堡标度重新拉回有限增益区。
+  于是逻辑叠加态 $\frac{|\bar 0\rangle + |\bar 1\rangle}{\sqrt{2}}$ 在纠错保护下无衰减地积累完整相位 $e^{i\omega T}$！不过需要保持工程清醒：现实实验中纠错症状提取必须远快于噪声率（$dt \ll 1/\gamma$），且辅助比特自身若有不可忽略的噪声或测量开销，就会把理想海森堡标度重新拉回有限增益区。
 
 ---
 
@@ -1166,7 +1278,7 @@ $$
 **题目**：某探针用 $H = \frac{1}{2}Z$ 测量直流磁场，它的唯一噪声源不是退相位，而是向基态 $|0\rangle$ 的自发辐射能量弛豫（振幅阻尼，参见[第 05 章](05-noise-channels.md)），对应单条 Lindblad 跃迁算符 $L = \sqrt{\gamma}\,|0\rangle\langle 1| = \sqrt{\gamma}\begin{pmatrix}0 & 1 \\ 0 & 0\end{pmatrix}$。
 初看之下，$L$ 只有非对角元，似乎和纯对角矩阵 $Z$“毫不相干”。请写出完整的 Lindblad 张成空间 $\mathcal{S} = \operatorname{span}\{I, L, L^\dagger, L^\dagger L\}$，检验 $H = \frac{1}{2}Z$ 是否满足 HNLS 条件，并解释这背后的物理教训。
 
-**零跳步解答**：
+**分步解答**：
 先逐一列出 $\mathcal{S}$ 的四个生成矩阵：
 
 $$
@@ -1195,26 +1307,46 @@ $$
 下面这张流程图把整章从“物理信号与噪声摸底”到“探针态、滤波序列、纠错判定与精度极限”的完整决策路径串成一张全景地图：
 
 ```mermaid
-flowchart LR
-  S0["待测物理量：直流场 / 交流场 / 频移 / 相移"] --> S1{"信号时域特性"}
-  S1 -->|"直流或准静态"| DC["Ramsey 干涉：自由等待累积相位，受限于 T2*"]
-  S1 -->|"特定频段交流或噪声谱"| AC["Hahn / CPMG-n 锁相：带通滤波响应延伸至 T2"]
-  DC --> S2{"噪声类型与多探针策略"}
+flowchart TB
+  S0["待测物理量：直流 / 交流场<br/>频移 / 相移"] --> S1{"信号时域特性"}
+  S1 -->|"直流或准静态"| DC["Ramsey 干涉<br/>自由等待累积相位<br/>受限于 T2*"]
+  S1 -->|"特定频段交流<br/>或噪声谱"| AC["Hahn / CPMG-n 锁相<br/>带通滤波响应<br/>延伸至 T2"]
+  DC --> S2{"噪声类型与<br/>多探针策略"}
   AC --> S2
-  S2 -->|"无纠缠独立探针"| SQL["标准量子极限 SQL：误差不低于 1/√N"]
-  S2 -->|"独立马尔可夫退相位下的 GHZ"| COLLAPSE["Huelga 坍塌：最优时长 1/(2Nγ)，退回 1/√N"]
-  S2 -->|"温和抗噪量子增强"| SQ["自旋压缩或光学压缩（如 LIGO O4 宽带降噪）"]
-  S2 -->|"满足 HNLS 纠错条件"| QEC["量子纠错辅助传感：压噪保信号，恢复海森堡标度"]
+  S2 -->|"无纠缠<br/>独立探针"| SQL["标准量子极限 SQL<br/>误差不低于 1/√N"]
+  S2 -->|"独立马尔可夫<br/>退相位 GHZ"| COLLAPSE["Huelga 坍塌<br/>最优时长 1/(2Nγ)<br/>退回 1/√N"]
+  S2 -->|"温和抗噪<br/>量子增强"| SQ["自旋压缩 / 光学压缩<br/>（LIGO O4 宽带降噪）"]
+  S2 -->|"满足 HNLS<br/>纠错条件"| QEC["量子纠错辅助传感<br/>压噪保信号<br/>恢复海森堡标度"]
 ```
 
-### 8.3 审读量子传感论文与新闻的四条专有核查口径
+### 8.3 审读量子传感论文与新闻的四条专有核查要点
 
-通用的科研统计规范与论文红旗总表见 [第 15 章第 5 节](15-practice-research.md)。遇到宣称“创纪录灵敏度”或“突破标准量子极限”的量子传感报道时，额外逐条过一遍下面四把**传感专有卡尺**，就能迅速辨出真实含金量：
+通用的科研统计规范与论文核查总表见 [第 15 章第 5 节](15-practice-research.md)。遇到宣称“创纪录灵敏度”或“突破标准量子极限”的量子传感报道时，额外逐条过一遍下面四把**传感专有卡尺**，就能迅速辨出真实含金量：
 
 1. **灵敏度与真实时间账**：所报 $\mathrm{T/\sqrt{Hz}}$ 或 $\mathrm{rad/\sqrt{Hz}}$ 是否基于包含制备、读出、复位死时间 $t_d$ 的**真实墙钟总时间 $T$** 实测噪声谱算得，还是仅凭单次相干时长 $\tau$ 代入理想公式推算？单次最小可测场（单位 $\mathrm{T}$）与单位根号带宽灵敏度（单位 $\mathrm{T/\sqrt{Hz}}$）是否混写？
 2. **探测体积与工作距离**：把纳米色心、芯片微米阵列、厘米级气室或公里级干涉臂摆在一起比较时，是否同步标明了**传感体积 $V$、探头到待测源的工作距离、响应带宽与磁场动态范围**？
 3. **量子增强的诚实基线**：所谓“超越 SQL 若干 dB”，究竟是指**整机总实测噪声低于同一装置关闭纠缠/压缩后的散粒噪声基线**（真正的计量学增益，如 LIGO O4 与 Robinson 2024），还是在**扣除探测损耗、光学损耗或经典技术噪声之后才推断出**的“内部自旋噪声压低”？同时，针对同一实际应用，是否与最强的无纠缠/经典基准（如 SERF OPM、SQUID 或常规光钟）做了正面比较？
 4. **噪声假设与纠错前提**：若文章宣称恢复海森堡标度 $1/N$ 或 $1/T$，所对抗的噪声究竟是**独立马尔可夫噪声**，还是慢漂移非马尔可夫 / 集体相关噪声？若采用量子纠错辅助传感，是否明确验证了 HNLS 条件并诚实计入了辅助比特退相干与纠错测量的时间开销？
+
+---
+
+## 本章一页速记卡
+
+**核心逻辑主链**（完整决策树见上方流程图与[灵敏度标度对比图](assets/v3-20-sensing-limits.svg)）：物理场编码 $\phi=\gamma_s B\tau$ $\longrightarrow$ 经典/量子 Fisher 信息与 QCRB $\longrightarrow$ $N$ 探针 SQL（$1/\sqrt{N}$）vs 海森堡极限（$1/N$）$\longrightarrow$ 退相位 Huelga 坍塌 $\longrightarrow$ 自旋/光学压缩、CPMG 交流锁相、光钟/重力仪/量子照明与 HNLS 纠错传感。
+
+| 概念 / 工具 | 核心公式 | 维数 / 单位 / 适用条件 | 最常见误用 |
+| :--- | :--- | :--- | :--- |
+| **磁场灵敏度 $\eta$** | $\eta = \delta B(T)\sqrt{T} = \frac{1}{\gamma_s\sqrt{N\tau}}$ | $\mathrm{T/\sqrt{Hz}}$；真实系统须乘 $\frac{e^{(\tau/T_2)^\beta}\sqrt{\tau+t_d}}{C\sqrt\tau}$ | 忽略探测体积 $V$ 与工作距离，直接拿单 NV 与厘米级 OPM 比数字 |
+| **量子 Cramér–Rao 界** | $\Delta\theta \ge \frac{1}{\sqrt{\nu F_C}} \ge \frac{1}{\sqrt{\nu F_Q}}$；纯态 $F_Q = 4(\Delta H)^2$ | $[\theta]$；渐近无偏有效，有限小样本未必可达 | 误把 $V<1$ 的波峰 $\phi=0$ 当高灵敏点（实际 $F_C(0;V)=0$） |
+| **SQL vs HL vs Huelga** | $\Delta\phi_{\mathrm{SQL}} \ge \frac{1}{\sqrt N}$；$\Delta\phi_{\mathrm{HL}} \ge \frac{1}{N}$；含噪 $\Delta\omega_{\mathrm{GHZ}}^{\min}=\sqrt{\frac{2e\gamma}{NT}}$ | 独立马尔可夫退相位下最优 $t_{\mathrm{opt}}=\frac{1}{2N\gamma}$，距理论下界差 $\sqrt e$ | 以为 GHZ 在任意含噪环境下都能保住 $1/N$ 加速 |
+| **自旋压缩与光学压缩** | $\xi_R^2 = \frac{N(\Delta J_\perp)^2}{\lvert\langle\vec J\rangle\rvert^2}$；$\operatorname{Var}_{\mathrm{loss}}(\hat q) = \frac{1}{2}(\eta_{\mathrm{opt}}e^{-2r}+1-\eta_{\mathrm{opt}})$ | $\xi_R^2<1$ 超越 SQL；光学损耗 $1-\eta_{\mathrm{opt}}$ 封死降噪上限 | 忽略光路损耗底板或忽略高频压缩引发的低频辐射压反噬 |
+| **CPMG-$n$ 与原子重力仪** | $\phi_{\mathrm{ac}} = \frac{2}{\pi}\gamma_e B_{\mathrm{ac}}T$，$|Y(\omega_0)|^2=\frac{4}{\pi^2}$；$\Delta\phi = -k_{\mathrm{eff}}gT^2$ | $\omega_0 = \pi n/T$；重力仪经二阶差分消去 $z_0, v_0$ | 漏算方波奇次谐波 $(2k+1)\omega_0$ 或忽略振动噪声共模消除 |
+| **光钟阿兰偏差与 HNLS** | $\sigma_y^{\mathrm{QPN}}(\tau)=\frac{\xi_R}{\omega_0\sqrt{NT_R\tau}}\sqrt{\frac{T_c}{T_R}}$；HNLS：$H\notin\operatorname{span}\{I,L_k,L_k^\dagger,L_j^\dagger L_k\}$ | 无量纲相对频偏；HNLS 必须包含二次项 $L_j^\dagger L_k$ | 混淆准确度与不稳定度 $\sigma_y(\tau)$，或误判振幅阻尼可通过 HNLS |
+
+**首遍通关自测三句话**：
+1. 我能解释灵敏度单位 $\mathrm{T/\sqrt{Hz}}$ 的来历，并由 Ramsey 含可见度条纹算出为什么 $\phi=\pi/2$ 灵敏而 $\phi=0$ 是盲点；
+2. 我能从 $F_Q=4(\Delta J_z)^2$ 导出 SQL 与海森堡极限，说清 Huelga 退相位为何让 GHZ 退回 $1/\sqrt{N}$，以及自旋/光学压缩为何更抗噪；
+3. 我能区分原子钟准确度与阿兰偏差 $\sigma_y(\tau)$，完整推导出冷原子重力仪的 $\Delta\phi=-k_{\mathrm{eff}}gT^2$，并客观评价量子照明 6 dB 优势的工程边界。
 
 ---
 
@@ -1254,4 +1386,4 @@ flowchart LR
 - **量子参数估计、SLD、Bures 几何与海森堡极限（同行评审原始论文）**：C. W. Helstrom, *Minimum mean-squared error of estimates in quantum statistics*, *Phys. Lett. A* **25**, 101–102 (1967)；S. L. Braunstein & C. M. Caves, *Statistical distance and the geometry of quantum states*, *Phys. Rev. Lett.* **72**, 3439–3443 (1994)；V. Giovannetti, S. Lloyd & L. Maccone, *Quantum-enhanced measurements: beating the standard quantum limit*, *Science* **306**, 1330–1336 (2004)；*Quantum metrology*, *Phys. Rev. Lett.* **96**, 010401 (2006)；L. Pezzè & A. Smerzi, *Entanglement, nonlinear dynamics, and the Heisenberg limit*, *Phys. Rev. Lett.* **102**, 100401 (2009)。
 - **含噪极限与 Huelga 坍塌（同行评审论文）**：S. F. Huelga, C. Macchiavello, T. Pellizzari, A. K. Ekert, M. B. Plenio & J. I. Cirac, *Improvement of frequency standards with quantum entanglement*, *Phys. Rev. Lett.* **79**, 3865–3868 (1997)；B. M. Escher, R. L. de Matos Filho & L. Davidovich, *General framework for estimating the ultimate precision limit in noisy quantum-enhanced metrology*, *Nature Physics* **7**, 406–411 (2011)；R. Demkowicz-Dobrzański, J. Kołodyński & M. Guţă, *The elusive Heisenberg limit in quantum-enhanced metrology*, *Nature Communications* **3**, 1063 (2012)；A. W. Chin, S. F. Huelga & M. B. Plenio, *Quantum metrology in non-Markovian environments*, *Phys. Rev. Lett.* **109**, 233601 (2012)。
 - **自旋压缩、光学压缩与 LIGO 引力波探测（同行评审论文）**：C. M. Caves, *Quantum-mechanical noise in an interferometer*, *Phys. Rev. D* **23**, 1693–1708 (1981)；D. J. Wineland, J. J. Bollinger, W. M. Itano, F. L. Moore & D. J. Heinzen, *Spin squeezing and reduced quantum noise in spectroscopy*, *Phys. Rev. A* **46**, R6797 (1992) 及 *Phys. Rev. A* **50**, 67–88 (1994)；M. Kitagawa & M. Ueda, *Squeezed spin states*, *Phys. Rev. A* **47**, 5138–5143 (1993)；M. Tse 等（LIGO O3）, *Quantum-enhanced Advanced LIGO detectors in the era of gravitational-wave astronomy*, *Phys. Rev. Lett.* **123**, 231107 (2019)；D. Ganapathy 等（LIGO O4）, *Broadband quantum enhancement of the LIGO detectors with frequency-dependent squeezing*, *Phys. Rev. X* **13**, 041021 (2023)。
-- **光晶格钟、冷原子干涉、强基线与 QEC 传感（同行评审论文，2024–2026 核验日期 2026-11-25）**：A. Aeppli, K. Kim, W. Warfield, M. S. Safronova & J. Ye, *Clock with $8\times 10^{-19}$ systematic uncertainty*, *Phys. Rev. Lett.* **133**, 023401 (2024)；J. M. Robinson, M. Miklos, Y. M. Tso, C. J. Kennedy, T. Bothwell, D. Kedar, J. K. Thompson & J. Ye, *Direct comparison of two spin-squeezed optical clock ensembles at the $10^{-17}$ level*, *Nature Physics* **20**, 208–213 (2024)；M. Kasevich & S. Chu, *Atomic interferometry using stimulated Raman transitions*, *Phys. Rev. Lett.* **67**, 181–184 (1991)；B. Stray 等, *Quantum sensing for gravity cartography*, *Nature* **602**, 590–594 (2022)；I. K. Kominis, T. W. Kornack, J. C. Allred & M. V. Romalis, *A subfemtotesla multichannel atomic magnetometer*, *Nature* **422**, 596–599 (2003)；S. Zhou, M. Zhang, J. Preskill & L. Jiang, *Achieving the Heisenberg limit in quantum metrology using quantum error correction*, *Nature Communications* **9**, 78 (2018)。
+- **光晶格钟、$^{229}\mathrm{Th}$ 核钟、冷原子干涉、量子照明与 QEC 传感（同行评审论文，2024–2026 核验日期 2026-11-25）**：D. W. Allan, *Statistics of atomic frequency standards*, *Proc. IEEE* **54**, 221–230 (1966)；G. J. Dick, *Local oscillator induced instabilities in trapped ion frequency standards*, *Proc. PTTI* (1987)；A. Aeppli, K. Kim, W. Warfield, M. S. Safronova & J. Ye, *Clock with $8\times 10^{-19}$ systematic uncertainty*, *Phys. Rev. Lett.* **133**, 023401 (2024)；J. M. Robinson 等, *Direct comparison of two spin-squeezed optical clock ensembles at the $10^{-17}$ level*, *Nature Physics* **20**, 208–213 (2024)；C. Zhang 等, *Frequency ratio of the $^{229m}\mathrm{Th}$ nuclear isomeric transition and the $^{87}\mathrm{Sr}$ atomic clock*, *Nature* **633**, 63–70 (2024)；M. Kasevich & S. Chu, *Atomic interferometry using stimulated Raman transitions*, *Phys. Rev. Lett.* **67**, 181–184 (1991)；B. Stray 等, *Quantum sensing for gravity cartography*, *Nature* **602**, 590–594 (2022)；S. Lloyd, *Enhanced sensitivity of photodetection via quantum illumination*, *Science* **321**, 1463–1465 (2008)；S.-H. Tan 等, *Quantum illumination with Gaussian states*, *Phys. Rev. Lett.* **101**, 253601 (2008)；S. Barzanjeh 等, *Microwave quantum illumination using a digital receiver*, *Science Advances* **6**, eabb0451 (2020)；I. K. Kominis, T. W. Kornack, J. C. Allred & M. V. Romalis, *A subfemtotesla multichannel atomic magnetometer*, *Nature* **422**, 596–599 (2003)；S. Zhou, M. Zhang, J. Preskill & L. Jiang, *Achieving the Heisenberg limit in quantum metrology using quantum error correction*, *Nature Communications* **9**, 78 (2018)。

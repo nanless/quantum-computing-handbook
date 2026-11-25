@@ -2,8 +2,8 @@
   <title id="title">三比特重复码中单个比特翻转的纠错症状流程</title>
   <desc id="desc">未知逻辑态被编码，在至多一个比特翻转的假设内，两个奇偶检查定位错误位置而不读取逻辑振幅，最后进行纠正。</desc>
   <style>
-    :root{color-scheme:light dark}.bg{fill:#f8fafc}.box{fill:#eaf4fa;stroke:#4b82a2;stroke-width:2}.check{fill:#e7f2dc;stroke:#668e4d;stroke-width:2}.warn{fill:#fff0e8;stroke:#bd674a;stroke-width:2}.title{font:500 24px system-ui,sans-serif;fill:#142b3f}.body{font:400 17px system-ui,sans-serif;fill:#314c63}.arrow{stroke:#234b64;stroke-width:3;fill:none}.dash{stroke:#6f8698;stroke-width:2;stroke-dasharray:7 6}
-    @media(prefers-color-scheme:dark){.bg{fill:#101820}.box{fill:#203b4b}.check{fill:#304428}.warn{fill:#4b2f27}.title{fill:#eef6ff}.body{fill:#d0deea}.arrow{stroke:#a9d9f2}.dash{stroke:#8da5b6}}
+    :root{color-scheme:light}.bg{fill:#f8fafc}.box{fill:#eaf4fa;stroke:#4b82a2;stroke-width:2}.check{fill:#e7f2dc;stroke:#668e4d;stroke-width:2}.warn{fill:#fff0e8;stroke:#bd674a;stroke-width:2}.title{font:500 24px system-ui,sans-serif;fill:#142b3f}.body{font:400 17px system-ui,sans-serif;fill:#314c63}.arrow{stroke:#234b64;stroke-width:3;fill:none}.dash{stroke:#6f8698;stroke-width:2;stroke-dasharray:7 6}
+    
   </style>
   <rect class="bg" width="1080" height="560" rx="28"/>
   <text class="title" x="45" y="54">纠错症状定位可纠正的 X 错误，不测未知振幅 α、β</text>

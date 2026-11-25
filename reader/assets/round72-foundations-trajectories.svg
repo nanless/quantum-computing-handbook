@@ -21,26 +21,7 @@
     .res-line { fill: none; stroke: #1f7a68; stroke-width: 1.5; opacity: 0.8; }
     .errbar { stroke: #1f7a68; stroke-width: 1.3; }
     .mc-dot { fill: #1f7a68; stroke: #ffffff; stroke-width: 0.9; }
-    @media (prefers-color-scheme: dark) {
-      .bg { fill: #121716; }
-      .panel { fill: #18201e; stroke: #2f3e3a; }
-      .card { fill: #1b2522; stroke: #31423d; }
-      .title { fill: #ecf3f0; }
-      .sub { fill: #a4b7b1; }
-      .sec { fill: #6cd3bc; }
-      .axis-lbl { fill: #d7e4df; }
-      .tick { fill: #9fb3ac; }
-      .note { fill: #d0ddd8; }
-      .mono { fill: #84e0cb; }
-      .grid { stroke: #273531; }
-      .axis { stroke: #7f9790; }
-      .zero-line { stroke: #7bb4f0; }
-      .exact { stroke: #7bb4f0; }
-      .me { stroke: #f29d5b; }
-      .res-line { stroke: #55d0b4; }
-      .errbar { stroke: #55d0b4; }
-      .mc-dot { fill: #55d0b4; stroke: #18201e; }
-    }
+    
   </style>
   <rect width="960" height="560" rx="12" class="bg"/>
   <text x="34" y="38" class="title">量子轨迹平均逼近主方程系综态（4,096 条实跑轨迹对照）</text>

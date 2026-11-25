@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">矩形弱驱动脉冲的一阶频谱相消零点与精确两态 Rabi 对比</title>
+  <desc id="desc">固定弱驱动面积 Ω_ab·τ = 0.1 rad、失谐 δf = 200 MHz 的合成孤立两态模型：左图绘制一阶跃迁概率 P^(1)(τ) = 0.0025·sinc²(π δf τ) 随时长 τ ∈ [0, 15] ns 的振荡曲线，标出 τ = 2.5 ns（1.013×10⁻³）及 5、10、15 ns 三处一阶谱零点；右表对比精确两态 Rabi 解，说明谱零点处高阶项仍非零且工程上需改用平滑包络加 DRAG。</desc>
+  <style>
+:root{color-scheme:dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.5;stroke-dasharray:6 5;fill:none}
+.bloch-disk{fill:#dff4ff;fill-opacity:.38;stroke:#1b6ca8;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.node-bg{fill:#ffffff}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.13}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.bar-bg{fill:#e2e8f0}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.42}
+
+.bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-disk{fill:#164968;fill-opacity:.40;stroke:#6bc2f5}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .node-bg{fill:#16222e}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area2{fill:#f28872;fill-opacity:.15}
+  .area3{fill:#5dd1a8;fill-opacity:.16}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .bar-bg{fill:#273a4c}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.52}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">矩形弱脉冲的频谱相消：一阶谱零点与精确两态对比</text>
+  <text class="subtitle" x="34" y="76">合成孤立两态弱驱动模型 · 固定面积 Ω<tspan dy="3" font-size="75%">ab</tspan><tspan dy="-3">&#8203;</tspan>τ = 0.1 rad，失谐 δf = 200 MHz（非真实三能级门）</text>
+  <rect class="panel" x="28" y="94" width="634" height="456" rx="14"/>
+  <path class="phead" d="M 42 95 H 648 Q 661 95 661 108 V 132 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="132" x2="661" y2="132"/>
+  <text class="sec" x="44" y="118">一阶跃迁概率 P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan>(τ) 随脉冲时长 τ 振荡曲线</text>
+  <rect class="panel" x="678" y="94" width="294" height="456" rx="14"/>
+  <path class="phead" d="M 692 95 H 958 Q 971 95 971 108 V 132 H 679 V 108 Q 679 95 692 95 Z"/>
+  <line class="grid" x1="679" y1="132" x2="971" y2="132"/>
+  <text class="sec" x="694" y="118">一阶微扰与精确 Rabi 对比及工程边界</text>
+  <line class="c1" stroke-width="2.6" x1="46" y1="152" x2="74" y2="152"/>
+  <circle class="c1-fill" cx="60" cy="152" r="3.6"/>
+  <text class="sm" x="80" y="156">一阶概率 P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan>(τ) = (0.1/2)² sinc²(π δf τ)</text>
+  <polygon class="node-bg c2" stroke-width="2.2" points="406,147.2 410.8,152 406,156.8 401.2,152"/>
+  <text class="sm" x="418" y="156">一阶谱零点（5, 10, 15 ns）</text>
+  <line class="grid" x1="104" y1="444" x2="638" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="444" x2="104" y2="444"/>
+  <text class="xs" x="95" y="448" text-anchor="end">0.0000</text>
+  <line class="grid" x1="104" y1="395.64" x2="638" y2="395.64"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="395.64" x2="104" y2="395.64"/>
+  <text class="xs" x="95" y="399.64" text-anchor="end">0.0005</text>
+  <line class="grid" x1="104" y1="347.27" x2="638" y2="347.27"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="347.27" x2="104" y2="347.27"/>
+  <text class="xs" x="95" y="351.27" text-anchor="end">0.0010</text>
+  <line class="grid" x1="104" y1="298.91" x2="638" y2="298.91"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="298.91" x2="104" y2="298.91"/>
+  <text class="xs" x="95" y="302.91" text-anchor="end">0.0015</text>
+  <line class="grid" x1="104" y1="250.55" x2="638" y2="250.55"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="250.55" x2="104" y2="250.55"/>
+  <text class="xs" x="95" y="254.55" text-anchor="end">0.0020</text>
+  <line class="grid" x1="104" y1="202.18" x2="638" y2="202.18"/>
+  <line class="axis" stroke-width="1.2" x1="99" y1="202.18" x2="104" y2="202.18"/>
+  <text class="xs" x="95" y="206.18" text-anchor="end">0.0025</text>
+  <line class="grid" x1="104" y1="178" x2="104" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="104" y1="444" x2="104" y2="449"/>
+  <text class="sm" x="104" y="463" text-anchor="middle">0</text>
+  <line class="grid" x1="191.83" y1="178" x2="191.83" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="191.83" y1="444" x2="191.83" y2="449"/>
+  <text class="sm" x="191.83" y="463" text-anchor="middle">2.5</text>
+  <line class="c2" stroke-width="1.2" stroke-dasharray="5 4" stroke-opacity="0.65" x1="279.66" y1="178" x2="279.66" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="279.66" y1="444" x2="279.66" y2="449"/>
+  <text class="sm" x="279.66" y="463" text-anchor="middle">5</text>
+  <line class="grid" x1="367.49" y1="178" x2="367.49" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="367.49" y1="444" x2="367.49" y2="449"/>
+  <text class="sm" x="367.49" y="463" text-anchor="middle">7.5</text>
+  <line class="c2" stroke-width="1.2" stroke-dasharray="5 4" stroke-opacity="0.65" x1="455.32" y1="178" x2="455.32" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="455.32" y1="444" x2="455.32" y2="449"/>
+  <text class="sm" x="455.32" y="463" text-anchor="middle">10</text>
+  <line class="grid" x1="543.14" y1="178" x2="543.14" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="543.14" y1="444" x2="543.14" y2="449"/>
+  <text class="sm" x="543.14" y="463" text-anchor="middle">12.5</text>
+  <line class="c2" stroke-width="1.2" stroke-dasharray="5 4" stroke-opacity="0.65" x1="630.97" y1="178" x2="630.97" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="630.97" y1="444" x2="630.97" y2="449"/>
+  <text class="sm" x="630.97" y="463" text-anchor="middle">15</text>
+  <polygon class="area1" points="104,444 104,202.18 106.2,202.31 108.39,202.68 110.59,203.3 112.78,204.16 114.98,205.27 117.17,206.62 119.37,208.21 121.57,210.03 123.76,212.08 125.96,214.36 128.15,216.85 130.35,219.56 132.54,222.47 134.74,225.58 136.94,228.89 139.13,232.38 141.33,236.04 143.52,239.87 145.72,243.85 147.91,247.99 150.11,252.26 152.31,256.67 154.5,261.19 156.7,265.82 158.89,270.55 161.09,275.36 163.28,280.25 165.48,285.21 167.68,290.23 169.87,295.28 172.07,300.38 174.26,305.49 176.46,310.62 178.65,315.74 180.85,320.87 183.05,325.97 185.24,331.04 187.44,336.08 189.63,341.06 191.83,345.99 194.02,350.86 196.22,355.65 198.42,360.36 200.61,364.99 202.81,369.51 205,373.93 207.2,378.24 209.39,382.44 211.59,386.51 213.79,390.46 215.98,394.28 218.18,397.96 220.37,401.5 222.57,404.91 224.76,408.16 226.96,411.27 229.16,414.23 231.35,417.05 233.55,419.71 235.74,422.22 237.94,424.58 240.13,426.79 242.33,428.86 244.53,430.77 246.72,432.54 248.92,434.17 251.11,435.66 253.31,437.01 255.5,438.23 257.7,439.31 259.9,440.27 262.09,441.11 264.29,441.83 266.48,442.44 268.68,442.94 270.88,443.34 273.07,443.63 275.27,443.84 277.46,443.96 279.66,444 281.85,443.96 284.05,443.86 286.25,443.69 288.44,443.46 290.64,443.17 292.83,442.84 295.03,442.47 297.22,442.07 299.42,441.63 301.62,441.16 303.81,440.68 306.01,440.18 308.2,439.67 310.4,439.16 312.59,438.64 314.79,438.12 316.99,437.61 319.18,437.11 321.38,436.63 323.57,436.16 325.77,435.71 327.96,435.29 330.16,434.88 332.36,434.51 334.55,434.17 336.75,433.85 338.94,433.57 341.14,433.33 343.33,433.12 345.53,432.94 347.73,432.8 349.92,432.69 352.12,432.62 354.31,432.59 356.51,432.59 358.7,432.63 360.9,432.7 363.1,432.81 365.29,432.94 367.49,433.11 369.68,433.31 371.88,433.53 374.07,433.78 376.27,434.05 378.47,434.35 380.66,434.66 382.86,434.99 385.05,435.34 387.25,435.71 389.44,436.08 391.64,436.46 393.84,436.86 396.03,437.25 398.23,437.65 400.42,438.05 402.62,438.45 404.81,438.85 407.01,439.24 409.21,439.62 411.4,440 413.6,440.37 415.79,440.72 417.99,441.06 420.18,441.39 422.38,441.7 424.58,441.99 426.77,442.27 428.97,442.52 431.16,442.76 433.36,442.98 435.55,443.18 437.75,443.35 439.95,443.51 442.14,443.64 444.34,443.75 446.53,443.84 448.73,443.91 450.92,443.96 453.12,443.99 455.32,444 457.51,443.99 459.71,443.96 461.9,443.92 464.1,443.86 466.29,443.78 468.49,443.69 470.69,443.59 472.88,443.47 475.08,443.34 477.27,443.21 479.47,443.06 481.66,442.91 483.86,442.75 486.06,442.59 488.25,442.42 490.45,442.25 492.64,442.08 494.84,441.91 497.03,441.74 499.23,441.58 501.43,441.42 503.62,441.26 505.82,441.11 508.01,440.97 510.21,440.83 512.4,440.7 514.6,440.59 516.8,440.48 518.99,440.38 521.19,440.29 523.38,440.22 525.58,440.15 527.77,440.1 529.97,440.06 532.17,440.03 534.36,440.02 536.56,440.02 538.75,440.02 540.95,440.05 543.14,440.08 545.34,440.12 547.54,440.18 549.73,440.25 551.93,440.32 554.12,440.41 556.32,440.51 558.51,440.61 560.71,440.72 562.91,440.84 565.1,440.96 567.3,441.1 569.49,441.23 571.69,441.37 573.88,441.51 576.08,441.65 578.28,441.8 580.47,441.95 582.67,442.09 584.86,442.24 587.06,442.38 589.25,442.52 591.45,442.66 593.65,442.79 595.84,442.92 598.04,443.04 600.23,443.16 602.43,443.27 604.62,443.38 606.82,443.48 609.02,443.57 611.21,443.65 613.41,443.72 615.6,443.79 617.8,443.84 620,443.89 622.19,443.93 624.39,443.96 626.58,443.98 628.78,444 630.97,444 630.97,444"/>
+  <path class="c1" stroke-width="2.6" d="M 104 202.18 L 106.2 202.31 L 108.39 202.68 L 110.59 203.3 L 112.78 204.16 L 114.98 205.27 L 117.17 206.62 L 119.37 208.21 L 121.57 210.03 L 123.76 212.08 L 125.96 214.36 L 128.15 216.85 L 130.35 219.56 L 132.54 222.47 L 134.74 225.58 L 136.94 228.89 L 139.13 232.38 L 141.33 236.04 L 143.52 239.87 L 145.72 243.85 L 147.91 247.99 L 150.11 252.26 L 152.31 256.67 L 154.5 261.19 L 156.7 265.82 L 158.89 270.55 L 161.09 275.36 L 163.28 280.25 L 165.48 285.21 L 167.68 290.23 L 169.87 295.28 L 172.07 300.38 L 174.26 305.49 L 176.46 310.62 L 178.65 315.74 L 180.85 320.87 L 183.05 325.97 L 185.24 331.04 L 187.44 336.08 L 189.63 341.06 L 191.83 345.99 L 194.02 350.86 L 196.22 355.65 L 198.42 360.36 L 200.61 364.99 L 202.81 369.51 L 205 373.93 L 207.2 378.24 L 209.39 382.44 L 211.59 386.51 L 213.79 390.46 L 215.98 394.28 L 218.18 397.96 L 220.37 401.5 L 222.57 404.91 L 224.76 408.16 L 226.96 411.27 L 229.16 414.23 L 231.35 417.05 L 233.55 419.71 L 235.74 422.22 L 237.94 424.58 L 240.13 426.79 L 242.33 428.86 L 244.53 430.77 L 246.72 432.54 L 248.92 434.17 L 251.11 435.66 L 253.31 437.01 L 255.5 438.23 L 257.7 439.31 L 259.9 440.27 L 262.09 441.11 L 264.29 441.83 L 266.48 442.44 L 268.68 442.94 L 270.88 443.34 L 273.07 443.63 L 275.27 443.84 L 277.46 443.96 L 279.66 444 L 281.85 443.96 L 284.05 443.86 L 286.25 443.69 L 288.44 443.46 L 290.64 443.17 L 292.83 442.84 L 295.03 442.47 L 297.22 442.07 L 299.42 441.63 L 301.62 441.16 L 303.81 440.68 L 306.01 440.18 L 308.2 439.67 L 310.4 439.16 L 312.59 438.64 L 314.79 438.12 L 316.99 437.61 L 319.18 437.11 L 321.38 436.63 L 323.57 436.16 L 325.77 435.71 L 327.96 435.29 L 330.16 434.88 L 332.36 434.51 L 334.55 434.17 L 336.75 433.85 L 338.94 433.57 L 341.14 433.33 L 343.33 433.12 L 345.53 432.94 L 347.73 432.8 L 349.92 432.69 L 352.12 432.62 L 354.31 432.59 L 356.51 432.59 L 358.7 432.63 L 360.9 432.7 L 363.1 432.81 L 365.29 432.94 L 367.49 433.11 L 369.68 433.31 L 371.88 433.53 L 374.07 433.78 L 376.27 434.05 L 378.47 434.35 L 380.66 434.66 L 382.86 434.99 L 385.05 435.34 L 387.25 435.71 L 389.44 436.08 L 391.64 436.46 L 393.84 436.86 L 396.03 437.25 L 398.23 437.65 L 400.42 438.05 L 402.62 438.45 L 404.81 438.85 L 407.01 439.24 L 409.21 439.62 L 411.4 440 L 413.6 440.37 L 415.79 440.72 L 417.99 441.06 L 420.18 441.39 L 422.38 441.7 L 424.58 441.99 L 426.77 442.27 L 428.97 442.52 L 431.16 442.76 L 433.36 442.98 L 435.55 443.18 L 437.75 443.35 L 439.95 443.51 L 442.14 443.64 L 444.34 443.75 L 446.53 443.84 L 448.73 443.91 L 450.92 443.96 L 453.12 443.99 L 455.32 444 L 457.51 443.99 L 459.71 443.96 L 461.9 443.92 L 464.1 443.86 L 466.29 443.78 L 468.49 443.69 L 470.69 443.59 L 472.88 443.47 L 475.08 443.34 L 477.27 443.21 L 479.47 443.06 L 481.66 442.91 L 483.86 442.75 L 486.06 442.59 L 488.25 442.42 L 490.45 442.25 L 492.64 442.08 L 494.84 441.91 L 497.03 441.74 L 499.23 441.58 L 501.43 441.42 L 503.62 441.26 L 505.82 441.11 L 508.01 440.97 L 510.21 440.83 L 512.4 440.7 L 514.6 440.59 L 516.8 440.48 L 518.99 440.38 L 521.19 440.29 L 523.38 440.22 L 525.58 440.15 L 527.77 440.1 L 529.97 440.06 L 532.17 440.03 L 534.36 440.02 L 536.56 440.02 L 538.75 440.02 L 540.95 440.05 L 543.14 440.08 L 545.34 440.12 L 547.54 440.18 L 549.73 440.25 L 551.93 440.32 L 554.12 440.41 L 556.32 440.51 L 558.51 440.61 L 560.71 440.72 L 562.91 440.84 L 565.1 440.96 L 567.3 441.1 L 569.49 441.23 L 571.69 441.37 L 573.88 441.51 L 576.08 441.65 L 578.28 441.8 L 580.47 441.95 L 582.67 442.09 L 584.86 442.24 L 587.06 442.38 L 589.25 442.52 L 591.45 442.66 L 593.65 442.79 L 595.84 442.92 L 598.04 443.04 L 600.23 443.16 L 602.43 443.27 L 604.62 443.38 L 606.82 443.48 L 609.02 443.57 L 611.21 443.65 L 613.41 443.72 L 615.6 443.79 L 617.8 443.84 L 620 443.89 L 622.19 443.93 L 624.39 443.96 L 626.58 443.98 L 628.78 444 L 630.97 444"/>
+  <circle class="c1-fill" cx="191.83" cy="345.99" r="5.0"/>
+  <polygon class="node-bg c2" stroke-width="2.4" points="279.66,438.4 285.26,444 279.66,449.6 274.06,444"/>
+  <polygon class="node-bg c2" stroke-width="2.4" points="455.32,438.4 460.92,444 455.32,449.6 449.72,444"/>
+  <polygon class="node-bg c2" stroke-width="2.4" points="630.97,438.4 636.57,444 630.97,449.6 625.37,444"/>
+  <rect class="pill-bg" x="152" y="184" width="166" height="24" rx="7"/>
+  <text class="xsb c1-txt" x="235" y="200" text-anchor="middle">τ → 0 极限：0.0025</text>
+  <line class="c1" stroke-width="1.2" x1="152" y1="198" x2="109" y2="202.18"/>
+  <rect class="c1-soft" x="230" y="264" width="166" height="38" rx="7"/>
+  <text class="xsb c1-txt" x="313" y="280" text-anchor="middle">τ = 2.5 ns（π δf τ = π/2）</text>
+  <text class="xs c1-txt" x="313" y="295" text-anchor="middle">P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan> ≈ 1.013 × 10⁻³</text>
+  <line class="c1" stroke-width="1.2" x1="230" y1="292" x2="197.83" y2="342.99"/>
+  <rect class="c2-soft" x="414" y="264" width="212" height="40" rx="8"/>
+  <text class="xsb c2-txt" x="520" y="280" text-anchor="middle">一阶谱零点：|δf|·τ = 1, 2, 3</text>
+  <text class="xs c2-txt" x="520" y="296" text-anchor="middle">τ = 5, 10, 15 ns 处 P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan> = 0</text>
+  <line class="c2" stroke-width="1.2" x1="455" y1="304" x2="455.32" y2="436"/>
+  <polygon class="c2-fill" points="455.32,437 452.44,431 458.2,431"/>
+  <rect class="pill-bg" x="302" y="366" width="146" height="24" rx="7"/>
+  <text class="xs" x="375" y="382" text-anchor="middle">首旁瓣 ≈ 1.18 × 10⁻⁴</text>
+  <line class="guide" x1="358" y1="390" x2="355.24" y2="428.59"/>
+  <line class="axis" x1="104" y1="444" x2="646" y2="444"/>
+  <polygon class="axis-fill" points="648,444 640.5,447.6 640.5,440.4"/>
+  <line class="axis" x1="104" y1="444" x2="104" y2="170"/>
+  <polygon class="axis-fill" points="104,168 107.6,175.5 100.4,175.5"/>
+  <text class="lbl" x="371" y="486" text-anchor="middle">脉冲时长 τ (ns)</text>
+  <text class="lbl" x="44" y="311" text-anchor="middle" transform="rotate(-90 44 311)">一阶跃迁概率 P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan>（无量纲）</text>
+  <rect class="pill" x="44" y="502" width="602" height="34" rx="8"/>
+  <text class="sm" x="345" y="523" text-anchor="middle">τ → 0 仅是固定面积下 Ω<tspan dy="3" font-size="75%">ab</tspan><tspan dy="-3">&#8203;</tspan> = 0.1/τ → ∞ 的数学极限；真实控制器幅度受硬件上限约束</text>
+  <rect class="c1-soft" x="692" y="144" width="266" height="78" rx="10"/>
+  <text class="smb c1-txt" x="706" y="164">① 频宽量级 1/τ 与谱零点</text>
+  <text class="sm" x="706" y="186">矩形包络频谱第一零点：|δf|·τ = 1</text>
+  <text class="sm" x="706" y="207">δf = 200 MHz ⇒ 首零点 τ = 5.0 ns</text>
+  <rect class="panel" x="692" y="232" width="266" height="142" rx="10"/>
+  <rect class="phead" x="693" y="233" width="264" height="28" rx="8"/>
+  <text class="xsb" x="724" y="251" text-anchor="middle">τ (ns)</text>
+  <text class="xsb c1-txt" x="802" y="251" text-anchor="middle">一阶 P<tspan dy="-4.5" font-size="75%">(1)</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xsb c2-txt" x="900" y="251" text-anchor="middle">精确 P<tspan dy="3" font-size="75%">exact</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="smb" x="724" y="286" text-anchor="middle">2.5</text>
+  <text class="sm c1-txt" x="802" y="286" text-anchor="middle">1.013×10⁻³</text>
+  <text class="smb c2-txt" x="900" y="286" text-anchor="middle">1.012×10⁻³</text>
+  <line class="grid" x1="700" y1="300" x2="950" y2="300"/>
+  <text class="smb" x="724" y="320" text-anchor="middle">5.0</text>
+  <text class="sm c1-txt" x="802" y="320" text-anchor="middle">0（零点）</text>
+  <text class="smb c2-txt" x="900" y="320" text-anchor="middle">4.01×10⁻¹¹</text>
+  <line class="grid" x1="700" y1="334" x2="950" y2="334"/>
+  <text class="smb" x="724" y="354" text-anchor="middle">10.0</text>
+  <text class="sm c1-txt" x="802" y="354" text-anchor="middle">0（零点）</text>
+  <text class="smb c2-txt" x="900" y="354" text-anchor="middle">2.51×10⁻¹²</text>
+  <rect class="c2-soft" x="692" y="384" width="266" height="152" rx="10"/>
+  <text class="smb c2-txt" x="706" y="405">② 工程边界：谱零点 ≠ 零泄漏保证</text>
+  <text class="sm" x="706" y="428">• 高阶 Rabi 项在零点处仍严格非零</text>
+  <text class="sm" x="706" y="450">• 真实 π 门含大幅 |0⟩↔|1⟩ 翻转</text>
+  <text class="sm" x="706" y="472">• 线路滤波失真与频漂会挪动零点</text>
+  <text class="smb c3-txt" x="706" y="496">工程方案：平滑包络（高斯/余弦）</text>
+  <text class="smb c3-txt" x="706" y="517">+ DRAG 正交导数修正压制泄漏</text>
+</svg>

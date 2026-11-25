@@ -2,13 +2,13 @@
   <title id="title">低温量子计算机的控制、读出与热流分层</title>
   <desc id="desc">用一种代表性分区，从室温、四开尔文、常见毫开尔文级到十至二十毫开尔文量子平面，分层显示数字控制、低温电子学、放大与隔离、线缆和量子芯片，并区分向下的控制信号、向上的读出信号与热负载。器件的实际温区依具体系统而异。</desc>
   <style>
-    :root{color-scheme:light dark}.bg{fill:#f7fafc}.title{font:600 29px system-ui,sans-serif;fill:#13263a}.sub{font:400 16px system-ui,sans-serif;fill:#4b6073}
+    :root{color-scheme:light}.bg{fill:#f7fafc}.title{font:600 29px system-ui,sans-serif;fill:#13263a}.sub{font:400 16px system-ui,sans-serif;fill:#4b6073}
     .stage{stroke-width:2}.rt{fill:#fff2dc;stroke:#bd8432}.k4{fill:#e8eff8;stroke:#547ca6}.mk100{fill:#e8f4f3;stroke:#4a8b86}.mk10{fill:#eae9fa;stroke:#7068ae}
     .staget{font:700 22px system-ui,sans-serif;fill:#173047}.stagec{font:400 15px system-ui,sans-serif;fill:#405b70}.box{fill:#fff;stroke:#92a9ba;stroke-width:1.5}.boxt{font:600 16px system-ui,sans-serif;fill:#1e3a50}.small{font:400 14px system-ui,sans-serif;fill:#4c6578}
     .ctrl{stroke:#2c78a3;stroke-width:4;fill:none;marker-end:url(#blue)}.read{stroke:#3d8b63;stroke-width:4;fill:none;marker-end:url(#green)}.heat{stroke:#c05c45;stroke-width:4;stroke-dasharray:8 7;fill:none;marker-end:url(#red)}.brace{stroke:#73899b;stroke-width:2;fill:none}
     .legend{font:600 15px system-ui,sans-serif;fill:#2b4358}.formula{font:500 16px ui-monospace,monospace;fill:#243c51}.warn{fill:#fff8e6;stroke:#c49234;stroke-width:1.5}
     .markerBlue{fill:#2c78a3}.markerGreen{fill:#3d8b63}.markerRed{fill:#c05c45}
-    @media(prefers-color-scheme:dark){.bg{fill:#101820}.title{fill:#eef6ff}.sub{fill:#b7c8d7}.rt{fill:#49371f}.k4{fill:#20364d}.mk100{fill:#1d403d}.mk10{fill:#302e51}.staget,.boxt{fill:#edf6fc}.stagec,.small,.legend{fill:#bfd0dc}.box{fill:#172632;stroke:#6d879a}.formula{fill:#e5f0f7}.warn{fill:#43391f;stroke:#d2a34a}.ctrl{stroke:#72bde7}.read{stroke:#7bd0a1}.heat{stroke:#f0927c}.markerBlue{fill:#72bde7}.markerGreen{fill:#7bd0a1}.markerRed{fill:#f0927c}}
+    
   </style>
   <defs>
     <marker id="blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="markerBlue" d="M0 0L10 5L0 10z"/></marker>
