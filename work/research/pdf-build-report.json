@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-11-25T08:51:45.062107+00:00",
+  "output": "dist/quantum-computing-handbook.pdf",
+  "edition": "2026-11-25",
+  "passed": true,
+  "checks": {
+    "fileUnder50MiB": true,
+    "outlineOver100": true,
+    "outlineHasAll3Levels": true,
+    "outlineZeroRawTex": true,
+    "catalogMetadataAndOutlineIntact": true,
+    "langZhCN": true,
+    "zeroKangxiRadicals": true,
+    "zeroBlankPages": true,
+    "bodyFontReadable": true,
+    "hasEndSentinel": true
+  },
+  "metrics": {
+    "totalPages": 1292,
+    "coverPages": 1,
+    "bodyPages": 1291,
+    "chunkCount": 26,
+    "headersStamped": 1291,
+    "internalLinks": {
+      "resolved": 1581,
+      "tocResolved": 47,
+      "dropped": 0,
+      "residualSentinels": 0
+    },
+    "streamDedup": {
+      "uniqueStreams": 12146,
+      "dedupedStreams": 31641,
+      "rewrittenObjects": 8034,
+      "kangxiCmapFix": {
+        "cmapsScanned": 8511,
+        "cmapsFixed": 1190,
+        "glyphsNormalized": 1333
+      }
+    },
+    "timingsSec": {
+      "merge": 0.57,
+      "stampHeadersFooters": 0.34,
+      "linksAndOutline": 0.35,
+      "streamDedup": 3.05,
+      "save": 0.3,
+      "qaAuditAndPreviews": 13.49,
+      "postprocessTotal": 18.1
+    },
+    "fileSizeBytes": 39453558,
+    "fileSizeMiB": 37.626,
+    "outlineTotal": 516,
+    "outlineLevels": {
+      "level1": 10,
+      "level2": 40,
+      "level3": 466
+    },
+    "outlineResolution": {
+      "namedDestHits": 514,
+      "textMatchHits": 0,
+      "fallbackCursorHits": 0
+    },
+    "kangxiRadicalCount": 0,
+    "kangxiHits": [],
+    "blankPages": [],
+    "sparsePages": [],
+    "bodyFontPt": {
+      "samples": 2398,
+      "median": 10.2,
+      "p10": 10.18
+    },
+    "rightMarginOverflowSamples": [],
+    "unrenderedTexHints": [],
+    "rawTexBookmarks": [],
+    "taggedPdf": {
+      "marked": true,
+      "structTreeRoot": true,
+      "lang": "zh-CN",
+      "structParentsPages": 8,
+      "totalPages": 1292,
+      "structParentsCoverageRatio": 0.0062,
+      "note": "Chunked fitz merge retains catalog /StructTreeRoot from front chunk while guaranteeing 0 xref errors and 3-level Unicode outline across all pages."
+    },
+    "metadata": {
+      "title": "量子计算手册：从直觉、数学与物理到容错、传感与模拟边界",
+      "author": "量子计算手册编写组",
+      "subject": "系统量子计算与量子力学教材：从零基础数学与物理直觉到核心算法、噪声纠错、量子传感、经典模拟与离线验算",
+      "keywords": "量子计算, 量子力学, 量子算法, 量子纠错, 表面码, 量子传感, 稳定子模拟, 离线出版, KaTeX"
+    }
+  },
+  "previews": {
+    "cover": {
+      "page": 1,
+      "file": "work/rendered/pdf-preview-cover.png",
+      "width": 1240,
+      "height": 1754,
+      "dpi": 150
+    },
+    "toc": {
+      "page": 2,
+      "file": "work/rendered/pdf-preview-toc.png",
+      "width": 1240,
+      "height": 1754,
+      "dpi": 150
+    },
+    "sample1": {
+      "page": 103,
+      "file": "work/rendered/pdf-preview-sample1.png",
+      "width": 1240,
+      "height": 1754,
+      "dpi": 150
+    },
+    "sample2": {
+      "page": 1030,
+      "file": "work/rendered/pdf-preview-sample2.png",
+      "width": 1240,
+      "height": 1754,
+      "dpi": 150
+    }
+  }
+}

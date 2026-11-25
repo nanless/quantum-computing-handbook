@@ -1,41 +1,75 @@
-# 离线阅读版
+# 离线阅读版与多格式出版工具链（V3）
 
-正文源文件位于 `handbook/`，输出位于 `reader/`。复制整个 `reader` 文件夹后，打开其中的 `index.html` 即可阅读，无需服务器或联网。不要只复制单个 HTML 文件。
+正文源文件位于 `handbook/`，离线网页阅读版输出位于 `reader/`，合订本 PDF 与 EPUB 3 出版产物输出位于 `dist/`。整个 `reader/` 文件夹完整自包含（含本地 KaTeX 字体、预渲染公式、矢量图表、教学音频、配套代码与离线交互实验台），复制整目录后直接打开 `reader/index.html` 即可零依赖离线阅读，无需服务器或联网；不要只复制单个 HTML 文件。
+
+## 快速构建与全套验收命令
 
 在项目根目录运行：
 
 ```sh
+# 1. 安装锁定依赖与 Chromium（首次或依赖变更时）
 npm ci --prefix tools/reader --ignore-scripts --no-audit --no-fund
 npm exec --prefix tools/reader -- playwright install chromium
+
+# 2. 构建 V3 离线阅读版（含 5 篇 26 章路线、展厅首页、可折叠本章解答与离线实验台）
 node tools/reader/build.mjs
+
+# 3. 浏览器双宽全量验收（1440px / 390px、暗色模式、交互实验台、音频与 SVG 边界）
 node tools/reader/verify.mjs
+
+# 4. V3 全书质量与完整性门禁（公式定界符、术语统一、SVG 文本节点、26 章 271 题对齐）
+node tools/reader/check-v3-quality.mjs
+
+# 5. 专项算例与题答复核
 node tools/reader/check-network-examples.mjs
 node tools/reader/check-qm-examples.mjs
 node tools/reader/check-qm-review.mjs
 ```
 
-构建依赖锁定在 `package-lock.json`。需要 Node.js、Playwright 和 Chromium；按上面命令安装即可，不依赖作者电脑的路径。如已有共享的 Playwright 运行环境，可用 `HANDBOOK_NODE_MODULES` 指向含 Playwright 的依赖目录，用 `HANDBOOK_CHROMIUM` 指向 Chromium 可执行文件。Mermaid 通过仅绑定本机的临时服务渲染，构建完成后关闭；成品不依赖该服务。
+如需指定本机已安装的共享 Playwright 依赖或 Chromium 可执行文件，可传入环境变量 `HANDBOOK_NODE_MODULES` 与 `HANDBOOK_CHROMIUM`（切勿将本机绝对路径写入教材或仓库配置）。Mermaid 流程图在构建阶段通过仅绑定 `127.0.0.1` 的临时服务预渲染并缓存于 `work/render-cache/`，成品不依赖任何在线服务。
 
-构建报告与验证报告位于 `work/research/reader-build-report.json`、`work/research/reader-verification.json`，页面与科学插图截图位于 `work/rendered/`。验证包括当前 41 页的宽屏与窄屏检查、原稿与输出哈希、公式内容和顺序、小节标题、资源与链接、目录交互及 SVG 文字边界。数学01先于Q1，Q2插在02之后，Q3插在09之前，Q4为末尾选读；保留原编号，侧栏与上一章/下一章采用同一阅读计划并独立检查。第 15 章的代码注释保留在代码块内；标题须从 Markdown 结构提取，不能按行首井号直接扫描。
+## V3 阅读版核心特性与五篇 26 章路线
 
-网络算例检查独立计算四个 Bell 投影与修正、丢弃记录后的密度矩阵、等待分布的有限双重和与闭式，结果写入 `work/research/network-example-checks.json`。它只验证这些小模型的代数和数值，不替代 QKD 安全证明、真实硬件模型或全部正文定理的审校。当前并未把浏览器打印结果作为经过逐页验收的 PDF 交付。
+- **五篇 26 章统一阅读序（`reading-order.mjs`）**：保持原章号 `00–21` 与物理基础篇 `Q1–Q4` 稳定不变，按教学依赖编排为五篇：
+  1. **第一篇 · 入门、数学与量子态基础**：`00 → 01 → Q1 → 02 → Q2 → 03 → 04 → 05`
+  2. **第二篇 · 核心算法、应用与实验实践**：`06 → 07 → 08 → 15`
+  3. **第三篇 · 物理硬件、编译、纠错与系统工程**：`Q3 → 09 → 14 → 10 → 11 → 19`
+  4. **第四篇 · 密码、网络与精密测量**：`12 → 20`
+  5. **第五篇 · 信息理论、高级算法、模拟边界与计算模型**：`13 → 16 → 21 → 17 → Q4 → 18`
+- **纸感制图桌双主题阅读体验（`reader.css` & `reader.js`）**：支持亮/暗模式手动切换（`#theme-toggle` + `localStorage` 持久化）与系统偏好自适应、顶部 2px 阅读进度条、右侧目录 ScrollSpy、四色语义 Callout 提示框、算例/练习标题微标、科学矢量图可见图注与原生 `<dialog>` 放大灯箱、代码块与行间公式（原始 TeX）一键复制、以及行内公式与后随标点防拆行胶水。
+- **展厅级课程首页与零安装交互实验台**：`reader/index.html` 顶部集成三态量子干涉交互演示、四条读者路径与可验证科研闭环概览；构建同步发布离线交互实验台 `reader/lab/quantum-lab.html`。
+- **可折叠本章参考解答**：构建期从 `handbook/appendices/exercises.md` 自动解析对应章节的零跳步推导，以默认折叠的 `<details>` 卡片注入每章末尾（打印时自动全部展开），不改变正文 `<article>` 的公式计数与哈希校验。
+- **听觉实验增强**：每段 `.wav` 音频均配唯一无障碍 `aria-label`，全页互斥播放，并为 `labs/audio.html` 中的 Ramsey 双轨自动提供 `0.0s / 0.5s / 1.5s / 3.5s` 时刻快速跳转按钮。
 
-量子力学算例检查复算干涉、Pauli 不确定度、势阱和 Gaussian 积分、矩形势垒边界匹配及通量守恒、热占据和 Rabi 脉冲，写入 `work/research/qm-example-checks.json`。这些检查验证明确模型的公式与数字，不代替物理公设、近似条件和教学表达的独立审阅。
+## 多格式电子书出版（A4 PDF 与 EPUB 3）
 
-题答复核检查全书编号、新基础篇答案与审稿草稿的一致性、相位符号同步及全局相位的概率不变性，写入 `work/research/qm-question-inventory.json`。
+在完成原稿更新后，可在项目根目录生成离线合订本 PDF 与原生 MathML EPUB 3：
 
-## 章级实验、源码和音频
+```sh
+# 构建带封面、页眉页码与 3 级 Unicode 书签的 A4 合订本 PDF -> dist/quantum-computing-handbook.pdf
+node tools/reader/build-pdf.mjs
 
-`python3 codes/run_all.py` 执行本书标准库实验并核对第三方快照哈希与5段WAV格式；最新统一结果写入 `work/research/code-validation.json`，不会覆盖历史轮次报告。科学图重建需要 `codes/practice/requirements-figures.txt` 中的可选依赖。第三方摘录不参与执行。
+# 如需独立运行 PDF 后处理与 10 项出版质量门禁（元数据、3 级书签、内链、字形与体积检查）
+python3 tools/reader/postprocess-pdf.py
 
-构建程序会复制 `codes/`，并仅改写本书自编代码说明中指向教材的链接；vendor 文件逐字节保留。`reader/codes/run_all.py` 也能在复制后的阅读版布局下运行；生成的本地检查报告在 `reader/work/research/`。浏览器检查涵盖41页两种宽度、代码副本哈希以及音频元数据加载。音频不自动播放。
+# 构建原生 MathML 3 电子书 -> dist/quantum-computing-handbook.epub
+node tools/reader/build-epub.mjs
+```
 
-如果没有 Playwright 对应浏览器，可用 `HANDBOOK_CHROMIUM` 指向已安装的 Chrome/Chromium；不要把本机绝对路径写进教材。浏览器执行权限与依赖存在性是环境条件，失败时应保留错误而非报告检查通过。
+- **A4 合订本 PDF 流水线（`build-pdf.mjs` + `postprocess-pdf.py`）**：零外网本地 KaTeX 预渲染与按块并行 Chrome 排版，经 PyMuPDF 原生合订后统一压印连续页眉/页码，生成 **3 级 Unicode 书签**与 **1,500+ 条精确内部跳转链接**，并执行 `/ToUnicode` CMap **康熙部首归一化**与 O(N) 相同流去重无损压缩（成品稳定控制在 **`< 50 MiB`**，0 xref 损坏）。分块合并仅保留首块（目录与导读页）的目录级 `/StructTreeRoot`，其余正文页不含 `/StructParents`，因此 `work/research/pdf-build-report.json` 如实记录 `structParentsPages` 与 `structParentsCoverageRatio`，不将成品夸大为整书全页 PDF/UA 带标签文档。
+- **EPUB 3 电子书流水线（`build-epub.mjs`）**：输出原生 MathML 3 公式与矢量 SVG（完整收录 26 章正文、7 篇附录含附录 G 审校记录及 7 篇实验册），由 Python 标准库打包为首条目无压缩 `mimetype` 的标准归档，并对全包 XML/XHTML/OPF/SVG 良构性及全部内部链接/锚点执行零报错门禁（报告写入 `work/research/epub-build-report.json`）。
 
-第71轮的额外检查：`node tools/reader/check-round71.mjs` 核对24章独立练习标签、代码入口和26项目97文件的目录一致性；`node tools/reader/verify-round71-visuals.mjs` 生成24章×两宽度的新增内容截图、四张科学图的完整图像与上下文。后者只生成截图并检查基础溢出，人工目视范围须另写报告，不能将截图数量当成已逐屏读审。先完成构建，再运行浏览器检查；可沿用上文HANDBOOK_CHROMIUM环境参数。
+> 浏览器“打印本章”仅作为单章便捷打印功能；正式合订本交付以 `build-pdf.mjs` + `postprocess-pdf.py` 及 `build-epub.mjs` 验收通过的 `dist/` 产物为准。
 
-第72轮新增 `node tools/reader/check-round72.mjs` 和 `node tools/reader/verify-round72-visuals.mjs`，检查逐章新标签、26个完整项目运行证据与四张新科学图。41页宽/窄布局由总验证器自动检查；截图生成与人工目视抽查分别记录。
+## GitHub Pages 在线部署
 
-浏览器检查先保存结果，再关闭本次检查创建的浏览器。某些已安装Chrome版本退出后仍留有传输句柄，检查工具对此增加10秒收尾上限；超时写明确提示并按已经完成的检查状态退出，不改变失败状态或终止用户浏览器。
+`.github/workflows/pages.yml` 在主分支更新或手动触发时自动执行 `build.mjs` 与 `verify.mjs`，并将 `reader/`（以及仓库中已构建的 `dist/*.pdf`、`dist/*.epub` 下载页）发布至 GitHub Pages，实现在线免下载阅读与本地整目录离线阅读同源一致。
 
-第73轮新增入口：`node tools/reader/check-round73.mjs`检查24篇新题与最新证据；`node tools/reader/verify-round73-visuals.mjs`生成新题上下文与科学图截图。生成截图不等于人工验收，实际看图范围记录于本轮报告。
+## 验收报告、代码与历史检查说明
+
+- **构建与浏览器验证报告**：写入 `work/research/reader-build-report.json` 与 `work/research/reader-verification.json`（并同步复制至 `reader/research/`），桌面/手机双宽页面、暗色模式、交互实验台与科学图截图保存于 `work/rendered/`。
+- **验证覆盖范围**：包括全书所有生成页的 1440px / 390px 布局与溢出检查、源/输出与 `inputHashes`（含 `reader.js` 与 `quantum-lab.html`）SHA-256 核验、公式计数与 `mathSourceDigest`、标题序列与锚点、目录搜索与翻页顺序、`reader/lab/quantum-lab.html` 离线交互零报错、5 段 WAV 元数据与唯一 `aria-label`，以及全部 `handbook/assets/*.svg` 的 `getBBox()` 边界与亮/暗双色渲染检查。
+- **V3 质量门禁（`check-v3-quality.mjs`）**：校验正文零 `\(...\)` / `\[...\]`、零禁用旧术语（`参数偏移` / `玩具模型` / `左线性`）、统一采用“解码”（仅放行 `亦称译码`、`旧称译码`、`vendor` 原文及历史审校日志）、全部科学 SVG 含真实 `<text>` 节点、以及 26 章自检题数与 `exercises.md` 精确对齐（总计 271 题）。
+- **离线教学代码与音频**：运行 `python3 codes/run_all.py` 执行标准库数值脚本、第三方快照哈希核对与 5 段 WAV 格式检验，结果写入 `work/research/code-validation.json`。构建会复制 `codes/` 并仅改写本书自编说明中的教材相对链接，第三方 `vendor/` 字节原样保留。
+- **浏览器收尾保护**：`browser-cleanup.mjs` 在保存报告后为浏览器退出设置 10 秒上限，防止部分 Chrome 版本的残留传输句柄阻塞进程，且不会改变检查失败状态。
+- **历史轮次脚本**：`check-round71.mjs`、`check-round72.mjs`、`check-round73.mjs` 及对应的 `verify-round7*-visuals.mjs` 保留作为历史审校归档入口；自动截图不代替人工目视验收，实际人工抽查范围另行记录于审校报告。

@@ -1,0 +1,2052 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>单量子比特干涉、Bloch 旋转与 Ramsey 退相干互动实验室 · 量子计算手册</title>
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('qch-lab-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #F4F2EC;
+    --panel: #FFFFFF;
+    --panel-soft: #FAF8F3;
+    --stone: #EFEBE1;
+    --ink: #182B27;
+    --heading: #122420;
+    --muted: #52645F;
+    --teal: #1E6B5A;
+    --teal-strong: #144B3F;
+    --teal-soft: #E5F3EE;
+    --blue: #1F5A92;
+    --blue-soft: #E6F0FA;
+    --red: #B84A2E;
+    --red-soft: #FBEAE4;
+    --amber: #B57614;
+    --amber-soft: #FBF2DD;
+    --line: #DBD5C8;
+    --line-strong: #BEB7A8;
+    --top-bar: #1B2D2A;
+    --shadow: 0 6px 22px rgba(24, 43, 39, 0.05);
+    --svg-bg: #FAF8F3;
+    --svg-card: #FFFFFF;
+    --svg-grid: #E2DDD1;
+    --svg-axis: #192D29;
+    --svg-neg: #7C908B;
+    --svg-sphere-0: #FFFFFF;
+    --svg-sphere-1: #E4F4F7;
+    --svg-sphere-2: #C7E5EC;
+    --svg-sphere-stroke: #2B6E87;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1615;
+      --panel: #15211F;
+      --panel-soft: #1B2A27;
+      --stone: #223430;
+      --ink: #E5EFEA;
+      --heading: #F1F8F5;
+      --muted: #9CB4AD;
+      --teal: #58C8AA;
+      --teal-strong: #83DFC6;
+      --teal-soft: #16372F;
+      --blue: #6BB8F2;
+      --blue-soft: #173044;
+      --red: #EF856B;
+      --red-soft: #3D1F19;
+      --amber: #E9B450;
+      --amber-soft: #3B2E14;
+      --line: #293D38;
+      --line-strong: #3F5A53;
+      --top-bar: #58C8AA;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      --svg-bg: #111C1A;
+      --svg-card: #172422;
+      --svg-grid: #273B36;
+      --svg-axis: #D7EAE4;
+      --svg-neg: #6F8982;
+      --svg-sphere-0: #1B3B47;
+      --svg-sphere-1: #142D38;
+      --svg-sphere-2: #0F232C;
+      --svg-sphere-stroke: #6EC4E2;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0E1615;
+    --panel: #15211F;
+    --panel-soft: #1B2A27;
+    --stone: #223430;
+    --ink: #E5EFEA;
+    --heading: #F1F8F5;
+    --muted: #9CB4AD;
+    --teal: #58C8AA;
+    --teal-strong: #83DFC6;
+    --teal-soft: #16372F;
+    --blue: #6BB8F2;
+    --blue-soft: #173044;
+    --red: #EF856B;
+    --red-soft: #3D1F19;
+    --amber: #E9B450;
+    --amber-soft: #3B2E14;
+    --line: #293D38;
+    --line-strong: #3F5A53;
+    --top-bar: #58C8AA;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    --svg-bg: #111C1A;
+    --svg-card: #172422;
+    --svg-grid: #273B36;
+    --svg-axis: #D7EAE4;
+    --svg-neg: #6F8982;
+    --svg-sphere-0: #1B3B47;
+    --svg-sphere-1: #142D38;
+    --svg-sphere-2: #0F232C;
+    --svg-sphere-stroke: #6EC4E2;
+  }
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { overflow-x: clip; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15.5px/1.68 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 14px;
+    top: -120px;
+    background: var(--panel);
+    color: var(--ink);
+    border: 2px solid var(--teal);
+    padding: 8px 14px;
+    border-radius: 6px;
+    z-index: 40;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .skip-link:focus { top: 10px; }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(0.9rem, 2.8vw, 1.8rem) clamp(0.85rem, 2.8vw, 1.8rem) 2.6rem;
+  }
+
+  /* Top navigation bar */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.2rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 1.15rem;
+    font-size: 0.92rem;
+  }
+  .nav-links a {
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 650;
+    text-underline-offset: 0.22em;
+    padding: 0.2rem 0;
+  }
+  .nav-links a:hover { color: var(--teal-strong); text-decoration: underline; }
+
+  .theme-btn {
+    min-height: 38px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--panel-soft);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 650;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+  }
+  .theme-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* Header */
+  .hero {
+    margin-bottom: 1.15rem;
+  }
+  .kicker {
+    margin: 0;
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0.32rem 0 0.5rem;
+    color: var(--heading);
+    font-size: clamp(1.55rem, 3.6vw, 2.35rem);
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+  }
+  .hero-deck {
+    margin: 0;
+    color: var(--muted);
+    max-width: 72ch;
+    font-size: 0.96rem;
+  }
+
+  /* Mode Tabs */
+  .tab-bar {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin: 1.1rem 0 1.2rem;
+  }
+  .tab-btn {
+    min-height: 48px;
+    padding: 0.62rem 0.9rem;
+    border-radius: 9px;
+    border: 1.5px solid var(--line-strong);
+    background: var(--panel);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.94rem;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+  }
+  .tab-btn .tab-sub {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .tab-btn:hover { border-color: var(--teal); }
+  .tab-btn[aria-selected="true"] {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #FFFFFF;
+  }
+  :root[data-theme="dark"] .tab-btn[aria-selected="true"] {
+    color: #0B1916;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tab-btn[aria-selected="true"] {
+      color: #0B1916;
+    }
+  }
+  .tab-btn[aria-selected="true"] .tab-sub {
+    color: inherit;
+    opacity: 0.88;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  /* Cards & Grids */
+  .lab-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .lab-grid-bloch {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .stack { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-top: 2.5px solid var(--top-bar);
+    border-radius: 10px;
+    padding: 1.05rem 1.15rem;
+    box-shadow: var(--shadow);
+    min-width: 0;
+  }
+  .card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.08rem;
+    color: var(--heading);
+    letter-spacing: -0.01em;
+  }
+  .card h3 {
+    margin: 0.85rem 0 0.4rem;
+    font-size: 0.95rem;
+    color: var(--heading);
+  }
+  .sub {
+    margin: 0.35rem 0 0.7rem;
+    color: var(--muted);
+    font-size: 0.89rem;
+  }
+
+  /* Controls */
+  .slider-group {
+    margin: 0.75rem 0;
+    padding: 0.65rem 0.78rem;
+    background: var(--panel-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .slider-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+  .slider-head label {
+    font-weight: 650;
+    font-size: 0.91rem;
+    color: var(--heading);
+  }
+  .mono-val {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--teal);
+  }
+  input[type="range"] {
+    width: 100%;
+    min-width: 0;
+    height: 28px;
+    accent-color: var(--teal);
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0.55rem 0 0.2rem;
+  }
+  .btn {
+    min-height: 38px;
+    padding: 0.38rem 0.78rem;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    background: var(--panel-soft);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.87rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: border-color 0.13s ease, background-color 0.13s ease, color 0.13s ease;
+  }
+  .btn:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-primary {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #FFFFFF;
+  }
+  :root[data-theme="dark"] .btn-primary { color: #0B1916; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-primary { color: #0B1916; }
+  }
+  .btn-primary:hover { filter: brightness(1.06); color: #FFFFFF; }
+  :root[data-theme="dark"] .btn-primary:hover { color: #0B1916; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-primary:hover { color: #0B1916; }
+  }
+
+  .btn[aria-pressed="true"] {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #FFFFFF;
+  }
+  :root[data-theme="dark"] .btn[aria-pressed="true"] { color: #0A1722; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn[aria-pressed="true"] { color: #0A1722; }
+  }
+
+  .btn-danger[aria-pressed="true"] {
+    background: var(--red);
+    border-color: var(--red);
+    color: #FFFFFF;
+  }
+  :root[data-theme="dark"] .btn-danger[aria-pressed="true"] { color: #1E0D09; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-danger[aria-pressed="true"] { color: #1E0D09; }
+  }
+
+  /* Gate buttons */
+  .gate-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin: 0.65rem 0;
+  }
+  .gate-btn {
+    min-height: 44px;
+    border-radius: 7px;
+    border: 1.5px solid var(--line-strong);
+    background: var(--panel-soft);
+    color: var(--heading);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.35rem;
+  }
+  .gate-btn small {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .gate-btn:hover { border-color: var(--teal); background: var(--teal-soft); }
+  .gate-btn.reset-btn {
+    grid-column: span 2;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .gate-btn.reset-btn:hover { background: var(--red-soft); }
+
+  /* Readout meters */
+  .meter-list { display: flex; flex-direction: column; gap: 0.55rem; margin: 0.65rem 0; }
+  .meter-row {
+    display: grid;
+    grid-template-columns: minmax(6.2rem, auto) minmax(2.5rem, 1fr) 4.6rem;
+    gap: 0.6rem;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  .meter-track {
+    height: 0.68rem;
+    background: var(--stone);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .meter-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: currentColor;
+    transition: width 0.12s ease-out;
+  }
+  .meter-out {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-weight: 750;
+    font-size: 0.9rem;
+  }
+  .c-teal { color: var(--teal); }
+  .c-blue { color: var(--blue); }
+  .c-red { color: var(--red); }
+  .c-amber { color: var(--amber); }
+
+  /* Key-value stat strip */
+  .kv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 0.65rem 0;
+  }
+  .kv-box {
+    background: var(--panel-soft);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 0.5rem 0.68rem;
+    min-width: 0;
+  }
+  .kv-lbl {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-bottom: 0.14rem;
+  }
+  .kv-val {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--heading);
+    overflow-wrap: anywhere;
+  }
+
+  /* Callout boxes */
+  .note-box {
+    padding: 0.68rem 0.88rem;
+    border-radius: 7px;
+    background: var(--teal-soft);
+    border: 1px solid var(--line);
+    border-left: 3.5px solid var(--teal);
+    font-size: 0.89rem;
+    margin: 0.7rem 0 0;
+  }
+  .note-box.warn {
+    background: var(--red-soft);
+    border-left-color: var(--red);
+  }
+  .note-box.amber {
+    background: var(--amber-soft);
+    border-left-color: var(--amber);
+  }
+
+  /* SVG frames */
+  .viz-wrap {
+    background: var(--svg-bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.55rem;
+    margin: 0.55rem 0;
+    overflow: hidden;
+  }
+  .viz-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  /* Audio cards */
+  .audio-box {
+    background: var(--panel-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.72rem 0.85rem;
+    margin-top: 0.65rem;
+  }
+  .audio-box h3 {
+    margin: 0 0 0.32rem;
+    font-size: 0.92rem;
+  }
+  audio {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0.45rem 0;
+  }
+  .audio-meta {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
+  }
+  .audio-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.65rem;
+  }
+
+  .history-strip {
+    font-family: var(--mono);
+    font-size: 0.84rem;
+    background: var(--stone);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 0.48rem 0.7rem;
+    color: var(--heading);
+    overflow-wrap: anywhere;
+    margin-top: 0.5rem;
+  }
+
+  .status-line {
+    font-size: 0.86rem;
+    color: var(--teal);
+    font-weight: 600;
+    margin: 0.5rem 0 0;
+    min-height: 1.4em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Toggle switch segment */
+  .seg-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin: 0.55rem 0;
+  }
+
+  /* Details / footer */
+  details {
+    margin-top: 0.95rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.7rem;
+    font-size: 0.89rem;
+    color: var(--muted);
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 650;
+    color: var(--heading);
+  }
+
+  footer {
+    margin-top: 1.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.84rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.2rem;
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    .lab-grid, .lab-grid-bloch, .audio-pair { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .tab-bar { grid-template-columns: 1fr; }
+    .gate-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .kv-grid, .seg-switch { grid-template-columns: 1fr; }
+    .meter-row { grid-template-columns: minmax(5.2rem, auto) minmax(2rem, 1fr) 4.1rem; gap: 0.45rem; font-size: 0.85rem; }
+    .card { padding: 0.88rem 0.85rem; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#lab-main">跳转到实验工作台</a>
+<div class="shell">
+  <nav class="top-nav" aria-label="实验室导航">
+    <div class="nav-links">
+      <a href="../index.html">← 返回阅读版首页</a>
+      <a href="../labs/audio.html">🔊 声音实验册（A01–A03）</a>
+    </div>
+    <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="false" aria-label="切换浅色或深色主题">
+      <span id="theme-icon" aria-hidden="true">☾</span>
+      <span id="theme-label">深色模式</span>
+    </button>
+  </nav>
+
+  <header class="hero">
+    <p class="kicker">《量子计算：从直觉到研究入口》· 零安装离线互动实验室</p>
+    <h1>单量子比特干涉、Bloch 旋转与 Ramsey 退相干</h1>
+    <p class="hero-deck">100% 离线运行、零外部网络请求。亲手调节相对相位、路径可见度、单比特量子门与退相干时间常数，在同一页面把公式、矢量图与 22050 Hz 16-bit PCM 合成声化即时打通。</p>
+  </header>
+
+  <div class="tab-bar" role="tablist" aria-label="三大交互实验模式">
+    <button id="tab-mzi" class="tab-btn" type="button" role="tab" aria-selected="true" aria-controls="panel-mzi" data-tab="mzi">
+      <span>01 · Mach–Zehnder 干涉仪</span>
+      <span class="tab-sub">相位 φ · 可见度 V · 实时 WAV 声化</span>
+    </button>
+    <button id="tab-bloch" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-bloch" data-tab="bloch">
+      <span>02 · Bloch 球与单比特门沙盒</span>
+      <span class="tab-sub">右手 3D 投影 · H/X/Y/Z/S/T · 三基概率</span>
+    </button>
+    <button id="tab-ramsey" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-ramsey" data-tab="ramsey">
+      <span>03 · Ramsey 失谐与退相干声化</span>
+      <span class="tab-sub">√P₀(t) vs 线性误区 · 同步跳转对比</span>
+    </button>
+  </div>
+
+  <main id="lab-main" tabindex="-1">
+    <!-- ==================== MODE 1: MZI ==================== -->
+    <section id="panel-mzi" role="tabpanel" aria-labelledby="tab-mzi">
+      <div class="lab-grid">
+        <div class="stack">
+          <div class="card">
+            <h2>Mach–Zehnder 干涉光路与复振幅箭头</h2>
+            <p class="sub">输入态 |0⟩ 经首块分束器 BS₁ (H) 分成参考臂与相位臂；当路径可见度 V 下降（出现路径标记或退相位），两臂交叉干涉项按 V 收缩，P(0)=(1+V cos φ)/2。</p>
+            <div class="viz-wrap">
+              <svg id="mzi-svg" viewBox="0 0 640 276" role="img" aria-label="Mach-Zehnder 干涉仪光路振幅箭头与端口概率实时图"></svg>
+            </div>
+            <div class="viz-wrap">
+              <svg id="mzi-fringe-svg" viewBox="0 0 640 198" role="img" aria-label="Mach-Zehnder 干涉条纹曲线 P(0) 与 P(1)"></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h2>参数调节与实时读数</h2>
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="mzi-phi">相对相位 φ（弧度 / 角度）</label>
+                <output id="mzi-phi-out" class="mono-val" for="mzi-phi">0° (0.000 rad)</output>
+              </div>
+              <input id="mzi-phi" type="range" min="0" max="360" step="1" value="0">
+              <div class="btn-row" role="group" aria-label="相对相位预设">
+                <button type="button" class="btn" data-mzi-phi="0">0° 同相</button>
+                <button type="button" class="btn" data-mzi-phi="90">90° (π/2)</button>
+                <button type="button" class="btn" data-mzi-phi="120">120° (2π/3)</button>
+                <button type="button" class="btn" data-mzi-phi="180">180° 反相</button>
+                <button type="button" class="btn" data-mzi-phi="270">270° (3π/2)</button>
+              </div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="mzi-vis">路径可见度 V（相干性）</label>
+                <output id="mzi-vis-out" class="mono-val" for="mzi-vis">V = 1.00</output>
+              </div>
+              <input id="mzi-vis" type="range" min="0" max="1" step="0.01" value="1">
+              <div class="btn-row" role="group" aria-label="路径可见度预设">
+                <button type="button" class="btn" data-mzi-vis="1">V = 1.00 纯干涉</button>
+                <button type="button" class="btn" data-mzi-vis="0.5">V = 0.50 部分路径</button>
+                <button type="button" class="btn" data-mzi-vis="0">V = 0.00 无干涉</button>
+              </div>
+            </div>
+
+            <div aria-live="polite" aria-atomic="true">
+              <div class="meter-list">
+                <div class="meter-row c-teal">
+                  <span>端口 0 · P(0)</span>
+                  <span class="meter-track" aria-hidden="true"><span id="mzi-bar-0" class="meter-fill" style="width:100%"></span></span>
+                  <output id="mzi-p0-out" class="meter-out">100.0%</output>
+                </div>
+                <div class="meter-row c-red">
+                  <span>端口 1 · P(1)</span>
+                  <span class="meter-track" aria-hidden="true"><span id="mzi-bar-1" class="meter-fill" style="width:0%"></span></span>
+                  <output id="mzi-p1-out" class="meter-out">0.0%</output>
+                </div>
+              </div>
+
+              <div class="kv-grid">
+                <div class="kv-box">
+                  <span class="kv-lbl">相干分支振幅 (1 + eⁱᵠ)/2</span>
+                  <span id="mzi-amp0" class="kv-val">1.000 + 0.000i</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">Englert 路径可区分度上限 D_max</span>
+                  <span id="mzi-dmax" class="kv-val">0.000 (V²+D² ≤ 1)</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">非对角相干项 |ρ₀₁| = V/2</span>
+                  <span id="mzi-coh" class="kv-val">0.500</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">概率守恒核验 P(0) + P(1)</span>
+                  <span id="mzi-sum" class="kv-val">1.0000</span>
+                </div>
+              </div>
+              <p id="mzi-note" class="note-box"></p>
+            </div>
+
+            <div class="audio-box">
+              <h3>实时合成 22050 Hz 16-bit PCM WAV 声化试听</h3>
+              <p class="sub">采用与手册 A01 相同的固定增益（0.2 × 2 = 0.4 上限、440 Hz 载频、10 ms 淡入淡出，不做逐段归一化），均方声能严格正比于 P(0)。</p>
+              <div class="btn-row">
+                <button id="mzi-synth-current" type="button" class="btn btn-primary">▶ 合成当前参数 WAV</button>
+                <button id="mzi-synth-compare" type="button" class="btn">⇄ 合成相长 (0°) vs 当前对比</button>
+              </div>
+              <audio id="mzi-audio" controls preload="metadata" aria-label="Mach-Zehnder 端口 0 合成声化音频"></audio>
+              <p id="mzi-audio-meta" class="audio-meta" role="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MODE 2: BLOCH ==================== -->
+    <section id="panel-bloch" role="tabpanel" aria-labelledby="tab-bloch" hidden>
+      <div class="lab-grid-bloch">
+        <div class="stack">
+          <div class="card">
+            <h2>右手三维正交投影 Bloch 球</h2>
+            <p class="sub">俯角 19°、方位角 34°（与手册 bloch-sphere.svg 完全一致）：+Z 朝上，+X 朝前左，+Y 朝前右，满足 +X × +Y = +Z。点击量子门可观察球面旋转轨迹。</p>
+            <div class="viz-wrap">
+              <svg id="bloch-svg" viewBox="0 0 560 440" role="img" aria-label="单量子比特右手三维正交投影 Bloch 球实时视图"></svg>
+            </div>
+            <div id="bloch-history" class="history-strip" aria-live="polite">线路序列：|0⟩</div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h2>角度调节与单比特门沙盒</h2>
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="bloch-theta">极角 θ ∈ [0°, 180°]</label>
+                <output id="bloch-theta-out" class="mono-val" for="bloch-theta">0° (0.000 rad)</output>
+              </div>
+              <input id="bloch-theta" type="range" min="0" max="180" step="1" value="0">
+            </div>
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="bloch-phi">方位角 φ ∈ [0°, 360°]</label>
+                <output id="bloch-phi-out" class="mono-val" for="bloch-phi">0° (0.000 rad)</output>
+              </div>
+              <input id="bloch-phi" type="range" min="0" max="360" step="1" value="0">
+            </div>
+
+            <h3>一键施加单比特酉门（左乘 U|ψ⟩）</h3>
+            <div class="gate-grid" role="group" aria-label="单比特量子门">
+              <button type="button" class="gate-btn" data-gate="H">H<small>Hadamard</small></button>
+              <button type="button" class="gate-btn" data-gate="X">X<small>绕 X 转 π</small></button>
+              <button type="button" class="gate-btn" data-gate="Y">Y<small>绕 Y 转 π</small></button>
+              <button type="button" class="gate-btn" data-gate="Z">Z<small>绕 Z 转 π</small></button>
+              <button type="button" class="gate-btn" data-gate="S">S<small>绕 Z 转 π/2</small></button>
+              <button type="button" class="gate-btn" data-gate="T">T<small>绕 Z 转 π/4</small></button>
+              <button type="button" class="gate-btn reset-btn" data-gate="RESET">↺ 复位到 |0⟩</button>
+            </div>
+
+            <div aria-live="polite" aria-atomic="true">
+              <h3>复振幅与 Bloch 坐标</h3>
+              <div class="kv-grid">
+                <div class="kv-box">
+                  <span class="kv-lbl">α = cos(θ/2)</span>
+                  <span id="bloch-alpha" class="kv-val">1.0000</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">β = eⁱᵠ sin(θ/2)</span>
+                  <span id="bloch-beta" class="kv-val">0.0000 + 0.0000i</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">Bloch 向量 (r_x, r_y, r_z)</span>
+                  <span id="bloch-vec" class="kv-val">(0.000, 0.000, 1.000)</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">纯态归一核验 |α|²+|β|² / ‖r‖</span>
+                  <span id="bloch-norm" class="kv-val">1.0000 / 1.0000</span>
+                </div>
+              </div>
+
+              <h3>X / Y / Z 三基测量概率</h3>
+              <div class="meter-list">
+                <div class="meter-row c-teal">
+                  <span>Z 基 · P(|0⟩)</span>
+                  <span class="meter-track" aria-hidden="true"><span id="bloch-bar-z" class="meter-fill" style="width:100%"></span></span>
+                  <output id="bloch-pz" class="meter-out">100.0%</output>
+                </div>
+                <div class="meter-row c-blue">
+                  <span>X 基 · P(|+⟩)</span>
+                  <span class="meter-track" aria-hidden="true"><span id="bloch-bar-x" class="meter-fill" style="width:50%"></span></span>
+                  <output id="bloch-px" class="meter-out">50.0%</output>
+                </div>
+                <div class="meter-row c-amber">
+                  <span>Y 基 · P(|+i⟩)</span>
+                  <span class="meter-track" aria-hidden="true"><span id="bloch-bar-y" class="meter-fill" style="width:50%"></span></span>
+                  <output id="bloch-py" class="meter-out">50.0%</output>
+                </div>
+              </div>
+              <p id="bloch-note" class="note-box"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MODE 3: RAMSEY ==================== -->
+    <section id="panel-ramsey" role="tabpanel" aria-labelledby="tab-ramsey" hidden>
+      <div class="lab-grid">
+        <div class="stack">
+          <div class="card">
+            <h2>Ramsey 失谐条纹与声化包络对比（4.0 秒教学时间轴）</h2>
+            <p class="sub">比较理想 Ramsey（V=1）、退相干正确声化 0.4√P₀(t)（趋向 0.4/√2 ≈ 0.283 稳态音）与常见误区 0.4 V(t)（衰减至静音）。竖线可随播放或跳转实时移动。</p>
+            <div class="viz-wrap">
+              <svg id="ramsey-svg" viewBox="0 0 640 292" role="img" aria-label="Ramsey 失谐与退相干包络曲线及时间游标图"></svg>
+            </div>
+
+            <h3>一键同步时间轴跳转（对照手册 A02 核心例题点）</h3>
+            <div class="btn-row" role="group" aria-label="Ramsey 关键时间点同步跳转">
+              <button type="button" class="btn" data-ramsey-jump="0">0.0s · 初始峰</button>
+              <button type="button" class="btn" data-ramsey-jump="0.5">0.5s · 首谷对照</button>
+              <button type="button" class="btn" data-ramsey-jump="1.5">1.5s · 例题点</button>
+              <button type="button" class="btn" data-ramsey-jump="3.5">3.5s · 稳态 vs 静音</button>
+            </div>
+            <p id="ramsey-seek-status" class="status-line" role="status"></p>
+
+            <div class="audio-pair">
+              <div class="audio-box">
+                <h3>理想 Ramsey（无退相干 V = 1）</h3>
+                <audio id="ramsey-audio-ideal" controls preload="metadata" aria-label="理想 Ramsey 无退相干教学合成音频"></audio>
+                <p id="ramsey-ideal-meta" class="audio-meta"></p>
+              </div>
+              <div class="audio-box">
+                <h3 id="ramsey-decay-title">退相干 Ramsey（正确映射 √P₀(t)）</h3>
+                <audio id="ramsey-audio-decay" controls preload="metadata" aria-label="退相干 Ramsey 教学合成音频"></audio>
+                <p id="ramsey-decay-meta" class="audio-meta"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h2>失谐、退相干与声化映射开关</h2>
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="ramsey-fdet">教学失谐条纹频率 f_det</label>
+                <output id="ramsey-fdet-out" class="mono-val" for="ramsey-fdet">1.00 Hz</output>
+              </div>
+              <input id="ramsey-fdet" type="range" min="0.25" max="3.0" step="0.05" value="1.0">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="ramsey-t2">退相干时间常数 T₂</label>
+                <output id="ramsey-t2-out" class="mono-val" for="ramsey-t2">1.50 s</output>
+              </div>
+              <input id="ramsey-t2" type="range" min="0.3" max="6.0" step="0.1" value="1.5">
+            </div>
+
+            <h3>声化映射切换：物理正确 vs 常见误区</h3>
+            <div class="seg-switch" role="group" aria-label="Ramsey 声化映射模式">
+              <button id="ramsey-map-correct" type="button" class="btn" aria-pressed="true" data-ramsey-map="correct">
+                ✓ 正确映射 √P₀(t)（声能 ∝ P₀）
+              </button>
+              <button id="ramsey-map-pitfall" type="button" class="btn btn-danger" aria-pressed="false" data-ramsey-map="pitfall">
+                ✕ 常见误区：按 V(t) 线性衰减
+              </button>
+            </div>
+
+            <div aria-live="polite" aria-atomic="true">
+              <div class="kv-grid">
+                <div class="kv-box">
+                  <span class="kv-lbl">当前游标时刻 t</span>
+                  <span id="ramsey-t-val" class="kv-val">1.50 s</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">可见度 V(t) = e^(−t/T₂)</span>
+                  <span id="ramsey-v-val" class="kv-val">0.3679</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">P₀(t) = (1 + V cos 2πf_det t)/2</span>
+                  <span id="ramsey-p0-val" class="kv-val">0.3161</span>
+                </div>
+                <div class="kv-box">
+                  <span class="kv-lbl">声化包络（正确 vs 线性误区）</span>
+                  <span id="ramsey-env-val" class="kv-val">0.2249 vs 0.1472</span>
+                </div>
+              </div>
+              <p id="ramsey-note" class="note-box"></p>
+            </div>
+
+            <div class="btn-row" style="margin-top:0.75rem;">
+              <button id="ramsey-reset" type="button" class="btn">恢复手册 A02 默认参数 (1.0 Hz, 1.5 s)</button>
+            </div>
+
+            <details>
+              <summary>实验声化边界与数学复算说明</summary>
+              <p>本实验室全部音频均为浏览器内纯 JavaScript 实时合成的 22050 Hz 单声道 16-bit PCM 经典正弦声波，并非量子芯片实录或真实微波脉冲；教学时间轴（1 Hz、1.5 s）用于让人耳分辨缓慢条纹，不对应真实超导或离子阱设备的 GHz 频率与微秒量级相干时间。</p>
+              <p>播放任意一段音频时会自动暂停页面内其余播放器（互斥播放），切换参数合成新 WAV 前会严格调用 <code>URL.revokeObjectURL</code> 释放旧音频对象内存。</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>《量子计算：从直觉到研究入口》离线互动实验室 · 零外部依赖</span>
+    <span>统一约定：左共轭内积 · 右手 Bloch 坐标系 · 22050 Hz 16-bit PCM</span>
+  </footer>
+</div>
+
+<!-- Single-source deterministic physics & PCM WAV synthesis kernel -->
+<script id="quantum-lab-model">
+const QuantumLabModel = (() => {
+  const SR = 22050;
+  const CARRIER = 440;
+  const GAIN = 0.2;
+  const FADE_S = 0.01;
+  const INV_SQRT2 = Math.SQRT1_2;
+  const BLOCH_ELEV = 19 * Math.PI / 180;
+  const BLOCH_AZIM = 34 * Math.PI / 180;
+
+  function encodeWav16(samples, sr = SR) {
+    const n = samples.length;
+    const bytes = new Uint8Array(44 + n * 2);
+    const view = new DataView(bytes.buffer);
+    function putAscii(offset, text) {
+      for (let i = 0; i < text.length; i++) bytes[offset + i] = text.charCodeAt(i);
+    }
+    putAscii(0, 'RIFF');
+    view.setUint32(4, 36 + n * 2, true);
+    putAscii(8, 'WAVE');
+    putAscii(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sr, true);
+    view.setUint32(28, sr * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    putAscii(36, 'data');
+    view.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) {
+      const clamped = Math.max(-1, Math.min(1, samples[i]));
+      const q = Math.max(-32767, Math.min(32767, Math.round(clamped * 32767)));
+      view.setInt16(44 + i * 2, q, true);
+    }
+    return bytes;
+  }
+
+  function statsOf(samples) {
+    let peak = 0;
+    let sq = 0;
+    for (let i = 0; i < samples.length; i++) {
+      const v = samples[i];
+      const av = Math.abs(v);
+      if (av > peak) peak = av;
+      sq += v * v;
+    }
+    return { peak, rms: Math.sqrt(sq / Math.max(1, samples.length)) };
+  }
+
+  // ---------- 1. MZI Model ----------
+  function mziMetrics(phiRad, visibility) {
+    const V = Math.max(0, Math.min(1, visibility));
+    const p0 = Math.max(0, Math.min(1, (1 + V * Math.cos(phiRad)) / 2));
+    const p1 = Math.max(0, Math.min(1, (1 - V * Math.cos(phiRad)) / 2));
+    const dMax = Math.sqrt(Math.max(0, 1 - V * V));
+    const amp0Re = (1 + Math.cos(phiRad)) / 2;
+    const amp0Im = Math.sin(phiRad) / 2;
+    const amp1Re = (1 - Math.cos(phiRad)) / 2;
+    const amp1Im = -Math.sin(phiRad) / 2;
+    return { p0, p1, dMax, coh: V / 2, amp0Re, amp0Im, amp1Re, amp1Im, visibility: V, phiRad };
+  }
+
+  function synthesizeMzi(phiRad, visibility, mode = 'current') {
+    const { p0 } = mziMetrics(phiRad, visibility);
+    const pure = visibility >= 0.9999;
+    const omega = 2 * Math.PI * CARRIER;
+    if (mode === 'compare') {
+      const segDur = 1.4;
+      const gapDur = 0.25;
+      const totalDur = segDur * 2 + gapDur;
+      const nTotal = Math.round(SR * totalDur);
+      const nSeg = Math.round(SR * segDur);
+      const nGap = Math.round(SR * gapDur);
+      const samples = new Float64Array(nTotal);
+      for (let i = 0; i < nSeg; i++) {
+        const t = i / SR;
+        const ramp = Math.max(0, Math.min(1, t / FADE_S, (segDur - 1 / SR - t) / FADE_S));
+        samples[i] = 2 * GAIN * Math.sin(omega * t) * ramp;
+      }
+      const start2 = nSeg + nGap;
+      for (let i = 0; i < nSeg && start2 + i < nTotal; i++) {
+        const t = i / SR;
+        const ramp = Math.max(0, Math.min(1, t / FADE_S, (segDur - 1 / SR - t) / FADE_S));
+        const raw = pure
+          ? GAIN * (Math.sin(omega * t) + Math.sin(omega * t + phiRad))
+          : 2 * GAIN * Math.sqrt(Math.max(0, p0)) * Math.sin(omega * t);
+        samples[start2 + i] = raw * ramp;
+      }
+      const st = statsOf(samples);
+      return { bytes: encodeWav16(samples), duration: totalDur, ...st };
+    }
+    const duration = 2.5;
+    const n = Math.round(SR * duration);
+    const samples = new Float64Array(n);
+    for (let i = 0; i < n; i++) {
+      const t = i / SR;
+      const ramp = Math.max(0, Math.min(1, t / FADE_S, (duration - 1 / SR - t) / FADE_S));
+      const raw = pure
+        ? GAIN * (Math.sin(omega * t) + Math.sin(omega * t + phiRad))
+        : 2 * GAIN * Math.sqrt(Math.max(0, p0)) * Math.sin(omega * t);
+      samples[i] = raw * ramp;
+    }
+    const st = statsOf(samples);
+    return { bytes: encodeWav16(samples), duration, ...st };
+  }
+
+  // ---------- 2. Bloch Sphere & Single-Qubit Gates ----------
+  function cMul(ar, ai, br, bi) {
+    return [ar * br - ai * bi, ar * bi + ai * br];
+  }
+
+  const GATES = {
+    H: [
+      [[INV_SQRT2, 0], [INV_SQRT2, 0]],
+      [[INV_SQRT2, 0], [-INV_SQRT2, 0]]
+    ],
+    X: [
+      [[0, 0], [1, 0]],
+      [[1, 0], [0, 0]]
+    ],
+    Y: [
+      [[0, 0], [0, -1]],
+      [[0, 1], [0, 0]]
+    ],
+    Z: [
+      [[1, 0], [0, 0]],
+      [[0, 0], [-1, 0]]
+    ],
+    S: [
+      [[1, 0], [0, 0]],
+      [[0, 0], [0, 1]]
+    ],
+    T: [
+      [[1, 0], [0, 0]],
+      [[0, 0], [INV_SQRT2, INV_SQRT2]]
+    ]
+  };
+
+  function canonicalizeState(aRe, aIm, bRe, bIm, fallbackPhi = 0) {
+    const norm = Math.hypot(aRe, aIm, bRe, bIm) || 1;
+    aRe /= norm; aIm /= norm; bRe /= norm; bIm /= norm;
+    const absA = Math.hypot(aRe, aIm);
+    const absB = Math.hypot(bRe, bIm);
+    if (absA > 1e-11) {
+      const phase = Math.atan2(aIm, aRe);
+      const cp = Math.cos(-phase), sp = Math.sin(-phase);
+      const [naRe, naIm] = cMul(aRe, aIm, cp, sp);
+      const [nbRe, nbIm] = cMul(bRe, bIm, cp, sp);
+      aRe = Math.max(0, naRe);
+      aIm = Math.abs(naIm) < 1e-12 ? 0 : naIm;
+      bRe = Math.abs(nbRe) < 1e-12 ? 0 : nbRe;
+      bIm = Math.abs(nbIm) < 1e-12 ? 0 : nbIm;
+    } else {
+      aRe = 0; aIm = 0;
+      const phaseB = Math.atan2(bIm, bRe);
+      const cp = Math.cos(-phaseB), sp = Math.sin(-phaseB);
+      const [nbRe] = cMul(bRe, bIm, cp, sp);
+      bRe = Math.max(0, nbRe); bIm = 0;
+    }
+    const theta = 2 * Math.acos(Math.max(0, Math.min(1, aRe)));
+    let phi = fallbackPhi;
+    if (absA > 1e-9 && absB > 1e-9) {
+      phi = Math.atan2(bIm, bRe);
+      if (phi < 0) phi += 2 * Math.PI;
+    }
+    return { aRe, aIm, bRe, bIm, theta, phi };
+  }
+
+  function stateFromAngles(thetaRad, phiRad) {
+    const c = Math.cos(thetaRad / 2);
+    const s = Math.sin(thetaRad / 2);
+    return canonicalizeState(c, 0, s * Math.cos(phiRad), s * Math.sin(phiRad), phiRad);
+  }
+
+  function applyGate(st, gateName) {
+    const M = GATES[gateName];
+    if (!M) return stateFromAngles(0, 0);
+    const [t00r, t00i] = cMul(M[0][0][0], M[0][0][1], st.aRe, st.aIm);
+    const [t01r, t01i] = cMul(M[0][1][0], M[0][1][1], st.bRe, st.bIm);
+    const [t10r, t10i] = cMul(M[1][0][0], M[1][0][1], st.aRe, st.aIm);
+    const [t11r, t11i] = cMul(M[1][1][0], M[1][1][1], st.bRe, st.bIm);
+    return canonicalizeState(t00r + t01r, t00i + t01i, t10r + t11r, t10i + t11i, st.phi);
+  }
+
+  function blochVector(st) {
+    const rx = 2 * (st.aRe * st.bRe + st.aIm * st.bIm);
+    const ry = 2 * (st.aRe * st.bIm - st.aIm * st.bRe);
+    const rz = (st.aRe * st.aRe + st.aIm * st.aIm) - (st.bRe * st.bRe + st.bIm * st.bIm);
+    const norm = Math.hypot(rx, ry, rz);
+    return {
+      rx, ry, rz, norm,
+      pZ0: (1 + rz) / 2, pZ1: (1 - rz) / 2,
+      pX0: (1 + rx) / 2, pX1: (1 - rx) / 2,
+      pY0: (1 + ry) / 2, pY1: (1 - ry) / 2
+    };
+  }
+
+  function projectBloch(x, y, z, cx, cy, R) {
+    const sa = Math.sin(BLOCH_ELEV), ca = Math.cos(BLOCH_ELEV);
+    const sb = Math.sin(BLOCH_AZIM), cb = Math.cos(BLOCH_AZIM);
+    const u = -sb * x + cb * y;
+    const v = -sa * cb * x - sa * sb * y + ca * z;
+    const depth = ca * cb * x + ca * sb * y + sa * z;
+    return { sx: cx + R * u, sy: cy - R * v, depth };
+  }
+
+  // ---------- 3. Ramsey Detuning & Decoherence Model ----------
+  function ramseyPoint(t, fDet, T2) {
+    const vis = Math.exp(-t / T2);
+    const phase = 2 * Math.PI * fDet * t;
+    const pIdeal = (1 + Math.cos(phase)) / 2;
+    const pDecay = (1 + vis * Math.cos(phase)) / 2;
+    const envIdeal = 2 * GAIN * Math.sqrt(Math.max(0, pIdeal));
+    const envCorrect = 2 * GAIN * Math.sqrt(Math.max(0, pDecay));
+    const envPitfall = 2 * GAIN * vis;
+    return { t, vis, pIdeal, pDecay, envIdeal, envCorrect, envPitfall };
+  }
+
+  function synthesizeRamsey(fDet, T2, kind) {
+    const duration = 4.0;
+    const n = Math.round(SR * duration);
+    const samples = new Float64Array(n);
+    const omega = 2 * Math.PI * CARRIER;
+    for (let i = 0; i < n; i++) {
+      const t = i / SR;
+      const ramp = Math.max(0, Math.min(1, t / FADE_S, (duration - 1 / SR - t) / FADE_S));
+      const phase = 2 * Math.PI * fDet * t;
+      let env;
+      if (kind === 'ideal') {
+        const p = (1 + Math.cos(phase)) / 2;
+        env = 2 * GAIN * Math.sqrt(Math.max(0, p));
+      } else if (kind === 'pitfall') {
+        env = 2 * GAIN * Math.exp(-t / T2);
+      } else {
+        const vis = Math.exp(-t / T2);
+        const p = (1 + vis * Math.cos(phase)) / 2;
+        env = 2 * GAIN * Math.sqrt(Math.max(0, p));
+      }
+      samples[i] = env * Math.sin(omega * t) * ramp;
+    }
+    const st = statsOf(samples);
+    return { bytes: encodeWav16(samples), duration, ...st };
+  }
+
+  return {
+    SR, CARRIER, GAIN, FADE_S,
+    encodeWav16, mziMetrics, synthesizeMzi,
+    stateFromAngles, applyGate, blochVector, projectBloch,
+    ramseyPoint, synthesizeRamsey
+  };
+})();
+</script>
+
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const f2 = x => Number(x).toFixed(2);
+  const f3 = x => Number(x).toFixed(3);
+  const f4 = x => Number(x).toFixed(4);
+  const pct = x => (100 * Math.max(0, Math.min(1, x))).toFixed(1) + '%';
+  const fmtComplex = (re, im) => {
+    const r = Math.abs(re) < 1e-4 ? 0 : re;
+    const i = Math.abs(im) < 1e-4 ? 0 : im;
+    const sign = i >= 0 ? '+' : '−';
+    return `${r.toFixed(4)} ${sign} ${Math.abs(i).toFixed(4)}i`;
+  };
+
+  // ---------- Theme Toggle ----------
+  const themeBtn = byId('theme-toggle');
+  const themeIcon = byId('theme-icon');
+  const themeLabel = byId('theme-label');
+
+  function effectiveTheme() {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function syncThemeButton() {
+    const isDark = effectiveTheme() === 'dark';
+    themeBtn.setAttribute('aria-pressed', String(isDark));
+    themeIcon.textContent = isDark ? '☀' : '☾';
+    themeLabel.textContent = isDark ? '浅色模式' : '深色模式';
+  }
+
+  themeBtn.addEventListener('click', () => {
+    const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('qch-lab-theme', next); } catch (e) {}
+    syncThemeButton();
+  });
+  syncThemeButton();
+
+  // ---------- Blob URL Lifecycle & Exclusive Audio ----------
+  const blobUrls = { mzi: null, ramseyIdeal: null, ramseyDecay: null };
+  const allAudios = [byId('mzi-audio'), byId('ramsey-audio-ideal'), byId('ramsey-audio-decay')];
+
+  function pauseAllAudio(exceptEl = null) {
+    for (const a of allAudios) {
+      if (a !== exceptEl && !a.paused) a.pause();
+    }
+  }
+
+  for (const audio of allAudios) {
+    audio.addEventListener('play', () => pauseAllAudio(audio));
+  }
+
+  function setAudioWav(audioEl, key, wavBytes) {
+    audioEl.pause();
+    if (blobUrls[key]) {
+      URL.revokeObjectURL(blobUrls[key]);
+      blobUrls[key] = null;
+    }
+    const url = URL.createObjectURL(new Blob([wavBytes], { type: 'audio/wav' }));
+    blobUrls[key] = url;
+    audioEl.src = url;
+    audioEl.load();
+  }
+
+  window.addEventListener('beforeunload', () => {
+    for (const key of Object.keys(blobUrls)) {
+      if (blobUrls[key]) {
+        URL.revokeObjectURL(blobUrls[key]);
+        blobUrls[key] = null;
+      }
+    }
+  });
+
+  // ---------- Mode Tabs ----------
+  const tabButtons = [...document.querySelectorAll('[role="tab"]')];
+  const tabPanels = {
+    mzi: byId('panel-mzi'),
+    bloch: byId('panel-bloch'),
+    ramsey: byId('panel-ramsey')
+  };
+
+  function activateTab(tabKey) {
+    pauseAllAudio();
+    for (const btn of tabButtons) {
+      const active = btn.dataset.tab === tabKey;
+      btn.setAttribute('aria-selected', String(active));
+    }
+    for (const [key, panel] of Object.entries(tabPanels)) {
+      panel.hidden = key !== tabKey;
+    }
+  }
+
+  for (const btn of tabButtons) {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  }
+
+  // ==================== 1. MZI CONTROLLER ====================
+  let mziPhiDeg = 0;
+  let mziVis = 1.0;
+
+  function drawPhasorDial(cx, cy, r, re, im, colorVar, label) {
+    const ex = cx + r * re;
+    const ey = cy - r * im;
+    const mag = Math.hypot(re, im);
+    let arrow = '';
+    if (mag > 0.04) {
+      const ux = (ex - cx) / (r * mag);
+      const uy = (ey - cy) / (r * mag);
+      const px = -uy, py = ux;
+      const al = Math.min(7, r * mag * 0.45);
+      const aw = 3;
+      const bx = ex - al * ux, by = ey - al * uy;
+      arrow = `<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${colorVar}" stroke-width="2.2" stroke-linecap="round"/>`
+        + `<polygon points="${ex.toFixed(1)},${ey.toFixed(1)} ${(bx + aw * px).toFixed(1)},${(by + aw * py).toFixed(1)} ${(bx - aw * px).toFixed(1)},${(by - aw * py).toFixed(1)}" fill="${colorVar}"/>`;
+    } else {
+      arrow = `<circle cx="${cx}" cy="${cy}" r="3.2" fill="${colorVar}"/>`;
+    }
+    return `<g>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="var(--svg-card)" stroke="var(--line-strong)" stroke-width="1.2"/>
+      <line x1="${cx - r}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="var(--svg-grid)" stroke-width="1"/>
+      <line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" stroke="var(--svg-grid)" stroke-width="1"/>
+      ${arrow}
+      <text x="${cx}" y="${cy + r + 14}" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">${label}</text>
+    </g>`;
+  }
+
+  function renderMziDiagrams(m) {
+    const phiDeg = mziPhiDeg;
+    const s = Math.SQRT1_2;
+    const cPhi = Math.cos(m.phiRad);
+    const sPhi = Math.sin(m.phiRad);
+    const barW0 = Math.max(0, Math.round(92 * m.p0));
+    const barW1 = Math.max(0, Math.round(92 * m.p1));
+    const pathDetOpacity = (0.12 + 0.88 * m.dMax).toFixed(2);
+    const coherentScale = 0.25 + 0.75 * m.visibility;
+
+    byId('mzi-svg').innerHTML = `
+      <rect x="2" y="2" width="636" height="272" rx="8" fill="var(--svg-bg)" stroke="var(--line)" stroke-width="1"/>
+      <text x="16" y="23" fill="var(--heading)" font-size="12.5" font-weight="700">MZI 光路与复振幅合成（φ = ${phiDeg}°, V = ${f2(m.visibility)}）</text>
+
+      <!-- Input |0> -->
+      <rect x="16" y="70" width="38" height="26" rx="5" fill="var(--teal)"/>
+      <text x="35" y="87" text-anchor="middle" fill="#FFFFFF" font-family="var(--mono)" font-size="12" font-weight="700">|0⟩</text>
+      <line x1="54" y1="83" x2="90" y2="83" stroke="var(--teal)" stroke-width="2.4"/>
+      <line x1="54" y1="192" x2="90" y2="192" stroke="var(--line-strong)" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <text x="35" y="196" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="11">0</text>
+
+      <!-- BS1 -->
+      <rect x="90" y="60" width="36" height="156" rx="7" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+      <line x1="96" y1="208" x2="120" y2="68" stroke="var(--blue)" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.7"/>
+      <text x="108" y="143" text-anchor="middle" fill="var(--blue)" font-family="Georgia,serif" font-size="16" font-weight="700">H</text>
+      <text x="108" y="52" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">BS₁</text>
+
+      <!-- Upper & lower interferometer arms -->
+      <line x1="126" y1="83" x2="364" y2="83" stroke="var(--teal)" stroke-width="2.4"/>
+      <line x1="126" y1="192" x2="364" y2="192" stroke="var(--amber)" stroke-width="2.4"/>
+
+      <!-- Phase shifter P(phi) -->
+      <rect x="198" y="176" width="66" height="32" rx="6" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.6"/>
+      <text x="231" y="196" text-anchor="middle" fill="var(--amber)" font-family="var(--mono)" font-size="11.5" font-weight="700">P(${phiDeg}°)</text>
+
+      <!-- Path detector indicator (visibility knob) -->
+      <rect x="192" y="114" width="118" height="30" rx="6" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1.3" opacity="${pathDetOpacity}"/>
+      <text x="251" y="133" text-anchor="middle" fill="var(--red)" font-family="var(--mono)" font-size="10.5" font-weight="700" opacity="${pathDetOpacity}">路径标记 D≤${f2(m.dMax)}</text>
+
+      <!-- Arm amplitude phasor dials -->
+      ${drawPhasorDial(162, 83, 21, s, 0, 'var(--teal)', '1/√2')}
+      ${drawPhasorDial(312, 83, 21, s, 0, 'var(--teal)', '臂 0')}
+      ${drawPhasorDial(312, 192, 21, s * cPhi, s * sPhi, 'var(--amber)', 'eⁱᵠ/√2')}
+
+      <!-- BS2 -->
+      <rect x="364" y="60" width="36" height="156" rx="7" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+      <line x1="370" y1="208" x2="394" y2="68" stroke="var(--blue)" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.7"/>
+      <text x="382" y="143" text-anchor="middle" fill="var(--blue)" font-family="Georgia,serif" font-size="16" font-weight="700">H</text>
+      <text x="382" y="52" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">BS₂</text>
+
+      <!-- Outputs to D0 & D1 -->
+      <line x1="400" y1="83" x2="486" y2="83" stroke="var(--teal)" stroke-width="${(1.4 + 2.4 * m.p0).toFixed(1)}"/>
+      <line x1="400" y1="192" x2="486" y2="192" stroke="var(--red)" stroke-width="${(1.4 + 2.4 * m.p1).toFixed(1)}"/>
+
+      <!-- Resultant coherent amplitude dials -->
+      <g opacity="${coherentScale.toFixed(2)}">
+        ${drawPhasorDial(442, 83, 22, m.amp0Re, m.amp0Im, 'var(--teal)', '端口 0 矢量和')}
+        ${drawPhasorDial(442, 192, 22, m.amp1Re, m.amp1Im, 'var(--red)', '端口 1 矢量差')}
+      </g>
+
+      <!-- Detector D0 + bar -->
+      <rect x="486" y="56" width="140" height="58" rx="7" fill="var(--svg-card)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="496" y="75" fill="var(--teal)" font-family="var(--mono)" font-size="11" font-weight="700">D₀: P(0) = ${pct(m.p0)}</text>
+      <rect x="496" y="86" width="120" height="14" rx="7" fill="var(--stone)"/>
+      <rect x="496" y="86" width="${Math.round(120 * m.p0)}" height="14" rx="7" fill="var(--teal)"/>
+
+      <!-- Detector D1 + bar -->
+      <rect x="486" y="165" width="140" height="58" rx="7" fill="var(--svg-card)" stroke="var(--red)" stroke-width="1.5"/>
+      <text x="496" y="184" fill="var(--red)" font-family="var(--mono)" font-size="11" font-weight="700">D₁: P(1) = ${pct(m.p1)}</text>
+      <rect x="496" y="195" width="120" height="14" rx="7" fill="var(--stone)"/>
+      <rect x="496" y="195" width="${Math.round(120 * m.p1)}" height="14" rx="7" fill="var(--red)"/>
+
+      <text x="16" y="258" fill="var(--muted)" font-size="11">提示：当 V=1 时两路复振幅严格相加/相减；当 V→0 时路径被记录，端口概率退化为 50% / 50% 经典混合。</text>
+    `;
+
+    // Full interference fringe curve SVG
+    const gx0 = 56, gx1 = 612, gy0 = 158, gy1 = 36;
+    const pts0 = [], pts1 = [], ptsIdeal = [];
+    const N = 120;
+    for (let i = 0; i <= N; i++) {
+      const u = i / N;
+      const phi = 2 * Math.PI * u;
+      const x = gx0 + u * (gx1 - gx0);
+      const y0 = gy0 - ((1 + m.visibility * Math.cos(phi)) / 2) * (gy0 - gy1);
+      const y1 = gy0 - ((1 - m.visibility * Math.cos(phi)) / 2) * (gy0 - gy1);
+      const yId = gy0 - ((1 + Math.cos(phi)) / 2) * (gy0 - gy1);
+      const cmd = i === 0 ? 'M' : 'L';
+      pts0.push(`${cmd}${x.toFixed(1)} ${y0.toFixed(1)}`);
+      pts1.push(`${cmd}${x.toFixed(1)} ${y1.toFixed(1)}`);
+      ptsIdeal.push(`${cmd}${x.toFixed(1)} ${yId.toFixed(1)}`);
+    }
+    const curX = gx0 + (mziPhiDeg / 360) * (gx1 - gx0);
+    const curY0 = gy0 - m.p0 * (gy0 - gy1);
+    const curY1 = gy0 - m.p1 * (gy0 - gy1);
+    const ticks = [[0, '0'], [0.25, 'π/2 (90°)'], [0.5, 'π (180°)'], [0.75, '3π/2 (270°)'], [1, '2π (360°)']];
+    const tickHtml = ticks.map(([u, lbl]) => {
+      const tx = (gx0 + u * (gx1 - gx0)).toFixed(1);
+      return `<line x1="${tx}" y1="${gy1}" x2="${tx}" y2="${gy0}" stroke="var(--svg-grid)" stroke-width="1"/>`
+        + `<text x="${tx}" y="${gy0 + 18}" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">${lbl}</text>`;
+    }).join('');
+
+    byId('mzi-fringe-svg').innerHTML = `
+      <rect x="2" y="2" width="636" height="194" rx="8" fill="var(--svg-bg)" stroke="var(--line)" stroke-width="1"/>
+      <text x="16" y="22" fill="var(--heading)" font-size="12" font-weight="700">完整干涉条纹 P(0; φ) 与 P(1; φ)</text>
+      <line x1="366" y1="18" x2="386" y2="18" stroke="var(--teal)" stroke-width="2.4"/>
+      <text x="392" y="22" fill="var(--teal)" font-family="var(--mono)" font-size="10.5" font-weight="700">P(0)</text>
+      <line x1="436" y1="18" x2="456" y2="18" stroke="var(--red)" stroke-width="1.8" stroke-dasharray="5 3"/>
+      <text x="462" y="22" fill="var(--red)" font-family="var(--mono)" font-size="10.5" font-weight="700">P(1)</text>
+      <line x1="506" y1="18" x2="526" y2="18" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 3"/>
+      <text x="532" y="22" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">V=1 参考</text>
+
+      ${tickHtml}
+      <line x1="${gx0}" y1="${gy1}" x2="${gx1}" y2="${gy1}" stroke="var(--svg-grid)" stroke-width="1"/>
+      <line x1="${gx0}" y1="${((gy0 + gy1) / 2).toFixed(1)}" x2="${gx1}" y2="${((gy0 + gy1) / 2).toFixed(1)}" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line x1="${gx0}" y1="${gy0}" x2="${gx1}" y2="${gy0}" stroke="var(--svg-axis)" stroke-width="1.2"/>
+      <line x1="${gx0}" y1="${gy1}" x2="${gx0}" y2="${gy0}" stroke="var(--svg-axis)" stroke-width="1.2"/>
+
+      <text x="${gx0 - 8}" y="${gy1 + 4}" text-anchor="end" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">1.0</text>
+      <text x="${gx0 - 8}" y="${((gy0 + gy1) / 2 + 4).toFixed(1)}" text-anchor="end" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">0.5</text>
+      <text x="${gx0 - 8}" y="${gy0 + 4}" text-anchor="end" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">0.0</text>
+
+      <path d="${ptsIdeal.join('')}" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.6"/>
+      <path d="${pts0.join('')}" fill="none" stroke="var(--teal)" stroke-width="2.5"/>
+      <path d="${pts1.join('')}" fill="none" stroke="var(--red)" stroke-width="1.9" stroke-dasharray="6 4"/>
+
+      <line x1="${curX.toFixed(1)}" y1="${gy1}" x2="${curX.toFixed(1)}" y2="${gy0}" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <circle cx="${curX.toFixed(1)}" cy="${curY0.toFixed(1)}" r="5.5" fill="var(--teal)" stroke="var(--panel)" stroke-width="2"/>
+      <circle cx="${curX.toFixed(1)}" cy="${curY1.toFixed(1)}" r="4.8" fill="var(--red)" stroke="var(--panel)" stroke-width="1.8"/>
+    `;
+  }
+
+  function synthMziClip(mode = 'current') {
+    const phiRad = mziPhiDeg * Math.PI / 180;
+    const res = QuantumLabModel.synthesizeMzi(phiRad, mziVis, mode);
+    setAudioWav(byId('mzi-audio'), 'mzi', res.bytes);
+    const label = mode === 'compare'
+      ? `已合成对比 WAV（前 1.4s 相长 0° → 后 1.4s 当前 φ=${mziPhiDeg}°, V=${f2(mziVis)}）`
+      : `已合成当前参数 WAV（φ=${mziPhiDeg}°, V=${f2(mziVis)}）`;
+    byId('mzi-audio-meta').textContent = `${label} · 22050 Hz 16-bit PCM · ${res.duration.toFixed(2)}s · Peak ${f4(res.peak)} · RMS ${f4(res.rms)}`;
+  }
+
+  function updateMzi(refreshAudio = false) {
+    const phiRad = mziPhiDeg * Math.PI / 180;
+    const m = QuantumLabModel.mziMetrics(phiRad, mziVis);
+    byId('mzi-phi').value = String(mziPhiDeg);
+    byId('mzi-vis').value = String(mziVis);
+    byId('mzi-phi-out').textContent = `${mziPhiDeg}° (${f3(phiRad)} rad)`;
+    byId('mzi-vis-out').textContent = `V = ${f2(mziVis)}`;
+
+    byId('mzi-bar-0').style.width = (100 * m.p0).toFixed(2) + '%';
+    byId('mzi-bar-1').style.width = (100 * m.p1).toFixed(2) + '%';
+    byId('mzi-p0-out').textContent = pct(m.p0);
+    byId('mzi-p1-out').textContent = pct(m.p1);
+    byId('mzi-amp0').textContent = fmtComplex(m.amp0Re, m.amp0Im);
+    byId('mzi-dmax').textContent = `${f3(m.dMax)} (V²+D² ≤ 1)`;
+    byId('mzi-coh').textContent = f3(m.coh);
+    byId('mzi-sum').textContent = f4(m.p0 + m.p1);
+
+    const noteEl = byId('mzi-note');
+    noteEl.className = 'note-box';
+    if (mziVis < 0.05) {
+      noteEl.classList.add('amber');
+      noteEl.textContent = '完全路径标记（V ≈ 0）：干涉条纹彻底抹平，无论怎么转动相位 φ，端口 0 与端口 1 都停在 50% / 50%。';
+    } else if (m.p0 > 0.98) {
+      noteEl.textContent = '相长干涉（φ ≈ 0°）：两臂复振幅同向相加，全部概率汇入端口 0，端口 1 相消归零。';
+    } else if (m.p0 < 0.02) {
+      noteEl.classList.add('warn');
+      noteEl.textContent = '相消干涉（φ ≈ 180°，即 H·Z·H|0⟩ = |1⟩）：端口 0 振幅精确抵消为零，输出全部转向端口 1！';
+    } else if (Math.abs(mziPhiDeg - 120) <= 2 && mziVis > 0.98) {
+      noteEl.textContent = '手册 A01 经典例题（φ = 120° = 2π/3）：端口 0 振幅模为 1/2，概率与声波均方功率比均为 (1/2)² = 1/4 = 25.0%。';
+    } else {
+      noteEl.textContent = `当前设置下，端口 0 概率 P(0) = ${f4(m.p0)}，端口 1 概率 P(1) = ${f4(m.p1)}；调节可见度 V 可直观观察互补关系对条纹对比度的压缩。`;
+    }
+
+    renderMziDiagrams(m);
+    if (refreshAudio) synthMziClip('current');
+  }
+
+  byId('mzi-phi').addEventListener('input', e => {
+    mziPhiDeg = Number(e.target.value);
+    updateMzi(false);
+  });
+  byId('mzi-phi').addEventListener('change', () => synthMziClip('current'));
+  byId('mzi-vis').addEventListener('input', e => {
+    mziVis = Number(e.target.value);
+    updateMzi(false);
+  });
+  byId('mzi-vis').addEventListener('change', () => synthMziClip('current'));
+
+  document.querySelectorAll('[data-mzi-phi]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mziPhiDeg = Number(btn.dataset.mziPhi);
+      updateMzi(true);
+    });
+  });
+  document.querySelectorAll('[data-mzi-vis]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mziVis = Number(btn.dataset.mziVis);
+      updateMzi(true);
+    });
+  });
+  byId('mzi-synth-current').addEventListener('click', () => synthMziClip('current'));
+  byId('mzi-synth-compare').addEventListener('click', () => synthMziClip('compare'));
+
+  // ==================== 2. BLOCH SPHERE CONTROLLER ====================
+  let blochState = QuantumLabModel.stateFromAngles(0, 0);
+  let blochHistory = ['|0⟩'];
+  let blochTrail = [{ rx: 0, ry: 0, rz: 1 }];
+
+  function splitProjectedPath(pts3d, cx, cy, R) {
+    const front = [], back = [];
+    let cf = [], cb = [];
+    for (const [x, y, z] of pts3d) {
+      const p = QuantumLabModel.projectBloch(x, y, z, cx, cy, R);
+      if (p.depth >= 0) {
+        if (cb.length) { cb.push(p); back.push(cb); cb = []; }
+        cf.push(p);
+      } else {
+        if (cf.length) { cf.push(p); front.push(cf); cf = []; }
+        cb.push(p);
+      }
+    }
+    if (cf.length) front.push(cf);
+    if (cb.length) back.push(cb);
+    const toD = segs => segs.filter(s => s.length > 1).map(seg =>
+      seg.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.sx.toFixed(1)} ${p.sy.toFixed(1)}`).join('')
+    ).join(' ');
+    return { frontD: toD(front), backD: toD(back) };
+  }
+
+  function svgArrow(x1, y1, x2, y2, color, len = 10, hw = 4) {
+    const dx = x2 - x1, dy = y2 - y1;
+    const d = Math.hypot(dx, dy);
+    if (d < 2) return '';
+    const ux = dx / d, uy = dy / d;
+    const px = -uy, py = ux;
+    const bx = x2 - len * ux, by = y2 - len * uy;
+    return `<polygon points="${x2.toFixed(1)},${y2.toFixed(1)} ${(bx + hw * px).toFixed(1)},${(by + hw * py).toFixed(1)} ${(bx - hw * px).toFixed(1)},${(by - hw * py).toFixed(1)}" fill="${color}"/>`;
+  }
+
+  function renderBlochSvg() {
+    const cx = 280, cy = 222, R = 132;
+    const proj = (x, y, z) => QuantumLabModel.projectBloch(x, y, z, cx, cy, R);
+    const vec = QuantumLabModel.blochVector(blochState);
+
+    const eqPts = [];
+    const merPts = [];
+    const latPts = [];
+    const sinTh = Math.sin(blochState.theta);
+    const cosTh = Math.cos(blochState.theta);
+    for (let i = 0; i <= 120; i++) {
+      const a = 2 * Math.PI * i / 120;
+      eqPts.push([Math.cos(a), Math.sin(a), 0]);
+      merPts.push([Math.sin(a), 0, Math.cos(a)]);
+      latPts.push([sinTh * Math.cos(a), sinTh * Math.sin(a), cosTh]);
+    }
+    const eq = splitProjectedPath(eqPts, cx, cy, R);
+    const mer = splitProjectedPath(merPts, cx, cy, R);
+    const lat = sinTh > 0.03 ? splitProjectedPath(latPts, cx, cy, R) : { frontD: '', backD: '' };
+
+    const pZ = proj(0, 0, 1.32), nZ = proj(0, 0, -1.24);
+    const pX = proj(1.36, 0, 0), nX = proj(-1.26, 0, 0);
+    const pY = proj(0, 1.34, 0), nY = proj(0, -1.26, 0);
+
+    const tip = proj(vec.rx, vec.ry, vec.rz);
+    const eqProj = proj(vec.rx, vec.ry, 0);
+
+    // Polar angle arc theta
+    let thetaArc = '';
+    if (blochState.theta > 0.08) {
+      const pts = [];
+      for (let i = 0; i <= 20; i++) {
+        const t = blochState.theta * i / 20;
+        const p = proj(0.34 * Math.sin(t) * Math.cos(blochState.phi), 0.34 * Math.sin(t) * Math.sin(blochState.phi), 0.34 * Math.cos(t));
+        pts.push(`${i === 0 ? 'M' : 'L'}${p.sx.toFixed(1)} ${p.sy.toFixed(1)}`);
+      }
+      thetaArc = `<path d="${pts.join('')}" fill="none" stroke="var(--red)" stroke-width="1.8"/>`;
+    }
+
+    // Azimuthal arc phi
+    let phiArc = '';
+    if (sinTh > 0.06 && blochState.phi > 0.08) {
+      const pts = [];
+      const steps = Math.max(12, Math.round(blochState.phi * 16));
+      for (let i = 0; i <= steps; i++) {
+        const a = blochState.phi * i / steps;
+        const p = proj(0.32 * Math.cos(a), 0.32 * Math.sin(a), 0);
+        pts.push(`${i === 0 ? 'M' : 'L'}${p.sx.toFixed(1)} ${p.sy.toFixed(1)}`);
+      }
+      phiArc = `<path d="${pts.join('')}" fill="none" stroke="var(--blue)" stroke-width="1.8"/>`;
+    }
+
+    // Trail markers from recent gates
+    let trailHtml = '';
+    if (blochTrail.length > 1) {
+      const recent = blochTrail.slice(-6);
+      const pts = recent.map(v => proj(v.rx, v.ry, v.rz));
+      const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.sx.toFixed(1)} ${p.sy.toFixed(1)}`).join('');
+      trailHtml = `<path d="${d}" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.8"/>`;
+      for (let i = 0; i < pts.length - 1; i++) {
+        trailHtml += `<circle cx="${pts[i].sx.toFixed(1)}" cy="${pts[i].sy.toFixed(1)}" r="3.4" fill="var(--amber)" opacity="${(0.35 + 0.12 * i).toFixed(2)}"/>`;
+      }
+    }
+
+    const pt0 = proj(0, 0, 1), pt1 = proj(0, 0, -1);
+    const ptXp = proj(1, 0, 0), ptXm = proj(-1, 0, 0);
+    const ptYp = proj(0, 1, 0), ptYm = proj(0, -1, 0);
+    const tipFront = tip.depth >= 0;
+
+    byId('bloch-svg').innerHTML = `
+      <defs>
+        <radialGradient id="bloch-grad" cx="38%" cy="30%" r="68%">
+          <stop offset="0%" stop-color="var(--svg-sphere-0)" stop-opacity="0.92"/>
+          <stop offset="58%" stop-color="var(--svg-sphere-1)" stop-opacity="0.72"/>
+          <stop offset="100%" stop-color="var(--svg-sphere-2)" stop-opacity="0.58"/>
+        </radialGradient>
+      </defs>
+      <rect x="2" y="2" width="556" height="436" rx="8" fill="var(--svg-bg)" stroke="var(--line)" stroke-width="1"/>
+
+      <!-- Sphere -->
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#bloch-grad)" stroke="var(--svg-sphere-stroke)" stroke-width="2.2"/>
+
+      <!-- Back hemisphere -->
+      <path d="${mer.backD}" fill="none" stroke="var(--svg-neg)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.65"/>
+      <path d="${eq.backD}" fill="none" stroke="var(--svg-sphere-stroke)" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.65"/>
+      ${lat.backD ? `<path d="${lat.backD}" fill="none" stroke="var(--amber)" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.55"/>` : ''}
+
+      <!-- Negative dashed axes -->
+      <line x1="${cx}" y1="${cy}" x2="${nZ.sx.toFixed(1)}" y2="${nZ.sy.toFixed(1)}" stroke="var(--svg-neg)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <line x1="${cx}" y1="${cy}" x2="${nX.sx.toFixed(1)}" y2="${nX.sy.toFixed(1)}" stroke="var(--svg-neg)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <line x1="${cx}" y1="${cy}" x2="${nY.sx.toFixed(1)}" y2="${nY.sy.toFixed(1)}" stroke="var(--svg-neg)" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+      <!-- Back benchmark points -->
+      <circle cx="${pt1.sx.toFixed(1)}" cy="${pt1.sy.toFixed(1)}" r="4.5" fill="var(--svg-bg)" stroke="var(--teal)" stroke-width="2"/>
+      <circle cx="${ptXm.sx.toFixed(1)}" cy="${ptXm.sy.toFixed(1)}" r="4.2" fill="var(--svg-bg)" stroke="var(--blue)" stroke-width="2"/>
+      <circle cx="${ptYm.sx.toFixed(1)}" cy="${ptYm.sy.toFixed(1)}" r="4.2" fill="var(--svg-bg)" stroke="var(--amber)" stroke-width="2"/>
+
+      <!-- Front hemisphere -->
+      <path d="${mer.frontD}" fill="none" stroke="var(--svg-neg)" stroke-width="1.3" opacity="0.8"/>
+      <path d="${eq.frontD}" fill="none" stroke="var(--svg-sphere-stroke)" stroke-width="2.0"/>
+      ${lat.frontD ? `<path d="${lat.frontD}" fill="none" stroke="var(--amber)" stroke-width="1.7" opacity="0.85"/>` : ''}
+
+      <!-- Positive axes -->
+      <line x1="${cx}" y1="${cy}" x2="${pZ.sx.toFixed(1)}" y2="${pZ.sy.toFixed(1)}" stroke="var(--svg-axis)" stroke-width="2.0"/>
+      ${svgArrow(cx, cy, pZ.sx, pZ.sy, 'var(--svg-axis)', 10, 3.8)}
+      <line x1="${cx}" y1="${cy}" x2="${pX.sx.toFixed(1)}" y2="${pX.sy.toFixed(1)}" stroke="var(--svg-axis)" stroke-width="2.0"/>
+      ${svgArrow(cx, cy, pX.sx, pX.sy, 'var(--svg-axis)', 10, 3.8)}
+      <line x1="${cx}" y1="${cy}" x2="${pY.sx.toFixed(1)}" y2="${pY.sy.toFixed(1)}" stroke="var(--svg-axis)" stroke-width="2.0"/>
+      ${svgArrow(cx, cy, pY.sx, pY.sy, 'var(--svg-axis)', 10, 3.8)}
+
+      <!-- Projection helpers & angles -->
+      ${sinTh > 0.04 ? `
+        <line x1="${tip.sx.toFixed(1)}" y1="${tip.sy.toFixed(1)}" x2="${eqProj.sx.toFixed(1)}" y2="${eqProj.sy.toFixed(1)}" stroke="var(--red)" stroke-width="1.3" stroke-dasharray="3 3" opacity="0.75"/>
+        <line x1="${cx}" y1="${cy}" x2="${eqProj.sx.toFixed(1)}" y2="${eqProj.sy.toFixed(1)}" stroke="var(--blue)" stroke-width="1.3" stroke-dasharray="3 3" opacity="0.75"/>
+      ` : ''}
+      ${thetaArc}
+      ${phiArc}
+      ${trailHtml}
+
+      <!-- Front benchmark points -->
+      <circle cx="${pt0.sx.toFixed(1)}" cy="${pt0.sy.toFixed(1)}" r="5" fill="var(--teal)"/>
+      <circle cx="${ptXp.sx.toFixed(1)}" cy="${ptXp.sy.toFixed(1)}" r="5" fill="var(--blue)"/>
+      <circle cx="${ptYp.sx.toFixed(1)}" cy="${ptYp.sy.toFixed(1)}" r="5" fill="var(--amber)"/>
+
+      <!-- State vector |psi> -->
+      <line x1="${cx}" y1="${cy}" x2="${tip.sx.toFixed(1)}" y2="${tip.sy.toFixed(1)}" stroke="var(--red)" stroke-width="3.2" stroke-linecap="round" ${tipFront ? '' : 'stroke-dasharray="6 3" opacity="0.82"'}/>
+      ${svgArrow(cx, cy, tip.sx, tip.sy, 'var(--red)', 12, 4.8)}
+      <circle cx="${cx}" cy="${cy}" r="4.0" fill="var(--svg-card)" stroke="var(--svg-axis)" stroke-width="1.8"/>
+      <circle cx="${tip.sx.toFixed(1)}" cy="${tip.sy.toFixed(1)}" r="6.8" fill="${tipFront ? 'var(--red)' : 'var(--svg-bg)'}" stroke="${tipFront ? 'var(--panel)' : 'var(--red)'}" stroke-width="2.4"/>
+
+      <!-- Labels -->
+      <text x="${(pZ.sx + 10).toFixed(1)}" y="${(pZ.sy + 5).toFixed(1)}" fill="var(--heading)" font-family="var(--mono)" font-size="13" font-weight="700">|0⟩ (+Z)</text>
+      <text x="${(nZ.sx + 10).toFixed(1)}" y="${(nZ.sy + 6).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="12.5" font-weight="600">|1⟩ (−Z)</text>
+      <text x="${(pX.sx - 12).toFixed(1)}" y="${(pX.sy + 20).toFixed(1)}" text-anchor="middle" fill="var(--heading)" font-family="var(--mono)" font-size="13" font-weight="700">|+⟩ (+X)</text>
+      <text x="${(nX.sx + 10).toFixed(1)}" y="${(nX.sy + 3).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="12">|−⟩ (−X)</text>
+      <text x="${(pY.sx + 12).toFixed(1)}" y="${(pY.sy + 20).toFixed(1)}" text-anchor="middle" fill="var(--heading)" font-family="var(--mono)" font-size="13" font-weight="700">|+i⟩ (+Y)</text>
+      <text x="${(nY.sx - 10).toFixed(1)}" y="${(nY.sy - 4).toFixed(1)}" text-anchor="end" fill="var(--muted)" font-family="var(--mono)" font-size="12">|−i⟩ (−Y)</text>
+      <text x="${(tip.sx + (tip.sx > cx ? 12 : -12)).toFixed(1)}" y="${(tip.sy - 10).toFixed(1)}" text-anchor="${tip.sx > cx ? 'start' : 'end'}" fill="var(--red)" font-family="var(--mono)" font-size="13.5" font-weight="800">|ψ⟩</text>
+      <text x="16" y="424" fill="var(--muted)" font-size="11.5">${tipFront ? '当前态点位于前半球（实心红点）' : '当前态点位于后半球（空心红圈 + 虚线矢）'} · +X → +Y 俯视为逆时针</text>
+    `;
+  }
+
+  function updateBlochUi() {
+    const vec = QuantumLabModel.blochVector(blochState);
+    const thDeg = Math.round(blochState.theta * 180 / Math.PI);
+    const phDeg = Math.round((blochState.phi * 180 / Math.PI) % 360);
+
+    byId('bloch-theta').value = String(thDeg);
+    byId('bloch-phi').value = String(phDeg);
+    byId('bloch-theta-out').textContent = `${thDeg}° (${f3(blochState.theta)} rad)`;
+    byId('bloch-phi-out').textContent = `${phDeg}° (${f3(blochState.phi)} rad)`;
+
+    byId('bloch-alpha').textContent = f4(blochState.aRe);
+    byId('bloch-beta').textContent = fmtComplex(blochState.bRe, blochState.bIm);
+    byId('bloch-vec').textContent = `(${f3(vec.rx)}, ${f3(vec.ry)}, ${f3(vec.rz)})`;
+    const probSum = blochState.aRe * blochState.aRe + blochState.aIm * blochState.aIm + blochState.bRe * blochState.bRe + blochState.bIm * blochState.bIm;
+    byId('bloch-norm').textContent = `${f4(probSum)} / ${f4(vec.norm)}`;
+
+    byId('bloch-bar-z').style.width = (100 * vec.pZ0).toFixed(2) + '%';
+    byId('bloch-bar-x').style.width = (100 * vec.pX0).toFixed(2) + '%';
+    byId('bloch-bar-y').style.width = (100 * vec.pY0).toFixed(2) + '%';
+    byId('bloch-pz').textContent = pct(vec.pZ0);
+    byId('bloch-px').textContent = pct(vec.pX0);
+    byId('bloch-py').textContent = pct(vec.pY0);
+
+    byId('bloch-history').textContent = '线路序列：' + blochHistory.join(' → ');
+
+    const noteEl = byId('bloch-note');
+    if (vec.rz > 0.995) {
+      noteEl.textContent = '处于北极 |0⟩：Z 基测量 100% 得 0；X 与 Y 基测量均为 50%/50%。试试按顺序点击 H → Z → H 观察干涉翻转！';
+    } else if (vec.rz < -0.995) {
+      noteEl.textContent = '处于南极 |1⟩：Z 基测量 100% 得 1；注意在两极点处方位角 φ 退化为全局相位，不影响物理可观测量。';
+    } else if (Math.abs(vec.rz) < 0.02) {
+      noteEl.textContent = `位于赤道等幅叠加圈（Z 基 50%/50%）：此时相对相位 φ = ${phDeg}° 完整决定 X 基（P|+⟩=${pct(vec.pX0)}）与 Y 基（P|+i⟩=${pct(vec.pY0)}）的测量分布。`;
+    } else {
+      noteEl.textContent = `一般纯态：绕 Z 轴的相位门（Z/S/T）仅改变 φ 而保持 Z 基概率不变，但会旋转 X/Y 基投影。`;
+    }
+
+    renderBlochSvg();
+  }
+
+  byId('bloch-theta').addEventListener('input', e => {
+    const th = Number(e.target.value) * Math.PI / 180;
+    const ph = Number(byId('bloch-phi').value) * Math.PI / 180;
+    blochState = QuantumLabModel.stateFromAngles(th, ph);
+    blochHistory = [`|ψ(${e.target.value}°,${byId('bloch-phi').value}°)⟩`];
+    const v = QuantumLabModel.blochVector(blochState);
+    blochTrail = [{ rx: v.rx, ry: v.ry, rz: v.rz }];
+    updateBlochUi();
+  });
+
+  byId('bloch-phi').addEventListener('input', e => {
+    const th = Number(byId('bloch-theta').value) * Math.PI / 180;
+    const ph = Number(e.target.value) * Math.PI / 180;
+    blochState = QuantumLabModel.stateFromAngles(th, ph);
+    blochHistory = [`|ψ(${byId('bloch-theta').value}°,${e.target.value}°)⟩`];
+    const v = QuantumLabModel.blochVector(blochState);
+    blochTrail = [{ rx: v.rx, ry: v.ry, rz: v.rz }];
+    updateBlochUi();
+  });
+
+  document.querySelectorAll('[data-gate]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const g = btn.dataset.gate;
+      if (g === 'RESET') {
+        blochState = QuantumLabModel.stateFromAngles(0, 0);
+        blochHistory = ['|0⟩'];
+        blochTrail = [{ rx: 0, ry: 0, rz: 1 }];
+      } else {
+        blochState = QuantumLabModel.applyGate(blochState, g);
+        if (blochHistory.length >= 14) blochHistory = ['…', ...blochHistory.slice(-10)];
+        blochHistory.push(g);
+        const v = QuantumLabModel.blochVector(blochState);
+        blochTrail.push({ rx: v.rx, ry: v.ry, rz: v.rz });
+        if (blochTrail.length > 10) blochTrail.shift();
+      }
+      updateBlochUi();
+    });
+  });
+
+  // ==================== 3. RAMSEY CONTROLLER ====================
+  let ramseyFdet = 1.0;
+  let ramseyT2 = 1.5;
+  let ramseyMap = 'correct'; // 'correct' | 'pitfall'
+  let ramseyCursorT = 1.5;
+  const ramseyIdealAudio = byId('ramsey-audio-ideal');
+  const ramseyDecayAudio = byId('ramsey-audio-decay');
+
+  function renderRamseySvg() {
+    const gx0 = 56, gx1 = 616, gy0 = 242, gy1 = 44;
+    const dur = 4.0;
+    const xOf = t => gx0 + (t / dur) * (gx1 - gx0);
+    const yOf = env => gy0 - (env / 0.44) * (gy0 - gy1); // env in [0, 0.44]
+
+    const ptsIdeal = [], ptsCorrect = [], ptsPitfall = [];
+    const N = 220;
+    for (let i = 0; i <= N; i++) {
+      const t = dur * i / N;
+      const pt = QuantumLabModel.ramseyPoint(t, ramseyFdet, ramseyT2);
+      const x = xOf(t).toFixed(1);
+      const cmd = i === 0 ? 'M' : 'L';
+      ptsIdeal.push(`${cmd}${x} ${yOf(pt.envIdeal).toFixed(1)}`);
+      ptsCorrect.push(`${cmd}${x} ${yOf(pt.envCorrect).toFixed(1)}`);
+      ptsPitfall.push(`${cmd}${x} ${yOf(pt.envPitfall).toFixed(1)}`);
+    }
+
+    const asymY = yOf(0.4 * Math.SQRT1_2);
+    const curX = xOf(Math.max(0, Math.min(dur, ramseyCursorT)));
+    const curPt = QuantumLabModel.ramseyPoint(ramseyCursorT, ramseyFdet, ramseyT2);
+    const curEnvActive = ramseyMap === 'pitfall' ? curPt.envPitfall : curPt.envCorrect;
+    const curYActive = yOf(curEnvActive);
+
+    const cueTimes = [0.0, 0.5, 1.5, 3.5];
+    const cueBands = cueTimes.map(t => {
+      const cx = xOf(t).toFixed(1);
+      return `<line x1="${cx}" y1="${gy1}" x2="${cx}" y2="${gy0}" stroke="var(--svg-grid)" stroke-width="1.2" stroke-dasharray="3 3"/>`
+        + `<text x="${cx}" y="${gy0 + 18}" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">${t.toFixed(1)}s</text>`;
+    }).join('');
+
+    const yTicks = [[0, '0.00'], [0.2, '0.20'], [0.4 * Math.SQRT1_2, '0.283'], [0.4, '0.40']];
+    const yTickHtml = yTicks.map(([v, lbl]) => {
+      const yy = yOf(v).toFixed(1);
+      return `<line x1="${gx0}" y1="${yy}" x2="${gx1}" y2="${yy}" stroke="var(--svg-grid)" stroke-width="1"/>`
+        + `<text x="${gx0 - 7}" y="${(Number(yy) + 4).toFixed(1)}" text-anchor="end" fill="var(--muted)" font-family="var(--mono)" font-size="10">${lbl}</text>`;
+    }).join('');
+
+    const isPitfall = ramseyMap === 'pitfall';
+
+    byId('ramsey-svg').innerHTML = `
+      <rect x="2" y="2" width="636" height="288" rx="8" fill="var(--svg-bg)" stroke="var(--line)" stroke-width="1"/>
+      <text x="16" y="22" fill="var(--heading)" font-size="12" font-weight="700">声化包络对比（440 Hz 载波数字振幅上限 0.40）</text>
+
+      <!-- Legend -->
+      <line x1="308" y1="18" x2="326" y2="18" stroke="var(--blue)" stroke-width="1.6" stroke-dasharray="4 3"/>
+      <text x="331" y="22" fill="var(--blue)" font-family="var(--mono)" font-size="10">理想 V=1</text>
+      <line x1="398" y1="18" x2="416" y2="18" stroke="var(--teal)" stroke-width="2.5"/>
+      <text x="421" y="22" fill="var(--teal)" font-family="var(--mono)" font-size="10" font-weight="700">正确 0.4√P₀</text>
+      <line x1="506" y1="18" x2="524" y2="18" stroke="var(--red)" stroke-width="2.2" stroke-dasharray="6 3"/>
+      <text x="529" y="22" fill="var(--red)" font-family="var(--mono)" font-size="10" font-weight="700">误区 0.4V(t)</text>
+
+      ${yTickHtml}
+      ${cueBands}
+
+      <!-- Asymptote 0.4 / sqrt(2) -->
+      <line x1="${gx0}" y1="${asymY.toFixed(1)}" x2="${gx1}" y2="${asymY.toFixed(1)}" stroke="var(--teal)" stroke-width="1.3" stroke-dasharray="5 4" opacity="0.72"/>
+      <rect x="${gx1 - 154}" y="${(asymY - 18).toFixed(1)}" width="152" height="16" rx="4" fill="var(--svg-bg)" fill-opacity="0.88"/>
+      <text x="${gx1 - 4}" y="${(asymY - 6).toFixed(1)}" text-anchor="end" fill="var(--teal)" font-family="var(--mono)" font-size="10" font-weight="700">稳态极限 0.4/√2 (P₀→1/2)</text>
+
+      <!-- Axes -->
+      <line x1="${gx0}" y1="${gy0}" x2="${gx1}" y2="${gy0}" stroke="var(--svg-axis)" stroke-width="1.3"/>
+      <line x1="${gx0}" y1="${gy1}" x2="${gx0}" y2="${gy0}" stroke="var(--svg-axis)" stroke-width="1.3"/>
+
+      <!-- Curves -->
+      <path d="${ptsIdeal.join('')}" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.65"/>
+      <path d="${ptsCorrect.join('')}" fill="none" stroke="var(--teal)" stroke-width="${isPitfall ? '1.8' : '2.7'}" opacity="${isPitfall ? '0.52' : '1'}"/>
+      <path d="${ptsPitfall.join('')}" fill="none" stroke="var(--red)" stroke-width="${isPitfall ? '2.7' : '1.7'}" stroke-dasharray="7 4" opacity="${isPitfall ? '1' : '0.68'}"/>
+
+      <!-- Live Playhead Cursor -->
+      <line id="ramsey-playhead" x1="${curX.toFixed(1)}" y1="${gy1}" x2="${curX.toFixed(1)}" y2="${gy0}" stroke="var(--amber)" stroke-width="2.0"/>
+      <circle cx="${curX.toFixed(1)}" cy="${curYActive.toFixed(1)}" r="5.5" fill="${isPitfall ? 'var(--red)' : 'var(--teal)'}" stroke="var(--panel)" stroke-width="2"/>
+      <rect x="${Math.min(gx1 - 74, Math.max(gx0 + 4, curX - 34)).toFixed(1)}" y="${gy1 - 16}" width="68" height="18" rx="4" fill="var(--heading)"/>
+      <text x="${Math.min(gx1 - 40, Math.max(gx0 + 38, curX)).toFixed(1)}" y="${gy1 - 3.5}" text-anchor="middle" fill="var(--bg)" font-family="var(--mono)" font-size="10" font-weight="700">t = ${f2(ramseyCursorT)}s</text>
+
+      <text x="16" y="278" fill="var(--muted)" font-size="11">横轴：教学时间 t (0–4.0 s) · 纵轴：合成声波瞬时振幅包络</text>
+    `;
+  }
+
+  function updateRamseyReadouts() {
+    const pt = QuantumLabModel.ramseyPoint(ramseyCursorT, ramseyFdet, ramseyT2);
+    byId('ramsey-fdet-out').textContent = `${f2(ramseyFdet)} Hz`;
+    byId('ramsey-t2-out').textContent = `${f2(ramseyT2)} s`;
+    byId('ramsey-t-val').textContent = `${f2(ramseyCursorT)} s`;
+    byId('ramsey-v-val').textContent = f4(pt.vis);
+    byId('ramsey-p0-val').textContent = f4(pt.pDecay);
+    byId('ramsey-env-val').textContent = `${f4(pt.envCorrect)} vs ${f4(pt.envPitfall)}`;
+
+    const isPitfall = ramseyMap === 'pitfall';
+    byId('ramsey-map-correct').setAttribute('aria-pressed', String(!isPitfall));
+    byId('ramsey-map-pitfall').setAttribute('aria-pressed', String(isPitfall));
+    byId('ramsey-decay-title').textContent = isPitfall
+      ? '退相干 Ramsey（✕ 常见误区：线性衰减 V(t)）'
+      : '退相干 Ramsey（✓ 正确映射：√P₀(t)）';
+
+    const noteEl = byId('ramsey-note');
+    noteEl.className = isPitfall ? 'note-box warn' : 'note-box';
+    if (isPitfall) {
+      noteEl.textContent = `已切至常见误区 0.4·V(t) sin(ωt)：在 t = 3.5 s 处可见度 V = ${f4(Math.exp(-3.5 / ramseyT2))}，声音几乎衰减到静音——这会让人误以为退相干让量子比特“不再输出信号”，而实际上输出概率是趋向 1/2 的平稳混合！`;
+    } else {
+      noteEl.textContent = `正确映射 0.4√P₀(t) sin(ωt)（均方声能 ∝ P₀）：随退相干推进，条纹起伏缩小，但声音趋向 0.4/√2 ≈ 0.2828 的稳态音而非静音；在 t = ${f2(ramseyCursorT)} s 处 P₀ = ${f4(pt.pDecay)}。`;
+    }
+    renderRamseySvg();
+  }
+
+  function synthRamseyAudio(both = true, preserveCue = false) {
+    if (both) {
+      const ideal = QuantumLabModel.synthesizeRamsey(ramseyFdet, ramseyT2, 'ideal');
+      setAudioWav(ramseyIdealAudio, 'ramseyIdeal', ideal.bytes);
+      byId('ramsey-ideal-meta').textContent = `4.00s · 22050 Hz 16-bit · Peak ${f4(ideal.peak)} · RMS ${f4(ideal.rms)}`;
+      if (preserveCue && ramseyCursorT > 0) {
+        pendingSeekTarget = ramseyCursorT;
+        pendingClips.add(ramseyIdealAudio);
+        applyPendingSeek(ramseyIdealAudio);
+      }
+    }
+    const decay = QuantumLabModel.synthesizeRamsey(ramseyFdet, ramseyT2, ramseyMap);
+    setAudioWav(ramseyDecayAudio, 'ramseyDecay', decay.bytes);
+    byId('ramsey-decay-meta').textContent = `4.00s · 22050 Hz 16-bit · Peak ${f4(decay.peak)} · RMS ${f4(decay.rms)}`;
+    if (preserveCue && ramseyCursorT > 0) {
+      pendingSeekTarget = ramseyCursorT;
+      pendingClips.add(ramseyDecayAudio);
+      applyPendingSeek(ramseyDecayAudio);
+    }
+  }
+
+  // Synchronized cue jump with seekable readiness queue (MASP pattern)
+  let pendingSeekTarget = null;
+  const pendingClips = new Set();
+
+  function applyPendingSeek(clip) {
+    if (pendingSeekTarget === null || !pendingClips.has(clip)) return;
+    if (clip.readyState >= 1) {
+      try {
+        clip.currentTime = pendingSeekTarget;
+      } catch (e) {}
+      pendingClips.delete(clip);
+    }
+  }
+
+  for (const clip of [ramseyIdealAudio, ramseyDecayAudio]) {
+    for (const evt of ['loadedmetadata', 'canplay', 'canplaythrough']) {
+      clip.addEventListener(evt, () => applyPendingSeek(clip));
+    }
+    clip.addEventListener('timeupdate', () => {
+      if (!clip.paused) {
+        ramseyCursorT = Math.min(4.0, Math.max(0, clip.currentTime));
+        updateRamseyReadouts();
+      }
+    });
+  }
+
+  function jumpRamseyTo(targetSec) {
+    pauseAllAudio();
+    ramseyCursorT = targetSec;
+    pendingSeekTarget = targetSec;
+    pendingClips.clear();
+    for (const clip of [ramseyIdealAudio, ramseyDecayAudio]) {
+      pendingClips.add(clip);
+      applyPendingSeek(clip);
+    }
+    const pt = QuantumLabModel.ramseyPoint(targetSec, ramseyFdet, ramseyT2);
+    byId('ramsey-seek-status').textContent =
+      `已同步定位到 t = ${f2(targetSec)} s：理想 P₀ = ${f4(pt.pIdeal)}，退相干 P₀ = ${f4(pt.pDecay)}，包络（正确 ${f4(pt.envCorrect)} vs 误区 ${f4(pt.envPitfall)}），可点任一播放器对比试听。`;
+    updateRamseyReadouts();
+  }
+
+  byId('ramsey-fdet').addEventListener('input', e => {
+    ramseyFdet = Number(e.target.value);
+    updateRamseyReadouts();
+  });
+  byId('ramsey-fdet').addEventListener('change', () => synthRamseyAudio(true));
+
+  byId('ramsey-t2').addEventListener('input', e => {
+    ramseyT2 = Number(e.target.value);
+    updateRamseyReadouts();
+  });
+  byId('ramsey-t2').addEventListener('change', () => synthRamseyAudio(false));
+
+  document.querySelectorAll('[data-ramsey-map]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      ramseyMap = btn.dataset.ramseyMap;
+      updateRamseyReadouts();
+      synthRamseyAudio(false, true);
+    });
+  });
+
+  document.querySelectorAll('[data-ramsey-jump]').forEach(btn => {
+    btn.addEventListener('click', () => jumpRamseyTo(Number(btn.dataset.ramseyJump)));
+  });
+
+  byId('ramsey-reset').addEventListener('click', () => {
+    ramseyFdet = 1.0;
+    ramseyT2 = 1.5;
+    ramseyMap = 'correct';
+    ramseyCursorT = 1.5;
+    byId('ramsey-fdet').value = '1.0';
+    byId('ramsey-t2').value = '1.5';
+    updateRamseyReadouts();
+    synthRamseyAudio(true);
+    byId('ramsey-seek-status').textContent = '已恢复手册 A02 默认参数（f_det = 1.00 Hz, T₂ = 1.50 s, 正确映射 √P₀(t)）。';
+  });
+
+  // Initial render
+  updateMzi(true);
+  updateBlochUi();
+  updateRamseyReadouts();
+  synthRamseyAudio(true);
+  byId('ramsey-seek-status').textContent = '就绪：点击上方时间点按钮可同步跳转两路播放器并对比包络数值。';
+})();
+</script>
+</body>
+</html>

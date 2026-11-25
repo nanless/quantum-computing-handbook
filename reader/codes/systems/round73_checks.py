@@ -1,7 +1,7 @@
 """Standard-library independent round73 derivations and archived evidence checks.
 Run python3 codes/systems/round73_checks.py --case all; no SDK, network, or device.
 """
-import argparse, ast, csv, hashlib, json, math, struct, zipfile
+import argparse, ast, csv, fractions, hashlib, json, math, struct, zipfile
 from pathlib import Path
 if not __debug__: raise RuntimeError('Validation requires assertions; do not run with -O')
 HERE=Path(__file__).resolve().parent; SDK=HERE/'sdk73'
@@ -113,11 +113,19 @@ def case15():
     assert any(abs(cross[i][j]-cross[j][i].conjugate())>.1 for i in range(4) for j in range(4))
     return dict(wrong_cross_trace=0,correct_projector_trace=1,wrong_cross_is_hermitian=False)
 def case19():
-    arrivals=[0,1,2,3,4];service=[.8,.8,4,.8,.8];end=0;rows=[]
-    for a,s in zip(arrivals,service):start=max(a,end);end=start+s;rows.append(dict(arrival=a,service=s,response=end-a))
-    assert max(r['response'] for r in rows)==4
+    F=fractions.Fraction
+    arrivals=[F(a) for a in (0,1,2,3,4)]
+    service=[F(4,5),F(4,5),F(4,1),F(4,5),F(4,5)]
+    end=F(0);rows=[]
+    for a,s in zip(arrivals,service):
+        start=max(a,end);wait=start-a;end=start+s;resp=end-a
+        rows.append(dict(arrival=float(a),service=float(s),wait=float(wait),response=float(resp)))
+    expected_responses=[F(4,5),F(4,5),F(4,1),F(19,5),F(18,5)]
+    assert [r['response'] for r in rows]==[float(x) for x in expected_responses]
+    assert max(r['response'] for r in rows)==4.0
+    assert rows[3]['wait']==3.0 and rows[4]['wait']==2.8
     # A deterministic queue demonstration independent of machine timing samples.
-    return dict(rows=rows,p99_observed_service_not_a_deadline_bound=True)
+    return dict(time_unit='us',rows=rows,max_response=4.0,p99_observed_service_not_a_deadline_bound=True)
 def caseq3():
     d=case14();leak_plus=abs((.1+.1)/math.sqrt(2))**2;leak_minus=abs((.1-.1)/math.sqrt(2))**2
     assert abs(leak_plus-.02)<1e-12 and leak_minus==0

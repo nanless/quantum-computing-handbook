@@ -25,19 +25,19 @@
       },
       {
         "d": 8,
-        "retained_mass": 0.9999897508033253,
-        "tail": 1.0249196674641692e-05,
-        "root_fidelity": 0.9999948753885318,
+        "retained_mass": 0.9999897508033254,
+        "tail": 1.0249196674641694e-05,
+        "root_fidelity": 0.9999948753885319,
         "trace_distance": 0.0032014366579149575,
-        "truncated_normalized_mean_n": 0.9999270072992701,
+        "truncated_normalized_mean_n": 0.99992700729927,
         "exact_mean_n": 1.0
       },
       {
         "d": 12,
-        "retained_mass": 0.9999999991683892,
-        "tail": 8.316107426882335e-10,
+        "retained_mass": 0.9999999991683893,
+        "tail": 8.316107426882334e-10,
         "root_fidelity": 0.9999999995841946,
-        "trace_distance": 2.883766187970574e-05,
+        "trace_distance": 2.8837661879705736e-05,
         "truncated_normalized_mean_n": 0.9999999907838444,
         "exact_mean_n": 1.0
       }

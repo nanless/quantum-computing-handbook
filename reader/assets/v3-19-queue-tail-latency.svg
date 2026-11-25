@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">20 任务 FIFO 实时解码排队尾延迟与停机并集可用率</title>
+  <desc id="desc">左面板按精确有理数复算 20 任务单服务台 FIFO 队列（每 1 μs 到达、常规服务 0.8 μs、n=2 突发 4.0 μs）：尽管平均服务 0.96 μs &lt; 1 μs，单次突发仍致 n=2 至 n=11 共 10 项（50%）击穿 2.0 μs 硬反馈截止线。右面板上部绘制 d=7 归档解码尾延迟分布（p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 与 SLA 红线），下部绘制 service_timeline.py 的 24 小时重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.halo{stroke:#ffffff;fill:none}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.6;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.c4-soft{fill:#fdf2dc;stroke:#b57614;stroke-width:1.4}
+.c5{stroke:#744ea6;fill:none}
+.c5-fill{fill:#744ea6}
+.c5-txt{fill:#5b3987}
+.c5-soft{fill:#efe8fa;stroke:#744ea6;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.10}
+.area1{fill:#1b6ca8;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.11}
+.area4{fill:#b57614;fill-opacity:.12}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.38}
+.hatch-stroke4{stroke:#b57614;stroke-width:1.1;stroke-opacity:.40}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .halo{stroke:#16222e}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3b2d13;stroke:#f0ba5a}
+  .c5{stroke:#b999f0}
+  .c5-fill{fill:#b999f0}
+  .c5-txt{fill:#d0b8fa}
+  .c5-soft{fill:#2d2045;stroke:#b999f0}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.14}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .area4{fill:#f0ba5a;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.45}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.45}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.45}
+  .hatch-stroke4{stroke:#f0ba5a;stroke-opacity:.45}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-amber" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke4" x1="0" y1="0" x2="0" y2="9"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="32" y="52">20 任务 FIFO 解码排队尾延迟与停机并集可用率</text>
+  <text class="subtitle" x="32" y="77">左：突发排队使均速达标队列半数超时（2.0 μs 截止线）；右：解码尾延迟分位与 24 h 停机区间并集核算</text>
+  <rect class="panel" x="28" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 478 Q 491 97 491 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="491" y2="134"/>
+  <text class="sec" x="44" y="120">20 任务 FIFO 实时解码响应时延（平均服务 0.96 μs）</text>
+  <rect class="panel" x="508" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 522 97 H 958 Q 971 97 971 110 V 134 H 509 V 110 Q 509 97 522 97 Z"/>
+  <line class="grid" x1="509" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="524" y="120">解码尾延迟分布与 24 h 停机并集可用率</text>
+  <rect class="c1-soft" x="48" y="147" width="13" height="11" rx="2"/>
+  <text class="xs" x="66" y="157">服务 s<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan></text>
+  <rect class="c4-soft" x="128" y="147" width="13" height="11" rx="2"/>
+  <text class="xs" x="146" y="157">排队等待 w<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan></text>
+  <rect class="c2-soft" x="234" y="147" width="13" height="11" rx="2"/>
+  <text class="xs" x="252" y="157">突发 / 超时项</text>
+  <line class="c2" stroke-width="2" stroke-dasharray="5 3" x1="354" y1="152" x2="378" y2="152"/>
+  <text class="xs c2-txt" x="384" y="157">截止 2.0 μs</text>
+  <rect class="forbid" x="82" y="178" width="392" height="136.67"/>
+  <line class="grid" x1="82" y1="424" x2="474" y2="424"/>
+  <text class="xs" x="76" y="427.5" text-anchor="end">0.0</text>
+  <line class="grid" x1="82" y1="369.33" x2="474" y2="369.33"/>
+  <text class="xs" x="76" y="372.83" text-anchor="end">1.0</text>
+  <line class="grid" x1="82" y1="314.67" x2="474" y2="314.67"/>
+  <text class="xs" x="76" y="318.17" text-anchor="end">2.0</text>
+  <line class="grid" x1="82" y1="260" x2="474" y2="260"/>
+  <text class="xs" x="76" y="263.5" text-anchor="end">3.0</text>
+  <line class="grid" x1="82" y1="205.33" x2="474" y2="205.33"/>
+  <text class="xs" x="76" y="208.83" text-anchor="end">4.0</text>
+  <text class="xs" x="91.8" y="440" text-anchor="middle">0</text>
+  <text class="xs" x="131" y="440" text-anchor="middle">2</text>
+  <text class="xs" x="189.8" y="440" text-anchor="middle">5</text>
+  <text class="xs" x="248.6" y="440" text-anchor="middle">8</text>
+  <text class="xs" x="307.4" y="440" text-anchor="middle">11</text>
+  <text class="xs" x="327" y="440" text-anchor="middle">12</text>
+  <text class="xs" x="385.8" y="440" text-anchor="middle">15</text>
+  <text class="xs" x="464.2" y="440" text-anchor="middle">19</text>
+  <rect class="c1-soft" x="85.33" y="380.27" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c1-soft" x="104.93" y="380.27" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c2-soft" x="124.53" y="205.33" width="12.94" height="218.67" rx="1.5"/>
+  <rect fill="url(#hatch-red)" x="124.53" y="205.33" width="12.94" height="218.67" rx="1.5"/>
+  <rect class="c4-soft" x="144.13" y="260" width="12.94" height="164" rx="1.5"/>
+  <rect class="c2-soft" x="144.13" y="216.27" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="163.73" y="270.93" width="12.94" height="153.07" rx="1.5"/>
+  <rect class="c2-soft" x="163.73" y="227.2" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="183.33" y="281.87" width="12.94" height="142.13" rx="1.5"/>
+  <rect class="c2-soft" x="183.33" y="238.13" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="202.93" y="292.8" width="12.94" height="131.2" rx="1.5"/>
+  <rect class="c2-soft" x="202.93" y="249.07" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="222.53" y="303.73" width="12.94" height="120.27" rx="1.5"/>
+  <rect class="c2-soft" x="222.53" y="260" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="242.13" y="314.67" width="12.94" height="109.33" rx="1.5"/>
+  <rect class="c2-soft" x="242.13" y="270.93" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="261.73" y="325.6" width="12.94" height="98.4" rx="1.5"/>
+  <rect class="c2-soft" x="261.73" y="281.87" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="281.33" y="336.53" width="12.94" height="87.47" rx="1.5"/>
+  <rect class="c2-soft" x="281.33" y="292.8" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="300.93" y="347.47" width="12.94" height="76.53" rx="1.5"/>
+  <rect class="c2-soft" x="300.93" y="303.73" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="320.53" y="358.4" width="12.94" height="65.6" rx="1.5"/>
+  <rect class="c1-soft" x="320.53" y="314.67" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="340.13" y="369.33" width="12.94" height="54.67" rx="1.5"/>
+  <rect class="c1-soft" x="340.13" y="325.6" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="359.73" y="380.27" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c1-soft" x="359.73" y="336.53" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="379.33" y="391.2" width="12.94" height="32.8" rx="1.5"/>
+  <rect class="c1-soft" x="379.33" y="347.47" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="398.93" y="402.13" width="12.94" height="21.87" rx="1.5"/>
+  <rect class="c1-soft" x="398.93" y="358.4" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c4-soft" x="418.53" y="413.07" width="12.94" height="10.93" rx="1.5"/>
+  <rect class="c1-soft" x="418.53" y="369.33" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c1-soft" x="438.13" y="380.27" width="12.94" height="43.73" rx="1.5"/>
+  <rect class="c1-soft" x="457.73" y="380.27" width="12.94" height="43.73" rx="1.5"/>
+  <path class="axis" stroke-width="1.6" d="M 91.8 380.27 L 111.4 380.27 L 131 205.33 L 150.6 216.27 L 170.2 227.2 L 189.8 238.13 L 209.4 249.07 L 229 260 L 248.6 270.93 L 268.2 281.87 L 287.8 292.8 L 307.4 303.73 L 327 314.67 L 346.6 325.6 L 366.2 336.53 L 385.8 347.47 L 405.4 358.4 L 425 369.33 L 444.6 380.27 L 464.2 380.27"/>
+  <line class="c2" stroke-width="2.2" stroke-dasharray="7 4" x1="82" y1="314.67" x2="474" y2="314.67"/>
+  <line class="c3" stroke-width="1.7" stroke-dasharray="3 3" x1="82" y1="371.52" x2="474" y2="371.52"/>
+  <line class="axis" x1="82" y1="424" x2="480" y2="424"/>
+  <polygon class="axis-fill" points="480,424 473.5,427.12 473.5,420.88"/>
+  <line class="axis" x1="82" y1="424" x2="82" y2="170"/>
+  <polygon class="axis-fill" points="82,170 85.12,176.5 78.88,176.5"/>
+  <text class="sm" x="278" y="458" text-anchor="middle">到达任务编号 n（到达间隔 1.0 μs）</text>
+  <text class="sm" x="44" y="301" text-anchor="middle" transform="rotate(-90 44 301)">响应时延 ℓ<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> = f<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> − a<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> (μs)</text>
+  <text class="xsb c2-txt" x="218" y="200">n=2 突发 s₂ = 4.0 μs</text>
+  <line class="c2" stroke-width="1.1" x1="139" y1="205.33" x2="213" y2="196"/>
+  <text class="xsb c2-txt" x="356" y="232" text-anchor="middle">n = 2–11 共 10 项超时 (50%)</text>
+  <text class="xs c2-txt" x="356" y="250" text-anchor="middle">每项仅消化 1.0 − 0.8 = 0.2 μs</text>
+  <text class="xsb c3-txt" x="406" y="306.67" text-anchor="middle">n=12 恢复 ≤ 2.0 μs</text>
+  <text class="xsb c3-txt" x="468" y="351.84" text-anchor="end">均值 0.96 μs</text>
+  <line class="c3" stroke-width="1.1" x1="452" y1="357.31" x2="452" y2="369.52"/>
+  <rect class="pill" x="44" y="476" width="432" height="62" rx="10"/>
+  <text class="xsb" x="58" y="497">FIFO 递推：b<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> = max(a<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan>, f<tspan dy="2.8" font-size="74%">n−1</tspan><tspan dy="-2.8">&#8203;</tspan>)，ℓ<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> = b<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> + s<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> − a<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan></text>
+  <text class="xs" x="58" y="517">增配第二台解码器可即时消除 n≥3 排队积压，但仍无法把 s₂ = 4.0 μs 压进 2.0 μs</text>
+  <text class="xsb" x="522" y="154">① 离线解码尾延迟分布（d=7 归档 N=1,000；通信固定 +8 μs）</text>
+  <line class="grid" x1="562" y1="174" x2="562" y2="290"/>
+  <text class="xs" x="562" y="304" text-anchor="middle">0 μs</text>
+  <line class="grid" x1="645.14" y1="174" x2="645.14" y2="290"/>
+  <text class="xs" x="645.14" y="304" text-anchor="middle">15 μs</text>
+  <line class="grid" x1="728.29" y1="174" x2="728.29" y2="290"/>
+  <text class="xs" x="728.29" y="304" text-anchor="middle">30 μs</text>
+  <line class="grid" x1="811.43" y1="174" x2="811.43" y2="290"/>
+  <text class="xs" x="811.43" y="304" text-anchor="middle">45 μs</text>
+  <line class="grid" x1="894.57" y1="174" x2="894.57" y2="290"/>
+  <text class="xs" x="894.57" y="304" text-anchor="middle">60 μs</text>
+  <polygon class="area1" points="562,290 562,290 564.16,290 566.31,290 568.47,290 570.62,290 572.78,290 574.93,289.98 577.09,289.92 579.24,289.73 581.4,289.29 583.56,288.45 585.71,287.04 587.87,284.9 590.02,281.92 592.18,278.05 594.33,273.29 596.49,267.71 598.64,261.46 600.8,254.68 602.96,247.57 605.11,240.33 607.27,233.13 609.42,226.15 611.58,219.55 613.73,213.46 615.89,207.96 618.04,203.12 620.2,199.01 622.36,195.62 624.51,192.97 626.67,191.04 628.82,189.79 630.98,189.2 633.13,189.2 635.29,189.76 637.44,190.8 639.6,192.28 641.76,194.14 643.91,196.32 646.07,198.77 648.22,201.45 650.38,204.3 652.53,207.29 654.69,210.38 656.84,213.53 659,216.72 661.16,219.91 663.31,223.09 665.47,226.24 667.62,229.33 669.78,232.36 671.93,235.31 674.09,238.18 676.24,240.95 678.4,243.63 680.56,246.21 682.71,248.68 684.87,251.04 687.02,253.3 689.18,255.46 691.33,257.51 693.49,259.46 695.64,261.31 697.8,263.06 699.96,264.72 702.11,266.29 704.27,267.77 706.42,269.16 708.58,270.48 710.73,271.72 712.89,272.88 715.04,273.98 717.2,275.01 719.36,275.97 721.51,276.88 723.67,277.73 725.82,278.53 727.98,279.28 730.13,279.98 732.29,280.63 734.44,281.25 736.6,281.82 738.76,282.36 740.91,282.86 743.07,283.33 745.22,283.77 747.38,284.18 749.53,284.56 751.69,284.92 753.84,285.26 756,285.57 758.16,285.86 760.31,286.13 762.47,286.39 764.62,286.63 766.78,286.85 768.93,287.05 771.09,287.25 773.24,287.43 775.4,287.6 777.56,287.75 779.71,287.9 781.87,288.04 784.02,288.17 786.18,288.29 788.33,288.4 790.49,288.5 792.64,288.6 794.8,288.69 796.96,288.77 799.11,288.85 801.27,288.93 803.42,289 805.58,289.06 807.73,289.12 809.89,289.18 812.04,289.23 814.2,289.28 816.36,289.33 818.51,289.37 820.67,289.41 822.82,289.45 824.98,289.48 827.13,289.51 829.29,289.54 831.44,289.57 833.6,289.6 835.76,289.62 837.91,289.65 840.07,289.67 842.22,289.69 844.38,289.71 846.53,289.73 848.69,289.74 850.84,289.76 853,289.78 855.16,289.79 857.31,289.8 859.47,289.81 861.62,289.83 863.78,289.84 865.93,289.85 868.09,289.86 870.24,289.86 872.4,289.87 874.56,289.88 876.71,289.89 878.87,289.89 881.02,289.9 883.18,289.91 885.33,289.91 887.49,289.92 889.64,289.92 891.8,289.93 893.96,289.93 896.11,289.94 898.27,289.94 900.42,289.94 902.58,289.95 904.73,289.95 906.89,289.95 909.04,289.95 911.2,289.96 913.36,289.96 915.51,289.96 917.67,289.96 919.82,289.97 921.98,289.97 924.13,289.97 926.29,289.97 928.44,289.97 930.6,289.97 932.76,289.98 934.91,289.98 937.07,289.98 939.22,289.98 941.38,289.98 943.53,289.98 945.69,289.98 947.84,289.98 950,289.99 950,290"/>
+  <polygon class="forbid" points="794.8,290 794.8,288.69 796.96,288.77 799.11,288.85 801.27,288.93 803.42,289 805.58,289.06 807.73,289.12 809.89,289.18 812.04,289.23 814.2,289.28 816.36,289.33 818.51,289.37 820.67,289.41 822.82,289.45 824.98,289.48 827.13,289.51 829.29,289.54 831.44,289.57 833.6,289.6 835.76,289.62 837.91,289.65 840.07,289.67 842.22,289.69 844.38,289.71 846.53,289.73 848.69,289.74 850.84,289.76 853,289.78 855.16,289.79 857.31,289.8 859.47,289.81 861.62,289.83 863.78,289.84 865.93,289.85 868.09,289.86 870.24,289.86 872.4,289.87 874.56,289.88 876.71,289.89 878.87,289.89 881.02,289.9 883.18,289.91 885.33,289.91 887.49,289.92 889.64,289.92 891.8,289.93 893.96,289.93 896.11,289.94 898.27,289.94 900.42,289.94 902.58,289.95 904.73,289.95 906.89,289.95 909.04,289.95 911.2,289.96 913.36,289.96 915.51,289.96 917.67,289.96 919.82,289.97 921.98,289.97 924.13,289.97 926.29,289.97 928.44,289.97 930.6,289.97 932.76,289.98 934.91,289.98 937.07,289.98 939.22,289.98 941.38,289.98 943.53,289.98 945.69,289.98 947.84,289.98 950,289.99 950,290"/>
+  <path class="c1" stroke-width="2.3" d="M 562 290 L 564.16 290 L 566.31 290 L 568.47 290 L 570.62 290 L 572.78 290 L 574.93 289.98 L 577.09 289.92 L 579.24 289.73 L 581.4 289.29 L 583.56 288.45 L 585.71 287.04 L 587.87 284.9 L 590.02 281.92 L 592.18 278.05 L 594.33 273.29 L 596.49 267.71 L 598.64 261.46 L 600.8 254.68 L 602.96 247.57 L 605.11 240.33 L 607.27 233.13 L 609.42 226.15 L 611.58 219.55 L 613.73 213.46 L 615.89 207.96 L 618.04 203.12 L 620.2 199.01 L 622.36 195.62 L 624.51 192.97 L 626.67 191.04 L 628.82 189.79 L 630.98 189.2 L 633.13 189.2 L 635.29 189.76 L 637.44 190.8 L 639.6 192.28 L 641.76 194.14 L 643.91 196.32 L 646.07 198.77 L 648.22 201.45 L 650.38 204.3 L 652.53 207.29 L 654.69 210.38 L 656.84 213.53 L 659 216.72 L 661.16 219.91 L 663.31 223.09 L 665.47 226.24 L 667.62 229.33 L 669.78 232.36 L 671.93 235.31 L 674.09 238.18 L 676.24 240.95 L 678.4 243.63 L 680.56 246.21 L 682.71 248.68 L 684.87 251.04 L 687.02 253.3 L 689.18 255.46 L 691.33 257.51 L 693.49 259.46 L 695.64 261.31 L 697.8 263.06 L 699.96 264.72 L 702.11 266.29 L 704.27 267.77 L 706.42 269.16 L 708.58 270.48 L 710.73 271.72 L 712.89 272.88 L 715.04 273.98 L 717.2 275.01 L 719.36 275.97 L 721.51 276.88 L 723.67 277.73 L 725.82 278.53 L 727.98 279.28 L 730.13 279.98 L 732.29 280.63 L 734.44 281.25 L 736.6 281.82 L 738.76 282.36 L 740.91 282.86 L 743.07 283.33 L 745.22 283.77 L 747.38 284.18 L 749.53 284.56 L 751.69 284.92 L 753.84 285.26 L 756 285.57 L 758.16 285.86 L 760.31 286.13 L 762.47 286.39 L 764.62 286.63 L 766.78 286.85 L 768.93 287.05 L 771.09 287.25 L 773.24 287.43 L 775.4 287.6 L 777.56 287.75 L 779.71 287.9 L 781.87 288.04 L 784.02 288.17 L 786.18 288.29 L 788.33 288.4 L 790.49 288.5 L 792.64 288.6 L 794.8 288.69 L 796.96 288.77 L 799.11 288.85 L 801.27 288.93 L 803.42 289 L 805.58 289.06 L 807.73 289.12 L 809.89 289.18 L 812.04 289.23 L 814.2 289.28 L 816.36 289.33 L 818.51 289.37 L 820.67 289.41 L 822.82 289.45 L 824.98 289.48 L 827.13 289.51 L 829.29 289.54 L 831.44 289.57 L 833.6 289.6 L 835.76 289.62 L 837.91 289.65 L 840.07 289.67 L 842.22 289.69 L 844.38 289.71 L 846.53 289.73 L 848.69 289.74 L 850.84 289.76 L 853 289.78 L 855.16 289.79 L 857.31 289.8 L 859.47 289.81 L 861.62 289.83 L 863.78 289.84 L 865.93 289.85 L 868.09 289.86 L 870.24 289.86 L 872.4 289.87 L 874.56 289.88 L 876.71 289.89 L 878.87 289.89 L 881.02 289.9 L 883.18 289.91 L 885.33 289.91 L 887.49 289.92 L 889.64 289.92 L 891.8 289.93 L 893.96 289.93 L 896.11 289.94 L 898.27 289.94 L 900.42 289.94 L 902.58 289.95 L 904.73 289.95 L 906.89 289.95 L 909.04 289.95 L 911.2 289.96 L 913.36 289.96 L 915.51 289.96 L 917.67 289.96 L 919.82 289.97 L 921.98 289.97 L 924.13 289.97 L 926.29 289.97 L 928.44 289.97 L 930.6 289.97 L 932.76 289.98 L 934.91 289.98 L 937.07 289.98 L 939.22 289.98 L 941.38 289.98 L 943.53 289.98 L 945.69 289.98 L 947.84 289.98 L 950 289.99"/>
+  <line class="guide" x1="644.68" y1="197.17" x2="644.68" y2="290"/>
+  <circle class="c1-fill" cx="644.68" cy="197.17" r="4.2"/>
+  <line class="guide" x1="775.4" y1="287.6" x2="775.4" y2="290"/>
+  <circle class="c4-fill" cx="775.4" cy="287.6" r="4.2"/>
+  <line class="guide" x1="889.72" y1="289.92" x2="889.72" y2="290"/>
+  <circle class="c2-fill" cx="889.72" cy="289.92" r="4.2"/>
+  <line class="c2" stroke-width="1.9" stroke-dasharray="5 3" x1="794.8" y1="174" x2="794.8" y2="290"/>
+  <text class="xsb c1-txt" x="647.91" y="182">p50 = 14.9 μs</text>
+  <text class="xsb c4-txt" x="762.65" y="236" text-anchor="end">p99 = 38.5</text>
+  <line class="c4" stroke-width="1.1" x1="760.43" y1="241" x2="773.4" y2="283.6"/>
+  <text class="xsb c2-txt" x="803.11" y="190">SLA 预算 42 μs</text>
+  <text class="xs c2-txt" x="803.11" y="207">(+8 通信 = 50 μs)</text>
+  <text class="xsb c2-txt" x="954" y="252" text-anchor="end">max = 59.1 μs (N=1,000)</text>
+  <text class="xs c2-txt" x="954" y="268" text-anchor="end">（超 SLA 违约!）</text>
+  <line class="c2" stroke-width="1.1" x1="889.72" y1="272" x2="889.72" y2="284.92"/>
+  <line class="axis" x1="562" y1="290" x2="956" y2="290"/>
+  <polygon class="axis-fill" points="956,290 950,292.88 950,287.12"/>
+  <line class="axis" x1="562" y1="290" x2="562" y2="168"/>
+  <polygon class="axis-fill" points="562,168 564.88,174 559.12,174"/>
+  <text class="xs" x="526" y="232" text-anchor="middle" transform="rotate(-90 526 232)">概率密度</text>
+  <line class="grid" x1="520" y1="322" x2="958" y2="322"/>
+  <text class="xsb" x="522" y="342">② 24 h 重叠停机日志并集核算（service_timeline.py）</text>
+  <line class="grid" x1="594" y1="354" x2="594" y2="458"/>
+  <text class="xs" x="594" y="473" text-anchor="middle">0h</text>
+  <line class="grid" x1="653" y1="354" x2="653" y2="458"/>
+  <text class="xs" x="653" y="473" text-anchor="middle">4h</text>
+  <line class="grid" x1="712" y1="354" x2="712" y2="458"/>
+  <text class="xs" x="712" y="473" text-anchor="middle">8h</text>
+  <line class="grid" x1="771" y1="354" x2="771" y2="458"/>
+  <text class="xs" x="771" y="473" text-anchor="middle">12h</text>
+  <line class="grid" x1="830" y1="354" x2="830" y2="458"/>
+  <text class="xs" x="830" y="473" text-anchor="middle">16h</text>
+  <line class="grid" x1="889" y1="354" x2="889" y2="458"/>
+  <text class="xs" x="889" y="473" text-anchor="middle">20h</text>
+  <line class="grid" x1="948" y1="354" x2="948" y2="458"/>
+  <text class="xs" x="948" y="473" text-anchor="middle">24h</text>
+  <text class="xsb" x="586" y="368.5" text-anchor="end">计划校准</text>
+  <rect class="pill" fill-opacity=".35" x="594" y="356" width="354" height="17" rx="3"/>
+  <rect class="c1-soft" x="623.5" y="356" width="44.25" height="17" rx="3"/>
+  <text class="xsb" x="586" y="393.5" text-anchor="end">故障停机</text>
+  <rect class="pill" fill-opacity=".35" x="594" y="381" width="354" height="17" rx="3"/>
+  <rect class="c2-soft" x="653" y="381" width="29.5" height="17" rx="3"/>
+  <text class="xsb" x="586" y="418.5" text-anchor="end">降级超标</text>
+  <rect class="pill" fill-opacity=".35" x="594" y="406" width="354" height="17" rx="3"/>
+  <rect class="c4-soft" x="741.5" y="406" width="29.5" height="17" rx="3"/>
+  <text class="xsb" x="586" y="443.5" text-anchor="end">并集结果</text>
+  <rect class="pill" fill-opacity=".35" x="594" y="431" width="354" height="17" rx="3"/>
+  <rect class="c3-soft" x="594" y="431" width="29.5" height="17" rx="3"/>
+  <rect class="c2-soft" x="623.5" y="431" width="59" height="17" rx="3"/>
+  <rect class="c3-soft" x="682.5" y="431" width="59" height="17" rx="3"/>
+  <rect class="c4-soft" x="741.5" y="431" width="29.5" height="17" rx="3"/>
+  <rect class="c3-soft" x="771" y="431" width="177" height="17" rx="3"/>
+  <rect fill="url(#hatch-red)" x="623.5" y="431" width="59" height="17" rx="3"/>
+  <text class="xs c2-txt" x="689.88" y="394">← [4,5) 重叠 1 h（去重防误乘）</text>
+  <text class="xs c4-txt" x="778.38" y="419">← 降级 2 h（不计合格）</text>
+  <text class="xsb c3-txt" x="859.5" y="443.5" text-anchor="middle">合格 18 h (75%)</text>
+  <rect class="pill" x="522" y="486" width="436" height="52" rx="9"/>
+  <text class="xsb" x="740" y="506" text-anchor="middle">并集在线 20/24 = 83.3%（非朴素独立积 80.2%）</text>
+  <text class="xs" x="740" y="526" text-anchor="middle">合格运行 18/24 = 75.0% → 墙钟合格吞吐 75 k shot/s（峰值 100 k）</text>
+</svg>

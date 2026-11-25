@@ -2,7 +2,11 @@
 
 本目录覆盖主篇 00、01、02、03、04、05、13，以及量子力学 Q1–Q4，共 11 个章级实验。完整题目、分步解答、适用条件见 [基础实验册](../../handbook/labs/foundations.md)。这些是本书独立编写的教学实现，未复制第三方软件源码。
 
-2026-10-13另补八组 [F71展开练习](round71-README.md)：被动换基、非投影工具、复数Schmidt构造、关联保持传态、信道顺序、条件擦除条纹与加强不确定关系等。题答就地插入原章节主节，使用独立标签，不改变旧题编号；运行入口为 `round71_checks.py`。
+2026-10-13 另补三组专题扩展实验（均保留原章自检编号，按需独立运行）：
+
+- **[F71 展开练习](round71-README.md)**（纯 Python 3 标准库，运行 `python3 codes/foundations/round71_checks.py --case all`）：涵盖稠密内存字节表、被动换基与主动施门对照、非投影弱测量仪器、复数 Schmidt 构造、关联保持传态、信道顺序、条件擦除条纹与加强不确定关系。
+- **[F72 矩阵指数与基础 SDK 归档复算](round72-README.md)**：其中纯 Python 3 标准库入口 `python3 codes/foundations/round72_stdlib.py --case all` 独立复算八篇已归档的矩阵指数验算（第 01 章 $e^{-i\frac{\pi}{4}X}$ 与逐格指数反例）、8192 次采样 QST 径向 PSD 投影、局部阻尼、动态反馈、Choi 偏迹、漏检分母与解析开放演化（**不会**重新安装或调用第三方 SDK）；完整固定版本官方 SDK（Qiskit / Aer / Experiments / QuTiP）隔离实跑说明与依赖锁见 [round72-README.md](round72-README.md) 及 [完整 SDK 实验册](../../handbook/labs/sdk-validation.md)。
+- **[F73 不对称读出求逆、约束层析与时变开放演化](round73-README.md)**：纯 Python 3 标准库入口 `python3 codes/foundations/round73_checks.py --case all` 独立验算列随机不对称读出矩阵求逆与条件数扰动放大（第 01 章）、不对称读出仿射还原与一阶方差传播勘误对照（第 02 章）、Bell 四格错报、传态错报信道、旋转加阻尼 Choi 矩阵、错报浅条纹与 Gaussian 驱动开放 Bloch 方程；完整 SDK 隔离实跑及历史归档说明见 [round73-README.md](round73-README.md)。
 
 只依赖 Python 3 标准库，不联网、不访问量子设备、不安装依赖。在仓库根目录运行：
 

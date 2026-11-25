@@ -28,7 +28,7 @@
 
   <g transform="translate(60 185)">
     <rect class="lane sc" width="1280" height="100" rx="18"/><text class="tag" x="24" y="43">超导</text><text class="small" x="24" y="68">mK 电路</text>
-    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">DAC / AWG / I·Q</text><text class="small" x="102" y="50" text-anchor="middle">微波、磁通、耦合器</text></g>
+    <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">DAC / AWG / I/Q</text><text class="small" x="102" y="50" text-anchor="middle">微波、磁通、耦合器</text></g>
     <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">衰减、滤波、线缆</text><text class="small" x="102" y="50" text-anchor="middle">频分复用与热化</text></g>
     <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">transmon + 谐振腔</text><text class="small" x="102" y="50" text-anchor="middle">门、泄漏与色散响应</text></g>
     <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">JPA/TWPA → HEMT</text><text class="small" x="102" y="50" text-anchor="middle">室温放大、ADC、判决</text></g>
@@ -61,8 +61,8 @@
     <g transform="translate(160 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">泵浦 / 源 / 压缩器</text><text class="small" x="102" y="50" text-anchor="middle">先兆式非高斯资源</text></g>
     <g transform="translate(385 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">滤波 / 复用 / 延迟</text><text class="small" x="102" y="50" text-anchor="middle">干涉仪、开关与损耗</text></g>
     <g transform="translate(610 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">簇态 / 逻辑模式</text><text class="small" x="102" y="50" text-anchor="middle">空间 × 时间 × 时钟</text></g>
-    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">PNR / homodyne</text><text class="small" x="102" y="50" text-anchor="middle">探测、译码与前馈</text></g>
-    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">重试 / 路由绕开</text><text class="small" x="97" y="50" text-anchor="middle">失败或擦除标志送译码</text></g>
+    <g transform="translate(835 17)"><rect class="box" width="205" height="66" rx="12"/><text class="boxt" x="102" y="28" text-anchor="middle">PNR / 零差探测</text><text class="small" x="102" y="50" text-anchor="middle">探测、解码与前馈</text></g>
+    <g transform="translate(1060 17)"><rect class="box" width="195" height="66" rx="12"/><text class="boxt" x="97" y="28" text-anchor="middle">重试 / 路由绕开</text><text class="small" x="97" y="50" text-anchor="middle">失败或擦除标志送解码</text></g>
     <path class="arrow" d="M367 50H380"/><path class="arrow" d="M592 50H605"/><path class="arrow" d="M817 50H830"/><path class="arrow" d="M1042 50H1055"/>
   </g>
 

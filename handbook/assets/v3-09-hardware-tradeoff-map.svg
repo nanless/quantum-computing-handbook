@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-09-hardware-tradeoff-map-title v3-09-hardware-tradeoff-map-desc">
+  <title id="v3-09-hardware-tradeoff-map-title">六大硬件路线门时长与相干时间双对数相图及光子存活雪崩</title>
+  <desc id="v3-09-hardware-tradeoff-map-desc">左面板绘出超导、离子阱、中性原子、硅自旋、光子与拓扑候选的双对数门时长-相干时间相图与等比值线 T2/tg=10^2..10^5；右面板精确绘出 N=1..100 时 eta=0.999, 0.995, 0.99, 0.90 的光子全存活概率曲线。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f8fafc}
+    .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
+    .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
+    .pill{fill:#ffffff;fill-opacity:.96;stroke:#8fa6ba;stroke-width:1.2}
+    .ink{fill:#13263a}
+    .muted{fill:#496176}
+    .accent{fill:#0e6b8a}
+    .warn{fill:#b93c3c}
+    .gold{fill:#9c6510}
+    .purple{fill:#5b42a6}
+    .green{fill:#1d7557}
+    .axis{stroke:#2b465e;stroke-width:1.6;fill:none}
+    .axishead{fill:#2b465e}
+    .grid{stroke:#dce6ef;stroke-width:1;stroke-dasharray:4 4;fill:none}
+    .divider{stroke:#c6d5e2;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+    .s-accent{stroke:#0e6b8a;fill:none}
+    .s-warn{stroke:#c04040;fill:none}
+    .s-gold{stroke:#a8640b;fill:none}
+    .s-purple{stroke:#5b42a6;fill:none}
+    .s-green{stroke:#1d7557;fill:none}
+    .s-muted{stroke:#688299;fill:none}
+    .f-accent{fill:#bae6fd;fill-opacity:.48;stroke:#0e6b8a;stroke-width:1.8}
+    .f-warn{fill:#fecaca;fill-opacity:.50;stroke:#c04040;stroke-width:1.8}
+    .f-gold{fill:#fde68a;fill-opacity:.52;stroke:#a8640b;stroke-width:1.8}
+    .f-purple{fill:#ddd6fe;fill-opacity:.50;stroke:#5b42a6;stroke-width:1.8}
+    .f-green{fill:#bbf7d0;fill-opacity:.50;stroke:#1d7557;stroke-width:1.8}
+    .b-accent{fill:#0e6b8a;fill-opacity:.82;stroke:#0a5068;stroke-width:1.4}
+    .b-warn{fill:#c04040;fill-opacity:.82;stroke:#962b2b;stroke-width:1.4}
+    .b-gold{fill:#c47a14;fill-opacity:.82;stroke:#8f5609;stroke-width:1.4}
+    .b-purple{fill:#6448b5;fill-opacity:.82;stroke:#483287;stroke-width:1.4}
+    .b-green{fill:#1d7557;fill-opacity:.82;stroke:#13543e;stroke-width:1.4}
+    .wire{stroke:#1d3b54;stroke-width:2.0;fill:none}
+    .ctrl{fill:#13263a}
+    .dot-ring{stroke:#ffffff;stroke-width:1.5}
+    .title{font:700 19.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .subtitle{font:400 13.2px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .h2{font:600 14px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .lbl{font:500 12.8px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .sm{font:400 12px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .xs{font:400 11px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
+    .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
+    
+    @media(prefers-color-scheme:dark){
+      .bg{fill:#101820}
+      .card{fill:#162330;stroke:#395066}
+      .subcard{fill:#1d2e3d;stroke:#3d566d}
+      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
+      .ink{fill:#eef6ff}
+      .muted{fill:#b4c8da}
+      .accent{fill:#6ed0f7}
+      .warn{fill:#ff8585}
+      .gold{fill:#f2c15a}
+      .purple{fill:#c0adff}
+      .green{fill:#6dd4aa}
+      .axis{stroke:#b9d0e2}
+      .axishead{fill:#b9d0e2}
+      .grid{stroke:#304659}
+      .divider{stroke:#4a637a}
+      .s-accent{stroke:#6ed0f7}
+      .s-warn{stroke:#ff8585}
+      .s-gold{stroke:#f2c15a}
+      .s-purple{stroke:#c0adff}
+      .s-green{stroke:#6dd4aa}
+      .s-muted{stroke:#8ca5ba}
+      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
+      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
+      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
+      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
+      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
+      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
+      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
+      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
+      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
+      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
+      .wire{stroke:#c9deee}
+      .ctrl{fill:#eef6ff}
+      .dot-ring{stroke:#162330}
+      
+    }
+  </style>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title ink" x="34" y="44">六大硬件路线门时长–相干时间双对数相图与光子存活雪崩</text>
+  <text class="subtitle muted" x="34" y="68">左：典型双比特门时长 t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan> 与回波相干时间 T<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> 双对数对照（斜虚线为 T<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>/t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>）；右：N 颗光子全存活概率 η<tspan dy="-4.5" font-size="9.2">N</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <rect class="card" x="32" y="84" width="548" height="446" rx="12"/>
+  <text class="h2 ink" x="48" y="108">(a) 门时长 t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan> vs 相干时间 T<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>（双对数相图）</text>
+  <line class="grid" x1="110.0" y1="126.0" x2="110.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="110.0" y1="440.0" x2="110.0" y2="445.0"/>
+  <text class="xs ink" x="110.0" y="462.0" text-anchor="middle">1 ns</text>
+  <line class="grid" x1="184.7" y1="126.0" x2="184.7" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="184.7" y1="440.0" x2="184.7" y2="445.0"/>
+  <text class="xs ink" x="184.7" y="462.0" text-anchor="middle">10 ns</text>
+  <line class="grid" x1="259.3" y1="126.0" x2="259.3" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="259.3" y1="440.0" x2="259.3" y2="445.0"/>
+  <text class="xs ink" x="259.3" y="462.0" text-anchor="middle">100 ns</text>
+  <line class="grid" x1="334.0" y1="126.0" x2="334.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="334.0" y1="440.0" x2="334.0" y2="445.0"/>
+  <text class="xs ink" x="334.0" y="462.0" text-anchor="middle">1 μs</text>
+  <line class="grid" x1="408.7" y1="126.0" x2="408.7" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="408.7" y1="440.0" x2="408.7" y2="445.0"/>
+  <text class="xs ink" x="408.7" y="462.0" text-anchor="middle">10 μs</text>
+  <line class="grid" x1="483.3" y1="126.0" x2="483.3" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="483.3" y1="440.0" x2="483.3" y2="445.0"/>
+  <text class="xs ink" x="483.3" y="462.0" text-anchor="middle">100 μs</text>
+  <line class="grid" x1="558.0" y1="126.0" x2="558.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="558.0" y1="440.0" x2="558.0" y2="445.0"/>
+  <text class="xs ink" x="558.0" y="462.0" text-anchor="middle">1 ms</text>
+  <line class="grid" x1="110.0" y1="440.0" x2="558.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="440.0" x2="110.0" y2="440.0"/>
+  <text class="xs ink" x="101.0" y="444.0" text-anchor="end">10 μs</text>
+  <line class="grid" x1="110.0" y1="395.1" x2="558.0" y2="395.1"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="395.1" x2="110.0" y2="395.1"/>
+  <text class="xs ink" x="101.0" y="399.1" text-anchor="end">100 μs</text>
+  <line class="grid" x1="110.0" y1="350.3" x2="558.0" y2="350.3"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="350.3" x2="110.0" y2="350.3"/>
+  <text class="xs ink" x="101.0" y="354.3" text-anchor="end">1 ms</text>
+  <line class="grid" x1="110.0" y1="305.4" x2="558.0" y2="305.4"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="305.4" x2="110.0" y2="305.4"/>
+  <text class="xs ink" x="101.0" y="309.4" text-anchor="end">10 ms</text>
+  <line class="grid" x1="110.0" y1="260.6" x2="558.0" y2="260.6"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="260.6" x2="110.0" y2="260.6"/>
+  <text class="xs ink" x="101.0" y="264.6" text-anchor="end">100 ms</text>
+  <line class="grid" x1="110.0" y1="215.7" x2="558.0" y2="215.7"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="215.7" x2="110.0" y2="215.7"/>
+  <text class="xs ink" x="101.0" y="219.7" text-anchor="end">1 s</text>
+  <line class="grid" x1="110.0" y1="170.9" x2="558.0" y2="170.9"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="170.9" x2="110.0" y2="170.9"/>
+  <text class="xs ink" x="101.0" y="174.9" text-anchor="end">10 s</text>
+  <line class="grid" x1="110.0" y1="126.0" x2="558.0" y2="126.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="105.0" y1="126.0" x2="110.0" y2="126.0"/>
+  <text class="xs ink" x="101.0" y="130.0" text-anchor="end">100 s</text>
+  <line class="s-muted" style="stroke-width:1.3;stroke-dasharray:6 4;stroke-opacity:.85" x1="259.3" y1="440.0" x2="558.0" y2="260.6"/>
+  <text class="xs muted" x="553.0" y="273.6" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">2</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="s-muted" style="stroke-width:1.3;stroke-dasharray:6 4;stroke-opacity:.85" x1="184.7" y1="440.0" x2="558.0" y2="215.7"/>
+  <text class="xs muted" x="553.0" y="228.7" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="s-muted" style="stroke-width:1.3;stroke-dasharray:6 4;stroke-opacity:.85" x1="110.0" y1="440.0" x2="558.0" y2="170.9"/>
+  <text class="xs muted" x="553.0" y="183.9" text-anchor="end">10<tspan dy="-4.5" font-size="9.2">4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="s-muted" style="stroke-width:1.3;stroke-dasharray:6 4;stroke-opacity:.85" x1="110.0" y1="395.1" x2="558.0" y2="126.0"/>
+  <text class="xs muted" x="553.0" y="141.0" text-anchor="end">T<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>/t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>=10<tspan dy="-4.5" font-size="9.2">5</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <rect class="f-accent" style="fill-opacity:.22;stroke-dasharray:4 3;stroke-width:1.3" x="110.0" y="126.0" width="35.8" height="314.0"/>
+  <rect class="pill" x="118.0" y="134.0" width="142" height="44" rx="7"/>
+  <text class="xs accent" style="font-weight:600" x="125.0" y="150.0">光子（~ns 级光路）</text>
+  <text class="xs muted" x="125.0" y="170.0">受损耗 η<tspan dy="-4.5" font-size="9.2">N</tspan><tspan dy="4.5">&#8203;</tspan> 截断 → 见(b)</text>
+  <rect class="f-green" x="277.8" y="167.3" width="21.1" height="48.4" rx="6"/>
+  <text class="xs green" style="font-weight:700" x="269.8" y="196.3" text-anchor="end">中性原子（光镊钟态）</text>
+  <text class="xs muted" x="269.8" y="215.3" text-anchor="end">200–300 ns · 1–12 s</text>
+  <rect class="f-gold" x="408.7" y="136.0" width="74.7" height="79.8" rx="8"/>
+  <text class="xs gold" style="font-weight:700" x="446.0" y="159.0" text-anchor="middle">离子阱</text>
+  <text class="xs ink" x="446.0" y="178.0" text-anchor="middle">10–100 μs</text>
+  <text class="xs muted" x="446.0" y="197.0" text-anchor="middle">1–60 s</text>
+  <rect class="f-purple" style="stroke-dasharray:5 3" x="207.1" y="291.9" width="74.7" height="71.9" rx="8"/>
+  <text class="xs purple" style="font-weight:700" x="289.8" y="302.9">硅自旋 <tspan dy="-4.5" font-size="9.2">28</tspan><tspan dy="4.5">&#8203;</tspan>Si</text>
+  <text class="xs muted" x="289.8" y="322.9">20–200 ns · 0.5–20 ms</text>
+  <path class="b-accent" d="M259.3 330.8L265.3 336.8L259.3 342.8L253.3 336.8Z"/>
+  <line class="s-accent" style="stroke-width:1.2" x1="253.3" y1="332.8" x2="188" y2="282"/>
+  <text class="xs accent" style="font-weight:600" x="116" y="257">Fluxonium</text>
+  <text class="xs muted" x="116" y="276">50–150 ns · 1–4 ms</text>
+  <rect class="f-accent" x="207.1" y="373.7" width="52.2" height="21.4" rx="6"/>
+  <text class="xs accent" style="font-weight:700" x="267.3" y="385.7">超导 Transmon</text>
+  <text class="xs muted" x="267.3" y="404.7">20–100 ns · 100–300 μs</text>
+  <path class="f-warn" style="stroke-dasharray:3 2" d="M376.4 343.3L383.4 350.3L376.4 357.3L369.4 350.3Z"/>
+  <text class="xs warn" style="font-weight:700" x="388.4" y="346.3">拓扑候选（尚无门数据）</text>
+  <text class="xs muted" x="388.4" y="365.3">宇称读出 ~3.7 μs, &gt;1 ms</text>
+  <rect class="axis" x="110.0" y="126.0" width="448.0" height="314.0"/>
+  <text class="lbl ink" x="334.0" y="484.0" text-anchor="middle">典型双比特门时长 t<tspan dy="3" font-size="9.2">g</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>
+  <text class="lbl ink" x="50" y="283.0" text-anchor="middle" transform="rotate(-90 50 283.0)">典型回波相干时间 T<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>
+  <text class="xs muted" x="48" y="518">注：离子阱与中性原子搬运时钟为 ms 级；拓扑仅标出射频宇称读出时间与驻留寿命。</text>
+  <rect class="card" x="596" y="84" width="372" height="446" rx="12"/>
+  <text class="h2 ink" x="612" y="108">(b) 光子全存活概率 η<tspan dy="-4.5" font-size="9.2">N</tspan><tspan dy="4.5">&#8203;</tspan> 指数雪崩</text>
+  <line class="grid" x1="660.0" y1="126.0" x2="660.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="660.0" y1="440.0" x2="660.0" y2="445.0"/>
+  <text class="xs ink" x="660.0" y="459.0" text-anchor="middle">0</text>
+  <line class="grid" x1="717.6" y1="126.0" x2="717.6" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="717.6" y1="440.0" x2="717.6" y2="445.0"/>
+  <text class="xs ink" x="717.6" y="459.0" text-anchor="middle">20</text>
+  <line class="grid" x1="775.2" y1="126.0" x2="775.2" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="775.2" y1="440.0" x2="775.2" y2="445.0"/>
+  <text class="xs ink" x="775.2" y="459.0" text-anchor="middle">40</text>
+  <line class="grid" x1="832.8" y1="126.0" x2="832.8" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="832.8" y1="440.0" x2="832.8" y2="445.0"/>
+  <text class="xs ink" x="832.8" y="459.0" text-anchor="middle">60</text>
+  <line class="grid" x1="890.4" y1="126.0" x2="890.4" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="890.4" y1="440.0" x2="890.4" y2="445.0"/>
+  <text class="xs ink" x="890.4" y="459.0" text-anchor="middle">80</text>
+  <line class="grid" x1="948.0" y1="126.0" x2="948.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="948.0" y1="440.0" x2="948.0" y2="445.0"/>
+  <text class="xs ink" x="948.0" y="459.0" text-anchor="middle">100</text>
+  <line class="grid" x1="660.0" y1="440.0" x2="948.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="440.0" x2="660.0" y2="440.0"/>
+  <text class="xs ink" x="651.0" y="444.0" text-anchor="end">0%</text>
+  <line class="grid" x1="660.0" y1="377.2" x2="948.0" y2="377.2"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="377.2" x2="660.0" y2="377.2"/>
+  <text class="xs ink" x="651.0" y="381.2" text-anchor="end">20%</text>
+  <line class="grid" x1="660.0" y1="314.4" x2="948.0" y2="314.4"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="314.4" x2="660.0" y2="314.4"/>
+  <text class="xs ink" x="651.0" y="318.4" text-anchor="end">40%</text>
+  <line class="grid" x1="660.0" y1="251.6" x2="948.0" y2="251.6"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="251.6" x2="660.0" y2="251.6"/>
+  <text class="xs ink" x="651.0" y="255.6" text-anchor="end">60%</text>
+  <line class="grid" x1="660.0" y1="188.8" x2="948.0" y2="188.8"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="188.8" x2="660.0" y2="188.8"/>
+  <text class="xs ink" x="651.0" y="192.8" text-anchor="end">80%</text>
+  <line class="grid" x1="660.0" y1="126.0" x2="948.0" y2="126.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="655.0" y1="126.0" x2="660.0" y2="126.0"/>
+  <text class="xs ink" x="651.0" y="130.0" text-anchor="end">100%</text>
+  <path class="s-green" style="stroke-width:2.6" d="M662.88 126.31L665.76 126.63L668.64 126.94L671.52 127.25L674.40 127.57L677.28 127.88L680.16 128.19L683.04 128.50L685.92 128.81L688.80 129.13L691.68 129.44L694.56 129.75L697.44 130.06L700.32 130.37L703.20 130.68L706.08 130.99L708.96 131.30L711.84 131.60L714.72 131.91L717.60 132.22L720.48 132.53L723.36 132.84L726.24 133.14L729.12 133.45L732.00 133.76L734.88 134.06L737.76 134.37L740.64 134.67L743.52 134.98L746.40 135.28L749.28 135.59L752.16 135.89L755.04 136.20L757.92 136.50L760.80 136.81L763.68 137.11L766.56 137.41L769.44 137.71L772.32 138.02L775.20 138.32L778.08 138.62L780.96 138.92L783.84 139.22L786.72 139.52L789.60 139.82L792.48 140.12L795.36 140.42L798.24 140.72L801.12 141.02L804.00 141.32L806.88 141.62L809.76 141.92L812.64 142.22L815.52 142.51L818.40 142.81L821.28 143.11L824.16 143.41L827.04 143.70L829.92 144.00L832.80 144.29L835.68 144.59L838.56 144.89L841.44 145.18L844.32 145.48L847.20 145.77L850.08 146.06L852.96 146.36L855.84 146.65L858.72 146.95L861.60 147.24L864.48 147.53L867.36 147.82L870.24 148.12L873.12 148.41L876.00 148.70L878.88 148.99L881.76 149.28L884.64 149.57L887.52 149.86L890.40 150.15L893.28 150.44L896.16 150.73L899.04 151.02L901.92 151.31L904.80 151.60L907.68 151.89L910.56 152.18L913.44 152.46L916.32 152.75L919.20 153.04L922.08 153.33L924.96 153.61L927.84 153.90L930.72 154.18L933.60 154.47L936.48 154.76L939.36 155.04L942.24 155.33L945.12 155.61L948.00 155.90"/>
+  <circle class="green dot-ring" cx="948.0" cy="155.9" r="4.2"/>
+  <path class="s-accent" style="stroke-width:2.6;stroke-dasharray:7 4" d="M662.88 127.57L665.76 129.13L668.64 130.69L671.52 132.23L674.40 133.77L677.28 135.30L680.16 136.83L683.04 138.34L685.92 139.85L688.80 141.35L691.68 142.84L694.56 144.33L697.44 145.81L700.32 147.28L703.20 148.74L706.08 150.20L708.96 151.65L711.84 153.09L714.72 154.52L717.60 155.95L720.48 157.37L723.36 158.79L726.24 160.19L729.12 161.59L732.00 162.98L734.88 164.37L737.76 165.75L740.64 167.12L743.52 168.48L746.40 169.84L749.28 171.19L752.16 172.53L755.04 173.87L757.92 175.20L760.80 176.53L763.68 177.84L766.56 179.15L769.44 180.46L772.32 181.76L775.20 183.05L778.08 184.33L780.96 185.61L783.84 186.88L786.72 188.15L789.60 189.41L792.48 190.66L795.36 191.91L798.24 193.15L801.12 194.38L804.00 195.61L806.88 196.83L809.76 198.05L812.64 199.26L815.52 200.46L818.40 201.66L821.28 202.85L824.16 204.04L827.04 205.22L829.92 206.39L832.80 207.56L835.68 208.72L838.56 209.88L841.44 211.03L844.32 212.17L847.20 213.31L850.08 214.44L852.96 215.57L855.84 216.69L858.72 217.81L861.60 218.92L864.48 220.03L867.36 221.13L870.24 222.22L873.12 223.31L876.00 224.39L878.88 225.47L881.76 226.54L884.64 227.61L887.52 228.67L890.40 229.73L893.28 230.78L896.16 231.83L899.04 232.87L901.92 233.90L904.80 234.94L907.68 235.96L910.56 236.98L913.44 238.00L916.32 239.01L919.20 240.01L922.08 241.01L924.96 242.01L927.84 243.00L930.72 243.98L933.60 244.96L936.48 245.94L939.36 246.91L942.24 247.87L945.12 248.83L948.00 249.79"/>
+  <circle class="accent dot-ring" cx="948.0" cy="249.8" r="4.2"/>
+  <path class="s-gold" style="stroke-width:2.6;stroke-dasharray:8 3 2 3" d="M662.88 129.14L665.76 132.25L668.64 135.33L671.52 138.37L674.40 141.39L677.28 144.38L680.16 147.33L683.04 150.26L685.92 153.16L688.80 156.02L691.68 158.86L694.56 161.68L697.44 164.46L700.32 167.21L703.20 169.94L706.08 172.64L708.96 175.32L711.84 177.96L714.72 180.58L717.60 183.18L720.48 185.75L723.36 188.29L726.24 190.81L729.12 193.30L732.00 195.76L734.88 198.21L737.76 200.62L740.64 203.02L743.52 205.39L746.40 207.73L749.28 210.06L752.16 212.36L755.04 214.63L757.92 216.89L760.80 219.12L763.68 221.33L766.56 223.51L769.44 225.68L772.32 227.82L775.20 229.94L778.08 232.04L780.96 234.12L783.84 236.18L786.72 238.22L789.60 240.24L792.48 242.24L795.36 244.21L798.24 246.17L801.12 248.11L804.00 250.03L806.88 251.93L809.76 253.81L812.64 255.67L815.52 257.51L818.40 259.34L821.28 261.15L824.16 262.93L827.04 264.70L829.92 266.46L832.80 268.19L835.68 269.91L838.56 271.61L841.44 273.30L844.32 274.96L847.20 276.61L850.08 278.25L852.96 279.86L855.84 281.47L858.72 283.05L861.60 284.62L864.48 286.17L867.36 287.71L870.24 289.24L873.12 290.74L876.00 292.24L878.88 293.71L881.76 295.18L884.64 296.62L887.52 298.06L890.40 299.48L893.28 300.88L896.16 302.27L899.04 303.65L901.92 305.01L904.80 306.36L907.68 307.70L910.56 309.02L913.44 310.33L916.32 311.63L919.20 312.91L922.08 314.19L924.96 315.44L927.84 316.69L930.72 317.92L933.60 319.14L936.48 320.35L939.36 321.55L942.24 322.73L945.12 323.90L948.00 325.07"/>
+  <circle class="gold dot-ring" cx="948.0" cy="325.1" r="4.2"/>
+  <path class="s-warn" style="stroke-width:2.6;stroke-dasharray:3 3" d="M662.88 157.40L665.76 185.66L668.64 211.09L671.52 233.98L674.40 254.59L677.28 273.13L680.16 289.81L683.04 304.83L685.92 318.35L688.80 330.51L691.68 341.46L694.56 351.32L697.44 360.19L700.32 368.17L703.20 375.35L706.08 381.82L708.96 387.63L711.84 392.87L714.72 397.58L717.60 401.82L720.48 405.64L723.36 409.08L726.24 412.17L729.12 414.95L732.00 417.46L734.88 419.71L737.76 421.74L740.64 423.57L743.52 425.21L746.40 426.69L749.28 428.02L752.16 429.22L755.04 430.30L757.92 431.27L760.80 432.14L763.68 432.93L766.56 433.63L769.44 434.27L772.32 434.84L775.20 435.36L778.08 435.82L780.96 436.24L783.84 436.62L786.72 436.95L789.60 437.26L792.48 437.53L795.36 437.78L798.24 438.00L801.12 438.20L804.00 438.38L806.88 438.54L809.76 438.69L812.64 438.82L815.52 438.94L818.40 439.04L821.28 439.14L824.16 439.23L827.04 439.30L829.92 439.37L832.80 439.44L835.68 439.49L838.56 439.54L841.44 439.59L844.32 439.63L847.20 439.67L850.08 439.70L852.96 439.73L855.84 439.76L858.72 439.78L861.60 439.80L864.48 439.82L867.36 439.84L870.24 439.86L873.12 439.87L876.00 439.88L878.88 439.90L881.76 439.91L884.64 439.92L887.52 439.92L890.40 439.93L893.28 439.94L896.16 439.94L899.04 439.95L901.92 439.95L904.80 439.96L907.68 439.96L910.56 439.97L913.44 439.97L916.32 439.97L919.20 439.98L922.08 439.98L924.96 439.98L927.84 439.98L930.72 439.98L933.60 439.99L936.48 439.99L939.36 439.99L942.24 439.99L945.12 439.99L948.00 439.99"/>
+  <text class="xs green" style="font-weight:700" x="936.5" y="173.9" text-anchor="end">η=0.999 → 90.5%</text>
+  <text class="xs accent" style="font-weight:700" x="939.4" y="203.8" text-anchor="end">η=0.995 → 60.6%</text>
+  <text class="xs gold" style="font-weight:700" x="855.8" y="347.1" text-anchor="end">η=0.990 → 36.6%</text>
+  <circle class="warn dot-ring" cx="732.0" cy="417.5" r="3.6"/>
+  <text class="xs warn" style="font-weight:600" x="743.5" y="411.5">η=0.90（N=100: 2.7×10<tspan dy="-4.5" font-size="9.2">-5</tspan><tspan dy="4.5">&#8203;</tspan>）</text>
+  <rect class="axis" x="660.0" y="126.0" width="288.0" height="314.0"/>
+  <text class="lbl ink" x="804.0" y="484.0" text-anchor="middle">独立光子规模 N（颗）</text>
+  <text class="lbl ink" x="614" y="283.0" text-anchor="middle" transform="rotate(-90 614 283.0)">全存活概率 η<tspan dy="-4.5" font-size="9.2">N</tspan><tspan dy="4.5">&#8203;</tspan>（%）</text>
+  <text class="xs muted" x="612" y="518">N=100：端到端 η 仅降 1% 即跌至 36.6%，需常数深度融合。</text>
+  <text class="sm muted" x="34" y="554">注：相干时间与门时长跨越 7 个数量级，硬件路线间存在固有权衡；光子路线核心红线为端到端损耗指数惩罚 ηᴺ。</text>
+</svg>

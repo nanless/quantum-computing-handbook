@@ -1,151 +1,162 @@
 # 参考资料与证据等级
 
-## 证据等级
+## 证据等级标尺
 
-| 等级 | 资料 | 适合支持 | 不宜单独支持 |
+| 等级 | 资料类型 | 适合支持 | 不宜单独支持 |
 |---|---|---|---|
-| A | 定理原始论文、标准、同行评审实验、权威教材 | 定义、证明、明确实验结果 | 超出设定的产业预测 |
-| B | 大学/研究机构课程、技术报告、公开数据 | 教学解释、工程细节、复现实务 | 未经同行评审的广泛结论 |
-| C | 预印本、厂商技术博客、路线图 | 最新线索、公开计划、待验证结果 | “已证实”“将按时实现” |
-| D | 新闻与二手综述 | 背景和发现线索 | 关键技术结论的唯一证据 |
+| **A** | 原始定理论文、国际/国家正式标准、同行评审实验、权威教材 | 数学定义、定理证明、明确条件下的实验事实 | 超出实验设定的商业或远期预测 |
+| **B** | 大学公开课程、研究机构技术报告、公开基准数据集 | 教学推导、工程实现细节、统计复现实务 | 未经同行评审的普适结论 |
+| **C** | 预印本（arXiv 等）、厂商技术博客、官方路线图 | 追踪前沿线索、公开工程规划、待审稿进展 | “已被学界证实”或“必将按期交付” |
+| **D** | 科技新闻与二手综述 | 背景线索与方向检索 | 关键技术结论的唯一依据 |
 
-本书对稳定理论优先使用 A/B 级资料；对快速变化的硬件里程碑，至少同时给出日期、定义和局限。本页是全书的**精选入口**，不是完整书目；支撑具体数字与时效结论的完整来源以各章末尾参考资料为准。
+本书对稳定理论优先引用 A/B 级一手资料；对快速演进的 2024–2026 硬件、纠错、标准与经典模拟进展，均明确标注发表年份与证据类型（**同行评审** / **正式标准** / **预印本** / **官方技术文档**）。本页为全书的精选总目，支撑各章具体数字的完整引文见各章末尾参考资料。
 
-## 基础教材与公开课程
+## 1. 基础教材、讲义与综述
 
-- Michael A. Nielsen and Isaac L. Chuang, [Quantum Computation and Quantum Information](https://www.cambridge.org/highereducation/books/quantum-computation-and-quantum-information/01E10196D0A682A6AEFFEA52D53BE9AE), Cambridge University Press, 2010。
-- John Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/), Cambridge University Press, 2018。
-- John Watrous, [Basics of Quantum Information](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information)，持续维护的公开课程。
-- John Preskill, [Quantum Computation lecture notes](https://www.preskill.caltech.edu/ph229/)。
-- Umesh Vazirani et al., [Berkeley CS 191 / Quantum Computation notes](https://inst.eecs.berkeley.edu/~cs191/)。
+- Michael A. Nielsen & Isaac L. Chuang, [Quantum Computation and Quantum Information](https://www.cambridge.org/highereducation/books/quantum-computation-and-quantum-information/01E10196D0A682A6AEFFEA52D53BE9AE), Cambridge University Press (2010) [A｜权威教材]。
+- John Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/), Cambridge University Press (2018) [A｜权威教材]。
+- Mark M. Wilde, [Quantum Information Theory](https://arxiv.org/abs/1106.1445) (2nd ed.), Cambridge University Press (2017；注意采用平方保真度与归一化 Choi 态) [A｜权威教材]。
+- John Watrous, [Basics of Quantum Information](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information) 公开课程与完整讲义预印本 *Understanding Quantum Information and Computation*（`arXiv:2507.11536`, 2025-07）[B/C｜公开课程与讲义]。
+- John Preskill, [Quantum Computation lecture notes (Ph229)](https://www.preskill.caltech.edu/ph229/) 与 [Quantum Computing in the NISQ era and beyond](https://doi.org/10.22331/q-2018-08-06-79), *Quantum* 2, 79 (2018) [A/B｜讲义与同行评审]。
+- Hsin-Yuan Huang, Soonwon Choi, Jarrod R. McClean & John Preskill, [Vast World of Quantum Advantage](https://doi.org/10.1103/tn89-g1xz), *Physical Review X* 16, 030501 (2026-07) [A｜同行评审综述]。
+- Umesh Vazirani et al., [Berkeley CS 191 / Quantum Computation notes](https://inst.eecs.berkeley.edu/~cs191/) [B｜大学公开课程]。
 
-## 算法与复杂度
+## 2. 算法、变分理论、复杂性与经典模拟
 
-- D. Deutsch and R. Jozsa, [Rapid solution of problems by quantum computation](https://doi.org/10.1098/rspa.1992.0167), *Proceedings of the Royal Society A* 439, 553–558 (1992)。
-- E. Bernstein and U. Vazirani, [Quantum complexity theory](https://doi.org/10.1137/S0097539796300921), *SIAM Journal on Computing* 26, 1411–1473 (1997)。
-- D. R. Simon, [On the Power of Quantum Computation](https://doi.org/10.1137/S0097539796298637), *SIAM Journal on Computing* 26, 1474–1483 (1997)。
-- P. W. Shor, [Algorithms for quantum computation: Discrete logarithms and factoring](https://doi.org/10.1109/SFCS.1994.365700), *Proceedings of the 35th Annual Symposium on Foundations of Computer Science*, 124–134 (1994)。
-- L. K. Grover, [A fast quantum mechanical algorithm for database search](https://doi.org/10.1145/237814.237866), *Proceedings of the 28th Annual ACM Symposium on Theory of Computing*, 212–219 (1996)。
-- G. Brassard, P. Høyer, M. Mosca and A. Tapp, [Quantum Amplitude Amplification and Estimation](https://doi.org/10.1090/conm/305/05215), *Contemporary Mathematics* 305, 53–74 (2002)。
-- S. Lloyd, [Universal quantum simulators](https://doi.org/10.1126/science.273.5278.1073), *Science* 273, 1073–1078 (1996)。
-- A. Peruzzo et al., [A variational eigenvalue solver on a photonic quantum processor](https://doi.org/10.1038/ncomms5213), *Nature Communications* 5, 4213 (2014)。
-- E. Farhi, J. Goldstone and S. Gutmann, [A Quantum Approximate Optimization Algorithm](https://arxiv.org/abs/1411.4028), arXiv:1411.4028 (2014)。
-- M. Cerezo et al., [Variational quantum algorithms](https://doi.org/10.1038/s42254-021-00348-9), *Nature Reviews Physics* 3, 625–644 (2021)。
+### 经典奠基论文
 
-## 噪声、纠错与容错
+- D. Deutsch & R. Jozsa, [Rapid solution of problems by quantum computation](https://doi.org/10.1098/rspa.1992.0167), *Proc. R. Soc. A* 439, 553–558 (1992) [A｜同行评审]。
+- E. Bernstein & U. Vazirani, [Quantum complexity theory](https://doi.org/10.1137/S0097539796300921), *SIAM J. Comput.* 26, 1411–1473 (1997) [A｜同行评审]。
+- D. R. Simon, [On the Power of Quantum Computation](https://doi.org/10.1137/S0097539796298637), *SIAM J. Comput.* 26, 1474–1483 (1997) [A｜同行评审]。
+- P. W. Shor, [Algorithms for quantum computation: Discrete logarithms and factoring](https://doi.org/10.1109/SFCS.1994.365700), *FOCS 1994*, 124–134；完整期刊版 *SIAM J. Comput.* 26, 1484–1509 (1997) [A｜同行评审]。
+- L. K. Grover, [A fast quantum mechanical algorithm for database search](https://doi.org/10.1145/237814.237866), *STOC 1996*, 212–219 [A｜同行评审]。
+- G. Brassard, P. Høyer, M. Mosca & A. Tapp, [Quantum Amplitude Amplification and Estimation](https://doi.org/10.1090/conm/305/05215), *Contemp. Math.* 305, 53–74 (2002) [A｜同行评审]。
+- S. Lloyd, [Universal quantum simulators](https://doi.org/10.1126/science.273.5278.1073), *Science* 273, 1073–1078 (1996) [A｜同行评审]。
+- A. W. Harrow, A. Hassidim & S. Lloyd, [Quantum algorithm for linear systems of equations](https://doi.org/10.1103/PhysRevLett.103.150502), *Phys. Rev. Lett.* 103, 150502 (2009) [A｜同行评审]。
+- A. Peruzzo et al., [A variational eigenvalue solver on a photonic quantum processor](https://doi.org/10.1038/ncomms5213), *Nature Communications* 5, 4213 (2014) [A｜同行评审]。
+- E. Farhi, J. Goldstone & S. Gutmann, [A Quantum Approximate Optimization Algorithm](https://arxiv.org/abs/1411.4028), `arXiv:1411.4028` (2014) [C｜预印本]。
+- A. Gilyén, Y. Su, G. H. Low & N. Wiebe, [Quantum singular value transformation and beyond](https://arxiv.org/abs/1806.01838), *STOC 2019*；J. M. Martyn et al., *Grand Unification of Quantum Algorithms*, *PRX Quantum* 2, 040203 (2021) [A｜同行评审]。
+- M. Cerezo et al., [Variational quantum algorithms](https://doi.org/10.1038/s42254-021-00348-9), *Nature Reviews Physics* 3, 625–644 (2021) [A｜同行评审]。
 
-- P. W. Shor, [Scheme for reducing decoherence in quantum computer memory](https://doi.org/10.1103/PhysRevA.52.R2493), *Physical Review A* 52, R2493–R2496 (1995)。
-- A. M. Steane, [Error Correcting Codes in Quantum Theory](https://doi.org/10.1103/PhysRevLett.77.793), *Physical Review Letters* 77, 793–797 (1996)。
-- E. Knill and R. Laflamme, [Theory of quantum error-correcting codes](https://doi.org/10.1103/PhysRevA.55.900), *Physical Review A* 55, 900–911 (1997)。
-- D. Gottesman, [Stabilizer Codes and Quantum Error Correction](https://arxiv.org/abs/quant-ph/9705052), PhD thesis, California Institute of Technology (1997)。
-- D. Aharonov and M. Ben-Or, [Fault-Tolerant Quantum Computation With Constant Error Rate](https://arxiv.org/abs/quant-ph/9906129), *SIAM Journal on Computing* 38, 1207–1282 (2008；早期稿 1997)。
-- B. Eastin and E. Knill, [Restrictions on Transversal Encoded Quantum Gate Sets](https://doi.org/10.1103/PhysRevLett.102.110502), *Physical Review Letters* 102, 110502 (2009)。
-- S. Bravyi and A. Kitaev, [Universal quantum computation with ideal Clifford gates and noisy ancillas](https://doi.org/10.1103/PhysRevA.71.022316), *Physical Review A* 71, 022316 (2005)。
-- B. M. Terhal, [Quantum error correction for quantum memories](https://doi.org/10.1103/RevModPhys.87.307), *Reviews of Modern Physics* 87, 307–346 (2015)。
-- A. G. Fowler et al., [Surface codes: Towards practical large-scale quantum computation](https://doi.org/10.1103/PhysRevA.86.032324), *Physical Review A* 86, 032324 (2012)。
+### 绝热计算与拓扑量子计算（第 17 章）
 
-## 硬件与基准
+- C. Nayak, S. H. Simon, A. Stern, M. Freedman & S. Das Sarma, [Non-Abelian anyons and topological quantum computation](https://doi.org/10.1103/RevModPhys.80.1083), *Rev. Mod. Phys.* **80**, 1083–1159 (2008) [A｜同行评审综述，非阿贝尔任意子与拓扑量子计算]。
+- T. Albash & D. A. Lidar, [Adiabatic quantum computation](https://doi.org/10.1103/RevModPhys.90.015002), *Rev. Mod. Phys.* **90**, 015002 (2018) [A｜同行评审综述，绝热量子计算与退火模型]。
+- M. B. Hastings, *The Power of Adiabatic Quantum Computation with No Sign Problem*, *Quantum* **5**, 597 (2021；早期版见 *STOC* 2021) [A｜同行评审，无符号问题随机哈密顿量绝热计算与神谕分离]。
 
-- D. P. DiVincenzo, [The Physical Implementation of Quantum Computation](https://doi.org/10.1002/1521-3978(200009)48:9/11%3C771::AID-PROP771%3E3.0.CO;2-E), *Fortschritte der Physik* 48, 771–783 (2000)。
-- T. D. Ladd et al., [Quantum computers](https://doi.org/10.1038/nature08812), *Nature* 464 (2010)。
-- J. M. Gambetta, J. M. Chow, M. Steffen, [Building logical qubits in a superconducting quantum computing system](https://doi.org/10.1038/s41534-016-0004-0), *npj Quantum Information* 3, 2 (2017)。
-- E. Magesan et al., [Scalable and robust randomized benchmarking](https://doi.org/10.1103/PhysRevLett.106.180504), *PRL* 106 (2011)。
-- A. W. Cross et al., [Validating quantum computers using randomized model circuits](https://doi.org/10.1103/PhysRevA.100.032328), *PRA* 100 (2019)。
-- R. Acharya et al., [Quantum error correction below the surface code threshold](https://www.nature.com/articles/s41586-024-08449-y), *Nature* 638, 920–926 (2025；在线 2024-12-09；另有 2026 年作者更正)。
-- H. J. Manetsch et al., [A tweezer array with 6,100 highly coherent atomic qubits](https://www.nature.com/articles/s41586-025-09641-4), *Nature* 647, 60–67 (2025)。
-- M. A. Guidry et al., [A manufacturable platform for photonic quantum computing](https://www.nature.com/articles/s41586-025-08820-7), *Nature* 641, 876–883 (2025)。
-- H. F. Legg, [On the robustness of topological gap detection via transport](https://doi.org/10.1038/s41586-026-10567-8), *Nature* 654, E22–E26 (2026)；Microsoft Quantum et al., [Reply to: On the robustness of topological gap detection via transport](https://doi.org/10.1038/s41586-026-10568-7), *Nature* 654, E27–E28 (2026)。
-- N. van Loo et al., [Single-shot parity readout of a minimal Kitaev chain](https://doi.org/10.1038/s41586-025-09927-7), *Nature* 650, 334–339 (2026；2026-02-11 在线)。
+### 2024–2026 前沿进展：资源估算、GQSP、贫瘠高原与经典模拟
 
-## 密码与网络
+- **Shor 容错资源演进**：C. Gidney & M. Ekerå, [How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits](https://doi.org/10.22331/q-2021-04-15-433), *Quantum* **5**, 433 (2021) [A｜同行评审]；C. Gidney, [How to factor 2048 bit RSA integers with less than a million noisy qubits](https://arxiv.org/abs/2505.15917), `arXiv:2505.15917` (2025-05；2025–2026 修订核验) [C｜预印本，在 $10^{-3}$ 物理门错与 $1\,\mu\mathrm{s}$ 纠错周期等假设下，结合近似剩余算术、轭联表面码与魔法态培育，将 RSA-2048 资源估算压至 $897{,}864$ 物理比特、约 $4.96$ 天]。
+- **广义量子信号处理（GQSP）**：D. Motlagh & N. Wiebe, [Generalized Quantum Signal Processing](https://arxiv.org/abs/2308.01501), *PRX Quantum* 5, 020368 (2024) [A｜同行评审，解除传统 QSP 奇偶性约束]。
+- **贫瘠高原统一理论与可训练性边界**：M. Ragone et al., [A Lie Algebraic Theory of Barren Plateaus for Deep Parameterized Quantum Circuits](https://arxiv.org/abs/2309.09342), *Nature Communications* 15, 7172 (2024) [A｜同行评审]；E. Fontana et al., *Characterizing barren plateaus in quantum ansätze with the adjoint representation*, *Nature Communications* 15, 7171 (2024) [A｜同行评审]；M. Larocca et al., [Barren Plateaus in Variational Quantum Computing](https://arxiv.org/abs/2405.00781), *Nature Reviews Physics* 7, 174–189 (2025) [A｜同行评审]；M. Cerezo et al., [Does provable absence of barren plateaus imply classical simulability?](https://arxiv.org/abs/2312.09121), *Nature Communications* 16, 7907 (2025) [A｜同行评审]。
+- **量子化学子空间方法（SQD）**：J. Robledo-Moreno et al., [Chemistry beyond the scale of exact diagonalization on a quantum-centric supercomputer](https://arxiv.org/abs/2405.05068), *Science Advances* 11(25), eadu9991 (2025) [A｜同行评审]；P. Reinholdt et al., [Critical limitations in quantum-selected configuration interaction methods](https://arxiv.org/abs/2501.07231), *J. Chem. Theory Comput.* 21(14), 6811–6822 (2025) [A｜同行评审]。
+- **经典模拟突破与量子优势交锋**：T. Begušić, J. Gray & G. K.-L. Chan, *Fast and converged classical simulations of evidence for the utility of quantum computing before fault tolerance*, *Science Advances* 10, eadk4321 (2024) [A｜同行评审，稀疏 Pauli 动力学]；J. Tindall, M. Fishman, E. M. Stoudenmire & D. Sels, *Efficient Tensor Network Simulation of IBM's Eagle Kicked Ising Experiment*, *PRX Quantum* 5, 010308 (2024) [A｜同行评审，置信传播张量网络]；J. Tindall, A. F. Mello, M. Fishman, E. M. Stoudenmire & D. Sels, *Dynamics of disordered quantum systems with two- and three-dimensional tensor networks*, *Science* 392(6800), 868–872 (2026-05; `arXiv:2503.05693`) [A｜同行评审，2D/3D 无序体系张量网络]；A. D. King et al., *Beyond-classical computation in quantum simulation*, *Science* 388(6743), 199–204 (2025-03; DOI `10.1126/science.ado6285`) [A｜同行评审]；Google Quantum AI & Collaborators, *Observation of constructive interference at the edge of quantum ergodicity*（**Quantum Echoes**）, *Nature* 646, 825–830 (2025) [A｜同行评审]；H. Manabe, H. Gu & F. Pan, [Classical Simulation and Design Frontiers for IBM's Doped Clifford Sampling Experiment](https://arxiv.org/abs/2608.13110), `arXiv:2608.13110` (2026-08) [C｜预印本]。
 
-- NIST, [Post-Quantum Cryptography project](https://csrc.nist.gov/projects/post-quantum-cryptography)。
-- NIST, [FIPS 203（ML-KEM，密钥封装）](https://csrc.nist.gov/pubs/fips/203/final)、[FIPS 204（ML-DSA，数字签名）](https://csrc.nist.gov/pubs/fips/204/final)、[FIPS 205（SLH-DSA，数字签名）](https://csrc.nist.gov/pubs/fips/205/final)，均于 2024-08-13 发布最终版。引用具体算法或参数时，应打开对应标准页；203、204 的页面另列有待未来修订处理的勘误，不等于最终版被撤销（核查于 2026-09-24）。
-- NIST, [HQC announced as a backup algorithm for general encryption](https://www.nist.gov/news-events/news/2025/03/nist-selects-hqc-fifth-algorithm-post-quantum-encryption)，2025-03-11；这是选择公告，不是最终 FIPS 发布。
-- NIST, [PQC Standardization](https://csrc.nist.gov/Projects/Post-Quantum-Cryptography/Post_Quantum_Cryptography-Standardization) 与 [Selected Algorithms](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization/selected-algorithms)，持续更新；引用 HQC 阶段时记录访问日期。
-- C. H. Bennett and G. Brassard, [Quantum cryptography: Public key distribution and coin tossing](https://doi.org/10.1016/j.tcs.2014.05.025), *Theoretical Computer Science* 560, 7–11 (2014 重印；原工作发表于 1984)。
-- H. J. Kimble, [The quantum internet](https://doi.org/10.1038/nature07127), *Nature* 453 (2008)。
-- C. M. Knaut et al., [Entanglement of nanophotonic quantum memory nodes in a telecom network](https://www.nature.com/articles/s41586-024-07252-z), *Nature* 629, 573–578 (2024)。
-- S. Kucera et al., [Demonstration of quantum network protocols over a 14-km urban fiber link](https://www.nature.com/articles/s41534-024-00886-x), *npj Quantum Information* 10, 88 (2024)。
-- W. Kozlowski et al., [Architectural Principles for a Quantum Internet](https://www.rfc-editor.org/rfc/rfc9340), RFC 9340 (2023)，信息性文档。
-- C. Wang et al., [Application Scenarios for the Quantum Internet](https://www.rfc-editor.org/rfc/rfc9583), RFC 9583 (2024)，信息性文档。
+## 3. 噪声、量子纠错与容错计算
 
-## 量子信息量度
+### 奠基理论与解码算法
 
-- John Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/), Cambridge University Press (2018)，第 3、5、6、8 章。
-- A. S. Holevo, [Bounds for the quantity of information transmitted by a quantum communication channel](https://www.mathnet.ru/eng/ppi903), *Problems of Information Transmission* 9, 177–183 (1973)。
-- C. A. Fuchs and J. van de Graaf, [Cryptographic distinguishability measures for quantum-mechanical states](https://doi.org/10.1109/18.585755), *IEEE Transactions on Information Theory* 45, 1216–1227 (1999)。
-- H. Barnum et al., [Noncommuting mixed states cannot be broadcast](https://doi.org/10.1103/PhysRevLett.76.2818), *Physical Review Letters* 76, 2818–2821 (1996)。
-- G. Vidal and R. F. Werner, [A computable measure of entanglement](https://doi.org/10.1103/PhysRevA.65.032314), *Physical Review A* 65, 032314 (2002)。
+- P. W. Shor, [Scheme for reducing decoherence in quantum computer memory](https://doi.org/10.1103/PhysRevA.52.R2493), *Phys. Rev. A* 52, R2493–R2496 (1995) [A｜同行评审]。
+- R. Laflamme et al., *Perfect Quantum Error Correcting Code*, *Phys. Rev. Lett.* 77, 198 (1996)；A. M. Steane, [Error Correcting Codes in Quantum Theory](https://doi.org/10.1103/PhysRevLett.77.793), *Phys. Rev. Lett.* 77, 793–797 (1996) [A｜同行评审]。
+- E. Knill & R. Laflamme, [Theory of quantum error-correcting codes](https://doi.org/10.1103/PhysRevA.55.900), *Phys. Rev. A* 55, 900–911 (1997) [A｜同行评审]。
+- D. Gottesman, [Stabilizer Codes and Quantum Error Correction](https://arxiv.org/abs/quant-ph/9705052), Caltech PhD Thesis (1997) [B｜经典博士论文]。
+- D. Aharonov & M. Ben-Or, [Fault-Tolerant Quantum Computation With Constant Error Rate](https://arxiv.org/abs/quant-ph/9906129), *SIAM J. Comput.* 38, 1207–1282 (2008；早期稿 1997) [A｜同行评审]。
+- S. Bravyi & A. Kitaev, [Universal quantum computation with ideal Clifford gates and noisy ancillas](https://doi.org/10.1103/PhysRevA.71.022316), *Phys. Rev. A* 71, 022316 (2005) [A｜同行评审]。
+- B. Eastin & E. Knill, [Restrictions on Transversal Encoded Quantum Gate Sets](https://doi.org/10.1103/PhysRevLett.102.110502), *Phys. Rev. Lett.* 102, 110502 (2009) [A｜同行评审]。
+- A. G. Fowler et al., [Surface codes: Towards practical large-scale quantum computation](https://doi.org/10.1103/PhysRevA.86.032324), *Phys. Rev. A* 86, 032324 (2012)；C. Horsman et al., *Surface code quantum computing by lattice surgery*, *New J. Phys.* 14, 123011 (2012)；B. M. Terhal, [Quantum error correction for quantum memories](https://doi.org/10.1103/RevModPhys.87.307), *Rev. Mod. Phys.* 87, 307–346 (2015) [A｜同行评审]。
+- C. Gidney, [Stim: a fast stabilizer circuit simulator](https://arxiv.org/abs/2103.02202), *Quantum* 5, 497 (2021)；O. Higgott & C. Gidney, [Sparse Blossom: correcting a million errors per core second with minimum-weight matching](https://arxiv.org/abs/2303.15933), *Quantum* 9, 1600 (2025) [A｜同行评审]。
 
-## 信道容量、通信复杂度与连续变量
+### 2024–2026 纠错与容错里程碑
 
-- C. H. Bennett, D. P. DiVincenzo, J. A. Smolin, [Capacities of Quantum Erasure Channels](https://doi.org/10.1103/PhysRevLett.78.3217), *Physical Review Letters* 78, 3217–3220 (1997)。
-- C. H. Bennett, P. W. Shor, J. A. Smolin, A. V. Thapliyal, [Entanglement-assisted capacity of a quantum channel and the reverse Shannon theorem](https://doi.org/10.1109/TIT.2002.802612), *IEEE Transactions on Information Theory* 48, 2637–2655 (2002)。
-- H. Buhrman, R. Cleve, J. Watrous, R. de Wolf, [Quantum Fingerprinting](https://doi.org/10.1103/PhysRevLett.87.167902), *Physical Review Letters* 87, 167902 (2001)。
-- R. Jain, Z. Ji, S. Upadhyay, J. Watrous, [QIP = PSPACE](https://doi.org/10.1145/2049697.2049704), *Journal of the ACM* 58, Article 30 (2011)。
-- C. Weedbrook et al., [Gaussian Quantum Information](https://doi.org/10.1103/RevModPhys.84.621), *Reviews of Modern Physics* 84, 621–669 (2012)。
+- **Google Quantum AI Willow（低于阈值表面码与勘误）**：R. Acharya et al. (Google Quantum AI), [Quantum error correction below the surface code threshold](https://www.nature.com/articles/s41586-024-08449-y), *Nature* **638**, 920–926 (2025；2024-12-09 在线)，及[作者更正](https://www.nature.com/articles/s41586-026-10559-8), *Nature* **653**, E5 (2026-04-28，修订图 3a 重复码横轴标签与图例，未改动表面码 $d=3\to 5\to 7$ 主数据 $\Lambda = 2.14 \pm 0.02$；须将其与 $d=29$ 重复码约 $10^{-10}/\mathrm{cycle}$ 的稀有相关突发误差地板加以区分) [A｜同行评审]。
+- **AlphaQubit 神经解码器**：J. Bausch et al., [Learning high-accuracy error decoding for quantum processors](https://doi.org/10.1038/s41586-024-08148-8), *Nature* **635**, 834–840 (2024) [A｜同行评审]；Google DeepMind & Google Quantum AI, [AlphaQubit 2](https://arxiv.org/abs/2512.07737), `arXiv:2512.07737` (2025-12) [C｜预印本，商用 TPU 实时解码 $<1\,\mu\mathrm{s}/\mathrm{cycle}$]。
+- **IBM Gross 码（高编码率 qLDPC）与 Relay-BP 实时解码**：S. Bravyi et al., [High-threshold and low-overhead fault-tolerant quantum memory](https://www.nature.com/articles/s41586-024-07107-7), *Nature* **627**, 778–782 (2024) [A｜同行评审]；T. Müller et al., [Relay-BP (`arXiv:2506.01779`)](https://arxiv.org/abs/2506.01779) (2025) 与 M. Maurer et al., [qLDPC 实时 FPGA 解码 (`arXiv:2510.21600`)](https://arxiv.org/abs/2510.21600) (2025) [C｜预印本，无序/负记忆中继置信传播硬件解码，单次迭代约 $24\,\mathrm{ns}$、平均每轮 $<1\,\mu\mathrm{s}$]。
+- **魔法态培育（MSC）**：C. Gidney, N. Shutty & C. Jones, *Magic state cultivation: growing T states as cheap as CNOT gates*, `arXiv:2409.17595` (2024-09) [C｜预印本]；E. Rosenfeld, C. Gidney, K. J. Satzinger et al., [Magic state cultivation on a superconducting quantum processor](https://doi.org/10.1126/science.aee7961), *Science* (2026-10；`arXiv:2512.13908`) [A｜同行评审，超导处理器 $d=3$ 色码原地培育嫁接至 $d=5$ 表面码，逻辑 $\lvert T\rangle$ 态保真度 $0.9999(1)$]。
+- **AWS Ocelot（耗散猫比特级联纠错）**：H. Putterman et al., [Hardware-efficient quantum error correction via concatenated bosonic qubits](https://www.nature.com/articles/s41586-025-08642-7), *Nature* 638, 927–934 (2025) [A｜同行评审]。
+- **实时低延迟纠错与解码**：B. Barber et al. (Riverlane), *A real-time, scalable, fast and highly resource efficient decoder for a quantum computer*, *Nature Electronics* (2025) [A｜同行评审]；[Demonstrating real-time and low-latency quantum error correction with superconducting qubits](https://www.nature.com/articles/s41467-026-73331-6), *Nature Communications* 17, 7383 (2026) [A｜同行评审]。
 
-## 编译、控制与实验
+## 4. 硬件路线、系统工程与基准测试
 
-- [OpenQASM 3 specification](https://openqasm.com/)。
-- IBM Quantum Documentation, [Introduction to transpilation](https://quantum.cloud.ibm.com/docs/en/guides/transpile)。
-- N. Khaneja et al., [Optimal control of coupled spin dynamics: design of NMR pulse sequences by gradient ascent algorithms](https://doi.org/10.1016/j.jmr.2004.11.004), *Journal of Magnetic Resonance* 172, 296–305 (2005)。
-- D. Greenbaum, [Introduction to quantum gate set tomography](https://arxiv.org/abs/1509.02921) (2015)。
-- [Demonstrating real-time and low-latency quantum error correction with superconducting qubits](https://www.nature.com/articles/s41467-026-73331-6), *Nature Communications* 17, 7383 (2026)。
+- D. P. DiVincenzo, [The Physical Implementation of Quantum Computation](https://doi.org/10.1002/1521-3978(200009)48:9/11%3C771::AID-PROP771%3E3.0.CO;2-E), *Fortschritte der Physik* 48, 771–783 (2000)；T. D. Ladd et al., [Quantum computers](https://doi.org/10.1038/nature08812), *Nature* 464, 45–53 (2010) [A｜同行评审]。
+- **超导 transmon 与 fluxonium**：J. Koch et al., [Charge-insensitive qubit design derived from the Cooper pair box](https://doi.org/10.1103/PhysRevA.76.042319), *Phys. Rev. A* 76, 042319 (2007)；V. E. Manucharyan et al., [Fluxonium: Single Cooper-Pair Circuit Free of Charge Offsets](https://doi.org/10.1126/science.1175552), *Science* 326, 113–116 (2009)；A. Somoroff et al., [Millisecond Coherence in a Superconducting Qubit](https://doi.org/10.1103/PhysRevLett.130.267001), *Phys. Rev. Lett.* 130, 267001 (2023)；J. M. Gambetta, J. M. Chow & M. Steffen, [Building logical qubits in a superconducting quantum computing system](https://doi.org/10.1038/s41534-016-0004-0), *npj Quantum Information* 3, 2 (2017) [A｜同行评审]。
+- **IBM Heron / Nighthawk r3 与模块化超导耦合器**：IBM Quantum 处理器发布与校准公告（Heron r2/r3 重六角格；方格拓扑 Nighthawk r1/r2 及 2026-11 揭晓的 **Nighthawk r3**——含 520 可编程比特 / 2,034 物理比特；片上长程 **c-coupler** 与米级超导同轴 **l-coupler**；2027 年双芯 1,040 比特与 2029 年 Starling 属厂商路线规划，核验日期 2026-11-25）[C｜官方技术公告与路线图]。
+- **离子阱 QCCD（Quantinuum H2 / Helios）**：A. Paetznick et al., [Improved quantum processor logical error rates via correction and detection](https://doi.org/10.1038/s41586-026-10628-y), *Nature* **654**, 349–355 (2026-06) [A｜同行评审]；A. Ransford et al. (Quantinuum Helios), [A 98-qubit trapped-ion quantum computer with all-to-all connectivity](https://doi.org/10.1038/s41586-026-10676-4), *Nature* **655**, 81–86 (2026；2026-06-17 在线) [A｜同行评审，98 比特 $^{137}\mathrm{Ba}^+$ 全连接环+交叉口架构；另见 48 个纠错逻辑比特演示预印本 `arXiv:2602.22211` (2026-02) [C｜预印本]]。
+- **中性原子可重构阵列（Harvard / QuEra 与 Caltech）**：D. Bluvstein et al., [Logical quantum processor based on reconfigurable atom arrays](https://doi.org/10.1038/s41586-023-06927-3), *Nature* **626**, 58–65 (2024) [A｜同行评审]；P. Sales Rodriguez et al., [Experimental demonstration of logical magic state distillation](https://doi.org/10.1038/s41586-025-09367-3), *Nature* **645**, 620–625 (2025) [A｜同行评审]；D. Bluvstein, A. A. Geim, M. D. Lukin et al., [A fault-tolerant neutral-atom architecture for universal quantum computation](https://doi.org/10.1038/s41586-025-09848-5), *Nature* **649**, 39–46 (2026-01) [A｜同行评审]；H. J. Manetsch et al., [A tweezer array with 6,100 highly coherent atomic qubits](https://www.nature.com/articles/s41586-025-09641-4), *Nature* **647**, 60–67 (2025) [A｜同行评审]。
+- **光子、硅自旋与拓扑路线**：H. Aghaee Rad et al. (Xanadu Aurora), [Scaling and networking a modular photonic quantum computer](https://doi.org/10.1038/s41586-024-08406-9), *Nature* **638**, 912–919 (2025) [A｜同行评审]；PsiQuantum Team (2025), [A manufacturable platform for photonic quantum computing](https://www.nature.com/articles/s41586-025-08820-7)（PsiQuantum Omega）, *Nature* **641**, 876–883 (2025；2025-02-26 在线) [A｜同行评审]；J. Y. Huang et al., [High-fidelity operation and algorithmic initialisation of spin qubits above one kelvin](https://doi.org/10.1038/s41586-024-07160-2), *Nature* **627**, 772–777 (2024) [A｜同行评审]；M. Aghaee et al., [Interferometric single-shot parity measurement in InAs–Al hybrid devices](https://doi.org/10.1038/s41586-024-08445-2), *Nature* **638**, 651–655 (2025) [A｜同行评审]；H. F. Legg, [On the robustness of topological gap detection via transport](https://doi.org/10.1038/s41586-026-10567-8), *Nature* **654**, E22–E26 (2026) 与 Microsoft Quantum et al., [Reply](https://doi.org/10.1038/s41586-026-10568-7), *Nature* **654**, E27–E28 (2026) [A｜同行评审学术讨论]；N. van Loo et al., [Single-shot parity readout of a minimal Kitaev chain](https://doi.org/10.1038/s41586-025-09927-7), *Nature* **650**, 334–339 (2026) [A｜同行评审]。
+- **基准测试与国际术语标准**：E. Magesan et al., [Scalable and robust randomized benchmarking](https://doi.org/10.1103/PhysRevLett.106.180504), *Phys. Rev. Lett.* 106, 180504 (2011) [A｜同行评审]；A. W. Cross et al., [Validating quantum computers using randomized model circuits](https://doi.org/10.1103/PhysRevA.100.032328), *Phys. Rev. A* 100, 032328 (2019) [A｜同行评审]；E. Nielsen et al., [Gate Set Tomography](https://doi.org/10.22331/q-2021-10-05-557), *Quantum* 5, 557 (2021) [A｜同行评审]；D. C. McKay et al., [Benchmarking quantum processor performance at scale](https://arxiv.org/abs/2311.05933), `arXiv:2311.05933` (2023，EPLG 与层保真度) [C｜预印本]；[ISO/IEC 4879:2024 — Quantum computing — Vocabulary](https://www.iso.org/standard/80432.html) [A｜国际正式标准]。
 
-## 量子力学基础篇
+## 5. 密码安全与量子网络
 
-以下是学习路线，不取代各章紧邻推导的详细出处。
+- **NIST 后量子密码正式标准与迁移路线**：
+  - NIST, [Post-Quantum Cryptography project](https://csrc.nist.gov/projects/post-quantum-cryptography)；[FIPS 203（ML-KEM）](https://csrc.nist.gov/pubs/fips/203/final)、[FIPS 204（ML-DSA）](https://csrc.nist.gov/pubs/fips/204/final)、[FIPS 205（SLH-DSA）](https://csrc.nist.gov/pubs/fips/205/final)（2024-08-13 正式发布；页面另附待后续修订处理的勘误）[A｜正式标准]；
+  - NIST, [SP 800-227](https://csrc.nist.gov/pubs/sp/800/227/final)（2025-09-18 正式发布，KEM 安全规范与组合器）[A｜正式标准]；
+  - NIST, [NIST IR 8545](https://csrc.nist.gov/pubs/ir/8545/final) 与 [HQC 入选备份算法公告](https://www.nist.gov/news-events/news/2025/03/nist-selects-hqc-fifth-algorithm-post-quantum-encryption)（2025-03-11，选定通告而非最终 FIPS；HQC-128 正式规格：公钥 `2,249 B`、压缩私钥 `40 B`、密文 `4,497 B`）及持续更新的 [Selected Algorithms 页面](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization/selected-algorithms) [B｜官方通告]；
+  - NIST, NIST IR 8610（2026-05-14，额外数字签名第 2 轮报告，原定 9 个方案晋级第 3 轮）及 **HAWK 撤回记录**（`2026-07-29`，循环格候选 HAWK 因针对循环格 Galois 自同构的密钥恢复攻击正式撤出第 3 轮；核验日期 2026-11-25）[B｜官方报告与通告]；
+  - NIST, [NIST IR 8547 正式定稿](https://csrc.nist.gov/pubs/ir/8547/final)（2026-10-27，向后量子密码标准的过渡路线，明确 2030 弃用 / 2035 禁用时间表）[A｜官方正式指南]；
+  - IETF, [RFC 10024](https://www.rfc-editor.org/rfc/rfc10024)（2026-08，TLS 1.3 混合后量子密钥交换 `X25519MLKEM768`）[A｜正式标准]。
+- **QKD、无中继界限与百公里 DI-QKD**：C. H. Bennett & G. Brassard, [Quantum cryptography: Public key distribution and coin tossing](https://doi.org/10.1016/j.tcs.2014.05.025), *Theor. Comput. Sci.* **560**, 7–11 (2014 重印；原工作 1984)；A. K. Ekert, *Quantum cryptography based on Bell's theorem*, *Phys. Rev. Lett.* **67**, 661–663 (1991，E91 协议)；S. Pirandola et al., [Fundamental limits of repeaterless quantum communications](https://www.nature.com/articles/ncomms15043), *Nature Communications* **8**, 15043 (2017，PLOB 界)；B.-W. Lu et al., [Device-independent quantum key distribution over 100 km with single atoms](https://doi.org/10.1126/science.aec6243), *Science* **391**, 592–597 (2026-02；11 km 有限密钥率 $0.112\,\mathrm{bit/event}$ 与 100 km 渐近正密钥率) [A｜同行评审]。
+- **量子网络与城域光纤实验**：H. J. Kimble, [The quantum internet](https://doi.org/10.1038/nature07127), *Nature* 453, 1023–1030 (2008)；C. M. Knaut et al., [Entanglement of nanophotonic quantum memory nodes in a telecom network](https://www.nature.com/articles/s41586-024-07252-z), *Nature* 629, 573–578 (2024)；J.-L. Liu et al., [Creation of memory-memory entanglement in a metropolitan quantum network](https://www.nature.com/articles/s41586-024-07308-0), *Nature* 629, 579–585 (2024)；S. Kucera et al., [Demonstration of quantum network protocols over a 14-km urban fiber link](https://www.nature.com/articles/s41534-024-00886-x), *npj Quantum Information* 10, 88 (2024) [A｜同行评审]；W. Kozlowski et al., [RFC 9340](https://www.rfc-editor.org/rfc/rfc9340) (2023) 与 C. Wang et al., [RFC 9583](https://www.rfc-editor.org/rfc/rfc9583) (2024) [B｜IETF 信息性文档]。
 
-- MIT OpenCourseWare, [8.04 Quantum Physics I，2016 讲义目录](https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/pages/lecture-notes/)：实验动机、波函数、时间演化、无限深势阱与谐振子。Q4 使用第 5、6、11、14–16 讲。
-- MIT OpenCourseWare, [22.51 第 3 章：量子力学公设](https://ocw.mit.edu/courses/22-51-quantum-theory-of-radiation-interactions-fall-2012/9cdcc3c1e36da2ae3e2f925d5b435ab6_MIT22_51F12_Ch3.pdf)：测量、期望值与不确定关系。
-- MIT OpenCourseWare, [8.321 第 8 讲：时变 Hamiltonian](https://ocw.mit.edu/courses/8-321-quantum-theory-i-fall-2017/579cb61c4eaa494b9adb90830d921099_MIT8_321F17_lec8.pdf)：时间排序与常用充分条件。
-- H. P. Robertson, [The Uncertainty Principle](https://doi.org/10.1103/PhysRev.34.163), *Physical Review* 34, 163–164 (1929)：本书态制备不确定关系的原始形式。
-- J. Koch et al., [Charge-insensitive qubit design derived from the Cooper pair box](https://doi.org/10.1103/PhysRevA.76.042319), *Physical Review A* 76, 042319 (2007)：transmon 的能级、非谐性与器件取舍。
-- MIT OpenCourseWare, [6.772 第 6 讲](https://ocw.mit.edu/courses/6-772-compound-semiconductor-devices-spring-2003/cf610e766603218f5e15fe998daf18d4_Lecture6v2.pdf)：矩形势垒的边界匹配与透射率；Q4 使用势垒内外质量相同的简化模型。
+## 6. 量子信息、信道容量、验证复杂度与连续变量
 
-## 维护规则
+- A. S. Holevo, [Bounds for the quantity of information transmitted by a quantum communication channel](https://www.mathnet.ru/eng/ppi903), *Problems of Information Transmission* 9, 177–183 (1973) [A｜同行评审]。
+- H. Barnum et al., [Noncommuting mixed states cannot be broadcast](https://doi.org/10.1103/PhysRevLett.76.2818), *Phys. Rev. Lett.* 76, 2818–2821 (1996) [A｜同行评审]。
+- C. H. Bennett, D. P. DiVincenzo & J. A. Smolin, [Capacities of Quantum Erasure Channels](https://doi.org/10.1103/PhysRevLett.78.3217), *Phys. Rev. Lett.* 78, 3217–3220 (1997)；C. H. Bennett, P. W. Shor, J. A. Smolin & A. V. Thapliyal, [Entanglement-assisted capacity of a quantum channel and the reverse Shannon theorem](https://doi.org/10.1109/TIT.2002.802612), *IEEE Trans. Inf. Theory* 48, 2637–2655 (2002) [A｜同行评审]。
+- C. A. Fuchs & J. van de Graaf, [Cryptographic distinguishability measures for quantum-mechanical states](https://doi.org/10.1109/18.585755), *IEEE Trans. Inf. Theory* 45, 1216–1227 (1999) [A｜同行评审]。
+- G. Vidal & R. F. Werner, [A computable measure of entanglement](https://doi.org/10.1103/PhysRevA.65.032314), *Phys. Rev. A* 65, 032314 (2002) [A｜同行评审]。
+- M. Horodecki, J. Oppenheim & A. Winter, [Partial quantum information](https://doi.org/10.1038/nature03909), *Nature* 436, 673–676 (2005，量子状态合并与负条件熵) [A｜同行评审]。
+- H.-Y. Huang, R. Kueng & J. Preskill, [Predicting many properties of a quantum system from very few measurements](https://arxiv.org/abs/2002.08953), *Nature Physics* 16, 1050–1057 (2020，经典阴影) [A｜同行评审]。
+- H. Buhrman, R. Cleve, J. Watrous & R. de Wolf, [Quantum Fingerprinting](https://doi.org/10.1103/PhysRevLett.87.167902), *Phys. Rev. Lett.* 87, 167902 (2001) [A｜同行评审]。
+- R. Jain, Z. Ji, S. Upadhyay & J. Watrous, [QIP = PSPACE](https://doi.org/10.1145/2049697.2049704), *J. ACM* 58, Article 30 (2011)；Z. Ji, A. Natarajan, T. Vidick, J. Wright & H. Yuen, [MIP* = RE](https://arxiv.org/abs/2001.04383) (2020) / *Commun. ACM* 64(11), 131–138 (2021) [A｜同行评审]。
+- C. Weedbrook et al., [Gaussian Quantum Information](https://doi.org/10.1103/RevModPhys.84.621), *Rev. Mod. Phys.* 84, 621–669 (2012)；A. Mari & J. Eisert, *Positive Wigner functions render classical simulation of quantum computation efficient*, *Phys. Rev. Lett.* 109, 230503 (2012) [A｜同行评审]。
 
-- 理论章节：每年检查链接、勘误和术语一致性。
-- 软件接口与云平台：每季度检查；示例应锁定版本。
-- 硬件纪录、路线图和政策标准：引用前实时核验，不只依赖本文日期。
-- 任何“世界首个”“最大”“首次优势”声明：至少查原始论文、补充材料和一个独立技术分析。
+## 7. 编译、脉冲控制、电路切割与实验统计
 
-## 软件实现与工业工作流的补充入口
+- [OpenQASM 3 specification](https://openqasm.com/) 与 [IBM Quantum Transpilation Guides](https://quantum.cloud.ibm.com/docs/en/guides/transpile) [B｜开放规范与官方文档]。
+- D. C. McKay et al., *Efficient Z gates for quantum computing*, *Phys. Rev. A* 96, 022330 (2017)；G. Li, Y. Ding & Y. Xie, *Tackling the qubit mapping problem for NISQ-era quantum devices* (SABRE), *ASPLOS* (2019) [A｜同行评审]；H. Zou et al., *LightSABRE: A lightweight and enhanced SABRE algorithm*, `arXiv:2409.08368` (2024) [C｜预印本]。
+- N. Khaneja et al., [Optimal control of coupled spin dynamics: design of NMR pulse sequences by gradient ascent algorithms](https://doi.org/10.1016/j.jmr.2004.11.004) (GRAPE), *J. Magn. Reson.* 172, 296–305 (2005)；F. Motzoi et al., *Simple pulses for elimination of leakage in weakly nonlinear qubits* (DRAG), *Phys. Rev. Lett.* 103, 110501 (2009)；N. Ezzell et al., *Dynamical decoupling for superconducting qubits: A performance survey*, *Phys. Rev. Applied* 20, 064027 (2023) [A｜同行评审]。
+- D. Greenbaum, [Introduction to quantum gate set tomography](https://arxiv.org/abs/1509.02921) (2015) [C｜综述预印本]；NIST, [EXACT BINOMIAL](https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm) [B｜统计技术参考]。
+- A. Carrera Vazquez et al., [Combining quantum processors with real-time classical communication](https://www.nature.com/articles/s41586-024-08178-2), *Nature* 636, 75–79 (2024)；L. Schmitt, C. Piveteau & D. Sutter, [Cutting circuits with multiple two-qubit unitaries](https://quantum-journal.org/papers/q-2025-02-18-1634/), *Quantum* 9, 1634 (2025) [A｜同行评审，电路切割与采样开销]。
 
-[算法、工业实践与开源代码对照](software-practice.md)按输入输出、成本、实验层级和许可证组织资料；第三方实现固定到2026-09-26核验的具体提交。源码可读与生产可用分别记录，不把软件库存在当作量子优势证明。
+## 8. 第 20 章：量子传感与精密测量
 
-第71轮于2026-10-13扩充固定摘录，旧19项目提交保留，新增7项目并补1份旧项目源码，共26项目97份文件。新增来源分别对应MPF、OBP、SQD-HPC、Pauli传播、Gaussian检查、过程层析和量子工具；完整文件边界见[清单](../../codes/vendor/manifest.json)。
+- C. L. Degen, F. Reinhard & P. Cappellaro, [Quantum sensing](https://doi.org/10.1103/RevModPhys.89.035002), *Rev. Mod. Phys.* **89**, 035002 (2017) [A｜同行评审综述，量子传感物理平台与灵敏度框架]。
+- V. Giovannetti, S. Lloyd & L. Maccone, *Advances in quantum metrology*, *Nat. Photonics* **5**, 222–229 (2011) [A｜同行评审综述，标准量子极限、海森堡极限与量子计量总体架构]。
+- S. F. Huelga, C. Macchiavello, T. Pellizzari, A. K. Ekert, M. B. Plenio & J. I. Cirac, [Improvement of frequency standards with quantum entanglement](https://doi.org/10.1103/PhysRevLett.79.3865), *Phys. Rev. Lett.* **79**, 3865–3868 (1997) [A｜同行评审，马尔可夫退相位下 GHZ 态海森堡极限坍塌与最优探询时长]。
+- S. Zhou, M. Zhang, J. Preskill & L. Jiang, *Achieving the Heisenberg limit in quantum metrology using quantum error correction*, *Nat. Commun.* **9**, 78 (2018) [A｜同行评审，量子纠错传感与 HNLS（哈密顿量不在 Lindblad 张成空间）充要判据]。
+- D. Ganapathy et al. (LIGO O4), [Broadband quantum enhancement of the LIGO detectors with frequency-dependent squeezing](https://doi.org/10.1103/PhysRevX.13.041021), *Phys. Rev. X* **13**, 041021 (2023) [A｜同行评审，频率相关光学压缩宽带引力波探测降噪]。
+- A. Aeppli, K. Kim, W. Warfield, M. S. Safronova & J. Ye, [Clock with $8\times 10^{-19}$ systematic uncertainty](https://doi.org/10.1103/PhysRevLett.133.023401), *Phys. Rev. Lett.* **133**, 023401 (2024) [A｜同行评审，Sr 光晶格钟系统不确定度纪录]。
 
-- Carrera Vazquez et al., [Well-conditioned multi-product formulas for hardware-friendly Hamiltonian simulation](https://quantum-journal.org/papers/q-2023-07-25-1067/)，*Quantum* 7, 1067（2023-07-25）：A类理论/研究来源；软件实践第11节的教学数字另独立构造。
-- [MPF官方教程](https://qiskit.github.io/qiskit-addon-mpf/tutorials/01_getting_started.html)与[稳定性说明](https://qiskit.github.io/qiskit-addon-mpf/explanations/mpf_stability.html)：实现/技术说明，解释权重重构与近似条件，不是生产收益证明。
-- [OBP官方API](https://qiskit.github.io/qiskit-addon-obp/apidocs/qiskit_addon_obp.html)：传播与剩余线路的接口；本书$L_1$截断偏差由算符范数独立推导，不自动套到任意高阶预算。
-- [Pauli propagation官方说明](https://quantum.cloud.ibm.com/docs/en/addons/pauli-prop)：实现证据；固定Python/Rust源码已归档。第71轮未运行完整扩展，第72轮安装官方wheel并实际调用Rust引擎，未从源编译。
-- [SQD-HPC官方说明](https://qiskit.github.io/qiskit-addon-sqd-hpc/)与[随机数约定](https://qiskit.github.io/qiskit-addon-sqd-hpc/random-number-generation.html)：工程接口与复现条件；本书未做MPI或多节点基准。
-- [ProcessTomography官方API](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.ProcessTomography.html)：完整积式方案的默认设置与条件记录；不当作所有过程学习方法的复杂度下界。
-- [The Walrus官方Gaussian源码](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)与[pyGSTi Instrument源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)：函数定义、hbar/平方保真度与测量分支的实现证据；独立数学核算及本地上游运行分别记录。
+## 9. 第 21 章：稳定子形式与经典模拟引擎
 
-## 本轮统计、切割与源码核查来源
+- D. Gottesman, [The Heisenberg Representation of Quantum Computers](https://arxiv.org/abs/quant-ph/9807006), Group22 Proceedings / `quant-ph/9807006` (1998) [A/B｜会议论文集，稳定子形式与 Gottesman–Knill 定理]。
+- S. Aaronson & D. Gottesman, [Improved Simulation of Stabilizer Circuits](https://doi.org/10.1103/PhysRevA.70.052328), *Phys. Rev. A* **70**, 052328 (2004；`quant-ph/0406196`) [A｜同行评审，去稳定子、无高斯消元 `rowsum` 与 CHP 模拟器]。
+- S. Bravyi & D. Gosset, [Improved Classical Simulation of Quantum Circuits Dominated by Clifford Gates](https://doi.org/10.1103/PhysRevLett.116.250501), *Phys. Rev. Lett.* **116**, 250501 (2016；`arXiv:1601.07601`) [A｜同行评审，稳定子秩分解与含少量非 Clifford 门电路经典模拟]。
+- U. Schollwöck, [The density-matrix renormalization group in the age of matrix product states](https://arxiv.org/abs/1008.3477), *Ann. Phys.* **326**(1), 96–192 (2011；`arXiv:1008.3477`) [A｜同行评审综述，矩阵乘积态（MPS）与张量网络模拟]。
+- M. S. Rudolph, T. Jones, Y. Teng, A. Angrisani & Z. Holmes, [Pauli Propagation: A Computational Framework for Simulating Quantum Systems](https://arxiv.org/abs/2505.21606), *PRX Quantum* **7**, 032001 (2026；`arXiv:2505.21606`) [A｜同行评审，海森堡绘景 Pauli 传播与截断模拟统一框架]。
+- C. Gidney, [Stim: a fast stabilizer circuit simulator](https://arxiv.org/abs/2103.02202), *Quantum* **5**, 497 (2021) [A｜同行评审，逆稳定子表、256 位 SIMD 与参考样本批量 Pauli 帧采样]。
 
-以下来源访问日期为2026-09-26，新增公式旁也有直接链接。独立教学推导与原实现分别记录；“官方”说明出处，不排除文档笔误或版本错位。
+## 10. 量子力学基础篇（Q1–Q4）
 
-- NIST, [EXACT BINOMIAL](https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm)：精确二项置信上界的官方统计说明，B类技术参考；用于P15-E的抽样设计。
-- [Combining quantum processors with real-time classical communication](https://www.nature.com/articles/s41586-024-08178-2), *Nature* (2024)：A类同行评审研究；单门准概率分解及指定模型的抽样开销。
-- L. Schmitt, C. Piveteau, D. Sutter, [Cutting circuits with multiple two-qubit unitaries](https://quantum-journal.org/papers/q-2025-02-18-1634/), *Quantum* 9, 1634 (2025)：A类研究；说明独立乘积分解的开销不等于所有联合切割方案的下界。
-- [pyqsp作者仓库](https://github.com/ichuang/pyqsp)、[qutip-qtrl官方仓库](https://github.com/qutip/qutip-qtrl)、[Qiskit cutting官方仓库](https://github.com/Qiskit/qiskit-addon-cutting)、[Aer官方仓库](https://github.com/Qiskit/qiskit-aer)：实现证据，固定提交与原许可证位于源码清单；不作为算法普适性能或工业优势证明。
-- IBM Research, [量子与高性能计算参考架构说明](https://research.ibm.com/blog/quantum-centric-supercomputing-system-reference-architecture), 2026-03-12：C类厂商技术说明，支持公开工作流和架构主张；不提供本仓库自行复现的客户生产数据。
+- MIT OpenCourseWare, [8.04 Quantum Physics I 讲义目录](https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/pages/lecture-notes/)（实验动机、波函数、时间演化、势阱与谐振子）[B｜大学公开课程]。
+- MIT OpenCourseWare, [22.51 第 3 章：量子力学公设](https://ocw.mit.edu/courses/22-51-quantum-theory-of-radiation-interactions-fall-2012/9cdcc3c1e36da2ae3e2f925d5b435ab6_MIT22_51F12_Ch3.pdf) 与 [8.321 第 8 讲：时变 Hamiltonian](https://ocw.mit.edu/courses/8-321-quantum-theory-i-fall-2017/579cb61c4eaa494b9adb90830d921099_MIT8_321F17_lec8.pdf) [B｜大学公开课程]。
+- H. P. Robertson, [The Uncertainty Principle](https://doi.org/10.1103/PhysRev.34.163), *Phys. Rev.* 34, 163–164 (1929)；E. Schrödinger, *Sitzungsber. Preuss. Akad. Wiss.* 19, 296–303 (1930)（[英译 `arXiv:quant-ph/9903100`](https://arxiv.org/abs/quant-ph/9903100)）[A｜同行评审]。
+- MIT OpenCourseWare, [6.772 第 6 讲：矩形势垒边界匹配与隧穿](https://ocw.mit.edu/courses/6-772-compound-semiconductor-devices-spring-2003/cf610e766603218f5e15fe998daf18d4_Lecture6v2.pdf) [B｜大学公开课程]。
 
-## 第72轮完整SDK与复现来源（2026-10-13）
+## 11. 软件实现、开源归档与复现入口
 
-[完整SDK实验册](../labs/sdk-validation.md)逐项列出26项目的实际发布版或完整C/C++提交、所运行任务、独立对照、原始样本及明确缺口。官方文档是接口来源，运行记录是本书实际执行证据；开发文档与已装版本不同时分别记录。
+[算法、工业实践与开源代码对照](software-practice.md)与[完整 SDK 实验册](../labs/sdk-validation.md)把正文方法对应到 31 个代表性开源项目、122 份锁定提交哈希的源码摘录（[manifest.json](../../codes/vendor/manifest.json)）及隔离环境本地运行记录。
 
-- [集成组官方发布元数据](../../codes/sdk/workflows/package-metadata.json)、[基础组发布元数据](../../codes/foundations/sdk/pypi-release-metadata.json)、[系统组安装证据](../../codes/systems/sdk/installed-package-evidence.json)：锁定版本与来源，不代替算法验收。
-- [Cirq](https://quantumai.google/cirq)、[PennyLane随机测量](https://docs.pennylane.ai/en/stable/code/api/pennylane.classical_shadow.html)、[Qualtran模幂](https://qualtran.readthedocs.io/en/latest/bloqs/cryptography/rsa/factoring-via-modexp.html)：HHL/oracle、实际采集和可逆算术的实现入口；小输入另独立验算。
-- [Qiskit Algorithms IAE](https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.IterativeAmplitudeEstimation.html)：自适应放大与区间；本书修正分批整数重种子，保存实际样本和调用账本。
-- [pyGSTi LGST源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/algorithms/core.py)：线性重构与gauge自由度；本书92设置有限采样拟合不称全部GST变体。
-- [OBP 0.3.0源码](https://github.com/Qiskit/qiskit-addon-obp/blob/0.3.0/qiskit_addon_obp/backpropagation.py)：零接受段缺陷的定位，失败复现、防护与正常路径分别保存。
-- [QuTiP 5.3.1主方程指南](https://qutip.readthedocs.io/en/v5.3.1/guide/dynamics/dynamics-master.html)、[随机轨迹指南](https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-monte.html)：标准误与总体标准差独立核对，不把未定义的1/n误差表述当均值标准误。
-- [Stim论文](https://arxiv.org/abs/2103.02202)、[Sparse Blossom论文](https://arxiv.org/abs/2303.15933)、[SeQUeNCe论文](https://arxiv.org/abs/2009.12000)：原始算法来源，本轮原始记录不代表复现论文全部规模或真实网络。
+- Carrera Vazquez et al., [Well-conditioned multi-product formulas for hardware-friendly Hamiltonian simulation](https://quantum-journal.org/papers/q-2023-07-25-1067/), *Quantum* 7, 1067 (2023) [A｜同行评审]；[MPF 官方教程](https://qiskit.github.io/qiskit-addon-mpf/tutorials/01_getting_started.html) 与 [稳定性说明](https://qiskit.github.io/qiskit-addon-mpf/explanations/mpf_stability.html) [B｜官方技术文档]。
+- [OBP 官方 API](https://qiskit.github.io/qiskit-addon-obp/apidocs/qiskit_addon_obp.html) 与 [OBP 0.3.0 源码](https://github.com/Qiskit/qiskit-addon-obp/blob/0.3.0/qiskit_addon_obp/backpropagation.py)；[Pauli Propagation 官方说明](https://quantum.cloud.ibm.com/docs/en/addons/pauli-prop)；[SQD-HPC 官方说明](https://qiskit.github.io/qiskit-addon-sqd-hpc/) 与 [随机数约定](https://qiskit.github.io/qiskit-addon-sqd-hpc/random-number-generation.html)；IBM Research, [量子—超算参考架构说明](https://research.ibm.com/blog/quantum-centric-supercomputing-system-reference-architecture) (2026-03-12) [B/C｜官方技术文档]。
+- [Cirq](https://quantumai.google/cirq)、[Qualtran 模幂](https://qualtran.readthedocs.io/en/latest/bloqs/cryptography/rsa/factoring-via-modexp.html)、[PennyLane 随机测量](https://docs.pennylane.ai/en/stable/code/api/pennylane.classical_shadow.html)、[Qiskit Algorithms IAE](https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.IterativeAmplitudeEstimation.html)、[ProcessTomography API](https://qiskit-community.github.io/qiskit-experiments/stubs/qiskit_experiments.library.tomography.ProcessTomography.html) [B｜官方文档]。
+- [pyqsp 仓库](https://github.com/ichuang/pyqsp)、[qutip-qtrl 仓库](https://github.com/qutip/qutip-qtrl)、[Qiskit Cutting 仓库](https://github.com/Qiskit/qiskit-addon-cutting)、[Qiskit Aer 仓库](https://github.com/Qiskit/qiskit-aer)、[The Walrus Gaussian 源码](https://github.com/XanaduAI/thewalrus/blob/master/thewalrus/quantum/gaussian_checks.py)、[pyGSTi Instrument 源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/modelmembers/instruments/instrument.py)、[pyGSTi LGST 源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/algorithms/core.py) [B｜开源源码入口]。
+- [QuTiP 5.3.1 主方程指南](https://qutip.readthedocs.io/en/v5.3.1/guide/dynamics/dynamics-master.html) 与 [随机轨迹指南](https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-monte.html)；[SeQUeNCe 论文](https://arxiv.org/abs/2009.12000) [B/C｜文档与论文]。
+- 本仓库锁定版本元数据：[工作流发行元数据](../../codes/sdk/workflows/package-metadata.json)、[基础组发行元数据](../../codes/foundations/sdk/pypi-release-metadata.json)与[系统组安装证据](../../codes/systems/sdk/installed-package-evidence.json)。
 
-完整项目在隔离环境实际安装或按固定提交取得；仓库保存自编调用、样本、依赖锁、重建步骤和日志。临时环境内的整包二进制与依赖不改称原创源码，第三方材料保留原许可边界。
+## 12. 资料维护原则
+
+- **稳定理论章节**：按年复查链接、勘误与跨章术语一致性。
+- **软件接口与工具栈**：按季度核对版本演进，所有可执行示例锁定具体版本或提交哈希。
+- **硬件纪录、标准与政策路线**：对外引用前按一手官方页面实时核验，不只停留在成稿日期。
+- **“首个 / 最大 / 量子优势”类声明**：至少核对原始论文正文、补充材料以及一份独立的经典模拟或技术评议。

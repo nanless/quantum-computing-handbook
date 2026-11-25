@@ -64,8 +64,39 @@
       "ideal_z": 0.5,
       "reported_z": 0.43500000000000005,
       "measurement_variance": 0.00023425220737795853,
-      "calibration_delta_variance": 6.137825328217455e-05,
-      "total_delta_standard_error": 0.01719390766114943,
+      "calibration_alpha_variance": 3.4324149408284015e-05,
+      "calibration_beta_variance": 6.396050989275146e-06,
+      "calibration_delta_variance": 4.072020039755916e-05,
+      "total_delta_variance": 0.0002749724077755177,
+      "total_delta_standard_error": 0.016582291994037424,
+      "corrected_3x3_covariance": [
+        [
+          0.0003262672198594674,
+          3.1894182176493824e-05,
+          3.5674868250739634e-05
+        ],
+        [
+          3.1894182176493824e-05,
+          0.00021167282581598958,
+          4.4413639870091615e-05
+        ],
+        [
+          3.5674868250739634e-05,
+          4.4413639870091615e-05,
+          0.0002749724077755177
+        ]
+      ],
+      "corrected_3x3_covariance_diag": [
+        0.0003262672198594674,
+        0.00021167282581598958,
+        0.0002749724077755177
+      ],
+      "legacy_sdk73_archive_erratum": {
+        "note": "Archived sdk73/validate_sdks.py (L66) and sdk73/all-results.json swapped dr/dalpha and dr/dbeta; historical archive is preserved unmodified.",
+        "swapped_calibration_delta_variance": 6.137825328217455e-05,
+        "swapped_total_delta_variance": 0.0002956304606601331,
+        "swapped_total_delta_standard_error": 0.01719390766114943
+      },
       "boundary": "first-order expansion, ideal stable calibration preparations"
     },
     "03": {
@@ -79,8 +110,8 @@
           0.30365
         ]
       ],
-      "reported_correlation": 0.4346,
-      "reported_witness_sum": 0.8692,
+      "reported_correlation": 0.43459999999999993,
+      "reported_witness_sum": 0.8691999999999999,
       "corrected_correlation": 1.0,
       "boundary": "independent classical readout errors; not device-independent Bell certification"
     },

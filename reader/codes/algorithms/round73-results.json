@@ -35,14 +35,14 @@
       },
       {
         "phase_bits": 5,
-        "flag_success": 0.14725283556304333,
-        "clean_success": 0.12996682845813495,
-        "garbage_given_flag": 0.11738997784873029
+        "flag_success": 0.14725283556304336,
+        "clean_success": 0.12996682845813493,
+        "garbage_given_flag": 0.11738997784873062
       },
       {
         "phase_bits": 6,
-        "flag_success": 0.13084989115821247,
-        "clean_success": 0.12634583862683094,
+        "flag_success": 0.1308498911582125,
+        "clean_success": 0.12634583862683096,
         "garbage_given_flag": 0.034421522949038
       }
     ],
@@ -215,7 +215,7 @@
         ],
         "mass": 0.9810118431238463,
         "root_fidelity_to_normalized_projection": 0.9984825522470744,
-        "trace_distance_to_normalized_projection": 0.05506898272320245,
+        "trace_distance_to_normalized_projection": 0.055068982723200446,
         "raw_low_level_amplitude_difference": 0.055650224327540104
       },
       {
@@ -252,9 +252,9 @@
           0.022604063092587355,
           0.008543532794657104
         ],
-        "mass": 0.9999897508033253,
-        "root_fidelity_to_normalized_projection": 0.999999488256787,
-        "trace_distance_to_normalized_projection": 0.0010116749300804954,
+        "mass": 0.9999897508033255,
+        "root_fidelity_to_normalized_projection": 0.9999994882567871,
+        "trace_distance_to_normalized_projection": 0.0010116749298515108,
         "raw_low_level_amplitude_difference": 0.0010116854462942522
       },
       {
@@ -304,8 +304,8 @@
           9.600081058513362e-05
         ],
         "mass": 0.9999999991683892,
-        "root_fidelity_to_normalized_projection": 0.9999999999702773,
-        "trace_distance_to_normalized_projection": 7.710080255180196e-06,
+        "root_fidelity_to_normalized_projection": 0.9999999999702776,
+        "trace_distance_to_normalized_projection": 7.710053571848176e-06,
         "raw_low_level_amplitude_difference": 7.710053581514765e-06
       }
     ],

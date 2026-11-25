@@ -1,41 +1,218 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="445" viewBox="0 0 900 445" role="img" aria-labelledby="title desc">
-<title id="title">Two opposite conditional fringes average to a flat marginal</title>
-<desc id="desc">Ideal balanced two-path quantum eraser. Solid square-marked plus group and dashed circle-marked minus group have opposite cosine fringes. Their equal-weight average remains one half at every phase. Synthetic formula curves, not experimental data.</desc>
-<rect width="900" height="445" fill="#fff"/>
-<g font-family="Arial, sans-serif" font-size="15" fill="#202938">
-<text x="85" y="29" font-size="21" font-weight="bold">Conditional fringes cancel in the full sample</text>
-<text x="85" y="51" font-size="13">Ideal model: balanced paths, orthogonal accessible records, record measured in the +/- basis</text>
-<path d="M85,320 H840" stroke="#dce2e9"/><text x="69" y="325" text-anchor="end">0</text>
-<path d="M85,257.0 H840" stroke="#dce2e9"/><text x="69" y="262.0" text-anchor="end">0.25</text>
-<path d="M85,194.0 H840" stroke="#dce2e9"/><text x="69" y="199.0" text-anchor="end">0.5</text>
-<path d="M85,131.0 H840" stroke="#dce2e9"/><text x="69" y="136.0" text-anchor="end">0.75</text>
-<path d="M85,68 H840" stroke="#dce2e9"/><text x="69" y="73" text-anchor="end">1</text>
-<path d="M85.0,68 V320" stroke="#edf0f5"/><text x="85.0" y="343" text-anchor="middle">0</text>
-<path d="M273.75,68 V320" stroke="#edf0f5"/><text x="273.75" y="343" text-anchor="middle">π/2</text>
-<path d="M462.49999999999994,68 V320" stroke="#edf0f5"/><text x="462.49999999999994" y="343" text-anchor="middle">π</text>
-<path d="M651.25,68 V320" stroke="#edf0f5"/><text x="651.25" y="343" text-anchor="middle">3π/2</text>
-<path d="M839.9999999999999,68 V320" stroke="#edf0f5"/><text x="839.9999999999999" y="343" text-anchor="middle">2π</text>
-<path d="M85,68 V320 H840" fill="none" stroke="#202938" stroke-width="1.5"/>
-<text x="462" y="368" text-anchor="middle">Phase difference φ (rad)</text>
-<text transform="translate(24,194) rotate(-90)" text-anchor="middle">Probability of detector 0</text>
-<path d="M85.000,68.000 L90.898,68.152 L96.797,68.607 L102.695,69.364 L108.594,70.421 L114.492,71.776 L120.391,73.426 L126.289,75.365 L132.188,77.591 L138.086,80.097 L143.984,82.878 L149.883,85.926 L155.781,89.235 L161.680,92.796 L167.578,96.601 L173.477,100.640 L179.375,104.905 L185.273,109.384 L191.172,114.066 L197.070,118.942 L202.969,123.998 L208.867,129.223 L214.766,134.604 L220.664,140.128 L226.562,145.782 L232.461,151.552 L238.359,157.424 L244.258,163.384 L250.156,169.419 L256.055,175.512 L261.953,181.650 L267.852,187.817 L273.750,194.000 L279.648,200.183 L285.547,206.350 L291.445,212.488 L297.344,218.581 L303.242,224.616 L309.141,230.576 L315.039,236.448 L320.938,242.218 L326.836,247.872 L332.734,253.396 L338.633,258.777 L344.531,264.002 L350.430,269.058 L356.328,273.934 L362.227,278.616 L368.125,283.095 L374.023,287.360 L379.922,291.399 L385.820,295.204 L391.719,298.765 L397.617,302.074 L403.516,305.122 L409.414,307.903 L415.313,310.409 L421.211,312.635 L427.109,314.574 L433.008,316.224 L438.906,317.579 L444.805,318.636 L450.703,319.393 L456.602,319.848 L462.500,320.000 L468.398,319.848 L474.297,319.393 L480.195,318.636 L486.094,317.579 L491.992,316.224 L497.891,314.574 L503.789,312.635 L509.688,310.409 L515.586,307.903 L521.484,305.122 L527.383,302.074 L533.281,298.765 L539.180,295.204 L545.078,291.399 L550.977,287.360 L556.875,283.095 L562.773,278.616 L568.672,273.934 L574.570,269.058 L580.469,264.002 L586.367,258.777 L592.266,253.396 L598.164,247.872 L604.062,242.218 L609.961,236.448 L615.859,230.576 L621.758,224.616 L627.656,218.581 L633.555,212.488 L639.453,206.350 L645.352,200.183 L651.250,194.000 L657.148,187.817 L663.047,181.650 L668.945,175.512 L674.844,169.419 L680.742,163.384 L686.641,157.424 L692.539,151.552 L698.438,145.782 L704.336,140.128 L710.234,134.604 L716.133,129.223 L722.031,123.998 L727.930,118.942 L733.828,114.066 L739.727,109.384 L745.625,104.905 L751.523,100.640 L757.422,96.601 L763.320,92.796 L769.219,89.235 L775.117,85.926 L781.016,82.878 L786.914,80.097 L792.812,77.591 L798.711,75.365 L804.609,73.426 L810.508,71.776 L816.406,70.421 L822.305,69.364 L828.203,68.607 L834.102,68.152 L840.000,68.000" fill="none" stroke="#165a9f" stroke-width="2.6"/>
-<path d="M85.000,320.000 L90.898,319.848 L96.797,319.393 L102.695,318.636 L108.594,317.579 L114.492,316.224 L120.391,314.574 L126.289,312.635 L132.188,310.409 L138.086,307.903 L143.984,305.122 L149.883,302.074 L155.781,298.765 L161.680,295.204 L167.578,291.399 L173.477,287.360 L179.375,283.095 L185.273,278.616 L191.172,273.934 L197.070,269.058 L202.969,264.002 L208.867,258.777 L214.766,253.396 L220.664,247.872 L226.562,242.218 L232.461,236.448 L238.359,230.576 L244.258,224.616 L250.156,218.581 L256.055,212.488 L261.953,206.350 L267.852,200.183 L273.750,194.000 L279.648,187.817 L285.547,181.650 L291.445,175.512 L297.344,169.419 L303.242,163.384 L309.141,157.424 L315.039,151.552 L320.938,145.782 L326.836,140.128 L332.734,134.604 L338.633,129.223 L344.531,123.998 L350.430,118.942 L356.328,114.066 L362.227,109.384 L368.125,104.905 L374.023,100.640 L379.922,96.601 L385.820,92.796 L391.719,89.235 L397.617,85.926 L403.516,82.878 L409.414,80.097 L415.313,77.591 L421.211,75.365 L427.109,73.426 L433.008,71.776 L438.906,70.421 L444.805,69.364 L450.703,68.607 L456.602,68.152 L462.500,68.000 L468.398,68.152 L474.297,68.607 L480.195,69.364 L486.094,70.421 L491.992,71.776 L497.891,73.426 L503.789,75.365 L509.688,77.591 L515.586,80.097 L521.484,82.878 L527.383,85.926 L533.281,89.235 L539.180,92.796 L545.078,96.601 L550.977,100.640 L556.875,104.905 L562.773,109.384 L568.672,114.066 L574.570,118.942 L580.469,123.998 L586.367,129.223 L592.266,134.604 L598.164,140.128 L604.062,145.782 L609.961,151.552 L615.859,157.424 L621.758,163.384 L627.656,169.419 L633.555,175.512 L639.453,181.650 L645.352,187.817 L651.250,194.000 L657.148,200.183 L663.047,206.350 L668.945,212.488 L674.844,218.581 L680.742,224.616 L686.641,230.576 L692.539,236.448 L698.438,242.218 L704.336,247.872 L710.234,253.396 L716.133,258.777 L722.031,264.002 L727.930,269.058 L733.828,273.934 L739.727,278.616 L745.625,283.095 L751.523,287.360 L757.422,291.399 L763.320,295.204 L769.219,298.765 L775.117,302.074 L781.016,305.122 L786.914,307.903 L792.812,310.409 L798.711,312.635 L804.609,314.574 L810.508,316.224 L816.406,317.579 L822.305,318.636 L828.203,319.393 L834.102,319.848 L840.000,320.000" fill="none" stroke="#a14a12" stroke-width="2.6" stroke-dasharray="9 6"/>
-<path d="M85,194 H840" fill="none" stroke="#333" stroke-width="2.2" stroke-dasharray="2 6"/>
-<rect x="81.0" y="64.0" width="8" height="8" fill="#165a9f" stroke="#fff"/>
-<circle cx="85.0" cy="320.0" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<rect x="269.75" y="190.0" width="8" height="8" fill="#165a9f" stroke="#fff"/>
-<circle cx="273.75" cy="194.0" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<rect x="458.49999999999994" y="316.0" width="8" height="8" fill="#165a9f" stroke="#fff"/>
-<circle cx="462.49999999999994" cy="68.0" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<rect x="647.25" y="190.00000000000003" width="8" height="8" fill="#165a9f" stroke="#fff"/>
-<circle cx="651.25" cy="193.99999999999997" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<rect x="835.9999999999999" y="64.0" width="8" height="8" fill="#165a9f" stroke="#fff"/>
-<circle cx="839.9999999999999" cy="320.0" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<path d="M85,396 H124" stroke="#165a9f" stroke-width="3"/><rect x="100" y="392" width="8" height="8" fill="#165a9f"/>
-<text x="133" y="401">P(0 | +)</text>
-<path d="M320,396 H359" stroke="#a14a12" stroke-width="3" stroke-dasharray="9 6"/><circle cx="339" cy="396" r="4" fill="#fff" stroke="#a14a12" stroke-width="2"/>
-<text x="368" y="401">P(0 | -)</text>
-<path d="M558,396 H597" stroke="#333" stroke-width="2.2" stroke-dasharray="2 6"/>
-<text x="606" y="401">P(0) = 1/2</text>
-<text x="85" y="429" font-size="13">Each record group has probability 1/2. Matching record labels is required to see conditional fringes.</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">量子擦除的两条反相条件条纹与恒为二分之一的非选择边缘分布</title>
+  <desc id="desc">理想平衡双路径量子擦除模型：按擦除基测量记录端 D 得到等概率两组（各占 1/2），+ 组条件概率 P(0|+) = (1+cos φ)/2（实线方块）与 − 组条件概率 P(0|−) = (1−cos φ)/2（虚线圆圈）严格反相，二者等权平均后波峰填平波谷，非选择边缘分布 P(0) 恒为 1/2，无法超光速传信。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.5;stroke-dasharray:6 5;fill:none}
+.bloch-disk{fill:#dff4ff;fill-opacity:.38;stroke:#1b6ca8;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.node-bg{fill:#ffffff}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.12}
+.area3{fill:#1e7a5c;fill-opacity:.13}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.bar-bg{fill:#e2e8f0}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.1;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.1;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.1;stroke-opacity:.42}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-disk{fill:#164968;fill-opacity:.40;stroke:#6bc2f5}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .node-bg{fill:#16222e}
+  .area1{fill:#6bc2f5;fill-opacity:.16}
+  .area2{fill:#f28872;fill-opacity:.15}
+  .area3{fill:#5dd1a8;fill-opacity:.16}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .bar-bg{fill:#273a4c}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.52}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">量子擦除条件条纹对照：反相子集叠加恒归平坦边缘</text>
+  <text class="subtitle" x="34" y="76">理想平衡双路径模型：路径与可访问正交记录纠缠，记录端按 |±⟩ 擦除基测量，两组权重各为 1/2</text>
+  <rect class="panel" x="28" y="94" width="634" height="456" rx="14"/>
+  <path class="phead" d="M 42 95 H 648 Q 661 95 661 108 V 132 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="132" x2="661" y2="132"/>
+  <text class="sec" x="44" y="118">端口 0 探测概率随路径相对相位 φ 变化（精确公式）</text>
+  <rect class="panel" x="678" y="94" width="294" height="456" rx="14"/>
+  <path class="phead" d="M 692 95 H 958 Q 971 95 971 108 V 132 H 679 V 108 Q 679 95 692 95 Z"/>
+  <line class="grid" x1="679" y1="132" x2="971" y2="132"/>
+  <text class="sec" x="694" y="118">条件分解表与因果性边界</text>
+  <line class="c1" stroke-width="2.6" x1="46" y1="152" x2="74" y2="152"/>
+  <rect class="c1-fill" x="56" y="148" width="8" height="8" rx="1"/>
+  <text class="sm" x="80" y="156">P(0 | +) = (1+cos φ)/2</text>
+  <line class="c2" stroke-width="2.5" stroke-dasharray="8 4" x1="252" y1="152" x2="280" y2="152"/>
+  <circle class="node-bg c2" stroke-width="2.2" cx="266" cy="152" r="4"/>
+  <text class="sm" x="286" y="156">P(0 | −) = (1−cos φ)/2</text>
+  <line class="c3" stroke-width="2.4" stroke-dasharray="3 4" x1="458" y1="152" x2="486" y2="152"/>
+  <text class="sm" x="492" y="156">边缘 P(0) = 1/2</text>
+  <line class="grid" x1="94" y1="444" x2="636" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="444" x2="94" y2="444"/>
+  <text class="sm" x="85" y="448" text-anchor="end">0.00</text>
+  <line class="grid" x1="94" y1="381.26" x2="636" y2="381.26"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="381.26" x2="94" y2="381.26"/>
+  <text class="sm" x="85" y="385.26" text-anchor="end">0.25</text>
+  <line class="grid" x1="94" y1="318.53" x2="636" y2="318.53"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="318.53" x2="94" y2="318.53"/>
+  <text class="sm" x="85" y="322.53" text-anchor="end">0.50</text>
+  <line class="grid" x1="94" y1="255.79" x2="636" y2="255.79"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="255.79" x2="94" y2="255.79"/>
+  <text class="sm" x="85" y="259.79" text-anchor="end">0.75</text>
+  <line class="grid" x1="94" y1="193.06" x2="636" y2="193.06"/>
+  <line class="axis" stroke-width="1.2" x1="89" y1="193.06" x2="94" y2="193.06"/>
+  <text class="sm" x="85" y="197.06" text-anchor="end">1.00</text>
+  <line class="grid" x1="94" y1="178" x2="94" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="94" y1="444" x2="94" y2="449"/>
+  <text class="sm" x="94" y="463" text-anchor="middle">0</text>
+  <line class="grid" x1="229.5" y1="178" x2="229.5" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="229.5" y1="444" x2="229.5" y2="449"/>
+  <text class="sm" x="229.5" y="463" text-anchor="middle">π/2</text>
+  <line class="grid" x1="365" y1="178" x2="365" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="365" y1="444" x2="365" y2="449"/>
+  <text class="sm" x="365" y="463" text-anchor="middle">π</text>
+  <line class="grid" x1="500.5" y1="178" x2="500.5" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="500.5" y1="444" x2="500.5" y2="449"/>
+  <text class="sm" x="500.5" y="463" text-anchor="middle">3π/2</text>
+  <line class="grid" x1="636" y1="178" x2="636" y2="444"/>
+  <line class="axis" stroke-width="1.2" x1="636" y1="444" x2="636" y2="449"/>
+  <text class="sm" x="636" y="463" text-anchor="middle">2π</text>
+  <polygon class="area2" points="229.5,318.53 229.5,318.53 232.89,313.6 236.28,308.68 239.66,303.78 243.05,298.9 246.44,294.05 249.82,289.24 253.21,284.47 256.6,279.76 259.99,275.1 263.38,270.51 266.76,266 270.15,261.57 273.54,257.22 276.93,252.97 280.31,248.82 283.7,244.78 287.09,240.85 290.48,237.04 293.86,233.36 297.25,229.81 300.64,226.39 304.02,223.12 307.41,219.99 310.8,217.02 314.19,214.2 317.57,211.55 320.96,209.05 324.35,206.73 327.74,204.58 331.12,202.61 334.51,200.81 337.9,199.2 341.29,197.77 344.68,196.52 348.06,195.47 351.45,194.6 354.84,193.93 358.22,193.44 361.61,193.15 365,193.06 368.39,193.15 371.77,193.44 375.16,193.93 378.55,194.6 381.94,195.47 385.32,196.52 388.71,197.77 392.1,199.2 395.49,200.81 398.88,202.61 402.26,204.58 405.65,206.73 409.04,209.05 412.43,211.55 415.81,214.2 419.2,217.02 422.59,219.99 425.98,223.12 429.36,226.39 432.75,229.81 436.14,233.36 439.52,237.04 442.91,240.85 446.3,244.78 449.69,248.82 453.08,252.97 456.46,257.22 459.85,261.57 463.24,266 466.62,270.51 470.01,275.1 473.4,279.76 476.79,284.47 480.18,289.24 483.56,294.05 486.95,298.9 490.34,303.78 493.72,308.68 497.11,313.6 500.5,318.53 500.5,318.53"/>
+  <polygon class="area1" points="229.5,318.53 229.5,318.53 232.89,323.45 236.28,328.37 239.66,333.28 243.05,338.16 246.44,343.01 249.82,347.82 253.21,352.59 256.6,357.3 259.99,361.96 263.38,366.54 266.76,371.06 270.15,375.49 273.54,379.84 276.93,384.09 280.31,388.24 283.7,392.28 287.09,396.21 290.48,400.02 293.86,403.7 297.25,407.25 300.64,410.66 304.02,413.94 307.41,417.06 310.8,420.04 314.19,422.85 317.57,425.51 320.96,428 324.35,430.32 327.74,432.47 331.12,434.45 334.51,436.24 337.9,437.86 341.29,439.29 344.68,440.53 348.06,441.59 351.45,442.46 354.84,443.13 358.22,443.61 361.61,443.9 365,444 368.39,443.9 371.77,443.61 375.16,443.13 378.55,442.46 381.94,441.59 385.32,440.53 388.71,439.29 392.1,437.86 395.49,436.24 398.88,434.45 402.26,432.47 405.65,430.32 409.04,428 412.43,425.51 415.81,422.85 419.2,420.04 422.59,417.06 425.98,413.94 429.36,410.66 432.75,407.25 436.14,403.7 439.52,400.02 442.91,396.21 446.3,392.28 449.69,388.24 453.08,384.09 456.46,379.84 459.85,375.49 463.24,371.06 466.62,366.54 470.01,361.96 473.4,357.3 476.79,352.59 480.18,347.82 483.56,343.01 486.95,338.16 490.34,333.28 493.72,328.37 497.11,323.45 500.5,318.53 500.5,318.53"/>
+  <line class="c3" stroke-width="2.6" stroke-dasharray="4 4" x1="94" y1="318.53" x2="636" y2="318.53"/>
+  <path class="c1" stroke-width="2.7" d="M 94 193.06 L 97.39 193.15 L 100.78 193.44 L 104.16 193.93 L 107.55 194.6 L 110.94 195.47 L 114.33 196.52 L 117.71 197.77 L 121.1 199.2 L 124.49 200.81 L 127.88 202.61 L 131.26 204.58 L 134.65 206.73 L 138.04 209.05 L 141.43 211.55 L 144.81 214.2 L 148.2 217.02 L 151.59 219.99 L 154.97 223.12 L 158.36 226.39 L 161.75 229.81 L 165.14 233.36 L 168.52 237.04 L 171.91 240.85 L 175.3 244.78 L 178.69 248.82 L 182.07 252.97 L 185.46 257.22 L 188.85 261.57 L 192.24 266 L 195.62 270.51 L 199.01 275.1 L 202.4 279.76 L 205.79 284.47 L 209.18 289.24 L 212.56 294.05 L 215.95 298.9 L 219.34 303.78 L 222.72 308.68 L 226.11 313.6 L 229.5 318.53 L 232.89 323.45 L 236.28 328.37 L 239.66 333.28 L 243.05 338.16 L 246.44 343.01 L 249.82 347.82 L 253.21 352.59 L 256.6 357.3 L 259.99 361.96 L 263.38 366.54 L 266.76 371.06 L 270.15 375.49 L 273.54 379.84 L 276.93 384.09 L 280.31 388.24 L 283.7 392.28 L 287.09 396.21 L 290.48 400.02 L 293.86 403.7 L 297.25 407.25 L 300.64 410.66 L 304.02 413.94 L 307.41 417.06 L 310.8 420.04 L 314.19 422.85 L 317.57 425.51 L 320.96 428 L 324.35 430.32 L 327.74 432.47 L 331.12 434.45 L 334.51 436.24 L 337.9 437.86 L 341.29 439.29 L 344.68 440.53 L 348.06 441.59 L 351.45 442.46 L 354.84 443.13 L 358.22 443.61 L 361.61 443.9 L 365 444 L 368.39 443.9 L 371.77 443.61 L 375.16 443.13 L 378.55 442.46 L 381.94 441.59 L 385.32 440.53 L 388.71 439.29 L 392.1 437.86 L 395.49 436.24 L 398.88 434.45 L 402.26 432.47 L 405.65 430.32 L 409.04 428 L 412.43 425.51 L 415.81 422.85 L 419.2 420.04 L 422.59 417.06 L 425.97 413.94 L 429.36 410.66 L 432.75 407.25 L 436.14 403.7 L 439.52 400.02 L 442.91 396.21 L 446.3 392.28 L 449.69 388.24 L 453.08 384.09 L 456.46 379.84 L 459.85 375.49 L 463.24 371.06 L 466.63 366.54 L 470.01 361.96 L 473.4 357.3 L 476.79 352.59 L 480.17 347.82 L 483.56 343.01 L 486.95 338.16 L 490.34 333.28 L 493.72 328.37 L 497.11 323.45 L 500.5 318.53 L 503.89 313.6 L 507.28 308.68 L 510.66 303.78 L 514.05 298.9 L 517.44 294.05 L 520.83 289.24 L 524.21 284.47 L 527.6 279.76 L 530.99 275.1 L 534.38 270.51 L 537.76 266 L 541.15 261.57 L 544.54 257.22 L 547.92 252.97 L 551.31 248.82 L 554.7 244.78 L 558.09 240.85 L 561.48 237.04 L 564.86 233.36 L 568.25 229.81 L 571.64 226.39 L 575.03 223.12 L 578.41 219.99 L 581.8 217.02 L 585.19 214.2 L 588.58 211.55 L 591.96 209.05 L 595.35 206.73 L 598.74 204.58 L 602.12 202.61 L 605.51 200.81 L 608.9 199.2 L 612.29 197.77 L 615.68 196.52 L 619.06 195.47 L 622.45 194.6 L 625.84 193.93 L 629.23 193.44 L 632.61 193.15 L 636 193.06"/>
+  <path class="c2" stroke-width="2.6" stroke-dasharray="9 5" d="M 94 444 L 97.39 443.9 L 100.78 443.61 L 104.16 443.13 L 107.55 442.46 L 110.94 441.59 L 114.33 440.53 L 117.71 439.29 L 121.1 437.86 L 124.49 436.24 L 127.88 434.45 L 131.26 432.47 L 134.65 430.32 L 138.04 428 L 141.43 425.51 L 144.81 422.85 L 148.2 420.04 L 151.59 417.06 L 154.97 413.94 L 158.36 410.66 L 161.75 407.25 L 165.14 403.7 L 168.52 400.02 L 171.91 396.21 L 175.3 392.28 L 178.69 388.24 L 182.07 384.09 L 185.46 379.84 L 188.85 375.49 L 192.24 371.06 L 195.62 366.54 L 199.01 361.96 L 202.4 357.3 L 205.79 352.59 L 209.18 347.82 L 212.56 343.01 L 215.95 338.16 L 219.34 333.28 L 222.72 328.37 L 226.11 323.45 L 229.5 318.53 L 232.89 313.6 L 236.28 308.68 L 239.66 303.78 L 243.05 298.9 L 246.44 294.05 L 249.82 289.24 L 253.21 284.47 L 256.6 279.76 L 259.99 275.1 L 263.38 270.51 L 266.76 266 L 270.15 261.57 L 273.54 257.22 L 276.93 252.97 L 280.31 248.82 L 283.7 244.78 L 287.09 240.85 L 290.48 237.04 L 293.86 233.36 L 297.25 229.81 L 300.64 226.39 L 304.02 223.12 L 307.41 219.99 L 310.8 217.02 L 314.19 214.2 L 317.57 211.55 L 320.96 209.05 L 324.35 206.73 L 327.74 204.58 L 331.12 202.61 L 334.51 200.81 L 337.9 199.2 L 341.29 197.77 L 344.68 196.52 L 348.06 195.47 L 351.45 194.6 L 354.84 193.93 L 358.22 193.44 L 361.61 193.15 L 365 193.06 L 368.39 193.15 L 371.77 193.44 L 375.16 193.93 L 378.55 194.6 L 381.94 195.47 L 385.32 196.52 L 388.71 197.77 L 392.1 199.2 L 395.49 200.81 L 398.88 202.61 L 402.26 204.58 L 405.65 206.73 L 409.04 209.05 L 412.43 211.55 L 415.81 214.2 L 419.2 217.02 L 422.59 219.99 L 425.97 223.12 L 429.36 226.39 L 432.75 229.81 L 436.14 233.36 L 439.52 237.04 L 442.91 240.85 L 446.3 244.78 L 449.69 248.82 L 453.08 252.97 L 456.46 257.22 L 459.85 261.57 L 463.24 266 L 466.63 270.51 L 470.01 275.1 L 473.4 279.76 L 476.79 284.47 L 480.17 289.24 L 483.56 294.05 L 486.95 298.9 L 490.34 303.78 L 493.72 308.68 L 497.11 313.6 L 500.5 318.53 L 503.89 323.45 L 507.28 328.37 L 510.66 333.28 L 514.05 338.16 L 517.44 343.01 L 520.83 347.82 L 524.21 352.59 L 527.6 357.3 L 530.99 361.96 L 534.38 366.54 L 537.76 371.06 L 541.15 375.49 L 544.54 379.84 L 547.92 384.09 L 551.31 388.24 L 554.7 392.28 L 558.09 396.21 L 561.48 400.02 L 564.86 403.7 L 568.25 407.25 L 571.64 410.66 L 575.03 413.94 L 578.41 417.06 L 581.8 420.04 L 585.19 422.85 L 588.58 425.51 L 591.96 428 L 595.35 430.32 L 598.74 432.47 L 602.12 434.45 L 605.51 436.24 L 608.9 437.86 L 612.29 439.29 L 615.68 440.53 L 619.06 441.59 L 622.45 442.46 L 625.84 443.13 L 629.23 443.61 L 632.61 443.9 L 636 444"/>
+  <rect class="c1-fill" x="89.8" y="188.86" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="94" cy="444" r="4.5"/>
+  <rect class="c1-fill" x="180.13" y="251.59" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="184.33" cy="381.26" r="4.5"/>
+  <rect class="c1-fill" x="225.3" y="314.33" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="229.5" cy="318.53" r="4.5"/>
+  <rect class="c1-fill" x="360.8" y="439.8" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="365" cy="193.06" r="4.5"/>
+  <rect class="c1-fill" x="496.3" y="314.33" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="500.5" cy="318.53" r="4.5"/>
+  <rect class="c1-fill" x="631.8" y="188.86" width="8.4" height="8.4" rx="1"/>
+  <circle class="node-bg c2" stroke-width="2.4" cx="636" cy="444" r="4.5"/>
+  <rect class="c2-soft" x="294" y="246" width="142" height="26" rx="7"/>
+  <text class="xsb c2-txt" x="365" y="263" text-anchor="middle">− 组亮峰：P(0|−) = 1</text>
+  <rect class="c1-soft" x="294" y="364" width="142" height="26" rx="7"/>
+  <text class="xsb c1-txt" x="365" y="381" text-anchor="middle">+ 组暗谷：P(0|+) = 0</text>
+  <rect class="c3-soft" x="104" y="305" width="104" height="26" rx="7"/>
+  <text class="xsb c3-txt" x="156" y="322" text-anchor="middle">边缘恒 = 0.50</text>
+  <line class="axis" x1="94" y1="444" x2="644" y2="444"/>
+  <polygon class="axis-fill" points="646,444 638.5,447.6 638.5,440.4"/>
+  <line class="axis" x1="94" y1="444" x2="94" y2="170"/>
+  <polygon class="axis-fill" points="94,168 97.6,175.5 90.4,175.5"/>
+  <text class="lbl" x="365" y="486" text-anchor="middle">路径相对相位 φ (rad)</text>
+  <text class="lbl" x="46" y="311" text-anchor="middle" transform="rotate(-90 46 311)">端口 0 探测概率 P（无量纲）</text>
+  <rect class="pill" x="44" y="502" width="602" height="34" rx="8"/>
+  <text class="sm" x="345" y="523" text-anchor="middle">两条反相条纹按各半权重相加，波峰恰好填平波谷：P(0) = ½P(0|+) + ½P(0|−) ≡ ½</text>
+  <rect class="c1-soft" x="692" y="144" width="266" height="92" rx="10"/>
+  <text class="smb c1-txt" x="706" y="164">① 擦除基条件概率恒等式</text>
+  <text class="sm" x="706" y="187">记录端 D 测 |+⟩ / |−⟩ 各占概率 1/2</text>
+  <text class="sm" x="706" y="208">P(0|±) = (1 ± cos φ) / 2</text>
+  <text class="smb c3-txt" x="706" y="228">非选择求和：P(0) ≡ 0.50（无条纹）</text>
+  <rect class="panel" x="692" y="246" width="266" height="156" rx="10"/>
+  <rect class="phead" x="693" y="247" width="264" height="28" rx="8"/>
+  <text class="xsb" x="720" y="265" text-anchor="middle">φ</text>
+  <text class="xsb c1-txt" x="782" y="265" text-anchor="middle">P(0|+)</text>
+  <text class="xsb c2-txt" x="852" y="265" text-anchor="middle">P(0|−)</text>
+  <text class="xsb c3-txt" x="920" y="265" text-anchor="middle">边缘 P(0)</text>
+  <text class="smb" x="720" y="298" text-anchor="middle">0</text>
+  <text class="sm c1-txt" x="782" y="298" text-anchor="middle">1.00</text>
+  <text class="sm c2-txt" x="852" y="298" text-anchor="middle">0.00</text>
+  <text class="smb c3-txt" x="920" y="298" text-anchor="middle">0.50</text>
+  <line class="grid" x1="700" y1="310" x2="950" y2="310"/>
+  <text class="smb" x="720" y="328" text-anchor="middle">π/3</text>
+  <text class="sm c1-txt" x="782" y="328" text-anchor="middle">0.75</text>
+  <text class="sm c2-txt" x="852" y="328" text-anchor="middle">0.25</text>
+  <text class="smb c3-txt" x="920" y="328" text-anchor="middle">0.50</text>
+  <line class="grid" x1="700" y1="340" x2="950" y2="340"/>
+  <text class="smb" x="720" y="358" text-anchor="middle">π/2</text>
+  <text class="sm c1-txt" x="782" y="358" text-anchor="middle">0.50</text>
+  <text class="sm c2-txt" x="852" y="358" text-anchor="middle">0.50</text>
+  <text class="smb c3-txt" x="920" y="358" text-anchor="middle">0.50</text>
+  <line class="grid" x1="700" y1="370" x2="950" y2="370"/>
+  <text class="smb" x="720" y="388" text-anchor="middle">π</text>
+  <text class="sm c1-txt" x="782" y="388" text-anchor="middle">0.00</text>
+  <text class="sm c2-txt" x="852" y="388" text-anchor="middle">1.00</text>
+  <text class="smb c3-txt" x="920" y="388" text-anchor="middle">0.50</text>
+  <rect class="note" x="692" y="412" width="266" height="124" rx="10"/>
+  <text class="smb c4-txt" x="706" y="432">② 因果性边界（为何不能超光速传信）</text>
+  <text class="sm" x="706" y="454">• 不按 D 分组时，总点击分布恒平坦</text>
+  <text class="sm" x="706" y="475">• 延迟测 D 从不改写已记录的 P 点击</text>
+  <text class="sm" x="706" y="496">• 须经经典信道（≤ c）符合筛选才见条纹</text>
+  <text class="sm" x="706" y="517">• 记录泄入宏观环境则无法相干擦除</text>
+</svg>

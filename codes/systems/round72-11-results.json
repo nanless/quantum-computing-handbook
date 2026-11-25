@@ -1,0 +1,44 @@
+{
+  "access_date": "2026-10-13",
+  "implementation": "Python standard library only; independent formulas and archived SDK data",
+  "cases": {
+    "11": {
+      "independent_CDF_intervals": [
+        {
+          "d": 3,
+          "p": 0.0,
+          "binomial_tail_inversion": [
+            0,
+            0.003682083896865672
+          ]
+        },
+        {
+          "d": 3,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            0.0003461415732329866,
+            0.0011112633024966878
+          ]
+        },
+        {
+          "d": 5,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            1.2110693365417037e-05,
+            0.0003611872030449163
+          ]
+        },
+        {
+          "d": 7,
+          "p": 0.001,
+          "binomial_tail_inversion": [
+            0,
+            0.00018442696396189925
+          ]
+        }
+      ],
+      "zero_failure_one_sided_95_upper": 0.000149775396222962
+    }
+  },
+  "status": "passed"
+}

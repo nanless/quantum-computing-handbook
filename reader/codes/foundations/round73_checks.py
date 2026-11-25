@@ -35,10 +35,46 @@ def case02():
     close(m,.435);close((m-(beta-alpha))/d,z)
     n=8192;nc=16384
     measurement=(1-m*m)/(n*d*d)
-    da=(z-1)/d;db=(z+1)/d
-    calibration=da*da*alpha*(1-alpha)/nc+db*db*beta*(1-beta)/nc
+    # Correct first-order partial derivatives of r(m, alpha, beta) = (m + alpha - beta)/(1 - alpha - beta):
+    # dr/dalpha = (1 + r)/d, dr/dbeta = (r - 1)/d.
+    da=(1+z)/d;db=(z-1)/d
+    # Independent central-difference and physical-boundary checks (r=+1 => dr/dbeta=0; r=-1 => dr/dalpha=0).
+    def r_inv(mv,av,bv):return (mv+av-bv)/(1-av-bv)
+    eps=1e-6
+    close((r_inv(m,alpha+eps,beta)-r_inv(m,alpha-eps,beta))/(2*eps),da,1e-9)
+    close((r_inv(m,alpha,beta+eps)-r_inv(m,alpha,beta-eps))/(2*eps),db,1e-9)
+    m_zero=beta-alpha+d*1.0;m_one=beta-alpha+d*(-1.0)
+    close((r_inv(m_zero,alpha,beta+eps)-r_inv(m_zero,alpha,beta-eps))/(2*eps),0.0,1e-9)
+    close((r_inv(m_one,alpha+eps,beta)-r_inv(m_one,alpha-eps,beta))/(2*eps),0.0,1e-9)
+    cal_alpha=da*da*alpha*(1-alpha)/nc
+    cal_beta=db*db*beta*(1-beta)/nc
+    calibration=cal_alpha+cal_beta
     var=measurement+calibration
-    return {'ideal_z':z,'reported_z':m,'measurement_variance':measurement,'calibration_delta_variance':calibration,'total_delta_standard_error':math.sqrt(var),'boundary':'first-order expansion, ideal stable calibration preparations'}
+    se=math.sqrt(var)
+    close(var,0.0002749724,1e-9);close(se,0.0165822920,1e-9)
+    # Full 3x3 covariance for the benchmark state r = (0, sqrt(3)/2, 1/2) under shared calibration.
+    true_r=[0.0,math.sqrt(3)/2,0.5]
+    mu=[(beta-alpha)+d*rv for rv in true_r]
+    vm=[(1-mv*mv)/(n*d*d) for mv in mu]
+    da_vec=[(1+rv)/d for rv in true_r];db_vec=[(rv-1)/d for rv in true_r]
+    cov3=[[ (vm[i] if i==j else 0.0)+da_vec[i]*da_vec[j]*alpha*(1-alpha)/nc+db_vec[i]*db_vec[j]*beta*(1-beta)/nc for j in range(3)] for i in range(3)]
+    # Explicit comparison with the legacy swapped-derivative bug archived in sdk73/validate_sdks.py (L66) and sdk73/all-results.json.
+    da_legacy=(z-1)/d;db_legacy=(z+1)/d
+    cal_legacy=da_legacy*da_legacy*alpha*(1-alpha)/nc+db_legacy*db_legacy*beta*(1-beta)/nc
+    var_legacy=measurement+cal_legacy
+    close(var_legacy,0.0002956304606601331,1e-12)
+    return {'ideal_z':z,'reported_z':m,'measurement_variance':measurement,
+        'calibration_alpha_variance':cal_alpha,'calibration_beta_variance':cal_beta,
+        'calibration_delta_variance':calibration,'total_delta_variance':var,
+        'total_delta_standard_error':se,
+        'corrected_3x3_covariance':cov3,'corrected_3x3_covariance_diag':[cov3[i][i] for i in range(3)],
+        'legacy_sdk73_archive_erratum':{
+            'note':'Archived sdk73/validate_sdks.py (L66) and sdk73/all-results.json swapped dr/dalpha and dr/dbeta; historical archive is preserved unmodified.',
+            'swapped_calibration_delta_variance':cal_legacy,
+            'swapped_total_delta_variance':var_legacy,
+            'swapped_total_delta_standard_error':math.sqrt(var_legacy)
+        },
+        'boundary':'first-order expansion, ideal stable calibration preparations'}
 
 def case03():
     offset=.11;d=.65

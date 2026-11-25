@@ -1,696 +1,179 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="651.368083pt" height="368.39952pt" viewBox="0 0 651.368083 368.39952" xmlns="http://www.w3.org/2000/svg" version="1.1">
- <metadata>
-  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-   <cc:Work>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:format>image/svg+xml</dc:format>
-    <dc:creator>
-     <cc:Agent>
-      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
-     </cc:Agent>
-    </dc:creator>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <defs>
-  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
- </defs>
- <g id="figure_1">
-  <g id="patch_1">
-   <path d="M 0 368.39952
-L 651.368083 368.39952
-L 651.368083 0
-L 0 0
-z
-" style="fill: #ffffff"/>
-  </g>
-  <g id="axes_1">
-   <g id="patch_2">
-    <path d="M 58.01375 326.97202
-L 640.585198 326.97202
-L 640.585198 24.14175
-L 58.01375 24.14175
-z
-" style="fill: #ffffff"/>
-   </g>
-   <g id="matplotlib.axis_1">
-    <g id="xtick_1">
-     <g id="line2d_1">
-      <path d="M 84.49427 326.97202
-L 84.49427 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_2">
-      <defs>
-       <path id="m5966817c82" d="M 0 0
-L 0 3.5
-" style="stroke: #000000; stroke-width: 0.8"/>
-      </defs>
-      <g>
-       <use xlink:href="#m5966817c82" x="84.49427" y="326.97202" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_1">
-      <!-- $\mathdefault{10^{2}}$ -->
-      <g transform="translate(73.93427 343.090145)">
-       <text>
-        <tspan style="font: 12px 'DejaVu Sans'" x="0 7.634766" y="-0.171875">10</tspan>
-        <tspan style="font: 8.4px 'DejaVu Sans'" x="15.384375" y="-4.765625">2</tspan>
-       </text>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_2">
-     <g id="line2d_3">
-      <path d="M 349.299474 326.97202
-L 349.299474 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_4">
-      <g>
-       <use xlink:href="#m5966817c82" x="349.299474" y="326.97202" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_2">
-      <!-- $\mathdefault{10^{3}}$ -->
-      <g transform="translate(338.739474 343.090145)">
-       <text>
-        <tspan style="font: 12px 'DejaVu Sans'" x="0 7.634766" y="-0.171875">10</tspan>
-        <tspan style="font: 8.4px 'DejaVu Sans'" x="15.384375" y="-4.765625">3</tspan>
-       </text>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_3">
-     <g id="line2d_5">
-      <path d="M 614.104677 326.97202
-L 614.104677 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_6">
-      <g>
-       <use xlink:href="#m5966817c82" x="614.104677" y="326.97202" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_3">
-      <!-- $\mathdefault{10^{4}}$ -->
-      <g transform="translate(603.544677 343.090145)">
-       <text>
-        <tspan style="font: 12px 'DejaVu Sans'" x="0 7.634766" y="-0.28125">10</tspan>
-        <tspan style="font: 8.4px 'DejaVu Sans'" x="15.384375" y="-4.875">4</tspan>
-       </text>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_4">
-     <g id="line2d_7">
-      <path d="M 58.831995 326.97202
-L 58.831995 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_8">
-      <defs>
-       <path id="ma7c14c827d" d="M 0 0
-L 0 2
-" style="stroke: #000000; stroke-width: 0.6"/>
-      </defs>
-      <g>
-       <use xlink:href="#ma7c14c827d" x="58.831995" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_5">
-     <g id="line2d_9">
-      <path d="M 72.377449 326.97202
-L 72.377449 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_10">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="72.377449" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_6">
-     <g id="line2d_11">
-      <path d="M 164.20858 326.97202
-L 164.20858 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_12">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="164.20858" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_7">
-     <g id="line2d_13">
-      <path d="M 210.838461 326.97202
-L 210.838461 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_14">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="210.838461" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_8">
-     <g id="line2d_15">
-      <path d="M 243.922889 326.97202
-L 243.922889 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_16">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="243.922889" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_9">
-     <g id="line2d_17">
-      <path d="M 269.585165 326.97202
-L 269.585165 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_18">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="269.585165" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_10">
-     <g id="line2d_19">
-      <path d="M 290.552771 326.97202
-L 290.552771 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_20">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="290.552771" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_11">
-     <g id="line2d_21">
-      <path d="M 308.280629 326.97202
-L 308.280629 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_22">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="308.280629" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_12">
-     <g id="line2d_23">
-      <path d="M 323.637198 326.97202
-L 323.637198 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_24">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="323.637198" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_13">
-     <g id="line2d_25">
-      <path d="M 337.182652 326.97202
-L 337.182652 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_26">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="337.182652" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_14">
-     <g id="line2d_27">
-      <path d="M 429.013783 326.97202
-L 429.013783 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_28">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="429.013783" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_15">
-     <g id="line2d_29">
-      <path d="M 475.643665 326.97202
-L 475.643665 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_30">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="475.643665" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_16">
-     <g id="line2d_31">
-      <path d="M 508.728092 326.97202
-L 508.728092 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_32">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="508.728092" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_17">
-     <g id="line2d_33">
-      <path d="M 534.390368 326.97202
-L 534.390368 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_34">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="534.390368" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_18">
-     <g id="line2d_35">
-      <path d="M 555.357974 326.97202
-L 555.357974 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_36">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="555.357974" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_19">
-     <g id="line2d_37">
-      <path d="M 573.085832 326.97202
-L 573.085832 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_38">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="573.085832" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_20">
-     <g id="line2d_39">
-      <path d="M 588.442402 326.97202
-L 588.442402 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_40">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="588.442402" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_21">
-     <g id="line2d_41">
-      <path d="M 601.987856 326.97202
-L 601.987856 24.14175
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_42">
-      <g>
-       <use xlink:href="#ma7c14c827d" x="601.987856" y="326.97202" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="text_4">
-     <text style="font: 12px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="349.299474" y="358.703895" transform="rotate(-0 349.299474 358.703895)">Pre-specified number of trials N (log scale)</text>
-    </g>
-   </g>
-   <g id="matplotlib.axis_2">
-    <g id="ytick_1">
-     <g id="line2d_43">
-      <path d="M 58.01375 240.906403
-L 640.585198 240.906403
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_44">
-      <defs>
-       <path id="mbb1deff423" d="M 0 0
-L -3.5 0
-" style="stroke: #000000; stroke-width: 0.8"/>
-      </defs>
-      <g>
-       <use xlink:href="#mbb1deff423" x="58.01375" y="240.906403" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_5">
-      <!-- $\mathdefault{10^{-3}}$ -->
-      <g transform="translate(22.81375 245.465465)">
-       <text>
-        <tspan style="font: 12px 'DejaVu Sans'" x="0 7.634766" y="-0.171875">10</tspan>
-        <tspan style="font: 8.4px 'DejaVu Sans'" x="15.384375 22.422656" y="-4.765625">−3</tspan>
-       </text>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_2">
-     <g id="line2d_45">
-      <path d="M 58.01375 102.812733
-L 640.585198 102.812733
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_46">
-      <g>
-       <use xlink:href="#mbb1deff423" x="58.01375" y="102.812733" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_6">
-      <!-- $\mathdefault{10^{-2}}$ -->
-      <g transform="translate(22.81375 107.371795)">
-       <text>
-        <tspan style="font: 12px 'DejaVu Sans'" x="0 7.634766" y="-0.171875">10</tspan>
-        <tspan style="font: 8.4px 'DejaVu Sans'" x="15.384375 22.422656" y="-4.765625">−2</tspan>
-       </text>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_3">
-     <g id="line2d_47">
-      <path d="M 58.01375 313.112647
-L 640.585198 313.112647
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_48">
-      <defs>
-       <path id="mf6494dc865" d="M 0 0
-L -2 0
-" style="stroke: #000000; stroke-width: 0.6"/>
-      </defs>
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="313.112647" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_4">
-     <g id="line2d_49">
-      <path d="M 58.01375 295.859399
-L 640.585198 295.859399
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_50">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="295.859399" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_5">
-     <g id="line2d_51">
-      <path d="M 58.01375 282.476739
-L 640.585198 282.476739
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_52">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="282.476739" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_6">
-     <g id="line2d_53">
-      <path d="M 58.01375 271.542311
-L 640.585198 271.542311
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_54">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="271.542311" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_7">
-     <g id="line2d_55">
-      <path d="M 58.01375 262.297383
-L 640.585198 262.297383
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_56">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="262.297383" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_8">
-     <g id="line2d_57">
-      <path d="M 58.01375 254.289062
-L 640.585198 254.289062
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_58">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="254.289062" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_9">
-     <g id="line2d_59">
-      <path d="M 58.01375 247.225222
-L 640.585198 247.225222
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_60">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="247.225222" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_10">
-     <g id="line2d_61">
-      <path d="M 58.01375 199.336066
-L 640.585198 199.336066
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_62">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="199.336066" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_11">
-     <g id="line2d_63">
-      <path d="M 58.01375 175.018977
-L 640.585198 175.018977
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_64">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="175.018977" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_12">
-     <g id="line2d_65">
-      <path d="M 58.01375 157.765729
-L 640.585198 157.765729
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_66">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="157.765729" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_13">
-     <g id="line2d_67">
-      <path d="M 58.01375 144.383069
-L 640.585198 144.383069
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_68">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="144.383069" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_14">
-     <g id="line2d_69">
-      <path d="M 58.01375 133.448641
-L 640.585198 133.448641
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_70">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="133.448641" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_15">
-     <g id="line2d_71">
-      <path d="M 58.01375 124.203713
-L 640.585198 124.203713
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_72">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="124.203713" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_16">
-     <g id="line2d_73">
-      <path d="M 58.01375 116.195392
-L 640.585198 116.195392
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_74">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="116.195392" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_17">
-     <g id="line2d_75">
-      <path d="M 58.01375 109.131552
-L 640.585198 109.131552
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_76">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="109.131552" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_18">
-     <g id="line2d_77">
-      <path d="M 58.01375 61.242396
-L 640.585198 61.242396
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_78">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="61.242396" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="ytick_19">
-     <g id="line2d_79">
-      <path d="M 58.01375 36.925308
-L 640.585198 36.925308
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="line2d_80">
-      <g>
-       <use xlink:href="#mf6494dc865" x="58.01375" y="36.925308" style="stroke: #000000; stroke-width: 0.6"/>
-      </g>
-     </g>
-    </g>
-    <g id="text_7">
-     <text style="font: 12px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="16.318125" y="175.556885" transform="rotate(-90 16.318125 175.556885)">Failure probability upper bound (log scale)</text>
-    </g>
-   </g>
-   <g id="line2d_81">
-    <path d="M 84.49427 37.906762
-L 164.20858 79.029621
-L 269.585165 133.713592
-L 442.559237 223.778452
-L 614.104677 313.207008
-L 614.104677 313.207008
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke: #176b64; stroke-width: 2.5; stroke-linecap: square"/>
-   </g>
-   <g id="line2d_82">
-    <path d="M 58.01375 240.906403
-L 640.585198 240.906403
-" clip-path="url(#p57f7be6535)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #944528; stroke-width: 1.5"/>
-   </g>
-   <g id="patch_3">
-    <path d="M 58.01375 326.97202
-L 58.01375 24.14175
-" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
-   </g>
-   <g id="patch_4">
-    <path d="M 58.01375 326.97202
-L 640.585198 326.97202
-" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
-   </g>
-   <g id="PathCollection_1">
-    <defs>
-     <path id="mc945a69a87" d="M 0 3.708099
-C 0.983399 3.708099 1.926654 3.317391 2.622022 2.622022
-C 3.317391 1.926654 3.708099 0.983399 3.708099 0
-C 3.708099 -0.983399 3.317391 -1.926654 2.622022 -2.622022
-C 1.926654 -3.317391 0.983399 -3.708099 0 -3.708099
-C -0.983399 -3.708099 -1.926654 -3.317391 -2.622022 -2.622022
-C -3.317391 -1.926654 -3.708099 -0.983399 -3.708099 0
-C -3.708099 0.983399 -3.317391 1.926654 -2.622022 2.622022
-C -1.926654 3.317391 -0.983399 3.708099 0 3.708099
-z
-" style="stroke: #944528"/>
-    </defs>
-    <g clip-path="url(#p57f7be6535)">
-     <use xlink:href="#mc945a69a87" x="349.299474" y="175.194164" style="fill: #944528; stroke: #944528"/>
-     <use xlink:href="#mc945a69a87" x="475.451833" y="240.921732" style="fill: #944528; stroke: #944528"/>
-    </g>
-   </g>
-   <g id="patch_5">
-    <path d="M 421.551849 152.294602
-Q 386.380413 163.441786 351.208976 174.58897
-" style="fill: none; stroke: #000000; stroke-linecap: round"/>
-   </g>
-   <g id="text_8">
-    <text style="font: 12px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="379.299474" y="147.194164" transform="rotate(-0 379.299474 147.194164)">N = 1000: 0.00299125</text>
-   </g>
-   <g id="patch_6">
-    <path d="M 551.570296 213.103609
-Q 514.45186 226.668849 477.333423 240.23409
-" style="fill: none; stroke: #000000; stroke-linecap: round"/>
-   </g>
-   <g id="text_9">
-    <text style="font: 12px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="505.451833" y="207.921732" transform="rotate(-0 505.451833 207.921732)">N = 2995: below 0.001</text>
-   </g>
-   <g id="text_10">
-    <text style="font: 14.4px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="349.299474" y="18.14175" transform="rotate(-0 349.299474 18.14175)">Zero observed failures still leave uncertainty</text>
-   </g>
-   <g id="legend_1">
-    <g id="patch_7">
-     <path d="M 367.924573 57.762375
-L 634.285198 57.762375
-Q 636.085198 57.762375 636.085198 55.962375
-L 636.085198 30.44175
-Q 636.085198 28.64175 634.285198 28.64175
-L 367.924573 28.64175
-Q 366.124573 28.64175 366.124573 30.44175
-L 366.124573 55.962375
-Q 366.124573 57.762375 367.924573 57.762375
-z
-" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
-    </g>
-    <g id="line2d_83">
-     <path d="M 369.724573 35.930344
-L 378.724573 35.930344
-L 387.724573 35.930344
-" style="fill: none; stroke: #176b64; stroke-width: 2.5; stroke-linecap: square"/>
-    </g>
-    <g id="text_11">
-     <text style="font: 9px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="394.924573" y="39.080344" transform="rotate(-0 394.924573 39.080344)">Exact one-sided 95% upper bound after zero failures</text>
-    </g>
-    <g id="line2d_84">
-     <path d="M 369.724573 49.140656
-L 378.724573 49.140656
-L 387.724573 49.140656
-" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #944528; stroke-width: 1.5"/>
-    </g>
-    <g id="text_12">
-     <text style="font: 9px 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="394.924573" y="52.290656" transform="rotate(-0 394.924573 52.290656)">Target failure probability: 0.001</text>
-    </g>
-   </g>
-  </g>
- </g>
- <defs>
-  <clipPath id="p57f7be6535">
-   <rect x="58.01375" y="24.14175" width="582.571448" height="302.83027"/>
-  </clipPath>
- </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">零失败测试的单侧 95% 错误概率上界与预定样本数 N</title>
+  <desc id="desc">双对数坐标精确绘制独立同分布试验观测到 0 次失败时的单侧 95% 错误概率上界 p_U = 1 − 0.05^(1/N)（N ∈ [100, 10000]），并标出目标门槛 p* = 0.001 以及两个关键里程碑：N = 1,000 时 p_U ≈ 0.299%，须至 N = 2,995 才首次压至 0.1% 以下。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:19.5px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:400;fill:#3e566d}
+.xsb{font-size:11px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.65;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.grid-minor{stroke:#e9eff5;stroke-width:0.8;stroke-dasharray:3 3;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.4}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.95;stroke:#9cb1c4;stroke-width:1.15}
+.area3{fill:#1e7a5c;fill-opacity:.10}
+.bar1{fill:#2678b5;fill-opacity:.86;stroke:#155585;stroke-width:1.3}
+.bar2{fill:#d96248;fill-opacity:.82;stroke:#a63824;stroke-width:1.3}
+.hollow-c1{fill:#ffffff;stroke:#1b6ca8;stroke-width:2.0}
+.hollow-c2{fill:#ffffff;stroke:#c74b34;stroke-width:2.1}
+.hollow-c3{fill:#ffffff;stroke:#1e7a5c;stroke-width:2.0}
+.hollow-c4{fill:#ffffff;stroke:#b57614;stroke-width:2.1}
+.hatch-bar{stroke:#ffffff;stroke-width:1.4;stroke-opacity:.55}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .grid-minor{stroke:#213344}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#1c2c3b;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.95;stroke:#4f6b85}
+  .area3{fill:#5dd1a8;fill-opacity:.14}
+  .bar1{fill:#49a4df;fill-opacity:.88;stroke:#8fd4fa}
+  .bar2{fill:#e47660;fill-opacity:.85;stroke:#f8a896}
+  .hollow-c1{fill:#16222e;stroke:#6bc2f5}
+  .hollow-c2{fill:#16222e;stroke:#f28872}
+  .hollow-c3{fill:#16222e;stroke:#5dd1a8}
+  .hollow-c4{fill:#16222e;stroke:#f0ba5a}
+  .hatch-bar{stroke:#0f1720;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-bar" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bar" x1="0" y1="0" x2="0" y2="7"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">零失败测试的单侧 95% 错误概率上界与预定样本数 N</text>
+  <text class="subtitle" x="34" y="77">精确二项反演 p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> = 1 − α<tspan dy="-4.5" font-size="74%">1/N</tspan><tspan dy="4.5">&#8203;</tspan>（α = 0.05，近乎“三倍法则” 3/N）：观测到 0 次失败不等于真实错误率为零</text>
+  <rect class="panel" x="28" y="96" width="944" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 958 Q 971 97 971 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="44" y="120">双对数坐标下零失败 95% 上界曲线与 p* = 0.001 目标门槛（N ∈ [100, 10,000]）</text>
+  <rect class="area3" x="122" y="343.33" width="560" height="90.67"/>
+  <text class="xsb c3-txt" x="136" y="420">达标区：p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> ≤ 0.001（0.1%）</text>
+  <line class="grid-minor" x1="206.29" y1="162" x2="206.29" y2="434"/>
+  <line class="grid-minor" x1="486.29" y1="162" x2="486.29" y2="434"/>
+  <line class="grid-minor" x1="122" y1="406.71" x2="682" y2="406.71"/>
+  <line class="grid-minor" x1="122" y1="316.04" x2="682" y2="316.04"/>
+  <line class="grid-minor" x1="122" y1="225.37" x2="682" y2="225.37"/>
+  <line class="grid-minor" x1="255.59" y1="162" x2="255.59" y2="434"/>
+  <line class="grid-minor" x1="535.59" y1="162" x2="535.59" y2="434"/>
+  <line class="grid-minor" x1="122" y1="390.74" x2="682" y2="390.74"/>
+  <line class="grid-minor" x1="122" y1="300.07" x2="682" y2="300.07"/>
+  <line class="grid-minor" x1="122" y1="209.41" x2="682" y2="209.41"/>
+  <line class="grid-minor" x1="317.71" y1="162" x2="317.71" y2="434"/>
+  <line class="grid-minor" x1="597.71" y1="162" x2="597.71" y2="434"/>
+  <line class="grid-minor" x1="122" y1="370.63" x2="682" y2="370.63"/>
+  <line class="grid-minor" x1="122" y1="279.96" x2="682" y2="279.96"/>
+  <line class="grid-minor" x1="122" y1="189.29" x2="682" y2="189.29"/>
+  <line class="grid" x1="122" y1="434" x2="682" y2="434"/>
+  <text class="sm" x="112" y="438" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="122" y1="343.33" x2="682" y2="343.33"/>
+  <text class="sm" x="112" y="347.33" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="122" y1="252.67" x2="682" y2="252.67"/>
+  <text class="sm" x="112" y="256.67" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-2</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="122" y1="162" x2="682" y2="162"/>
+  <text class="sm" x="112" y="166" text-anchor="end">10<tspan dy="-4.5" font-size="74%">-1</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="122" y1="162" x2="122" y2="434"/>
+  <text class="sm" x="122" y="453" text-anchor="middle">100</text>
+  <line class="grid" x1="255.59" y1="162" x2="255.59" y2="434"/>
+  <text class="sm" x="255.59" y="453" text-anchor="middle">300</text>
+  <line class="grid" x1="402" y1="162" x2="402" y2="434"/>
+  <text class="sm" x="402" y="453" text-anchor="middle">1,000</text>
+  <line class="grid" x1="535.59" y1="162" x2="535.59" y2="434"/>
+  <text class="sm" x="535.59" y="453" text-anchor="middle">3,000</text>
+  <line class="grid" x1="682" y1="162" x2="682" y2="434"/>
+  <text class="sm" x="682" y="453" text-anchor="middle">10,000</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="7 4" x1="122" y1="343.33" x2="682" y2="343.33"/>
+  <text class="xsb c2-txt" x="136" y="336.33">目标错误率门槛 p* = 0.001（0.1%）</text>
+  <line class="axis" x1="122" y1="434" x2="690" y2="434"/>
+  <polygon class="axis-fill" points="690,434 682.5,437.6 682.5,430.4"/>
+  <line class="axis" x1="122" y1="434" x2="122" y2="152"/>
+  <polygon class="axis-fill" points="122,152 125.6,159.5 118.4,159.5"/>
+  <text class="lbl" x="402" y="478" text-anchor="middle">预先固定的独立试验次数 N（对数刻度）</text>
+  <text class="lbl" x="54" y="298" text-anchor="middle" transform="rotate(-90 54 298)">单侧 95% 错误概率上界 p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan>（对数刻度）</text>
+  <path class="c1" stroke-width="2.8" d="M 122 210.05 L 126.67 211.54 L 131.33 213.03 L 136 214.52 L 140.67 216.01 L 145.33 217.51 L 150 219 L 154.67 220.49 L 159.33 221.99 L 164 223.48 L 168.67 224.98 L 173.33 226.47 L 178 227.97 L 182.67 229.47 L 187.33 230.96 L 192 232.46 L 196.67 233.96 L 201.33 235.46 L 206 236.96 L 210.67 238.46 L 215.33 239.96 L 220 241.46 L 224.67 242.96 L 229.33 244.46 L 234 245.96 L 238.67 247.47 L 243.33 248.97 L 248 250.47 L 252.67 251.98 L 257.33 253.48 L 262 254.98 L 266.67 256.49 L 271.33 257.99 L 276 259.5 L 280.67 261 L 285.33 262.51 L 290 264.01 L 294.67 265.52 L 299.33 267.02 L 304 268.53 L 308.67 270.04 L 313.33 271.54 L 318 273.05 L 322.67 274.55 L 327.33 276.06 L 332 277.57 L 336.67 279.08 L 341.33 280.58 L 346 282.09 L 350.67 283.6 L 355.33 285.11 L 360 286.61 L 364.67 288.12 L 369.33 289.63 L 374 291.14 L 378.67 292.65 L 383.33 294.15 L 388 295.66 L 392.67 297.17 L 397.33 298.68 L 402 300.19 L 406.67 301.7 L 411.33 303.21 L 416 304.72 L 420.67 306.23 L 425.33 307.73 L 430 309.24 L 434.67 310.75 L 439.33 312.26 L 444 313.77 L 448.67 315.28 L 453.33 316.79 L 458 318.3 L 462.67 319.81 L 467.33 321.32 L 472 322.83 L 476.67 324.34 L 481.33 325.85 L 486 327.36 L 490.67 328.87 L 495.33 330.38 L 500 331.89 L 504.67 333.4 L 509.33 334.91 L 514 336.42 L 518.67 337.93 L 523.33 339.44 L 528 340.95 L 532.67 342.46 L 537.33 343.97 L 542 345.48 L 546.67 346.99 L 551.33 348.5 L 556 350.01 L 560.67 351.52 L 565.33 353.03 L 570 354.55 L 574.67 356.06 L 579.33 357.57 L 584 359.08 L 588.67 360.59 L 593.33 362.1 L 598 363.61 L 602.67 365.12 L 607.33 366.63 L 612 368.14 L 616.67 369.65 L 621.33 371.16 L 626 372.67 L 630.67 374.18 L 635.33 375.69 L 640 377.21 L 644.67 378.72 L 649.33 380.23 L 654 381.74 L 658.67 383.25 L 663.33 384.76 L 668 386.27 L 672.67 387.78 L 677.33 389.29 L 682 390.8"/>
+  <line class="guide" x1="402" y1="306.19" x2="402" y2="434"/>
+  <line class="guide" x1="535.39" y1="349.34" x2="535.39" y2="434"/>
+  <circle class="c2-fill" cx="402" cy="300.19" r="5.8"/>
+  <circle class="c2-fill" cx="535.39" cy="343.34" r="5.8"/>
+  <rect class="c1-soft" x="436" y="190" width="212" height="46" rx="8"/>
+  <text class="xsb c1-txt" x="542" y="209" text-anchor="middle">N = 1,000 次零失败</text>
+  <text class="xs c1-txt" x="542" y="226" text-anchor="middle">p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> = 0.002991（约 0.299%）</text>
+  <line class="c1" stroke-width="1.4" x1="454" y1="236" x2="407" y2="295.19"/>
+  <rect class="c2-soft" x="498" y="264" width="174" height="46" rx="8"/>
+  <text class="xsb c2-txt" x="585" y="283" text-anchor="middle">N = 2,995 次零失败</text>
+  <text class="xs c2-txt" x="585" y="300" text-anchor="middle">首次压至 0.001（0.1%）以下</text>
+  <line class="c2" stroke-width="1.4" x1="535.39" y1="310" x2="535.39" y2="336.34"/>
+  <rect class="pill" x="704" y="154" width="252" height="326" rx="10"/>
+  <text class="smb" x="720" y="177">图例与精确二项公式</text>
+  <line class="c1" stroke-width="2.6" x1="720" y1="198" x2="744" y2="198"/>
+  <text class="xs" x="752" y="202">零失败单侧 95% 精确上界</text>
+  <line class="c2" stroke-width="2.0" stroke-dasharray="6 3" x1="720" y1="220" x2="744" y2="220"/>
+  <text class="xs" x="752" y="224">目标阈值 p* = 0.001</text>
+  <circle class="c2-fill" cx="732" cy="242" r="4.5"/>
+  <text class="xs" x="752" y="246">关键样本量验证点</text>
+  <line class="grid" x1="718" y1="260" x2="942" y2="260"/>
+  <text class="xsb" x="720" y="280">(1 − p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan>)<tspan dy="-4.5" font-size="74%">N</tspan><tspan dy="4.5">&#8203;</tspan> = α （α = 0.05）</text>
+  <text class="xs c1-txt" x="720" y="300">p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> = 1 − 0.05<tspan dy="-4.5" font-size="74%">1/N</tspan><tspan dy="4.5">&#8203;</tspan> ≈ 3 / N</text>
+  <text class="xs" x="720" y="320">N ≥ ⌈ln(α) / ln(1 − p*)⌉</text>
+  <line class="grid" x1="718" y1="336" x2="942" y2="336"/>
+  <text class="xsb" x="720" y="356">常见样本量速查（0 失败）</text>
+  <text class="xs" x="720" y="378">N = 100     → p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> ≈ 2.95%</text>
+  <text class="xs" x="720" y="398">N = 1,000   → p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.299%</text>
+  <text class="xs c2-txt" x="720" y="418">N = 2,995   → p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> ≤ 0.100%</text>
+  <text class="xs" x="720" y="438">N = 10,000  → p<tspan dy="3" font-size="74%">U</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.030%</text>
+  <text class="xs" x="720" y="458">p* = 10<tspan dy="-4.5" font-size="74%">−6</tspan><tspan dy="4.5">&#8203;</tspan>   → 需 N ≥ 2,995,731</text>
+  <rect class="note" x="44" y="496" width="912" height="40" rx="9"/>
+  <text class="sm" x="500" y="520" text-anchor="middle">前提边界：样本数 N 须在试验前预先固定且独立同分布；反复凑“连续零失败”区间再套用公式将破坏 95% 覆盖保证。</text>
 </svg>

@@ -1,0 +1,100 @@
+name: Deploy Reader to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "handbook/**"
+      - "tools/reader/**"
+      - "codes/**"
+      - "dist/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: "tools/reader/package-lock.json"
+
+      - name: Install reader build dependencies
+        run: |
+          npm ci --prefix tools/reader --ignore-scripts --no-audit --no-fund
+          npm exec --prefix tools/reader -- playwright install --with-deps chromium
+
+      - name: Build offline-first reader
+        run: node tools/reader/build.mjs
+
+      - name: Verify reader layout, formulas, audio, SVG, and interactive lab
+        run: node tools/reader/verify.mjs
+
+      - name: Stage GitHub Pages artifact
+        run: |
+          rm -rf _pages
+          mkdir -p _pages
+          cp -a reader/. _pages/
+          touch _pages/.nojekyll
+
+          if [ -d dist ] && ls dist/*.pdf dist/*.epub >/dev/null 2>&1; then
+            mkdir -p _pages/dist
+            cp -a dist/*.pdf _pages/dist/ 2>/dev/null || true
+            cp -a dist/*.epub _pages/dist/ 2>/dev/null || true
+            node -e '
+              const fs = require("node:fs");
+              const path = require("node:path");
+              const files = fs.readdirSync("_pages/dist")
+                .filter(f => /\.(pdf|epub)$/i.test(f))
+                .sort();
+              const rows = files.map(f => {
+                const mb = (fs.statSync(path.join("_pages/dist", f)).size / (1024 * 1024)).toFixed(2);
+                return `<li><a href="./${f}">${f}</a> <span>(${mb} MiB)</span></li>`;
+              }).join("\n");
+              const html = `<!doctype html>
+              <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+              <title>电子书下载 · 量子计算手册</title>
+              <style>body{font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}</style>
+              </head><body>
+              <h1>量子计算手册 · 电子书下载</h1>
+              <p>以下离线出版物与当前在线阅读版同源构建：</p>
+              <ul>${rows}</ul>
+              <p><a href="../index.html">← 返回在线阅读版首页</a></p>
+              </body></html>`;
+              fs.writeFileSync("_pages/dist/index.html", html);
+            '
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_pages"
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

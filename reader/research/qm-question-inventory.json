@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-10-13T09:03:34.498Z",
+  "generatedAt": "2026-11-25T08:49:48.014Z",
   "reviewer": "primary agent",
-  "chapters": 24,
-  "questions": 251,
-  "answers": 251,
-  "matchingFoundationDrafts": 4,
+  "chapters": 26,
+  "questions": 271,
+  "answers": 271,
+  "foundationArchivesAligned": 4,
+  "foundationMathChecks": 4,
   "globalPhaseProbabilityChecks": 21,
   "counts": [
     {
@@ -106,6 +107,16 @@
       "file": "handbook/19-engineering-architecture.md",
       "questions": 12,
       "answers": 12
+    },
+    {
+      "file": "handbook/20-quantum-sensing-metrology.md",
+      "questions": 10,
+      "answers": 10
+    },
+    {
+      "file": "handbook/21-stabilizer-classical-simulation.md",
+      "questions": 10,
+      "answers": 10
     },
     {
       "file": "handbook/quantum-mechanics/01-experiments-states.md",

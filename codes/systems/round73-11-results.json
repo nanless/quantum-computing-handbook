@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "cases": {
+    "11": {
+      "rescued": 160,
+      "regressed": 47,
+      "paired_failure_difference": -0.0113,
+      "exact_p": 1.2996577613713636e-15,
+      "zero_failure_simultaneous_upper": 0.0007269754644569915
+    }
+  },
+  "scope": "stdlib archive and mathematical checks; not SDK rerun"
+}

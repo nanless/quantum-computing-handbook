@@ -29,7 +29,7 @@
     "required_n": 2995,
     "coverage_check_n": 20,
     "grid_points": 201,
-    "minimum_grid_coverage": 0.9510256111816644
+    "minimum_grid_coverage": 0.9510256111816647
   },
   "wall_clock_allocation": {
     "equal_shots": {
@@ -59,7 +59,7 @@
       -0.2
     ],
     "gamma": 2.0,
-    "expectation": 0.7,
+    "expectation": 0.6999999999999998,
     "variance": 3.51,
     "independent_CNOT_cut_bounds": {
       "0": 1,

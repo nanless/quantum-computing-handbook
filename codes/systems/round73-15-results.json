@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "cases": {
+    "15": {
+      "wrong_cross_trace": 0,
+      "correct_projector_trace": 1,
+      "wrong_cross_is_hermitian": false
+    }
+  },
+  "scope": "stdlib archive and mathematical checks; not SDK rerun"
+}

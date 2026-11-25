@@ -186,7 +186,8 @@ def caseq3():
         return omega**2/f**2 * math.sin(f*t/2)**2
     plus, minus = prob(delta), prob(-delta)
     close(plus, minus)
-    # New, explicit Ramsey model H_eff = hbar*delta*Z/2; not ZE of Q3 drive.
+    # Computational-basis rotating-frame Ramsey model H_eff = hbar*Delta*Z/2
+    # (Z = |0><0|-|1><1|, Delta = omega_d - omega_0, aligned with Q3 and Ch. 14).
     tau = 1/(4*6e6)
     y = [inner(mv(rotation(Z, d*tau), PLUS),
                mv(Y, mv(rotation(Z, d*tau), PLUS))).real for d in [delta, -delta]]

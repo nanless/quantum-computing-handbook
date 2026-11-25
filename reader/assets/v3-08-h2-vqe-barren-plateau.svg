@@ -1,0 +1,292 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">H₂ 分子 STO-3G 解离势能面与动力李代数贫瘠高原标度</title>
+  <desc id="desc">左面板从头计算最小基组 STO-3G 下 H₂ 分子解离势能面（R = 0.4–2.6 Å）：精确 FCI、单参数 UCCSD-VQE 与 SQD 曲线重合，并附化学精度带（±1.6 mHa，示意加宽）；限制 Hartree–Fock (RHF) 在拉键区因静关联误差剧烈飙升。右面板在对数纵轴展示单位纯度/全局观测量条件下的梯度方差标度 1/dim(g) 随量子比特数 n 的变化：指数 DLA su(2^n) 坠入采样噪声地板，而多项式 DLA so(2n) 与 O(n³) 保持缓慢衰减。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.0}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.c5{stroke:#6b4ea8;fill:none}
+.c5-fill{fill:#6b4ea8}
+.c5-txt{fill:#51358a}
+.c5-soft{fill:#efe9fb;stroke:#6b4ea8;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.14}
+.area3{fill:#1e7a5c;fill-opacity:.15}
+.area4{fill:#b57614;fill-opacity:.13}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.4}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.hm-pos1{fill:#1b6ca8;stroke:#ffffff;stroke-width:1.4}
+.hm-pos2{fill:#2d82bf;stroke:#ffffff;stroke-width:1.4}
+.hm-pos3{fill:#f3b562;stroke:#ffffff;stroke-width:1.4}
+.hm-neg3{fill:#d96b57;stroke:#ffffff;stroke-width:1.4}
+.hm-zero{fill:#edf2f7;stroke:#cbd5e1;stroke-width:1.1}
+.hm-hi{fill:none;stroke:#b57614;stroke-width:2.0;stroke-dasharray:4 2}
+.hm-inv{fill:#ffffff;font-size:10.5px;font-weight:700}
+.hm-dark{fill:#13263a;font-size:10.5px;font-weight:700}
+.hm-muted{fill:#64748b;font-size:10.5px;font-weight:500}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .c5{stroke:#b79ef5}
+  .c5-fill{fill:#b79ef5}
+  .c5-txt{fill:#cbb8fa}
+  .c5-soft{fill:#2d2147;stroke:#b79ef5}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.17}
+  .area2{fill:#f28872;fill-opacity:.18}
+  .area3{fill:#5dd1a8;fill-opacity:.18}
+  .area4{fill:#f0ba5a;fill-opacity:.17}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .badge-txt{fill:#0f1720}
+  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
+  .hm-pos2{fill:#3a92cc;stroke:#16222e}
+  .hm-pos3{fill:#b87a24;stroke:#16222e}
+  .hm-neg3{fill:#b84b3a;stroke:#16222e}
+  .hm-zero{fill:#213243;stroke:#354c61}
+  .hm-hi{stroke:#f0ba5a}
+  .hm-inv{fill:#ffffff}
+  .hm-dark{fill:#eef6ff}
+  .hm-muted{fill:#8fa9c2}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">H₂ (STO-3G) 分子解离势能面与动力李代数贫瘠高原标度</text>
+  <text class="subtitle" x="34" y="76">左：第一性原理 STO-3G 精确 FCI / VQE / SQD vs 限制 RHF 解离失真；右：单位纯度/全局观测量条件 1/dim(g) 梯度方差标度</text>
+  <rect class="panel" x="28" y="94" width="472" height="458" rx="14"/>
+  <path class="phead" d="M 42 95 H 486 Q 499 95 499 108 V 130 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="130" x2="499" y2="130"/>
+  <text class="sec" x="44" y="117">H₂ (STO-3G) 解离势能面与化学精度 1.6 mHa</text>
+  <rect class="panel" x="516" y="94" width="456" height="458" rx="14"/>
+  <path class="phead" d="M 530 95 H 958 Q 971 95 971 108 V 130 H 517 V 108 Q 517 95 530 95 Z"/>
+  <line class="grid" x1="517" y1="130" x2="971" y2="130"/>
+  <text class="sec" x="532" y="117">贫瘠高原标度：1/dim(g)（单位纯度/全局观测量条件）</text>
+  <line class="grid" x1="96" y1="456" x2="480" y2="456"/>
+  <text class="sm" x="88" y="460" text-anchor="end">−1.2</text>
+  <line class="grid" x1="96" y1="407" x2="480" y2="407"/>
+  <text class="sm" x="88" y="411" text-anchor="end">−1.1</text>
+  <line class="grid" x1="96" y1="358" x2="480" y2="358"/>
+  <text class="sm" x="88" y="362" text-anchor="end">−1.0</text>
+  <line class="grid" x1="96" y1="309" x2="480" y2="309"/>
+  <text class="sm" x="88" y="313" text-anchor="end">−0.9</text>
+  <line class="grid" x1="96" y1="260" x2="480" y2="260"/>
+  <text class="sm" x="88" y="264" text-anchor="end">−0.8</text>
+  <line class="grid" x1="96" y1="211" x2="480" y2="211"/>
+  <text class="sm" x="88" y="215" text-anchor="end">−0.7</text>
+  <line class="grid" x1="96" y1="162" x2="480" y2="162"/>
+  <text class="sm" x="88" y="166" text-anchor="end">−0.6</text>
+  <line class="grid" x1="113.45" y1="162" x2="113.45" y2="456"/>
+  <text class="sm" x="113.45" y="473" text-anchor="middle">0.5</text>
+  <line class="grid" x1="200.73" y1="162" x2="200.73" y2="456"/>
+  <text class="sm" x="200.73" y="473" text-anchor="middle">1.0</text>
+  <line class="grid" x1="288" y1="162" x2="288" y2="456"/>
+  <text class="sm" x="288" y="473" text-anchor="middle">1.5</text>
+  <line class="grid" x1="375.27" y1="162" x2="375.27" y2="456"/>
+  <text class="sm" x="375.27" y="473" text-anchor="middle">2.0</text>
+  <line class="grid" x1="462.55" y1="162" x2="462.55" y2="456"/>
+  <text class="sm" x="462.55" y="473" text-anchor="middle">2.5</text>
+  <line class="axis" x1="96" y1="456" x2="488" y2="456"/>
+  <polygon class="axis-fill" points="488,456 481,459.22 481,452.78"/>
+  <line class="axis" x1="96" y1="456" x2="96" y2="152"/>
+  <polygon class="axis-fill" points="96,152 99.22,159 92.78,159"/>
+  <text class="sm" x="288" y="494" text-anchor="middle">核间距键长 R (Å)</text>
+  <text class="sm" x="45" y="309" text-anchor="middle" transform="rotate(-90 45 309)">分子总能量 E (Ha)</text>
+  <path class="area3" d="M 96 312.99 L 100.36 335.65 L 104.73 354.28 L 109.09 369.58 L 113.45 382.09 L 117.82 392.26 L 122.18 400.45 L 126.55 406.96 L 130.91 412.04 L 135.27 415.9 L 139.64 418.71 L 144 420.63 L 148.36 421.79 L 152.73 422.3 L 157.09 422.25 L 161.45 421.72 L 165.82 420.79 L 170.18 419.52 L 174.55 417.96 L 178.91 416.15 L 183.27 414.13 L 187.64 411.95 L 192 409.62 L 196.36 407.17 L 200.73 404.62 L 205.09 402 L 209.45 399.33 L 213.82 396.61 L 218.18 393.86 L 222.55 391.11 L 226.91 388.35 L 231.27 385.59 L 235.64 382.86 L 240 380.16 L 244.36 377.49 L 248.73 374.87 L 253.09 372.3 L 257.45 369.79 L 261.82 367.34 L 266.18 364.95 L 270.55 362.64 L 274.91 360.4 L 279.27 358.24 L 283.64 356.16 L 288 354.15 L 292.36 352.23 L 296.73 350.39 L 301.09 348.64 L 305.45 346.96 L 309.82 345.37 L 314.18 343.85 L 318.55 342.42 L 322.91 341.06 L 327.27 339.78 L 331.64 338.56 L 336 337.42 L 340.36 336.35 L 344.73 335.34 L 349.09 334.4 L 353.45 333.51 L 357.82 332.69 L 362.18 331.91 L 366.55 331.19 L 370.91 330.52 L 375.27 329.89 L 379.64 329.31 L 384 328.77 L 388.36 328.27 L 392.73 327.8 L 397.09 327.37 L 401.45 326.97 L 405.82 326.6 L 410.18 326.26 L 414.55 325.94 L 418.91 325.65 L 423.27 325.38 L 427.64 325.13 L 432 324.9 L 436.36 324.69 L 440.73 324.49 L 445.09 324.31 L 449.45 324.15 L 453.82 324 L 458.18 323.86 L 462.55 323.73 L 466.91 323.61 L 471.27 323.5 L 475.64 323.4 L 480 323.31 L 480 329.19 L 475.64 329.28 L 471.27 329.38 L 466.91 329.49 L 462.55 329.61 L 458.18 329.74 L 453.82 329.88 L 449.45 330.03 L 445.09 330.19 L 440.73 330.37 L 436.36 330.57 L 432 330.78 L 427.64 331.01 L 423.27 331.26 L 418.91 331.53 L 414.55 331.82 L 410.18 332.14 L 405.82 332.48 L 401.45 332.85 L 397.09 333.25 L 392.73 333.68 L 388.36 334.15 L 384 334.65 L 379.64 335.19 L 375.27 335.77 L 370.91 336.4 L 366.55 337.07 L 362.18 337.79 L 357.82 338.57 L 353.45 339.39 L 349.09 340.28 L 344.73 341.22 L 340.36 342.23 L 336 343.3 L 331.64 344.44 L 327.27 345.66 L 322.91 346.94 L 318.55 348.3 L 314.18 349.73 L 309.82 351.25 L 305.45 352.84 L 301.09 354.52 L 296.73 356.27 L 292.36 358.11 L 288 360.03 L 283.64 362.04 L 279.27 364.12 L 274.91 366.28 L 270.55 368.52 L 266.18 370.83 L 261.82 373.22 L 257.45 375.67 L 253.09 378.18 L 248.73 380.75 L 244.36 383.37 L 240 386.04 L 235.64 388.74 L 231.27 391.47 L 226.91 394.23 L 222.55 396.99 L 218.18 399.74 L 213.82 402.49 L 209.45 405.21 L 205.09 407.88 L 200.73 410.5 L 196.36 413.05 L 192 415.5 L 187.64 417.83 L 183.27 420.01 L 178.91 422.03 L 174.55 423.84 L 170.18 425.4 L 165.82 426.67 L 161.45 427.6 L 157.09 428.13 L 152.73 428.18 L 148.36 427.67 L 144 426.51 L 139.64 424.59 L 135.27 421.78 L 130.91 417.92 L 126.55 412.84 L 122.18 406.33 L 117.82 398.14 L 113.45 387.97 L 109.09 375.46 L 104.73 360.16 L 100.36 341.53 L 96 318.87 Z"/>
+  <path class="c2" stroke-width="2.4" stroke-dasharray="8 4" d="M 96 311.14 L 100.36 333.53 L 104.73 351.88 L 109.09 366.88 L 113.45 379.07 L 117.82 388.9 L 122.18 396.73 L 126.55 402.87 L 130.91 407.55 L 135.27 410.99 L 139.64 413.37 L 144 414.83 L 148.36 415.5 L 152.73 415.5 L 157.09 414.91 L 161.45 413.83 L 165.82 412.32 L 170.18 410.43 L 174.55 408.23 L 178.91 405.75 L 183.27 403.04 L 187.64 400.12 L 192 397.02 L 196.36 393.77 L 200.73 390.39 L 205.09 386.9 L 209.45 383.31 L 213.82 379.64 L 218.18 375.9 L 222.55 372.11 L 226.91 368.27 L 231.27 364.4 L 235.64 360.5 L 240 356.59 L 244.36 352.67 L 248.73 348.74 L 253.09 344.82 L 257.45 340.92 L 261.82 337.03 L 266.18 333.16 L 270.55 329.33 L 274.91 325.52 L 279.27 321.75 L 283.64 318.02 L 288 314.33 L 292.36 310.68 L 296.73 307.09 L 301.09 303.54 L 305.45 300.05 L 309.82 296.61 L 314.18 293.22 L 318.55 289.9 L 322.91 286.63 L 327.27 283.41 L 331.64 280.26 L 336 277.17 L 340.36 274.14 L 344.73 271.16 L 349.09 268.25 L 353.45 265.4 L 357.82 262.61 L 362.18 259.88 L 366.55 257.22 L 370.91 254.61 L 375.27 252.06 L 379.64 249.57 L 384 247.14 L 388.36 244.76 L 392.73 242.45 L 397.09 240.19 L 401.45 237.98 L 405.82 235.83 L 410.18 233.74 L 414.55 231.69 L 418.91 229.7 L 423.27 227.76 L 427.64 225.87 L 432 224.03 L 436.36 222.24 L 440.73 220.49 L 445.09 218.8 L 449.45 217.14 L 453.82 215.53 L 458.18 213.97 L 462.55 212.44 L 466.91 210.96 L 471.27 209.52 L 475.64 208.11 L 480 206.75"/>
+  <path class="c1" stroke-width="2.8" d="M 96 315.93 L 100.36 338.59 L 104.73 357.22 L 109.09 372.52 L 113.45 385.03 L 117.82 395.2 L 122.18 403.39 L 126.55 409.9 L 130.91 414.98 L 135.27 418.84 L 139.64 421.65 L 144 423.57 L 148.36 424.73 L 152.73 425.24 L 157.09 425.19 L 161.45 424.66 L 165.82 423.73 L 170.18 422.46 L 174.55 420.9 L 178.91 419.09 L 183.27 417.07 L 187.64 414.89 L 192 412.56 L 196.36 410.11 L 200.73 407.56 L 205.09 404.94 L 209.45 402.27 L 213.82 399.55 L 218.18 396.8 L 222.55 394.05 L 226.91 391.29 L 231.27 388.53 L 235.64 385.8 L 240 383.1 L 244.36 380.43 L 248.73 377.81 L 253.09 375.24 L 257.45 372.73 L 261.82 370.28 L 266.18 367.89 L 270.55 365.58 L 274.91 363.34 L 279.27 361.18 L 283.64 359.1 L 288 357.09 L 292.36 355.17 L 296.73 353.33 L 301.09 351.58 L 305.45 349.9 L 309.82 348.31 L 314.18 346.79 L 318.55 345.36 L 322.91 344 L 327.27 342.72 L 331.64 341.5 L 336 340.36 L 340.36 339.29 L 344.73 338.28 L 349.09 337.34 L 353.45 336.45 L 357.82 335.63 L 362.18 334.85 L 366.55 334.13 L 370.91 333.46 L 375.27 332.83 L 379.64 332.25 L 384 331.71 L 388.36 331.21 L 392.73 330.74 L 397.09 330.31 L 401.45 329.91 L 405.82 329.54 L 410.18 329.2 L 414.55 328.88 L 418.91 328.59 L 423.27 328.32 L 427.64 328.07 L 432 327.84 L 436.36 327.63 L 440.73 327.43 L 445.09 327.25 L 449.45 327.09 L 453.82 326.94 L 458.18 326.8 L 462.55 326.67 L 466.91 326.55 L 471.27 326.44 L 475.64 326.34 L 480 326.25"/>
+  <circle class="c1-fill" cx="113.45" cy="385.03" r="4.0"/>
+  <circle class="c1-fill" cx="154.47" cy="425.28" r="4.0"/>
+  <circle class="c1-fill" cx="200.73" cy="407.56" r="4.0"/>
+  <circle class="c1-fill" cx="270.55" cy="365.58" r="4.0"/>
+  <circle class="c1-fill" cx="340.36" cy="339.29" r="4.0"/>
+  <circle class="c1-fill" cx="410.18" cy="329.2" r="4.0"/>
+  <circle class="c1-fill" cx="462.55" cy="326.67" r="4.0"/>
+  <polygon class="c3-fill" points="130.91,409.69 135.51,418.66 126.31,418.66"/>
+  <polygon class="c3-fill" points="183.27,411.78 187.87,420.75 178.67,420.75"/>
+  <polygon class="c3-fill" points="235.64,380.51 240.24,389.48 231.04,389.48"/>
+  <polygon class="c3-fill" points="305.45,344.61 310.05,353.58 300.85,353.58"/>
+  <polygon class="c3-fill" points="375.27,327.54 379.87,336.51 370.67,336.51"/>
+  <polygon class="c3-fill" points="445.09,321.96 449.69,330.93 440.49,330.93"/>
+  <line class="c4" stroke-width="2.0" x1="462.55" y1="217.44" x2="462.55" y2="321.67"/>
+  <polygon class="c4-fill" points="462.55,216.44 465.31,222.44 459.79,222.44"/>
+  <polygon class="c4-fill" points="462.55,322.67 459.79,316.67 465.31,316.67"/>
+  <rect class="pill-bg" x="330" y="254" width="124" height="36" rx="6"/>
+  <text class="xsb c4-txt" x="392" y="269" text-anchor="middle">静关联误差 233 mHa</text>
+  <text class="xs" x="392" y="284" text-anchor="middle">(145× 化学精度)</text>
+  <rect class="pill-bg" x="150" y="150" width="224" height="78" rx="7"/>
+  <line class="c2" stroke-width="2.3" stroke-dasharray="7 3" x1="160" y1="166" x2="184" y2="166"/>
+  <text class="xs c2-txt" x="190" y="170">限制 RHF（单行列式）</text>
+  <line class="c1" stroke-width="2.6" x1="160" y1="184" x2="184" y2="184"/>
+  <circle class="c1-fill" cx="172" cy="184" r="3.4"/>
+  <text class="xs c1-txt" x="190" y="188">精确 FCI / UCCSD-VQE</text>
+  <polygon class="c3-fill" points="172,197.17 176.2,205.36 167.8,205.36"/>
+  <text class="xs c3-txt" x="190" y="206">SQD 子空间精确对角化</text>
+  <rect class="area3" stroke="#1e7a5c" stroke-width="0.9" x="160" y="214" width="24" height="7" rx="2"/>
+  <text class="xs" x="190" y="221">化学精度带 (±1.6 mHa，示意加宽)</text>
+  <rect class="pill-bg" x="174" y="408" width="156" height="36" rx="6"/>
+  <text class="xsb c1-txt" x="252" y="423" text-anchor="middle">平衡键长 R = 0.735 Å</text>
+  <text class="xs" x="252" y="438" text-anchor="middle">E<tspan dy="3" font-size="74%">FCI</tspan><tspan dy="-3">&#8203;</tspan> = −1.137 Ha</text>
+  <line class="guide" x1="174" y1="426" x2="159.47" y2="426.28"/>
+  <rect class="note" x="42" y="508" width="444" height="32" rx="8"/>
+  <text class="xs" x="264" y="528" text-anchor="middle">阴影带示意加宽（真实 ±1.6 mHa 窄于线宽）；RHF 拉键混入离子态失真</text>
+  <line class="grid" x1="586" y1="162" x2="954" y2="162"/>
+  <text class="sm" x="578" y="166" text-anchor="end">10<tspan dy="-4.5" font-size="74%">0</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="220.8" x2="954" y2="220.8"/>
+  <text class="sm" x="578" y="224.8" text-anchor="end">10<tspan dy="-4.5" font-size="74%">−2</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="279.6" x2="954" y2="279.6"/>
+  <text class="sm" x="578" y="283.6" text-anchor="end">10<tspan dy="-4.5" font-size="74%">−4</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="338.4" x2="954" y2="338.4"/>
+  <text class="sm" x="578" y="342.4" text-anchor="end">10<tspan dy="-4.5" font-size="74%">−6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="397.2" x2="954" y2="397.2"/>
+  <text class="sm" x="578" y="401.2" text-anchor="end">10<tspan dy="-4.5" font-size="74%">−8</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="456" x2="954" y2="456"/>
+  <text class="sm" x="578" y="460" text-anchor="end">10<tspan dy="-4.5" font-size="74%">−10</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="586" y1="162" x2="586" y2="456"/>
+  <text class="sm" x="586" y="473" text-anchor="middle">2</text>
+  <line class="grid" x1="638.57" y1="162" x2="638.57" y2="456"/>
+  <text class="sm" x="638.57" y="473" text-anchor="middle">4</text>
+  <line class="grid" x1="691.14" y1="162" x2="691.14" y2="456"/>
+  <text class="sm" x="691.14" y="473" text-anchor="middle">6</text>
+  <line class="grid" x1="743.71" y1="162" x2="743.71" y2="456"/>
+  <text class="sm" x="743.71" y="473" text-anchor="middle">8</text>
+  <line class="grid" x1="796.29" y1="162" x2="796.29" y2="456"/>
+  <text class="sm" x="796.29" y="473" text-anchor="middle">10</text>
+  <line class="grid" x1="848.86" y1="162" x2="848.86" y2="456"/>
+  <text class="sm" x="848.86" y="473" text-anchor="middle">12</text>
+  <line class="grid" x1="901.43" y1="162" x2="901.43" y2="456"/>
+  <text class="sm" x="901.43" y="473" text-anchor="middle">14</text>
+  <line class="grid" x1="954" y1="162" x2="954" y2="456"/>
+  <text class="sm" x="954" y="473" text-anchor="middle">16</text>
+  <rect class="area2" x="586" y="338.4" width="368" height="117.6"/>
+  <line class="c2" stroke-width="1.5" stroke-dasharray="6 4" x1="586" y1="338.4" x2="954" y2="338.4"/>
+  <line class="axis" x1="586" y1="456" x2="962" y2="456"/>
+  <polygon class="axis-fill" points="962,456 955,459.22 955,452.78"/>
+  <line class="axis" x1="586" y1="456" x2="586" y2="152"/>
+  <polygon class="axis-fill" points="586,152 589.22,159 582.78,159"/>
+  <text class="sm" x="770" y="494" text-anchor="middle">量子比特数 n (个)</text>
+  <text class="sm" x="530" y="309" text-anchor="middle" transform="rotate(-90 530 309)">梯度方差 Var(∂θC) (对数刻度)</text>
+  <path class="c3" stroke-width="2.6" d="M 586 184.88 L 612.29 196.58 L 638.57 204.55 L 664.86 210.6 L 691.14 215.49 L 717.43 219.6 L 743.71 223.13 L 770 226.23 L 796.29 229 L 822.57 231.49 L 848.86 233.76 L 875.14 235.85 L 901.43 237.78 L 927.71 239.57 L 954 241.25"/>
+  <path class="c1" stroke-width="2.4" stroke-dasharray="8 3 2 3" d="M 586 190.05 L 612.29 199.6 L 638.57 207.03 L 664.86 213.17 L 691.14 218.42 L 717.43 223.02 L 743.71 227.12 L 770 230.81 L 796.29 234.17 L 822.57 237.26 L 848.86 240.12 L 875.14 242.77 L 901.43 245.26 L 927.71 247.59 L 954 249.78"/>
+  <path class="c2" stroke-width="2.8" stroke-dasharray="7 4" d="M 586 196.58 L 612.29 214.9 L 638.57 232.75 L 664.86 250.49 L 691.14 268.2 L 717.43 285.9 L 743.71 303.6 L 770 321.31 L 796.29 339.01 L 822.57 356.71 L 848.86 374.41 L 875.14 392.11 L 901.43 409.81 L 927.71 427.51 L 954 445.21"/>
+  <polygon class="c3-fill" points="586,179.82 590.4,188.4 581.6,188.4"/>
+  <circle class="c1-fill" cx="586" cy="190.05" r="3.8"/>
+  <polygon class="c2-fill" points="586,191.98 590.6,196.58 586,201.18 581.4,196.58"/>
+  <polygon class="c3-fill" points="638.57,199.49 642.97,208.07 634.17,208.07"/>
+  <circle class="c1-fill" cx="638.57" cy="207.03" r="3.8"/>
+  <polygon class="c2-fill" points="638.57,228.15 643.17,232.75 638.57,237.35 633.97,232.75"/>
+  <polygon class="c3-fill" points="691.14,210.43 695.54,219.01 686.74,219.01"/>
+  <circle class="c1-fill" cx="691.14" cy="218.42" r="3.8"/>
+  <polygon class="c2-fill" points="691.14,263.6 695.74,268.2 691.14,272.8 686.54,268.2"/>
+  <polygon class="c3-fill" points="743.71,218.07 748.11,226.65 739.31,226.65"/>
+  <circle class="c1-fill" cx="743.71" cy="227.12" r="3.8"/>
+  <polygon class="c2-fill" points="743.71,299 748.31,303.6 743.71,308.2 739.11,303.6"/>
+  <polygon class="c3-fill" points="796.29,223.94 800.69,232.52 791.89,232.52"/>
+  <circle class="c1-fill" cx="796.29" cy="234.17" r="3.8"/>
+  <polygon class="c2-fill" points="796.29,334.41 800.89,339.01 796.29,343.61 791.69,339.01"/>
+  <polygon class="c3-fill" points="848.86,228.7 853.26,237.28 844.46,237.28"/>
+  <circle class="c1-fill" cx="848.86" cy="240.12" r="3.8"/>
+  <polygon class="c2-fill" points="848.86,369.81 853.46,374.41 848.86,379.01 844.26,374.41"/>
+  <polygon class="c3-fill" points="901.43,232.72 905.83,241.3 897.03,241.3"/>
+  <circle class="c1-fill" cx="901.43" cy="245.26" r="3.8"/>
+  <polygon class="c2-fill" points="901.43,405.21 906.03,409.81 901.43,414.41 896.83,409.81"/>
+  <polygon class="c3-fill" points="954,236.19 958.4,244.77 949.6,244.77"/>
+  <circle class="c1-fill" cx="954" cy="249.78" r="3.8"/>
+  <polygon class="c2-fill" points="954,440.61 958.6,445.21 954,449.81 949.4,445.21"/>
+  <rect class="pill-bg" x="756" y="258" width="194" height="68" rx="7"/>
+  <line class="c3" stroke-width="2.4" x1="765" y1="274" x2="785" y2="274"/>
+  <polygon class="c3-fill" points="775,269.63 778.8,277.04 771.2,277.04"/>
+  <text class="xs c3-txt" x="791" y="278">so(2n) 多项式 O(n<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan>)</text>
+  <line class="c1" stroke-width="2.2" stroke-dasharray="7 2 2 2" x1="765" y1="293" x2="785" y2="293"/>
+  <circle class="c1-fill" cx="775" cy="293" r="3.2"/>
+  <text class="xs c1-txt" x="791" y="297">守恒子空间 O(n<tspan dy="-4.5" font-size="74%">3</tspan><tspan dy="4.5">&#8203;</tspan>)</text>
+  <line class="c2" stroke-width="2.5" stroke-dasharray="6 3" x1="765" y1="312" x2="785" y2="312"/>
+  <polygon class="c2-fill" points="775,308 779,312 775,316 771,312"/>
+  <text class="xs c2-txt" x="791" y="316">HEA su(2<tspan dy="-4.5" font-size="74%">n</tspan><tspan dy="4.5">&#8203;</tspan>) 指数 4<tspan dy="-4.5" font-size="74%">n</tspan><tspan dy="4.5">&#8203;</tspan>−1</text>
+  <rect class="pill-bg" x="594" y="384" width="214" height="54" rx="7"/>
+  <text class="xsb c2-txt" x="701" y="401" text-anchor="middle">采样噪声地板 (S = 10<tspan dy="-4.5" font-size="74%">6</tspan><tspan dy="4.5">&#8203;</tspan> 次采样)</text>
+  <text class="xs" x="701" y="418" text-anchor="middle">单位纯度/全局观测量：n ≥ 10 淹没</text>
+  <text class="xs" x="701" y="433" text-anchor="middle">局域 Z<tspan dy="3" font-size="74%">0</tspan><tspan dy="-3">&#8203;</tspan> 按 1/(2<tspan dy="-4.5" font-size="74%">n</tspan><tspan dy="4.5">&#8203;</tspan>+1)：n ≈ 20</text>
+  <rect class="note" x="530" y="508" width="428" height="32" rx="8"/>
+  <text class="xs" x="744" y="528" text-anchor="middle">多项式 dim(g) 避开指数贫瘠高原，却常落入经典可高效模拟区（可训练-可模拟权衡）</text>
+</svg>

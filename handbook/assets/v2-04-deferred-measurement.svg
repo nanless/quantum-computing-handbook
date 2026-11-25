@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">多比特核心量子门与延迟测量原理</title>
+  <desc id="desc">上面板展示四个多比特核心量子门的标准电路符号与计算基作用（时间从左到右）：CNOT、对称受控相位门 CZ、三 CNOT 交替分解的 SWAP 门以及经典可逆通用的 Toffoli (CCNOT) 门。下面板展示延迟测量原理：将电路中段测量与经典双线条件门 U，等价替换为量子受控门 C-U 并将测量推迟至电路末端。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:12.5px;font-weight:400;fill:#3e566d}
+.smb{font-size:12.5px;font-weight:600;fill:#19324d}
+.xs{font-size:11.5px;font-weight:500;fill:#3e566d}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.wire{stroke:#19324d;stroke-width:2.0;fill:none}
+.cwire{stroke:#4a637a;stroke-width:1.5;fill:none}
+.ctrl{fill:#13263a}
+.targ{fill:#ffffff;stroke:#13263a;stroke-width:2.0}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.5}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.mirror{stroke:#19324d;stroke-width:3.2;stroke-linecap:round}
+.bs-glass{fill:#bae6fd;fill-opacity:.58;stroke:#1b6ca8;stroke-width:1.6}
+.det-body{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12.5px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis,.wire{stroke:#cde0f2}
+  .axis-fill,.ctrl{fill:#cde0f2}
+  .cwire{stroke:#9bb6ce}
+  .targ{fill:#16222e;stroke:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .mirror{stroke:#cde0f2}
+  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
+  .det-body{fill:#163d31;stroke:#5dd1a8}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">多比特核心量子门与延迟测量原理</text>
+  <text class="subtitle" x="34" y="79">上：CNOT、CZ、SWAP (= 3 CNOT) 与 Toffoli (CCNOT) 门符号与作用；下：中段测量加经典控门 ≡ 量子受控门加末端测量</text>
+  <rect class="panel" x="28" y="96" width="944" height="208" rx="14"/>
+  <path class="phead" d="M 42 97 H 958 Q 971 97 971 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="44" y="120">多比特核心量子门：符号、恒等分解与计算基作用（时间从左到右）</text>
+  <rect class="panel" x="28" y="316" width="944" height="236" rx="14"/>
+  <path class="phead" d="M 42 317 H 958 Q 971 317 971 330 V 354 H 29 V 330 Q 29 317 42 317 Z"/>
+  <line class="grid" x1="29" y1="354" x2="971" y2="354"/>
+  <text class="sec" x="44" y="340">延迟测量原理（Principle of Deferred Measurement）：动态经典反馈 ≡ 量子受控门 + 末端测量</text>
+  <rect class="subpanel" x="42" y="144" width="220" height="150" rx="10"/>
+  <text class="smb c1-txt" x="152" y="165" text-anchor="middle">CNOT（受控非门）</text>
+  <line class="wire" x1="80" y1="196" x2="196" y2="196"/>
+  <line class="wire" x1="80" y1="238" x2="196" y2="238"/>
+  <line class="wire" x1="138" y1="196" x2="138" y2="238"/>
+  <circle class="ctrl" cx="138" cy="196" r="4.6"/>
+  <circle class="targ" cx="138" cy="238" r="10.5"/>
+  <line class="wire" x1="127.5" y1="238" x2="148.5" y2="238"/>
+  <line class="wire" x1="138" y1="227.5" x2="138" y2="248.5"/>
+  <text class="sm" x="72" y="200" text-anchor="end">|x⟩</text>
+  <text class="sm" x="72" y="242" text-anchor="end">|y⟩</text>
+  <text class="sm" x="204" y="200">|x⟩</text>
+  <text class="sm" x="204" y="242">|y⊕x⟩</text>
+  <text class="xs" x="152" y="278" text-anchor="middle">|x, y⟩ ↦ |x, y ⊕ x⟩</text>
+  <rect class="subpanel" x="274" y="144" width="220" height="150" rx="10"/>
+  <text class="smb c1-txt" x="384" y="165" text-anchor="middle">CZ（对称受控相位门）</text>
+  <line class="wire" x1="298" y1="196" x2="366" y2="196"/>
+  <line class="wire" x1="298" y1="238" x2="366" y2="238"/>
+  <line class="wire" x1="332" y1="196" x2="332" y2="238"/>
+  <circle class="ctrl" cx="332" cy="196" r="4.6"/>
+  <circle class="ctrl" cx="332" cy="238" r="4.6"/>
+  <text class="lblb c1-txt" x="384" y="222" text-anchor="middle">≡</text>
+  <line class="wire" x1="402" y1="196" x2="478" y2="196"/>
+  <line class="wire" x1="402" y1="238" x2="478" y2="238"/>
+  <line class="wire" x1="440" y1="196" x2="440" y2="224"/>
+  <circle class="ctrl" cx="440" cy="196" r="4.6"/>
+  <rect class="c1-soft" x="426" y="224" width="28" height="28" rx="5"/>
+  <text class="gate-txt" x="440" y="243" text-anchor="middle">Z</text>
+  <text class="xs" x="384" y="278" text-anchor="middle">|x, y⟩ ↦ (−1)ˣʸ|x, y⟩（两线对称）</text>
+  <rect class="subpanel" x="506" y="144" width="220" height="150" rx="10"/>
+  <text class="smb c1-txt" x="616" y="165" text-anchor="middle">SWAP（三 CNOT 交替分解）</text>
+  <line class="wire" x1="518" y1="196" x2="566" y2="196"/>
+  <line class="wire" x1="518" y1="238" x2="566" y2="238"/>
+  <line class="wire" x1="542" y1="196" x2="542" y2="238"/>
+  <line class="wire" x1="536.5" y1="190.5" x2="547.5" y2="201.5"/>
+  <line class="wire" x1="536.5" y1="201.5" x2="547.5" y2="190.5"/>
+  <line class="wire" x1="536.5" y1="232.5" x2="547.5" y2="243.5"/>
+  <line class="wire" x1="536.5" y1="243.5" x2="547.5" y2="232.5"/>
+  <text class="lblb c1-txt" x="582" y="222" text-anchor="middle">≡</text>
+  <line class="wire" x1="598" y1="196" x2="716" y2="196"/>
+  <line class="wire" x1="598" y1="238" x2="716" y2="238"/>
+  <line class="wire" x1="618" y1="196" x2="618" y2="238"/>
+  <circle class="ctrl" cx="618" cy="196" r="4.6"/>
+  <circle class="targ" cx="618" cy="238" r="8.8"/>
+  <line class="wire" x1="609.2" y1="238" x2="626.8" y2="238"/>
+  <line class="wire" x1="618" y1="229.2" x2="618" y2="246.8"/>
+  <line class="wire" x1="657" y1="238" x2="657" y2="196"/>
+  <circle class="ctrl" cx="657" cy="238" r="4.6"/>
+  <circle class="targ" cx="657" cy="196" r="8.8"/>
+  <line class="wire" x1="648.2" y1="196" x2="665.8" y2="196"/>
+  <line class="wire" x1="657" y1="187.2" x2="657" y2="204.8"/>
+  <line class="wire" x1="696" y1="196" x2="696" y2="238"/>
+  <circle class="ctrl" cx="696" cy="196" r="4.6"/>
+  <circle class="targ" cx="696" cy="238" r="8.8"/>
+  <line class="wire" x1="687.2" y1="238" x2="704.8" y2="238"/>
+  <line class="wire" x1="696" y1="229.2" x2="696" y2="246.8"/>
+  <text class="xs" x="616" y="278" text-anchor="middle">|x, y⟩ ↦ |y, x⟩（恰好 3 个 CNOT）</text>
+  <rect class="subpanel" x="738" y="144" width="220" height="150" rx="10"/>
+  <text class="smb c1-txt" x="848" y="165" text-anchor="middle">Toffoli（双控非门 CCNOT）</text>
+  <line class="wire" x1="774" y1="186" x2="884" y2="186"/>
+  <line class="wire" x1="774" y1="214" x2="884" y2="214"/>
+  <line class="wire" x1="774" y1="242" x2="884" y2="242"/>
+  <line class="wire" x1="829" y1="186" x2="829" y2="242"/>
+  <circle class="ctrl" cx="829" cy="186" r="4.4"/>
+  <circle class="ctrl" cx="829" cy="214" r="4.4"/>
+  <circle class="targ" cx="829" cy="242" r="9.5"/>
+  <line class="wire" x1="819.5" y1="242" x2="838.5" y2="242"/>
+  <line class="wire" x1="829" y1="232.5" x2="829" y2="251.5"/>
+  <text class="xs" x="768" y="190" text-anchor="end">|x⟩</text>
+  <text class="xs" x="768" y="218" text-anchor="end">|y⟩</text>
+  <text class="xs" x="768" y="246" text-anchor="end">|z⟩</text>
+  <text class="xs" x="890" y="190">|x⟩</text>
+  <text class="xs" x="890" y="218">|y⟩</text>
+  <text class="xs" x="890" y="246">|z⊕xy⟩</text>
+  <text class="xs" x="848" y="278" text-anchor="middle">经典可逆通用；|z⟩ ↦ |z ⊕ x·y⟩</text>
+  <rect class="subpanel" x="42" y="362" width="418" height="132" rx="10"/>
+  <text class="smb c4-txt" x="56" y="382">方案一：中段测量 + 经典条件门 U（动态电路）</text>
+  <text class="xs" x="54" y="422">寄存器 A</text>
+  <text class="xs" x="54" y="472">寄存器 B</text>
+  <line class="wire" x1="112" y1="418" x2="176" y2="418"/>
+  <rect class="c3-soft" x="176" y="401" width="40" height="34" rx="6"/>
+  <path class="axis" stroke-width="1.6" d="M 207.13 421.5 L 206.34 419.91 L 205.33 418.45 L 204.11 417.15 L 202.71 416.05 L 201.17 415.17 L 199.51 414.52 L 197.77 414.13 L 196 414 L 194.23 414.13 L 192.49 414.52 L 190.83 415.17 L 189.29 416.05 L 187.89 417.15 L 186.67 418.45 L 185.66 419.91 L 184.87 421.5"/>
+  <line class="c2" stroke-width="1.8" x1="196" y1="426" x2="206.5" y2="411"/>
+  <polygon class="c2-fill" points="206.5,411 205.6,416.47 201.67,413.72"/>
+  <text class="xs c3-txt" x="211" y="431" text-anchor="end">Z</text>
+  <line class="cwire" x1="216" y1="415.4" x2="384" y2="415.4"/>
+  <line class="cwire" x1="216" y1="420.6" x2="384" y2="420.6"/>
+  <text class="xs c4-txt" x="304" y="405" text-anchor="middle">经典双线 k ∈ {0, 1}</text>
+  <text class="sm" x="392" y="422">k</text>
+  <line class="wire" x1="112" y1="468" x2="288" y2="468"/>
+  <line class="wire" x1="334" y1="468" x2="384" y2="468"/>
+  <line class="cwire" x1="308.4" y1="420.6" x2="308.4" y2="450"/>
+  <line class="cwire" x1="313.6" y1="420.6" x2="313.6" y2="450"/>
+  <circle class="c4-fill" cx="311" cy="418" r="4.0"/>
+  <text class="xs c4-txt" x="322" y="439">k = 1</text>
+  <rect class="c4-soft" x="288" y="450" width="46" height="36" rx="6"/>
+  <text class="gate-txt" x="311" y="474" text-anchor="middle">U</text>
+  <text class="xs" x="390" y="465">U<tspan baseline-shift="super" font-size="72%">k</tspan>|ψ<tspan dy="3" font-size="75%">k</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <text class="xs" x="390" y="481">(归一条件态)</text>
+  <text class="title c1-txt" x="500" y="430" text-anchor="middle">≡</text>
+  <text class="xs c1-txt" x="500" y="450" text-anchor="middle">统计与末态</text>
+  <text class="xs c1-txt" x="500" y="465" text-anchor="middle">完全等价</text>
+  <rect class="subpanel" x="540" y="362" width="418" height="132" rx="10"/>
+  <text class="smb c1-txt" x="554" y="382">方案二：量子受控门 C-U + 末端统一测量</text>
+  <text class="xs" x="552" y="422">寄存器 A</text>
+  <text class="xs" x="552" y="472">寄存器 B</text>
+  <line class="wire" x1="610" y1="418" x2="796" y2="418"/>
+  <line class="wire" x1="704" y1="418" x2="704" y2="450"/>
+  <circle class="ctrl" cx="704" cy="418" r="5.0"/>
+  <text class="xs c1-txt" x="704" y="403" text-anchor="middle">量子受控 C-U</text>
+  <rect class="c3-soft" x="796" y="401" width="40" height="34" rx="6"/>
+  <path class="axis" stroke-width="1.6" d="M 827.13 421.5 L 826.34 419.91 L 825.33 418.45 L 824.11 417.15 L 822.71 416.05 L 821.17 415.17 L 819.51 414.52 L 817.77 414.13 L 816 414 L 814.23 414.13 L 812.49 414.52 L 810.83 415.17 L 809.29 416.05 L 807.89 417.15 L 806.67 418.45 L 805.66 419.91 L 804.87 421.5"/>
+  <line class="c2" stroke-width="1.8" x1="816" y1="426" x2="826.5" y2="411"/>
+  <polygon class="c2-fill" points="826.5,411 825.6,416.47 821.67,413.72"/>
+  <text class="xs c3-txt" x="831" y="431" text-anchor="end">Z</text>
+  <line class="cwire" x1="836" y1="415.4" x2="878" y2="415.4"/>
+  <line class="cwire" x1="836" y1="420.6" x2="878" y2="420.6"/>
+  <text class="sm" x="886" y="422">k</text>
+  <line class="wire" x1="610" y1="468" x2="681" y2="468"/>
+  <line class="wire" x1="727" y1="468" x2="878" y2="468"/>
+  <rect class="c1-soft" x="681" y="450" width="46" height="36" rx="6"/>
+  <text class="gate-txt" x="704" y="474" text-anchor="middle">U</text>
+  <text class="xs" x="884" y="465">U<tspan baseline-shift="super" font-size="72%">k</tspan>|ψ<tspan dy="3" font-size="75%">k</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
+  <text class="xs" x="884" y="481">(归一条件态)</text>
+  <rect class="note" x="42" y="500" width="916" height="44" rx="9"/>
+  <text class="xs" x="500" y="517" text-anchor="middle">初态 √p<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>|0⟩|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩ + √p<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|1⟩|ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩（|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩, |ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩ 归一）：两方案皆得 ρ′<tspan dy="3" font-size="75%">AB</tspan><tspan dy="-3">&#8203;</tspan> = p<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>|0⟩⟨0|⊗|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩⟨ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>| + p<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|1⟩⟨1|⊗U|ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩⟨ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|U†</text>
+  <text class="xs" x="500" y="535" text-anchor="middle">核心前提：测后不对控制位 A 施非对角门或复位复用（注：异地隐形传态仍需中途测量与经典通信）</text>
+</svg>

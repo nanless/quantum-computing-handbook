@@ -117,8 +117,10 @@ def fock():
             return value
         out=series(100);test=series(80);assert norm([a-b for a,b in zip(out,test)])<1e-12
         known=[math.exp(-.5)/math.sqrt(math.factorial(n)) for n in range(d)];mass=norm(known)**2;proj=[z/math.sqrt(mass) for z in known]
-        f=abs(inner(proj,out)); assert abs(norm(out)-1)<1e-12
-        distance=math.sqrt(max(0.,1-f*f));gap=norm([a-b for a,b in zip(out,known)])
+        n_out=norm(out); assert abs(n_out-1)<1e-12
+        out_unit=[z/n_out for z in out]; overlap=inner(proj,out_unit); f=abs(overlap)
+        # Use orthogonal component norm ||out_unit - <proj|out_unit>proj|| instead of sqrt(1 - f^2) to avoid catastrophic cancellation near f = 1.
+        distance=norm([a-overlap*b for a,b in zip(out_unit,proj)]);gap=norm([a-b for a,b in zip(out,known)])
         rows.append({'dimension':d,'finite_generator_state':encode(out),'infinite_projected_state':known,'mass':mass,'root_fidelity_to_normalized_projection':f,'trace_distance_to_normalized_projection':distance,'raw_low_level_amplitude_difference':gap})
     assert rows[0]['trace_distance_to_normalized_projection']>.01
     assert rows[2]['trace_distance_to_normalized_projection']<rows[0]['trace_distance_to_normalized_projection']

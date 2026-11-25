@@ -1,0 +1,42 @@
+{
+  "scope": "synthetic mathematical checks, standard library only",
+  "cases": {
+    "04": {
+      "average_record_flip_probability": 0.175,
+      "pauli_error_weights": [
+        0.6806249999999999,
+        0.14437499999999998,
+        0.14437499999999998,
+        0.030624999999999996
+      ],
+      "output_density": [
+        [
+          [
+            0.6625,
+            0.0
+          ],
+          [
+            0.0,
+            -0.18294786654946266
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.18294786654946266
+          ],
+          [
+            0.3374999999999999,
+            0.0
+          ]
+        ]
+      ],
+      "output_bloch": [
+        0.0,
+        0.3658957330989253,
+        0.32500000000000007
+      ],
+      "boundary": "ideal resources and gates; record flips already drove physical corrections"
+    }
+  }
+}

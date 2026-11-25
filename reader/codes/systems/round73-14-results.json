@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "cases": {
+    "14": {
+      "optimized": {
+        "leakage": [
+          6.251216812177794e-10,
+          6.15393447262812e-10
+        ],
+        "survival": 0.9999999993797433,
+        "unconditional_overlap": 0.9999999983963624,
+        "six_state_overlap": 0.9999999983963627
+      },
+      "one_ns_discrete_filter": {
+        "leakage": [
+          0.009531972675138225,
+          0.005173323175314595
+        ],
+        "survival": 0.9926473520747731,
+        "unconditional_overlap": 0.9809241231593456,
+        "six_state_overlap": 0.9809241231593457
+      }
+    }
+  },
+  "scope": "stdlib archive and mathematical checks; not SDK rerun"
+}

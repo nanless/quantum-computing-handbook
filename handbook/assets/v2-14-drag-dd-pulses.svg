@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">DRAG 高斯整形脉冲波形与动态解耦时序对比</title>
+  <desc id="desc">左面板精确绘制高斯同相包络 I(t) = Ω₀ exp[−(t−t₀)²/(2σ²)]（实线，t₀ = 8 ns，σ = 2 ns）与 DRAG 正交导数修正 Q(t) = −(β/α) İ(t)（虚线，α/2π = −200 MHz，β = 1，正负峰位于 t₀ ± σ = 6、10 ns，幅值 ±0.241 Ω₀）。右面板对比相同总时长 T 下的三种时序：自由演化 Ramsey、Hahn 自旋回波（T/2 − π − T/2）与 CPMG 四脉冲序列（τ/2 − π_Y − τ − π_Y − τ − π_Y − τ − π_Y − τ/2，τ = T/4，初末脉冲为 π/2_X）。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:14px;font-weight:400;fill:#3e566d}
+.sec{font-size:15px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:13px;font-weight:400;fill:#3e566d}
+.smb{font-size:13px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:2}
+.badge-txt{fill:#ffffff;font-size:13px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">DRAG 抑制泄漏整形脉冲与动态解耦时序对比</text>
+  <text class="subtitle" x="34" y="79">左：高斯包络 I(t) 与 DRAG 正交导数修正 Q(t) 精确波形；右：Ramsey、Hahn 回波与 CPMG-4 时序</text>
+  <rect class="panel" x="28" y="96" width="456" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 470 Q 483 97 483 110 V 135 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="135" x2="483" y2="135"/>
+  <text class="sec" x="44" y="121">DRAG 脉冲包络（精确公式，σ = 2 ns）</text>
+  <rect class="panel" x="500" y="96" width="472" height="456" rx="14"/>
+  <path class="phead" d="M 514 97 H 958 Q 971 97 971 110 V 135 H 501 V 110 Q 501 97 514 97 Z"/>
+  <line class="grid" x1="501" y1="135" x2="971" y2="135"/>
+  <text class="sec" x="516" y="121">动态解耦时序对比（相同总时长 T，非等比例示意）</text>
+  <line class="grid" x1="100" y1="423.96" x2="460" y2="423.96"/>
+  <text class="sm" x="92" y="428.46" text-anchor="end">-0.25</text>
+  <line class="axis" stroke-width="1.4" x1="100" y1="378.85" x2="460" y2="378.85"/>
+  <text class="sm" x="92" y="383.35" text-anchor="end">0.00</text>
+  <line class="grid" x1="100" y1="333.75" x2="460" y2="333.75"/>
+  <text class="sm" x="92" y="338.25" text-anchor="end">0.25</text>
+  <line class="grid" x1="100" y1="288.64" x2="460" y2="288.64"/>
+  <text class="sm" x="92" y="293.14" text-anchor="end">0.50</text>
+  <line class="grid" x1="100" y1="243.54" x2="460" y2="243.54"/>
+  <text class="sm" x="92" y="248.04" text-anchor="end">0.75</text>
+  <line class="grid" x1="100" y1="198.43" x2="460" y2="198.43"/>
+  <text class="sm" x="92" y="202.93" text-anchor="end">1.00</text>
+  <line class="grid" x1="100" y1="184" x2="100" y2="442"/>
+  <text class="sm" x="100" y="462" text-anchor="middle">0</text>
+  <line class="grid" x1="190" y1="184" x2="190" y2="442"/>
+  <text class="sm" x="190" y="462" text-anchor="middle">4</text>
+  <line class="grid" x1="280" y1="184" x2="280" y2="442"/>
+  <text class="sm" x="280" y="462" text-anchor="middle">8</text>
+  <line class="grid" x1="370" y1="184" x2="370" y2="442"/>
+  <text class="sm" x="370" y="462" text-anchor="middle">12</text>
+  <line class="grid" x1="460" y1="184" x2="460" y2="442"/>
+  <text class="sm" x="460" y="462" text-anchor="middle">16</text>
+  <polygon class="area1" points="100,378.85 100,378.79 101.5,378.78 103,378.77 104.5,378.76 106,378.75 107.5,378.74 109,378.72 110.5,378.7 112,378.68 113.5,378.66 115,378.64 116.5,378.61 118,378.58 119.5,378.54 121,378.5 122.5,378.46 124,378.41 125.5,378.36 127,378.3 128.5,378.23 130,378.16 131.5,378.07 133,377.98 134.5,377.88 136,377.77 137.5,377.65 139,377.52 140.5,377.38 142,377.22 143.5,377.04 145,376.85 146.5,376.64 148,376.41 149.5,376.16 151,375.89 152.5,375.59 154,375.27 155.5,374.93 157,374.55 158.5,374.14 160,373.7 161.5,373.22 163,372.71 164.5,372.16 166,371.56 167.5,370.93 169,370.24 170.5,369.51 172,368.73 173.5,367.89 175,366.99 176.5,366.04 178,365.03 179.5,363.95 181,362.81 182.5,361.6 184,360.32 185.5,358.96 187,357.53 188.5,356.02 190,354.44 191.5,352.77 193,351.02 194.5,349.18 196,347.26 197.5,345.25 199,343.15 200.5,340.96 202,338.69 203.5,336.32 205,333.87 206.5,331.32 208,328.69 209.5,325.97 211,323.17 212.5,320.28 214,317.31 215.5,314.26 217,311.14 218.5,307.94 220,304.68 221.5,301.35 223,297.97 224.5,294.52 226,291.03 227.5,287.5 229,283.93 230.5,280.33 232,276.71 233.5,273.07 235,269.42 236.5,265.78 238,262.14 239.5,258.52 241,254.92 242.5,251.36 244,247.84 245.5,244.38 247,240.97 248.5,237.64 250,234.38 251.5,231.22 253,228.15 254.5,225.2 256,222.35 257.5,219.63 259,217.05 260.5,214.6 262,212.3 263.5,210.16 265,208.18 266.5,206.37 268,204.74 269.5,203.28 271,202.01 272.5,200.92 274,200.03 275.5,199.33 277,198.83 278.5,198.53 280,198.43 281.5,198.53 283,198.83 284.5,199.33 286,200.03 287.5,200.92 289,202.01 290.5,203.28 292,204.74 293.5,206.37 295,208.18 296.5,210.16 298,212.3 299.5,214.6 301,217.05 302.5,219.63 304,222.35 305.5,225.2 307,228.15 308.5,231.22 310,234.38 311.5,237.64 313,240.97 314.5,244.38 316,247.84 317.5,251.36 319,254.92 320.5,258.52 322,262.14 323.5,265.78 325,269.42 326.5,273.07 328,276.71 329.5,280.33 331,283.93 332.5,287.5 334,291.03 335.5,294.52 337,297.97 338.5,301.35 340,304.68 341.5,307.94 343,311.14 344.5,314.26 346,317.31 347.5,320.28 349,323.17 350.5,325.97 352,328.69 353.5,331.32 355,333.87 356.5,336.32 358,338.69 359.5,340.96 361,343.15 362.5,345.25 364,347.26 365.5,349.18 367,351.02 368.5,352.77 370,354.44 371.5,356.02 373,357.53 374.5,358.96 376,360.32 377.5,361.6 379,362.81 380.5,363.95 382,365.03 383.5,366.04 385,366.99 386.5,367.89 388,368.73 389.5,369.51 391,370.24 392.5,370.93 394,371.56 395.5,372.16 397,372.71 398.5,373.22 400,373.7 401.5,374.14 403,374.55 404.5,374.93 406,375.27 407.5,375.59 409,375.89 410.5,376.16 412,376.41 413.5,376.64 415,376.85 416.5,377.04 418,377.22 419.5,377.38 421,377.52 422.5,377.65 424,377.77 425.5,377.88 427,377.98 428.5,378.07 430,378.16 431.5,378.23 433,378.3 434.5,378.36 436,378.41 437.5,378.46 439,378.5 440.5,378.54 442,378.58 443.5,378.61 445,378.64 446.5,378.66 448,378.68 449.5,378.7 451,378.72 452.5,378.74 454,378.75 455.5,378.76 457,378.77 458.5,378.78 460,378.79 460,378.85"/>
+  <path class="c1" stroke-width="2.6" d="M 100 378.79 L 101.5 378.78 L 103 378.77 L 104.5 378.76 L 106 378.75 L 107.5 378.74 L 109 378.72 L 110.5 378.7 L 112 378.68 L 113.5 378.66 L 115 378.64 L 116.5 378.61 L 118 378.58 L 119.5 378.54 L 121 378.5 L 122.5 378.46 L 124 378.41 L 125.5 378.36 L 127 378.3 L 128.5 378.23 L 130 378.16 L 131.5 378.07 L 133 377.98 L 134.5 377.88 L 136 377.77 L 137.5 377.65 L 139 377.52 L 140.5 377.38 L 142 377.22 L 143.5 377.04 L 145 376.85 L 146.5 376.64 L 148 376.41 L 149.5 376.16 L 151 375.89 L 152.5 375.59 L 154 375.27 L 155.5 374.93 L 157 374.55 L 158.5 374.14 L 160 373.7 L 161.5 373.22 L 163 372.71 L 164.5 372.16 L 166 371.56 L 167.5 370.93 L 169 370.24 L 170.5 369.51 L 172 368.73 L 173.5 367.89 L 175 366.99 L 176.5 366.04 L 178 365.03 L 179.5 363.95 L 181 362.81 L 182.5 361.6 L 184 360.32 L 185.5 358.96 L 187 357.53 L 188.5 356.02 L 190 354.44 L 191.5 352.77 L 193 351.02 L 194.5 349.18 L 196 347.26 L 197.5 345.25 L 199 343.15 L 200.5 340.96 L 202 338.69 L 203.5 336.32 L 205 333.87 L 206.5 331.32 L 208 328.69 L 209.5 325.97 L 211 323.17 L 212.5 320.28 L 214 317.31 L 215.5 314.26 L 217 311.14 L 218.5 307.94 L 220 304.68 L 221.5 301.35 L 223 297.97 L 224.5 294.52 L 226 291.03 L 227.5 287.5 L 229 283.93 L 230.5 280.33 L 232 276.71 L 233.5 273.07 L 235 269.42 L 236.5 265.78 L 238 262.14 L 239.5 258.52 L 241 254.92 L 242.5 251.36 L 244 247.84 L 245.5 244.38 L 247 240.97 L 248.5 237.64 L 250 234.38 L 251.5 231.22 L 253 228.15 L 254.5 225.2 L 256 222.35 L 257.5 219.63 L 259 217.05 L 260.5 214.6 L 262 212.3 L 263.5 210.16 L 265 208.18 L 266.5 206.37 L 268 204.74 L 269.5 203.28 L 271 202.01 L 272.5 200.92 L 274 200.03 L 275.5 199.33 L 277 198.83 L 278.5 198.53 L 280 198.43 L 281.5 198.53 L 283 198.83 L 284.5 199.33 L 286 200.03 L 287.5 200.92 L 289 202.01 L 290.5 203.28 L 292 204.74 L 293.5 206.37 L 295 208.18 L 296.5 210.16 L 298 212.3 L 299.5 214.6 L 301 217.05 L 302.5 219.63 L 304 222.35 L 305.5 225.2 L 307 228.15 L 308.5 231.22 L 310 234.38 L 311.5 237.64 L 313 240.97 L 314.5 244.38 L 316 247.84 L 317.5 251.36 L 319 254.92 L 320.5 258.52 L 322 262.14 L 323.5 265.78 L 325 269.42 L 326.5 273.07 L 328 276.71 L 329.5 280.33 L 331 283.93 L 332.5 287.5 L 334 291.03 L 335.5 294.52 L 337 297.97 L 338.5 301.35 L 340 304.68 L 341.5 307.94 L 343 311.14 L 344.5 314.26 L 346 317.31 L 347.5 320.28 L 349 323.17 L 350.5 325.97 L 352 328.69 L 353.5 331.32 L 355 333.87 L 356.5 336.32 L 358 338.69 L 359.5 340.96 L 361 343.15 L 362.5 345.25 L 364 347.26 L 365.5 349.18 L 367 351.02 L 368.5 352.77 L 370 354.44 L 371.5 356.02 L 373 357.53 L 374.5 358.96 L 376 360.32 L 377.5 361.6 L 379 362.81 L 380.5 363.95 L 382 365.03 L 383.5 366.04 L 385 366.99 L 386.5 367.89 L 388 368.73 L 389.5 369.51 L 391 370.24 L 392.5 370.93 L 394 371.56 L 395.5 372.16 L 397 372.71 L 398.5 373.22 L 400 373.7 L 401.5 374.14 L 403 374.55 L 404.5 374.93 L 406 375.27 L 407.5 375.59 L 409 375.89 L 410.5 376.16 L 412 376.41 L 413.5 376.64 L 415 376.85 L 416.5 377.04 L 418 377.22 L 419.5 377.38 L 421 377.52 L 422.5 377.65 L 424 377.77 L 425.5 377.88 L 427 377.98 L 428.5 378.07 L 430 378.16 L 431.5 378.23 L 433 378.3 L 434.5 378.36 L 436 378.41 L 437.5 378.46 L 439 378.5 L 440.5 378.54 L 442 378.58 L 443.5 378.61 L 445 378.64 L 446.5 378.66 L 448 378.68 L 449.5 378.7 L 451 378.72 L 452.5 378.74 L 454 378.75 L 455.5 378.76 L 457 378.77 L 458.5 378.78 L 460 378.79"/>
+  <path class="c2" stroke-width="2.4" stroke-dasharray="8 5" d="M 100 378.76 L 101.5 378.74 L 103 378.73 L 104.5 378.71 L 106 378.7 L 107.5 378.68 L 109 378.65 L 110.5 378.63 L 112 378.6 L 113.5 378.57 L 115 378.54 L 116.5 378.5 L 118 378.46 L 119.5 378.41 L 121 378.36 L 122.5 378.3 L 124 378.24 L 125.5 378.17 L 127 378.1 L 128.5 378.02 L 130 377.93 L 131.5 377.83 L 133 377.72 L 134.5 377.61 L 136 377.48 L 137.5 377.34 L 139 377.19 L 140.5 377.03 L 142 376.86 L 143.5 376.67 L 145 376.46 L 146.5 376.24 L 148 376 L 149.5 375.75 L 151 375.47 L 152.5 375.18 L 154 374.87 L 155.5 374.53 L 157 374.17 L 158.5 373.79 L 160 373.38 L 161.5 372.95 L 163 372.5 L 164.5 372.02 L 166 371.51 L 167.5 370.97 L 169 370.4 L 170.5 369.81 L 172 369.18 L 173.5 368.53 L 175 367.84 L 176.5 367.13 L 178 366.39 L 179.5 365.61 L 181 364.81 L 182.5 363.98 L 184 363.12 L 185.5 362.23 L 187 361.32 L 188.5 360.38 L 190 359.42 L 191.5 358.44 L 193 357.44 L 194.5 356.42 L 196 355.39 L 197.5 354.34 L 199 353.28 L 200.5 352.22 L 202 351.15 L 203.5 350.08 L 205 349.02 L 206.5 347.96 L 208 346.92 L 209.5 345.89 L 211 344.88 L 212.5 343.89 L 214 342.94 L 215.5 342.02 L 217 341.13 L 218.5 340.29 L 220 339.5 L 221.5 338.77 L 223 338.09 L 224.5 337.47 L 226 336.92 L 227.5 336.45 L 229 336.05 L 230.5 335.73 L 232 335.5 L 233.5 335.36 L 235 335.31 L 236.5 335.36 L 238 335.51 L 239.5 335.76 L 241 336.12 L 242.5 336.58 L 244 337.15 L 245.5 337.83 L 247 338.62 L 248.5 339.52 L 250 340.53 L 251.5 341.65 L 253 342.88 L 254.5 344.21 L 256 345.64 L 257.5 347.18 L 259 348.81 L 260.5 350.53 L 262 352.35 L 263.5 354.24 L 265 356.22 L 266.5 358.26 L 268 360.38 L 269.5 362.55 L 271 364.78 L 272.5 367.05 L 274 369.37 L 275.5 371.71 L 277 374.08 L 278.5 376.46 L 280 378.85 L 281.5 381.24 L 283 383.63 L 284.5 386 L 286 388.34 L 287.5 390.65 L 289 392.93 L 290.5 395.15 L 292 397.33 L 293.5 399.44 L 295 401.49 L 296.5 403.46 L 298 405.36 L 299.5 407.17 L 301 408.9 L 302.5 410.53 L 304 412.06 L 305.5 413.5 L 307 414.83 L 308.5 416.06 L 310 417.17 L 311.5 418.18 L 313 419.08 L 314.5 419.88 L 316 420.56 L 317.5 421.13 L 319 421.59 L 320.5 421.95 L 322 422.2 L 323.5 422.35 L 325 422.39 L 326.5 422.35 L 328 422.2 L 329.5 421.97 L 331 421.66 L 332.5 421.26 L 334 420.78 L 335.5 420.24 L 337 419.62 L 338.5 418.94 L 340 418.2 L 341.5 417.41 L 343 416.57 L 344.5 415.69 L 346 414.77 L 347.5 413.81 L 349 412.83 L 350.5 411.82 L 352 410.79 L 353.5 409.74 L 355 408.69 L 356.5 407.62 L 358 406.56 L 359.5 405.49 L 361 404.42 L 362.5 403.37 L 364 402.32 L 365.5 401.29 L 367 400.27 L 368.5 399.27 L 370 398.28 L 371.5 397.32 L 373 396.39 L 374.5 395.47 L 376 394.59 L 377.5 393.73 L 379 392.9 L 380.5 392.09 L 382 391.32 L 383.5 390.58 L 385 389.86 L 386.5 389.18 L 388 388.52 L 389.5 387.9 L 391 387.3 L 392.5 386.74 L 394 386.2 L 395.5 385.69 L 397 385.21 L 398.5 384.75 L 400 384.32 L 401.5 383.92 L 403 383.53 L 404.5 383.18 L 406 382.84 L 407.5 382.53 L 409 382.23 L 410.5 381.96 L 412 381.7 L 413.5 381.47 L 415 381.25 L 416.5 381.04 L 418 380.85 L 419.5 380.68 L 421 380.51 L 422.5 380.36 L 424 380.23 L 425.5 380.1 L 427 379.98 L 428.5 379.88 L 430 379.78 L 431.5 379.69 L 433 379.61 L 434.5 379.53 L 436 379.46 L 437.5 379.4 L 439 379.35 L 440.5 379.3 L 442 379.25 L 443.5 379.21 L 445 379.17 L 446.5 379.14 L 448 379.11 L 449.5 379.08 L 451 379.05 L 452.5 379.03 L 454 379.01 L 455.5 378.99 L 457 378.98 L 458.5 378.96 L 460 378.95"/>
+  <line class="axis" x1="100" y1="442" x2="468" y2="442"/>
+  <polygon class="axis-fill" points="468,442 460.5,445.6 460.5,438.4"/>
+  <line class="axis" x1="100" y1="442" x2="100" y2="172"/>
+  <polygon class="axis-fill" points="100,172 103.6,179.5 96.4,179.5"/>
+  <text class="lbl" x="280" y="486" text-anchor="middle">时间 t (ns)</text>
+  <text class="lbl" x="48" y="313" text-anchor="middle" transform="rotate(-90 48 313)">归一化包络幅值 / Ω₀ (无量纲)</text>
+  <line class="guide" x1="280" y1="198.43" x2="280" y2="442"/>
+  <circle class="c1-fill" cx="280" cy="198.43" r="5"/>
+  <text class="smb c1-txt" x="290" y="189.43">I<tspan dy="3" font-size="75%">max</tspan><tspan dy="-3">&#8203;</tspan> = Ω₀ (t₀ = 8 ns)</text>
+  <polygon class="c2-fill" points="235,329.31 241,335.31 235,341.31 229,335.31"/>
+  <polygon class="c2-fill" points="325,416.39 331,422.39 325,428.39 319,422.39"/>
+  <line class="c2" stroke-width="1.2" x1="229" y1="333.31" x2="176.5" y2="313.9"/>
+  <text class="smb c2-txt" x="174.25" y="312.1" text-anchor="end">+0.241 Ω₀</text>
+  <text class="smb c2-txt" x="335" y="436.39">−0.241 Ω₀</text>
+  <line class="c1" stroke-width="2.6" x1="56" y1="154" x2="86" y2="154"/>
+  <text class="sm" x="92" y="158">同相 I(t)（高斯）</text>
+  <line class="c2" stroke-width="2.4" stroke-dasharray="7 4" x1="226" y1="154" x2="256" y2="154"/>
+  <text class="sm" x="262" y="158">正交 Q(t) = −(β/α) İ(t)</text>
+  <rect class="pill" x="44" y="502" width="424" height="36" rx="8"/>
+  <text class="sm" x="256" y="524" text-anchor="middle">α/2π = −200 MHz，β = 1；极值在 t₀ ± σ = 6、10 ns，压低 |1⟩→|2⟩ 泄漏</text>
+  <line class="guide" x1="556" y1="170" x2="556" y2="456"/>
+  <line class="axis" stroke-width="1.3" x1="556" y1="478" x2="556" y2="484"/>
+  <text class="smb" x="556" y="497" text-anchor="middle">0</text>
+  <line class="guide" x1="724" y1="170" x2="724" y2="456"/>
+  <line class="axis" stroke-width="1.3" x1="724" y1="478" x2="724" y2="484"/>
+  <text class="smb" x="724" y="497" text-anchor="middle">T/2</text>
+  <line class="guide" x1="892" y1="170" x2="892" y2="456"/>
+  <line class="axis" stroke-width="1.3" x1="892" y1="478" x2="892" y2="484"/>
+  <text class="smb" x="892" y="497" text-anchor="middle">T</text>
+  <text class="smb" x="518" y="164">① 自由演化 Ramsey（受准静态失谐退相干，尺度 T₂*）</text>
+  <line class="axis" x1="522" y1="226" x2="948" y2="226"/>
+  <rect class="c1-soft" stroke-width="1.8" x="546" y="198" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="556" y="192" text-anchor="middle">π/2</text>
+  <rect class="c1-soft" stroke-width="1.8" x="882" y="198" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="892" y="192" text-anchor="middle">π/2</text>
+  <rect class="c3-soft" stroke-width="1.8" x="910" y="198" width="28" height="28" rx="5"/>
+  <text class="smb c3-txt" x="924" y="217" text-anchor="middle">测</text>
+  <line class="c1" stroke-width="1.5" x1="572" y1="214" x2="876" y2="214"/>
+  <text class="sm" x="724" y="208" text-anchor="middle">自由等待 T（相位累积 +δT）</text>
+  <text class="smb" x="518" y="266">② Hahn 自旋回波（T/2 − π − T/2，抵消静态失谐，T<tspan dy="3" font-size="75%">2,echo</tspan><tspan dy="-3">&#8203;</tspan> &gt; T₂*）</text>
+  <line class="axis" x1="522" y1="338" x2="948" y2="338"/>
+  <rect class="c1-soft" stroke-width="1.8" x="546" y="310" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="556" y="304" text-anchor="middle">π/2</text>
+  <rect class="c2-soft" stroke-width="2" x="713" y="292" width="22" height="46" rx="4"/>
+  <rect fill="url(#hatch-red)" x="713" y="292" width="22" height="46" rx="4"/>
+  <text class="smb c2-txt" x="724" y="286" text-anchor="middle">π</text>
+  <rect class="c1-soft" stroke-width="1.8" x="882" y="310" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="892" y="304" text-anchor="middle">π/2</text>
+  <rect class="c3-soft" stroke-width="1.8" x="910" y="310" width="28" height="28" rx="5"/>
+  <text class="smb c3-txt" x="924" y="329" text-anchor="middle">测</text>
+  <text class="sm c1-txt" x="640" y="326" text-anchor="middle">T/2（+δT/2）</text>
+  <text class="sm c3-txt" x="808" y="326" text-anchor="middle">T/2（−δT/2，抵消）</text>
+  <text class="smb" x="518" y="382">③ CPMG-4（τ = T/4，π<tspan dy="3" font-size="75%">Y</tspan><tspan dy="-3">&#8203;</tspan> 重聚焦，滤除更宽低频噪声）</text>
+  <line class="axis" x1="522" y1="456" x2="948" y2="456"/>
+  <rect class="c1-soft" stroke-width="1.8" x="546" y="428" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="556" y="422" text-anchor="middle">π/2<tspan dy="3" font-size="9.5">X</tspan></text>
+  <rect class="c2-soft" stroke-width="2" x="587" y="410" width="22" height="46" rx="4"/>
+  <rect fill="url(#hatch-red)" x="587" y="410" width="22" height="46" rx="4"/>
+  <text class="smb c2-txt" x="598" y="404" text-anchor="middle">π<tspan dy="3" font-size="9.5">Y</tspan></text>
+  <rect class="c2-soft" stroke-width="2" x="671" y="410" width="22" height="46" rx="4"/>
+  <rect fill="url(#hatch-red)" x="671" y="410" width="22" height="46" rx="4"/>
+  <text class="smb c2-txt" x="682" y="404" text-anchor="middle">π<tspan dy="3" font-size="9.5">Y</tspan></text>
+  <rect class="c2-soft" stroke-width="2" x="755" y="410" width="22" height="46" rx="4"/>
+  <rect fill="url(#hatch-red)" x="755" y="410" width="22" height="46" rx="4"/>
+  <text class="smb c2-txt" x="766" y="404" text-anchor="middle">π<tspan dy="3" font-size="9.5">Y</tspan></text>
+  <rect class="c2-soft" stroke-width="2" x="839" y="410" width="22" height="46" rx="4"/>
+  <rect fill="url(#hatch-red)" x="839" y="410" width="22" height="46" rx="4"/>
+  <text class="smb c2-txt" x="850" y="404" text-anchor="middle">π<tspan dy="3" font-size="9.5">Y</tspan></text>
+  <rect class="c1-soft" stroke-width="1.8" x="882" y="428" width="20" height="28" rx="4"/>
+  <text class="sm c1-txt" x="892" y="422" text-anchor="middle">π/2<tspan dy="3" font-size="9.5">X</tspan></text>
+  <rect class="c3-soft" stroke-width="1.8" x="910" y="428" width="28" height="28" rx="5"/>
+  <text class="smb c3-txt" x="924" y="447" text-anchor="middle">测</text>
+  <text class="sm" x="577" y="473" text-anchor="middle">τ/2</text>
+  <text class="sm" x="640" y="473" text-anchor="middle">τ</text>
+  <text class="sm" x="724" y="473" text-anchor="middle">τ</text>
+  <text class="sm" x="808" y="473" text-anchor="middle">τ</text>
+  <text class="sm" x="871" y="473" text-anchor="middle">τ/2</text>
+  <rect class="note" x="516" y="504" width="440" height="36" rx="8"/>
+  <text class="sm" x="736" y="526" text-anchor="middle">时间从左向右；蓝矮框 π/2，红斜纹高框 π（重聚焦），绿框为测量</text>
+</svg>

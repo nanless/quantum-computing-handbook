@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" role="img" aria-labelledby="title desc">
   <title id="title">表面码中空间错误链与时间读出错误的检测事件</title>
-  <desc id="desc">左图为概念性综合征图，红色数据错误链与蓝色候选修正链连接同一对橙色检测事件，合并为可收缩闭环。右图为同一个检查在三轮的读数零、一、零；中间一次读出错误使相邻两处时间边界出现检测事件。图不表示特定器件的精确布线或含孔补丁的全部边界规则。</desc>
+  <desc id="desc">左图为概念性纠错症状图，红色数据错误链与蓝色候选修正链连接同一对橙色检测事件，合并为可收缩闭环。右图为同一个检查在三轮的读数零、一、零；中间一次读出错误使相邻两处时间边界出现检测事件。图不表示特定器件的精确布线或含孔补丁的全部边界规则。</desc>
   <style>
     :root{color-scheme:light dark}
     .bg{fill:#f7faf9}.panel{fill:#fff;stroke:#b9d2ca;stroke-width:1.5}.head{fill:#eaf3f0}

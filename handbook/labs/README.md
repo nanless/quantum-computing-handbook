@@ -1,190 +1,77 @@
 # 实验、练习、代码与声音
 
-这里把全书 24 篇正文连接到可运行的小实验。先读题目、写预测，再运行程序；每题都有计算过程、答案和模型边界。既有的 [251 道自检及答案](../appendices/exercises.md)保持原编号，新增实验使用独立标签。
+本手册把全书 **26 篇正文**（主篇第 00–21 章与量子力学基础篇 Q1–Q4）连接到本地可运行的动手实验。学习每个主题时，建议先读题目、在草稿纸上写出预测，再运行程序核对每一步推导、答案与模型边界。全书 26 篇正文的 [271 道自检题及零跳步参考解答](../appendices/exercises.md)（保留原有 24 篇 251 道题号不变，并增补第 20–21 章各 10 道自检题）均已收录于附录 D；跨章就地练习与程序验算均采用独立标签入口。
 
 ## 怎样开始
 
-1. 零基础从[基础实验册](foundations.md)的 F00、F01、F02 开始。
-2. 算法读者先做[QPE 与 Grover](algorithms.md)，再比较变分、QSVT 和容量。
-3. 工程读者使用[系统实验册](systems.md)，逐层连接标签、译码、资源、网络、映射与服务可用率。
-4. 用[统计实验](practice.md)检查结论是否受 shots、外推和多重比较影响。
-5. 用[声音实验](audio.md)听相位和对比度的教学映射，并回到公式核对。声音是程序合成，不是真实设备录音。
+1. **零基础入门主线**：先做[基础实验册](foundations.md)中的 `F00`、`F01`、`F02`，亲手核对抽样波动、左共轭内积与 $Y$ 基测量门序。
+2. **算法与经典模拟路线**：先做[算法实验册](algorithms.md)中的 QPE 与 Grover（`06-A`、`07-A`），再对照变分预算、QSVT 非厄米反例、擦除信道容量以及第 21 章的三大经典模拟引擎（`21-A`）。
+3. **硬件、纠错、系统与传感路线**：使用[系统与传感实验册](systems.md)，逐层贯通读出告警、加权解码、魔法态调度、量子网络、编译映射、服务可用率，以及第 20 章的量子传感与精密测量（`S20`）。
+4. **统计方法与论文复核路线**：用[统计与实验方法实验册](practice.md)检查结论是否受采样次数（shots）、外推放大、后选择分母、零失败样本量与多重比较影响。
+5. **听觉直觉辅助**：用[声音实验册](audio.md)试听相位干涉与 Ramsey 对比度衰减的教学声化映射，并回到公式逐点核对。所有声音均为程序合成的经典波形，不是真实设备录音。
+6. **开源工具链实跑**：读完核心章节后，按[完整 SDK 实验册](sdk-validation.md)的 11 组端到端工作流（`SDK-01` 至 `SDK-11`），对照 31 个开源项目在隔离环境中的真实输出、上游陷阱与验收边界。
 
-## 逐章实验映射
+## 全书 26 章三阶动手实验总图谱
 
-| 章 | 可核对的问题 | 实验册 |
-|---|---|---|
-| 00 | 1000 次测量为何不必恰好一半 | [F00](foundations.md) |
-| 01 | 复共轭、内积和换基 | [F01](foundations.md) |
-| 02 | Y 基测量门序与相位 | [F02](foundations.md) |
-| 03 | 非均匀纠缠态偏迹与远端旋转 | [F03](foundations.md) |
-| 04 | 传态四个分支及复振幅修正 | [F04](foundations.md) |
-| 05 | 阻尼、退相位与 T1/T2 | [F05](foundations.md) |
-| 06 | 相位估计的模 1 网格误差 | [06-A](algorithms.md) |
-| 07 | Grover 过度旋转与重复查询账 | [07-A](algorithms.md) |
-| 08 | Pauli 分组预算、QAOA 输出分布 | [08-A](algorithms.md) |
-| 09 | 稀有丢失事件中的告警可信度 | [S09](systems.md) |
-| 10 | 非均匀独立噪声下的加权译码 | [S10](systems.md) |
-| 11 | 魔法态供给与突发消费 | [S11](systems.md) |
-| 12 | 两条快慢不同链路的等待 | [S12](systems.md) |
-| 13 | 不等先验的 Helstrom 判别 | [F13](foundations.md) |
-| 14 | 输出映射与线路等价 | [S14](systems.md) |
-| 15 | 不等shots、外推、多重比较、后选择、零失败、时间预算、切割 | [P15-A–G](practice.md) |
-| 16 | 非厄米矩阵的 QSVT 反例 | [16-A](algorithms.md) |
-| 17 | MBQC 分支与重试失败预算 | [17-A](algorithms.md) |
-| 18 | 擦除信道降解映射及熵 | [18-A](algorithms.md) |
-| 19 | 故障区间并集、可用率与合格服务吞吐 | [S19](systems.md) |
-| Q1 | 环境重叠的模与相位 | [FQ1](foundations.md) |
-| Q2 | 时序和子系统能量零点 | [FQ2](foundations.md) |
-| Q3 | 热占据、角频率和失谐 | [FQ3](foundations.md) |
-| Q4 | 连续态离散化归一化及收敛 | [FQ4](foundations.md) |
+下表按章节顺序整合了全书三层难度的本地实验：**一阶**为纯 Python 标准库手算核验；**二阶**为易漏前提、最小反例与深度数学检验；**三阶**为完整开源 SDK 隔离环境实跑归档。全部一、二阶命令行均在**仓库根目录**运行。
 
-章节实验覆盖并不表示每个研究算法都有完整生产实现。实现深度与尚未覆盖的主题见[算法、工业实践与开源对照](../appendices/software-practice.md)。
+| 章节 | 一阶：入门手算与标准库实验 | 二阶：核心反例与深度核验（含 CLI 命令） | 三阶：完整开源 SDK 实跑 |
+|---|---|---|---|
+| [00 全景与边界](../00-overview.md) | [F00：1000 次测量为何很少对半](foundations.md#f001000-次测量为何很少恰好对半)（`python3 codes/foundations/foundations_lab.py --case 00`） | 重复复制日志非独立样本、态矢量与密度矩阵字节账、校准与留出预算计费：`python3 codes/foundations/diagnostic_lab.py --case 00`；[基础核验](../../codes/foundations/round71_checks.py) `--case 00`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 00` | Aer 多模拟表示与同一实验对照（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [01 零基础数学工具](../01-math.md) | [F01：复共轭内积、外积与换基](foundations.md#f01不取复共轭会把长度算成复数)（`python3 codes/foundations/foundations_lab.py --case 01`） | 列归一化不保酉性、含复数换基与主动门区分、逆矩阵还原放大误差：`python3 codes/foundations/diagnostic_lab.py --case 01`；[基础核验](../../codes/foundations/round71_checks.py) `--case 01`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 01` | QuTiP 矩阵指数与线性逆条件数对照（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [02 单量子比特](../02-single-qubit.md) | [F02：$Y$ 基测量门序与相位](foundations.md#f02y-基测量需要先-s再-h)（`python3 codes/foundations/foundations_lab.py --case 02`） | 合法计数重构出负本征值、非投影 POVM 后态、不对称读出补偿与方差传播勘误：`python3 codes/foundations/diagnostic_lab.py --case 02`；[基础核验](../../codes/foundations/round71_checks.py) `--case 02`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 02` | Qiskit Experiments 态层析与读出反演（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [03 多量子比特与纠缠](../03-multiple-qubits.md) | [F03：非均匀纠缠偏迹与远端旋转](foundations.md#f03非均匀纠缠态配合远端旋转检查偏迹方向)（`python3 codes/foundations/foundations_lab.py --case 03`） | 复相位纠缠测量轴、复系数 Schmidt 还原、双端读出偏差下的纠缠见证换算：`python3 codes/foundations/diagnostic_lab.py --case 03`；[基础核验](../../codes/foundations/round71_checks.py) `--case 03`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 03` | Aer 局部阻尼与纠缠衰变核验（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [04 量子门、电路与协议](../04-circuits-protocols.md) | [F04：隐形传态四分支与复振幅校正](foundations.md#f04传态必须逐支检验复振幅)（`python3 codes/foundations/foundations_lab.py --case 04`） | 受控门全局相位变相对相位、纠缠输入传态、经典反馈读错位的影响：`python3 codes/foundations/diagnostic_lab.py --case 04`；[基础核验](../../codes/foundations/round71_checks.py) `--case 04`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 04` | Aer 动态测量与含噪经典反馈传态（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [05 混态、噪声与信道](../05-noise-channels.md) | [F05：振幅阻尼、纯退相位与 $T_1 / T_2$](foundations.md#f05布居与相干有不同时间常数)（`python3 codes/foundations/foundations_lab.py --case 05`） | 有限温度热激发、信道非交换与无信号证明、CP 与 TP 约束及多项最大似然层析：`python3 codes/foundations/diagnostic_lab.py --case 05`；[基础核验](../../codes/foundations/round71_checks.py) `--case 05`；[进阶核验](../../codes/foundations/round73_checks.py) `--case 05` | Aer 54 组噪声与 Experiments 过程层析（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [06 量子算法共同骨架](../06-algorithmic-primitives.md) | [06-A：有限相位网格与圆周距离](algorithms.md#实验-06-a有限相位网格与圆周距离)（`python3 codes/algorithms/experiments.py 06`） | Hadamard 测试读写复期望、垃圾态破坏干涉与反计算、相位符号承诺解码：`python3 codes/algorithms/round70_checks.py 06`；[算法核验](../../codes/algorithms/round71_checks.py) `06`；[进阶核验](../../codes/algorithms/round73_checks.py) `06` | Cirq 可逆预言机与承诺条件核验（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+| [07 代表性量子算法](../07-algorithms.md) | [07-A：Grover 过度旋转与重试查询账](algorithms.md#实验-07-a逐振幅检查过度旋转)（`python3 codes/algorithms/experiments.py 07`） | 单深度振幅混叠、Simon 满秩失败上界、负谱与非网格 HHL 垃圾概率：`python3 codes/algorithms/round70_checks.py 07`；[算法核验](../../codes/algorithms/round71_checks.py) `07`；[进阶核验](../../codes/algorithms/round73_checks.py) `07` | Cirq 完整非对角与负谱 HHL、Qiskit Algorithms Grover 与 IAE（[SDK-01](sdk-validation.md)） |
+| [08 应用、变分与边界](../08-applications.md) | [08-A：Pauli 分组预算与 QAOA 分布](algorithms.md#实验-08-a测量预算与最优解概率)（`python3 codes/algorithms/experiments.py 08`） | 共享参数移位链式求导、共测协方差与总制备预算、粒子数罚项排除真空解：`python3 codes/algorithms/round70_checks.py 08`；[算法核验](../../codes/algorithms/round71_checks.py) `08`；[进阶核验](../../codes/algorithms/round73_checks.py) `08` | OpenFermion 费米映射、PennyLane/Qiskit VQE、SQD（[算法运行说明](../../codes/algorithms/round72-README.md)、[SDK-06](sdk-validation.md)） |
+| [09 物理量子比特与控制栈](../09-hardware.md) | [S09：稀有丢失事件与告警精确率](systems.md#s09要让告警至少九成可信误报要压到多少)（`python3 codes/systems/hardware_flags.py`） | 有限标定样本方差传播、有限温度被动复位底限、单个 $Y$ 故障同时触发两张检查图：`python3 codes/systems/calibration_uncertainty.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 09`；[进阶核验](../../codes/systems/round73_checks.py) `--case 09` | 噪声参数跨库换算与刺激电路噪声对照（[系统运行说明](../../codes/systems/round72-README.md)、[进阶归档](../../codes/systems/sdk73/README.md)） |
+| [10 量子纠错与容错计算](../10-error-correction.md) | [S10：非均匀独立噪声下的加权解码](systems.md#s10何时翻第一位与翻后两位一样可信)（`python3 codes/systems/weighted_decoder.py`） | 纠错症状测后的相干逻辑误差、未知错加擦除码距条件、双基与相关匹配解码：`python3 codes/systems/coherent_repetition.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 10`；[进阶核验](../../codes/systems/round73_checks.py) `--case 10` | Stim 电路级表面码采样 + PyMatching 普通与相关匹配解码（[系统运行说明](../../codes/systems/round72-README.md)、[进阶归档](../../codes/systems/sdk73/README.md)） |
+| [11 资源估算与基准](../11-resources-benchmarks.md) | [S11：魔法态供给、库存与突发消费](systems.md#s11没有库存工厂够快也可能永远做不了下一层)（`python3 codes/systems/factory_schedule.py`） | 批内漂移相关性压缩有效样本、每周期错率与终态奇偶区分、解码器配对比较与耗时分布：`python3 codes/systems/correlated_shots.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 11`；[进阶核验](../../codes/systems/round73_checks.py) `--case 11` | 失败置信区间、时间分母与 Qualtran 资源分解（[系统运行说明](../../codes/systems/round72-README.md)、[完整 SDK 总账](sdk-validation.md)） |
+| [12 密码、网络与前沿](../12-security-network-frontiers.md) | [S12：两条异速量子链路的等待与存储](systems.md#s12把一条链路做成每轮必成功另一条仍然很慢)（`python3 codes/systems/network_wait.py`） | 存储超时截止权衡、两段含噪 Bell 对交换卷积、先兆纠缠生成与过期事件：`python3 codes/systems/network_cutoff.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 12`；[进阶核验](../../codes/systems/round73_checks.py) `--case 12` | SeQUeNCe 离散事件网络时序仿真 + `liboqs` 三种 ML-KEM 完整构建（[系统运行说明](../../codes/systems/round72-README.md)、[进阶归档](../../codes/systems/sdk73/README.md)） |
+| [13 量子信息论](../13-quantum-information.md) | [F13：不等先验的 Helstrom 最优判别](foundations.md#f13先验不相等时08536不再是答案)（`python3 codes/foundations/foundations_lab.py --case 13`） | 后选择不违背迹距离收缩、经典马尔可夫链条件互信息、同基计数不保证输出纯态：`python3 codes/foundations/diagnostic_lab.py --case 13`；[算法核验](../../codes/algorithms/round71_checks.py) `13`；[进阶核验](../../codes/algorithms/round73_checks.py) `13` | PennyLane 采样非线性插件偏差与熵估对照（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+| [14 编译、路由与脉冲控制](../14-compilation-control.md) | [S14：省 SWAP 后的输出映射与线路等价](systems.md#s14为什么只检查计算基概率还不够)（`python3 codes/systems/routing_mapping.py`） | 共享控制资源并行冲突、虚拟 $Z$ 脉冲相位等式、含泄漏三能级最优控制验收：`python3 codes/systems/resource_schedule.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 14`；[进阶核验](../../codes/systems/round73_checks.py) `--case 14` | Qiskit 线型编译布局 + `qutip-qtrl` 受约束 GRAPE 与三能级优化（[系统运行说明](../../codes/systems/round72-README.md)、[SDK-03](sdk-validation.md)） |
+| [15 动手实践与研究方法](../15-practice-research.md) | [P15-A–C：Bell 下界、ZNE 预算与多重比较](practice.md#p15-a同一个-bell-点估计为什么下界不同)（`python3 codes/practice/experiments.py`） | 后选择、零失败、按耗时分配与负权重切割，以及多次偷看停止规则与反例检验：`python3 codes/practice/research_checks.py`（[P15-D–G](practice.md#p15-d后选择更准确为什么每次尝试反而更少成功)）；[系统核验](../../codes/systems/round71_checks.py) `--case 15`；[进阶核验](../../codes/systems/round73_checks.py) `--case 15` | Mitiq 零噪声外推、归档独立重建与 SLC / PNA 缓解（[SDK-08](sdk-validation.md)、[SDK-09](sdk-validation.md)） |
+| [16 高级算法与可扩展验证](../16-advanced-algorithms-verification.md) | [16-A：Chebyshev 信号多项式与非厄米反例](algorithms.md#实验-16-a信号多项式与非厄米反例)（`python3 codes/algorithms/experiments.py 16`） | 小成功率放大条件态误差、量子化信号条件、超立方体 SKW 量子行走搜索与选择位：`python3 codes/algorithms/round70_checks.py 16`；[算法核验](../../codes/algorithms/round71_checks.py) `16`；[进阶核验](../../codes/algorithms/round73_checks.py) `16` | `pyqsp` 对称相位求解、`quimb` 图行走、PennyLane 经典阴影与 Qualtran 块编码（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+| [17 多元计算模型](../17-computation-models.md) | [17-A：MBQC 前馈校正与退火重试预算](algorithms.md#实验-17-a前馈和退火成功率)（`python3 codes/algorithms/experiments.py 17`） | 退火链强度简并与缩放代价、回波时间失配残余相位、两步适应性 MBQC 四支校正：`python3 codes/algorithms/round70_checks.py 17`；[算法核验](../../codes/algorithms/round71_checks.py) `17`；[进阶核验](../../codes/algorithms/round73_checks.py) `17` | `dimod` QUBO / Ising 符号与穷举谱核验（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+| [18 信道容量、复杂性与连续变量](../18-channels-capacities-complexity.md) | [18-A：擦除信道四种容量与相干信息网格](algorithms.md#实验-18-a擦除信道的四种任务)（`python3 codes/algorithms/experiments.py 18`） | 有限块码可靠性不等于容量、连续变量协方差物理性与多模排序、能量上限 Fock 尾界：`python3 codes/algorithms/round70_checks.py 18`；[算法核验](../../codes/algorithms/round71_checks.py) `18`；[进阶核验](../../codes/algorithms/round73_checks.py) `18` | The Walrus 高斯态协方差与光子数概率核验（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+| [19 工程架构、运维与玻色码](../19-engineering-architecture.md) | [S19：故障区间并集、可用率与合格吞吐](systems.md#s19每秒成功很多却没有一个可用答案)（`python3 codes/systems/service_timeline.py`） | 校准依赖失效传播、同 POVM 不同测后仪器与 QND 区分、服务吞吐与反馈队列分离：`python3 codes/systems/calibration_dependencies.py`；[系统核验](../../codes/systems/round71_checks.py) `--case 19`；[进阶核验](../../codes/systems/round73_checks.py) `--case 19` | pyGSTi 量子仪器重复读数、LGST 与长序列最大似然 GST（[SDK-05](sdk-validation.md)、[SDK-10](sdk-validation.md)） |
+| [20 量子传感与精密测量](../20-quantum-sensing-metrology.md) | [S20：CFI/QFI、Huelga 坍塌与 HNLS 判据](systems.md#s20量子传感的-cfiqfihuelga-坍塌与-hnls-纠错判据)（`python3 codes/systems/sensing_lab.py`） | NV 灵敏度、Ramsey Bures 极限、GHZ 宇称与单比特丢失归零、含死时间 Huelga 劣化、Wineland 单轴扭转与光学损耗上限、CPMG 滤波与 HNLS 子空间校验（[sensing_lab.py](../../codes/systems/sensing_lab.py)） | 见正文 §8 开放传感基准口径与论文核查清单（无单独新增封装包） |
+| [21 稳定子与经典模拟引擎](../21-stabilizer-classical-simulation.md) | [21-A：稳定子表、MPS 与含噪 Pauli 传播三引擎](algorithms.md#实验-21-a稳定子表mps-与含噪-pauli-传播三引擎)（`python3 codes/algorithms/simulation_engines_lab.py`） | Aaronson–Gottesman 稳定子表 4 比特压测与魔法态展度、3 比特 MPS 逐键精确 SVD 与截断误差、2/3 比特含噪海森堡 Pauli 传播及 $\ell_1$ 界（[simulation_engines_lab.py](../../codes/algorithms/simulation_engines_lab.py)） | Stim 稳定子采样、quimb 张量网络与 `pauli-prop` Rust 扩展实跑（[完整 SDK 总账](sdk-validation.md)） |
+| [Q1 实验与量子态](../quantum-mechanics/01-experiments-states.md) | [FQ1：环境重叠的模长与相位移动条纹](foundations.md#fq1环境重叠的相位移动条纹模长改变可见度)（`python3 codes/foundations/foundations_lab.py --case q1`） | 相同可见度难辨不等权与退相干、延迟选择擦除反相条件条纹、漏检与错报区别：`python3 codes/foundations/diagnostic_lab.py --case q1`；[基础核验](../../codes/foundations/round71_checks.py) `--case q1`；[进阶核验](../../codes/foundations/round73_checks.py) `--case q1` | 不等探测效率与擦除符合统计核验（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [Q2 可观测量与演化](../quantum-mechanics/02-observables-dynamics.md) | [FQ2：脉冲时序与子系统能量零点](foundations.md#fq2子系统整体能量平移仍然只是全局相位)（`python3 codes/foundations/foundations_lab.py --case q2`） | 简并读数对应不同测后仪器、Schrödinger 加强不确定界、时变脉冲的时序/积分/轨迹三误差分离：`python3 codes/foundations/diagnostic_lab.py --case q2`；[基础核验](../../codes/foundations/round71_checks.py) `--case q2`；[进阶核验](../../codes/foundations/round73_checks.py) `--case q2` | QuTiP 主方程与 2048/4096 随机量子轨迹对比（[基础运行说明](../../codes/foundations/round72-README.md)、[进阶归档](../../codes/foundations/sdk73/README.md)） |
+| [Q3 能级与物理量子比特](../quantum-mechanics/03-levels-control.md) | [FQ3：热占据、角频率与失谐峰高](foundations.md#fq3同一实验中核对温度频率与时间)（`python3 codes/foundations/foundations_lab.py --case q3`） | Rabi 布居辨认失谐符号、矩形脉冲频谱零点与泄漏条件、三维酉门二维截断非酉：`python3 codes/foundations/diagnostic_lab.py --case q3`；[系统核验](../../codes/systems/round71_checks.py) `--case q3`；[进阶核验](../../codes/systems/round73_checks.py) `--case q3` | `qutip-qtrl` 三能级泄漏抑制与频域滤波核验（[系统运行说明](../../codes/systems/round72-README.md)、[进阶归档](../../codes/systems/sdk73/README.md)） |
+| [Q4 波函数与典型模型](../quantum-mechanics/04-wavefunctions-models.md) | [FQ4：连续态网格归一化与二阶收敛](foundations.md#fq4把连续波函数放到网格上时别漏掉根号步长)（`python3 codes/foundations/foundations_lab.py --case q4`） | Fock 截断改变对易子、矩形势垒顶极限与超势垒共振、先截断后驱动与先驱动后投影差异：`python3 codes/foundations/diagnostic_lab.py --case q4`；[算法核验](../../codes/algorithms/round71_checks.py) `q4`；[进阶核验](../../codes/algorithms/round73_checks.py) `q4` | The Walrus / 截断尾界与连续态数值对照（[算法运行说明](../../codes/algorithms/round72-README.md)、[进阶归档](../../codes/algorithms/sdk73/README.md)） |
+
+## 跨章软件工作流、源码精读与声音实验
+
+除了逐章实验外，手册还提供三类横向动手入口：
+
+- **软件工作流带解练习（`W1–W6`）与源码精读核验（`S04–S08`）**：见[算法、工业实践与开源对照](../appendices/software-practice.md)，连接多乘积公式、可观测量反向传播、含噪 Pauli 伴随、子空间对角化、并行随机数与过程层析；运行 `python3 codes/practice/workflow_checks.py` 与 [source_reading_checks.py](../../codes/practice/source_reading_checks.py) 即可离线复算全部标准库小模型。
+- **端到端开源 SDK 工作流（`SDK-01` 至 `SDK-11`）**：见[完整 SDK 实验册](sdk-validation.md)，汇总 **31 个开源项目（对应 122 份固定提交源码）** 的真实版本、运行日志、复现的上游陷阱与独立反例。
+- **教学合成声音实验（A01–A03）**：见[声音实验册](audio.md)，提供 5 段 4 秒合成 WAV 音频（相位干涉三轨对照与 Ramsey 退相干双轨对照），配套精确公式与听辨时刻导览。
 
 ## 运行方式与结果
 
-本轮自编数值实验使用 Python 3.9 及以上的标准库；不用账户、不调用云服务。不要加 `-O` 关闭断言。绘图程序另需指定版本的 matplotlib 和 NumPy；不重画图就无需安装它们。
+本册全部自编教学与核验程序均仅依赖 Python 3.9 及以上标准库，默认不请求云服务、不消耗付费额度。运行测试时**不要加 `-O`**（否则会关闭断言）。绘图程序另需指定版本的 Matplotlib 与 NumPy；不重画图就无需安装它们。
+
+在**仓库根目录**运行统一入口及新增第 20–21 章实验：
 
 ```sh
 python3 codes/run_all.py
+python3 codes/systems/sensing_lab.py
+python3 codes/algorithms/simulation_engines_lab.py
 ```
 
-在**仓库根目录**运行上面的统一入口；分章运行见[代码说明](../../codes/README.md)。检查项覆盖概率/态归一化、独立解析式、四个测量分支、资源边界、位序、离散化收敛、源码哈希与音频格式。数值通过意味着本模型在检查点一致，不是对全部物理公设、定理和工业优势的证明。
+分章运行方式、预期输出与依赖清单见[代码总说明](../../codes/README.md)。统一检查项覆盖态与概率归一化、独立解析式、完整测量分支、资源边界、位序、离散化收敛、122 份源码 SHA-256 完整性与 5 段音频格式校验。程序通过断言说明数值实现与明示模型自洽；小规模算例不能替代一般定理证明或真实硬件实验。完整 SDK 则须在各自隔离虚拟环境中按锁定版本运行，不与默认标准库入口混跑。
 
 ## 如何把练习改成自己的研究
 
-一次只改变一个因素：先把初态换成含非零复相位的态，再改变噪声，再增加系统大小。记录何时解析断言仍成立、何时已越出模型条件。失败例子比只贴一张漂亮成功图更有价值。
+一次只改变一个因素：先把初态换成含非零复相位的态，再引入噪声或读出偏差，最后逐步扩大系统规模。记录解析断言在何处继续成立、在何处开始越出模型前提——一个精准定位失效边界的反例，往往比只贴一张漂亮的成功曲线更有研究价值。
 
-真实硬件实验还需要软件锁定、编译与校准快照、原始计数、时间顺序和费用预算。第三方源码清单支持代码溯源，没有替读者完成这些设备实验。
+迈向真实硬件实验时，还须同步保存软件依赖锁、编译布局与硬件校准快照、完整原始计数、采集时序与端到端机时预算。
 
-## 第四组逐章练习：完整SDK与独立复算
+## 历史归档脚本命名说明
 
-本轮在24篇正文就地补充F72/A72/S72练习，原题编号保持。完整版本、任务、原始样本、六组集成流程练习与限定范围见[完整SDK实验册](sdk-validation.md)。SDK安装和运行需各组隔离环境；默认标准库入口只做教学实验及保存结果的独立重算。
-
-| 篇章 | 新标签与重点 | 代码入口 |
-|---|---|---|
-| [00](../00-overview.md) | F72-00：模拟表示与相同实验 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [01](../01-math.md) | F72-01：矩阵指数前置 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [02](../02-single-qubit.md) | F72-02：原计数/线性逆/PSD | [运行与结果](../../codes/foundations/round72-README.md) |
-| [03](../03-multiple-qubits.md) | F72-03：局部阻尼与纠缠 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [04](../04-circuits-protocols.md) | F72-04：缺少反馈的传态 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [05](../05-noise-channels.md) | F72-05：CP与TP分开检查 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [Q1](../quantum-mechanics/01-experiments-states.md) | F72-Q1：不等探测效率 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [Q2](../quantum-mechanics/02-observables-dynamics.md) | F72-Q2：主方程与随机轨迹 | [运行与结果](../../codes/foundations/round72-README.md) |
-| [06](../06-algorithmic-primitives.md) | A72-06：可逆oracle及承诺 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [07](../07-algorithms.md) | A72-07：完整非对角HHL | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [08](../08-applications.md) | A72-08：费米子映射与粒子数 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [13](../13-quantum-information.md) | A72-13：非线性插件偏差 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [16](../16-advanced-algorithms-verification.md) | A72-16：一般图行走/QSP/两位阴影 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [17](../17-computation-models.md) | A72-17：QUBO与自旋符号 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [18](../18-channels-capacities-complexity.md) | A72-18：Gaussian光子概率 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [Q4](../quantum-mechanics/04-wavefunctions-models.md) | A72-Q4：Fock截止与无限尾界 | [运行与结果](../../codes/algorithms/round72-README.md) |
-| [09](../09-hardware.md) | S72-09：噪声参数换算 | [运行与结果](../../codes/systems/round72-README.md) |
-| [10](../10-error-correction.md) | S72-10：电路级纠错与原样本 | [运行与结果](../../codes/systems/round72-README.md) |
-| [11](../11-resources-benchmarks.md) | S72-11：失败区间/时间分母 | [运行与结果](../../codes/systems/round72-README.md) |
-| [12](../12-security-network-frontiers.md) | S72-12：ML-KEM/网络时间轴 | [运行与结果](../../codes/systems/round72-README.md) |
-| [14](../14-compilation-control.md) | S72-14：受约束GRAPE及梯度 | [运行与结果](../../codes/systems/round72-README.md) |
-| [15](../15-practice-research.md) | S72-15：归档独立重建 | [运行与结果](../../codes/systems/round72-README.md) |
-| [19](../19-engineering-architecture.md) | S72-19：反馈队列与截止 | [运行与结果](../../codes/systems/round72-README.md) |
-| [Q3](../quantum-mechanics/03-levels-control.md) | S72-Q3：三能级泄漏/过滤 | [运行与结果](../../codes/systems/round72-README.md) |
-
-上表的A72-16包含a/b/c三项独立练习；完整集成实验册另有R72-IAE、OBP、CUT、MPF、GST、HPC六组计算和实际SDK代码。全部样本为本地模拟或明示模型；没有新采集真机数据。
-
-## 第三组逐章练习：从解释断点到独立核算
-
-这组题于2026-10-13加入，分别嵌在每篇相关小节中，答案紧邻问题，不替换原题编号。每篇有独立标签，均有实际可运行的标准库核算；同一程序负责多篇时用章节参数选择。正文先给一般定义、条件或证明，程序再用固定小输入从独立路径核对。
-
-| 章节与标签 | 分步练习及解释重点 | 核算程序 |
-|---|---|---|
-| [00：F71-00](../00-overview.md) | 振幅数组与密度矩阵的实际字节数；表示成本与模拟困难区别 | [基础](../../codes/foundations/round71_checks.py) `--case 00` |
-| [01：F71-01](../01-math.md) | 含复数的换基；坐标变化与主动门分开计算 | [基础](../../codes/foundations/round71_checks.py) `--case 01` |
-| [02：F71-02](../02-single-qubit.md) | 非投影POVM的平方根工具、每支后态和非选择态 | [基础](../../codes/foundations/round71_checks.py) `--case 02` |
-| [03：F71-03](../03-multiple-qubits.md) | 从复系数四项态构造两侧Schmidt向量并逐格还原 | [基础](../../codes/foundations/round71_checks.py) `--case 03` |
-| [04：F71-04](../04-circuits-protocols.md) | 与参考位纠缠的输入传态，四分支与联合关联 | [基础](../../codes/foundations/round71_checks.py) `--case 04` |
-| [05：F71-05](../05-noise-channels.md) | 合法噪声不交换；局域保迹与无信号的一般证明 | [基础](../../codes/foundations/round71_checks.py) `--case 05` |
-| [06：A71-06](../06-algorithmic-primitives.md) | 垃圾态内积怎样压低干涉；复位为何不等于反计算 | [算法](../../codes/algorithms/round71_checks.py) `06` |
-| [07：A71-07](../07-algorithms.md) | Simon固定采样预算的满秩概率和失败上界 | [算法](../../codes/algorithms/round71_checks.py) `07` |
-| [08：A71-08](../08-applications.md) | 共测的协方差、配对原始计数和总制备预算 | [算法](../../codes/algorithms/round71_checks.py) `08` |
-| [09：S71-09](../09-hardware.md) | 有限温度的被动复位底限、初态与速率方程 | [系统](../../codes/systems/round71_checks.py) `--case 09` |
-| [10：S71-10](../10-error-correction.md) | 未知错误加已知擦除的距离条件及边界反例 | [系统](../../codes/systems/round71_checks.py) `--case 10` |
-| [11：S71-11](../11-resources-benchmarks.md) | 每周期概率、最终奇偶翻转与至少一次事件区别 | [系统](../../codes/systems/round71_checks.py) `--case 11` |
-| [12：S71-12](../12-security-network-frontiers.md) | 两段噪声Bell对交换；四分支与标签卷积 | [系统](../../codes/systems/round71_checks.py) `--case 12` |
-| [13：A71-13](../13-quantum-information.md) | 经典Markov链与XOR的条件互信息 | [算法](../../codes/algorithms/round71_checks.py) `13` |
-| [14：S71-14](../14-compilation-control.md) | 虚拟Z后的脉冲相位、矩阵等式和错误对照 | [系统](../../codes/systems/round71_checks.py) `--case 14` |
-| [15：S71-15](../15-practice-research.md) | 多次查看与停止规则；预先分配错误概率 | [系统](../../codes/systems/round71_checks.py) `--case 15` |
-| [16：A71-16](../16-advanced-algorithms-verification.md) | qubitization信号条件、反例和厄米化构造 | [算法](../../codes/algorithms/round71_checks.py) `16` |
-| [17：A71-17](../17-computation-models.md) | echo时间失配的残余耦合与不可见相位误差 | [算法](../../codes/algorithms/round71_checks.py) `17` |
-| [18：A71-18](../18-channels-capacities-complexity.md) | 协方差物理性、正矩阵反例、hbar与多模排序 | [算法](../../codes/algorithms/round71_checks.py) `18` |
-| [19：S71-19](../19-engineering-architecture.md) | 相同POVM、不同测后过程；QND与重复性区别 | [系统](../../codes/systems/round71_checks.py) `--case 19` |
-| [Q1：F71-Q1](../quantum-mechanics/01-experiments-states.md) | 两组相反的条件擦除条纹与整体概率 | [基础](../../codes/foundations/round71_checks.py) `--case q1` |
-| [Q2：F71-Q2](../quantum-mechanics/02-observables-dynamics.md) | 不确定关系中保留对称协方差的加强界 | [基础](../../codes/foundations/round71_checks.py) `--case q2` |
-| [Q3：S71-Q3](../quantum-mechanics/03-levels-control.md) | 矩形脉冲频谱零点；泄漏近似的条件 | [系统](../../codes/systems/round71_checks.py) `--case q3` |
-| [Q4：A71-Q4](../quantum-mechanics/04-wavefunctions-models.md) | 势垒顶连续极限、超势垒反射、共振及边界匹配 | [算法](../../codes/algorithms/round71_checks.py) `q4` |
-
-源码实践另有S71-MPF、OBP、NOISE、SQD、RNG、TOMO六组[带解练习](../appendices/software-practice.md)，连接权重约束、采样预算、截断偏差、噪声伴随、投影归一化、并行样本与过程层析。运行 `python3 codes/practice/workflow_checks.py`；固定结果可与逐步答案对照。它们是自编小模型，不导入vendor、不申请真机作业。
-
-## 第二组逐章练习：检验容易遗漏的条件
-
-本组题目和完整解答直接放在相应正文的“新增诊断练习”“实操扩展B”或“练习与实验”中；不必在两个文档间来回找答案。原251道自检与上表第一组实验继续保留。全部新数值程序已接入统一入口，输入是合成计数或明示模型。
-
-| 章节入口 | 新练习要回答的问题 | 程序 |
-|---|---|---|
-| [00](../00-overview.md) | 重复复制的日志为何不能算独立shots | [基础诊断00](../../codes/foundations/diagnostic_lab.py) |
-| [01](../01-math.md) | 两列归一化为何还不保证酉性 | [基础诊断01](../../codes/foundations/diagnostic_lab.py) |
-| [02](../02-single-qubit.md) | 合法计数为何重构出负本征值 | [基础诊断02](../../codes/foundations/diagnostic_lab.py) |
-| [03](../03-multiple-qubits.md) | 复相位纠缠应测哪个相关方向 | [基础诊断03](../../codes/foundations/diagnostic_lab.py) |
-| [04](../04-circuits-protocols.md) | 门的全局相位加控制后为何不能删 | [基础诊断04](../../codes/foundations/diagnostic_lab.py) |
-| [05](../05-noise-channels.md) | 有限温度阻尼为何也能激发基态 | [基础诊断05](../../codes/foundations/diagnostic_lab.py) |
-| [06](../06-algorithmic-primitives.md) | Hadamard测试如何读复期望值的实部和虚部 | [算法检查06](../../codes/algorithms/round70_checks.py) |
-| [07](../07-algorithms.md) | 单个Grover深度为什么分不清不同振幅 | [算法检查07](../../codes/algorithms/round70_checks.py) |
-| [08](../08-applications.md) | 多个门共享参数时如何正确求导 | [算法检查08](../../codes/algorithms/round70_checks.py) |
-| [09](../09-hardware.md) | 如何把有限标定样本的不确定性一起算 | [标定传播](../../codes/systems/calibration_uncertainty.py) |
-| [10](../10-error-correction.md) | 综合征测后为何仍有相干逻辑误差 | [相干重复码](../../codes/systems/coherent_repetition.py) |
-| [11](../11-resources-benchmarks.md) | 批内漂移怎样减少有效独立信息 | [相关shots](../../codes/systems/correlated_shots.py) |
-| [12](../12-security-network-frontiers.md) | 存储超时怎样交换速率与条件质量 | [网络超时](../../codes/systems/network_cutoff.py) |
-| [13](../13-quantum-information.md) | 后选择为何不违反迹距离收缩定理 | [基础诊断13](../../codes/foundations/diagnostic_lab.py) |
-| [14](../14-compilation-control.md) | 不共用比特的门为何还不能并行 | [共享资源调度](../../codes/systems/resource_schedule.py) |
-| [15](../15-practice-research.md) | 后选择、零失败、时间预算、负权重怎样报告 | [P15-D–G](../../codes/practice/research_checks.py) |
-| [16](../16-advanced-algorithms-verification.md) | 小成功率为何放大条件态误差 | [算法检查16](../../codes/algorithms/round70_checks.py) |
-| [17](../17-computation-models.md) | 链强度阈值为何有简并和缩放代价 | [算法检查17](../../codes/algorithms/round70_checks.py) |
-| [18](../18-channels-capacities-complexity.md) | 有限块码可靠性为何不能等同信道容量 | [算法检查18](../../codes/algorithms/round70_checks.py) |
-| [19](../19-engineering-architecture.md) | 校准更新怎样传播失效和拒绝过期发布 | [校准依赖](../../codes/systems/calibration_dependencies.py) |
-| [Q1](../quantum-mechanics/01-experiments-states.md) | 相同可见度能否区分不等权与退相干 | [基础诊断q1](../../codes/foundations/diagnostic_lab.py) |
-| [Q2](../quantum-mechanics/02-observables-dynamics.md) | 同一简并读数能否来自不同测后作用 | [基础诊断q2](../../codes/foundations/diagnostic_lab.py) |
-| [Q3](../quantum-mechanics/03-levels-control.md) | Rabi人口能否辨认失谐符号 | [基础诊断q3](../../codes/foundations/diagnostic_lab.py) |
-| [Q4](../quantum-mechanics/04-wavefunctions-models.md) | Fock截断如何改变对易子 | [基础诊断q4](../../codes/foundations/diagnostic_lab.py) |
-
-此外，[源码阅读练习S04–S08](../appendices/software-practice.md)把多项式基、LCU归一化、阴影快照、控制约束和重构顺序连接到固定的上游文件。四组数值题有[独立复算代码](../../codes/practice/source_reading_checks.py)，工程讨论题保留其无法单靠程序断言验收的边界。
-
-## 第五组逐章练习：第73轮补缺口与深度核验
-
-三组完整读审并交换复核24篇。每篇的新题有明确条件、分步解答、代码与样本；原251题保留。完整SDK安装在独立环境中，默认入口只执行标准库复算。[五组上层集成题](sdk-validation.md#9-第73轮补缺口先把未实现拆成可验收任务)另给动态MPF、SLC、PNA、GST和Philox计算。
-
-| 篇章与新题 | 重点 | 独立复算 |
-|---|---|---|
-| [F73-00](../00-overview.md) | F73-00｜校准与留出验证也要计入一次任务 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-01](../01-math.md) | F73-01｜逆矩阵怎样还原读出，为什么也会放大误差 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-02](../02-single-qubit.md) | F73-02｜读出补偿：把偏差和校准的不确定度一起带回来 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-03](../03-multiple-qubits.md) | F73-03｜两端都有读出偏差，纠缠见证怎样换算 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-04](../04-circuits-protocols.md) | F73-04｜消息全到了，读错一位仍会做错校正 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-05](../05-noise-channels.md) | F73-05｜真正约束CP与TP，Gaussian拟合与计数最大似然分开 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-Q1](../quantum-mechanics/01-experiments-states.md) | F73-Q1｜漏检与错报不同：纯态也会得到浅条纹 | [foundations](../../codes/foundations/round73_checks.py) |
-| [F73-Q2](../quantum-mechanics/02-observables-dynamics.md) | F73-Q2｜脉冲随时间变化：分别检查时序误差、积分误差与轨迹涨落 | [foundations](../../codes/foundations/round73_checks.py) |
-| [A73-06](../06-algorithmic-primitives.md) | 练习 A73-06：相位没有正负号，谱值的符号要靠承诺解码 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-07](../07-algorithms.md) | 完整电路练习 A73-07：负谱与非网格 HHL，要把垃圾概率单独算 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-08](../08-applications.md) | 练习 A73-08：粒子数罚项多大，才真正排除真空答案 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-13](../13-quantum-information.md) | 练习 A73-13：相同计算基计数，不能判断反计算后的输出仍是纯态 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-16](../16-advanced-algorithms-verification.md) | 完整离散搜索练习 A73-16a：给标记点换硬币，才从行走变成搜索 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-17](../17-computation-models.md) | 完整前馈练习 A73-17：两个测量步，四种结果都要纠正 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-18](../18-channels-capacities-complexity.md) | 练习 A73-18：只有能量上限时，Fock 尾界应当多保守 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [A73-Q4](../quantum-mechanics/04-wavefunctions-models.md) | 练习 A73-Q4：截断后再驱动，并不等于先驱动再投影 | [algorithms](../../codes/algorithms/round73_checks.py) |
-| [S73-09](../09-hardware.md) | 5.6 S73-09：同一个 Y 故障，为什么会同时进入两张检查图 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-10](../10-error-correction.md) | 7.4 S73-10：双基、固定轮数和相关匹配，逐个缺口真正补上 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-11](../11-resources-benchmarks.md) | 7.3 S73-11：换译码器要逐条配对，计时也要留下分布 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-12](../12-security-network-frontiers.md) | 7.3 S73-12：真的先兆两段 Bell 对，再执行交换和过期事件 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-14](../14-compilation-control.md) | 6.2 S73-14：把泄漏放进优化目标后，怎样验收计算子空间 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-15](../15-practice-research.md) | 15.2 S73-15：SDK有成功先兆，也要用数学反例检查后态 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-19](../19-engineering-architecture.md) | 10.3 S73-19：有了真实时长样本，仍要把“服务”与“反馈”分开 | [systems](../../codes/systems/round73_checks.py) |
-| [S73-Q3](../quantum-mechanics/03-levels-control.md) | 6.4 S73-Q3：三维门酉，不表示它的二维限制也酉 | [systems](../../codes/systems/round73_checks.py) |
-
-基础完整流程见[基础SDK](../../codes/foundations/sdk73/README.md)，算法见[算法SDK](../../codes/algorithms/sdk73/README.md)，系统见[系统SDK](../../codes/systems/sdk73/README.md)，集成见[上层工作流](../../codes/sdk/round73/README.md)。标签A73-16含多个子题，各题独立说明口径；覆盖篇章不表示穷尽全部算法。
+为严格保持历史 Git 提交、验证日志与数据文件 SHA-256 哈希的可追溯性，仓库 `codes/` 下的部分底层核验脚本和历史隔离环境档案目录仍保留原始文件名（如 `round70_checks.py`、`round71_checks.py`、`round72-README.md`、`round73_checks.py`、`sdk73/` 与 `codes/sdk/round73/`），不作重命名或篡改。它们对应的理论推导、反例拆解与分步解答均已自然融入全书正文与本总图谱。如需查阅历史隔离环境的完整原始运行日志，可直接访问：[基础 SDK 归档](../../codes/foundations/sdk73/README.md)、[算法 SDK 归档](../../codes/algorithms/sdk73/README.md)、[系统 SDK 归档](../../codes/systems/sdk73/README.md)与[进阶集成工作流归档](../../codes/sdk/round73/README.md)。

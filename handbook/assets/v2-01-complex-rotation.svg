@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">复平面上的旋转、共轭镜像与模平方辨析</title>
+  <desc id="desc">左图在等比例复平面上绘制 z₁ = 1 + i（模 √2，角度 45°）、乘以虚数单位 i 后逆时针旋转 90° 得到的 z₂ = −1 + i（135°），以及关于实轴镜像的共轭 z₁* = 1 − i（−45°），三点同位于半径 √2 的圆周。右图对比 Born 概率所需的非负实数模平方 |z₁|² = z₁*·z₁ = 2 与复数直接平方 z₁² = 2i。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:12.5px;font-weight:400;fill:#3e566d}
+.smb{font-size:12.5px;font-weight:600;fill:#19324d}
+.xs{font-size:11.5px;font-weight:500;fill:#3e566d}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.wire{stroke:#19324d;stroke-width:2.0;fill:none}
+.cwire{stroke:#4a637a;stroke-width:1.5;fill:none}
+.ctrl{fill:#13263a}
+.targ{fill:#ffffff;stroke:#13263a;stroke-width:2.0}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.5}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.mirror{stroke:#19324d;stroke-width:3.2;stroke-linecap:round}
+.bs-glass{fill:#bae6fd;fill-opacity:.58;stroke:#1b6ca8;stroke-width:1.6}
+.det-body{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12.5px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis,.wire{stroke:#cde0f2}
+  .axis-fill,.ctrl{fill:#cde0f2}
+  .cwire{stroke:#9bb6ce}
+  .targ{fill:#16222e;stroke:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .mirror{stroke:#cde0f2}
+  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
+  .det-body{fill:#163d31;stroke:#5dd1a8}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">复平面上的旋转、共轭镜像与模平方辨析</text>
+  <text class="subtitle" x="34" y="79">左：z₁ = 1 + i 乘 i 逆时针旋 90° 到 z₂ = −1 + i，共轭 z₁* = 1 − i 沿实轴镜像；右：|z₁|² 与 z₁² 的本质区别</text>
+  <rect class="panel" x="28" y="96" width="548" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 562 Q 575 97 575 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="575" y2="134"/>
+  <text class="sec" x="44" y="120">等比例复平面：乘 i 旋转 90° 与共轭实轴镜像</text>
+  <rect class="panel" x="592" y="96" width="380" height="456" rx="14"/>
+  <path class="phead" d="M 606 97 H 958 Q 971 97 971 110 V 134 H 593 V 110 Q 593 97 606 97 Z"/>
+  <line class="grid" x1="593" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="608" y="120">关键辨析：模平方 |z₁|² 与复数平方 z₁²</text>
+  <line class="grid" x1="118" y1="195.4" x2="118" y2="474.16"/>
+  <line class="grid" x1="210" y1="195.4" x2="210" y2="474.16"/>
+  <line class="grid" x1="394" y1="195.4" x2="394" y2="474.16"/>
+  <line class="grid" x1="486" y1="195.4" x2="486" y2="474.16"/>
+  <line class="grid" x1="104.2" y1="430" x2="499.8" y2="430"/>
+  <line class="grid" x1="104.2" y1="246" x2="499.8" y2="246"/>
+  <circle class="grid" stroke-dasharray="3 4" cx="302" cy="338" r="92"/>
+  <circle class="unit-circle" cx="302" cy="338" r="130.11"/>
+  <text class="xs" x="286" y="394" text-anchor="end">单位圆 r = 1</text>
+  <text class="xs" x="180.56" y="452.08" text-anchor="end">等模圆 r = √2</text>
+  <line class="axis" x1="97.76" y1="338" x2="509" y2="338"/>
+  <polygon class="axis-fill" points="509,338 501,341.84 501,334.16"/>
+  <line class="axis" x1="302" y1="481.52" x2="302" y2="185.28"/>
+  <polygon class="axis-fill" points="302,185.28 305.84,193.28 298.16,193.28"/>
+  <rect class="pill-bg" x="399" y="306" width="110" height="22" rx="8"/>
+  <text class="xs" x="454" y="321" text-anchor="middle">Re(z) (无量纲)</text>
+  <text class="smb" x="302" y="174.28" text-anchor="middle">Im(z) (虚部，无量纲)</text>
+  <line class="axis" stroke-width="1.3" x1="118" y1="334" x2="118" y2="342"/>
+  <text class="sm" x="118" y="357" text-anchor="middle">−2</text>
+  <line class="axis" stroke-width="1.3" x1="210" y1="334" x2="210" y2="342"/>
+  <text class="sm" x="210" y="357" text-anchor="middle">−1</text>
+  <line class="axis" stroke-width="1.3" x1="394" y1="334" x2="394" y2="342"/>
+  <text class="sm" x="386" y="357" text-anchor="middle">1</text>
+  <line class="axis" stroke-width="1.3" x1="486" y1="334" x2="486" y2="342"/>
+  <text class="sm" x="486" y="357" text-anchor="middle">2</text>
+  <line class="axis" stroke-width="1.3" x1="298" y1="430" x2="306" y2="430"/>
+  <text class="sm" x="292" y="434" text-anchor="end">−1</text>
+  <line class="axis" stroke-width="1.3" x1="298" y1="246" x2="306" y2="246"/>
+  <text class="sm" x="292" y="261" text-anchor="end">1</text>
+  <text class="sm" x="292" y="356" text-anchor="end">0</text>
+  <line class="guide" x1="394" y1="246" x2="394" y2="430"/>
+  <line class="guide" x1="210" y1="246" x2="394" y2="246"/>
+  <line class="guide" x1="210" y1="246" x2="210" y2="338"/>
+  <path class="c2" stroke-width="1.5" d="M 313.31 326.69 L 302 315.37 L 290.69 326.69"/>
+  <path class="c1" stroke-width="1.7" d="M 346 338 L 345.96 336.08 L 345.83 334.17 L 345.62 332.26 L 345.33 330.36 L 344.96 328.48 L 344.5 326.61 L 343.96 324.77 L 343.35 322.95 L 342.65 321.16 L 341.88 319.4 L 341.03 317.68 L 340.11 316 L 339.11 314.36 L 338.04 312.76 L 336.91 311.21 L 335.71 309.72 L 334.44 308.27 L 333.11 306.89"/>
+  <text class="xs c1-txt" x="352" y="324">+45°</text>
+  <path class="c3" stroke-width="1.7" d="M 346 338 L 345.96 339.92 L 345.83 341.83 L 345.62 343.74 L 345.33 345.64 L 344.96 347.52 L 344.5 349.39 L 343.96 351.23 L 343.35 353.05 L 342.65 354.84 L 341.88 356.6 L 341.03 358.32 L 340.11 360 L 339.11 361.64 L 338.04 363.24 L 336.91 364.79 L 335.71 366.28 L 334.44 367.73 L 333.11 369.11"/>
+  <text class="xs c3-txt" x="352" y="362">−45°</text>
+  <path class="c2" stroke-width="2.1" d="M 376.61 257.17 L 372.2 253.31 L 367.6 249.7 L 362.8 246.33 L 357.84 243.23 L 352.72 240.39 L 347.45 237.83 L 342.05 235.55 L 336.55 233.57 L 330.94 231.87 L 325.25 230.49 L 319.5 229.4 L 313.69 228.62 L 307.85 228.16 L 302 228 L 296.15 228.16 L 290.31 228.62 L 284.5 229.4 L 278.75 230.49 L 273.06 231.87 L 267.45 233.57 L 261.95 235.55 L 256.55 237.83 L 251.28 240.39 L 246.16 243.23 L 241.2 246.33 L 236.4 249.7 L 231.8 253.31 L 227.39 257.17"/>
+  <polygon class="c2-fill" points="227.39,257.17 230.67,249.52 235.41,254.94"/>
+  <rect class="pill-bg" x="234" y="198" width="136" height="24" rx="12"/>
+  <text class="smb c2-txt" x="302" y="214" text-anchor="middle">× i：逆时针 +90°</text>
+  <line class="c1" stroke-width="2.8" x1="302" y1="338" x2="394" y2="246"/>
+  <polygon class="c1-fill" points="394,246 390.69,255.42 384.58,249.31"/>
+  <circle class="c1-fill" cx="394" cy="246" r="5.5"/>
+  <line class="c2" stroke-width="2.7" stroke-dasharray="8 4" x1="302" y1="338" x2="210" y2="246"/>
+  <polygon class="c2-fill" points="210,246 219.42,249.31 213.31,255.42"/>
+  <polygon class="c2-fill" points="210,239.8 216.2,246 210,252.2 203.8,246"/>
+  <line class="c3" stroke-width="2.6" stroke-dasharray="10 3 2 3" x1="302" y1="338" x2="394" y2="430"/>
+  <polygon class="c3-fill" points="394,430 384.58,426.69 390.69,420.58"/>
+  <rect class="c3-fill" x="389" y="425" width="10" height="10" rx="1.5"/>
+  <text class="lblb c1-txt" x="408" y="238">z₁ = 1 + i</text>
+  <text class="sm c1-txt" x="408" y="256">|z₁| = √2, θ = 45°</text>
+  <text class="lblb c2-txt" x="196" y="238" text-anchor="end">z₂ = i·z₁ = −1 + i</text>
+  <text class="sm c2-txt" x="196" y="256" text-anchor="end">|z₂| = √2, θ = 135°</text>
+  <text class="lblb c3-txt" x="408" y="432">z₁* = 1 − i（共轭）</text>
+  <text class="sm c3-txt" x="408" y="450">|z₁*| = √2, θ = −45°</text>
+  <rect class="pill-bg" x="406" y="366" width="114" height="24" rx="10"/>
+  <text class="xs c3-txt" x="463" y="382" text-anchor="middle">沿实轴上下镜像</text>
+  <rect class="note" x="44" y="498" width="516" height="40" rx="10"/>
+  <text class="sm" x="302" y="522" text-anchor="middle">乘法法则：长度相乘、角度相加；乘单位相位 e<tspan baseline-shift="super" font-size="72%">iφ</tspan> 只旋不缩，保概率总和为 1</text>
+  <rect class="c3-soft" x="608" y="150" width="348" height="108" rx="11"/>
+  <rect class="c3-fill" x="620" y="162" width="60" height="22" rx="11"/>
+  <text class="badge-txt" x="650" y="177" text-anchor="middle">✓ 模平方</text>
+  <text class="lblb c3-txt" x="690" y="178">|z₁|² = z₁* · z₁ = 2</text>
+  <text class="sm" x="622" y="206">代数：(1 − i)(1 + i) = 1² − i² = 1 + 1 = 2</text>
+  <text class="sm" x="622" y="226">极坐标：(√2·e<tspan baseline-shift="super" font-size="72%">−iπ/4</tspan>)(√2·e<tspan baseline-shift="super" font-size="72%">+iπ/4</tspan>) = 2（相位抵消）</text>
+  <text class="smb c3-txt" x="622" y="247">结果恒为非负实数 ∈ ℝ≥₀，归一化后作测量概率</text>
+  <rect class="c2-soft" x="608" y="270" width="348" height="108" rx="11"/>
+  <rect fill="url(#hatch-red)" x="608" y="270" width="348" height="108" rx="11" opacity="0.28"/>
+  <rect class="c2-fill" x="620" y="282" width="68" height="22" rx="11"/>
+  <text class="badge-txt" x="654" y="297" text-anchor="middle">✕ 复数平方</text>
+  <text class="lblb c2-txt" x="698" y="298">z₁² = z₁ · z₁ = 2i</text>
+  <text class="sm" x="622" y="326">代数：(1 + i)² = 1 + 2i + i² = 2i</text>
+  <text class="sm" x="622" y="346">极坐标：(√2)²·e<tspan baseline-shift="super" font-size="72%">i(2×45°)</tspan> = 2·e<tspan baseline-shift="super" font-size="72%">iπ/2</tspan>（角度翻倍）</text>
+  <text class="smb c2-txt" x="622" y="367">结果落在虚轴（非实数），不能当作测量概率</text>
+  <rect class="subpanel" x="608" y="390" width="348" height="96" rx="10"/>
+  <line class="axis" stroke-width="1.4" x1="644" y1="470" x2="744" y2="470"/>
+  <polygon class="axis-fill" points="744,470 738,472.88 738,467.12"/>
+  <line class="axis" stroke-width="1.4" x1="656" y1="480" x2="656" y2="396"/>
+  <polygon class="axis-fill" points="656,396 658.88,402 653.12,402"/>
+  <line class="c3" stroke-width="3.0" x1="656" y1="470" x2="716" y2="470"/>
+  <circle class="c3-fill" cx="716" cy="470" r="4.8"/>
+  <text class="smb c3-txt" x="716" y="460" text-anchor="middle">|z₁|² = 2</text>
+  <line class="c2" stroke-width="2.8" stroke-dasharray="6 3" x1="656" y1="470" x2="656" y2="410"/>
+  <polygon class="c2-fill" points="656,404.02 661.2,414.16 650.8,414.16"/>
+  <text class="smb c2-txt" x="668" y="415">z₁² = 2i</text>
+  <text class="smb" x="770" y="420">几何对照（同长 2）</text>
+  <text class="sm" x="770" y="442">|z₁|² 沿正实轴（0°）</text>
+  <text class="sm" x="770" y="462">z₁² 沿正虚轴（90°）</text>
+  <rect class="note" x="608" y="498" width="348" height="40" rx="10"/>
+  <text class="sm" x="782" y="522" text-anchor="middle">算例：α = (1+i)/2 ⇒ |α|² = 1/2（概率），α² = i/2</text>
+</svg>

@@ -1,7 +1,4 @@
-"""Independent eight-topic review. Does not if not __debug__:
-    raise RuntimeError('Independent numerical review requires assertions; run without -O.')
-
-import systems implementation.
+"""Independent eight-topic review. Does not import systems implementation.
 
 Matrix primitives come only from this handbook's foundations helpers; physical
 circuits, recurrence, subgroup enumeration and probability propagation are new.
@@ -12,6 +9,9 @@ import json
 import math
 import sys
 from pathlib import Path
+
+if not __debug__:
+    raise RuntimeError('Independent numerical review requires assertions; run without -O.')
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'codes/foundations'))
@@ -187,5 +187,5 @@ out['software_11_16']={'MPF_polynomial':comb,'variance_upper':variance,
    'duplicate_physical_energy':physical.real,'qpt_5_settings':12**5,
    'qpt_10_settings':12**10}
 payload=json.dumps({'date':'2026-10-13','independent_review':out},indent=2)+'\n'
-(ROOT/'work/research/round71-cross-foundations-systems-results.json').write_text(payload)
+(ROOT/'work/research/latest-cross-foundations-systems-results.json').write_text(payload)
 print(payload)

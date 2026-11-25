@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">单比特旋转的半角几何：Ry(θ) 旋转角与 Rz(φ) 赤道相位门</title>
+  <desc id="desc">左面板绘制 Bloch 球 x–z 截面圆：从北极 |0⟩ 施加 Ry(θ) 后振幅取半角 cos(θ/2)、sin(θ/2)，Bloch 向量却绕 +y 轴（指向纸内）顺时针转过整角 θ，依次经过 π/3、π/2(|+⟩)、π(|1⟩)、3π/2(|−⟩)，转满 2π 回到北极点却给态矢量乘上 −1（注：门旋转角 θ∈[0,2π]，而 Bloch 极角仅取 [0,π]）。右面板俯视赤道 x–y 截面，展示 Rz(φ) 与 T(π/4)、S(π/2)、Z(π) 门位置。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13.5px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:12.5px;font-weight:400;fill:#3e566d}
+.smb{font-size:12.5px;font-weight:600;fill:#19324d}
+.xs{font-size:11.5px;font-weight:500;fill:#3e566d}
+.gate-txt{font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.wire{stroke:#19324d;stroke-width:2.0;fill:none}
+.cwire{stroke:#4a637a;stroke-width:1.5;fill:none}
+.ctrl{fill:#13263a}
+.targ{fill:#ffffff;stroke:#13263a;stroke-width:2.0}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.2}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.5}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.mirror{stroke:#19324d;stroke-width:3.2;stroke-linecap:round}
+.bs-glass{fill:#bae6fd;fill-opacity:.58;stroke:#1b6ca8;stroke-width:1.6}
+.det-body{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.8}
+.badge-txt{fill:#ffffff;font-size:12.5px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.gate-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis,.wire{stroke:#cde0f2}
+  .axis-fill,.ctrl{fill:#cde0f2}
+  .cwire{stroke:#9bb6ce}
+  .targ{fill:#16222e;stroke:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .mirror{stroke:#cde0f2}
+  .bs-glass{fill:#1d5475;fill-opacity:.65;stroke:#6bc2f5}
+  .det-body{fill:#163d31;stroke:#5dd1a8}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">单比特旋转的半角几何：R<tspan dy="3" font-size="75%">y</tspan><tspan dy="-3">&#8203;</tspan>(θ) 旋转角与 R<tspan dy="3" font-size="75%">z</tspan><tspan dy="-3">&#8203;</tspan>(φ) 赤道相位门</text>
+  <text class="subtitle" x="34" y="79">态空间矩阵以半角 θ/2、φ/2 演化，在三维 Bloch 球上转过整角 θ、φ；转满 2π 回到原球面点但给态矢量乘 −1</text>
+  <rect class="panel" x="28" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 478 Q 491 97 491 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="134" x2="491" y2="134"/>
+  <text class="sec" x="44" y="120">Bloch 球 x–z 截面：R<tspan dy="3" font-size="75%">y</tspan><tspan dy="-3">&#8203;</tspan>(θ)|0⟩ = cos(θ/2)|0⟩ + sin(θ/2)|1⟩</text>
+  <rect class="panel" x="508" y="96" width="464" height="456" rx="14"/>
+  <path class="phead" d="M 522 97 H 958 Q 971 97 971 110 V 134 H 509 V 110 Q 509 97 522 97 Z"/>
+  <line class="grid" x1="509" y1="134" x2="971" y2="134"/>
+  <text class="sec" x="524" y="120">赤道 x–y 截面（俯视 +z）：R<tspan dy="3" font-size="75%">z</tspan><tspan dy="-3">&#8203;</tspan>(φ) 与 T、S、Z 相位门</text>
+  <circle class="bloch-circle" cx="256" cy="306" r="112"/>
+  <rect class="pill" x="42" y="144" width="114" height="22" rx="11"/>
+  <text class="xs" x="99" y="159" text-anchor="middle">⊗ +y 轴指向纸内</text>
+  <line class="axis" x1="256" y1="440" x2="256" y2="170"/>
+  <polygon class="axis-fill" points="256,170 259.6,177.5 252.4,177.5"/>
+  <line class="axis" x1="122" y1="306" x2="392" y2="306"/>
+  <polygon class="axis-fill" points="392,306 384.5,309.6 384.5,302.4"/>
+  <text class="smb" x="256" y="162" text-anchor="middle">+z：|0⟩ (θ = 0)</text>
+  <text class="smb" x="256" y="456" text-anchor="middle">−z：|1⟩ (θ = π)</text>
+  <text class="smb" x="398" y="303">+x：|+⟩</text>
+  <text class="xs" x="398" y="319">(θ = π/2)</text>
+  <text class="smb" x="116" y="303" text-anchor="end">−x：|−⟩</text>
+  <text class="xs" x="120" y="319" text-anchor="end">(转角 θ = 3π/2)</text>
+  <line class="guide" x1="352.99" y1="250" x2="256" y2="250"/>
+  <line class="guide" x1="352.99" y1="250" x2="352.99" y2="306"/>
+  <text class="xs c1-txt" x="248" y="254" text-anchor="end">cos θ</text>
+  <text class="xs c1-txt" x="342.99" y="322" text-anchor="middle">sin θ</text>
+  <path class="c1" stroke-width="2.0" d="M 256 260 L 258.19 260.05 L 260.37 260.21 L 262.55 260.47 L 264.71 260.83 L 266.84 261.3 L 268.96 261.86 L 271.05 262.53 L 273.1 263.3 L 275.11 264.16 L 277.08 265.11 L 279 266.16 L 280.87 267.3 L 282.68 268.53 L 284.44 269.84 L 286.12 271.24 L 287.74 272.71 L 289.29 274.26 L 290.76 275.88 L 292.16 277.56 L 293.47 279.32 L 294.7 281.13 L 295.84 283"/>
+  <polygon class="c1-fill" points="295.84,283 289.79,279.07 295.12,275.83"/>
+  <text class="smb c1-txt" x="272" y="282">θ</text>
+  <path class="c2" stroke-width="2.0" stroke-dasharray="6 4" d="M 379.78 313.44 L 379.11 320.8 L 378.01 328.11 L 376.48 335.34 L 374.52 342.46 L 372.13 349.46 L 369.34 356.3 L 366.14 362.97 L 362.55 369.43 L 358.58 375.66 L 354.25 381.65 L 349.57 387.37 L 344.55 392.8 L 339.22 397.92 L 333.6 402.72 L 327.7 407.17 L 321.54 411.26 L 315.16 414.98 L 308.56 418.31 L 301.77 421.24 L 294.83 423.76 L 287.74 425.87 L 280.54 427.55 L 273.26 428.79 L 265.91 429.6"/>
+  <polygon class="c2-fill" points="265.91,429.6 272.03,425.79 272.71,431.99"/>
+  <text class="xs c2-txt" x="358" y="408">θ = π → |1⟩</text>
+  <text class="xs c2-txt" x="358" y="424">(振幅半角 π/2)</text>
+  <path class="c4" stroke-width="1.8" stroke-dasharray="3 4" d="M 241.16 429.11 L 231.29 427.51 L 221.59 425.13 L 212.11 421.97 L 202.91 418.06 L 194.06 413.42 L 185.62 408.09 L 177.63 402.09 L 170.14 395.47 L 163.22 388.27 L 156.9 380.53 L 151.22 372.31 L 146.22 363.66 L 141.93 354.63 L 138.39 345.29 L 135.61 335.69 L 133.61 325.9 L 132.4 315.98 L 132 306 L 132.4 296.02 L 133.61 286.1 L 135.61 276.31 L 138.39 266.71 L 141.93 257.37 L 146.22 248.34 L 151.22 239.69 L 156.9 231.47 L 163.22 223.73 L 170.14 216.53 L 177.63 209.91 L 185.62 203.91 L 194.06 198.58 L 202.91 193.94 L 212.11 190.03 L 221.59 186.87 L 231.29 184.49 L 241.16 182.89"/>
+  <polygon class="c4-fill" points="241.16,182.89 235.24,187.01 234.24,180.85"/>
+  <text class="xs c4-txt" x="150" y="206" text-anchor="end">转满 θ = 2π 回北极</text>
+  <text class="xs c4-txt" x="150" y="222" text-anchor="end">R<tspan dy="3" font-size="75%">y</tspan><tspan dy="-3">&#8203;</tspan>(2π)|0⟩ = −|0⟩</text>
+  <line class="c1" stroke-width="2.8" x1="256" y1="306" x2="352.99" y2="250"/>
+  <polygon class="c1-fill" points="352.99,250 347.67,257.78 343.59,250.72"/>
+  <circle class="c1-fill" cx="256" cy="194" r="5.0"/>
+  <circle class="c1-fill" cx="352.99" cy="250" r="5.0"/>
+  <polygon class="c3-fill" points="368,300.2 373.8,306 368,311.8 362.2,306"/>
+  <rect class="c2-fill" x="251" y="413" width="10" height="10" rx="1.5"/>
+  <text class="smb c1-txt" x="362.99" y="234">R<tspan dy="3" font-size="75%">y</tspan><tspan dy="-3">&#8203;</tspan>(θ)|0⟩</text>
+  <text class="xs c1-txt" x="362.99" y="250">球面角 θ = π/3</text>
+  <text class="xs c1-txt" x="362.99" y="265">振幅角 θ/2 = π/6</text>
+  <rect class="note" x="42" y="476" width="436" height="62" rx="10"/>
+  <text class="smb" x="56" y="497">半角机制：正交态 |0⟩, |1⟩ 态空间夹 90°，Bloch 球面成 180°</text>
+  <text class="xs" x="56" y="516">r<tspan dy="3" font-size="75%">x</tspan><tspan dy="-3">&#8203;</tspan> = 2cos(θ/2)sin(θ/2) = sin θ，r<tspan dy="3" font-size="75%">z</tspan><tspan dy="-3">&#8203;</tspan> = cos²(θ/2)−sin²(θ/2) = cos θ</text>
+  <text class="xs" x="56" y="532">门旋转角 θ ∈ [0, 2π] (rad)；Bloch 极角仅取 θ ∈ [0, π]（坐标无量纲）</text>
+  <circle class="bloch-circle" cx="740" cy="306" r="110"/>
+  <rect class="pill" x="522" y="144" width="114" height="22" rx="11"/>
+  <text class="xs" x="579" y="159" text-anchor="middle">⊙ +z 轴指向纸外</text>
+  <line class="axis" x1="608" y1="306" x2="874" y2="306"/>
+  <polygon class="axis-fill" points="874,306 866.5,309.6 866.5,302.4"/>
+  <line class="axis" x1="740" y1="438" x2="740" y2="172"/>
+  <polygon class="axis-fill" points="740,172 743.6,179.5 736.4,179.5"/>
+  <text class="smb" x="878" y="303">+x：|+⟩</text>
+  <text class="xs" x="878" y="319">(φ = 0)</text>
+  <text class="smb c2-txt" x="602" y="303" text-anchor="end">−x：|−⟩</text>
+  <text class="xs c2-txt" x="602" y="319" text-anchor="end">Z|+⟩ (π)</text>
+  <text class="smb c3-txt" x="740" y="164" text-anchor="middle">+y：|+i⟩ = S|+⟩ (φ = π/2)</text>
+  <text class="smb" x="740" y="454" text-anchor="middle">−y：|−i⟩ = S†|+⟩ (φ = −π/2)</text>
+  <line class="c4" stroke-width="2.4" x1="740" y1="306" x2="817.78" y2="228.22"/>
+  <line class="c3" stroke-width="2.3" stroke-dasharray="6 3" x1="740" y1="306" x2="740" y2="196"/>
+  <line class="c2" stroke-width="2.3" stroke-dasharray="10 3 2 3" x1="740" y1="306" x2="630" y2="306"/>
+  <line class="guide" x1="740" y1="306" x2="817.78" y2="383.78"/>
+  <path class="c4" stroke-width="2.2" d="M 803.95 303.44 L 803.8 300.94 L 803.55 298.44 L 803.21 295.96 L 802.77 293.49 L 802.23 291.04 L 801.59 288.61 L 800.86 286.21 L 800.04 283.84 L 799.13 281.51 L 798.12 279.21 L 797.03 276.95 L 795.85 274.74 L 794.58 272.58 L 793.23 270.47 L 791.8 268.41 L 790.28 266.41 L 788.69 264.47 L 787.03 262.59"/>
+  <polygon class="c4-fill" points="787.03,262.59 793.16,265.17 788.86,268.99"/>
+  <text class="xs c4-txt" x="818" y="284">+π/4</text>
+  <path class="c3" stroke-width="2.2" stroke-dasharray="5 3" d="M 782.94 258.54 L 781.1 256.94 L 779.2 255.41 L 777.25 253.96 L 775.24 252.57 L 773.18 251.27 L 771.07 250.05 L 768.92 248.91 L 766.72 247.85 L 764.49 246.87 L 762.22 245.98 L 759.92 245.18 L 757.59 244.47 L 755.24 243.84 L 752.86 243.31 L 750.46 242.86 L 748.05 242.51 L 745.63 242.25 L 743.2 242.08"/>
+  <polygon class="c3-fill" points="743.2,242.08 749.38,239.62 748.99,245.37"/>
+  <text class="xs c3-txt" x="768" y="232">+π/4</text>
+  <path class="c2" stroke-width="2.2" stroke-dasharray="8 4" d="M 736.16 242.12 L 732.61 242.43 L 729.07 242.94 L 725.57 243.65 L 722.12 244.55 L 718.72 245.64 L 715.38 246.92 L 712.13 248.39 L 708.96 250.03 L 705.88 251.85 L 702.92 253.84 L 700.07 255.99 L 697.34 258.29 L 694.75 260.75 L 692.29 263.34 L 689.99 266.07 L 687.84 268.92 L 685.85 271.88 L 684.03 274.96 L 682.39 278.13 L 680.92 281.38 L 679.64 284.72 L 678.55 288.12 L 677.65 291.57 L 676.94 295.07 L 676.43 298.61 L 676.12 302.16"/>
+  <polygon class="c2-fill" points="676.12,302.16 673.58,295.41 679.79,295.96"/>
+  <text class="xs c2-txt" x="644" y="210" text-anchor="end">再转 +π/2</text>
+  <text class="xs c2-txt" x="644" y="226" text-anchor="end">(累计 φ = π，即 Z)</text>
+  <circle class="c1-fill" cx="850" cy="306" r="5.0"/>
+  <polygon class="c4-fill" points="817.78,221.32 823.78,233.02 811.78,233.02"/>
+  <polygon class="c3-fill" points="740,190 746,196 740,202 734,196"/>
+  <rect class="c2-fill" x="625" y="301" width="10" height="10" rx="1.5"/>
+  <circle class="panel" stroke="#7c93a8" stroke-width="2" cx="817.78" cy="383.78" r="4.5"/>
+  <circle class="panel" stroke="#7c93a8" stroke-width="2" cx="740" cy="416" r="4.5"/>
+  <text class="smb c4-txt" x="827.78" y="218.22">T 门 (φ = π/4)</text>
+  <text class="xs c4-txt" x="827.78" y="234.22">T = diag(1, e<tspan baseline-shift="super" font-size="72%">iπ/4</tspan>)</text>
+  <text class="xs" x="827.78" y="388.78">T† (−π/4)</text>
+  <rect class="note" x="522" y="476" width="436" height="62" rx="10"/>
+  <text class="smb" x="536" y="497">R<tspan dy="3" font-size="75%">z</tspan><tspan dy="-3">&#8203;</tspan>(φ) = diag(e<tspan baseline-shift="super" font-size="72%">−iφ/2</tspan>, e<tspan baseline-shift="super" font-size="72%">+iφ/2</tspan>)，仅差全局相位即 diag(1, e<tspan baseline-shift="super" font-size="72%">iφ</tspan>)</text>
+  <text class="xs" x="536" y="516">门递进：T² = S (π/2)，S² = Z (π)；赤道转动不改变计算基概率</text>
+  <text class="xs" x="536" y="532">坐标 r<tspan dy="3" font-size="75%">x</tspan><tspan dy="-3">&#8203;</tspan>, r<tspan dy="3" font-size="75%">y</tspan><tspan dy="-3">&#8203;</tspan> 无量纲；方位角 φ 单位为弧度 (rad)</text>
+</svg>

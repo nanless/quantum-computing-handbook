@@ -8,7 +8,7 @@
   "frechet_max_diff": 6.092551327012795e-12,
   "naive_commuting_derivative_max_diff": 0.0021115544664203237,
   "queue": {
-    "mean_service_us": 0.9600000000000003,
+    "mean_service_us": 0.96,
     "max_latency_us": 4.0,
     "misses": 10,
     "jobs": [

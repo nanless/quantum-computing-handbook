@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">超算符五表示互转与 Pauli 旋转随机化 PTM 热力矩阵对照</title>
+  <desc id="desc">左面板展示 Stinespring 扩张、Kraus 算符和、Choi 矩阵、Liouville 超算符与 Pauli 转移矩阵 (PTM) 五种等价量子信道表示的精确转换关系。右面板以 4×4 PTM 热力矩阵对照相干过旋转 Rz(0.2) 在 Pauli 旋转随机化前后的元素变化：非对角旋转元 ∓0.199 彻底清零，主对角线与平均门保真度保持不变。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.subpanel{fill:#f4f8fb;stroke:#d1dde8;stroke-width:1.2}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:13px;font-weight:400;fill:#3e566d}
+.sec{font-size:14.5px;font-weight:700;fill:#13263a}
+.lbl{font-size:13px;font-weight:500;fill:#19324d}
+.lblb{font-size:13px;font-weight:700;fill:#13263a}
+.sm{font-size:12px;font-weight:400;fill:#3e566d}
+.smb{font-size:12px;font-weight:600;fill:#19324d}
+.xs{font-size:11px;font-weight:500;fill:#3e566d}
+.xsb{font-size:11px;font-weight:700;fill:#19324d}
+.math-txt{font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;fill:#13263a}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#dce5ee;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.25;stroke-dasharray:5 4;fill:none}
+.unit-circle{stroke:#5b7790;stroke-width:1.6;stroke-dasharray:6 5;fill:none}
+.bloch-circle{fill:#dff4ff;fill-opacity:.34;stroke:#2e6f95;stroke-width:2.0}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#145282}
+.c1-soft{fill:#e1f1fb;stroke:#1b6ca8;stroke-width:1.5}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce8e3;stroke:#c74b34;stroke-width:1.5}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#155e46}
+.c3-soft{fill:#e2f5ee;stroke:#1e7a5c;stroke-width:1.5}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8a5609}
+.c4-soft{fill:#fff4d8;stroke:#b57614;stroke-width:1.5}
+.c5{stroke:#6b4ea8;fill:none}
+.c5-fill{fill:#6b4ea8}
+.c5-txt{fill:#51358a}
+.c5-soft{fill:#efe9fb;stroke:#6b4ea8;stroke-width:1.5}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.3}
+.pill{fill:#f3f7fa;stroke:#9cb1c4;stroke-width:1.2}
+.pill-bg{fill:#ffffff;fill-opacity:.94;stroke:#9cb1c4;stroke-width:1.1}
+.area1{fill:#1b6ca8;fill-opacity:.13}
+.area2{fill:#c74b34;fill-opacity:.14}
+.area3{fill:#1e7a5c;fill-opacity:.15}
+.area4{fill:#b57614;fill-opacity:.13}
+.bar-neutral{fill:#e2e8f0;stroke:#556b80;stroke-width:1.4}
+.wall{fill:#334e68;stroke:#19324d;stroke-width:1.2}
+.badge-txt{fill:#ffffff;font-size:11.5px;font-weight:700}
+.hm-pos1{fill:#1b6ca8;stroke:#ffffff;stroke-width:1.4}
+.hm-pos2{fill:#2d82bf;stroke:#ffffff;stroke-width:1.4}
+.hm-pos3{fill:#f3b562;stroke:#ffffff;stroke-width:1.4}
+.hm-neg3{fill:#d96b57;stroke:#ffffff;stroke-width:1.4}
+.hm-zero{fill:#edf2f7;stroke:#cbd5e1;stroke-width:1.1}
+.hm-hi{fill:none;stroke:#b57614;stroke-width:2.0;stroke-dasharray:4 2}
+.hm-inv{fill:#ffffff;font-size:10.5px;font-weight:700}
+.hm-dark{fill:#13263a;font-size:10.5px;font-weight:700}
+.hm-muted{fill:#64748b;font-size:10.5px;font-weight:500}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.45}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke0{stroke:#556b80;stroke-width:1.1;stroke-opacity:.38}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .subpanel{fill:#1b2a38;stroke:#3b5369}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb,.math-txt{fill:#eef6ff}
+  .subtitle,.sm,.xs{fill:#b7cde0}
+  .lbl,.smb,.xsb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide,.unit-circle{stroke:#738fa8}
+  .bloch-circle{fill:#164968;fill-opacity:.38;stroke:#7ed4ff}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .c4-soft{fill:#3d3014;stroke:#f0ba5a}
+  .c5{stroke:#b79ef5}
+  .c5-fill{fill:#b79ef5}
+  .c5-txt{fill:#cbb8fa}
+  .c5-soft{fill:#2d2147;stroke:#b79ef5}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .pill-bg{fill:#16222e;fill-opacity:.94;stroke:#4f6b85}
+  .area1{fill:#6bc2f5;fill-opacity:.17}
+  .area2{fill:#f28872;fill-opacity:.18}
+  .area3{fill:#5dd1a8;fill-opacity:.18}
+  .area4{fill:#f0ba5a;fill-opacity:.17}
+  .bar-neutral{fill:#2a3c4e;stroke:#8fa9c2}
+  .wall{fill:#8ca5bc;stroke:#cde0f2}
+  .badge-txt{fill:#0f1720}
+  .hm-pos1{fill:#2a7fb8;stroke:#16222e}
+  .hm-pos2{fill:#3a92cc;stroke:#16222e}
+  .hm-pos3{fill:#b87a24;stroke:#16222e}
+  .hm-neg3{fill:#b84b3a;stroke:#16222e}
+  .hm-zero{fill:#213243;stroke:#354c61}
+  .hm-hi{stroke:#f0ba5a}
+  .hm-inv{fill:#ffffff}
+  .hm-dark{fill:#eef6ff}
+  .hm-muted{fill:#8fa9c2}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.50}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+  .hatch-stroke0{stroke:#9ab4cc;stroke-opacity:.42}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-neutral" width="7" height="7" patternUnits="userSpaceOnUse"><line class="hatch-stroke0" x1="0" y1="3.5" x2="7" y2="3.5"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="52">超算符五种等价表示互转与 Pauli 旋转随机化 PTM 对照</text>
+  <text class="subtitle" x="34" y="76">左：Stinespring ↔ Kraus ↔ Choi ↔ Liouville ↔ PTM 转换网络；右：Rz(0.2) 随机化后非对角相干元 ∓0.199 归零</text>
+  <rect class="panel" x="28" y="94" width="452" height="458" rx="14"/>
+  <path class="phead" d="M 42 95 H 466 Q 479 95 479 108 V 130 H 29 V 108 Q 29 95 42 95 Z"/>
+  <line class="grid" x1="29" y1="130" x2="479" y2="130"/>
+  <text class="sec" x="44" y="117">五种超算符表示的精确互转网络</text>
+  <rect class="panel" x="496" y="94" width="476" height="458" rx="14"/>
+  <path class="phead" d="M 510 95 H 958 Q 971 95 971 108 V 130 H 497 V 108 Q 497 95 510 95 Z"/>
+  <line class="grid" x1="497" y1="130" x2="971" y2="130"/>
+  <text class="sec" x="512" y="117">Rz(0.2) 经 Pauli 旋转随机化前后 4×4 PTM 热力矩阵</text>
+  <rect class="c5-soft" x="132" y="142" width="244" height="58" rx="9"/>
+  <text class="smb c5-txt" x="254" y="161" text-anchor="middle">① Stinespring 扩张</text>
+  <text class="xs" x="254" y="177" text-anchor="middle">Tr<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan>[ U (ρ ⊗ |0⟩⟨0|<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan>) U† ]</text>
+  <text class="xs c5-txt" x="254" y="192" text-anchor="middle">自动满足 CP+TP · 微观物理图像</text>
+  <line class="axis" stroke-width="1.6" x1="254" y1="201" x2="254" y2="235"/>
+  <polygon class="axis-fill" points="254,201 256.53,206.5 251.47,206.5"/>
+  <polygon class="axis-fill" points="254,235 251.47,229.5 256.53,229.5"/>
+  <text class="xs" x="244" y="222" text-anchor="end">K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan> = <tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan>⟨k|U|0⟩<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs" x="264" y="222">V = ∑ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan> ⊗ |k⟩<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <rect class="c1-soft" x="132" y="238" width="244" height="58" rx="9"/>
+  <text class="smb c1-txt" x="254" y="257" text-anchor="middle">② Kraus 算符和 {Kₖ}</text>
+  <text class="xs" x="254" y="273" text-anchor="middle">E(ρ) = ∑ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan> ρ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan>†，∑ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan>†K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan> = I</text>
+  <text class="xs c1-txt" x="254" y="288" text-anchor="middle">极易判 TP · 适配量子跳跃轨迹</text>
+  <rect class="c3-soft" x="42" y="336" width="184" height="64" rx="9"/>
+  <text class="smb c3-txt" x="134" y="356" text-anchor="middle">③ Choi 矩阵 J<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs" x="134" y="373" text-anchor="middle">∑ vec(K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan>) vec(K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan>)†</text>
+  <text class="xs c3-txt" x="134" y="390" text-anchor="middle">最易判 CP：J<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan> ⪰ 0</text>
+  <rect class="c4-soft" x="282" y="336" width="184" height="64" rx="9"/>
+  <text class="smb c4-txt" x="374" y="356" text-anchor="middle">④ Liouville 超算符 S<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs" x="374" y="373" text-anchor="middle">∑ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan>* ⊗ K<tspan dy="3" font-size="74%">k</tspan><tspan dy="-3">&#8203;</tspan> (列堆叠)</text>
+  <text class="xs c4-txt" x="374" y="390" text-anchor="middle">串联即矩阵乘 S<tspan dy="3" font-size="74%">2</tspan><tspan dy="-3">&#8203;</tspan>S<tspan dy="3" font-size="74%">1</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <line class="axis" stroke-width="1.5" x1="194" y1="297" x2="148" y2="334"/>
+  <polygon class="axis-fill" points="194,297 191.3,302.42 188.13,298.48"/>
+  <polygon class="axis-fill" points="148,334 150.7,328.58 153.87,332.52"/>
+  <text class="xs" x="150" y="314" text-anchor="end">谱分解 ↔ vec</text>
+  <line class="axis" stroke-width="1.5" x1="314" y1="297" x2="360" y2="334"/>
+  <polygon class="axis-fill" points="314,297 319.87,298.48 316.7,302.42"/>
+  <polygon class="axis-fill" points="360,334 354.13,332.52 357.3,328.58"/>
+  <text class="xs" x="358" y="314">张量求和</text>
+  <line class="axis" stroke-width="1.6" x1="229" y1="368" x2="279" y2="368"/>
+  <polygon class="axis-fill" points="229,368 234.5,365.47 234.5,370.53"/>
+  <polygon class="axis-fill" points="279,368 273.5,370.53 273.5,365.47"/>
+  <text class="xs" x="254" y="360" text-anchor="middle">重排</text>
+  <text class="xs" x="254" y="384" text-anchor="middle">(p, n)</text>
+  <rect class="c2-soft" x="132" y="438" width="244" height="58" rx="9"/>
+  <text class="smb c2-txt" x="254" y="457" text-anchor="middle">⑤ Pauli 转移矩阵 (PTM) R</text>
+  <text class="xs" x="254" y="473" text-anchor="middle">R<tspan dy="3" font-size="74%">ij</tspan><tspan dy="-3">&#8203;</tspan> = ½Tr(σ<tspan dy="3" font-size="74%">i</tspan><tspan dy="-3">&#8203;</tspan> E(σ<tspan dy="3" font-size="74%">j</tspan><tspan dy="-3">&#8203;</tspan>)) = (M† S<tspan dy="3" font-size="74%">E</tspan><tspan dy="-3">&#8203;</tspan> M)<tspan dy="3" font-size="74%">ij</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs c2-txt" x="254" y="488" text-anchor="middle">全实数 · 装入 Bloch 仿射 · 随机化对角化</text>
+  <line class="axis" stroke-width="1.6" x1="352" y1="402" x2="314" y2="436"/>
+  <polygon class="axis-fill" points="352,402 349.59,407.55 346.21,403.78"/>
+  <polygon class="axis-fill" points="314,436 316.41,430.45 319.79,434.22"/>
+  <text class="xs" x="354" y="426">酉换基 M† S M</text>
+  <rect class="note" x="42" y="508" width="424" height="32" rx="8"/>
+  <text class="xs" x="254" y="528" text-anchor="middle">五表示完全等价：判 CP 用 Choi，串联用 S / R，分析 Bloch 与随机化首选 PTM</text>
+  <text class="smb c2-txt" x="600" y="164" text-anchor="middle">随机化前：相干 R<tspan dy="3" font-size="74%">z</tspan><tspan dy="-3">&#8203;</tspan>(0.2)</text>
+  <text class="xsb" x="540" y="180" text-anchor="middle">I</text>
+  <text class="xsb" x="580" y="180" text-anchor="middle">X</text>
+  <text class="xsb" x="620" y="180" text-anchor="middle">Y</text>
+  <text class="xsb" x="660" y="180" text-anchor="middle">Z</text>
+  <text class="xsb" x="513" y="209" text-anchor="end">I</text>
+  <rect class="hm-pos1" x="520" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="540" y="209" text-anchor="middle">1.00</text>
+  <rect class="hm-zero" x="560" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="580" y="209" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="600" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="620" y="209" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="640" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="660" y="209" text-anchor="middle">0</text>
+  <text class="xsb" x="513" y="247" text-anchor="end">X</text>
+  <rect class="hm-zero" x="520" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="540" y="247" text-anchor="middle">0</text>
+  <rect class="hm-pos2" x="560" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="580" y="247" text-anchor="middle">0.980</text>
+  <rect class="hm-neg3" x="600" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="620" y="247" text-anchor="middle">−0.199</text>
+  <rect class="hm-zero" x="640" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="660" y="247" text-anchor="middle">0</text>
+  <text class="xsb" x="513" y="285" text-anchor="end">Y</text>
+  <rect class="hm-zero" x="520" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="540" y="285" text-anchor="middle">0</text>
+  <rect class="hm-pos3" x="560" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-dark" x="580" y="285" text-anchor="middle">+0.199</text>
+  <rect class="hm-pos2" x="600" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="620" y="285" text-anchor="middle">0.980</text>
+  <rect class="hm-zero" x="640" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="660" y="285" text-anchor="middle">0</text>
+  <text class="xsb" x="513" y="323" text-anchor="end">Z</text>
+  <rect class="hm-zero" x="520" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="540" y="323" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="560" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="580" y="323" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="600" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="620" y="323" text-anchor="middle">0</text>
+  <rect class="hm-pos1" x="640" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="660" y="323" text-anchor="middle">1.00</text>
+  <rect class="hm-hi" x="601.5" y="225.5" width="37" height="35" rx="4"/>
+  <rect class="hm-hi" x="561.5" y="263.5" width="37" height="35" rx="4"/>
+  <text class="smb c3-txt" x="874" y="164" text-anchor="middle">随机化后：R<tspan dy="3" font-size="74%">twirl</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xsb" x="814" y="180" text-anchor="middle">I</text>
+  <text class="xsb" x="854" y="180" text-anchor="middle">X</text>
+  <text class="xsb" x="894" y="180" text-anchor="middle">Y</text>
+  <text class="xsb" x="934" y="180" text-anchor="middle">Z</text>
+  <text class="xsb" x="787" y="209" text-anchor="end">I</text>
+  <rect class="hm-pos1" x="794" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="814" y="209" text-anchor="middle">1.00</text>
+  <rect class="hm-zero" x="834" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="854" y="209" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="874" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="894" y="209" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="914" y="186" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="934" y="209" text-anchor="middle">0</text>
+  <text class="xsb" x="787" y="247" text-anchor="end">X</text>
+  <rect class="hm-zero" x="794" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="814" y="247" text-anchor="middle">0</text>
+  <rect class="hm-pos2" x="834" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="854" y="247" text-anchor="middle">0.980</text>
+  <rect class="hm-zero" x="874" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="894" y="247" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="914" y="224" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="934" y="247" text-anchor="middle">0</text>
+  <text class="xsb" x="787" y="285" text-anchor="end">Y</text>
+  <rect class="hm-zero" x="794" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="814" y="285" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="834" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="854" y="285" text-anchor="middle">0</text>
+  <rect class="hm-pos2" x="874" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="894" y="285" text-anchor="middle">0.980</text>
+  <rect class="hm-zero" x="914" y="262" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="934" y="285" text-anchor="middle">0</text>
+  <text class="xsb" x="787" y="323" text-anchor="end">Z</text>
+  <rect class="hm-zero" x="794" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="814" y="323" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="834" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="854" y="323" text-anchor="middle">0</text>
+  <rect class="hm-zero" x="874" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-muted" x="894" y="323" text-anchor="middle">0</text>
+  <rect class="hm-pos1" x="914" y="300" width="40" height="38" rx="4"/>
+  <text class="hm-inv" x="934" y="323" text-anchor="middle">1.00</text>
+  <rect class="hm-hi" x="875.5" y="225.5" width="37" height="35" rx="4"/>
+  <rect class="hm-hi" x="835.5" y="263.5" width="37" height="35" rx="4"/>
+  <line class="c3" stroke-width="2.6" x1="696" y1="262" x2="760" y2="262"/>
+  <polygon class="c3-fill" points="762,262 754.5,265.45 754.5,258.55"/>
+  <text class="xsb c3-txt" x="729" y="252" text-anchor="middle">Twirl</text>
+  <text class="xs" x="729" y="280" text-anchor="middle">¼∑ R<tspan dy="3" font-size="74%">P</tspan><tspan dy="-3">&#8203;</tspan> R R<tspan dy="3" font-size="74%">P</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <rect class="hm-pos1" x="524" y="355" width="16" height="14" rx="3"/>
+  <text class="xs" x="545" y="366">1.00</text>
+  <rect class="hm-pos2" x="600" y="355" width="16" height="14" rx="3"/>
+  <text class="xs" x="621" y="366">0.980</text>
+  <rect class="hm-pos3" x="686" y="355" width="16" height="14" rx="3"/>
+  <text class="xs" x="707" y="366">+0.199</text>
+  <rect class="hm-neg3" x="782" y="355" width="16" height="14" rx="3"/>
+  <text class="xs" x="803" y="366">−0.199</text>
+  <rect class="hm-zero" x="878" y="355" width="16" height="14" rx="3"/>
+  <text class="xs" x="899" y="366">0 (清零)</text>
+  <rect class="subpanel" x="510" y="384" width="448" height="114" rx="9"/>
+  <text class="smb c3-txt" x="522" y="404">1. 非对角相干元精准清零（虚线框）</text>
+  <text class="xs" x="522" y="422">I, Z 夹心保留 ±0.199，X, Y 翻号为 ∓0.199 ⇒ 四项平均精确抵消为 0</text>
+  <text class="smb c1-txt" x="522" y="446">2. 相干二次方累积 → 温和线性退相位</text>
+  <text class="xs" x="522" y="464">E<tspan dy="3" font-size="74%">twirl</tspan><tspan dy="-3">&#8203;</tspan>(ρ) = cos<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan>(0.1)ρ + sin<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan>(0.1)ZρZ（p<tspan dy="3" font-size="74%">Z</tspan><tspan dy="-3">&#8203;</tspan>≈1.0%），深 m 层 O(m²ε²)→O(mε²)</text>
+  <text class="xs c4-txt" x="522" y="485">边界：主对角线不变 ⇒ 单步平均门保真度 F<tspan dy="3" font-size="74%">avg</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.9934 保持不变</text>
+  <rect class="note" x="510" y="508" width="448" height="32" rx="8"/>
+  <text class="xs" x="734" y="528" text-anchor="middle">工程桥梁：Pauli Twirling 把复杂相干误差转为稀疏 Pauli 信道，支撑 PEC 与 QEC 阈值</text>
+</svg>

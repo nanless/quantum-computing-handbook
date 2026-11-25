@@ -1,0 +1,41 @@
+{
+  "08": {
+    "sector_ground_threshold": 0.7928932188134524,
+    "rows": [
+      {
+        "lambda": 0.5,
+        "sector_energies": [
+          0.5,
+          0.7928932188134524,
+          2.2071067811865475,
+          3.5
+        ],
+        "ground": 0.5,
+        "one_particle_is_only_ground_sector": false
+      },
+      {
+        "lambda": 0.7928932188134524,
+        "sector_energies": [
+          0.7928932188134524,
+          0.7928932188134524,
+          2.2071067811865475,
+          3.7928932188134525
+        ],
+        "ground": 0.7928932188134524,
+        "one_particle_is_only_ground_sector": false
+      },
+      {
+        "lambda": 1.0,
+        "sector_energies": [
+          1.0,
+          0.7928932188134524,
+          2.2071067811865475,
+          4.0
+        ],
+        "ground": 0.7928932188134524,
+        "one_particle_is_only_ground_sector": true
+      }
+    ],
+    "pauli_penalty": "lambda*(I+Z0Z1)/2"
+  }
+}

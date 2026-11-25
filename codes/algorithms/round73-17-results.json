@@ -1,0 +1,46 @@
+{
+  "17": {
+    "alpha": 0.7853981633974483,
+    "beta": 1.0471975511965976,
+    "target": {
+      "real": [
+        0.08476752651335771,
+        0.16012685872790117
+      ],
+      "imag": [
+        0.3475715732344361,
+        0.9199825308352766
+      ]
+    },
+    "branches": [
+      {
+        "m0": 0,
+        "m1": 0,
+        "physical_second_angle": 1.0471975511965976,
+        "probability": 0.24999999999999994,
+        "root_fidelity_after_X_then_Z": 0.9999999999999997
+      },
+      {
+        "m0": 0,
+        "m1": 1,
+        "physical_second_angle": 1.0471975511965976,
+        "probability": 0.24999999999999994,
+        "root_fidelity_after_X_then_Z": 0.9999999999999997
+      },
+      {
+        "m0": 1,
+        "m1": 0,
+        "physical_second_angle": -1.0471975511965976,
+        "probability": 0.25,
+        "root_fidelity_after_X_then_Z": 0.9999999999999998
+      },
+      {
+        "m0": 1,
+        "m1": 1,
+        "physical_second_angle": -1.0471975511965976,
+        "probability": 0.25,
+        "root_fidelity_after_X_then_Z": 0.9999999999999998
+      }
+    ]
+  }
+}

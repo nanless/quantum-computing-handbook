@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const near = (a,b,tolerance=1e-10) => assert.ok(Math.abs(a-b)<tolerance, `${a} != ${b}`);
 const s = Math.SQRT1_2;
 const bells = [[s,0,0,s],[s,0,0,-s],[0,s,s,0],[0,s,-s,0]];
-const corrections = [[[1,0],[0,1]],[[1,0],[0,-1]],[[0,1],[1,0]],[[0,-1],[1,0]]];
+const corrections = [[[1,0],[0,1]],[[1,0],[0,-1]],[[0,1],[1,0]],[[0,1],[-1,0]]];
 const initial = Array(16).fill(0);
 for (const i of [0,3,12,15]) initial[i]=.5;
 const average = Array.from({length:4},()=>Array(4).fill(0));
@@ -21,7 +21,7 @@ const branches = bells.map((bell,k)=>{
   const corrected = Array(4).fill(0);
   for(let a=0;a<2;a++)for(let c=0;c<2;c++)for(let input=0;input<2;input++)corrected[2*a+c]+=corrections[k][c][input]*normalized[2*a+input];
   const overlap = corrected.reduce((sum,x,i)=>sum+x*bells[0][i],0);
-  near(overlap*overlap,1);
+  near(overlap,1);
   return {bell:['Phi+','Phi-','Psi+','Psi-'][k],probability,correctedOverlap:overlap};
 });
 for(let i=0;i<4;i++)for(let j=0;j<4;j++)near(average[i][j],i===j?.25:0);

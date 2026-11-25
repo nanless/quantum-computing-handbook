@@ -16,6 +16,7 @@ COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experim
  ['systems/calibration_uncertainty.py'],['systems/coherent_repetition.py'],
  ['systems/correlated_shots.py'],['systems/network_cutoff.py'],
  ['systems/resource_schedule.py'],['systems/calibration_dependencies.py'],
+ ['systems/sensing_lab.py'],['algorithms/simulation_engines_lab.py'],
  ['practice/source_reading_checks.py'],['practice/experiments.py'],['practice/research_checks.py'],
  ['practice/workflow_checks.py'],['snapshot_sources.py','--verify'],['tests/test_snapshot_sources.py']]
 

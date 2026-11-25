@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-11-benchmark-scaling-eplg-title v3-11-benchmark-scaling-eplg-desc">
+  <title id="v3-11-benchmark-scaling-eplg-title">随机基准指数衰减与 100 比特链 EPLG/PEC 采样天花板</title>
+  <desc id="v3-11-benchmark-scaling-eplg-desc">左面板展示随机基准 P(m)=Aα^m+B 剥离 SPAM 截距的指数衰减曲线与无纠错电路存活标度 (1-r)^G；右面板双轴展示 100 比特连通链层保真度 LF=(1-EPLG)^99 与 D=2, 5 周期 PEC 采样放大倍数 LF^(-4D)。</desc>
+  <style>
+    :root{color-scheme:light dark}
+    .bg{fill:#f8fafc}
+    .card{fill:#ffffff;stroke:#cbd8e4;stroke-width:1.6}
+    .subcard{fill:#f2f6fa;stroke:#d2dee9;stroke-width:1.2}
+    .pill{fill:#ffffff;fill-opacity:.96;stroke:#8fa6ba;stroke-width:1.2}
+    .ink{fill:#13263a}
+    .muted{fill:#496176}
+    .accent{fill:#0e6b8a}
+    .warn{fill:#b93c3c}
+    .gold{fill:#9c6510}
+    .purple{fill:#5b42a6}
+    .green{fill:#1d7557}
+    .axis{stroke:#2b465e;stroke-width:1.6;fill:none}
+    .axishead{fill:#2b465e}
+    .grid{stroke:#dce6ef;stroke-width:1;stroke-dasharray:4 4;fill:none}
+    .divider{stroke:#c6d5e2;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+    .s-accent{stroke:#0e6b8a;fill:none}
+    .s-warn{stroke:#c04040;fill:none}
+    .s-gold{stroke:#a8640b;fill:none}
+    .s-purple{stroke:#5b42a6;fill:none}
+    .s-green{stroke:#1d7557;fill:none}
+    .s-muted{stroke:#688299;fill:none}
+    .f-accent{fill:#bae6fd;fill-opacity:.48;stroke:#0e6b8a;stroke-width:1.8}
+    .f-warn{fill:#fecaca;fill-opacity:.50;stroke:#c04040;stroke-width:1.8}
+    .f-gold{fill:#fde68a;fill-opacity:.52;stroke:#a8640b;stroke-width:1.8}
+    .f-purple{fill:#ddd6fe;fill-opacity:.50;stroke:#5b42a6;stroke-width:1.8}
+    .f-green{fill:#bbf7d0;fill-opacity:.50;stroke:#1d7557;stroke-width:1.8}
+    .b-accent{fill:#0e6b8a;fill-opacity:.82;stroke:#0a5068;stroke-width:1.4}
+    .b-warn{fill:#c04040;fill-opacity:.82;stroke:#962b2b;stroke-width:1.4}
+    .b-gold{fill:#c47a14;fill-opacity:.82;stroke:#8f5609;stroke-width:1.4}
+    .b-purple{fill:#6448b5;fill-opacity:.82;stroke:#483287;stroke-width:1.4}
+    .b-green{fill:#1d7557;fill-opacity:.82;stroke:#13543e;stroke-width:1.4}
+    .wire{stroke:#1d3b54;stroke-width:2.0;fill:none}
+    .ctrl{fill:#13263a}
+    .dot-ring{stroke:#ffffff;stroke-width:1.5}
+    .title{font:700 19.5px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .subtitle{font:400 13.2px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .h2{font:600 14px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .lbl{font:500 12.8px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .sm{font:400 12px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .xs{font:400 11px 'PingFang SC','Noto Sans SC',system-ui,'STIX Two Math','Cambria Math','Apple Symbols',sans-serif}
+    .mono{font:500 11.8px 'SFMono-Regular',Menlo,Consolas,monospace}
+    .gate-txt{font:700 13.5px Georgia,'Times New Roman',serif}
+    
+    @media(prefers-color-scheme:dark){
+      .bg{fill:#101820}
+      .card{fill:#162330;stroke:#395066}
+      .subcard{fill:#1d2e3d;stroke:#3d566d}
+      .pill{fill:#14212c;fill-opacity:.96;stroke:#6d8ba3}
+      .ink{fill:#eef6ff}
+      .muted{fill:#b4c8da}
+      .accent{fill:#6ed0f7}
+      .warn{fill:#ff8585}
+      .gold{fill:#f2c15a}
+      .purple{fill:#c0adff}
+      .green{fill:#6dd4aa}
+      .axis{stroke:#b9d0e2}
+      .axishead{fill:#b9d0e2}
+      .grid{stroke:#304659}
+      .divider{stroke:#4a637a}
+      .s-accent{stroke:#6ed0f7}
+      .s-warn{stroke:#ff8585}
+      .s-gold{stroke:#f2c15a}
+      .s-purple{stroke:#c0adff}
+      .s-green{stroke:#6dd4aa}
+      .s-muted{stroke:#8ca5ba}
+      .f-accent{fill:#17506e;fill-opacity:.58;stroke:#6ed0f7}
+      .f-warn{fill:#5c2228;fill-opacity:.60;stroke:#ff8585}
+      .f-gold{fill:#5a4318;fill-opacity:.60;stroke:#f2c15a}
+      .f-purple{fill:#372863;fill-opacity:.60;stroke:#c0adff}
+      .f-green{fill:#174a3a;fill-opacity:.60;stroke:#6dd4aa}
+      .b-accent{fill:#2e8eb3;fill-opacity:.88;stroke:#6ed0f7}
+      .b-warn{fill:#c84b4b;fill-opacity:.88;stroke:#ff8585}
+      .b-gold{fill:#b87e1b;fill-opacity:.88;stroke:#f2c15a}
+      .b-purple{fill:#7a5cc7;fill-opacity:.88;stroke:#c0adff}
+      .b-green{fill:#288c68;fill-opacity:.88;stroke:#6dd4aa}
+      .wire{stroke:#c9deee}
+      .ctrl{fill:#eef6ff}
+      .dot-ring{stroke:#162330}
+      
+    }
+  </style>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title ink" x="34" y="44">随机基准指数衰减与 100 比特链 EPLG / PEC 采样天花板</text>
+  <text class="subtitle muted" x="34" y="68">左：RB 衰减 P(m)=Aα<tspan dy="-4.5" font-size="9.2">m</tspan><tspan dy="4.5">&#8203;</tspan>+B 剥离 SPAM 截距及门数标度 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan>；右：100 比特链层保真度 LF 与 PEC 采样放大倍数</text>
+  <rect class="card" x="32" y="84" width="452" height="446" rx="12"/>
+  <text class="h2 ink" x="48" y="108">(a) RB 剥离 SPAM 截距与 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan> 标度</text>
+  <line class="grid" x1="96.0" y1="122.0" x2="96.0" y2="270.0"/>
+  <text class="xs ink" x="96.0" y="285.0" text-anchor="middle">0</text>
+  <line class="grid" x1="188.0" y1="122.0" x2="188.0" y2="270.0"/>
+  <text class="xs ink" x="188.0" y="285.0" text-anchor="middle">50</text>
+  <line class="grid" x1="280.0" y1="122.0" x2="280.0" y2="270.0"/>
+  <text class="xs ink" x="280.0" y="285.0" text-anchor="middle">100</text>
+  <line class="grid" x1="372.0" y1="122.0" x2="372.0" y2="270.0"/>
+  <text class="xs ink" x="372.0" y="285.0" text-anchor="middle">150</text>
+  <line class="grid" x1="464.0" y1="122.0" x2="464.0" y2="270.0"/>
+  <text class="xs ink" x="464.0" y="285.0" text-anchor="middle">200</text>
+  <line class="grid" x1="96.0" y1="257.0" x2="464.0" y2="257.0"/>
+  <text class="xs ink" x="88.0" y="261.0" text-anchor="end">0.5</text>
+  <line class="grid" x1="96.0" y1="205.1" x2="464.0" y2="205.1"/>
+  <text class="xs ink" x="88.0" y="209.1" text-anchor="end">0.7</text>
+  <line class="grid" x1="96.0" y1="153.2" x2="464.0" y2="153.2"/>
+  <text class="xs ink" x="88.0" y="157.2" text-anchor="end">0.9</text>
+  <line class="grid" x1="96.0" y1="127.2" x2="464.0" y2="127.2"/>
+  <text class="xs ink" x="88.0" y="131.2" text-anchor="end">1.0</text>
+  <line class="s-muted" style="stroke-width:1.4;stroke-dasharray:5 4" x1="96.0" y1="257.0" x2="464.0" y2="257.0"/>
+  <text class="xs muted" x="104.0" y="252.0">渐近基线 B = 1/d = 0.50</text>
+  <path class="s-accent" style="stroke-width:2.4" d="M96.00 132.39L103.36 136.33L110.72 140.14L118.08 143.84L125.44 147.42L132.80 150.88L140.16 154.24L147.52 157.49L154.88 160.63L162.24 163.68L169.60 166.63L176.96 169.49L184.32 172.26L191.68 174.94L199.04 177.53L206.40 180.05L213.76 182.48L221.12 184.84L228.48 187.12L235.84 189.33L243.20 191.47L250.56 193.54L257.92 195.55L265.28 197.49L272.64 199.37L280.00 201.20L287.36 202.96L294.72 204.67L302.08 206.33L309.44 207.93L316.80 209.48L324.16 210.98L331.52 212.44L338.88 213.85L346.24 215.21L353.60 216.54L360.96 217.82L368.32 219.05L375.68 220.26L383.04 221.42L390.40 222.54L397.76 223.63L405.12 224.69L412.48 225.71L419.84 226.70L427.20 227.66L434.56 228.59L441.92 229.49L449.28 230.36L456.64 231.20L464.00 232.02"/>
+  <circle class="accent dot-ring" cx="96.0" cy="132.4" r="3.6"/>
+  <path class="s-green" style="stroke-width:2.4;stroke-dasharray:6 4" d="M96.00 163.54L103.36 166.50L110.72 169.36L118.08 172.13L125.44 174.82L132.80 177.42L140.16 179.93L147.52 182.37L154.88 184.73L162.24 187.02L169.60 189.23L176.96 191.37L184.32 193.45L191.68 195.46L199.04 197.40L206.40 199.29L213.76 201.11L221.12 202.88L228.48 204.59L235.84 206.25L243.20 207.86L250.56 209.41L257.92 210.92L265.28 212.37L272.64 213.79L280.00 215.15L287.36 216.48L294.72 217.76L302.08 219.00L309.44 220.20L316.80 221.37L324.16 222.49L331.52 223.58L338.88 224.64L346.24 225.66L353.60 226.66L360.96 227.62L368.32 228.55L375.68 229.45L383.04 230.32L390.40 231.16L397.76 231.98L405.12 232.77L412.48 233.54L419.84 234.28L427.20 235.00L434.56 235.70L441.92 236.37L449.28 237.02L456.64 237.65L464.00 238.27"/>
+  <circle class="green dot-ring" cx="96.0" cy="163.5" r="3.6"/>
+  <path class="s-warn" style="stroke-width:2.4;stroke-dasharray:7 3 2 3" d="M96.00 132.39L103.36 142.06L110.72 150.99L118.08 159.22L125.44 166.81L132.80 173.81L140.16 180.27L147.52 186.23L154.88 191.73L162.24 196.79L169.60 201.47L176.96 205.78L184.32 209.76L191.68 213.43L199.04 216.81L206.40 219.93L213.76 222.81L221.12 225.47L228.48 227.92L235.84 230.18L243.20 232.26L250.56 234.18L257.92 235.95L265.28 237.59L272.64 239.10L280.00 240.49L287.36 241.77L294.72 242.96L302.08 244.05L309.44 245.05L316.80 245.98L324.16 246.84L331.52 247.63L338.88 248.36L346.24 249.03L353.60 249.65L360.96 250.22L368.32 250.75L375.68 251.24L383.04 251.69L390.40 252.10L397.76 252.48L405.12 252.83L412.48 253.16L419.84 253.46L427.20 253.73L434.56 253.99L441.92 254.22L449.28 254.44L456.64 254.64L464.00 254.83"/>
+  <circle class="warn dot-ring" cx="96.0" cy="132.4" r="3.6"/>
+  <line class="s-gold" style="stroke-width:1.8" x1="103.0" y1="134.4" x2="103.0" y2="161.5"/>
+  <line class="s-gold" style="stroke-width:1.2;stroke-dasharray:3 2" x1="103.0" y1="165.5" x2="110.0" y2="218"/>
+  <text class="xs gold" style="font-weight:700" x="106.0" y="232">SPAM 仅移截距</text>
+  <rect class="pill" x="248" y="128" width="212" height="60" rx="7"/>
+  <line class="s-accent" style="stroke-width:2.2" x1="256" y1="140" x2="274" y2="140"/>
+  <text class="xs accent" x="280" y="144">α=0.992 (SPAM 2%, r=0.4%)</text>
+  <line class="s-green" style="stroke-width:2.2;stroke-dasharray:6 4" x1="256" y1="158" x2="274" y2="158"/>
+  <text class="xs green" x="280" y="162">同 α=0.992 (SPAM 14%, 同底数)</text>
+  <line class="s-warn" style="stroke-width:2.2;stroke-dasharray:7 3 2 3" x1="256" y1="176" x2="274" y2="176"/>
+  <text class="xs warn" x="280" y="180">α=0.980 (SPAM 2%, r=1.0%)</text>
+  <rect class="axis" x="96.0" y="122.0" width="368.0" height="148.0"/>
+  <text class="xs ink" x="280.0" y="305.0" text-anchor="middle">Clifford 序列长度 m（P(m) = Aα<tspan dy="-4.5" font-size="9.2">m</tspan><tspan dy="4.5">&#8203;</tspan> + B）</text>
+  <text class="xs ink" x="52" y="196.0" text-anchor="middle" transform="rotate(-90 52 196.0)">生存概率 P(m)</text>
+  <text class="xs ink" style="font-weight:600" x="96.0" y="332.0">无纠错整线路存活标度 S(G) = (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="grid" x1="96.0" y1="340.0" x2="96.0" y2="466.0"/>
+  <text class="xs ink" x="96.0" y="481.0" text-anchor="middle">0</text>
+  <line class="grid" x1="169.6" y1="340.0" x2="169.6" y2="466.0"/>
+  <text class="xs ink" x="169.6" y="481.0" text-anchor="middle">200</text>
+  <line class="grid" x1="243.2" y1="340.0" x2="243.2" y2="466.0"/>
+  <text class="xs ink" x="243.2" y="481.0" text-anchor="middle">400</text>
+  <line class="grid" x1="316.8" y1="340.0" x2="316.8" y2="466.0"/>
+  <text class="xs ink" x="316.8" y="481.0" text-anchor="middle">600</text>
+  <line class="grid" x1="390.4" y1="340.0" x2="390.4" y2="466.0"/>
+  <text class="xs ink" x="390.4" y="481.0" text-anchor="middle">800</text>
+  <line class="grid" x1="464.0" y1="340.0" x2="464.0" y2="466.0"/>
+  <text class="xs ink" x="464.0" y="481.0" text-anchor="middle">1000</text>
+  <line class="grid" x1="96.0" y1="466.0" x2="464.0" y2="466.0"/>
+  <text class="xs ink" x="88.0" y="470.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="96.0" y1="403.0" x2="464.0" y2="403.0"/>
+  <text class="xs ink" x="88.0" y="407.0" text-anchor="end">0.5</text>
+  <line class="grid" x1="96.0" y1="340.0" x2="464.0" y2="340.0"/>
+  <text class="xs ink" x="88.0" y="344.0" text-anchor="end">1.0</text>
+  <line class="s-muted" style="stroke-width:1.2;stroke-dasharray:4 4" x1="96.0" y1="419.6" x2="464.0" y2="419.6"/>
+  <text class="xs muted" x="458.0" y="433.6" text-anchor="end">1/e ≈ 36.8%（G ≈ 1/r）</text>
+  <path class="s-green" style="stroke-width:2.4" d="M96.00 340.00L99.68 341.25L103.36 342.50L107.04 343.73L110.72 344.94L114.40 346.15L118.08 347.34L121.76 348.52L125.44 349.69L129.12 350.85L132.80 352.00L136.48 353.13L140.16 354.25L143.84 355.37L147.52 356.47L151.20 357.56L154.88 358.64L158.56 359.71L162.24 360.77L165.92 361.81L169.60 362.85L173.28 363.88L176.96 364.89L180.64 365.90L184.32 366.90L188.00 367.88L191.68 368.86L195.36 369.83L199.04 370.78L202.72 371.73L206.40 372.67L210.08 373.60L213.76 374.52L217.44 375.43L221.12 376.33L224.80 377.22L228.48 378.11L232.16 378.98L235.84 379.85L239.52 380.71L243.20 381.56L246.88 382.40L250.56 383.23L254.24 384.05L257.92 384.87L261.60 385.68L265.28 386.48L268.96 387.27L272.64 388.05L276.32 388.83L280.00 389.60L283.68 390.36L287.36 391.11L291.04 391.86L294.72 392.59L298.40 393.32L302.08 394.05L305.76 394.76L309.44 395.47L313.12 396.18L316.80 396.87L320.48 397.56L324.16 398.24L327.84 398.91L331.52 399.58L335.20 400.24L338.88 400.90L342.56 401.55L346.24 402.19L349.92 402.82L353.60 403.45L357.28 404.07L360.96 404.69L364.64 405.30L368.32 405.91L372.00 406.50L375.68 407.10L379.36 407.68L383.04 408.26L386.72 408.84L390.40 409.41L394.08 409.97L397.76 410.53L401.44 411.08L405.12 411.63L408.80 412.17L412.48 412.70L416.16 413.24L419.84 413.76L423.52 414.28L427.20 414.80L430.88 415.31L434.56 415.81L438.24 416.31L441.92 416.80L445.60 417.29L449.28 417.78L452.96 418.26L456.64 418.73L460.32 419.20L464.00 419.67"/>
+  <path class="s-accent" style="stroke-width:2.4;stroke-dasharray:6 4" d="M96.00 340.00L99.68 343.73L103.36 347.35L107.04 350.86L110.72 354.27L114.40 357.58L118.08 360.78L121.76 363.90L125.44 366.92L129.12 369.85L132.80 372.70L136.48 375.46L140.16 378.14L143.84 380.74L147.52 383.26L151.20 385.71L154.88 388.09L158.56 390.40L162.24 392.63L165.92 394.80L169.60 396.91L173.28 398.96L176.96 400.94L180.64 402.87L184.32 404.74L188.00 406.55L191.68 408.31L195.36 410.02L199.04 411.67L202.72 413.28L206.40 414.84L210.08 416.36L213.76 417.83L217.44 419.25L221.12 420.63L224.80 421.98L228.48 423.28L232.16 424.54L235.84 425.77L239.52 426.96L243.20 428.12L246.88 429.24L250.56 430.33L254.24 431.38L257.92 432.41L261.60 433.40L265.28 434.37L268.96 435.30L272.64 436.21L276.32 437.09L280.00 437.95L283.68 438.78L287.36 439.58L291.04 440.37L294.72 441.13L298.40 441.86L302.08 442.58L305.76 443.27L309.44 443.94L313.12 444.60L316.80 445.23L320.48 445.84L324.16 446.44L327.84 447.02L331.52 447.58L335.20 448.13L338.88 448.65L342.56 449.17L346.24 449.67L349.92 450.15L353.60 450.62L357.28 451.07L360.96 451.52L364.64 451.94L368.32 452.36L372.00 452.76L375.68 453.16L379.36 453.54L383.04 453.91L386.72 454.26L390.40 454.61L394.08 454.95L397.76 455.27L401.44 455.59L405.12 455.90L408.80 456.20L412.48 456.49L416.16 456.77L419.84 457.04L423.52 457.31L427.20 457.57L430.88 457.82L434.56 458.06L438.24 458.29L441.92 458.52L445.60 458.74L449.28 458.96L452.96 459.17L456.64 459.37L460.32 459.56L464.00 459.76"/>
+  <path class="s-warn" style="stroke-width:2.4;stroke-dasharray:3 3" d="M96.00 340.00L99.68 352.05L103.36 362.94L107.04 372.80L110.72 381.71L114.40 389.77L118.08 397.06L121.76 403.65L125.44 409.61L129.12 415.00L132.80 419.88L136.48 424.29L140.16 428.28L143.84 431.88L147.52 435.15L151.20 438.10L154.88 440.77L158.56 443.18L162.24 445.36L165.92 447.33L169.60 449.12L173.28 450.73L176.96 452.19L180.64 453.51L184.32 454.71L188.00 455.79L191.68 456.76L195.36 457.65L199.04 458.45L202.72 459.17L206.40 459.82L210.08 460.41L213.76 460.95L217.44 461.43L221.12 461.87L224.80 462.26L228.48 462.62L232.16 462.94L235.84 463.23L239.52 463.50L243.20 463.74L246.88 463.95L250.56 464.15L254.24 464.33L257.92 464.49L261.60 464.63L265.28 464.76L268.96 464.88L272.64 464.99L276.32 465.08L280.00 465.17L283.68 465.25L287.36 465.32L291.04 465.39L294.72 465.45L298.40 465.50L302.08 465.55L305.76 465.59L309.44 465.63L313.12 465.66L316.80 465.70L320.48 465.73L324.16 465.75L327.84 465.78L331.52 465.80L335.20 465.82L338.88 465.83L342.56 465.85L346.24 465.86L349.92 465.88L353.60 465.89L357.28 465.90L360.96 465.91L364.64 465.92L368.32 465.93L372.00 465.93L375.68 465.94L379.36 465.95L383.04 465.95L386.72 465.96L390.40 465.96L394.08 465.96L397.76 465.97L401.44 465.97L405.12 465.97L408.80 465.98L412.48 465.98L416.16 465.98L419.84 465.98L423.52 465.98L427.20 465.99L430.88 465.99L434.56 465.99L438.24 465.99L441.92 465.99L445.60 465.99L449.28 465.99L452.96 465.99L456.64 465.99L460.32 465.99L464.00 465.99"/>
+  <text class="xs green" style="font-weight:700" x="375.7" y="397.1" text-anchor="middle">r = 10<tspan dy="-4.5" font-size="9.2">-3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs accent" style="font-weight:700" x="228.5" y="409.3">r = 3×10<tspan dy="-4.5" font-size="9.2">-3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs warn" style="font-weight:700" x="175.1" y="446.0">r = 10<tspan dy="-4.5" font-size="9.2">-2</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <rect class="axis" x="96.0" y="340.0" width="368.0" height="126.0"/>
+  <text class="xs ink" x="280.0" y="498.0" text-anchor="middle">电路门总数 G（门数上限 G ~ 1/r）</text>
+  <text class="xs ink" x="52" y="403.0" text-anchor="middle" transform="rotate(-90 52 403.0)">存活率 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs muted" x="48" y="518">注：α=1−p 为退极化保留底数（§3.1）；相干过旋转可按 O(√r) 偏离 RB。</text>
+  <rect class="card" x="500" y="84" width="468" height="446" rx="12"/>
+  <text class="h2 ink" x="516" y="108">(b) 100 比特链层保真度 LF 与 PEC 天花板</text>
+  <line class="grid" x1="562.0" y1="134.0" x2="562.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="562.0" y1="440.0" x2="562.0" y2="445.0"/>
+  <text class="xs ink" x="562.0" y="462.0" text-anchor="middle">0.0%</text>
+  <line class="grid" x1="643.5" y1="134.0" x2="643.5" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="643.5" y1="440.0" x2="643.5" y2="445.0"/>
+  <text class="xs ink" x="643.5" y="462.0" text-anchor="middle">0.5%</text>
+  <line class="grid" x1="725.0" y1="134.0" x2="725.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="725.0" y1="440.0" x2="725.0" y2="445.0"/>
+  <text class="xs ink" x="725.0" y="462.0" text-anchor="middle">1.0%</text>
+  <line class="grid" x1="806.5" y1="134.0" x2="806.5" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="806.5" y1="440.0" x2="806.5" y2="445.0"/>
+  <text class="xs ink" x="806.5" y="462.0" text-anchor="middle">1.5%</text>
+  <line class="grid" x1="888.0" y1="134.0" x2="888.0" y2="440.0"/>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="440.0" x2="888.0" y2="445.0"/>
+  <text class="xs ink" x="888.0" y="462.0" text-anchor="middle">2.0%</text>
+  <line class="grid" x1="562.0" y1="440.0" x2="888.0" y2="440.0"/>
+  <text class="xs accent" x="554.0" y="444.0" text-anchor="end">0.0</text>
+  <line class="grid" x1="562.0" y1="378.8" x2="888.0" y2="378.8"/>
+  <text class="xs accent" x="554.0" y="382.8" text-anchor="end">0.2</text>
+  <line class="grid" x1="562.0" y1="317.6" x2="888.0" y2="317.6"/>
+  <text class="xs accent" x="554.0" y="321.6" text-anchor="end">0.4</text>
+  <line class="grid" x1="562.0" y1="256.4" x2="888.0" y2="256.4"/>
+  <text class="xs accent" x="554.0" y="260.4" text-anchor="end">0.6</text>
+  <line class="grid" x1="562.0" y1="195.2" x2="888.0" y2="195.2"/>
+  <text class="xs accent" x="554.0" y="199.2" text-anchor="end">0.8</text>
+  <line class="grid" x1="562.0" y1="134.0" x2="888.0" y2="134.0"/>
+  <text class="xs accent" x="554.0" y="138.0" text-anchor="end">1.0</text>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="440.0" x2="893.0" y2="440.0"/>
+  <text class="xs warn" x="897.0" y="444.0">10<tspan dy="-4.5" font-size="9.2">0</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="363.5" x2="893.0" y2="363.5"/>
+  <text class="xs warn" x="897.0" y="367.5">10<tspan dy="-4.5" font-size="9.2">3</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="287.0" x2="893.0" y2="287.0"/>
+  <text class="xs warn" x="897.0" y="291.0">10<tspan dy="-4.5" font-size="9.2">6</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="210.5" x2="893.0" y2="210.5"/>
+  <text class="xs warn" x="897.0" y="214.5">10<tspan dy="-4.5" font-size="9.2">9</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="axis" style="stroke-width:1.3" x1="888.0" y1="134.0" x2="893.0" y2="134.0"/>
+  <text class="xs warn" x="897.0" y="138.0">10<tspan dy="-4.5" font-size="9.2">12</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <line class="s-warn" style="stroke-width:1.4;stroke-dasharray:5 4" x1="562.0" y1="236.0" x2="888.0" y2="236.0"/>
+  <text class="xs warn" x="882.0" y="252.0" text-anchor="end">~10<tspan dy="-4.5" font-size="9.2">8</tspan><tspan dy="4.5">&#8203;</tspan>× 采样工程天花板</text>
+  <path class="s-accent" style="stroke-width:2.8" d="M562.00 134.00L565.26 140.00L568.52 145.88L571.78 151.65L575.04 157.31L578.30 162.86L581.56 168.30L584.82 173.63L588.08 178.86L591.34 183.99L594.60 189.02L597.86 193.95L601.12 198.78L604.38 203.52L607.64 208.17L610.90 212.73L614.16 217.20L617.42 221.58L620.68 225.88L623.94 230.09L627.20 234.22L630.46 238.27L633.72 242.25L636.98 246.14L640.24 249.96L643.50 253.70L646.76 257.37L650.02 260.97L653.28 264.50L656.54 267.96L659.80 271.35L663.06 274.68L666.32 277.94L669.58 281.14L672.84 284.28L676.10 287.35L679.36 290.36L682.62 293.32L685.88 296.22L689.14 299.06L692.40 301.84L695.66 304.57L698.92 307.25L702.18 309.87L705.44 312.45L708.70 314.97L711.96 317.44L715.22 319.87L718.48 322.25L721.74 324.58L725.00 326.86L728.26 329.10L731.52 331.30L734.78 333.45L738.04 335.56L741.30 337.63L744.56 339.66L747.82 341.65L751.08 343.60L754.34 345.52L757.60 347.39L760.86 349.23L764.12 351.03L767.38 352.80L770.64 354.53L773.90 356.22L777.16 357.89L780.42 359.52L783.68 361.12L786.94 362.69L790.20 364.22L793.46 365.73L796.72 367.21L799.98 368.65L803.24 370.07L806.50 371.47L809.76 372.83L813.02 374.17L816.28 375.48L819.54 376.76L822.80 378.02L826.06 379.26L829.32 380.47L832.58 381.65L835.84 382.82L839.10 383.96L842.36 385.07L845.62 386.17L848.88 387.24L852.14 388.30L855.40 389.33L858.66 390.34L861.92 391.33L865.18 392.30L868.44 393.26L871.70 394.19L874.96 395.11L878.22 396.00L881.48 396.88L884.74 397.75L888.00 398.59"/>
+  <path class="s-warn" style="stroke-width:2.8" d="M562.00 440.00L565.26 435.61L568.52 431.23L571.78 426.84L575.04 422.45L578.30 418.06L581.56 413.67L584.82 409.28L588.08 404.89L591.34 400.49L594.60 396.10L597.86 391.71L601.12 387.31L604.38 382.91L607.64 378.52L610.90 374.12L614.16 369.72L617.42 365.32L620.68 360.92L623.94 356.52L627.20 352.11L630.46 347.71L633.72 343.31L636.98 338.90L640.24 334.49L643.50 330.09L646.76 325.68L650.02 321.27L653.28 316.86L656.54 312.45L659.80 308.04L663.06 303.63L666.32 299.21L669.58 294.80L672.84 290.38L676.10 285.97L679.36 281.55L682.62 277.13L685.88 272.71L689.14 268.29L692.40 263.87L695.66 259.45L698.92 255.03L702.18 250.61L705.44 246.18L708.70 241.76L711.96 237.33L715.22 232.91L718.48 228.48L721.74 224.05L725.00 219.62L728.26 215.19L731.52 210.76L734.78 206.33L738.04 201.89L741.30 197.46L744.56 193.03L747.82 188.59L751.08 184.15L754.34 179.72L757.60 175.28L760.86 170.84L764.12 166.40L767.38 161.96L770.64 157.52L773.90 153.07L777.16 148.63L780.42 144.18L783.68 139.74L786.94 135.29L787.89 134.00"/>
+  <path class="s-purple" style="stroke-width:2.4;stroke-dasharray:7 4" d="M562.00 440.00L565.26 438.25L568.52 436.49L571.78 434.74L575.04 432.98L578.30 431.22L581.56 429.47L584.82 427.71L588.08 425.96L591.34 424.20L594.60 422.44L597.86 420.68L601.12 418.92L604.38 417.17L607.64 415.41L610.90 413.65L614.16 411.89L617.42 410.13L620.68 408.37L623.94 406.61L627.20 404.85L630.46 403.08L633.72 401.32L636.98 399.56L640.24 397.80L643.50 396.03L646.76 394.27L650.02 392.51L653.28 390.74L656.54 388.98L659.80 387.22L663.06 385.45L666.32 383.69L669.58 381.92L672.84 380.15L676.10 378.39L679.36 376.62L682.62 374.85L685.88 373.09L689.14 371.32L692.40 369.55L695.66 367.78L698.92 366.01L702.18 364.24L705.44 362.47L708.70 360.70L711.96 358.93L715.22 357.16L718.48 355.39L721.74 353.62L725.00 351.85L728.26 350.08L731.52 348.30L734.78 346.53L738.04 344.76L741.30 342.98L744.56 341.21L747.82 339.44L751.08 337.66L754.34 335.89L757.60 334.11L760.86 332.34L764.12 330.56L767.38 328.78L770.64 327.01L773.90 325.23L777.16 323.45L780.42 321.67L783.68 319.90L786.94 318.12L790.20 316.34L793.46 314.56L796.72 312.78L799.98 311.00L803.24 309.22L806.50 307.44L809.76 305.66L813.02 303.88L816.28 302.09L819.54 300.31L822.80 298.53L826.06 296.75L829.32 294.96L832.58 293.18L835.84 291.40L839.10 289.61L842.36 287.83L845.62 286.04L848.88 284.26L852.14 282.47L855.40 280.68L858.66 278.90L861.92 277.11L865.18 275.32L868.44 273.54L871.70 271.75L874.96 269.96L878.22 268.17L881.48 266.38L884.74 264.59L888.00 262.80"/>
+  <path class="b-accent" d="M832.6 376.2L838.1 381.7L832.6 387.2L827.1 381.7Z"/>
+  <text class="xs accent" style="font-weight:700" x="882.0" y="430.0" text-anchor="end">Eagle 100Q (1.66%, LF≈0.19)</text>
+  <circle class="warn dot-ring" cx="725.0" cy="219.6" r="4.2"/>
+  <text class="xs warn" style="font-weight:700" x="735.0" y="223.6">EPLG=1%: 4.4×10<tspan dy="-4.5" font-size="9.2">8</tspan><tspan dy="4.5">&#8203;</tspan>×</text>
+  <text class="xs accent" style="font-weight:700" x="591.3" y="160.0">LF = (1−EPLG)<tspan dy="-4.5" font-size="9.2">99</tspan><tspan dy="4.5">&#8203;</tspan>（左轴）</text>
+  <text class="xs warn" style="font-weight:700" x="786.9" y="156.0">PEC D=5 (10层)</text>
+  <text class="xs purple" style="font-weight:700" x="803.2" y="281.8" text-anchor="middle">PEC D=2 (4层)</text>
+  <rect class="axis" x="562.0" y="134.0" width="326.0" height="306.0"/>
+  <text class="lbl ink" x="725.0" y="484.0" text-anchor="middle">每层门错误率 EPLG（%）</text>
+  <text class="lbl accent" x="518" y="287.0" text-anchor="middle" transform="rotate(-90 518 287.0)">100 比特链层保真度 LF</text>
+  <text class="lbl warn" x="952" y="287.0" text-anchor="middle" transform="rotate(90 952 287.0)">PEC 采样放大倍数 LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs muted" x="516" y="518">每砖墙周期含奇偶两层并行门（99 条边）；方差开销 ≳ LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan>。</text>
+  <text class="sm muted" x="34" y="554">注：RB 解决单/双门 SPAM 剥离，LF/EPLG 捕捉全链并行串扰，两者共同划定无纠错误差缓解（PEC）的深度上限。</text>
+</svg>

@@ -25,7 +25,7 @@ ax[2].plot(4,25/64,'s',ms=8,fillstyle='none',color='black',label='Selected earli
 ax[2].set(title='C. Coherent walk search can overshoot',xlabel='Number of full walk steps',ylabel='Final marked probability',xticks=[0,4,8,12,16],ylim=(-.015,.46))
 ax[2].legend(loc='upper center',bbox_to_anchor=(.5,-.17),fontsize=8)
 for a in ax:a.grid(alpha=.25);a.spines[['top','right']].set_visible(False)
-fig.suptitle('Round 73: signed off-grid HHL and 16-vertex discrete walk search',fontsize=13)
+fig.suptitle('Signed off-grid HHL and 16-vertex discrete walk search',fontsize=13)
 asset=root/'handbook/assets/round73-algorithms.svg';png=root/'work/rendered/round73-algorithms.png'
 png.parent.mkdir(exist_ok=True,parents=True)
 fig.savefig(asset);fig.savefig(png,dpi=160)

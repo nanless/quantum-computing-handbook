@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T09:03:34.394Z",
+  "generatedAt": "2026-11-25T08:49:48.073Z",
   "node": "v22.22.2",
   "branches": [
     {
@@ -20,7 +20,7 @@
     {
       "bell": "Psi-",
       "probability": 0.25000000000000006,
-      "correctedOverlap": -1.0000000000000002
+      "correctedOverlap": 1.0000000000000002
     }
   ],
   "unconditionalState": [

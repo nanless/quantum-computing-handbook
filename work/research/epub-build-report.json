@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-11-25T08:51:48.840695+00:00",
+  "output": "dist/quantum-computing-handbook.epub",
+  "edition": "2026-11-25",
+  "passed": true,
+  "metrics": {
+    "fileSizeBytes": 3815287,
+    "fileSizeMiB": 3.639,
+    "zipEntries": 162,
+    "xhtmlDocuments": 43,
+    "xmlFilesValidated": 159,
+    "mathmlElements": 46770,
+    "svgAssets": 114,
+    "linksValidated": 2483,
+    "diagramsRendered": 35,
+    "formulasRendered": 46770
+  },
+  "checks": {
+    "mimetypeFirstAndStored": true,
+    "allXmlWellFormed": true,
+    "manifestAndSpineComplete": true,
+    "zeroBrokenLinksOrFragments": true
+  },
+  "errors": []
+}

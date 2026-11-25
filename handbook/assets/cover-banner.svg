@@ -1,0 +1,382 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="cover-title cover-desc">
+  <title id="cover-title">量子计算：从直觉到研究入口 — 主视觉原理图</title>
+  <desc id="cover-desc">暖纸青绿制图台风格封面：左侧展示书名、定位及 26 章、46,000+ 公式、80+ 矢量图、271 题零跳步题答、36 离线验算脚本规模卡；右侧三合一原理图依次呈现 Mach–Zehnder 干涉波包、右手三维 Bloch 球 Larmor 进动与 d=3 旋转表面码 [[9,1,3]] 稳定子解码网格。</desc>
+  <defs>
+    <pattern id="drafting-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#8D8577" opacity="0.22"/>
+    </pattern>
+    <radialGradient id="bloch-fill" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#E4F4F7" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#C8E6EC" stop-opacity="0.58"/>
+    </radialGradient>
+  </defs>
+  <style>
+    text { font-family: system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; }
+    .eyebrow { font-size: 11.2px; font-weight: 700; fill: #154C40; letter-spacing: 0.4px; }
+    .hero-main { font-size: 40px; font-weight: 800; fill: #142622; letter-spacing: -0.6px; }
+    .hero-sub { font-size: 26.5px; font-weight: 700; fill: #1E6B5A; letter-spacing: -0.3px; }
+    .deck { font-size: 13px; font-weight: 450; fill: #3E524D; }
+    .stat-num { font-size: 20px; font-weight: 800; fill: #142622; }
+    .stat-num-sm { font-size: 17.5px; font-weight: 800; fill: #142622; }
+    .stat-sub { font-size: 11.2px; font-weight: 450; fill: #556661; }
+    .dark-num { font-size: 18.5px; font-weight: 800; fill: #F8F5EE; }
+    .dark-sub { font-size: 11.2px; font-weight: 450; fill: #C2D6CF; }
+    .dark-pill { font-size: 10.6px; font-weight: 600; fill: #D7EBE4; }
+    .foot-head { font-size: 11px; font-weight: 700; fill: #4E5E59; }
+    .foot-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 600; fill: #1D342F; }
+    .pipe-blue { font-size: 12px; font-weight: 700; fill: #1F5A92; }
+    .pipe-teal { font-size: 12px; font-weight: 700; fill: #1E6B5A; }
+    .pipe-red { font-size: 12px; font-weight: 700; fill: #B84A2E; }
+    .pipe-arrow { font-size: 11.5px; font-weight: 600; fill: #8A8275; }
+    .panel-title { font-size: 12.2px; font-weight: 700; fill: #182C28; }
+    .mono-accent { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.8px; font-weight: 700; fill: #1F5A92; }
+    .mono-teal { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 700; fill: #1E6B5A; }
+    .mono-red { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 700; fill: #B84A2E; }
+    .mono-amber { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.8px; font-weight: 700; fill: #9F6510; }
+    .mono-bold { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 700; fill: #182C28; }
+    .mono-muted { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.2px; font-weight: 600; fill: #5E6E6A; }
+    .mono-xs { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 600; fill: #5A645F; }
+    .badge-light { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11.5px; font-weight: 700; fill: #FAF8F3; }
+    .gate-mini { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; font-weight: 700; fill: #1F5A92; }
+    .det-lbl-teal { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 800; fill: #154C40; }
+    .det-lbl-red { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 800; fill: #98361E; }
+    .card-sub-head { font-size: 11.2px; font-weight: 700; fill: #182C28; }
+    .stab-red { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 800; fill: #9E341B; }
+    .stab-teal { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; font-weight: 800; fill: #155344; }
+    .stab-mini-teal { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 9.5px; font-weight: 800; fill: #155344; }
+    .stab-mini-blue { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 9.5px; font-weight: 800; fill: #174979; }
+    .err-q { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 800; fill: #FFFFFF; }
+    .legend-txt { font-size: 10.5px; font-weight: 500; fill: #2B3C38; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .mzi-flow-upper { animation: mziFlow 2.6s linear infinite; }
+      .mzi-flow-lower { animation: mziFlow 2.6s linear infinite; animation-delay: -0.45s; }
+      .bloch-orbit-flow { animation: orbitFlow 3.4s linear infinite; }
+      .bloch-tip-halo { animation: pulseHalo 2.4s ease-in-out infinite; }
+      .syndrome-halo { animation: pulseSyndrome 2.4s ease-in-out infinite; }
+      .mzi-pulse-dot { animation: pulseDot 2.4s ease-in-out infinite; }
+      @keyframes mziFlow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+      @keyframes orbitFlow { from { stroke-dashoffset: 21; } to { stroke-dashoffset: 0; } }
+      @keyframes pulseHalo { 0%, 100% { fill-opacity: 0.14; } 50% { fill-opacity: 0.36; } }
+      @keyframes pulseSyndrome { 0%, 100% { fill-opacity: 0.10; } 50% { fill-opacity: 0.32; } }
+      @keyframes pulseDot { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; } }
+    }
+  </style>
+
+  <!-- Warm Archival Drafting Workbench Plate -->
+  <rect x="1" y="1" width="1198" height="518" rx="14" fill="#FAF8F3" stroke="#D3CDC0" stroke-width="1.6"/>
+  <rect x="2" y="2" width="1196" height="516" rx="13" fill="url(#drafting-dots)"/>
+
+  <!-- Top drafting hairline accent -->
+  <rect x="26" y="12" width="428" height="3" rx="1.5" fill="#1E6B5A"/>
+  <rect x="474" y="12" width="344" height="3" rx="1.5" fill="#1F5A92"/>
+  <rect x="830" y="12" width="344" height="3" rx="1.5" fill="#C28524"/>
+
+  <!-- Left Column: Title, Deck, and 5 Scale Metric Cards -->
+  <g id="left-identity">
+    <!-- Eyebrow Pill -->
+    <rect x="26" y="26" width="284" height="26" rx="13" fill="#E5F2ED" stroke="#B6D5C9" stroke-width="1"/>
+    <circle cx="40" cy="39" r="3.8" fill="#1E6B5A"/>
+    <text x="51" y="43" class="eyebrow">QUANTUM COMPUTING · 系统教材与实验台</text>
+
+    <!-- Title & Subtitle -->
+    <text x="26" y="96" class="hero-main">量子计算</text>
+    <text x="26" y="135" class="hero-sub">从直觉到研究入口</text>
+
+    <!-- Three-tone drafting rule -->
+    <rect x="26" y="149" width="88" height="3.5" rx="1.75" fill="#1E6B5A"/>
+    <rect x="120" y="149" width="28" height="3.5" rx="1.75" fill="#C28524"/>
+    <rect x="154" y="149" width="16" height="3.5" rx="1.75" fill="#B84A2E"/>
+
+    <!-- Deck -->
+    <text x="26" y="176" class="deck">从草稿纸能算透的二维小例出发，打通线性代数、</text>
+    <text x="26" y="197" class="deck">量子干涉、核心算法、噪声信道与表面码容错全链路。</text>
+
+    <!-- Scale Card 1: 26 章 -->
+    <rect x="26" y="216" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <rect x="28" y="224" width="3.8" height="48" rx="1.9" fill="#1E6B5A"/>
+    <text x="42" y="246" class="stat-num">26 章</text>
+    <text x="42" y="267" class="stat-sub">主篇 00–21 + 量子力学 Q1–Q4</text>
+
+    <!-- Scale Card 2: 46,000+ 公式 -->
+    <rect x="246" y="216" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <rect x="248" y="224" width="3.8" height="48" rx="1.9" fill="#1F5A92"/>
+    <text x="262" y="246" class="stat-num">46,000+ 公式</text>
+    <text x="262" y="267" class="stat-sub">本地 KaTeX 预渲染 · 逐步演算</text>
+
+    <!-- Scale Card 3: 80+ 矢量图 -->
+    <rect x="26" y="290" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <rect x="28" y="298" width="3.8" height="48" rx="1.9" fill="#C28524"/>
+    <text x="42" y="320" class="stat-num">80+ 矢量图</text>
+    <text x="42" y="341" class="stat-sub">公式驱动 SVG + 架构流程图</text>
+
+    <!-- Scale Card 4: 271 题零跳步题答 -->
+    <rect x="246" y="290" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <rect x="248" y="298" width="3.8" height="48" rx="1.9" fill="#B84A2E"/>
+    <text x="262" y="319" class="stat-num-sm">271 题零跳步题答</text>
+    <text x="262" y="341" class="stat-sub">逐行矩阵展开与归一独立回验</text>
+
+    <!-- Scale Card 5 (Full-Width Dark Anchor): 36 离线验算脚本 -->
+    <rect x="26" y="364" width="428" height="66" rx="8" fill="#1B2D2A" stroke="#2D4944" stroke-width="1.2"/>
+    <rect x="28" y="372" width="4" height="50" rx="2" fill="#DDA03B"/>
+    <text x="44" y="394" class="dark-num">36 离线验算脚本</text>
+    <rect x="224" y="376" width="216" height="22" rx="11" fill="#27403B" stroke="#3D615B" stroke-width="1"/>
+    <text x="332" y="391" text-anchor="middle" class="dark-pill">纯标准库 · 零云依赖 · 声化互动台</text>
+    <text x="44" y="417" class="dark-sub">纸笔手算 → 离线复算 → 31 个开源项目对照 · 全册 100% 离线</text>
+
+    <!-- Bottom Contract Strip -->
+    <rect x="26" y="440" width="428" height="54" rx="8" fill="#F1EDE4" stroke="#DDD7CB" stroke-width="1.1"/>
+    <text x="40" y="460" class="foot-head">全书统一数学与物理契约</text>
+    <text x="40" y="481" class="foot-mono">左共轭 ⟨u|v⟩ · 大端序 |q₁q₀⟩ · 根保真度 F(ρ,σ) · log₂/ln</text>
+  </g>
+
+  <!-- Right Workbench Header Bar -->
+  <g id="right-header">
+    <rect x="474" y="26" width="700" height="34" rx="7" fill="#F1EDE4" stroke="#DDD7CB" stroke-width="1.1"/>
+    <text x="492" y="47" class="pipe-blue">01 · MZI 相位干涉波包</text>
+    <text x="646" y="47" class="pipe-arrow">──▶</text>
+    <text x="684" y="47" class="pipe-teal">02 · Bloch 球进动 |ψ(θ,φ)⟩</text>
+    <text x="874" y="47" class="pipe-arrow">──▶</text>
+    <text x="912" y="47" class="pipe-red">03 · 表面码网格 [[9,1,3]]</text>
+  </g>
+
+  <!-- Panel 01: Mach-Zehnder Interferometer & Fringe Plot -->
+  <g id="panel-mzi">
+    <rect x="474" y="70" width="700" height="182" rx="9" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <text x="490" y="92" class="panel-title">01 · Mach–Zehnder 干涉波包（振幅先相加再取模平方）</text>
+    <text x="1158" y="92" text-anchor="end" class="mono-accent">H · P(φ) · H |0⟩  |  P(0) = cos²(φ/2)</text>
+
+    <!-- Optical bench backdrop -->
+    <rect x="488" y="104" width="398" height="134" rx="7" fill="#FAF8F3" stroke="#E5E0D5" stroke-width="1"/>
+
+    <!-- Input port |0> -->
+    <rect x="496" y="130" width="30" height="24" rx="5" fill="#1B2D2A"/>
+    <text x="511" y="146" text-anchor="middle" class="badge-light">|0⟩</text>
+    <line x1="526" y1="142" x2="544" y2="142" stroke="#1E6B5A" stroke-width="2.2"/>
+    <line x1="518" y1="200" x2="544" y2="200" stroke="#C5BEB0" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <text x="510" y="204" text-anchor="middle" class="mono-xs">0</text>
+
+    <!-- Beam Splitter BS1 (H) -->
+    <rect x="544" y="122" width="32" height="98" rx="6" fill="#E6F1FA" stroke="#1F5A92" stroke-width="1.5"/>
+    <line x1="549" y1="213" x2="571" y2="129" stroke="#1F5A92" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.7"/>
+    <text x="560" y="175" text-anchor="middle" class="gate-mini">H</text>
+    <text x="560" y="116" text-anchor="middle" class="mono-xs">BS₁</text>
+
+    <!-- Arms baselines -->
+    <line x1="576" y1="142" x2="736" y2="142" stroke="#D5D0C5" stroke-width="1.3"/>
+    <line x1="576" y1="200" x2="736" y2="200" stroke="#D5D0C5" stroke-width="1.3"/>
+
+    <!-- Animated subtle energy flow guide lines -->
+    <line class="mzi-flow-upper" x1="576" y1="142" x2="736" y2="142" stroke="#1E6B5A" stroke-width="2.2" stroke-dasharray="10 14" opacity="0.45"/>
+    <line class="mzi-flow-lower" x1="576" y1="200" x2="736" y2="200" stroke="#C28524" stroke-width="2.2" stroke-dasharray="10 14" opacity="0.45"/>
+
+    <!-- Wave packets in upper and lower arms -->
+    <path d="M582 142.35L584.03 142.5L586.06 142.63L588.08 142.74L590.11 142.79L592.14 142.76L594.17 142.62L596.19 142.35L598.22 141.94L600.25 141.39L602.28 140.74L604.31 140.02L606.33 139.31L608.36 138.7L610.39 138.29L612.42 138.16L614.44 138.41L616.47 139.1L618.5 140.23L620.53 141.78L622.56 143.66L624.58 145.72L626.61 147.78L628.64 149.62L630.67 151.02L632.69 151.78L634.72 151.74L636.75 150.81L638.78 149.02L640.81 146.44L642.83 143.28L644.86 139.81L646.89 136.33L648.92 133.18L650.94 130.67L652.97 129.06L655 128.5L657.03 129.06L659.06 130.67L661.08 133.18L663.11 136.33L665.14 139.81L667.17 143.28L669.19 146.44L671.22 149.02L673.25 150.81L675.28 151.74L677.31 151.78L679.33 151.02L681.36 149.62L683.39 147.78L685.42 145.72L687.44 143.66L689.47 141.78L691.5 140.23L693.53 139.1L695.56 138.41L697.58 138.16L699.61 138.29L701.64 138.7L703.67 139.31L705.69 140.02L707.72 140.74L709.75 141.39L711.78 141.94L713.81 142.35L715.83 142.62L717.86 142.76L719.89 142.79L721.92 142.74L723.94 142.63L725.97 142.5L728 142.35" fill="none" stroke="#1E6B5A" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M582 200.4L584.03 200.4L586.06 200.35L588.08 200.23L590.11 200.03L592.14 199.74L594.17 199.38L596.19 198.95L598.22 198.5L600.25 198.08L602.28 197.75L604.31 197.57L606.33 197.62L608.36 197.95L610.39 198.59L612.42 199.56L614.44 200.81L616.47 202.28L618.5 203.83L620.53 205.33L622.56 206.59L624.58 207.44L626.61 207.73L628.64 207.32L630.67 206.17L632.69 204.3L634.72 201.8L636.75 198.86L638.78 195.73L640.81 192.7L642.83 190.07L644.86 188.13L646.89 187.09L648.92 187.11L650.94 188.21L652.97 190.31L655 193.25L657.03 196.74L659.06 200.47L661.08 204.07L663.11 207.24L665.14 209.68L667.17 211.21L669.19 211.74L671.22 211.29L673.25 209.95L675.28 207.94L677.31 205.48L679.33 202.85L681.36 200.3L683.39 198.06L685.42 196.28L687.44 195.07L689.47 194.45L691.5 194.4L693.53 194.82L695.56 195.6L697.58 196.6L699.61 197.69L701.64 198.75L703.67 199.69L705.69 200.45L707.72 200.99L709.75 201.31L711.78 201.44L713.81 201.4L715.83 201.25L717.86 201.02L719.89 200.76L721.92 200.51L723.94 200.28L725.97 200.09L728 199.95" fill="none" stroke="#C28524" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>
+
+    <!-- Arm labels -->
+    <text x="656" y="121" text-anchor="middle" class="mono-teal">参考臂 |0⟩  (相位 0)</text>
+    <!-- Phase shifter P(phi) on lower arm -->
+    <rect x="633" y="188" width="46" height="24" rx="5" fill="#FBF3E0" stroke="#C28524" stroke-width="1.5"/>
+    <text x="656" y="204" text-anchor="middle" class="mono-amber">P(φ)</text>
+    <text x="656" y="229" text-anchor="middle" class="mono-xs">相位臂 |1⟩ · φ = π/3</text>
+
+    <!-- Beam Splitter BS2 (H) -->
+    <rect x="736" y="122" width="32" height="98" rx="6" fill="#E6F1FA" stroke="#1F5A92" stroke-width="1.5"/>
+    <line x1="741" y1="213" x2="763" y2="129" stroke="#1F5A92" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.7"/>
+    <text x="752" y="175" text-anchor="middle" class="gate-mini">H</text>
+    <text x="752" y="116" text-anchor="middle" class="mono-xs">BS₂</text>
+
+    <!-- Output wave packets & detectors -->
+    <line x1="768" y1="142" x2="838" y2="142" stroke="#D5D0C5" stroke-width="1.2"/>
+    <line x1="768" y1="200" x2="838" y2="200" stroke="#D5D0C5" stroke-width="1.2"/>
+    <path d="M774 141.58L774.83 141.49L775.67 141.41L776.5 141.35L777.33 141.32L778.17 141.33L779 141.4L779.83 141.54L780.67 141.77L781.5 142.1L782.33 142.53L783.17 143.05L784 143.66L784.83 144.34L785.67 145.06L786.5 145.78L787.33 146.44L788.17 147L789 147.39L789.83 147.57L790.67 147.47L791.5 147.06L792.33 146.32L793.17 145.25L794 143.85L794.83 142.16L795.67 140.27L796.5 138.24L797.33 136.19L798.17 134.22L799 132.45L799.83 130.98L800.67 129.92L801.5 129.33L802.33 129.27L803.17 129.75L804 130.75L804.83 132.22L805.67 134.09L806.5 136.24L807.33 138.57L808.17 140.94L809 143.23L809.83 145.34L810.67 147.15L811.5 148.6L812.33 149.64L813.17 150.25L814 150.44L814.83 150.24L815.67 149.71L816.5 148.92L817.33 147.93L818.17 146.83L819 145.69L819.83 144.57L820.67 143.54L821.5 142.63L822.33 141.87L823.17 141.28L824 140.85L824.83 140.57L825.67 140.44L826.5 140.42L827.33 140.49L828.17 140.62L829 140.8L829.83 141L830.67 141.2L831.5 141.39L832.33 141.56L833.17 141.71L834 141.83" fill="none" stroke="#1E6B5A" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M774 199.97L774.83 200.03L775.67 200.1L776.5 200.19L777.33 200.31L778.17 200.45L779 200.6L779.83 200.77L780.67 200.93L781.5 201.09L782.33 201.22L783.17 201.3L784 201.32L784.83 201.26L785.67 201.1L786.5 200.84L787.33 200.45L788.17 199.95L789 199.34L789.83 198.64L790.67 197.87L791.5 197.08L792.33 196.3L793.17 195.59L794 194.99L794.83 194.56L795.67 194.33L796.5 194.35L797.33 194.63L798.17 195.18L799 195.99L799.83 197.03L800.67 198.26L801.5 199.62L802.33 201.03L803.17 202.44L804 203.75L804.83 204.91L805.67 205.85L806.5 206.53L807.33 206.91L808.17 206.99L809 206.78L809.83 206.3L810.67 205.59L811.5 204.7L812.33 203.7L813.17 202.64L814 201.58L814.83 200.58L815.67 199.69L816.5 198.93L817.33 198.33L818.17 197.9L819 197.64L819.83 197.53L820.67 197.55L821.5 197.69L822.33 197.92L823.17 198.2L824 198.51L824.83 198.82L825.67 199.13L826.5 199.41L827.33 199.65L828.17 199.85L829 200L829.83 200.11L830.67 200.19L831.5 200.23L832.33 200.24L833.17 200.24L834 200.22" fill="none" stroke="#B84A2E" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/>
+
+    <!-- Detector D0 -->
+    <path d="M838 128 H848 A14 14 0 0 1 848 156 H838 Z" fill="#E5F3EE" stroke="#1E6B5A" stroke-width="1.6"/>
+    <text x="849" y="146" text-anchor="middle" class="det-lbl-teal">D₀</text>
+    <text x="849" y="121" text-anchor="middle" class="mono-teal">75%</text>
+
+    <!-- Detector D1 -->
+    <path d="M838 186 H848 A14 14 0 0 1 848 214 H838 Z" fill="#FAEAE4" stroke="#B84A2E" stroke-width="1.6"/>
+    <text x="849" y="204" text-anchor="middle" class="det-lbl-red">D₁</text>
+    <text x="849" y="230" text-anchor="middle" class="mono-red">25%</text>
+
+    <!-- Right mini-plot: full interference fringe -->
+    <rect x="896" y="104" width="264" height="134" rx="7" fill="#FAF8F3" stroke="#E5E0D5" stroke-width="1"/>
+    <!-- Grid lines -->
+    <line x1="918" y1="130" x2="1144" y2="130" stroke="#E6E1D6" stroke-width="1"/>
+    <line x1="918" y1="172" x2="1144" y2="172" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="918" y1="214" x2="1144" y2="214" stroke="#8A8275" stroke-width="1.2"/>
+    <line x1="918" y1="126" x2="918" y2="214" stroke="#8A8275" stroke-width="1.2"/>
+
+    <!-- Y labels -->
+    <text x="912" y="134" text-anchor="end" class="mono-xs">1</text>
+    <text x="912" y="176" text-anchor="end" class="mono-xs">.5</text>
+    <text x="912" y="218" text-anchor="end" class="mono-xs">0</text>
+    <line x1="918" y1="214" x2="918" y2="218" stroke="#8A8275" stroke-width="1"/><text x="918" y="230" text-anchor="middle" class="mono-xs">0</text><line x1="974.5" y1="214" x2="974.5" y2="218" stroke="#8A8275" stroke-width="1"/><text x="974.5" y="230" text-anchor="middle" class="mono-xs">π/2</text><line x1="1031" y1="214" x2="1031" y2="218" stroke="#8A8275" stroke-width="1"/><text x="1031" y="230" text-anchor="middle" class="mono-xs">π</text><line x1="1087.5" y1="214" x2="1087.5" y2="218" stroke="#8A8275" stroke-width="1"/><text x="1087.5" y="230" text-anchor="middle" class="mono-xs">3π/2</text><line x1="1144" y1="214" x2="1144" y2="218" stroke="#8A8275" stroke-width="1"/><text x="1144" y="230" text-anchor="middle" class="mono-xs">2π</text>
+
+    <!-- Fringe curves -->
+    <path d="M918 130L920.35 130.09L922.71 130.36L925.06 130.81L927.42 131.43L929.77 132.23L932.12 133.2L934.48 134.33L936.83 135.63L939.19 137.08L941.54 138.68L943.9 140.42L946.25 142.3L948.6 144.31L950.96 146.43L953.31 148.67L955.67 151L958.02 153.42L960.38 155.93L962.73 158.5L965.08 161.13L967.44 163.81L969.79 166.52L972.15 169.25L974.5 172L976.85 174.75L979.21 177.48L981.56 180.19L983.92 182.87L986.27 185.5L988.62 188.07L990.98 190.58L993.33 193L995.69 195.33L998.04 197.57L1000.4 199.69L1002.75 201.7L1005.1 203.58L1007.46 205.32L1009.81 206.92L1012.17 208.37L1014.52 209.67L1016.88 210.8L1019.23 211.77L1021.58 212.57L1023.94 213.19L1026.29 213.64L1028.65 213.91L1031 214L1033.35 213.91L1035.71 213.64L1038.06 213.19L1040.42 212.57L1042.77 211.77L1045.12 210.8L1047.48 209.67L1049.83 208.37L1052.19 206.92L1054.54 205.32L1056.9 203.58L1059.25 201.7L1061.6 199.69L1063.96 197.57L1066.31 195.33L1068.67 193L1071.02 190.58L1073.38 188.07L1075.73 185.5L1078.08 182.87L1080.44 180.19L1082.79 177.48L1085.15 174.75L1087.5 172L1089.85 169.25L1092.21 166.52L1094.56 163.81L1096.92 161.13L1099.27 158.5L1101.62 155.93L1103.98 153.42L1106.33 151L1108.69 148.67L1111.04 146.43L1113.4 144.31L1115.75 142.3L1118.1 140.42L1120.46 138.68L1122.81 137.08L1125.17 135.63L1127.52 134.33L1129.88 133.2L1132.23 132.23L1134.58 131.43L1136.94 130.81L1139.29 130.36L1141.65 130.09L1144 130L1144 214L918 214Z" fill="#1E6B5A" fill-opacity="0.10"/>
+    <path d="M918 130L920.35 130.09L922.71 130.36L925.06 130.81L927.42 131.43L929.77 132.23L932.12 133.2L934.48 134.33L936.83 135.63L939.19 137.08L941.54 138.68L943.9 140.42L946.25 142.3L948.6 144.31L950.96 146.43L953.31 148.67L955.67 151L958.02 153.42L960.38 155.93L962.73 158.5L965.08 161.13L967.44 163.81L969.79 166.52L972.15 169.25L974.5 172L976.85 174.75L979.21 177.48L981.56 180.19L983.92 182.87L986.27 185.5L988.62 188.07L990.98 190.58L993.33 193L995.69 195.33L998.04 197.57L1000.4 199.69L1002.75 201.7L1005.1 203.58L1007.46 205.32L1009.81 206.92L1012.17 208.37L1014.52 209.67L1016.88 210.8L1019.23 211.77L1021.58 212.57L1023.94 213.19L1026.29 213.64L1028.65 213.91L1031 214L1033.35 213.91L1035.71 213.64L1038.06 213.19L1040.42 212.57L1042.77 211.77L1045.12 210.8L1047.48 209.67L1049.83 208.37L1052.19 206.92L1054.54 205.32L1056.9 203.58L1059.25 201.7L1061.6 199.69L1063.96 197.57L1066.31 195.33L1068.67 193L1071.02 190.58L1073.38 188.07L1075.73 185.5L1078.08 182.87L1080.44 180.19L1082.79 177.48L1085.15 174.75L1087.5 172L1089.85 169.25L1092.21 166.52L1094.56 163.81L1096.92 161.13L1099.27 158.5L1101.62 155.93L1103.98 153.42L1106.33 151L1108.69 148.67L1111.04 146.43L1113.4 144.31L1115.75 142.3L1118.1 140.42L1120.46 138.68L1122.81 137.08L1125.17 135.63L1127.52 134.33L1129.88 133.2L1132.23 132.23L1134.58 131.43L1136.94 130.81L1139.29 130.36L1141.65 130.09L1144 130" fill="none" stroke="#1E6B5A" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M918 214L920.35 213.91L922.71 213.64L925.06 213.19L927.42 212.57L929.77 211.77L932.12 210.8L934.48 209.67L936.83 208.37L939.19 206.92L941.54 205.32L943.9 203.58L946.25 201.7L948.6 199.69L950.96 197.57L953.31 195.33L955.67 193L958.02 190.58L960.38 188.07L962.73 185.5L965.08 182.87L967.44 180.19L969.79 177.48L972.15 174.75L974.5 172L976.85 169.25L979.21 166.52L981.56 163.81L983.92 161.13L986.27 158.5L988.62 155.93L990.98 153.42L993.33 151L995.69 148.67L998.04 146.43L1000.4 144.31L1002.75 142.3L1005.1 140.42L1007.46 138.68L1009.81 137.08L1012.17 135.63L1014.52 134.33L1016.88 133.2L1019.23 132.23L1021.58 131.43L1023.94 130.81L1026.29 130.36L1028.65 130.09L1031 130L1033.35 130.09L1035.71 130.36L1038.06 130.81L1040.42 131.43L1042.77 132.23L1045.12 133.2L1047.48 134.33L1049.83 135.63L1052.19 137.08L1054.54 138.68L1056.9 140.42L1059.25 142.3L1061.6 144.31L1063.96 146.43L1066.31 148.67L1068.67 151L1071.02 153.42L1073.38 155.93L1075.73 158.5L1078.08 161.13L1080.44 163.81L1082.79 166.52L1085.15 169.25L1087.5 172L1089.85 174.75L1092.21 177.48L1094.56 180.19L1096.92 182.87L1099.27 185.5L1101.62 188.07L1103.98 190.58L1106.33 193L1108.69 195.33L1111.04 197.57L1113.4 199.69L1115.75 201.7L1118.1 203.58L1120.46 205.32L1122.81 206.92L1125.17 208.37L1127.52 209.67L1129.88 210.8L1132.23 211.77L1134.58 212.57L1136.94 213.19L1139.29 213.64L1141.65 213.91L1144 214" fill="none" stroke="#B84A2E" stroke-width="1.7" stroke-dasharray="5 3" stroke-linejoin="round"/>
+
+    <!-- Demo marker at phi = pi/3 -->
+    <line x1="955.67" y1="130" x2="955.67" y2="214" stroke="#C28524" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <circle class="mzi-pulse-dot" cx="955.67" cy="151" r="4.5" fill="#1E6B5A" stroke="#FFFFFF" stroke-width="1.5"/>
+    <circle cx="955.67" cy="193" r="4.0" fill="#B84A2E" stroke="#FFFFFF" stroke-width="1.4"/>
+
+    <!-- Compact fringe legend in dedicated top band above gy1=130 -->
+    <line x1="998" y1="117" x2="1016" y2="117" stroke="#1E6B5A" stroke-width="2.2"/>
+    <text x="1021" y="121" class="mono-teal">P(0)</text>
+    <line x1="1068" y1="117" x2="1086" y2="117" stroke="#B84A2E" stroke-width="1.7" stroke-dasharray="4 2"/>
+    <text x="1091" y="121" class="mono-red">P(1)</text>
+  </g>
+
+  <!-- Panel 02: Bloch Sphere Precession -->
+  <g id="panel-bloch">
+    <rect x="474" y="262" width="344" height="232" rx="9" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <text x="490" y="284" class="panel-title">02 · Bloch 球进动（右手三维投影）</text>
+
+    <!-- Sphere silhouette -->
+    <circle cx="584" cy="392" r="62" fill="url(#bloch-fill)" stroke="#2C6F88" stroke-width="1.8"/>
+
+    <!-- Back hemisphere curves -->
+    <path d="M571.58 452.73L573.29 452.92L575.03 452.96L576.79 452.82L578.58 452.52L580.38 452.05L582.19 451.42L584 450.62L585.81 449.67L587.62 448.55L589.42 447.28L591.21 445.86L592.97 444.29L594.71 442.58L596.42 440.73L598.1 438.75L599.74 436.64L601.33 434.4L602.88 432.05L604.38 429.59L605.82 427.03L607.2 424.37L608.52 421.62L609.76 418.79L610.94 415.89L612.05 412.92L613.08 409.89L614.03 406.82L614.89 403.7L615.67 400.56L616.37 397.39L616.97 394.2L617.49 391.01L617.91 387.82L618.24 384.64L618.48 381.49L618.62 378.36L618.67 375.27L618.62 372.22L618.48 369.23L618.24 366.3L617.91 363.44L617.49 360.66L616.97 357.97L616.37 355.37L615.67 352.87L614.89 350.48L614.03 348.2L613.08 346.04L612.05 344L610.94 342.1L609.76 340.34L608.52 338.71L607.2 337.24L605.82 335.91L604.38 334.74L602.88 333.72L601.33 332.86L599.74 332.17L598.1 331.64L596.42 331.27" fill="none" stroke="#9AB2BC" stroke-width="1.0" stroke-dasharray="4 4"/>
+    <path d="M645.96 391.3L645.76 390.24L645.4 389.19L644.86 388.15L644.16 387.12L643.29 386.1L642.26 385.1L641.07 384.11L639.73 383.15L638.23 382.21L636.58 381.3L634.79 380.42L632.86 379.57L630.79 378.76L628.6 377.98L626.28 377.24L623.85 376.54L621.31 375.88L618.67 375.27L615.93 374.7L613.11 374.18L610.2 373.71L607.23 373.28L604.19 372.91L601.09 372.6L597.95 372.33L594.77 372.12L591.56 371.97L588.32 371.86L585.08 371.82L581.84 371.83L578.6 371.89L575.37 372.01L572.17 372.19L569 372.41L565.87 372.7L562.79 373.03L559.77 373.42L556.82 373.86L553.94 374.35L551.15 374.88L548.44 375.47L545.83 376.09L543.32 376.77L540.93 377.48L538.66 378.23L536.51 379.03L534.48 379.85L532.6 380.71L530.86 381.6L529.26 382.52L527.81 383.47L526.51 384.44L525.38 385.43L524.4 386.44L523.59 387.46L522.94 388.49L522.46 389.54L522.15 390.59L522.01 391.65L522.04 392.7" fill="none" stroke="#6B9FB4" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <path d="M630.72 351.26L629.91 350.47L628.97 349.69L627.91 348.94L626.73 348.2L625.43 347.48L624.02 346.79L622.5 346.12L620.87 345.47L619.14 344.86L617.32 344.28L615.4 343.72L613.4 343.21L611.32 342.72L609.16 342.27L606.94 341.86L604.65 341.49L602.3 341.16L599.91 340.87L597.47 340.62L594.99 340.41L592.48 340.24L589.95 340.12L587.41 340.04L584.85 340L582.29 340.01L579.74 340.06L577.2 340.16L574.68 340.29L572.18 340.47L569.72 340.7L567.29 340.96L564.91 341.27L562.58 341.61L560.31 342L558.11 342.42L555.98 342.88L553.92 343.37L551.95 343.9L550.06 344.47L548.27 345.06L546.57 345.68L544.98 346.34L543.5 347.01L542.12 347.72L540.86 348.44L539.72 349.19L538.7 349.95L537.81 350.73L537.04 351.52L536.4 352.33" fill="none" stroke="#D39D4A" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.65"/>
+
+    <!-- Negative dashed half-axes -->
+    <line x1="584" y1="392" x2="584" y2="462.35" stroke="#7A8F99" stroke-width="1.15" stroke-dasharray="4 3"/>
+    <line x1="584" y1="392" x2="623.52" y2="372.92" stroke="#7A8F99" stroke-width="1.15" stroke-dasharray="4 3"/>
+    <line x1="584" y1="392" x2="525.4" y2="379.13" stroke="#7A8F99" stroke-width="1.15" stroke-dasharray="4 3"/>
+
+    <!-- Front hemisphere curves -->
+    <path d="M584 333.38L582.19 334.33L580.38 335.45L578.58 336.72L576.79 338.14L575.03 339.71L573.29 341.42L571.58 343.27L569.9 345.25L568.26 347.36L566.67 349.6L565.12 351.95L563.62 354.41L562.18 356.97L560.8 359.63L559.48 362.38L558.24 365.21L557.06 368.11L555.95 371.08L554.92 374.11L553.97 377.18L553.11 380.3L552.33 383.44L551.63 386.61L551.03 389.8L550.51 392.99L550.09 396.18L549.76 399.36L549.52 402.51L549.38 405.64L549.33 408.73L549.38 411.78L549.52 414.77L549.76 417.7L550.09 420.56L550.51 423.34L551.03 426.03L551.63 428.63L552.33 431.13L553.11 433.52L553.97 435.8L554.92 437.96L555.95 440L557.06 441.9L558.24 443.66L559.48 445.29L560.8 446.76L562.18 448.09L563.62 449.26L565.12 450.28L566.67 451.14L568.26 451.83L569.9 452.36L571.58 452.73 M596.42 331.27L594.71 331.08L592.97 331.04L591.21 331.18L589.42 331.48L587.62 331.95L585.81 332.58L584 333.38" fill="none" stroke="#7A9CAB" stroke-width="1.1"/>
+    <path d="M549.33 408.73L552.07 409.3L554.89 409.82L557.8 410.29L560.77 410.72L563.81 411.09L566.91 411.4L570.05 411.67L573.23 411.88L576.44 412.03L579.68 412.14L582.92 412.18L586.16 412.17L589.4 412.11L592.63 411.99L595.83 411.81L599 411.59L602.13 411.3L605.21 410.97L608.23 410.58L611.18 410.14L614.06 409.65L616.85 409.12L619.56 408.53L622.17 407.91L624.68 407.23L627.07 406.52L629.34 405.77L631.49 404.97L633.52 404.15L635.4 403.29L637.14 402.4L638.74 401.48L640.19 400.53L641.49 399.56L642.62 398.57L643.6 397.56L644.41 396.54L645.06 395.51L645.54 394.46L645.85 393.41L645.99 392.35L645.96 391.3 M522.04 392.7L522.24 393.76L522.6 394.81L523.14 395.85L523.84 396.88L524.71 397.9L525.74 398.9L526.93 399.89L528.27 400.85L529.77 401.79L531.42 402.7L533.21 403.58L535.14 404.43L537.21 405.24L539.4 406.02L541.72 406.76L544.15 407.46L546.69 408.12L549.33 408.73" fill="none" stroke="#2C6F88" stroke-width="1.5"/>
+    <path d="M556.68 369.1L558.84 369.54L561.06 369.95L563.35 370.32L565.7 370.66L568.09 370.95L570.53 371.2L573.01 371.41L575.52 371.57L578.05 371.7L580.59 371.78L583.15 371.81L585.71 371.81L588.26 371.75L590.8 371.66L593.32 371.52L595.82 371.34L598.28 371.12L600.71 370.86L603.09 370.55L605.42 370.2L607.69 369.82L609.89 369.4L612.02 368.94L614.08 368.44L616.05 367.91L617.94 367.35L619.73 366.76L621.43 366.13L623.02 365.48L624.5 364.8L625.88 364.1L627.14 363.38L628.28 362.63L629.3 361.87L630.19 361.09L630.96 360.29L631.6 359.49L632.11 358.67L632.49 357.85L632.74 357.02L632.85 356.19L632.83 355.35L632.67 354.52L632.38 353.69L631.96 352.87L631.41 352.06L630.72 351.26 M536.4 352.33L535.89 353.15L535.51 353.97L535.26 354.8L535.15 355.63L535.17 356.46L535.33 357.29L535.62 358.12L536.04 358.94L536.59 359.76L537.28 360.56L538.09 361.35L539.03 362.12L540.09 362.88L541.27 363.62L542.57 364.34L543.98 365.03L545.5 365.7L547.13 366.34L548.86 366.96L550.68 367.54L552.6 368.09L554.6 368.61L556.68 369.1" fill="none" stroke="#C28524" stroke-width="1.9"/>
+    <path class="bloch-orbit-flow" d="M556.68 369.1L558.84 369.54L561.06 369.95L563.35 370.32L565.7 370.66L568.09 370.95L570.53 371.2L573.01 371.41L575.52 371.57L578.05 371.7L580.59 371.78L583.15 371.81L585.71 371.81L588.26 371.75L590.8 371.66L593.32 371.52L595.82 371.34L598.28 371.12L600.71 370.86L603.09 370.55L605.42 370.2L607.69 369.82L609.89 369.4L612.02 368.94L614.08 368.44L616.05 367.91L617.94 367.35L619.73 366.76L621.43 366.13L623.02 365.48L624.5 364.8L625.88 364.1L627.14 363.38L628.28 362.63L629.3 361.87L630.19 361.09L630.96 360.29L631.6 359.49L632.11 358.67L632.49 357.85L632.74 357.02L632.85 356.19L632.83 355.35L632.67 354.52L632.38 353.69L631.96 352.87L631.41 352.06L630.72 351.26 M536.4 352.33L535.89 353.15L535.51 353.97L535.26 354.8L535.15 355.63L535.17 356.46L535.33 357.29L535.62 358.12L536.04 358.94L536.59 359.76L537.28 360.56L538.09 361.35L539.03 362.12L540.09 362.88L541.27 363.62L542.57 364.34L543.98 365.03L545.5 365.7L547.13 366.34L548.86 366.96L550.68 367.54L552.6 368.09L554.6 368.61L556.68 369.1" fill="none" stroke="#B84A2E" stroke-width="2.1" stroke-dasharray="9 12" opacity="0.72"/>
+
+    <!-- Positive axes with arrows -->
+    <line x1="584" y1="392" x2="584" y2="314.62" stroke="#182C28" stroke-width="1.6"/>
+    <path d="M584 314.62L587 322.62L581 322.62Z" fill="#182C28"/>
+    <line x1="584" y1="392" x2="538.24" y2="414.09" stroke="#182C28" stroke-width="1.6"/>
+    <path d="M538.24 414.09L544.14 407.91L546.74 413.31Z" fill="#182C28"/>
+    <line x1="584" y1="392" x2="651.85" y2="406.9" stroke="#182C28" stroke-width="1.6"/>
+    <path d="M651.85 406.9L643.39 408.11L644.68 402.25Z" fill="#182C28"/>
+
+    <!-- Projection drop lines and angles -->
+    <line x1="611.32" y1="369.1" x2="611.32" y2="405.19" stroke="#B84A2E" stroke-width="1.15" stroke-dasharray="3 3" opacity="0.78"/>
+    <line x1="584" y1="392" x2="611.32" y2="405.19" stroke="#1F5A92" stroke-width="1.15" stroke-dasharray="3 3" opacity="0.78"/>
+    <path d="M584 367.38L584.66 367.72L585.32 368.12L585.98 368.56L586.63 369.05L587.28 369.59L587.92 370.18L588.55 370.81L589.17 371.48L589.78 372.2L590.38 372.95L590.97 373.75L591.54 374.58L592.1 375.45L592.64 376.35L593.16 377.29L593.67 378.25L594.15 379.25L594.61 380.27L595.06 381.31L595.47 382.38" fill="none" stroke="#B84A2E" stroke-width="1.4"/>
+    <path d="M570.83 398.36L572.01 398.6L573.23 398.82L574.49 399.02L575.79 399.19L577.11 399.34L578.46 399.46L579.83 399.55L581.21 399.62L582.6 399.66L584 399.67L585.4 399.66L586.79 399.62L588.17 399.55L589.54 399.46L590.89 399.34L592.21 399.19L593.51 399.02L594.77 398.82L595.99 398.6L597.17 398.36" fill="none" stroke="#1F5A92" stroke-width="1.4"/>
+
+    <!-- State vector |psi> -->
+    <line x1="584" y1="392" x2="611.32" y2="369.1" stroke="#B84A2E" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M611.32 369.1L606.74 377.64L602.11 372.12Z" fill="#B84A2E"/>
+    <circle class="bloch-tip-halo" cx="611.32" cy="369.1" r="8.5" fill="#B84A2E" fill-opacity="0.18"/>
+    <circle cx="611.32" cy="369.1" r="4.2" fill="#B84A2E" stroke="#FFFFFF" stroke-width="1.5"/>
+
+    <!-- Benchmark dots & origin -->
+    <circle cx="584" cy="392" r="2.8" fill="#FFFFFF" stroke="#182C28" stroke-width="1.4"/>
+    <circle cx="584" cy="333.38" r="3.2" fill="#1E6B5A"/>
+    <circle cx="584" cy="450.62" r="2.8" fill="#FAF8F3" stroke="#1E6B5A" stroke-width="1.5"/>
+    <circle cx="549.33" cy="408.73" r="3.0" fill="#1F5A92"/>
+    <circle cx="635.4" cy="403.29" r="3.0" fill="#1F5A92"/>
+
+    <!-- Clean non-overlapping axis labels -->
+    <text x="593" y="318.62" class="mono-bold">|0⟩ (+Z)</text>
+    <text x="593" y="467.35" class="mono-muted">|1⟩ (−Z)</text>
+    <text x="528.24" y="429.09" text-anchor="middle" class="mono-bold">|+⟩ (+X)</text>
+    <text x="661.85" y="421.9" text-anchor="middle" class="mono-bold">|+i⟩ (+Y)</text>
+    <text x="622.32" y="365.1" class="mono-red">|ψ⟩</text>
+    <text x="592.97" y="366.75" class="mono-red">θ</text>
+    <text x="590.79" y="412.62" class="mono-accent">φ</text>
+
+    <!-- Right-side compact specification card -->
+    <rect x="692" y="302" width="114" height="178" rx="7" fill="#F6F3EB" stroke="#E0DACD" stroke-width="1"/>
+    <text x="702" y="322" class="card-sub-head">Larmor 进动</text>
+    <text x="702" y="340" class="mono-xs">dr/dt = ω × r</text>
+    <line x1="702" y1="350" x2="796" y2="350" stroke="#DDD7CB" stroke-width="1"/>
+    <text x="702" y="368" class="mono-red">θ = 52°</text>
+    <text x="702" y="385" class="mono-amber">φ(t) = ω₀ t</text>
+    <line x1="702" y1="395" x2="796" y2="395" stroke="#DDD7CB" stroke-width="1"/>
+    <text x="702" y="413" class="card-sub-head">右手坐标系</text>
+    <text x="702" y="430" class="mono-xs">+X × +Y = +Z</text>
+    <text x="702" y="449" class="mono-teal">纯态 ‖r‖ = 1</text>
+    <text x="702" y="466" class="mono-xs">混态 ‖r‖ &lt; 1</text>
+  </g>
+
+  <!-- Panel 03: Rotated d=3 Surface Code Lattice -->
+  <g id="panel-surface">
+    <rect x="830" y="262" width="344" height="232" rx="9" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
+    <text x="846" y="284" class="panel-title">03 · 表面码网格（d = 3 旋转码 [[9,1,3]]）</text>
+
+    <!-- Boundary weight-2 stabilizers -->
+    <path d="M876 342 A25 19 0 0 1 926 342 Z" fill="#D9EFE7" stroke="#1E6B5A" stroke-width="1.3"/>
+    <path d="M926 442 A25 19 0 0 0 976 442 Z" fill="#D9EFE7" stroke="#1E6B5A" stroke-width="1.3"/>
+    <path d="M876 392 A19 25 0 0 0 876 442 Z" fill="#DCEAF8" stroke="#1F5A92" stroke-width="1.3"/>
+    <path d="M976 342 A19 25 0 0 1 976 392 Z" fill="#DCEAF8" stroke="#1F5A92" stroke-width="1.3"/>
+
+    <!-- Interior weight-4 plaquettes -->
+    <!-- TL: Z stabilizer (triggered defect -1) -->
+    <rect x="876" y="342" width="50" height="50" fill="#FBE5DD" stroke="#B84A2E" stroke-width="1.6"/>
+    <!-- TR: X stabilizer -->
+    <rect x="926" y="342" width="50" height="50" fill="#D9EFE7" stroke="#1E6B5A" stroke-width="1.3"/>
+    <!-- BL: X stabilizer -->
+    <rect x="876" y="392" width="50" height="50" fill="#D9EFE7" stroke="#1E6B5A" stroke-width="1.3"/>
+    <!-- BR: Z stabilizer (triggered defect -1) -->
+    <rect x="926" y="392" width="50" height="50" fill="#FBE5DD" stroke="#B84A2E" stroke-width="1.6"/>
+
+    <!-- Syndrome coupling highlight from center X error to both Z defects -->
+    <line x1="926" y1="392" x2="901" y2="367" stroke="#B84A2E" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+    <line x1="926" y1="392" x2="951" y2="417" stroke="#B84A2E" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+
+    <!-- Animated pulsing syndrome halos on TL and BR Z-stabilizers -->
+    <circle class="syndrome-halo" cx="901" cy="367" r="15" fill="#B84A2E" fill-opacity="0.16"/>
+    <circle class="syndrome-halo" cx="951" cy="417" r="15" fill="#B84A2E" fill-opacity="0.16"/>
+
+    <!-- Plaquette labels (crisp pills behind triggered Z-1 defects so dashed lines stay clean) -->
+    <rect x="887" y="359" width="28" height="16" rx="4" fill="#FBE5DD" fill-opacity="0.92"/>
+    <rect x="937" y="409" width="28" height="16" rx="4" fill="#FBE5DD" fill-opacity="0.92"/>
+    <text x="901" y="371" text-anchor="middle" class="stab-red">Z−1</text>
+    <text x="951" y="421" text-anchor="middle" class="stab-red">Z−1</text>
+    <text x="951" y="371" text-anchor="middle" class="stab-teal">X</text>
+    <text x="901" y="421" text-anchor="middle" class="stab-teal">X</text>
+    <text x="901" y="337" text-anchor="middle" class="stab-mini-teal">X</text>
+    <text x="951" y="455" text-anchor="middle" class="stab-mini-teal">X</text>
+    <text x="867" y="420.5" text-anchor="middle" class="stab-mini-blue">Z</text>
+    <text x="985" y="370.5" text-anchor="middle" class="stab-mini-blue">Z</text>
+
+    <!-- Logical Z-bar chain across top row (0,0)-(0,1)-(0,2) -->
+    <line x1="876" y1="342" x2="976" y2="342" stroke="#C28524" stroke-width="2.8" stroke-dasharray="6 3.5"/>
+    <text x="990" y="336" class="mono-amber">Z̄</text>
+
+    <!-- 9 data qubits -->
+    <circle cx="876" cy="342" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="926" cy="342" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="976" cy="342" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="876" cy="392" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="926" cy="392" r="9.0" fill="#B84A2E" stroke="#FFFFFF" stroke-width="2.0"/><text x="926" y="395.8" text-anchor="middle" class="err-q">X</text><circle cx="976" cy="392" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="876" cy="442" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="926" cy="442" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/><circle cx="976" cy="442" r="6.8" fill="#FAF8F3" stroke="#182C28" stroke-width="1.8"/>
+
+    <!-- Right-side compact legend card -->
+    <rect x="1030" y="302" width="132" height="178" rx="7" fill="#F6F3EB" stroke="#E0DACD" stroke-width="1"/>
+    <text x="1042" y="322" class="card-sub-head">稳定子与解码</text>
+
+    <circle cx="1048" cy="342" r="5.0" fill="#FAF8F3" stroke="#182C28" stroke-width="1.5"/>
+    <text x="1060" y="346" class="legend-txt">数据比特 (9)</text>
+
+    <rect x="1043" y="359" width="10" height="10" rx="2" fill="#D9EFE7" stroke="#1E6B5A" stroke-width="1.2"/>
+    <text x="1060" y="368" class="legend-txt">X 稳定子 (4)</text>
+
+    <rect x="1043" y="381" width="10" height="10" rx="2" fill="#DCEAF8" stroke="#1F5A92" stroke-width="1.2"/>
+    <text x="1060" y="390" class="legend-txt">Z 稳定子 (4)</text>
+
+    <circle cx="1048" cy="408" r="5.2" fill="#B84A2E"/>
+    <text x="1060" y="412" class="legend-txt">X 错 → 成对症状</text>
+
+    <line x1="1042" y1="430" x2="1055" y2="430" stroke="#C28524" stroke-width="2.5" stroke-dasharray="4 2"/>
+    <text x="1060" y="434" class="legend-txt">逻辑算符 Z̄</text>
+
+    <line x1="1042" y1="448" x2="1150" y2="448" stroke="#DDD7CB" stroke-width="1"/>
+    <text x="1042" y="466" class="mono-xs">码距 d=3 · 纠单错</text>
+  </g>
+</svg>

@@ -54,7 +54,7 @@
           6.251216812177794e-10,
           6.15393447262812e-10
         ],
-        "survival": 0.9999999993797434,
+        "survival": 0.9999999993797433,
         "unconditional_overlap": 0.9999999983963624,
         "six_state_overlap": 0.9999999983963627
       },
@@ -65,7 +65,7 @@
         ],
         "survival": 0.9926473520747731,
         "unconditional_overlap": 0.9809241231593456,
-        "six_state_overlap": 0.9809241231593456
+        "six_state_overlap": 0.9809241231593457
       }
     },
     "15": {
@@ -74,38 +74,45 @@
       "wrong_cross_is_hermitian": false
     },
     "19": {
+      "time_unit": "us",
       "rows": [
         {
-          "arrival": 0,
+          "arrival": 0.0,
           "service": 0.8,
+          "wait": 0.0,
           "response": 0.8
         },
         {
-          "arrival": 1,
+          "arrival": 1.0,
           "service": 0.8,
+          "wait": 0.0,
           "response": 0.8
         },
         {
-          "arrival": 2,
-          "service": 4,
-          "response": 4
+          "arrival": 2.0,
+          "service": 4.0,
+          "wait": 0.0,
+          "response": 4.0
         },
         {
-          "arrival": 3,
+          "arrival": 3.0,
           "service": 0.8,
+          "wait": 3.0,
           "response": 3.8
         },
         {
-          "arrival": 4,
+          "arrival": 4.0,
           "service": 0.8,
-          "response": 3.5999999999999996
+          "wait": 2.8,
+          "response": 3.6
         }
       ],
+      "max_response": 4.0,
       "p99_observed_service_not_a_deadline_bound": true
     },
     "q3": {
-      "average_survival": 0.9999999993797434,
-      "average_leakage": 6.202566238400209e-10
+      "average_survival": 0.9999999993797433,
+      "average_leakage": 6.202567348623234e-10
     }
   },
   "scope": "stdlib archive and mathematical checks; not SDK rerun"

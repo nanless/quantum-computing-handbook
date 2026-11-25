@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">二元香农熵、Helstrom 最优测量轴与 Holevo 界对比</title>
+  <desc id="desc">左面板精确绘制二元香农熵 H₂(p) = −p log₂p − (1−p)log₂(1−p) 在 p ∈ [0, 1] 的凹曲线，标出 p = 0.5 处最大值 1.00 bit 及 p_e ≈ 0.146 处 H₂(p_e) ≈ 0.601 bit。右面板上部在 Bloch x-z 截面标出等先验态 |0⟩ 与 |+⟩（Bloch 夹角 90°）以及最优 Helstrom 测量轴（Bloch 偏转 45°，对应态空间夹角 θ/2 = 22.5°，成功率 cos²22.5° = 85.36%）；下部柱状图对比 Holevo 上界 χ = 0.601 bit 与单次可访问信息 I_acc = 0.399 bit。</desc>
+  <style>
+:root{color-scheme:light dark}
+text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+.bg{fill:#f8fafc}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4}
+.phead{fill:#eef4f8}
+.title{font-size:20px;font-weight:700;fill:#13263a}
+.subtitle{font-size:14px;font-weight:400;fill:#3e566d}
+.sec{font-size:15px;font-weight:700;fill:#13263a}
+.lbl{font-size:13.5px;font-weight:500;fill:#19324d}
+.lblb{font-size:13.5px;font-weight:700;fill:#13263a}
+.sm{font-size:13px;font-weight:400;fill:#3e566d}
+.smb{font-size:13px;font-weight:600;fill:#19324d}
+.axis{stroke:#19324d;stroke-width:1.7;fill:none}
+.axis-fill{fill:#19324d}
+.grid{stroke:#d9e3ec;stroke-width:1;fill:none}
+.guide{stroke:#7c93a8;stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+.c1{stroke:#1b6ca8;fill:none}
+.c1-fill{fill:#1b6ca8}
+.c1-txt{fill:#155585}
+.c1-soft{fill:#dff0fa;stroke:#1b6ca8;stroke-width:1.4}
+.c2{stroke:#c74b34;fill:none}
+.c2-fill{fill:#c74b34}
+.c2-txt{fill:#a63824}
+.c2-soft{fill:#fce7e2;stroke:#c74b34;stroke-width:1.4}
+.c3{stroke:#1e7a5c;fill:none}
+.c3-fill{fill:#1e7a5c}
+.c3-txt{fill:#176148}
+.c3-soft{fill:#e1f5ed;stroke:#1e7a5c;stroke-width:1.4}
+.c4{stroke:#b57614;fill:none}
+.c4-fill{fill:#b57614}
+.c4-txt{fill:#8c580b}
+.note{fill:#fff8e6;stroke:#c98d24;stroke-width:1.4}
+.pill{fill:#edf2f7;stroke:#9fb3c8;stroke-width:1.2}
+.forbid{fill:#c74b34;fill-opacity:.09}
+.area1{fill:#1b6ca8;fill-opacity:.11}
+.data-node{fill:#ffffff;stroke:#19324d;stroke-width:2}
+.badge-txt{fill:#ffffff;font-size:13px;font-weight:700}
+.hatch-stroke1{stroke:#1b6ca8;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke2{stroke:#c74b34;stroke-width:1.2;stroke-opacity:.42}
+.hatch-stroke3{stroke:#1e7a5c;stroke-width:1.2;stroke-opacity:.42}
+@media(prefers-color-scheme:dark){
+  .bg{fill:#0f1720}
+  .panel{fill:#16222e;stroke:#354c61}
+  .phead{fill:#1c2d3d}
+  .title,.sec,.lblb{fill:#eef6ff}
+  .subtitle,.sm{fill:#b7cde0}
+  .lbl,.smb{fill:#d7e7f5}
+  .axis{stroke:#cde0f2}
+  .axis-fill{fill:#cde0f2}
+  .grid{stroke:#293e52}
+  .guide{stroke:#738fa8}
+  .c1{stroke:#6bc2f5}
+  .c1-fill{fill:#6bc2f5}
+  .c1-txt{fill:#8fd4fa}
+  .c1-soft{fill:#173a52;stroke:#6bc2f5}
+  .c2{stroke:#f28872}
+  .c2-fill{fill:#f28872}
+  .c2-txt{fill:#f8a896}
+  .c2-soft{fill:#48241e;stroke:#f28872}
+  .c3{stroke:#5dd1a8}
+  .c3-fill{fill:#5dd1a8}
+  .c3-txt{fill:#84e0bf}
+  .c3-soft{fill:#163d31;stroke:#5dd1a8}
+  .c4{stroke:#f0ba5a}
+  .c4-fill{fill:#f0ba5a}
+  .c4-txt{fill:#f5cc82}
+  .note{fill:#332914;stroke:#d6a240}
+  .pill{fill:#203142;stroke:#4f6b85}
+  .forbid{fill:#f28872;fill-opacity:.12}
+  .area1{fill:#6bc2f5;fill-opacity:.15}
+  .data-node{fill:#16222e;stroke:#d7e7f5}
+  .badge-txt{fill:#0f1720}
+  .hatch-stroke1{stroke:#6bc2f5;stroke-opacity:.48}
+  .hatch-stroke2{stroke:#f28872;stroke-opacity:.48}
+  .hatch-stroke3{stroke:#5dd1a8;stroke-opacity:.48}
+}
+  </style>
+  <defs>
+    <pattern id="hatch-blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke1" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke2" x1="0" y1="0" x2="0" y2="8"/></pattern>
+    <pattern id="hatch-green" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-stroke3" x1="0" y1="0" x2="0" y2="8"/></pattern>
+  </defs>
+  <rect class="bg" width="1000" height="580" rx="20"/>
+  <text class="title" x="34" y="54">二元香农熵、Helstrom 最优判别与 Holevo 界间隙</text>
+  <text class="subtitle" x="34" y="79">左：二元香农熵 H₂(p) 精确曲线；右：等先验 |0⟩ 与 |+⟩ 的最优测量轴及 χ 与 I<tspan dy="3" font-size="75%">acc</tspan><tspan dy="-3">&#8203;</tspan> 对比</text>
+  <rect class="panel" x="28" y="96" width="444" height="456" rx="14"/>
+  <path class="phead" d="M 42 97 H 458 Q 471 97 471 110 V 135 H 29 V 110 Q 29 97 42 97 Z"/>
+  <line class="grid" x1="29" y1="135" x2="471" y2="135"/>
+  <text class="sec" x="44" y="121">二元香农熵 H₂(p)（精确曲线）</text>
+  <rect class="panel" x="488" y="96" width="484" height="456" rx="14"/>
+  <path class="phead" d="M 502 97 H 958 Q 971 97 971 110 V 135 H 489 V 110 Q 489 97 502 97 Z"/>
+  <line class="grid" x1="489" y1="135" x2="971" y2="135"/>
+  <text class="sec" x="504" y="121">等先验 |0⟩、|+⟩：Helstrom 判别与 Holevo 间隙</text>
+  <line class="grid" x1="98" y1="440" x2="442" y2="440"/>
+  <text class="sm" x="90" y="444.5" text-anchor="end">0.0</text>
+  <line class="grid" x1="98" y1="391.48" x2="442" y2="391.48"/>
+  <text class="sm" x="90" y="395.98" text-anchor="end">0.2</text>
+  <line class="grid" x1="98" y1="342.96" x2="442" y2="342.96"/>
+  <text class="sm" x="90" y="347.46" text-anchor="end">0.4</text>
+  <line class="grid" x1="98" y1="294.44" x2="442" y2="294.44"/>
+  <text class="sm" x="90" y="298.94" text-anchor="end">0.6</text>
+  <line class="grid" x1="98" y1="245.93" x2="442" y2="245.93"/>
+  <text class="sm" x="90" y="250.43" text-anchor="end">0.8</text>
+  <line class="grid" x1="98" y1="197.41" x2="442" y2="197.41"/>
+  <text class="sm" x="90" y="201.91" text-anchor="end">1.0</text>
+  <line class="grid" x1="98" y1="178" x2="98" y2="440"/>
+  <text class="sm" x="98" y="460" text-anchor="middle">0</text>
+  <line class="grid" x1="184" y1="178" x2="184" y2="440"/>
+  <text class="sm" x="184" y="460" text-anchor="middle">0.25</text>
+  <line class="grid" x1="270" y1="178" x2="270" y2="440"/>
+  <text class="sm" x="270" y="460" text-anchor="middle">0.5</text>
+  <line class="grid" x1="356" y1="178" x2="356" y2="440"/>
+  <text class="sm" x="356" y="460" text-anchor="middle">0.75</text>
+  <line class="grid" x1="442" y1="178" x2="442" y2="440"/>
+  <text class="sm" x="442" y="460" text-anchor="middle">1</text>
+  <polygon class="area1" points="98,440 98,440 98.03,439.72 98.1,439.03 98.24,438.01 98.42,436.71 98.65,435.16 98.94,433.39 99.28,431.4 99.67,429.23 100.12,426.89 100.61,424.38 101.16,421.72 101.76,418.93 102.41,416 103.11,412.96 103.86,409.81 104.66,406.55 105.52,403.2 106.42,399.76 107.37,396.25 108.37,392.66 109.42,389 110.52,385.28 111.67,381.5 112.87,377.68 114.12,373.81 115.41,369.9 116.75,365.96 118.13,361.99 119.57,358 121.04,353.98 122.57,349.95 124.14,345.91 125.75,341.87 127.41,337.82 129.11,333.77 130.85,329.73 132.63,325.7 134.46,321.68 136.33,317.68 138.24,313.7 140.19,309.75 142.18,305.82 144.21,301.92 146.27,298.06 148.38,294.23 150.52,290.45 152.7,286.7 154.91,283.01 157.16,279.36 159.44,275.76 161.76,272.22 164.11,268.73 166.49,265.31 168.9,261.94 171.34,258.64 173.82,255.41 176.32,252.25 178.85,249.15 181.41,246.13 184,243.19 186.61,240.32 189.25,237.54 191.91,234.83 194.6,232.21 197.31,229.67 200.04,227.21 202.79,224.85 205.57,222.57 208.36,220.39 211.17,218.3 214,216.3 216.85,214.39 219.71,212.59 222.59,210.88 225.48,209.26 228.39,207.75 231.31,206.34 234.24,205.03 237.18,203.82 240.13,202.71 243.09,201.71 246.06,200.81 249.04,200.01 252.02,199.32 255.01,198.74 258,198.26 261,197.89 264,197.62 267,197.46 270,197.41 273,197.46 276,197.62 279,197.89 282,198.26 284.99,198.74 287.98,199.32 290.96,200.01 293.94,200.81 296.91,201.71 299.87,202.71 302.82,203.82 305.76,205.03 308.69,206.34 311.61,207.75 314.52,209.26 317.41,210.88 320.29,212.59 323.15,214.39 326,216.3 328.83,218.3 331.64,220.39 334.43,222.57 337.21,224.85 339.96,227.21 342.69,229.67 345.4,232.21 348.09,234.83 350.75,237.54 353.39,240.32 356,243.19 358.59,246.13 361.15,249.15 363.68,252.25 366.18,255.41 368.66,258.64 371.1,261.94 373.51,265.31 375.89,268.73 378.24,272.22 380.56,275.76 382.84,279.36 385.09,283.01 387.3,286.7 389.48,290.45 391.62,294.23 393.73,298.06 395.79,301.92 397.82,305.82 399.81,309.75 401.76,313.7 403.67,317.68 405.54,321.68 407.37,325.7 409.15,329.73 410.89,333.77 412.59,337.82 414.25,341.87 415.86,345.91 417.43,349.95 418.96,353.98 420.43,358 421.87,361.99 423.25,365.96 424.59,369.9 425.88,373.81 427.13,377.68 428.33,381.5 429.48,385.28 430.58,389 431.63,392.66 432.63,396.25 433.58,399.76 434.48,403.2 435.34,406.55 436.14,409.81 436.89,412.96 437.59,416 438.24,418.93 438.84,421.72 439.39,424.38 439.88,426.89 440.33,429.23 440.72,431.4 441.06,433.39 441.35,435.16 441.58,436.71 441.76,438.01 441.9,439.03 441.97,439.72 442,440 442,440"/>
+  <path class="c1" stroke-width="2.8" d="M 98 440 L 98.03 439.72 L 98.1 439.03 L 98.24 438.01 L 98.42 436.71 L 98.65 435.16 L 98.94 433.39 L 99.28 431.4 L 99.67 429.23 L 100.12 426.89 L 100.61 424.38 L 101.16 421.72 L 101.76 418.93 L 102.41 416 L 103.11 412.96 L 103.86 409.81 L 104.66 406.55 L 105.52 403.2 L 106.42 399.76 L 107.37 396.25 L 108.37 392.66 L 109.42 389 L 110.52 385.28 L 111.67 381.5 L 112.87 377.68 L 114.12 373.81 L 115.41 369.9 L 116.75 365.96 L 118.13 361.99 L 119.57 358 L 121.04 353.98 L 122.57 349.95 L 124.14 345.91 L 125.75 341.87 L 127.41 337.82 L 129.11 333.77 L 130.85 329.73 L 132.63 325.7 L 134.46 321.68 L 136.33 317.68 L 138.24 313.7 L 140.19 309.75 L 142.18 305.82 L 144.21 301.92 L 146.27 298.06 L 148.38 294.23 L 150.52 290.45 L 152.7 286.7 L 154.91 283.01 L 157.16 279.36 L 159.44 275.76 L 161.76 272.22 L 164.11 268.73 L 166.49 265.31 L 168.9 261.94 L 171.34 258.64 L 173.82 255.41 L 176.32 252.25 L 178.85 249.15 L 181.41 246.13 L 184 243.19 L 186.61 240.32 L 189.25 237.54 L 191.91 234.83 L 194.6 232.21 L 197.31 229.67 L 200.04 227.21 L 202.79 224.85 L 205.57 222.57 L 208.36 220.39 L 211.17 218.3 L 214 216.3 L 216.85 214.39 L 219.71 212.59 L 222.59 210.88 L 225.48 209.26 L 228.39 207.75 L 231.31 206.34 L 234.24 205.03 L 237.18 203.82 L 240.13 202.71 L 243.09 201.71 L 246.06 200.81 L 249.04 200.01 L 252.02 199.32 L 255.01 198.74 L 258 198.26 L 261 197.89 L 264 197.62 L 267 197.46 L 270 197.41 L 273 197.46 L 276 197.62 L 279 197.89 L 282 198.26 L 284.99 198.74 L 287.98 199.32 L 290.96 200.01 L 293.94 200.81 L 296.91 201.71 L 299.87 202.71 L 302.82 203.82 L 305.76 205.03 L 308.69 206.34 L 311.61 207.75 L 314.52 209.26 L 317.41 210.88 L 320.29 212.59 L 323.15 214.39 L 326 216.3 L 328.83 218.3 L 331.64 220.39 L 334.43 222.57 L 337.21 224.85 L 339.96 227.21 L 342.69 229.67 L 345.4 232.21 L 348.09 234.83 L 350.75 237.54 L 353.39 240.32 L 356 243.19 L 358.59 246.13 L 361.15 249.15 L 363.68 252.25 L 366.18 255.41 L 368.66 258.64 L 371.1 261.94 L 373.51 265.31 L 375.89 268.73 L 378.24 272.22 L 380.56 275.76 L 382.84 279.36 L 385.09 283.01 L 387.3 286.7 L 389.48 290.45 L 391.62 294.23 L 393.73 298.06 L 395.79 301.92 L 397.82 305.82 L 399.81 309.75 L 401.76 313.7 L 403.67 317.68 L 405.54 321.68 L 407.37 325.7 L 409.15 329.73 L 410.89 333.77 L 412.59 337.82 L 414.25 341.87 L 415.86 345.91 L 417.43 349.95 L 418.96 353.98 L 420.43 358 L 421.87 361.99 L 423.25 365.96 L 424.59 369.9 L 425.88 373.81 L 427.13 377.68 L 428.33 381.5 L 429.48 385.28 L 430.58 389 L 431.63 392.66 L 432.63 396.25 L 433.58 399.76 L 434.48 403.2 L 435.34 406.55 L 436.14 409.81 L 436.89 412.96 L 437.59 416 L 438.24 418.93 L 438.84 421.72 L 439.39 424.38 L 439.88 426.89 L 440.33 429.23 L 440.72 431.4 L 441.06 433.39 L 441.35 435.16 L 441.58 436.71 L 441.76 438.01 L 441.9 439.03 L 441.97 439.72 L 442 440"/>
+  <line class="axis" x1="98" y1="440" x2="450" y2="440"/>
+  <polygon class="axis-fill" points="450,440 442.5,443.6 442.5,436.4"/>
+  <line class="axis" x1="98" y1="440" x2="98" y2="166"/>
+  <polygon class="axis-fill" points="98,166 101.6,173.5 94.4,173.5"/>
+  <text class="lbl" x="270" y="484" text-anchor="middle">二元事件概率 p (无量纲)</text>
+  <text class="lbl" x="48" y="309" text-anchor="middle" transform="rotate(-90 48 309)">二元香农熵 H₂(p) (bit)</text>
+  <line class="guide" x1="270" y1="197.41" x2="270" y2="440"/>
+  <circle class="c1-fill" cx="270" cy="197.41" r="5.5"/>
+  <text class="smb c1-txt" x="270" y="185.41" text-anchor="middle">峰值：p = 0.5，H₂ = 1.00 bit</text>
+  <line class="guide" x1="148.38" y1="294.23" x2="148.38" y2="440"/>
+  <line class="guide" x1="98" y1="294.23" x2="148.38" y2="294.23"/>
+  <polygon class="c2-fill" points="148.38,288.03 154.58,294.23 148.38,300.43 142.18,294.23"/>
+  <text class="smb c2-txt" x="159.38" y="312.23">p<tspan dy="3" font-size="75%">e</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.146</text>
+  <text class="sm c2-txt" x="159.38" y="330.23">H₂ = 0.601 bit</text>
+  <rect class="pill" x="44" y="502" width="412" height="36" rx="8"/>
+  <text class="sm" x="250" y="524" text-anchor="middle">H₂(p) = −p log₂p − (1−p) log₂(1−p)（对称严格凹函数）</text>
+  <circle class="c1-soft" fill-opacity=".35" cx="602" cy="256" r="74"/>
+  <line class="axis" x1="510" y1="256" x2="694" y2="256"/>
+  <polygon class="axis-fill" points="694,256 687,259.36 687,252.64"/>
+  <line class="axis" x1="602" y1="348" x2="602" y2="164"/>
+  <polygon class="axis-fill" points="602,164 605.36,171 598.64,171"/>
+  <text class="smb" x="610" y="168">+Z：|0⟩</text>
+  <text class="sm" x="610" y="349">−Z：|1⟩</text>
+  <text class="smb" x="698" y="260.5">+X：|+⟩</text>
+  <text class="sm" x="506" y="260.5" text-anchor="end">−X</text>
+  <path class="c1" stroke-width="1.6" d="M 602 241 H 617 V 256"/>
+  <text class="sm c1-txt" x="622" y="246">90°</text>
+  <line class="c1" stroke-width="3.0" x1="602" y1="256" x2="602" y2="182"/>
+  <circle class="c1-fill" cx="602" cy="182" r="5"/>
+  <line class="c1" stroke-width="3.0" x1="602" y1="256" x2="676" y2="256"/>
+  <circle class="c1-fill" cx="676" cy="256" r="5"/>
+  <line class="c2" stroke-width="2.6" stroke-dasharray="8 4" x1="549.67" y1="203.67" x2="654.33" y2="308.33"/>
+  <polygon class="c2-fill" points="549.67,198.07 555.27,203.67 549.67,209.27 544.07,203.67"/>
+  <polygon class="c2-fill" points="654.33,302.73 659.93,308.33 654.33,313.93 648.73,308.33"/>
+  <text class="smb c2-txt" x="541.67" y="197.67" text-anchor="end">|m₀⟩</text>
+  <text class="smb c2-txt" x="662.33" y="322.33">|m₊⟩</text>
+  <path class="c2" stroke-width="1.6" d="M 602 226 A 30 30 0 0 0 580.79 234.79"/>
+  <text class="sm c2-txt" x="585" y="217" text-anchor="middle">45°</text>
+  <rect class="note" x="776" y="152" width="180" height="194" rx="10"/>
+  <text class="smb" x="788" y="176">Bloch x-z 截面几何</text>
+  <text class="sm" x="788" y="199">|0⟩ 与 |+⟩ 夹角：90°</text>
+  <text class="sm c2-txt" x="788" y="222">Helstrom 最优轴：</text>
+  <text class="sm" x="788" y="242">Bloch 偏角 45°</text>
+  <text class="smb c2-txt" x="788" y="263">态空间夹角 22.5°</text>
+  <text class="sm" x="788" y="287">最小错误率 14.64%</text>
+  <text class="smb c3-txt" x="788" y="310">成功率 85.36%</text>
+  <text class="sm" x="788" y="332">(cos² 22.5° = (2+√2)/4)</text>
+  <line class="grid" x1="504" y1="378" x2="956" y2="378"/>
+  <text class="smb" x="508" y="400">单次可访问信息与 Holevo 上界（单位：bit）</text>
+  <line class="grid" x1="618" y1="412" x2="618" y2="500"/>
+  <text class="sm" x="618" y="518" text-anchor="middle">0.0</text>
+  <line class="grid" x1="683.2" y1="412" x2="683.2" y2="500"/>
+  <text class="sm" x="683.2" y="518" text-anchor="middle">0.2</text>
+  <line class="grid" x1="748.4" y1="412" x2="748.4" y2="500"/>
+  <text class="sm" x="748.4" y="518" text-anchor="middle">0.4</text>
+  <line class="grid" x1="813.6" y1="412" x2="813.6" y2="500"/>
+  <text class="sm" x="813.6" y="518" text-anchor="middle">0.6</text>
+  <line class="grid" x1="878.8" y1="412" x2="878.8" y2="500"/>
+  <text class="sm" x="878.8" y="518" text-anchor="middle">0.8</text>
+  <line class="grid" x1="944" y1="412" x2="944" y2="500"/>
+  <text class="sm" x="944" y="518" text-anchor="middle">1.0</text>
+  <line class="axis" x1="618" y1="500" x2="952" y2="500"/>
+  <polygon class="axis-fill" points="952,500 945.5,503.12 945.5,496.88"/>
+  <line class="axis" x1="618" y1="412" x2="618" y2="500"/>
+  <text class="sm" x="781" y="540" text-anchor="middle">信息量 (bit)</text>
+  <rect class="c1-soft" stroke-width="1.8" x="618" y="418" width="195.89" height="28" rx="4"/>
+  <rect fill="url(#hatch-blue)" x="618" y="418" width="195.89" height="28" rx="4"/>
+  <text class="smb" x="610" y="437" text-anchor="end">Holevo 上界 χ</text>
+  <text class="smb c1-txt" x="821.89" y="437">0.601 bit</text>
+  <rect class="c2-soft" stroke-width="1.8" x="618" y="458" width="130.11" height="28" rx="4"/>
+  <rect fill="url(#hatch-red)" x="618" y="458" width="130.11" height="28" rx="4"/>
+  <text class="smb" x="610" y="477" text-anchor="end">可访问信息 I<tspan dy="3" font-size="75%">acc</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="smb c2-txt" x="683.06" y="477" text-anchor="middle">0.399 bit</text>
+  <line class="guide" x1="813.89" y1="446" x2="813.89" y2="494"/>
+  <line class="c3" stroke-width="1.8" x1="752.11" y1="472" x2="809.89" y2="472"/>
+  <polygon class="c3-fill" points="751.11,472 756.61,469.36 756.61,474.64"/>
+  <polygon class="c3-fill" points="810.89,472 805.39,474.64 805.39,469.36"/>
+  <text class="smb c3-txt" x="821.89" y="477">间隙 0.202 bit</text>
+</svg>
