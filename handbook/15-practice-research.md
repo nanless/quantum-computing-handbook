@@ -510,7 +510,7 @@ $$
 
 **真机三道对照排错法**：如果在硬件上测 $X$ 基时没拿到接近 100% 的确定结果，不要笼统归结为“有噪声”，而是拆成三道递进对照——① 跑一条不加任何门的空线路量出读出混淆矩阵；② 跑连续两个 $H$ 门（$H^2 = I$）测单比特门误差；③ 在两个 $H$ 之间插入逐渐拉长的等待时间看退相干，一步步把误差源剥离出来。
 
-如果你想用耳朵感受“先加振幅再平方”和“对比度衰减”的区别，可以配合听一下[声音实验](labs/audio.md)里的五段教学合成音频（同相、120 度、反相与理想/衰减 Ramsey 条纹）；音频类比能帮大脑抓住干涉相位，但声波不是量子硬件录音，定性直觉之外定量判断仍要回到公式与计数。
+如果想交互观察“先加振幅再平方”与“退相干把干涉对比度压平到 $1/2$”的几何过程，可以打开离线阅读版内置的[6 模块交互量子实验台](../reader/lab/quantum-lab.html#tab-mzi)（01 号 MZI 干涉与 03 号 Ramsey 退相干模块），自由拖动相对相位 $\phi$ 与可见度 $V$ 对照密度矩阵读数。
 
 ### 4.2 实验二：Bell 相关不等于纠缠证明（三基计数与 Hoeffding 下界）
 
@@ -1056,7 +1056,7 @@ def test_endianness_unitarity_and_depolarizing_contract():
 ## 延伸阅读与动手实验
 
 - **配套统计、ZNE 倍率与等价性验证脚本**：[有限样本、外推代价与多重比较](labs/practice.md)覆盖 Bell 分母对比、ZNE shots 分配、多重比较、后选择分母、零失败精确上界、按耗时分配与准概率估计七组可手算练习，对应纯 Python 标准库代码 [experiments.py](../codes/practice/experiments.py)、[research_checks.py](../codes/practice/research_checks.py) 以及覆盖 Bootstrap/BCa 零失败反例、少聚类 $t_{B-1}$ 覆盖率、ZNE 固定总预算倍率与 QCEC 随机态证伪的 [v4_practice_lab.py](../codes/practice/v4_practice_lab.py)（完整目录与运行边界见[实践脚本说明](../codes/practice/README.md)）。
-- **相位听觉实验**：[声音实验](labs/audio.md)用五段相同数字增益的合成音频对比同相、120 度、反相与 Ramsey 对比度衰减，附公式、科学图与类比边界。
+- **离线交互实验台**：打开[6 模块离线交互量子实验台](../reader/lab/quantum-lab.html)，交互核对 MZI 干涉、Bloch 球千次采样、Ramsey 退相干、CHSH 千局 Wilson 置信区间、Grover 振幅放大与 $d=3$ 表面码解码。
 - **软件栈与独立复核日志**：
   - [完整 SDK 实验册](labs/sdk-validation.md)汇总 31 个开源量子项目（含 26 个基础核心发行包与扩展工作流）的独立安装实跑、数学对照与上游缺陷防护过程；
   - [算法、工业实践与开源代码对照](appendices/software-practice.md)给出各算法族的实现入口与核对要点；

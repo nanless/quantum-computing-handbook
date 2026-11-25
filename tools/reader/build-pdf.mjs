@@ -257,7 +257,6 @@ const LAB_ORDER = [
   'algorithms.md',
   'systems.md',
   'practice.md',
-  'audio.md',
   'sdk-validation.md',
 ];
 
@@ -583,7 +582,7 @@ async function main() {
     parts.push({
       id: 'part-labs',
       kicker: 'OFFLINE LABS · 离线动手实验册',
-      title: '动手实验、合成声音与开源 SDK 核验',
+      title: '动手实验与开源 SDK 核验',
       label: '离线动手实验册',
       files: labFiles,
       isAppendix: true,
@@ -778,9 +777,6 @@ async function main() {
       }
       const [p, rawFrag] = href.split('#');
       const frag = rawFrag ? safeDecode(rawFrag) : '';
-      if (/\.wav$/i.test(p)) {
-        return `<span class="audio-print-note">${labelHtml} · 合成音频见离线阅读版</span>`;
-      }
       const target = path.resolve(path.dirname(filePath), p);
       if (fileToDocId.has(target)) {
         const targetDocId = fileToDocId.get(target);
@@ -882,7 +878,7 @@ async function main() {
         <table class="cover-structure-table">
           <tbody>
             ${coverRowsHtml}
-            <tr><td class="cover-part-tag">附录与实验</td><td class="cover-part-name">工具书与离线验证</td><td class="cover-part-chapters">先修自测 · 符号与术语表 · 全书逐步题答 · 开源对照 · 离线实验与声音样本</td></tr>
+            <tr><td class="cover-part-tag">附录与实验</td><td class="cover-part-name">工具书与离线验证</td><td class="cover-part-chapters">先修自测 · 符号与术语表 · 全书逐步题答 · 开源对照 · 离线实验与核验</td></tr>
           </tbody>
         </table>
       </div>
@@ -1004,7 +1000,7 @@ ${partGroupsHtml}
       if (part.id === 'part-appendices') {
         subtitle = `本篇共收录 ${part.chapters.length} 篇工具书附录；每篇另起新页，供先修自测、符号查阅、全书题答与开源核验对照。`;
       } else if (part.id === 'part-labs') {
-        subtitle = `本篇共收录 ${part.chapters.length} 篇离线实验手册；每篇另起新页，配套代码与合成声音均可在本地零外网复算。`;
+        subtitle = `本篇共收录 ${part.chapters.length} 篇离线实验手册；每篇另起新页，配套纯 Python 标准库代码均可在本地零外网复算。`;
       } else {
         subtitle = `本篇共收录 ${part.chapters.length} 章完整内容；每章另起新页，公式与图表均按统一符号契约核验。`;
       }

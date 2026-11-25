@@ -557,11 +557,14 @@ try {
         approx(bv.rz, 0, 1e-12, 'Bloch H->S->T rz');
         approx(bv.norm, 1, 1e-12, 'Bloch norm');
         if (M.fmtFixed(-1e-12, 3) !== '0.000') errs.push('fmtFixed produced negative zero');
-        // 3. Ramsey
+        // 3. Ramsey decoherence steady-state & classical Fisher information
         const rp = M.ramseyPoint(1.5, 1.0, 1.5);
         approx(rp.vis, Math.exp(-1), 1e-12, 'Ramsey visibility at T2');
         approx(rp.pDecay, (1 - Math.exp(-1)) / 2, 1e-12, 'Ramsey pDecay at 1.5s');
-        if (!(rp.envCorrect > rp.envPitfall)) errs.push('Ramsey correct envelope should exceed pitfall at 1.5s');
+        approx(rp.pWrong, 0, 1e-12, 'Ramsey pitfall pWrong at trough');
+        approx(rp.fisherC, 0, 1e-12, 'Ramsey Fisher blind spot at trough');
+        const rpMid = M.ramseyPoint(0.25, 1.0, 1.5);
+        approx(rpMid.fisherC, rpMid.vis * rpMid.vis, 1e-12, 'Ramsey peak Fisher F_C = V^2 at mid-fringe');
         // 4. Bell & CHSH
         const bm = M.bellWernerMetrics(Math.PI / 4, 1);
         approx(bm.entropyA, 1, 1e-12, 'Bell entropyA');
@@ -673,43 +676,9 @@ try {
     await page.close();
   }
 
-  // Verify teaching WAV metadata, unique aria-labels, and Ramsey cue buttons.
-  const audioPage = await browser.newPage();
-  await audioPage.goto(pathToFileURL(path.join(root, 'reader/labs/audio.html')).href);
-  report.audioChecks = await audioPage.locator('audio').evaluateAll(async elements => {
-    return Promise.all(elements.map(e => new Promise(resolve => {
-      const done = () => resolve({
-        src: e.getAttribute('src'),
-        ariaLabel: e.getAttribute('aria-label') || '',
-        duration: e.duration,
-        readyState: e.readyState,
-        error: e.error?.message || null,
-        autoplay: e.autoplay,
-        controls: e.controls,
-      });
-      e.addEventListener('loadedmetadata', done, { once: true });
-      e.addEventListener('error', done, { once: true });
-      setTimeout(done, 5000);
-      e.load();
-    })));
-  });
-  const audioLabels = report.audioChecks.map(a => a.ariaLabel.trim());
-  if (report.audioChecks.length !== 5 || report.audioChecks.some(a => a.error || a.duration !== 4 || a.autoplay || !a.controls)) {
-    report.errors.push({ message: 'teaching WAV metadata/controls failed', audio: report.audioChecks });
-  }
-  if (audioLabels.some(l => !l) || new Set(audioLabels).size !== audioLabels.length) {
-    report.errors.push({ file: 'reader/labs/audio.html', message: 'audio elements must have non-empty unique aria-label attributes', audioLabels });
-  }
-  const ramseyBarCount = await audioPage.locator('.ramsey-cue-bar').count();
-  if (ramseyBarCount !== 2) {
-    report.errors.push({ file: 'reader/labs/audio.html', message: 'expected 2 Ramsey cue jump bars on labs/audio.html', actual: ramseyBarCount });
-  }
-  await audioPage.close();
-
   // Verify mobile right-edge scroll samples and revised explanations.
   const sample = await browser.newPage({ viewport: { width: 390, height: 1000 } });
   for (const [file, selector, label] of [
-    ['labs/audio.html', '.table-scroll', 'audio-controls'],
     ['labs/practice.html', '.katex-display', 'statistics-formula'],
     ['appendices/notation.html', '.table-scroll', 'table'],
     ['appendices/prerequisites.html', '.table-scroll', 'prerequisites-table'],

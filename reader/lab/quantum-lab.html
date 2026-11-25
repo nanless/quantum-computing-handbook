@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314453d'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23fbfaf6'%3E%CF%88%3C/text%3E%3C/svg%3E">
 <title>6 模块离线量子互动实验台 · 量子计算手册</title>
 <script>
 (function(){
@@ -538,28 +539,6 @@
     touch-action: none;
   }
 
-  .audio-box {
-    background: var(--panel-soft);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 0.68rem 0.82rem;
-    margin-top: 0.6rem;
-  }
-  .audio-box h3 { margin: 0 0 0.28rem; font-size: 0.9rem; }
-  audio { display: block; width: 100%; max-width: 100%; margin: 0.4rem 0; }
-  .audio-meta {
-    font-family: var(--mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin: 0.22rem 0 0;
-  }
-  .audio-pair {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-    margin-top: 0.6rem;
-  }
   .history-strip {
     font-family: var(--mono);
     font-size: 0.82rem;
@@ -611,7 +590,7 @@
     * { transition: none !important; animation: none !important; }
   }
   @media (max-width: 920px) {
-    .lab-grid, .lab-grid-bloch, .audio-pair, .slider-grid-2 { grid-template-columns: 1fr; }
+    .lab-grid, .lab-grid-bloch, .slider-grid-2 { grid-template-columns: 1fr; }
     .tab-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   /* Compact 390px Mobile: Single-Row Topbar + Horizontal Capsule Tabs -> Keeps Interactive SVG in First Viewport */
@@ -655,7 +634,7 @@
   <nav class="top-nav" aria-label="实验室导航">
     <div class="nav-links">
       <a href="../index.html">← 返回首页</a>
-      <a class="nav-link-secondary" href="../labs/audio.html">🔊 声音实验册</a>
+      <a class="nav-link-secondary" href="../labs/index.html">🧪 实验总览</a>
       <a class="nav-link-secondary" href="../appendices/exercises.html">📝 271 题答</a>
     </div>
     <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="false" aria-label="切换浅色或深色主题">
@@ -667,21 +646,21 @@
   <header class="hero">
     <p class="kicker">《量子计算手册》· 零安装 100% 离线 6 模块互动实验台</p>
     <h1>从单比特干涉、Bell 博弈、Grover 放大到 d = 3 表面码解码</h1>
-    <p class="hero-deck">零外部请求、双击 <code>file://</code> 原生运行。6 大顿悟级交互沙盒严格与正文符号、右手 Bloch 坐标系和 22050 Hz 16-bit PCM 合成规则保持一致；支持键盘方向键切换标签页。</p>
+    <p class="hero-deck">零外部请求、双击 <code>file://</code> 原生运行。6 大交互沙盒严格与正文符号、右手 Bloch 坐标系和精确量子力学公式保持一致；支持键盘方向键切换标签页。</p>
   </header>
 
   <div class="tab-bar" role="tablist" aria-label="六大交互量子实验模块">
     <button id="tab-mzi" class="tab-btn" type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="panel-mzi" data-tab="mzi">
-      <span>01 · MZI 干涉与声化</span>
-      <span class="tab-sub">相位 φ · 混态 ρ₀₁ · 实时 WAV</span>
+      <span>01 · MZI 干涉与密度矩阵</span>
+      <span class="tab-sub">相位 φ · 混态 ρ₀₁ · Englert 对偶</span>
     </button>
     <button id="tab-bloch" class="tab-btn" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-bloch" data-tab="bloch">
       <span>02 · Bloch 球真弧沙盒</span>
       <span class="tab-sub">球面真弧 · 撤销 · 单次/千次采样</span>
     </button>
     <button id="tab-ramsey" class="tab-btn" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-ramsey" data-tab="ramsey">
-      <span>03 · Ramsey 退相干声化</span>
-      <span class="tab-sub">√P₀(t) vs 误区 · 游标拖拽</span>
+      <span>03 · Ramsey 退相干与传感</span>
+      <span class="tab-sub">P₀(t)→1/2 稳态 · Fisher 信息 F_C</span>
     </button>
     <button id="tab-chsh" class="tab-btn" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-chsh" data-tab="chsh">
       <span>04 · Bell 偏迹与 CHSH</span>
@@ -711,7 +690,7 @@
         </div>
         <div class="stack">
           <div class="card">
-            <h2>参数调节、实时读数与 WAV 声化</h2>
+            <h2>参数调节与密度矩阵实时读数</h2>
             <div class="slider-group">
               <div class="slider-head">
                 <label for="mzi-phi">相对相位 φ</label>
@@ -721,7 +700,7 @@
               <div class="btn-row">
                 <button type="button" class="btn" data-mzi-phi="0">0° 同相</button>
                 <button type="button" class="btn" data-mzi-phi="90">90°</button>
-                <button type="button" class="btn" data-mzi-phi="120">120° (A01)</button>
+                <button type="button" class="btn" data-mzi-phi="120">120° (P₀=1/4)</button>
                 <button type="button" class="btn" data-mzi-phi="180">180° 反相</button>
                 <button type="button" class="btn" data-mzi-phi="270">270°</button>
               </div>
@@ -770,15 +749,6 @@
                 </div>
               </div>
               <p id="mzi-note" class="note-box"></p>
-            </div>
-            <div class="audio-box">
-              <h3>实时合成 22050 Hz 16-bit PCM WAV（点击即试听）</h3>
-              <div class="btn-row">
-                <button id="mzi-synth-current" type="button" class="btn btn-primary">▶ 合成并试听当前 WAV</button>
-                <button id="mzi-synth-compare" type="button" class="btn">⇄ 试听相长 (0°) vs 当前对比</button>
-              </div>
-              <audio id="mzi-audio" controls preload="metadata" aria-label="Mach-Zehnder 端口 0 合成声化音频"></audio>
-              <p id="mzi-audio-meta" class="audio-meta" role="status"></p>
             </div>
           </div>
         </div>
@@ -870,59 +840,47 @@
       <div class="lab-grid">
         <div class="stack">
           <div class="card">
-            <h2>Ramsey 失谐条纹与声化包络对比（4.0 s 教学轴）</h2>
-            <p class="sub">比较理想 Ramsey（V=1）、退相干正确声化 0.4√P₀(t)（趋向 0.4/√2 稳态音）与常见误区 0.4V(t)（衰减至静音）；可直接在曲线图上拖动游标 t。</p>
-            <div class="viz-wrap"><svg id="ramsey-svg" viewBox="0 0 640 296" role="img" aria-label="Ramsey 失谐与退相干包络曲线"></svg></div>
-            <div class="btn-row" role="group" aria-label="Ramsey 关键时间点同步跳转">
-              <button type="button" class="btn" data-ramsey-jump="0">0.0s · 初始峰</button>
-              <button type="button" class="btn" data-ramsey-jump="0.5">0.5s · 首谷</button>
-              <button type="button" class="btn" data-ramsey-jump="1.5">1.5s · 例题点</button>
-              <button type="button" class="btn" data-ramsey-jump="3.5">3.5s · 稳态 vs 静音</button>
+            <h2>Ramsey 失谐条纹、退相干稳态与传感灵敏度（第 Q3 &amp; 20 章）</h2>
+            <p class="sub">比较理想 Ramsey（V = 1）、真实纯退相位概率 P₀(t) = [1 + V(t)cos(2πf_det t)]/2（振荡渐平并收敛至最大混合态 0.50）与常见误区曲线 V(t)cos²(πf_det t)（误以为衰减至 0）；可直接在曲线图上点击/拖动时间游标 t。</p>
+            <div class="viz-wrap"><svg id="ramsey-svg" viewBox="0 0 640 296" role="img" aria-label="Ramsey 失谐与退相干概率条纹曲线"></svg></div>
+            <div class="btn-row" role="group" aria-label="Ramsey 关键时间点快速定位">
+              <button type="button" class="btn" data-ramsey-jump="0">0.00s · 峰顶盲点</button>
+              <button type="button" class="btn" data-ramsey-jump="0.25">0.25s · 半高腰最陡点</button>
+              <button type="button" class="btn" data-ramsey-jump="1.5">1.50s · T₂ 谷底</button>
+              <button type="button" class="btn" data-ramsey-jump="3.5">3.50s · 稳态 0.50 vs 误区 0</button>
             </div>
             <p id="ramsey-seek-status" class="status-line" role="status"></p>
-            <div class="audio-pair">
-              <div class="audio-box">
-                <h3>理想 Ramsey（V = 1）</h3>
-                <audio id="ramsey-audio-ideal" controls preload="metadata" aria-label="理想 Ramsey 无退相干教学合成音频"></audio>
-                <p id="ramsey-ideal-meta" class="audio-meta"></p>
-              </div>
-              <div class="audio-box">
-                <h3 id="ramsey-decay-title">退相干 Ramsey（✓ 正确映射 √P₀(t)）</h3>
-                <audio id="ramsey-audio-decay" controls preload="metadata" aria-label="退相干 Ramsey 教学合成音频"></audio>
-                <p id="ramsey-decay-meta" class="audio-meta"></p>
-              </div>
-            </div>
           </div>
         </div>
         <div class="stack">
           <div class="card">
-            <h2>失谐、退相干与声化映射开关</h2>
+            <h2>失谐、退相干时间与曲线对照开关</h2>
             <div class="slider-group">
-              <div class="slider-head"><label for="ramsey-fdet">教学失谐条纹频率 f_det</label><output id="ramsey-fdet-out" class="mono-val" for="ramsey-fdet">1.00 Hz</output></div>
+              <div class="slider-head"><label for="ramsey-fdet">失谐条纹频率 f_det（归一化教学轴）</label><output id="ramsey-fdet-out" class="mono-val" for="ramsey-fdet">1.00 Hz</output></div>
               <input id="ramsey-fdet" type="range" min="0.25" max="3.0" step="0.05" value="1.0">
             </div>
             <div class="slider-group">
-              <div class="slider-head"><label for="ramsey-t2">退相干时间常数 T₂</label><output id="ramsey-t2-out" class="mono-val" for="ramsey-t2">1.50 s</output></div>
+              <div class="slider-head"><label for="ramsey-t2">退相干时间常数 T₂*</label><output id="ramsey-t2-out" class="mono-val" for="ramsey-t2">1.50 s</output></div>
               <input id="ramsey-t2" type="range" min="0.3" max="6.0" step="0.1" value="1.5">
             </div>
-            <div class="seg-switch" role="group" aria-label="Ramsey 声化映射模式">
-              <button id="ramsey-map-correct" type="button" class="btn" aria-pressed="true" data-ramsey-map="correct">✓ 正确映射 √P₀(t)</button>
-              <button id="ramsey-map-pitfall" type="button" class="btn btn-danger" aria-pressed="false" data-ramsey-map="pitfall">✕ 误区：线性 V(t)</button>
+            <div class="seg-switch" role="group" aria-label="Ramsey 曲线对照高亮模式">
+              <button id="ramsey-map-correct" type="button" class="btn" aria-pressed="true" data-ramsey-map="correct">✓ 真实退相干 P₀(t)→0.50</button>
+              <button id="ramsey-map-pitfall" type="button" class="btn btn-danger" aria-pressed="false" data-ramsey-map="pitfall">✕ 误区：按 V(t) 衰到 0</button>
             </div>
             <!-- High-frequency playhead numbers kept OUTSIDE aria-live to prevent screen-reader spam -->
             <div class="kv-grid">
               <div class="kv-box"><span class="kv-lbl">当前游标时刻 t</span><span id="ramsey-t-val" class="kv-val">1.50 s</span></div>
-              <div class="kv-box"><span class="kv-lbl">可见度 V(t) = e^(−t/T₂)</span><span id="ramsey-v-val" class="kv-val">0.3679</span></div>
-              <div class="kv-box"><span class="kv-lbl">P₀(t) = (1 + V cos 2πf_det t)/2</span><span id="ramsey-p0-val" class="kv-val">0.3161</span></div>
-              <div class="kv-box"><span class="kv-lbl">声化包络（正确 vs 误区）</span><span id="ramsey-env-val" class="kv-val">0.2249 vs 0.1472</span></div>
+              <div class="kv-box"><span class="kv-lbl">可见度 V(t) = e^(−t/T₂*)</span><span id="ramsey-v-val" class="kv-val">0.3679</span></div>
+              <div class="kv-box"><span class="kv-lbl">P₀(t)（真实 vs 误区）</span><span id="ramsey-p0-val" class="kv-val">0.3161 vs 0.0000</span></div>
+              <div class="kv-box"><span class="kv-lbl">经典 Fisher 信息 F_C(φ; V)</span><span id="ramsey-fc-val" class="kv-val">0.0000 (盲点)</span></div>
             </div>
             <p id="ramsey-note" class="note-box" aria-live="polite"></p>
             <div class="btn-row" style="margin-top:0.7rem;">
-              <button id="ramsey-reset" type="button" class="btn">恢复手册 A02 默认 (1.0 Hz, 1.5 s)</button>
+              <button id="ramsey-reset" type="button" class="btn">恢复默认参数 (1.0 Hz, 1.5 s)</button>
             </div>
             <details>
-              <summary>声化映射与边界声明</summary>
-              <p>音频为浏览器内纯 JS 实时合成的 22050 Hz 单声道 16-bit PCM 经典正弦声波，并非量子芯片实录；教学时间轴（1 Hz / 1.5 s）不对应真实器件 GHz 微波与微秒相干时间。</p>
+              <summary>公式口径与第 20 章传感灵敏度联系</summary>
+              <p>纯退相位抹去密度矩阵非对角项 |ρ₀₁| = V(t)/2，使测量概率 P₀(t) = (1 + V(t)cos φ)/2 收敛至最大混合态 1/2 而非 0。对可见度 V &lt; 1，经典 Fisher 信息 F_C(φ; V) = V²sin²φ / (1 − V²cos²φ) 在峰谷处（φ = 0, π）跌至盲点 0，在半高腰最陡斜率处（φ = π/2, 3π/2）达到峰值 V²；横轴采用 0–4 s 无量纲教学尺度，真实超导/离子器件对应微秒至毫秒级相干时间。</p>
             </details>
           </div>
         </div>
@@ -1097,7 +1055,7 @@
 
   <footer>
     <span>《量子计算手册》6 模块离线互动实验台 · 零外部依赖 · file:// 原生运行</span>
-    <span>统一约定：左共轭内积 · 右手 Bloch 坐标 · [[9,1,3]] 旋转表面码 · 22050 Hz 16-bit PCM</span>
+    <span>统一约定：左共轭内积 · 右手 Bloch 坐标 · 高位在左大端序 · [[9,1,3]] 旋转表面码</span>
   </footer>
 </div>
 

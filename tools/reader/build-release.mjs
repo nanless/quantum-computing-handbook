@@ -9,7 +9,7 @@
  *   1. quantum-computing-handbook.pdf
  *   2. quantum-computing-handbook.epub
  *   3. quantum-computing-handbook-<ver>-web.zip   (complete self-contained offline flagship site)
- *   4. quantum-computing-handbook-<ver>-codes.zip (self-authored stdlib suite + WAV audio, excl. vendor/)
+ *   4. quantum-computing-handbook-<ver>-codes.zip (self-authored stdlib suite, excl. vendor/)
  *   5. SHA256SUMS.txt                             (sorted SHA-256 manifest for the 4 release artifacts)
  */
 
@@ -26,7 +26,6 @@ const root = path.resolve(here, '../..');
 const handbookDir = path.join(root, 'handbook');
 const readerDir = path.join(root, 'reader');
 const codesDir = path.join(root, 'codes');
-const audioDir = path.join(handbookDir, 'assets/audio');
 const distDir = path.join(root, 'dist');
 const releaseDir = path.join(distDir, 'release');
 
@@ -217,11 +216,11 @@ function buildOfflineDistGuideHtml({ version, edition, pdfBytes, pdfSha, epubByt
       <div class="links">
         <a class="btn" href="../index.html">
           <strong>打开离线旗舰阅读首页</strong>
-          <span>26 章 + 7 附录 + 7 实验册 + 全文离线搜索 + 5 段声化音频</span>
+          <span>26 章 + 7 附录 + 6 实验册 + 全文离线搜索 + 6 模块交互实验台</span>
         </a>
         <a class="btn" href="../lab/quantum-lab.html">
           <strong>打开六模块量子互动实验台</strong>
-          <span>纯前端零外网交互仿真（Bloch / 干涉 / 门线路 / 纠错等）</span>
+          <span>纯前端零外网交互仿真（MZI / Bloch / Ramsey / CHSH / Grover / 表面码）</span>
         </a>
         <a class="btn" href="quantum-computing-handbook.pdf">
           <strong>A4 印刷级 PDF 快捷入口</strong>
@@ -236,7 +235,7 @@ function buildOfflineDistGuideHtml({ version, edition, pdfBytes, pdfSha, epubByt
     <div class="card">
       <h2>离线电子书本地放置与校验说明</h2>
       <ol>
-        <li>本压缩包为完整自包含离线网站版，无需联网，解压后直接双击根目录 <code>index.html</code> 即可完整阅读、检索、听音频并运行交互实验台。</li>
+        <li>本压缩包为完整自包含离线网站版，无需联网，解压后直接双击根目录 <code>index.html</code> 即可完整阅读、检索并运行 6 模块交互实验台。</li>
         <li>为避免重复占用下载流量，PDF 与 EPUB 电子书作为同版本 GitHub Release 的独立文件发布。下载后将 <code>quantum-computing-handbook.pdf</code> 与 <code>quantum-computing-handbook.epub</code> 放入本 <code>dist/</code> 目录，上方快捷入口即可直接离线打开。</li>
         <li>官方 SHA-256 校验摘要：
           <br/>PDF：<code>${escHtml(pdfSha)}</code>
@@ -337,7 +336,6 @@ async function main() {
   const epubSrcBytes = await assertFileNonEmpty(epubSrc, 'run make epub');
   await assertFileNonEmpty(path.join(codesDir, 'run_all.py'));
   await assertFileNonEmpty(path.join(codesDir, 'README.md'));
-  await assertFileNonEmpty(path.join(audioDir, 'manifest.json'));
 
   const [pdfSrcSha, epubSrcSha] = await Promise.all([sha256File(pdfSrc), sha256File(epubSrc)]);
 
@@ -423,7 +421,6 @@ async function main() {
       if (entry.name === '.DS_Store' || entry.name === '__pycache__' || entry.name.endsWith('.pyc') || entry.name.endsWith('.pyo')) return true;
       return false;
     });
-    await copyTreeFiltered(audioDir, path.join(codesStage, 'handbook/assets/audio'), (_srcPath, entry) => entry.name === '.DS_Store');
 
     const rootLicense = path.join(root, 'LICENSE');
     if (fsSync.existsSync(rootLicense)) {
@@ -439,7 +436,6 @@ async function main() {
         '',
         'Included:',
         '  - codes/                  All self-authored Python stdlib verification scripts, JSON baselines & docs',
-        '  - handbook/assets/audio/  All 5 synthesized WAV audio demonstrations + manifest.json',
         '  - THIRD-PARTY-SOURCES.txt Index of all 31 upstream open-source repositories, commits & license notices',
         '',
         'Excluded intentionally (license boundary):',

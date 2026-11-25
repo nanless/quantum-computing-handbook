@@ -767,21 +767,6 @@ pre code {
   color: inherit;
 }
 
-.audio-print-note {
-  display: inline-block;
-  margin-left: 4pt;
-  padding: 0.8pt 5pt;
-  border-radius: 2.5pt;
-  background: var(--amber-soft);
-  border: 0.5pt solid #E1C58E;
-  color: #7A5212;
-  font-size: 7.8pt;
-}
-
-audio {
-  display: none !important;
-}
-
 /* ==========================================================================
    Four-Color Drafting Workbench Callout System
    ========================================================================== */

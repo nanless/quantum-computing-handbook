@@ -1,21 +1,20 @@
 # 可复现实验与第三方源码
 
-在仓库根目录运行 `python3 codes/run_all.py`（或 `make test`）。该入口只执行本书的标准库教学程序，并核对源码和音频清单；不联网、不运行第三方摘录、不请求云设备。不要使用 `python3 -O` 关闭断言。
+在仓库根目录运行 `python3 codes/run_all.py`（或 `make test`）。该入口只执行本书的标准库教学程序，并核对第三方源码清单；不联网、不运行第三方摘录、不请求云设备。不要使用 `python3 -O` 关闭断言。
 
 | 目录 | 内容 | 入口 |
 |---|---|---|
 | foundations | 00–05、13、Q1–Q4 共11组原实验及11组新增诊断 | `python3 codes/foundations/foundations_lab.py --case all` |
 | algorithms | 06–08、16–18 共6组原实验、6组新增检查、第 21 章三大经典模拟迷你引擎及 V4 算法核验 | `python3 codes/algorithms/experiments.py all`、`simulation_engines_lab.py`、`v4_algorithms_lab.py` |
 | systems | 09–12、14、19 共12个系统程序，以及第 20 章量子传感与精密测量验算 | 见 [systems/README.md](systems/README.md) 与 `sensing_lab.py` |
-| practice | 15章7组统计实验、V4 统计与实践核验、5个合成音频、科学图与纯标准库 SVG 生成器 | `python3 codes/practice/experiments.py`、`v4_practice_lab.py`、`generate_v4_figures.py` |
+| practice | 15章7组统计实验、V4 统计与实践核验、科学图与纯标准库 SVG 生成器 | `python3 codes/practice/experiments.py`、`v4_practice_lab.py`、`generate_v4_figures.py` |
 | review | 交换复核的两组独立计算路径 | `python3 codes/review/cross_foundations.py` 与 `cross_systems.py` |
 | vendor | 31个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
 
 教学实验结果是精确小模型、合成计数或固定种子模拟；不是新采集的真机数据。程序中的断言和各目录的 `expected-results.json` / `results.json` 提供复算依据。统一运行报告保存在 `work/research/code-validation.json`。
 
-## 科学插图与合成音频生成器
+## 科学插图生成器
 
-- **合成音频**：`python3 codes/practice/generate_audio.py`（纯 Python 3 标准库生成 5 段确定性 `.wav` 与清单）。
 - **纯标准库亮暗双主题科学 SVG 绘图器（V2 / V3 / V4）**：默认生成模式**零第三方依赖（纯 Python 3 标准库）**，直接输出带真实 `<text>` 节点与 `@media (prefers-color-scheme: dark)` 适配的矢量图；其中 `generate_v2_figures_part2b.py`、`generate_v3_figures_part1.py`、`upgrade_legacy_svgs_part2.py` 等脚本内置可选 `--check-bbox` 视觉几何审计参数，仅在显式启用该参数时延迟导入 `playwright.sync_api`：
   - `codes/practice/generate_bloch_sphere.py`：生成单比特基础 Bloch 球 `bloch-sphere.svg`；
   - `codes/practice/generate_v2_figures_part1a.py`、`generate_v2_figures_part1b.py`、`generate_v2_figures_part2a.py`、`generate_v2_figures_part2b.py`：生成 19 幅 `v2-*.svg` 科学插图（覆盖第 01–08、10、12–14、16–18、Q1、Q3、Q4 章）；

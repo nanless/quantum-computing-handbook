@@ -1071,7 +1071,7 @@ flowchart LR
   H1 --> H2["抵消静态失谐：测回波相干时间 T2"]
 ```
 
-如果想用耳朵直觉地感受“Ramsey 干涉条纹随退相干变扁，但平均概率始终停在 $1/2$ 而不是归零”，可以去听[声音实验](../labs/audio.md)里的理想与衰减 Ramsey 合成声化音频（那里采用程序生成的教学声学映射，用来直观对比干涉对比度衰减，不是实验芯片的真实录音）。
+想交互式观察“Ramsey 干涉条纹随退相干变扁，但平均概率始终收敛到 $1/2$ 而不是归零”的读者，可以在离线阅读版中打开[6 模块交互量子实验台（03 号 Ramsey 退相干与传感模块）](../../reader/lab/quantum-lab.html#tab-ramsey)，自由调节失谐频率 $f_{\mathrm{det}}$ 与相干时间 $T_2$ 并实时对比 $P_0(t) \to 1/2$ 稳态与常见误区曲线。
 
 ---
 
@@ -1508,7 +1508,7 @@ $$
 
 - **热占据与失谐 Rabi 核对**：打开[基础实验册](../labs/foundations.md)（编号 `q3`）与[代码说明](../../codes/foundations/README.md)，用统一 SI 单位核验不同温度的玻尔兹曼占据（负指数防溢出实现）并直接从 $2\times 2$ 矩阵指数复算失谐 Rabi 的峰高与峰值时间。
 - **Ramsey 失谐辨号验证**：运行 `python3 codes/foundations/diagnostic_lab.py --case q3`（脚本见 [diagnostic_lab.py](../../codes/foundations/diagnostic_lab.py)），直接从旋转矩阵验算 $\pm 6\ \mathrm{MHz}$ 失谐在 $\tau \approx 41.67\ \mathrm{ns}$ 处的 $\langle Y\rangle = \pm 1$ 符号分辨。
-- **Ramsey 干涉与退相干声化实验**：进入[声音实验](../labs/audio.md)试听理想与对比度衰减的合成 Ramsey 教学音频，直观感受条纹对比度下降与平均概率保持 $1/2$ 的区别。
+- **Ramsey 干涉与退相干交互对比**：进入[离线交互量子实验台（03 号 Ramsey 模块）](../../reader/lab/quantum-lab.html#tab-ramsey)，自由拖动失谐频率、相干时间与时间游标，直观对比条纹对比度下降、稳态 $P_0 \to 1/2$ 与经典 Fisher 信息灵敏度变化。
 - **矩形脉冲频谱与三能级泄漏复现**：
   - 打开[矩形脉冲频谱核验脚本](../../codes/systems/round71_checks.py)（或通过统一入口 `python3 codes/run_all.py` 运行），用数值复积分核对矩形脉冲一阶 $\operatorname{sinc}$ 振幅与精确两态解的差距；
   - 查看[二能级 GRAPE 脚本](../../codes/systems/sdk/grape_control.py)（二能级最优 $X_\pi$ 放回三能级产生 $1.33\% / 2.36\%$ 泄漏）、[三能级 GRAPE 脚本](../../codes/systems/sdk73/grape_three.py)与[三能级泄漏核验脚本](../../codes/systems/round73_checks.py)（核对三能级优化波形、80 槽脉冲表 [grape-three-amplitudes.csv](../../codes/systems/sdk73/grape-three-amplitudes.csv) 及 $1\ \mathrm{ns}$ 离散滤波下的相干泄漏恒等式）。

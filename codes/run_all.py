@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Run only local, authored stdlib experiments; verify vendor bytes and audio."""
-import datetime, hashlib, json, pathlib, platform, subprocess, sys, wave
+"""Run only local, authored stdlib experiments and verify vendor bytes."""
+import datetime, json, pathlib, platform, subprocess, sys
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 COMMANDS=[['foundations/foundations_lab.py','--case','all'],['algorithms/experiments.py','all'],
  ['systems/hardware_flags.py'],['systems/weighted_decoder.py'],['systems/factory_schedule.py'],
@@ -30,26 +30,12 @@ def main():
         results.append({'command':'python3 codes/'+' '.join(args),'returncode':run.returncode,
           'stdout':run.stdout,'stderr':run.stderr})
         print(('PASS' if run.returncode==0 else 'FAIL'),args[0],flush=True)
-    audio_dir=ROOT/'handbook/assets/audio'
-    if not audio_dir.exists(): audio_dir=ROOT/'assets/audio'  # portable reader layout
-    manifest=json.loads((audio_dir/'manifest.json').read_text())
-    audio=[]
-    for entry in manifest['files']:
-        path=audio_dir/entry['file']
-        assert hashlib.sha256(path.read_bytes()).hexdigest()==entry['sha256']
-        with wave.open(str(path),'rb') as w:
-            assert w.getnchannels()==manifest['channels']
-            assert w.getframerate()==manifest['sample_rate_hz']
-            assert w.getsampwidth()*8==manifest['pcm_bits']
-            assert w.getnframes()==entry['frames']
-            assert w.getnframes()/w.getframerate()==entry['duration_s']
-        audio.append(entry['file'])
     report={'date_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
-      'python':platform.python_version(),'checks':results,'verified_audio':audio,
-      'scope':'authored stdlib tests, vendor integrity, WAV format; no upstream execution'}
+      'python':platform.python_version(),'checks':results,
+      'scope':'authored stdlib tests and vendor integrity; no upstream execution'}
     dest=ROOT/'work/research/code-validation.json'
     dest.parent.mkdir(parents=True,exist_ok=True)
     dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     if any(x['returncode'] for x in results): raise SystemExit(1)
-    print('All local checks passed; 5 WAV files verified.')
+    print(f'All {len(results)} local checks passed.')
 if __name__=='__main__': main()

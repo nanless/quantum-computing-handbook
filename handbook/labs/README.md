@@ -1,15 +1,15 @@
-# 实验、练习、代码与声音
+# 实验、练习与可复现代码总览
 
 本手册把全书 **26 篇正文**（主篇第 00–21 章与量子力学基础篇 Q1–Q4）连接到本地可运行的动手实验与浏览器互动沙盒。学习每个主题时，建议先读题目、在草稿纸上写出预测，再运行程序核对每一步推导、答案与模型边界。全书 26 篇正文的 [271 道自检题及分级零跳步参考解答](../appendices/exercises.md)（含难度标签、防剧透核心提示与四步完整演算）均已收录于附录 D；离线统一检验入口现包含 **38 项**纯 Python 3 标准库实验与校验脚本。
 
 ## 怎样开始
 
-1. **零安装视觉直觉上手（推荐首站）**：直接在浏览器打开[**离线交互量子实验台（6 模块沙箱）**](../../reader/lab/quantum-lab.html)——无需配置任何 Python 环境，即可交互体验 **01 MZI 干涉与实时声化**、**02 Bloch 球真弧沙盒**、**03 Ramsey 退相干对比**、**04 Bell 偏迹与 CHSH 博弈**、**05 Grover 半拍放大与过冲陷阱**以及 **06 $d=3$ 表面码注错解码**六大核心模型。
+1. **零安装视觉直觉上手（推荐首站）**：直接在浏览器打开[**离线交互量子实验台（6 模块沙箱）**](../../reader/lab/quantum-lab.html)——无需配置任何 Python 环境，即可交互体验 **01 MZI 干涉与密度矩阵**、**02 Bloch 球真弧沙盒**、**03 Ramsey 退相干与 Fisher 灵敏度**、**04 Bell 偏迹与 CHSH 博弈**、**05 Grover 半拍放大与过冲陷阱**以及 **06 $d=3$ 表面码注错解码**六大核心模型。
 2. **零基础入门主线**：打开[基础实验册](foundations.md)，从 `F00`、`F01`、`F02` 起步亲手核对抽样波动、左共轭内积与 $Y$ 基测量门序，再跟进十一组诊断反例与开放动力学轨迹对照。
 3. **算法与经典模拟路线**：使用[算法实验册](algorithms.md)，先完成 QPE 与 Grover（`06-A`、`07-A`），再贯通高阶算法与 QSVT 专题核验（LCHS、Carleman、6 门 PREPARE–SELECT、QROM 与 $4\times 4$ 负谱 QSVT），以及第 21 章稳定子表、MPS / 二维 PEPS 与含噪 Pauli 传播三引擎探究（`21-A`）。
 4. **硬件、纠错、系统与传感路线**：使用[系统与传感实验册](systems.md)，逐层贯通读出告警、加权解码、魔法态调度、量子网络、编译映射、服务可用率与系统条件边界，并完成第 20 章量子传感、Huelga 退相位、原子钟与重力仪分步实验（`S20`）。
 5. **统计方法与编译等价性路线**：用[统计与实验方法实验册](practice.md)核查有限样本下界、ZNE 固定总 shots 最优分配、BCa / Cluster Bootstrap、零失败反例、少聚类 $t_{B-1}$ 区间、多重比较与 QCEC 随机态探针。
-6. **听觉直觉与完整开源 SDK 实跑**：用[声音实验册](audio.md)试听 5 段程序合成教学 WAV 波形（非真机录音）；读完核心章节后，按[完整 SDK 实验册](sdk-validation.md)的 11 组端到端工作流（`SDK-01` 至 `SDK-11`），对照 31 个开源项目在隔离环境中的真实输出、上游陷阱与验收边界。
+6. **完整开源 SDK 隔离实跑**：读完核心章节后，按[完整 SDK 实验册](sdk-validation.md)的 11 组端到端工作流（`SDK-01` 至 `SDK-11`），对照 31 个开源项目在隔离环境中的真实输出、上游陷阱与验收边界。
 
 ## 全书 26 章三阶动手实验总图谱
 
@@ -44,20 +44,19 @@
 | [Q3 能级与物理量子比特](../quantum-mechanics/03-levels-control.md) | [FQ3：热占据、角频率与失谐峰高](foundations.md#fq3同一实验中核对温度频率与时间)（`foundations_lab.py --case q3`） | Rabi 失谐符号不可辨识性、矩形脉冲频谱零点与三维截断非酉：[基础诊断实验](foundations.md#基础诊断与动力学轨迹实验导览)（`diagnostic_lab.py --case q3`）、[脉冲频谱核验](../../codes/systems/round71_checks.py)、[三能级泄漏复算](../../codes/systems/round73_checks.py) | `qutip-qtrl` 三能级泄漏抑制与频域滤波核验（[系统基础归档](../../codes/systems/round72-README.md)、[系统进阶归档](../../codes/systems/sdk73/README.md)） |
 | [Q4 波函数与典型模型](../quantum-mechanics/04-wavefunctions-models.md) | [FQ4：连续态网格归一化与二阶收敛](foundations.md#fq4把连续波函数放到网格上时别漏掉根号步长)（`foundations_lab.py --case q4`） | Fock 截断对易子反例、方势垒透射共振与有限截断高能尾界：[基础诊断实验](foundations.md#基础诊断与动力学轨迹实验导览)（`diagnostic_lab.py --case q4`）、[势垒共振核验](../../codes/algorithms/round71_checks.py)、[截断尾界核验](../../codes/algorithms/round73_checks.py) | The Walrus 高斯态与连续态数值对照（[算法基础归档](../../codes/algorithms/round72-README.md)、[算法进阶归档](../../codes/algorithms/sdk73/README.md)） |
 
-## 跨章软件工作流、交互实验台与声音实验
+## 跨章软件工作流与交互实验台
 
-除了逐章实验外，手册还提供四类横向动手入口：
+除了逐章实验外，手册还提供三类横向动手入口：
 
-- **6 模块离线交互量子实验台**：双击或直接打开[离线交互量子实验台](../../reader/lab/quantum-lab.html)，覆盖 MZI 干涉与实时 WAV 声化、Bloch 球真弧沙盒、Ramsey 退相干对比、Bell 偏迹与 CHSH 博弈、Grover 半拍放大与 $d=3$ 表面码注错解码，零外网依赖。
+- **6 模块离线交互量子实验台**：双击或直接打开[离线交互量子实验台](../../reader/lab/quantum-lab.html)，覆盖 MZI 干涉与密度矩阵、Bloch 球真弧沙盒、Ramsey 退相干与 Fisher 灵敏度对比、Bell 偏迹与 CHSH 博弈、Grover 半拍放大与 $d=3$ 表面码注错解码，零外网依赖。
 - **软件工作流带解练习（`W1–W6`）与源码精读核验（`S04–S08`）**：见[算法、工业实践与开源对照](../appendices/software-practice.md)，连接多乘积公式、可观测量反向传播、含噪 Pauli 伴随、子空间对角化、并行随机数与过程层析；运行 `python3 codes/practice/workflow_checks.py` 与 [源码精读校验程序](../../codes/practice/source_reading_checks.py) 即可离线复算全部标准库小模型。
 - **端到端开源 SDK 工作流（`SDK-01` 至 `SDK-11`）**：见[完整 SDK 实验册](sdk-validation.md)，汇总 **31 个开源项目（对应 122 份固定提交源码）** 的真实版本、运行日志、复现的上游陷阱与独立反例。
-- **教学合成声音实验（A01–A03）**：见[声音实验册](audio.md)，提供 5 段 4 秒合成 WAV 音频（相位干涉三轨对照与 Ramsey 退相干双轨对照），配套精确公式与听辨时刻导览。
 
 ## 运行方式与结果
 
 本册全部自编教学与核验程序均仅依赖 Python 3.9 及以上标准库，默认不请求云服务、不消耗付费额度。运行测试时**不要加 `-O`**（否则会关闭断言）。绘图程序另需指定版本的 Matplotlib 与 NumPy；不重画图就无需安装它们。
 
-在**仓库根目录**运行统一入口，即可一键执行全部 **38 项**标准库验证脚本（已内置 `v4_algorithms_lab.py`、`v4_practice_lab.py`、`sensing_lab.py` 与 `simulation_engines_lab.py`，无需跑完再重复手跑），并同步校验 122 份第三方源码 SHA-256 与 5 段合成音频格式：
+在**仓库根目录**运行统一入口，即可一键执行全部 **38 项**标准库验证脚本（已内置 `v4_algorithms_lab.py`、`v4_practice_lab.py`、`sensing_lab.py` 与 `simulation_engines_lab.py`，无需跑完再重复手跑），并同步校验 122 份第三方源码 SHA-256：
 
 ```sh
 python3 codes/run_all.py

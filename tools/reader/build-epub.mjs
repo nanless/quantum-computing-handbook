@@ -110,7 +110,6 @@ const LAB_ORDER = [
   'algorithms.md',
   'systems.md',
   'practice.md',
-  'audio.md',
   'sdk-validation.md',
 ];
 
@@ -573,7 +572,7 @@ nav#toc > ol > li { margin: 0.45em 0; }
   width: auto;
   height: auto;
 }
-.code-ref-pill, .audio-note {
+.code-ref-pill {
   font-family: Menlo, Consolas, monospace;
   font-size: 0.86em;
   color: var(--muted);
@@ -1043,7 +1042,7 @@ async function main() {
     return { title: fullTitle, label: g.label, files: g.files };
   });
   if (appendixFiles.length) groups.push({ title: '附录工具书', label: '附录', files: appendixFiles });
-  if (labFiles.length) groups.push({ title: '离线动手实验与声音样本', label: '实验册', files: labFiles });
+  if (labFiles.length) groups.push({ title: '离线动手实验册', label: '实验册', files: labFiles });
 
   const exercisesParts = contents.has(exercisesFile)
     ? splitExercisesByPart(contents.get(exercisesFile), orderedReading.groups)
@@ -1301,9 +1300,6 @@ async function main() {
       }
       const [p, rawFrag] = href.split('#');
       const frag = rawFrag ? safeDecode(rawFrag) : '';
-      if (/\.wav$/i.test(p)) {
-        return `<span class="audio-note">${label}（教学合成音频见离线阅读版）</span>`;
-      }
       const target = path.resolve(path.dirname(sourceFile), p);
       if (target === exercisesFile && exercisesParts.length) {
         if (frag && exercisesFragToTarget.has(frag)) {

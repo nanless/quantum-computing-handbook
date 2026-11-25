@@ -81,5 +81,5 @@ jobs:
       - name: Build offline-first reader
         run: node tools/reader/build.mjs
 
-      - name: Verify reader layout, formulas, audio, SVG, and interactive lab
+      - name: Verify reader layout, formulas, SVG, and interactive lab
         run: node tools/reader/verify.mjs

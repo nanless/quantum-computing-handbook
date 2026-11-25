@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-11-25T12:29:06.244122+00:00",
+  "generatedAt": "2026-11-25T13:30:15.550533+00:00",
   "output": "dist/quantum-computing-handbook.epub",
   "edition": "2026-11-25",
   "passed": true,
   "metrics": {
-    "fileSizeBytes": 3512895,
-    "fileSizeMiB": 3.35,
-    "zipEntries": 178,
-    "xhtmlDocuments": 47,
+    "fileSizeBytes": 3491973,
+    "fileSizeMiB": 3.33,
+    "zipEntries": 175,
+    "xhtmlDocuments": 46,
     "maxXhtmlName": "OEBPS/text/app-exercises-p1.xhtml",
     "maxXhtmlKiB": 1017.9,
-    "xmlFilesValidated": 170,
-    "mathmlElements": 50925,
+    "xmlFilesValidated": 167,
+    "mathmlElements": 50809,
     "annotationElements": 0,
-    "svgAssets": 120,
+    "svgAssets": 118,
     "mermaidSvgsWithWarmBg": "30/30",
-    "linksValidated": 3516,
+    "linksValidated": 3483,
     "diagramsRendered": 30,
-    "formulasRendered": 50925
+    "formulasRendered": 50809
   },
   "checks": {
     "mimetypeFirstAndStored": true,

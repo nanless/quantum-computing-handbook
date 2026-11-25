@@ -1,11 +1,7 @@
-/* Quantum Computing Handbook · Deterministic Pure Math & PCM WAV Kernel (6 Modules) */
+/* Quantum Computing Handbook · Deterministic Pure Math Kernel (6 Modules) */
 (function (global) {
   'use strict';
 
-  const SR = 22050;
-  const CARRIER = 440;
-  const GAIN = 0.2;
-  const FADE_S = 0.01;
   const INV_SQRT2 = Math.SQRT1_2;
   const BLOCH_ELEV = 19 * Math.PI / 180;
   const BLOCH_AZIM = 34 * Math.PI / 180;
@@ -45,46 +41,6 @@
     };
   }
 
-  function encodeWav16(samples, sr = SR) {
-    const n = samples.length;
-    const bytes = new Uint8Array(44 + n * 2);
-    const view = new DataView(bytes.buffer);
-    function putAscii(offset, text) {
-      for (let i = 0; i < text.length; i++) bytes[offset + i] = text.charCodeAt(i);
-    }
-    putAscii(0, 'RIFF');
-    view.setUint32(4, 36 + n * 2, true);
-    putAscii(8, 'WAVE');
-    putAscii(12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    view.setUint16(22, 1, true);
-    view.setUint32(24, sr, true);
-    view.setUint32(28, sr * 2, true);
-    view.setUint16(32, 2, true);
-    view.setUint16(34, 16, true);
-    putAscii(36, 'data');
-    view.setUint32(40, n * 2, true);
-    for (let i = 0; i < n; i++) {
-      const clamped = Math.max(-1, Math.min(1, samples[i]));
-      const q = Math.max(-32767, Math.min(32767, Math.round(clamped * 32767)));
-      view.setInt16(44 + i * 2, q, true);
-    }
-    return bytes;
-  }
-
-  function statsOf(samples) {
-    let peak = 0;
-    let sq = 0;
-    for (let i = 0; i < samples.length; i++) {
-      const v = samples[i];
-      const av = Math.abs(v);
-      if (av > peak) peak = av;
-      sq += v * v;
-    }
-    return { peak, rms: Math.sqrt(sq / Math.max(1, samples.length)) };
-  }
-
   // ==================== 1. MZI MODEL ====================
   function mziMetrics(phiRad, visibility) {
     const V = Math.max(0, Math.min(1, visibility));
@@ -109,50 +65,6 @@
       isMixed: V < 0.995,
       visibility: V, phiRad,
     };
-  }
-
-  function synthesizeMzi(phiRad, visibility, mode = 'current') {
-    const { p0 } = mziMetrics(phiRad, visibility);
-    const pure = visibility >= 0.9999;
-    const omega = 2 * Math.PI * CARRIER;
-    if (mode === 'compare') {
-      const segDur = 1.4;
-      const gapDur = 0.25;
-      const totalDur = segDur * 2 + gapDur;
-      const nTotal = Math.round(SR * totalDur);
-      const nSeg = Math.round(SR * segDur);
-      const nGap = Math.round(SR * gapDur);
-      const samples = new Float64Array(nTotal);
-      for (let i = 0; i < nSeg; i++) {
-        const t = i / SR;
-        const ramp = Math.max(0, Math.min(1, t / FADE_S, (segDur - 1 / SR - t) / FADE_S));
-        samples[i] = 2 * GAIN * Math.sin(omega * t) * ramp;
-      }
-      const start2 = nSeg + nGap;
-      for (let i = 0; i < nSeg && start2 + i < nTotal; i++) {
-        const t = i / SR;
-        const ramp = Math.max(0, Math.min(1, t / FADE_S, (segDur - 1 / SR - t) / FADE_S));
-        const raw = pure
-          ? GAIN * (Math.sin(omega * t) + Math.sin(omega * t + phiRad))
-          : 2 * GAIN * Math.sqrt(Math.max(0, p0)) * Math.sin(omega * t);
-        samples[start2 + i] = raw * ramp;
-      }
-      const st = statsOf(samples);
-      return { bytes: encodeWav16(samples), duration: totalDur, ...st };
-    }
-    const duration = 2.5;
-    const n = Math.round(SR * duration);
-    const samples = new Float64Array(n);
-    for (let i = 0; i < n; i++) {
-      const t = i / SR;
-      const ramp = Math.max(0, Math.min(1, t / FADE_S, (duration - 1 / SR - t) / FADE_S));
-      const raw = pure
-        ? GAIN * (Math.sin(omega * t) + Math.sin(omega * t + phiRad))
-        : 2 * GAIN * Math.sqrt(Math.max(0, p0)) * Math.sin(omega * t);
-      samples[i] = raw * ramp;
-    }
-    const st = statsOf(samples);
-    return { bytes: encodeWav16(samples), duration, ...st };
   }
 
   // ==================== 2. BLOCH SPHERE & SINGLE-QUBIT GATES ====================
@@ -344,42 +256,23 @@
     return { shots, c0, c1: shots - c0, freq0: c0 / shots, ci };
   }
 
-  // ==================== 3. RAMSEY MODEL ====================
+  // ==================== 3. RAMSEY DECOHERENCE & FISHER SENSING MODEL ====================
   function ramseyPoint(t, fDet, T2) {
     const vis = Math.exp(-t / T2);
     const phase = 2 * Math.PI * fDet * t;
-    const pIdeal = (1 + Math.cos(phase)) / 2;
-    const pDecay = (1 + vis * Math.cos(phase)) / 2;
-    const envIdeal = 2 * GAIN * Math.sqrt(Math.max(0, pIdeal));
-    const envCorrect = 2 * GAIN * Math.sqrt(Math.max(0, pDecay));
-    const envPitfall = 2 * GAIN * vis;
-    return { t, vis, pIdeal, pDecay, envIdeal, envCorrect, envPitfall };
-  }
-
-  function synthesizeRamsey(fDet, T2, kind) {
-    const duration = 4.0;
-    const n = Math.round(SR * duration);
-    const samples = new Float64Array(n);
-    const omega = 2 * Math.PI * CARRIER;
-    for (let i = 0; i < n; i++) {
-      const t = i / SR;
-      const ramp = Math.max(0, Math.min(1, t / FADE_S, (duration - 1 / SR - t) / FADE_S));
-      const phase = 2 * Math.PI * fDet * t;
-      let env;
-      if (kind === 'ideal') {
-        const p = (1 + Math.cos(phase)) / 2;
-        env = 2 * GAIN * Math.sqrt(Math.max(0, p));
-      } else if (kind === 'pitfall') {
-        env = 2 * GAIN * Math.exp(-t / T2);
-      } else {
-        const vis = Math.exp(-t / T2);
-        const p = (1 + vis * Math.cos(phase)) / 2;
-        env = 2 * GAIN * Math.sqrt(Math.max(0, p));
-      }
-      samples[i] = env * Math.sin(omega * t) * ramp;
-    }
-    const st = statsOf(samples);
-    return { bytes: encodeWav16(samples), duration, ...st };
+    const c = Math.cos(phase);
+    const s = Math.sin(phase);
+    const pIdeal = (1 + c) / 2;
+    const pDecay = (1 + vis * c) / 2;
+    // Common misconception: multiplying ideal probability by V(t) so it decays to 0 instead of 0.5
+    const pWrong = vis * pIdeal;
+    // Classical Fisher information F_C(phi; V) = V^2 sin^2(phi) / (1 - V^2 cos^2(phi));
+    // at V = 1 (t = 0) the limit is identically 1.
+    const denom = 1 - vis * vis * c * c;
+    const fisherC = vis >= 1 - 1e-12
+      ? 1
+      : cleanZero((vis * vis * s * s) / Math.max(1e-12, denom));
+    return { t, vis, phase, pIdeal, pDecay, pWrong, fisherC };
   }
 
   // ==================== 4. BELL STATE, PARTIAL TRACE & CHSH MODEL ====================
@@ -698,12 +591,12 @@
   }
 
   const QuantumLabModel = {
-    SR, CARRIER, GAIN, FADE_S, BLOCH_ELEV, BLOCH_AZIM,
-    cleanZero, fmtFixed, wilsonCI, mulberry32, encodeWav16, statsOf,
-    mziMetrics, synthesizeMzi,
+    BLOCH_ELEV, BLOCH_AZIM,
+    cleanZero, fmtFixed, wilsonCI, mulberry32,
+    mziMetrics,
     GATES, GATE_ROTATIONS, rotationGateMatrix, rodriguesRotate, sphericalArcPoints,
     stateFromAngles, applyGate, blochVector, projectBloch, sampleMeasurement,
-    ramseyPoint, synthesizeRamsey,
+    ramseyPoint,
     binaryEntropy, bellWernerMetrics, chshCorrelations, simulateChshRounds,
     groverInit, groverOracle, groverDiffusion, groverStep, groverMetrics,
     SURFACE_D3, surfaceSyndromesFromMasks, surfaceAnalyze,

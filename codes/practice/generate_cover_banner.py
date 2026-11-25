@@ -723,12 +723,12 @@ def render_svg(*, animated: bool) -> str:
     <text x="262" y="319" class="stat-num-sm">271 题零跳步题答</text>
     <text x="262" y="341" class="stat-sub">逐行矩阵展开与归一独立回验</text>
 
-    <!-- Scale Card 5 (Full-Width Dark Anchor): 36 离线验算脚本 -->
+    <!-- Scale Card 5 (Full-Width Dark Anchor): 38 离线验算脚本 -->
     <rect x="26" y="364" width="428" height="66" rx="8" fill="#1B2D2A" stroke="#2D4944" stroke-width="1.2"/>
     <rect x="28" y="372" width="4" height="50" rx="2" fill="#DDA03B"/>
-    <text x="44" y="394" class="dark-num">36 离线验算脚本</text>
+    <text x="44" y="394" class="dark-num">38 离线验算脚本</text>
     <rect x="224" y="376" width="216" height="22" rx="11" fill="#27403B" stroke="#3D615B" stroke-width="1"/>
-    <text x="332" y="391" text-anchor="middle" class="dark-pill">纯标准库 · 零云依赖 · 声化互动台</text>
+    <text x="332" y="391" text-anchor="middle" class="dark-pill">纯标准库 · 零云依赖 · 6 模块实验台</text>
     <text x="44" y="417" class="dark-sub">纸笔手算 → 离线复算 → 31 个开源项目对照 · 全册 100% 离线</text>
 
     <!-- Bottom Contract Strip -->

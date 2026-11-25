@@ -695,7 +695,7 @@
   color: var(--ch-accent);
 }
 
-/* Interactive Cases (CHSH + Surface Code) & Audio Board */
+/* Interactive Cases (CHSH + Surface Code) */
 .course-cases {
   border-top: 1px solid var(--ch-line);
   padding-block: clamp(36px, 5vw, 66px) 0;
@@ -836,115 +836,6 @@
   padding-top: 6px;
   font-size: 0.89rem;
   font-weight: 660;
-}
-
-/* Synchronized Audio Board */
-.course-case-audio {
-  margin-top: 18px;
-  padding: clamp(18px, 3vw, 28px);
-  border: 1px solid var(--ch-line);
-  background: var(--ch-card);
-  border-radius: 9px;
-}
-.course-audio-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px 20px;
-  flex-wrap: wrap;
-}
-.course-audio-head h3 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-.course-case-audio > p {
-  margin: 8px 0 14px;
-  color: var(--ch-quiet);
-  font-size: 0.94rem;
-}
-.course-audio-jumps:not([hidden]) {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 14px;
-}
-.course-audio-jumps button {
-  min-height: 40px;
-  padding: 5px 13px;
-  color: var(--ch-heading);
-  background: var(--ch-paper);
-  border: 1px solid var(--ch-line-strong);
-  border-radius: 6px;
-  font: inherit;
-  font-size: 0.86rem;
-  font-weight: 650;
-  cursor: pointer;
-}
-.course-audio-jumps button:hover,
-.course-audio-jumps button.is-active {
-  border-color: var(--ch-accent);
-  background: var(--ch-accent-soft);
-  color: var(--ch-accent);
-}
-.course-seek-status {
-  font-size: 0.84rem;
-  color: var(--ch-quiet);
-}
-.course-audio-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-.course-audio-grid > div,
-.course-audio-subgrid > div {
-  padding: 12px 14px;
-  background: var(--ch-paper);
-  border: 1px solid var(--ch-line);
-  border-radius: 7px;
-}
-.course-audio-grid .course-aud-featured {
-  background: var(--ch-accent-soft);
-  border-color: color-mix(in srgb, var(--ch-accent) 45%, var(--ch-line));
-  border-left: 3px solid var(--ch-accent);
-}
-.course-audio-grid h4,
-.course-audio-subgrid h4 {
-  margin: 0 0 7px;
-  font-size: 0.9rem;
-  color: var(--ch-heading);
-}
-.course-audio-grid audio,
-.course-audio-subgrid audio {
-  display: block;
-  width: 100%;
-  height: 40px;
-  margin: 0;
-}
-.course-aud-cap {
-  margin: 6px 0 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
-  color: var(--ch-quiet);
-}
-.course-audio-subgrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 12px;
-}
-.course-audio-disclosure {
-  margin: 14px 0 0 !important;
-  padding: 10px 13px;
-  border-radius: 7px;
-  background: var(--ch-stone);
-  border: 1px solid var(--ch-line);
-  font-size: 0.83rem !important;
-  color: var(--ch-quiet) !important;
-  line-height: 1.65;
-}
-.course-audio-disclosure strong {
-  color: var(--ch-heading);
 }
 
 /* Warm Stone Interactive Lab Banner */
@@ -1261,10 +1152,6 @@
   .course-nav {
     display: none;
   }
-  .course-audio-grid,
-  .course-audio-subgrid {
-    grid-template-columns: 1fr;
-  }
   .course-lab-banner {
     flex-direction: column;
     align-items: flex-start;
@@ -1330,7 +1217,6 @@
   .course-resume-wrap,
   .course-switch,
   .course-case-switch,
-  .course-audio-jumps,
   .course-downloads {
     display: none !important;
   }

@@ -1,5 +1,5 @@
 {
-  "date_utc": "2026-11-25T12:19:39.833262+00:00",
+  "date_utc": "2026-11-25T13:26:15.593600+00:00",
   "python": "3.13.12",
   "checks": [
     {
@@ -228,15 +228,8 @@
       "command": "python3 codes/tests/test_snapshot_sources.py",
       "returncode": 0,
       "stdout": "",
-      "stderr": "test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests.test_download_exception_preserves_snapshot) ... ok\ntest_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests.test_fetch_hash_mismatch_does_not_publish) ... ok\ntest_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests.test_first_rename_failure_preserves_snapshot) ... ok\ntest_missing_source_does_not_publish (__main__.SnapshotPublicationTests.test_missing_source_does_not_publish) ... ok\ntest_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests.test_publication_rename_failure_rolls_back_previous) ... ok\ntest_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests.test_success_publishes_matching_files_and_manifest) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.030s\n\nOK\n"
+      "stderr": "test_download_exception_preserves_snapshot (__main__.SnapshotPublicationTests.test_download_exception_preserves_snapshot) ... ok\ntest_fetch_hash_mismatch_does_not_publish (__main__.SnapshotPublicationTests.test_fetch_hash_mismatch_does_not_publish) ... ok\ntest_first_rename_failure_preserves_snapshot (__main__.SnapshotPublicationTests.test_first_rename_failure_preserves_snapshot) ... ok\ntest_missing_source_does_not_publish (__main__.SnapshotPublicationTests.test_missing_source_does_not_publish) ... ok\ntest_publication_rename_failure_rolls_back_previous (__main__.SnapshotPublicationTests.test_publication_rename_failure_rolls_back_previous) ... ok\ntest_success_publishes_matching_files_and_manifest (__main__.SnapshotPublicationTests.test_success_publishes_matching_files_and_manifest) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.043s\n\nOK\n"
     }
   ],
-  "verified_audio": [
-    "phase-0.wav",
-    "phase-120.wav",
-    "phase-180.wav",
-    "ramsey-ideal.wav",
-    "ramsey-decay.wav"
-  ],
-  "scope": "authored stdlib tests, vendor integrity, WAV format; no upstream execution"
+  "scope": "authored stdlib tests and vendor integrity; no upstream execution"
 }

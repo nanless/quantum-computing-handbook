@@ -144,12 +144,12 @@ flowchart TB
 | 退相位噪声下，为什么 $N$ 比特 GHZ 传感器反而赢不了独立比特？ | [第 20 章第 5 节](20-quantum-sensing-metrology.md)：Huelga 1997 最优探询时间 $1/(2N\gamma)$ 与常数因子 $e$ 零跳步手算 |
 | 没有 $2^n$ 振幅数组，稳定子表和 Pauli 传播怎么一步步算出结果？ | [第 21 章第 3、5、6 节](21-stabilizer-classical-simulation.md)：Bell 态稳定子表演化、3 比特 GHZ/W 态逐键 SVD 与含噪反向树 |
 
-## 配套实验、源码与声音
+## 配套实验、源码与交互实验台
 
 除了正文推导，全书还配套了可直接离线运行的验证生态：
 
 - **动手实验册与 38 个标准库脚本**：[逐章实验总览](labs/README.md)、[基础实验册](labs/foundations.md)、[算法实验册](labs/algorithms.md)、[系统与传感实验册](labs/systems.md)与[统计实践实验册](labs/practice.md)，每组实验均提供手算步骤、答案和零云依赖的本地 Python 标准库脚本（含第 20 章量子传感、第 21 章三大经典模拟迷你引擎及 V4 量子微分方程/显式 $4\times 4$ QSVT/BCa Bootstrap/ZNE 预算验证套件）；
-- **声音教学样本与 6 模块离线交互实验台**：[五个合成声音样本](labs/audio.md)把相位差和干涉对比度直观映射到经典声波，帮助你用耳朵听出抵消与退相干的区别；离线交互实验台位于 `reader/lab/quantum-lab.html`（源码 `tools/reader/quantum-lab.html`），可在浏览器本地交互操作 MZI 干涉仪、3D Bloch 球面真弧门沙箱、Ramsey 音频对比、Bell/CHSH 千局非局域博弈、Grover 半拍振幅放大与过冲沙盒，以及 $d=3$ 旋转表面码症状解码沙箱；
+- **6 模块离线交互量子实验台**：位于 `reader/lab/quantum-lab.html`（源码 `tools/reader/quantum-lab.html`），可在浏览器本地交互操作 MZI 干涉与密度矩阵沙箱、3D Bloch 球面真弧门沙箱、Ramsey 退相干条纹与 Fisher 灵敏度对比、Bell/CHSH 千局非局域博弈、Grover 半拍振幅放大与过冲沙盒，以及 $d=3$ 旋转表面码症状解码沙箱；
 - **开源代码与工业工作流**：[算法、工业实践与开源代码对照](appendices/software-practice.md)与[完整 SDK 实验册](labs/sdk-validation.md)把书中的数学模型连接到 31 个代表性开源项目、122 份固定提交源码摘录以及隔离环境本地运行核验记录。
 
 ## 统一约定

@@ -71,5 +71,5 @@
 - [ ] 题目、答案（[exercises.md](appendices/exercises.md)，271 题均带难度标签与防剧透核心提示）、正文与全部离线标准库验证代码（以 `python3 codes/run_all.py` 清单为准）的参数、基序、单位和结果一致。
 - [ ] 所有公式（KaTeX）、流程图（Mermaid）与科学 SVG 经过实际构建渲染，零报错、零未渲染粗体 `**`。
 - [ ] 全介质同步构建与门禁通过：离线 Web 阅读版（`node tools/reader/build.mjs` + `verify.mjs` + `check-v3-quality.mjs`，宽屏 1440px 与窄屏 390px 零断链、零断锚、零表格错列、零外网请求、零横向溢出）、A4 合订本 PDF（`node tools/reader/build-pdf.mjs`，零康熙部首/零空页/零断链）与原生 MathML 3 EPUB 3（`node tools/reader/build-epub.mjs`，XML 严格合法）。
-- [ ] 离线交互实验台（`tools/reader/quantum-lab.html`）各模块数学断言、实时音频合成与亮暗主题切换通过浏览器实测。
+- [ ] 离线交互实验台（`tools/reader/quantum-lab.html`）各模块数学断言、交互可视化与亮暗主题切换通过浏览器实测。
 - [ ] 人工抽查关键页面与新增插图的实际渲染截图，核对标签、箭头、图例与公式无遮挡；版本演进、验证边界与已发现的公开勘误如实更新至[附录 G](appendices/audit-log.md)，内部过程日志归档于 `work/research/`。

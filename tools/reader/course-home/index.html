@@ -7,7 +7,7 @@
       </a>
       <nav class="course-nav" aria-label="课程主导航">
         <a href="#course-pillars">六大支柱</a>
-        <a href="#course-cases">互动案例与声化</a>
+        <a href="#course-cases">互动机制预览</a>
         <a href="lab/quantum-lab.html">6 模块实验台</a>
         <a href="#course-path">学习路线</a>
         <a href="#course-engineering">工程与验证</a>
@@ -48,12 +48,12 @@
         <a class="course-cta" href="00-overview.html">从第 00 章开始 <span aria-hidden="true">→</span></a>
         <a class="course-secondary" href="01-math.html">第 01 章 · 数学基础</a>
         <a class="course-secondary course-secondary-accent" href="lab/quantum-lab.html">▶ 6 模块互动实验台</a>
-        <a class="course-quiet" href="#course-audio-board">听量子干涉声化 <span aria-hidden="true">↓</span></a>
+        <a class="course-quiet" href="#course-cases">浏览互动机制预览 <span aria-hidden="true">↓</span></a>
       </div>
       <div class="course-stats" aria-label="全书规模与交付概览">
         <div><strong>26 章 + 7 附录</strong><span>五篇教学序 · 271 题两级题答</span></div>
         <div><strong>50,900+ 数学公式</strong><span>KaTeX 零跳步推导 · 一键复制 TeX</span></div>
-        <div><strong>92 张科学矢量图</strong><span>亮暗原生双主题高清矢量</span></div>
+        <div><strong>90 张科学矢量图</strong><span>亮暗原生双主题高清矢量</span></div>
         <div><strong>38 个标准库脚本</strong><span>零依赖复算 + 31 开源项目对照</span></div>
       </div>
       <p class="course-note">100% 离线自包含（支持 <code>file://</code> 本地双击与 GitHub Pages）· 按 <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> 秒搜全书 1,300+ 节与 151 条核心术语</p>
@@ -270,11 +270,11 @@
     </div>
   </section>
 
-  <!-- INTERACTIVE CASES + SYNCHRONIZED AUDIO -->
+  <!-- INTERACTIVE CASES + 6-MODULE LAB -->
   <section class="course-cases course-width" id="course-cases" aria-labelledby="course-cases-title">
-    <p class="course-kicker">直觉预览 × 真实机制 × 同步量子声化</p>
-    <h2 id="course-cases-title">亲手切换非局域博弈与表面码解码，再听清退相干与静音的差别</h2>
-    <p class="course-section-intro">下面两张互动展卡直接对应全书最核心的两个分水岭——第 03 章的 Bell/CHSH 非局域性检验与第 10 章的 d=3 表面码纠错界；随后可用同一时间轴试听五段确定性教学合成声波。</p>
+    <p class="course-kicker">直觉预览 × 核心机制 × 互动沙箱</p>
+    <h2 id="course-cases-title">亲手切换非局域博弈与表面码解码，看清量子优势与容错边界</h2>
+    <p class="course-section-intro">下面两张互动展卡直接对应全书最核心的两个分水岭——第 03 章的 Bell/CHSH 非局域性检验与第 10 章的 d=3 表面码纠错界；也可一键进入 6 模块离线交互实验台，自由调节全部物理参数。</p>
 
     <div class="course-case-grid">
       <!-- Case 1: Bell & CHSH -->
@@ -441,58 +441,12 @@
       </article>
     </div>
 
-    <!-- Synchronized Quantum Sonification Board -->
-    <section class="course-case-audio" id="course-audio-board" aria-labelledby="course-audio-title">
-      <div class="course-audio-head">
-        <div>
-          <p class="course-kicker">同步多轨量子声化试听 · A01 &amp; A02</p>
-          <h3 id="course-audio-title">用耳朵分辨“相长基准 / 理想干涉 / 退相干稳态”的差别</h3>
-        </div>
-        <a class="course-secondary" href="labs/audio.html">打开完整声学实验册 →</a>
-      </div>
-      <p>三路音频共享同一 4.0 秒教学时间轴与固定数字增益（不做单轨峰值归一化），互斥播放防止空气混音干扰。点击下方同步时间点按钮，重点听清 <strong>2.4s 之后退相干轨收敛到稳态常音（P₀→1/2），而不是衰减成静音</strong>。</p>
-      <div class="course-audio-jumps" role="group" aria-label="将三路播放器同步定位到同一时刻" hidden>
-        <button type="button" data-course-seek="0.0">0.0s 起振</button>
-        <button type="button" data-course-seek="1.2">1.2s 相位拍频</button>
-        <button type="button" data-course-seek="2.4">2.4s 退相干尾</button>
-        <span class="course-seek-status" role="status"></span>
-      </div>
-      <div class="course-audio-grid">
-        <div>
-          <h4 id="course-aud-p0">轨 1 · 相长基准 φ = 0° (P₀ = 1.00)</h4>
-          <audio controls preload="none" aria-labelledby="course-aud-p0" src="assets/audio/phase-0.wav"></audio>
-          <p class="course-aud-cap">恒定最大包络 0.400 · RMS 0.2824</p>
-        </div>
-        <div>
-          <h4 id="course-aud-ri">轨 2 · 理想 Ramsey 干涉 (V = 1, 1 Hz)</h4>
-          <audio controls preload="none" aria-labelledby="course-aud-ri" src="assets/audio/ramsey-ideal.wav"></audio>
-          <p class="course-aud-cap">包络 0.4|cos(πt)| · 每半整数秒清零</p>
-        </div>
-        <div class="course-aud-featured">
-          <h4 id="course-aud-rd">轨 3 · 退相干 Ramsey (T₂ = 1.5 s)</h4>
-          <audio controls preload="none" aria-labelledby="course-aud-rd" src="assets/audio/ramsey-decay.wav"></audio>
-          <p class="course-aud-cap">包络 0.4√P₀(t) · 趋向稳态 0.4/√2 ≈ 0.283</p>
-        </div>
-      </div>
-      <div class="course-audio-subgrid" aria-label="相位相消对照音频">
-        <div>
-          <h4 id="course-aud-p120">A01 对照 · φ = 120° 部分相消 (P₀ = 0.25)</h4>
-          <audio controls preload="none" aria-labelledby="course-aud-p120" src="assets/audio/phase-120.wav"></audio>
-        </div>
-        <div>
-          <h4 id="course-aud-p180">A01 对照 · φ = 180° 完全反相静音 (P₀ = 0.00)</h4>
-          <audio controls preload="none" aria-labelledby="course-aud-p180" src="assets/audio/phase-180.wav"></audio>
-        </div>
-      </div>
-      <p class="course-audio-disclosure"><strong>声化物理映射与边界声明：</strong>全部 5 段音频均由 <code>codes/practice/generate_audio.py</code> 程序确定性合成（22050 Hz 单声道 16-bit PCM WAV，时长 4.0 s，440 Hz 正弦载波，单分量固定增益 0.2，首尾 10 ms 线性淡入淡出，不做单轨独立归一化），将 Born 概率平方根映射为瞬时包络 <code>A(t) = 0.4√P₀(t)</code>（均方声能类比测量概率）。<strong>这些音频绝非量子芯片实验设备实录</strong>；经典声压、量子复振幅与单次离散测量坍缩不可混为一谈。</p>
-    </section>
-
     <!-- Warm Stone Lab Banner -->
     <aside class="course-lab-banner" aria-labelledby="course-lab-title">
       <div>
         <p class="course-kicker">零安装浏览器实验 · 6 大顿悟级交互模块</p>
-        <h3 id="course-lab-title">亲手玩透 6 个经典量子现象：从 MZI 干涉声化到 d=3 表面码解码</h3>
-        <p>无需 Python 环境、无需联网、双击 <code>file://</code> 即开即跑：<strong>01</strong> MZI 干涉与密度矩阵声化 · <strong>02</strong> 3D 真弧旋转 Bloch 球与千次采样 · <strong>03</strong> Ramsey 失谐与退相干误区对比 · <strong>04</strong> Bell 态偏迹坍缩与 CHSH 千局博弈 · <strong>05</strong> Grover 半拍振幅放大与第 3 步过冲陷阱 · <strong>06</strong> d=3 旋转表面码点击注错与最小权重解码。</p>
+        <h3 id="course-lab-title">亲手玩透 6 个经典量子现象：从 MZI 干涉到 d=3 表面码解码</h3>
+        <p>无需 Python 环境、无需联网、双击 <code>file://</code> 即开即跑：<strong>01</strong> MZI 干涉与密度矩阵 · <strong>02</strong> 3D 真弧旋转 Bloch 球与千次采样 · <strong>03</strong> Ramsey 退相干稳态与 Fisher 灵敏度 · <strong>04</strong> Bell 态偏迹坍缩与 CHSH 千局博弈 · <strong>05</strong> Grover 半拍振幅放大与第 3 步过冲陷阱 · <strong>06</strong> d=3 旋转表面码点击注错与最小权重解码。</p>
       </div>
       <a class="course-cta" href="lab/quantum-lab.html">启动 6 模块交互实验台 <span aria-hidden="true">→</span></a>
     </aside>

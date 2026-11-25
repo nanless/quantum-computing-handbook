@@ -8229,4 +8229,4 @@
 
 - **章内就地进阶练习（53 道）**：全书 26 篇正文均已在章末或核心小节就地配备独立标签练习（其中 25 章各 2 道 `练 XX-A/B`，第 12 章 3 道 `练 12-A/B/C`，合计 53 道），紧贴正文例题即时巩固；
 - **本附录薄弱章盲区精练（14 道）**：针对高密度或低题密章节，在本附录对应章末增补 14 道独立标签四步零跳步练习——[第 0 章](#第-0-章)（`练 00-C/D`，三大支柱与 40 比特内存墙）、[第 5 章](#第-5-章)（`练 05-C/D`，GAD/PTM 与 $T_1/T_2/T_\phi$ 边界）、[第 13 章](#第-13-章)（`练 13-C/D/E`，DPI、无歧义判别与剩余哈希引理）、[第 14 章](#第-14-章)（`练 14-C/D/E`，Weyl 室/ZX 演算、DRAG/M3 与 Litinski 推门）、[量子力学 Q2](#量子力学-q2)（`练 Q2-C/D`，二阶 Magnus/Dyson 反例与 CSCO）以及[量子力学 Q3](#量子力学-q3)（`练 Q3-C/D`，双口径失谐/cQED 色散与 Ramsey/Hahn 回波）；
-- **分主题实验册与代码实跑**：可从[实验、练习、代码与声音](../labs/README.md)总索引进入[基础实验册](../labs/foundations.md)、[算法实验册](../labs/algorithms.md)、[系统实验册](../labs/systems.md)、[第 15 章统计实验](../labs/practice.md)、[声音映射练习](../labs/audio.md)，以及[开源代码对照](software-practice.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。
+- **分主题实验册与代码实跑**：可从[实验、练习与可复现代码总览](../labs/README.md)总索引进入[基础实验册](../labs/foundations.md)、[算法实验册](../labs/algorithms.md)、[系统实验册](../labs/systems.md)、[第 15 章统计实验](../labs/practice.md)，以及[开源代码对照](software-practice.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。

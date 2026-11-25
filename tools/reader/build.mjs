@@ -555,11 +555,7 @@ function buildChapterSolutionsHtml(chId, targetOutputFile, prefix, exercisesFile
   solRenderer.link = function ({ href, title, tokens: inlineTokens }) {
     const resolved = href && href.startsWith('#') ? `${prefix}appendices/exercises.html${href}` : rewriteHref(href);
     const linkHtml = this.parser.parseInline(inlineTokens);
-    const plainLabel = linkHtml.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || path.basename(resolved);
-    const link = `<a href="${esc(resolved)}"${title ? ` title="${esc(title)}"` : ''}>${linkHtml}</a>`;
-    return /\.wav$/i.test(resolved)
-      ? `${link}<audio controls preload="none" src="${esc(resolved)}" aria-label="教学合成音频：${esc(plainLabel)}"></audio>`
-      : link;
+    return `<a href="${esc(resolved)}"${title ? ` title="${esc(title)}"` : ''}>${linkHtml}</a>`;
   };
 
   const renderedItems = [];
@@ -782,7 +778,7 @@ for (const [f, text] of contents) {
 
 const courseHomeHtml = (await fs.readFile(path.join(courseHomeDir, 'index.html'), 'utf8'))
   .replace(/href="([^"]*\/)?README\.html(#[^"]*)?"/g, 'href="$1index.html$2"');
-// Register all local assets referenced in course-home/index.html (e.g. assets/audio/*.wav).
+// Register all local assets referenced in course-home/index.html.
 for (const m of courseHomeHtml.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
   recordAssetTarget(path.join(source, m[1]));
 }
@@ -941,11 +937,7 @@ try {
     renderer.link = function ({ href, title, tokens }) {
       const resolved = rewriteHref(href);
       const linkHtml = this.parser.parseInline(tokens);
-      const plainLabel = linkHtml.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || path.basename(resolved);
-      const link = `<a href="${esc(resolved)}"${title ? ` title="${esc(title)}"` : ''}>${linkHtml}</a>`;
-      return /\.wav$/i.test(resolved)
-        ? `${link}<audio controls preload="none" src="${esc(resolved)}" aria-label="教学合成音频：${esc(plainLabel)}"></audio>`
-        : link;
+      return `<a href="${esc(resolved)}"${title ? ` title="${esc(title)}"` : ''}>${linkHtml}</a>`;
     };
 
     let body;
@@ -971,7 +963,7 @@ try {
             `${chapterLinks(group.files)}`,
         )
         .join('') +
-      `<div class="nav-label">实验、代码与音频</div>` +
+      `<div class="nav-label">实验与代码</div>` +
       `<a class="nav-lab-featured" href="${prefix}lab/quantum-lab.html">⚡ 6 模块交互量子实验台（离线）</a>` +
       `${chapterLinks(labs)}`;
 
@@ -1029,8 +1021,11 @@ try {
       ? ` class="course-page course-home-page" data-page-url="${outRel}" data-page-title="${esc(titleOf(f))}"`
       : ` data-page-url="${outRel}" data-page-title="${esc(titleOf(f))}"`;
 
+    const faviconLink =
+      `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314453d'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23fbfaf6'%3E%CF%88%3C/text%3E%3C/svg%3E">`;
     const html =
       `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">` +
+      `${faviconLink}` +
       `<title>${esc(titleOf(f))} · 量子计算手册</title>${bootScript}` +
       `<link rel="stylesheet" href="${prefix}assets/katex/katex.min.css">` +
       `<link rel="stylesheet" href="${prefix}assets/reader.css">` +
@@ -1071,9 +1066,9 @@ try {
 
   // Add the 6 interactive Quantum Lab modules to the offline search index.
   searchIndex.push(
-    { t: '01 · MZI 干涉与密度矩阵声化实验台', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-mzi', k: 'lab', s: 'Mach-Zehnder 单比特干涉仪、可见度 V、Englert 对偶与 22050 Hz PCM WAV 实时声化。' },
+    { t: '01 · MZI 干涉与密度矩阵实验台', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-mzi', k: 'lab', s: 'Mach-Zehnder 单比特干涉仪、复振幅相量、可见度 V、混态密度矩阵与 Englert 对偶。' },
     { t: '02 · Bloch 球真弧旋转与千次采样沙盒', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-bloch', k: 'lab', s: '右手三维 Bloch 球、球面真弧单比特门（H/X/Y/Z/S/T/Rx/Ry/Rz）与 Z/X/Y 基采样坍缩。' },
-    { t: '03 · Ramsey 失谐与退相干声化实验台', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-ramsey', k: 'lab', s: '对比正确声化 √P₀(t) 趋向稳态常音与误区衰减至静音，支持图上游标拖拽与快跳。' },
+    { t: '03 · Ramsey 退相干稳态与 Fisher 灵敏度实验台', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-ramsey', k: 'lab', s: '对比真实纯退相位 P₀(t)→0.50 稳态与衰减至 0 误区，实时观测经典 Fisher 信息 F_C(φ; V)。' },
     { t: '04 · Bell 偏迹坍缩与 CHSH 博弈台', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-chsh', k: 'lab', s: '双 Bloch 球约化态缩向球心、并发度、CHSH 测量角调节与 1000 局 95% Wilson 置信检验。' },
     { t: '05 · Grover 振幅放大半拍拆解与过冲陷阱', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-grover', k: 'lab', s: '拆分 Oracle 反相与绕均值扩散两半拍，观察 n=3 M=1 第 2 步 94.53% 与第 3 步过冲 33.01%。' },
     { t: '06 · d=3 旋转表面码注错与症状解码沙箱', p: '6 模块离线交互实验台', u: 'lab/quantum-lab.html#tab-surface', k: 'lab', s: '[[9,1,3]] 表面码点击注错（X/Z/Y）、稳定子亮灯、最小权重解码与单错纠回 vs 双错逻辑翻转。' },
@@ -1094,6 +1089,7 @@ try {
   await fs.mkdir(path.join(output, 'dist'), { recursive: true });
   const distLandingHtml =
     `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">` +
+    `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314453d'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23fbfaf6'%3E%CF%88%3C/text%3E%3C/svg%3E">` +
     `<title>电子书与离线包下载 · 量子计算手册</title>` +
     `<style>` +
     `body{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;max-width:780px;margin:44px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}` +

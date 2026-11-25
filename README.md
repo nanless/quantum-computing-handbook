@@ -7,11 +7,11 @@
 
 # 量子计算：从直觉到研究入口
 
-一套面向零基础自学者、工程研发人员与入门研究生的中文量子计算系统教材。全书以二维和四维草稿纸手算为起点，贯通数学语言、量子物理、算法原语、硬件控制、容错纠错、密码网络、精密传感与经典模拟边界，全部公式、图表、题答、合成音频与验证脚本均可完全离线核对。
+一套面向零基础自学者、工程研发人员与入门研究生的中文量子计算系统教材。全书以二维和四维草稿纸手算为起点，贯通数学语言、量子物理、算法原语、硬件控制、容错纠错、密码网络、精密传感与经典模拟边界，全部公式、图表、题答与验证脚本均可完全离线核对。
 
-**[在线进入旗舰课程网站 →](https://nanless.github.io/quantum-computing-handbook/)** · **[▶ 零安装 6 模块量子互动实验台](https://nanless.github.io/quantum-computing-handbook/lab/quantum-lab.html)** · **[🔊 量子干涉与 Ramsey 声化对比](https://nanless.github.io/quantum-computing-handbook/#course-cases)** · **[出版级 A4 合订本 PDF](dist/quantum-computing-handbook.pdf)** · **[原生 MathML 3 EPUB 3](dist/quantum-computing-handbook.epub)** · **[全书导读](handbook/README.md)**
+**[在线进入旗舰课程网站 →](https://nanless.github.io/quantum-computing-handbook/)** · **[▶ 零安装 6 模块量子互动实验台](https://nanless.github.io/quantum-computing-handbook/lab/quantum-lab.html)** · **[出版级 A4 合订本 PDF](https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.pdf)** · **[原生 MathML 3 EPUB 3](https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.epub)** · **[全书导读](handbook/README.md)**
 
-**26 章正文 · 7 份附录 · 7 份实验册 · 271 道自检题 + 67 道精练 · 50,937 条公式 · 92 张科学矢量图 + 30 幅流程图 · 38 个纯标准库脚本 · 31 个开源项目对照**
+**26 章正文 · 7 份附录 · 6 份实验册 · 271 道自检题 + 67 道精练 · 50,900+ 条公式 · 90 张科学矢量图 + 30 幅流程图 · 38 个纯标准库脚本 · 31 个开源项目对照**
 
 最新版本同时发布 A4 合订本 PDF、原生 MathML 3 EPUB 3、完整可双击运行的离线网站包、自编离线复算代码套件与 `SHA256SUMS.txt`。[查看发布说明与全产物下载（GitHub Releases） →](https://github.com/nanless/quantum-computing-handbook/releases/latest)
 
@@ -21,11 +21,11 @@
 
 | 交付形态 | 入口路径 | 内容与适用场景 |
 | :--- | :--- | :--- |
-| **在线旗舰课程网站（GitHub Pages）** | [nanless.github.io/quantum-computing-handbook](https://nanless.github.io/quantum-computing-handbook/) | 无需克隆即可直接打开阅读：含首页 4 模式量子干涉互动工作台、Bell/CHSH 与表面码预览、同步声化试听、`Cmd/Ctrl+K` 离线全书检索、初学主线一键折叠进阶选读与亮/暗双主题 |
-| **零安装 6 模块量子互动实验台** | [在线打开](https://nanless.github.io/quantum-computing-handbook/lab/quantum-lab.html) · [本地文件](reader/lab/quantum-lab.html) | 零外网依赖纯浏览器实验台（源码 [`tools/reader/quantum-lab.html`](tools/reader/quantum-lab.html)）：01 MZI 干涉仪、02 3D Bloch 球面真弧门沙箱、03 Ramsey 音频对比、04 Bell/CHSH 千局非局域博弈、05 Grover 半拍振幅放大与过冲、06 $d=3$ 旋转表面码症状解码 |
+| **在线旗舰课程网站（GitHub Pages）** | [nanless.github.io/quantum-computing-handbook](https://nanless.github.io/quantum-computing-handbook/) | 无需克隆即可直接打开阅读：含首页 4 模式量子干涉互动工作台、Bell/CHSH 与表面码互动预览、`Cmd/Ctrl+K` 离线全书检索、初学主线一键折叠进阶选读与亮/暗双主题 |
+| **零安装 6 模块量子互动实验台** | [在线打开](https://nanless.github.io/quantum-computing-handbook/lab/quantum-lab.html) · [本地文件](reader/lab/quantum-lab.html) | 零外网依赖纯浏览器实验台（源码 [`tools/reader/quantum-lab.html`](tools/reader/quantum-lab.html)）：01 MZI 干涉与密度矩阵、02 3D Bloch 球面真弧门沙箱、03 Ramsey 退相干与 Fisher 灵敏度、04 Bell/CHSH 千局非局域博弈、05 Grover 半拍振幅放大与过冲、06 $d=3$ 旋转表面码症状解码 |
 | **离线完整网站包（本地 / Release ZIP）** | [`reader/index.html`](reader/index.html) · [Releases 下载](https://github.com/nanless/quantum-computing-handbook/releases/latest) | 克隆仓库或从 Releases 下载 `*-web.zip` 解压后双击 `index.html` 即可全功能离线运行（请保留完整 `reader/` 目录，勿只下载单个 HTML） |
-| **出版级 A4 合订本 PDF（1,045 页 / 27.6 MiB）** | [`dist/quantum-computing-handbook.pdf`](dist/quantum-computing-handbook.pdf) | 适合打印精读与平板批注：含封面、带精确印刷页码与点线引导的目录、527 条三级书签、0 偏移页码、中文避头点保护与全矢量插图 |
-| **原生 MathML 3 EPUB 3 电子书（3.35 MiB）** | [`dist/quantum-computing-handbook.epub`](dist/quantum-computing-handbook.epub) | 适合电纸书、平板与手机流式阅读及无障碍屏幕朗读：50,920 个原生 MathML 3 公式、暗色安全矢量图、横向可滚宽表、五篇拆分题库与 EPUB 2 `toc.ncx` 回退 |
+| **出版级 A4 合订本 PDF（1,000+ 页 / ~27.5 MiB）** | [Releases 直链](https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.pdf) · 本地 `dist/quantum-computing-handbook.pdf` | 适合打印精读与平板批注：含封面、带精确印刷页码与点线引导的目录、500+ 条三级书签、0 偏移页码、中文避头点保护与全矢量插图 |
+| **原生 MathML 3 EPUB 3 电子书（~3.3 MiB）** | [Releases 直链](https://github.com/nanless/quantum-computing-handbook/releases/latest/download/quantum-computing-handbook.epub) · 本地 `dist/quantum-computing-handbook.epub` | 适合电纸书、平板与手机流式阅读及无障碍屏幕朗读：50,900+ 个原生 MathML 3 公式、暗色安全矢量图、横向可滚宽表、五篇拆分题库与 EPUB 2 `toc.ncx` 回退 |
 | **Markdown 原稿与 271+ 题答汇编** | [`handbook/README.md`](handbook/README.md) · [`exercises.md`](handbook/appendices/exercises.md) | 全书 26 章均配“本章一页速记卡”；271 道自检题全量分级并配防剧透“核心提示 → 完整四步解答”与 14 道附录盲区精练 |
 
 ---
@@ -34,13 +34,13 @@
 
 | 维度 | 量化指标 | 核验口径与约束 |
 | :--- | :--- | :--- |
-| **课程体量** | **26 章**（22 主章 `00`–`21` + 4 篇物理基础 `Q1`–`Q4`） | 覆盖“计算—通信—传感”量子科技三大支柱及经典模拟边界，配套 7 份附录、7 份实验册与 26 张章末一页速记卡 |
-| **数学公式** | **50,937 条** 构建期预渲染公式 | 统一 `$...$` / `$$...$$` 定界符、左共轭内积、大端序基序、$\log_2/\ln$ 底数与根保真度契约；Web 用轻量 HTML+`data-tex`，EPUB 保留原生 MathML 3 |
-| **科学插图** | **92 张** 亮暗双主题公式生成矢量图 + **30 幅** Mermaid 流程图 | 由脚本按公式或精确数据生成，轴标与单位与正文一致；Web 构建期自动产出亮/暗双变体，经 Chrome 真机像素亮度门禁核验 |
+| **课程体量** | **26 章**（22 主章 `00`–`21` + 4 篇物理基础 `Q1`–`Q4`） | 覆盖“计算—通信—传感”量子科技三大支柱及经典模拟边界，配套 7 份附录、6 份实验册与 26 张章末一页速记卡 |
+| **数学公式** | **50,900+ 条** 构建期预渲染公式 | 统一 `$...$` / `$$...$$` 定界符、左共轭内积、大端序基序、$\log_2/\ln$ 底数与根保真度契约；Web 用轻量 HTML+`data-tex`，EPUB 保留原生 MathML 3 |
+| **科学插图** | **90 张** 亮暗双主题公式生成矢量图 + **30 幅** Mermaid 流程图 | 由脚本按公式或精确数据生成，轴标与单位与正文一致；Web 构建期自动产出亮/暗双变体，经 Chrome 真机像素亮度门禁核验 |
 | **习题体系** | **271 道** 分级两级折叠自检题 + **53 道**章内练 + **14 道**盲区精练 | 覆盖全部 26 章 `## 自检题`，题号连续稳定并经自动化门禁对账；全量配套核心提示与零跳步四步演算 |
-| **本地验算** | **38 个** 零外网纯 Python 标准库验证脚本 + **5 段**确定性合成 WAV | `python3 codes/run_all.py` 一键执行并核验断言、源码哈希与音频 PCM 元数据（含 LCHS/Carleman、显式 $4\times 4$ QSVT、BCa Bootstrap、ZNE 最优预算等），不消耗云额度 |
+| **本地验算** | **38 个** 零外网纯 Python 标准库验证脚本 | `python3 codes/run_all.py` 一键执行并核验全部数学断言与源码哈希（含 LCHS/Carleman、显式 $4\times 4$ QSVT、BCa Bootstrap、ZNE 最优预算等），不消耗云额度 |
 | **开源对照** | **31 个** 代表性开源项目 / **122 份** 第三方源码摘录 | 40 位 Git 提交哈希与 SHA-256 锁定于 [`codes/vendor/manifest.json`](codes/vendor/manifest.json)，另附隔离环境实跑记录 |
-| **离线交付** | **100% 离线**，零外部网络请求、零本机路径泄露 | 精简本地 KaTeX `woff2` 字体、检索索引、亮暗 SVG、合成音频与 6 模块交互实验台全部打包在本地，由 Playwright 浏览器自动门禁核验 |
+| **离线交付** | **100% 离线**，零外部网络请求、零本机路径泄露 | 精简本地 KaTeX `woff2` 字体、检索索引、亮暗 SVG 与 6 模块交互实验台全部打包在本地，由 Playwright 浏览器自动门禁核验 |
 
 ---
 
@@ -117,7 +117,7 @@
 | `Q4` | [Q4｜波函数、势阱、谐振子、隧穿与原子能级](handbook/quantum-mechanics/04-wavefunctions-models.md) | 支持硬件/CV 双入口跳读：高斯波包、方势阱、谐振子、WKB 双势阱劈裂、含 $^{87}\mathrm{Sr}$ 原子超精细钟态与 Fock 截断边界 |
 | `18` | [18｜量子信道、通信容量、复杂度与连续变量](handbook/18-channels-capacities-complexity.md) | Choi 同构、钻石范数、四类通信容量、纠缠负性、`QIP`/`MIP*=RE`、CV-MBQC 光量子集群态（Xanadu Aurora）与 GKP 网格码 |
 
-**附录与实验入口**：[先修自测](handbook/appendices/prerequisites.md) · [符号表与速查](handbook/appendices/notation.md) · [术语表](handbook/appendices/glossary.md) · [练习答案](handbook/appendices/exercises.md) · [开源实践对照](handbook/appendices/software-practice.md) · [参考资料](handbook/appendices/references.md) · [版本演进与公开勘误](handbook/appendices/audit-log.md) · [逐章实验总览](handbook/labs/README.md) · [声音实验](handbook/labs/audio.md) · [完整 SDK 实验册](handbook/labs/sdk-validation.md)
+**附录与实验入口**：[先修自测](handbook/appendices/prerequisites.md) · [符号表与速查](handbook/appendices/notation.md) · [术语表](handbook/appendices/glossary.md) · [练习答案](handbook/appendices/exercises.md) · [开源实践对照](handbook/appendices/software-practice.md) · [参考资料](handbook/appendices/references.md) · [版本演进与公开勘误](handbook/appendices/audit-log.md) · [逐章实验总览](handbook/labs/README.md) · [完整 SDK 实验册](handbook/labs/sdk-validation.md)
 
 ---
 
@@ -126,7 +126,7 @@
 所有自编验证脚本仅依赖 Python 3 标准库，默认不联网、不调用云量子设备；阅读版与电子书构建依赖 Node.js 与 Playwright/Chromium，阅读已生成的 `reader/` 或 `dist/` 无需安装构建依赖。仓库根目录提供统一 [`Makefile`](Makefile)：
 
 ```sh
-# 1. 运行全部 38 个纯 Python 标准库教学与核验脚本（含 vendor SHA-256 与 5 段 WAV 校验）
+# 1. 运行全部 38 个纯 Python 标准库教学与核验脚本（含 vendor SHA-256 校验）
 make test          # 等价于 python3 codes/run_all.py
 
 # 2. 运行全套源码质检门禁（LaTeX 定界符、术语、题答对账、隐私路径、算例复核）
@@ -147,8 +147,8 @@ make pdf && make epub && make release
 
 ## 仓库目录与许可边界
 
-- `handbook/`：全书 26 章、7 份附录、7 份实验册与 92 张双主题矢量图的 Markdown 原稿；
-- `reader/`：由 `tools/reader/build.mjs` 编译生成的完整离线旗舰网站（含官网首页、预渲染公式、`Cmd/Ctrl+K` 检索索引、亮暗 SVG 双变体、精简 `woff2` 字体、合成音频、6 模块交互实验台与代码副本）；
+- `handbook/`：全书 26 章、7 份附录、6 份实验册与 90 张双主题矢量图的 Markdown 原稿；
+- `reader/`：由 `tools/reader/build.mjs` 编译生成的完整离线旗舰网站（含官网首页、预渲染公式、`Cmd/Ctrl+K` 检索索引、亮暗 SVG 双变体、精简 `woff2` 字体、6 模块交互实验台与代码副本）；
 - `dist/`：出版级 A4 PDF 与原生 MathML 3 EPUB 3 电子书发布产物（`dist/release/` 归档压缩包由 `.gitignore` 忽略，统一经 GitHub Releases 分发）；
 - `codes/`：38 个自编标准库教学/验算程序与 [`codes/vendor/`](codes/vendor/README.md) 第三方固定提交源码摘录；
 - `tools/reader/`：旗舰网站构建、PDF/EPUB 导出、Release 打包与全量浏览器自动验收工具；

@@ -1,4 +1,4 @@
-/* Quantum Lab App Shell: Theme Sync, WAI-ARIA Tabs (Arrow/Home/End), Audio Lifecycle & 6 Module Bootstrap */
+/* Quantum Lab App Shell: Theme Sync, WAI-ARIA Tabs (Arrow/Home/End) & 6 Module Bootstrap */
 (function (global) {
   'use strict';
 
@@ -46,42 +46,8 @@
   });
   syncThemeButton();
 
-  // 2. Blob URL Lifecycle & Exclusive Audio Playback
-  const blobUrls = { mzi: null, ramseyIdeal: null, ramseyDecay: null };
-  const allAudios = [byId('mzi-audio'), byId('ramsey-audio-ideal'), byId('ramsey-audio-decay')].filter(Boolean);
-
-  function pauseAllAudio(exceptEl = null) {
-    for (const a of allAudios) {
-      if (a !== exceptEl && !a.paused) a.pause();
-    }
-  }
-  for (const audio of allAudios) {
-    audio.addEventListener('play', () => pauseAllAudio(audio));
-  }
-
-  function setAudioWav(audioEl, key, wavBytes) {
-    audioEl.pause();
-    if (blobUrls[key]) {
-      URL.revokeObjectURL(blobUrls[key]);
-      blobUrls[key] = null;
-    }
-    const url = URL.createObjectURL(new Blob([wavBytes], { type: 'audio/wav' }));
-    blobUrls[key] = url;
-    audioEl.src = url;
-    audioEl.load();
-  }
-
-  window.addEventListener('beforeunload', () => {
-    for (const key of Object.keys(blobUrls)) {
-      if (blobUrls[key]) {
-        URL.revokeObjectURL(blobUrls[key]);
-        blobUrls[key] = null;
-      }
-    }
-  });
-
-  // 3. Initialize all 6 modules
-  const ctx = { byId, f2, f3, f4, pct, fmtComplex, setAudioWav, pauseAllAudio };
+  // 2. Initialize all 6 modules
+  const ctx = { byId, f2, f3, f4, pct, fmtComplex };
   const hooks = {};
   if (Mods.initMzi) hooks.mzi = Mods.initMzi(ctx);
   if (Mods.initBloch) hooks.bloch = Mods.initBloch(ctx);
@@ -90,7 +56,7 @@
   if (Mods.initGrover) hooks.grover = Mods.initGrover(ctx);
   if (Mods.initSurface) hooks.surface = Mods.initSurface(ctx);
 
-  // 4. WAI-ARIA Tabs (ArrowLeft/ArrowRight/Home/End + roving tabindex + hash deep-linking)
+  // 3. WAI-ARIA Tabs (ArrowLeft/ArrowRight/Home/End + roving tabindex + hash deep-linking)
   const tabButtons = [...document.querySelectorAll('[role="tab"]')];
   const tabPanels = {};
   for (const btn of tabButtons) {
@@ -100,7 +66,6 @@
 
   function activateTab(tabKey, moveFocus = false) {
     if (!tabPanels[tabKey]) return;
-    pauseAllAudio();
     for (const btn of tabButtons) {
       const active = btn.dataset.tab === tabKey;
       btn.setAttribute('aria-selected', String(active));

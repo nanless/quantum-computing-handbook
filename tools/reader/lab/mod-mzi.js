@@ -1,4 +1,4 @@
-/* Module 01: Mach-Zehnder Interferometer, Density Matrix & Live PCM WAV Sonification */
+/* Module 01: Mach-Zehnder Interferometer, Complex Phasors & Density Matrix */
 (function (global) {
   'use strict';
 
@@ -6,7 +6,7 @@
   const Mods = (global.QuantumLabModules = global.QuantumLabModules || {});
 
   Mods.initMzi = function initMzi(ctx) {
-    const { byId, f2, f3, f4, pct, fmtComplex, setAudioWav, pauseAllAudio } = ctx;
+    const { byId, f2, f3, f4, pct, fmtComplex } = ctx;
     let mziPhiDeg = 0;
     let mziVis = 1.0;
 
@@ -169,28 +169,7 @@
       `;
     }
 
-    function synthMziClip(mode = 'current', autoPlay = false) {
-      const phiRad = mziPhiDeg * Math.PI / 180;
-      const res = M.synthesizeMzi(phiRad, mziVis, mode);
-      const audioEl = byId('mzi-audio');
-      setAudioWav(audioEl, 'mzi', res.bytes);
-      const label = mode === 'compare'
-        ? `对比 WAV（前 1.4s 相长 0° → 后 1.4s φ=${mziPhiDeg}°, V=${f2(mziVis)}）`
-        : `当前参数 WAV（φ=${mziPhiDeg}°, V=${f2(mziVis)}）`;
-      const metaEl = byId('mzi-audio-meta');
-      metaEl.textContent = `${label} · 22050 Hz 16-bit PCM · ${res.duration.toFixed(2)}s · Peak ${f4(res.peak)} · RMS ${f4(res.rms)}`;
-      if (autoPlay) {
-        pauseAllAudio(audioEl);
-        const playPromise = audioEl.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(() => {
-            metaEl.textContent += '（浏览器拦截自动播放，请点播放器 ▶ 试听）';
-          });
-        }
-      }
-    }
-
-    function updateMzi(refreshAudio = false) {
+    function updateMzi() {
       const phiRad = mziPhiDeg * Math.PI / 180;
       const m = M.mziMetrics(phiRad, mziVis);
       byId('mzi-phi').value = String(mziPhiDeg);
@@ -231,13 +210,12 @@
         noteEl.classList.add('warn');
         noteEl.textContent = '相消干涉（φ ≈ 180°，即 H·Z·H|0⟩ = |1⟩）：端口 0 振幅精确抵消为零，输出全部转向端口 1！';
       } else if (Math.abs(mziPhiDeg - 120) <= 2) {
-        noteEl.textContent = '手册 A01 经典例题（φ = 120° = 2π/3）：端口 0 振幅模为 1/2，概率与声波均方功率比均为 (1/2)² = 1/4 = 25.0%。';
+        noteEl.textContent = '典型相位例题（φ = 120° = 2π/3）：端口 0 复振幅模长为 1/2，测量概率 P(0) = |1 + e^(i2π/3)|² / 4 = (1/2)² = 1/4 = 25.0%。';
       } else {
         noteEl.textContent = `当前纯态：P(0) = ${f4(m.p0)}，P(1) = ${f4(m.p1)}；调节可见度 V 可直观观察路径标记对非对角相干项的压缩。`;
       }
 
       renderMziDiagrams(m);
-      if (refreshAudio) synthMziClip('current', false);
     }
 
     // Pointer scrubbing on #mzi-fringe-svg
@@ -249,7 +227,7 @@
       const svgX = ((e.clientX - rect.left) / rect.width) * 640;
       const u = Math.max(0, Math.min(1, (svgX - 56) / (612 - 56)));
       mziPhiDeg = Math.round(u * 360);
-      updateMzi(false);
+      updateMzi();
     }
     fringeSvg.style.cursor = 'ew-resize';
     fringeSvg.addEventListener('pointerdown', e => {
@@ -261,38 +239,31 @@
       if (scrubbing) scrubPhi(e);
     });
     fringeSvg.addEventListener('pointerup', () => {
-      if (scrubbing) {
-        scrubbing = false;
-        synthMziClip('current', false);
-      }
+      scrubbing = false;
     });
 
     byId('mzi-phi').addEventListener('input', e => {
       mziPhiDeg = Number(e.target.value);
-      updateMzi(false);
+      updateMzi();
     });
-    byId('mzi-phi').addEventListener('change', () => synthMziClip('current', false));
     byId('mzi-vis').addEventListener('input', e => {
       mziVis = Number(e.target.value);
-      updateMzi(false);
+      updateMzi();
     });
-    byId('mzi-vis').addEventListener('change', () => synthMziClip('current', false));
 
     document.querySelectorAll('[data-mzi-phi]').forEach(btn => {
       btn.addEventListener('click', () => {
         mziPhiDeg = Number(btn.dataset.mziPhi);
-        updateMzi(true);
+        updateMzi();
       });
     });
     document.querySelectorAll('[data-mzi-vis]').forEach(btn => {
       btn.addEventListener('click', () => {
         mziVis = Number(btn.dataset.mziVis);
-        updateMzi(true);
+        updateMzi();
       });
     });
-    byId('mzi-synth-current').addEventListener('click', () => synthMziClip('current', true));
-    byId('mzi-synth-compare').addEventListener('click', () => synthMziClip('compare', true));
 
-    updateMzi(true);
+    updateMzi();
   };
 })(window);

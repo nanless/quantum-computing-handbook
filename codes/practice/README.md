@@ -26,10 +26,9 @@ python3 codes/practice/workflow_checks.py
 | `source_reading_checks.py` | [软件实践附录](../../handbook/appendices/software-practice.md) | 第三方源码摘录接口与本地固定结果一致性核对（输出写入 `source-reading-results.json`） |
 | `workflow_checks.py` | 实验工作流归档 | 端到端数据契约、批处理记录与核查字段完整性测试（输出写入 `workflow-results.json`） |
 
-## 二、音频与科学图生成脚本
+## 二、科学图生成脚本
 
-- `generate_audio.py`：生成[声音实验](../../handbook/labs/audio.md)使用的五段教学合成 WAV 音频（明确声明为公式合成声波，非实验硬件实录）。
-- `plot_figures.py`、`research_figures.py`、`workflow_figures.py`、`generate_bloch_sphere.py`、`generate_cover_banner.py`、`generate_v2_figures_part*.py`、`generate_v3_figures_part*.py`：全书由公式或可复算数据驱动的科学 SVG 生成脚本。
+- `plot_figures.py`、`research_figures.py`、`workflow_figures.py`、`generate_bloch_sphere.py`、`generate_cover_banner.py`、`generate_v2_figures_part*.py`、`generate_v3_figures_part*.py`、`generate_v4_figures.py`：全书由公式或可复算数据驱动的科学 SVG 生成脚本。
 
 ## 三、适用边界说明
 

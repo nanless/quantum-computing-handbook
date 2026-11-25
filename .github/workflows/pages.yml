@@ -73,7 +73,7 @@ jobs:
       - name: Build offline-first reader
         run: node tools/reader/build.mjs
 
-      - name: Verify reader layout, formulas, audio, SVG, and interactive lab
+      - name: Verify reader layout, formulas, SVG, and interactive lab
         run: node tools/reader/verify.mjs
 
       - name: Stage GitHub Pages artifact
@@ -117,6 +117,7 @@ jobs:
               : "";
             const html = `<!doctype html>
           <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+          <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314453d'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23fbfaf6'%3E%CF%88%3C/text%3E%3C/svg%3E">
           <title>电子书与离线包下载 · 量子计算手册</title>
           <style>body{font-family:"Noto Sans CJK SC",system-ui,-apple-system,sans-serif;max-width:780px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}.card{margin:24px 0;padding:18px 22px;border:1px solid #d7d1c5;border-radius:10px;background:#f3efe6}h2{margin-top:0;font-size:1.15rem}code{background:#e9e3d7;padding:2px 6px;border-radius:4px;font-size:0.9em}</style>
           </head><body>

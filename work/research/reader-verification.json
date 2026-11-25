@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T12:24:20.302Z",
+  "generatedAt": "2026-11-25T13:30:36.267Z",
   "pages": [
     {
       "file": "reader/00-overview.html",
@@ -16,7 +16,7 @@
     {
       "file": "reader/02-single-qubit.html",
       "width": 1440,
-      "formulas": 1445,
+      "formulas": 1443,
       "images": 4
     },
     {
@@ -94,7 +94,7 @@
     {
       "file": "reader/15-practice-research.html",
       "width": 1440,
-      "formulas": 684,
+      "formulas": 688,
       "images": 4
     },
     {
@@ -194,12 +194,6 @@
       "images": 1
     },
     {
-      "file": "reader/labs/audio.html",
-      "width": 1440,
-      "formulas": 123,
-      "images": 2
-    },
-    {
       "file": "reader/labs/foundations.html",
       "width": 1440,
       "formulas": 280,
@@ -220,7 +214,7 @@
     {
       "file": "reader/labs/systems.html",
       "width": 1440,
-      "formulas": 151,
+      "formulas": 153,
       "images": 0
     },
     {
@@ -238,7 +232,7 @@
     {
       "file": "reader/quantum-mechanics/03-levels-control.html",
       "width": 1440,
-      "formulas": 1214,
+      "formulas": 1217,
       "images": 3
     },
     {
@@ -268,7 +262,7 @@
     {
       "file": "reader/02-single-qubit.html",
       "width": 390,
-      "formulas": 1445,
+      "formulas": 1443,
       "images": 4
     },
     {
@@ -346,7 +340,7 @@
     {
       "file": "reader/15-practice-research.html",
       "width": 390,
-      "formulas": 684,
+      "formulas": 688,
       "images": 4
     },
     {
@@ -446,12 +440,6 @@
       "images": 1
     },
     {
-      "file": "reader/labs/audio.html",
-      "width": 390,
-      "formulas": 123,
-      "images": 2
-    },
-    {
       "file": "reader/labs/foundations.html",
       "width": 390,
       "formulas": 280,
@@ -472,7 +460,7 @@
     {
       "file": "reader/labs/systems.html",
       "width": 390,
-      "formulas": 151,
+      "formulas": 153,
       "images": 0
     },
     {
@@ -490,7 +478,7 @@
     {
       "file": "reader/quantum-mechanics/03-levels-control.html",
       "width": 390,
-      "formulas": 1214,
+      "formulas": 1217,
       "images": 3
     },
     {
@@ -517,7 +505,7 @@
       "scrollWidth": 1440,
       "innerWidth": 1440,
       "svgCount": 9,
-      "controlsCount": 81,
+      "controlsCount": 79,
       "tabCount": 6
     },
     {
@@ -530,7 +518,7 @@
       "scrollWidth": 390,
       "innerWidth": 390,
       "svgCount": 9,
-      "controlsCount": 81,
+      "controlsCount": 79,
       "tabCount": 6
     }
   ],
@@ -589,7 +577,7 @@
     }
   ],
   "searchIndexGate": {
-    "total": 1494,
+    "total": 1483,
     "broken": 0
   },
   "flowNodeGate": {
@@ -617,7 +605,6 @@
     "work/rendered/software-practice-1440.png",
     "work/rendered/lab-index-1440.png",
     "work/rendered/lab-algorithms-1440.png",
-    "work/rendered/lab-audio-1440.png",
     "work/rendered/lab-foundations-1440.png",
     "work/rendered/lab-practice-1440.png",
     "work/rendered/lab-sdk-validation-1440.png",
@@ -646,7 +633,6 @@
     "work/rendered/software-practice-390.png",
     "work/rendered/lab-index-390.png",
     "work/rendered/lab-algorithms-390.png",
-    "work/rendered/lab-audio-390.png",
     "work/rendered/lab-foundations-390.png",
     "work/rendered/lab-practice-390.png",
     "work/rendered/lab-sdk-validation-390.png",
@@ -660,7 +646,6 @@
     "work/rendered/12-mobile-section-menu.png",
     "work/rendered/12-mobile-section-arrival.png",
     "work/rendered/quantum-lab-390.png",
-    "work/rendered/audio-controls-390-right-edge.png",
     "work/rendered/statistics-formula-390-right-edge.png",
     "work/rendered/table-390-right-edge.png",
     "work/rendered/prerequisites-table-390-right-edge.png",
@@ -682,53 +667,6 @@
     "work/rendered/16-qsvt-flowchart-390.png",
     "work/rendered/16-qsvt-flowchart-full.png",
     "work/rendered/02-single-qubit-1440-dark.png"
-  ],
-  "audioChecks": [
-    {
-      "src": "../assets/audio/phase-0.wav",
-      "ariaLabel": "教学合成音频：播放 A01-1：同相 0° 合成音频",
-      "duration": 4,
-      "readyState": 4,
-      "error": null,
-      "autoplay": false,
-      "controls": true
-    },
-    {
-      "src": "../assets/audio/phase-120.wav",
-      "ariaLabel": "教学合成音频：播放 A01-2：120° 相位差合成音频",
-      "duration": 4,
-      "readyState": 4,
-      "error": null,
-      "autoplay": false,
-      "controls": true
-    },
-    {
-      "src": "../assets/audio/phase-180.wav",
-      "ariaLabel": "教学合成音频：播放 A01-3：反相 180° 静音对照",
-      "duration": 4,
-      "readyState": 4,
-      "error": null,
-      "autoplay": false,
-      "controls": true
-    },
-    {
-      "src": "../assets/audio/ramsey-ideal.wav",
-      "ariaLabel": "教学合成音频：播放 A02-1：理想 Ramsey 条纹音频",
-      "duration": 4,
-      "readyState": 4,
-      "error": null,
-      "autoplay": false,
-      "controls": true
-    },
-    {
-      "src": "../assets/audio/ramsey-decay.wav",
-      "ariaLabel": "教学合成音频：播放 A02-2：退相干对比度衰减音频",
-      "duration": 4,
-      "readyState": 4,
-      "error": null,
-      "autoplay": false,
-      "controls": true
-    }
   ],
   "svgChecks": [
     {
@@ -781,14 +719,6 @@
     },
     {
       "file": "lab-cutting-overhead.svg",
-      "textOutsideViewBox": []
-    },
-    {
-      "file": "lab-phase-audio.svg",
-      "textOutsideViewBox": []
-    },
-    {
-      "file": "lab-ramsey-audio.svg",
       "textOutsideViewBox": []
     },
     {
