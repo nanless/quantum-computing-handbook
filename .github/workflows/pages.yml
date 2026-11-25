@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: read
+  pages: read
 
 concurrency:
   group: "pages"
@@ -84,7 +85,7 @@ jobs:
           mkdir -p _pages _pages/dist
           cp -a reader/. _pages/
           find _pages -path '*/vendor' -prune -o -type d -name '__pycache__' -prune -exec rm -rf {} +
-          find _pages -path '*/vendor' -prune -o -type f \( -name '*.pyc' -o -name '.DS_Store' \) -delete
+          find _pages -path '*/vendor' -prune -o -type f \( -name '*.pyc' -o -name '.DS_Store' \) -exec rm -f {} +
           rm -rf _pages/research _pages/STYLE.html
           touch _pages/.nojekyll
 
@@ -109,18 +110,18 @@ jobs:
               return `<li><a href="./${f}">${f}</a> <span>(${kind} · ${mb} MiB)</span></li>`;
             }).join("\n");
             const listBlock = files.length
-              ? `<ul>\n${rows}\n</ul>`
-              : `<p>当前 Pages 产物中未内嵌大体积 PDF/EPUB 文件，请通过下方 GitHub Releases 获取完整发行包。</p>`;
+              ? `<section class="card"><h2>本站托管的离线出版物</h2><ul>\n${rows}\n</ul></section>`
+              : "";
             const releaseBlock = releaseUrl
-              ? `<section class="card"><h2>GitHub Releases 完整离线发行包</h2><p>获取带 SHA-256 校验清单（<code>SHA256SUMS.txt</code>）的最新版 A4 PDF、EPUB 3、整站离线阅读版 ZIP 与自编离线代码复算包 ZIP：</p><p><a href="${releaseUrl}" rel="noopener noreferrer">前往 GitHub Releases 最新版本下载 →</a></p></section>`
+              ? `<section class="card"><h2>GitHub Releases 完整离线发行包</h2><p>全部 5 类带 SHA-256 校验清单（<code>SHA256SUMS.txt</code>）的官方发行产物均托管在 GitHub Releases（最新版与历史归档长期可下载）：</p><ul><li><a href="${releaseUrl}/download/quantum-computing-handbook.pdf" rel="noopener noreferrer">直接下载 A4 印刷级合订本 PDF (quantum-computing-handbook.pdf) ↗</a></li><li><a href="${releaseUrl}/download/quantum-computing-handbook.epub" rel="noopener noreferrer">直接下载原生 MathML 3 电子书 EPUB 3 (quantum-computing-handbook.epub) ↗</a></li><li><a href="${releaseUrl}/download/SHA256SUMS.txt" rel="noopener noreferrer">下载 SHA256SUMS.txt 完整性校验清单 ↗</a></li><li><a href="${releaseUrl}" rel="noopener noreferrer">前往 GitHub Releases 查看全部 5 类产物（含整站离线阅读版 ZIP 与自编离线代码复算包 ZIP）↗</a></li></ul></section>`
               : "";
             const html = `<!doctype html>
           <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
           <title>电子书与离线包下载 · 量子计算手册</title>
-          <style>body{font-family:"Noto Sans CJK SC",system-ui,-apple-system,sans-serif;max-width:760px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}.card{margin:24px 0;padding:16px 20px;border:1px solid #d7d1c5;border-radius:10px;background:#f3efe6}h2{margin-top:0;font-size:1.15rem}</style>
+          <style>body{font-family:"Noto Sans CJK SC",system-ui,-apple-system,sans-serif;max-width:780px;margin:48px auto;padding:0 20px;line-height:1.75;color:#1b2b27;background:#fbfaf6}a{color:#14453d;font-weight:600}li{margin:10px 0}.card{margin:24px 0;padding:18px 22px;border:1px solid #d7d1c5;border-radius:10px;background:#f3efe6}h2{margin-top:0;font-size:1.15rem}code{background:#e9e3d7;padding:2px 6px;border-radius:4px;font-size:0.9em}</style>
           </head><body>
           <h1>量子计算手册 · 电子书与离线包下载</h1>
-          <p>本站托管的离线出版物文件：</p>
+          <p>《量子计算手册》除在线阅读版外，同时提供印刷级 A4 PDF、原生 MathML 3 EPUB 3、零依赖整站离线 ZIP 与自编离线复算代码包。</p>
           ${listBlock}
           ${releaseBlock}
           <p><a href="../index.html">← 返回在线阅读版首页</a></p>
