@@ -51,7 +51,7 @@
         <a class="course-quiet" href="#course-cases">浏览互动机制预览 <span aria-hidden="true">↓</span></a>
       </div>
       <div class="course-stats" aria-label="全书规模与交付概览">
-        <div><strong>26 章 + 7 附录</strong><span>五篇教学序 · 271 题两级题答</span></div>
+        <div><strong>{{reading-chapters}} 章 + 7 附录</strong><span>{{reading-parts}} 篇教学序 · 271 题两级题答</span></div>
         <div><strong>50,900+ 数学公式</strong><span>KaTeX 零跳步推导 · 一键复制 TeX</span></div>
         <div><strong>90 张科学矢量图</strong><span>亮暗原生双主题高清矢量</span></div>
         <div><strong>38 个标准库脚本</strong><span>零依赖复算 + 31 开源项目对照</span></div>
@@ -217,7 +217,7 @@
 
   <!-- SIX PILLARS -->
   <section class="course-pillars course-width" id="course-pillars" aria-labelledby="course-pillars-title">
-    <p class="course-kicker">全书知识架构 · 26 章 5 大教学篇</p>
+    <p class="course-kicker">全书知识架构 · {{reading-chapters}} 章 {{reading-parts}} 篇</p>
     <h2 id="course-pillars-title">一套量子计算体系，贯通哪六大核心支柱？</h2>
     <p class="course-section-intro">从两维列向量到百万比特容错资源账本，把数学语言、量子算法、硬件控制、纠错解码、后量子安全与经典模拟铁壁放进同一条逻辑主线，每章均附可复算小例与失效边界。</p>
     <div class="course-pillar-grid">
@@ -452,65 +452,12 @@
     </aside>
   </section>
 
-  <!-- FOUR ENTRY LEARNING PATHS -->
   <section class="course-path course-width" id="course-path" aria-labelledby="course-path-title">
-    <p class="course-kicker">分阶段学习路线图</p>
-    <h2 id="course-path-title">按你的背景选择最短切入路线</h2>
-    <p class="course-section-intro">全书保留 00–21 与 Q1–Q4 稳定编号，按教学依赖排为五篇；你也可以开启内页顶栏的<strong>「初学主线模式」</strong>一键折叠进阶证明，一刷抓核心，二刷补深潜。</p>
+    <p class="course-kicker">全书阅读顺序</p>
+    <h2 id="course-path-title">查看全书 {{reading-parts}} 篇的阅读顺序</h2>
+    <p class="course-section-intro">每张卡片按阅读顺序列出本篇章节。章号用于查找原文、题答和代码。初次阅读可以先做<a href="appendices/prerequisites.html">入门自测</a>，再开启内页的<strong>「初学主线模式」</strong>折叠进阶选读。只走算法与软件路线，读完第 05 章可直达<a href="06-algorithmic-primitives.html">第 06 章</a>。</p>
     <ol class="course-stops">
-      <li>
-        <span>路线 01 · 零基础全景入门</span>
-        <h3>数学底座 → 物理直觉 → 量子态与噪声</h3>
-        <p>先花 10 分钟做七道先修自测，再拿草稿纸走完二维列向量、双缝实验、Bloch 球、Bell 纠缠、基础电路与 CPTP 噪声信道。</p>
-        <div>
-          <a href="appendices/prerequisites.html">七道先修自测</a>
-          <a href="00-overview.html">00 全景</a>
-          <a href="01-math.html">01 数学基础</a>
-          <a href="quantum-mechanics/01-experiments-states.html">Q1 实验与态</a>
-          <a href="02-single-qubit.html">02 单比特</a>
-          <a href="03-multiple-qubits.html">03 纠缠与 CHSH</a>
-          <a href="05-noise-channels.html">05 噪声信道</a>
-        </div>
-      </li>
-      <li>
-        <span>路线 02 · 算法与软件工程</span>
-        <h3>核心原语 → 变分统计 → 复算与经典模拟</h3>
-        <p>打通相位回踢、Grover、QPE、Shor 与 QSVT 统一框架，用 20 行纯标准库手写模拟器、做 Wilson 区间统计并掌握四大 SDK 与模拟边界。</p>
-        <div>
-          <a href="06-algorithmic-primitives.html">06 算法原语</a>
-          <a href="07-algorithms.html">07 代表性算法</a>
-          <a href="08-applications.html">08 变分与 QEM</a>
-          <a href="15-practice-research.html">15 动手与复核</a>
-          <a href="16-advanced-algorithms-verification.html">16 QSVT 与验证</a>
-          <a href="21-stabilizer-classical-simulation.html">21 经典模拟</a>
-        </div>
-      </li>
-      <li>
-        <span>路线 03 · 物理硬件与容错系统</span>
-        <h3>能级控制 → 六大平台 → 编译、纠错与整机</h3>
-        <p>从约瑟夫森结非谐性与色散读出出发，贯穿超导/离子阱/中性原子/光子硬件、Weyl 室编译、表面码晶格手术、实时解码与容错账本。</p>
-        <div>
-          <a href="quantum-mechanics/03-levels-control.html">Q3 能级控制</a>
-          <a href="09-hardware.html">09 硬件平台</a>
-          <a href="14-compilation-control.html">14 编译与脉冲</a>
-          <a href="10-error-correction.html">10 量子纠错</a>
-          <a href="11-resources-benchmarks.html">11 资源账本</a>
-          <a href="19-engineering-architecture.html">19 系统工程</a>
-        </div>
-      </li>
-      <li>
-        <span>路线 04 · 科研前沿与量子传感</span>
-        <h3>后量子密码 → 精密测量 → 信息容量与模型</h3>
-        <p>面向科研切入：一次打通 NIST 后量子迁移、三代量子中继、海森堡极限与核钟传感、量子信息熵界、连续变量 GKP 与七大计算模型。</p>
-        <div>
-          <a href="12-security-network-frontiers.html">12 密码与网络</a>
-          <a href="20-quantum-sensing-metrology.html">20 量子传感</a>
-          <a href="13-quantum-information.html">13 量子信息</a>
-          <a href="17-computation-models.html">17 七大模型</a>
-          <a href="quantum-mechanics/04-wavefunctions-models.html">Q4 波函数</a>
-          <a href="18-channels-capacities-complexity.html">18 信道与 CV</a>
-        </div>
-      </li>
+      <!-- READING GROUPS -->
     </ol>
     <p class="course-extra">
       <span>常备工具书：</span>
@@ -611,7 +558,7 @@
 
       <div class="course-bridge">
         <a href="appendices/audit-log.html">全书审校记录、数值交叉复算与边界说明 →</a>
-        <a class="course-bridge-down" href="#main-content">↓ 继续向下阅读：全书详细导读、五篇 26 章提要与统一符号约定</a>
+        <a class="course-bridge-down" href="#main-content">↓ 继续向下阅读：全书详细导读、{{reading-parts}} 篇 {{reading-chapters}} 章提要与统一符号约定</a>
       </div>
     </div>
   </section>

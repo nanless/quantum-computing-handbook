@@ -3,6 +3,9 @@ Run python3 codes/systems/round73_checks.py --case all; no SDK, network, or devi
 """
 import argparse, ast, csv, fractions, hashlib, json, math, struct, zipfile
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 if not __debug__: raise RuntimeError('Validation requires assertions; do not run with -O')
 HERE=Path(__file__).resolve().parent; SDK=HERE/'sdk73'
 def read(name):return json.loads((SDK/name).read_text())
@@ -142,4 +145,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--case',choices=['all']+list(CASES),default='all');args=p.parse_args()
     chosen=CASES if args.case=='all' else {args.case:CASES[args.case]}
     result=dict(status='passed',cases={k:f() for k,f in chosen.items()},scope='stdlib archive and mathematical checks; not SDK rerun')
-    (HERE/('round73-results.json' if args.case=='all' else f'round73-{args.case}-results.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
+    write_result(HERE/('round73-results.json' if args.case=='all' else f'round73-{args.case}-results.json'),
+                 json.dumps(result,indent=2)+'\n')
+    print(json.dumps(result,indent=2))

@@ -6,6 +6,9 @@ python3 codes/systems/round72_checks.py --case all
 import argparse,ast,csv,cmath,hashlib,json,math,struct,zipfile
 from fractions import Fraction
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 if not __debug__: raise RuntimeError('Run without -O')
 ROOT=Path(__file__).resolve().parent;SDK=ROOT/'sdk'
 def close(x,y,tol=1e-10): assert abs(x-y)<tol,(x,y,tol)
@@ -128,5 +131,6 @@ if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--case',choices=['all']+list(CASES),default='all');args=ap.parse_args()
     results={name:fn() for name,fn in CASES.items() if args.case in ('all',name)}
     report={'access_date':'2026-10-13','implementation':'Python standard library only; independent formulas and archived SDK data','cases':results,'status':'passed'}
-    (ROOT/('round72-results.json' if args.case=='all' else f'round72-{args.case}-results.json')).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    write_result(ROOT/('round72-results.json' if args.case=='all' else f'round72-{args.case}-results.json'),
+                 json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'cases':list(results),'status':'passed'},ensure_ascii=False))

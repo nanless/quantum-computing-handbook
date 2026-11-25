@@ -195,10 +195,10 @@ class SvgDoc:
 
 
 # ---------------------------------------------------------------------------
-# Figure 1: Q3 — Anharmonic potential vs Harmonic oscillator + Exact Rabi P1(t)
+# Figure 1: Q3 — Anharmonic and harmonic potentials with RWA Rabi P1(t)
 # ---------------------------------------------------------------------------
 def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
-    # Exact physics parameters for Rabi plot
+    # RWA model parameters for the Rabi plot.
     omega_mhz = 10.0  # Omega / (2 pi) = 10 MHz
     delta_mhz = 6.0   # Delta / (2 pi) = 6 MHz
     omega_eff_mhz = math.hypot(omega_mhz, delta_mhz)  # sqrt(136) MHz
@@ -211,7 +211,7 @@ def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
         # Omega_eff * t / 2 = pi * (w_eff [MHz] * 1e-3 [GHz]) * t [ns]
         return (omega_mhz / w_eff) ** 2 * (math.sin(math.pi * w_eff * 1e-3 * t_ns) ** 2)
 
-    # Assertions on exact Rabi formula
+    # Check the closed-form RWA predictions at both first maxima.
     assert abs(p1_rabi(0.0, 0.0)) < 1e-15
     assert abs(p1_rabi(t_pi_res, 0.0) - 1.0) < 1e-12
     assert abs(p1_rabi(2.0 * t_pi_res, 0.0)) < 1e-12
@@ -221,21 +221,21 @@ def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
     assert abs(t_peak_det - 42.874646285) < 1e-6
 
     doc = SvgDoc(
-        title="谐振子与 transmon 非谐势能级对比及精确 Rabi 振荡曲线",
+        title="谐振子与 transmon 非谐势能级对比及旋转波近似下的 Rabi 振荡",
         desc=(
             "左面板对比理想谐振子抛物势（等间距能级 ℏω）与约瑟夫森结 transmon 余弦势（负非谐性 α < 0 使 ω₁₂ < ω₀₁，"
-            "能量非等比例示意）。右面板按精确二能级公式绘制 Ω/2π = 10 MHz 下共振驱动（Δ = 0，首峰 50.0 ns、峰高 1.00）"
+            "能量非等比例示意）。右面板按二能级旋转波近似绘制 Ω/2π = 10 MHz 下共振驱动（Δ = 0，首峰 50.0 ns、峰高 1.00）"
             "与失谐驱动（Δ/2π = 6 MHz，首峰 42.9 ns、峰高 100/136 ≈ 0.735）的激发态占据概率 P₁(t)。"
         ),
     )
     doc.add_header(
         "非谐势能级寻址与共振 / 失谐 Rabi 振荡",
-        "左：抛物势（等间距）与 transmon 余弦势（负非谐性 α < 0）对比；右：精确二能级 Rabi 振荡 P₁(t)",
+        "左：抛物势（等间距）与 transmon 余弦势（α < 0）；右：二能级旋转波近似（RWA）下的振荡",
     )
 
     # Panels (stay within [28, 972] so inner text stays strictly >= 30px from edge)
     doc.add_panel(28, 96, 460, 456, "势阱与能级间距（非等比例示意）")
-    doc.add_panel(508, 96, 464, 456, "二能级 Rabi 振荡：共振与失谐（精确公式）")
+    doc.add_panel(508, 96, 464, 456, "二能级 Rabi 振荡：共振与失谐（RWA）")
 
     # --- Left Panel: Two potential wells computed from exact math ---
     # Normalized well coordinates: E in [0, 3.0], phi in [-1.85, 1.85]
@@ -335,13 +335,13 @@ def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
         )
         doc.add(f'<text class="smb" x="{fmt(map_x2(-phi_t) - 6)}" y="{fmt(ye + 4)}" text-anchor="end">|{idx}⟩</text>')
 
-    # Faint reference line showing where harmonic |2> would have been + clean right bracket for |alpha|
+    # Compare |2> with equally spaced levels at the same E0 and E1.
     ye2_ho = map_e(2.35)
     ye2_tr = map_e(2.09)
     doc.add(f'<line class="guide" x1="{fmt(cx2 - 54)}" y1="{fmt(ye2_ho)}" x2="{fmt(cx2 + 74)}" y2="{fmt(ye2_ho)}"/>')
     doc.add(f'<line class="guide" x1="{fmt(cx2 + 60)}" y1="{fmt(ye2_tr)}" x2="{fmt(cx2 + 74)}" y2="{fmt(ye2_tr)}"/>')
     doc.add(f'<line class="c2" stroke-width="1.5" x1="{fmt(cx2 + 74)}" y1="{fmt(ye2_ho)}" x2="{fmt(cx2 + 74)}" y2="{fmt(ye2_tr)}"/>')
-    doc.add(f'<text class="smb c2-txt" x="{fmt(cx2 + 79)}" y="{fmt(0.5*(ye2_ho + ye2_tr) + 4.5)}">|α|</text>')
+    doc.add(f'<text class="smb c2-txt" x="{fmt(cx2 + 79)}" y="{fmt(0.5*(ye2_ho + ye2_tr) + 4.5)}">ℏ|α|</text>')
 
     # Transition arrows for w01 and w12
     ax2 = cx2 - 2
@@ -360,7 +360,7 @@ def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
     doc.add('<text class="smb" x="58" y="504">α = ω₁₂ − ω₀₁ &lt; 0（典型算例：α/2π ≈ −200 MHz）</text>')
     doc.add('<text class="sm" x="58" y="525">虚线为同曲率抛物势参考；余弦软化拉低 |2⟩，允许按频寻址 |0⟩↔|1⟩</text>')
 
-    # --- Right Panel: Exact Rabi Oscillations Plot ---
+    # --- Right Panel: RWA Rabi oscillations ---
     px0, px1 = 582.0, 944.0
     py0, py1 = 446.0, 188.0  # py0=bottom (P1=0), py1=top (P1=1.0)
     t_max = 160.0
@@ -435,7 +435,7 @@ def build_fig1_anharmonic_rabi() -> tuple[str, dict[str, float]]:
     doc.add('<rect class="pill" x="524" y="502" width="432" height="34" rx="8"/>')
     doc.add(
         f'<text class="sm" x="740" y="523" text-anchor="middle">'
-        f'P₁(t) = (Ω²/Ω{sub("eff")}²) sin²(Ω{sub("eff")} t/2)，Ω{sub("eff")} = √(Ω²+Δ²) ≈ 2π × 11.66 MHz'
+        f'P₁(t) = (Ω²/Ω{sub("eff")}²) sin²(Ω{sub("eff")} t/2)，失谐时 Ω{sub("eff")}/2π ≈ 11.66 MHz'
         f'</text>'
     )
 
@@ -1174,7 +1174,7 @@ def build_fig5_drag_dd_pulses() -> tuple[str, dict[str, float]]:
         ),
     )
     doc.add_header(
-        "DRAG 抑制泄漏整形脉冲与动态解耦时序对比",
+        "DRAG 脉冲包络与动态解耦时序",
         "左：高斯包络 I(t) 与 DRAG 正交导数修正 Q(t) 精确波形；右：Ramsey、Hahn 回波与 CPMG-4 时序",
     )
     doc.add_panel(28, 96, 456, 456, "DRAG 脉冲包络（精确公式，σ = 2 ns）")
@@ -1249,7 +1249,7 @@ def build_fig5_drag_dd_pulses() -> tuple[str, dict[str, float]]:
     doc.add('<rect class="pill" x="44" y="502" width="424" height="36" rx="8"/>')
     doc.add(
         '<text class="sm" x="256" y="524" text-anchor="middle">'
-        'α/2π = −200 MHz，β = 1；极值在 t₀ ± σ = 6、10 ns，压低 |1⟩→|2⟩ 泄漏'
+        'α/2π = −200 MHz，β = 1，标出正交包络极值位置'
         '</text>'
     )
 

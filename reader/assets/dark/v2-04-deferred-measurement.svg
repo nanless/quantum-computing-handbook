@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
   <title id="title">多比特核心量子门与延迟测量原理</title>
-  <desc id="desc">上面板展示四个多比特核心量子门的标准电路符号与计算基作用（时间从左到右）：CNOT、对称受控相位门 CZ、三 CNOT 交替分解的 SWAP 门以及经典可逆通用的 Toffoli (CCNOT) 门。下面板展示延迟测量原理：将电路中段测量与经典双线条件门 U，等价替换为量子受控门 C-U 并将测量推迟至电路末端。</desc>
+  <desc id="desc">上面板展示四个多比特核心量子门的标准电路符号与计算基作用（时间从左到右）：CNOT、对称受控相位门 CZ、三 CNOT 交替分解的 SWAP 门以及经典可逆通用的 Toffoli (CCNOT) 门。下面板比较中段测量后按标签反馈与相干控制后再读标签。画的是原控制线保留标签的情形。若数据线继续使用，可另设干净记录位。</desc>
   <style>
 :root{color-scheme:dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -112,7 +112,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   </defs>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title" x="34" y="54">多比特核心量子门与延迟测量原理</text>
-  <text class="subtitle" x="34" y="79">上：CNOT、CZ、SWAP (= 3 CNOT) 与 Toffoli (CCNOT) 门符号与作用；下：中段测量加经典控门 ≡ 量子受控门加末端测量</text>
+  <text class="subtitle" x="34" y="79">上：CNOT、CZ、SWAP (= 3 CNOT) 与 Toffoli (CCNOT) 门符号与作用；下：控制位保留读出标签时的延迟测量</text>
   <rect class="panel" x="28" y="96" width="944" height="208" rx="14"/>
   <path class="phead" d="M 42 97 H 958 Q 971 97 971 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
   <line class="grid" x1="29" y1="134" x2="971" y2="134"/>
@@ -120,7 +120,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <rect class="panel" x="28" y="316" width="944" height="236" rx="14"/>
   <path class="phead" d="M 42 317 H 958 Q 971 317 971 330 V 354 H 29 V 330 Q 29 317 42 317 Z"/>
   <line class="grid" x1="29" y1="354" x2="971" y2="354"/>
-  <text class="sec" x="44" y="340">延迟测量原理（Principle of Deferred Measurement）：动态经典反馈 ≡ 量子受控门 + 末端测量</text>
+  <text class="sec" x="44" y="340">延迟测量原理（Principle of Deferred Measurement）：控制位保留原标签</text>
   <rect class="subpanel" x="42" y="144" width="220" height="150" rx="10"/>
   <text class="smb c1-txt" x="152" y="165" text-anchor="middle">CNOT（受控非门）</text>
   <line class="wire" x1="80" y1="196" x2="196" y2="196"/>
@@ -221,8 +221,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xs" x="390" y="465">U<tspan baseline-shift="super" font-size="72%">k</tspan>|ψ<tspan dy="3" font-size="75%">k</tspan><tspan dy="-3">&#8203;</tspan>⟩</text>
   <text class="xs" x="390" y="481">(归一条件态)</text>
   <text class="title c1-txt" x="500" y="430" text-anchor="middle">≡</text>
-  <text class="xs c1-txt" x="500" y="450" text-anchor="middle">统计与末态</text>
-  <text class="xs c1-txt" x="500" y="465" text-anchor="middle">完全等价</text>
+  <text class="xs c1-txt" x="500" y="450" text-anchor="middle">末端读出</text>
+  <text class="xs c1-txt" x="500" y="465" text-anchor="middle">分支相同</text>
   <rect class="subpanel" x="540" y="362" width="418" height="132" rx="10"/>
   <text class="smb c1-txt" x="554" y="382">方案二：量子受控门 C-U + 末端统一测量</text>
   <text class="xs" x="552" y="422">寄存器 A</text>
@@ -247,5 +247,5 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xs" x="884" y="481">(归一条件态)</text>
   <rect class="note" x="42" y="500" width="916" height="44" rx="9"/>
   <text class="xs" x="500" y="517" text-anchor="middle">初态 √p<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>|0⟩|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩ + √p<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|1⟩|ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩（|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩, |ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩ 归一）：两方案皆得 ρ′<tspan dy="3" font-size="75%">AB</tspan><tspan dy="-3">&#8203;</tspan> = p<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>|0⟩⟨0|⊗|ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>⟩⟨ψ<tspan dy="3" font-size="75%">0</tspan><tspan dy="-3">&#8203;</tspan>| + p<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|1⟩⟨1|⊗U|ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>⟩⟨ψ<tspan dy="3" font-size="75%">1</tspan><tspan dy="-3">&#8203;</tspan>|U†</text>
-  <text class="xs" x="500" y="535" text-anchor="middle">核心前提：测后不对控制位 A 施非对角门或复位复用（注：异地隐形传态仍需中途测量与经典通信）</text>
+  <text class="xs" x="500" y="535" text-anchor="middle">本图沿用控制位 A 保持标签。若继续操作数据位，可另设干净记录位；跨站点相干门另计通信资源。</text>
 </svg>

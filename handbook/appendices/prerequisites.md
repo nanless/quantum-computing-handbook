@@ -1,27 +1,25 @@
 # 入门先修：自测与补习路线
 
-读量子计算之前，不需要先修完一整套大学量子力学。你需要哪些先修工具，完全取决于当下想读懂哪一部分内容。下面的五篇 26 章路线表、七道主线短题与三道按需选做热身，帮你快速定位眼下容易卡住的那一步；哪一题卡壳，就顺着题后的链接去补那一小节，不必从头重修所有前置课程。
+先做题 1–4，检查复数、矩阵和张量积是否顺手，再按学习目标补所需的概念。题 5–6 针对算法和统计实验，题 7 与选做 A–C 可按专题选择。[六篇总目录](../README.md)列出全书 26 章的阅读顺序。
 
 ## 1. 先选你当下想解决的问题
 
-在手机上可左右滑动下表，查看最右侧的五篇 26 章推荐阅读顺序。
+在手机上可左右滑动表格。表中的入口按学习目标选择，可以跨篇阅读。
 
-| 你想做到的事 | 眼下最有用的准备 | 推荐阅读顺序（对应五篇 26 章体系） |
+| 你想做到的事 | 眼下最有用的准备 | 阅读入口 |
 |---|---|---|
-| 看懂单比特、纠缠、基础线路与噪声（第一篇） | 分数与条件概率、复数模平方、二维列向量与矩阵乘法、张量积 | [全景 00](../00-overview.md) → [数学 01](../01-math.md) → [实验 Q1](../quantum-mechanics/01-experiments-states.md) → [单比特 02](../02-single-qubit.md) → [演化 Q2](../quantum-mechanics/02-observables-dynamics.md) → [多比特 03](../03-multiple-qubits.md) → [电路 04](../04-circuits-protocols.md) → [噪声 05](../05-noise-channels.md) |
-| 手算 Grover、QPE、Shor 与变分应用，并动手写模拟器做统计验收（第二篇） | 走完第一篇，再熟悉模运算、对数底数、二项抽样与 Python/NumPy 基础 | [算法骨架 06](../06-algorithmic-primitives.md) → [代表算法 07](../07-algorithms.md) → [变分与应用 08](../08-applications.md) → [实践路线 15](../15-practice-research.md) |
-| 理解真实器件、脉冲控制、纠错与整机系统工程（第三篇） | 读完第一篇，熟悉[数学 01 的矩阵指数与条件数](../01-math.md#6-迹正半定矩阵指数与求逆条件数)，再补能量、角频率与旋转坐标系 | [能级 Q3](../quantum-mechanics/03-levels-control.md) → [硬件 09](../09-hardware.md) → [编译控制 14](../14-compilation-control.md) → [纠错容错 10](../10-error-correction.md) → [基准资源 11](../11-resources-benchmarks.md) → [系统工程 19](../19-engineering-architecture.md) |
-| 搞清后量子密码、QKD 与量子网络（第四篇上） | 第一篇电路与噪声、Shor 算法直觉、基础条件概率与二元熵 | [密码与网络 12](../12-security-network-frontiers.md)（衔接[第 04 章](../04-circuits-protocols.md)、[第 07 章](../07-algorithms.md)、[第 10 章](../10-error-correction.md)） |
-| 入门量子传感与精密测量、推导 SQL 与海森堡极限（第四篇下） | 一阶求导与对数似然、GHZ 态、退相位信道、Ramsey/回波与根保真度 | [能级 Q3](../quantum-mechanics/03-levels-control.md) + [噪声 05](../05-noise-channels.md) + [信息量度 13](../13-quantum-information.md) → [量子传感 20](../20-quantum-sensing-metrology.md)（光学压缩另需[第 18 章第 9 节](../18-channels-capacities-complexity.md)） |
-| 掌握稳定子表、MPS 与 Pauli 传播，看透经典模拟边界（第五篇） | 模 2 异或与辛内积、Schmidt/SVD 分解、Clifford 群、稳定子群与态矢量模拟 | [多比特 03](../03-multiple-qubits.md) + [电路 04](../04-circuits-protocols.md) + [纠错 10](../10-error-correction.md) + [实践 15](../15-practice-research.md) → [经典模拟边界 21](../21-stabilizer-classical-simulation.md)（与[第 16 章](../16-advanced-algorithms-verification.md)互照） |
-| 亲手推导波函数、势阱、谐振子、隧穿并攻克连续变量与信道容量（第五篇） | 读至演化 Q2 与信息量度 13，另需一元微积分与简单二阶微分方程 | [信息量度 13](../13-quantum-information.md) → [计算模型 17](../17-computation-models.md) → [波函数 Q4](../quantum-mechanics/04-wavefunctions-models.md) → [信道与连续变量 18](../18-channels-capacities-complexity.md) |
-| 亲手运行、改写第 15 章的模拟器与全书离线脚本 | Python 变量、函数与循环基础；熟悉 NumPy 数组建立与运算 | 先手算[数学 01 的矩阵算例](../01-math.md#4-矩阵与量子算符从线性变换到酉门厄米算符)，再参考 [NumPy 入门教程](https://numpy.org/doc/stable/user/absolute_beginners)，最后动手写[实践 15 的 Python 态矢量模拟器](../15-practice-research.md#2-从零手写-python-态矢量模拟器) |
+| 看懂量子态、纠缠、电路与噪声（第一篇） | 分数、条件概率、复数模平方、列向量与矩阵乘法、张量积 | [全景 00](../00-overview.md) → [数学 01](../01-math.md) → [单比特 02](../02-single-qubit.md) → [多比特 03](../03-multiple-qubits.md) → [电路 04](../04-circuits-protocols.md) → [噪声 05](../05-noise-channels.md) |
+| 从实验理解量子过程，或推导连续波函数（第二篇） | Q1–Q3 先从矩阵算例入手。Q4 的完整推导用到一元导数、定积分与简单二阶微分方程 | [实验 Q1](../quantum-mechanics/01-experiments-states.md) → [演化 Q2](../quantum-mechanics/02-observables-dynamics.md) → [能级 Q3](../quantum-mechanics/03-levels-control.md)。想了解连续模型可从 Q2 转入[波函数 Q4](../quantum-mechanics/04-wavefunctions-models.md) |
+| 手算 Grover、QPE、Shor，再用统计验证算法（第三篇） | 第一篇的量子态、门与测量。读 Shor 时补模运算，做有限样本实验时补二项抽样 | [算法骨架 06](../06-algorithmic-primitives.md) → [代表算法 07](../07-algorithms.md) → [变分与应用 08](../08-applications.md) → [实验方法 15](../15-practice-research.md) |
+| 理解物理器件、纠错、编译控制与系统工程（第四篇） | 第一篇的多比特、线路与噪声；能级、失谐与实验标定可从 [Q3](../quantum-mechanics/03-levels-control.md) 补起 | [硬件 09](../09-hardware.md) → [纠错容错 10](../10-error-correction.md) → [基准资源 11](../11-resources-benchmarks.md) → [编译控制 14](../14-compilation-control.md) → [系统工程 19](../19-engineering-architecture.md) |
+| 理解后量子密码、QKD 与量子网络（第五篇） | [03 的 Bell 态与 CHSH](../03-multiple-qubits.md)、[04 的隐形传态和不可克隆](../04-circuits-protocols.md)、[07 的 Shor 与 Grover](../07-algorithms.md) | [密码与网络 12](../12-security-network-frontiers.md)。安全证明中的信息量度可对照[第 13 章](../13-quantum-information.md)，容错网络专题可对照[第 10 章](../10-error-correction.md) |
+| 区分各种信道容量，或学习连续变量（第五篇） | [03 的纠缠](../03-multiple-qubits.md)、[05 的信道](../05-noise-channels.md)和[13 的信息量度](../13-quantum-information.md)。验证复杂度一节可回看[第 07 章](../07-algorithms.md)，连续变量一节需要 [Q4 的谐振子](../quantum-mechanics/04-wavefunctions-models.md#4-量子谐振子用升降算符一步步搭出等间距能级梯)。 | [信道与容量 18](../18-channels-capacities-complexity.md)。研究光学模式与 GKP 网格码时进入[第 18 章 §9](../18-channels-capacities-complexity.md#9-连续变量cv量子信息正交分量wigner-相空间gkp-网格码与截断边界)。 |
+| 推导量子传感的灵敏度与精度界（第五篇） | [03 的 GHZ 态与偏迹](../03-multiple-qubits.md)、[05 的退相位](../05-noise-channels.md)、[Q3 的 Ramsey 与回波](../quantum-mechanics/03-levels-control.md)；手算似然时用到一阶导数 | [传感 20](../20-quantum-sensing-metrology.md) §3.3 与 §6.2 分别引入根保真度和单模正交分量。深入混态距离可翻[第 13 章](../13-quantum-information.md)，深入多模连续变量可翻[第 18 章 §9](../18-channels-capacities-complexity.md#9-连续变量cv量子信息正交分量wigner-相空间gkp-网格码与截断边界) |
+| 研究高级算法、其他计算模型与经典模拟（第六篇） | 16 从 [06](../06-algorithmic-primitives.md)、[07](../07-algorithms.md) 的算法原语起步。17 从[第 04 章的门与电路](../04-circuits-protocols.md)起步。21 的稳定子、MPS 与模拟器分别接续 [10](../10-error-correction.md)、[03](../03-multiple-qubits.md) 和 [15](../15-practice-research.md) | 按目标选读[高级算法 16](../16-advanced-algorithms-verification.md)、[计算模型 17](../17-computation-models.md)或[经典模拟 21](../21-stabilizer-classical-simulation.md) |
 
-[第 01 章：零基础数学工具](../01-math.md)会从复数和列向量一步步讲起；下面的自测用来帮你判断，在此之前是否需要花半小时热身一下分数、条件概率或模运算，以及能否直接跳过第 01 章前半段。写代码能帮你快速验算，但并非读懂前五章的前提——第 15 章里的矩阵乘法 `@` 和左共轭内积 `np.vdot`，都能先在草稿纸上用手算摸透。如果你希望零安装先建立直观画面，可以直接在浏览器打开[离线交互量子实验台](../../reader/lab/quantum-lab.html)，拖动滑块体验干涉相位、Bloch 球旋转、Ramsey 退相干、CHSH 非局域博弈、Grover 振幅放大与表面码症状解码；而[逐章实验册](../labs/README.md)中的全部离线教学脚本仅依赖 Python 标准库，不装 NumPy 也能直接运行核对。
+想先看实验的读者可以直接打开[离线交互量子实验台](../../reader/lab/quantum-lab.html)。[实验总览](../labs/README.md)中的默认离线验证脚本用 Python 标准库运行。第 15 章的 [NumPy 模拟器](../15-practice-research.md#2-从零手写-python-态矢量模拟器)可先用纸笔核对小矩阵，再用 [NumPy 入门教程](https://numpy.org/doc/stable/user/absolute_beginners)补数组操作。
 
-这种分层安排也和主流公开课程一致：[IBM 的量子信息基础课程](https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information)主要要求基本线性代数、复数与函数基础；而 [MIT 8.04 量子物理 I 课程说明](https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2013/pages/syllabus/)则把波动与微分方程列为正式先修，对应本书第五篇选读的 Q4 深度。
-
-## 2. 七道主线短题与三道选做热身：拿张草稿纸直接算
+## 2. 六道基础自测与四道专题热身
 
 做题时先遮住“核对”段落，老老实实写出中间步骤。算完后问自己：是看不懂符号、算错了代数，还是算对了数字却说不清它代表什么？只要把卡住的那一环补齐，后面就会顺畅很多。
 
@@ -148,7 +146,7 @@ F_C(\phi)
 = 1.
 $$
 
-这说明在无噪理想情形下，无论相位 $\phi$ 处于何处，单次 Ramsey 测量都给出恒定的经典 Fisher 信息 $F_C = 1$（引入退相位噪声后才会在 $\phi=0$ 出现盲点）。掌握这一步链式求导，读[第 20 章：量子传感与精密测量](../20-quantum-sensing-metrology.md)的 Cramér–Rao 界推导就会非常顺手。
+因此，在题设的开区间里，每次测量的相位信息为 $1$。若把相位扩到端点，例如 $\phi=0$，结果 $0$ 的概率为 $1$、导数为 $0$，结果 $1$ 在该点的概率为 $0$。按[符号表](notation.md)中只对正概率项求和的约定，端点的点值为 $0$，从内点趋近端点的极限为 $1$。这两种取法不同，因为端点的概率支持发生了变化。固定这一测量时，$+\phi$ 与 $-\phi$ 也给出一样的分布。要测有符号的微小失谐，可把读出偏置调到条纹半高处。估计频率时还要用 $\phi=2\pi f t$ 换元，询问时间 $t=0$ 时频率信息为 $0$。见[第 20 章](../20-quantum-sensing-metrology.md)。
 
 ### 选做热身 C：$\mathbb{F}_2$ 模 2 辛内积（面向第 10 章纠错与第 21 章稳定子表）
 
@@ -173,13 +171,13 @@ $$
 
 ## 3. 自测通关分流表：怎样高效跳读第 01 章并回到主线
 
-已经修过大学线性代数和概率论的读者，不必从头逐页精读[第 01 章](../01-math.md)。对照你在上一节的实测表现，按下面这张分流表直接进入最省时间的起点：
+做完自测后，按卡住的概念选择[第 01 章](../01-math.md)的小节，再回到正在学习的主题。
 
 | 你的自测通关情况 | 第 01 章跳读建议 | 建议立刻衔接的主线入口 |
 |---|---|---|
-| **题 1–4 任一题卡壳** | 完整顺序阅读[第 01 章 §1–§8](../01-math.md#1-复数把旋转和缩放装进一个数)，把复共轭、矩阵乘列向量与张量积手算熟 | 随后沿第一篇主线进入 [Q1](../quantum-mechanics/01-experiments-states.md) → [第 02 章](../02-single-qubit.md) |
-| **题 1–4 全对，但选做 A（外积/本征值）犹豫** | **跳过第 01 章 §1–§4.3**，直接从[§3.2 正交投影](../01-math.md#32-正交投影把手电筒的影子写成外积矩阵)、[§4.4 被动换基与主动施门](../01-math.md#44-换坐标还是动了态被动换基与主动施门)和[§5–§7](../01-math.md#5-本征值本征向量与谱分解22-零跳步配方)读起 | 补齐外积、谱分解与张量积后直入 [Q1](../quantum-mechanics/01-experiments-states.md) 与[第 02–05 章](../02-single-qubit.md) |
-| **题 1–6 与选做 A 全部顺手通关** | **跳过第 01 章 §1–§5 与 §8**，仅速览[§6.3–§6.4 矩阵指数、SVD 与读出条件数](../01-math.md#63-矩阵指数从厄米算符生出酉门)及[§9 复杂度口径](../01-math.md#9-渐近复杂度看清增速口径与常数交叉点)核对全书符号 | 直接从[第 02 章](../02-single-qubit.md)或[第二篇第 06 章](../06-algorithmic-primitives.md)起步；遇物理控制再回看 [Q2](../quantum-mechanics/02-observables-dynamics.md) / [Q3](../quantum-mechanics/03-levels-control.md) |
-| **目标直奔第 20 / 21 章或 Q4 进阶专题** | 以**选做 B** 检验对数似然求导（进第 20 章）、**选做 C** 检验 $\mathbb{F}_2$ 辛内积（进第 10/21 章）、**题 7** 检验三角积分（进 Q4 / 第 18 章） | 直入[第 20 章](../20-quantum-sensing-metrology.md)、[第 21 章](../21-stabilizer-classical-simulation.md)或 [Q4](../quantum-mechanics/04-wavefunctions-models.md)，同步打开[离线交互量子实验台](../../reader/lab/quantum-lab.html) |
+| **题 1–4 任一题卡壳** | 从[第 01 章 §1–§8](../01-math.md#1-复数把旋转和缩放装进一个数)中补对应的数学操作，再重做卡住的题 | 接着进入[第 02 章](../02-single-qubit.md)，想先看实验可选读 [Q1](../quantum-mechanics/01-experiments-states.md) §1–§5 |
+| **题 1–4 全对，但选做 A（外积/本征值）犹豫** | 补[§3.2 正交投影](../01-math.md#32-正交投影把手电筒的影子写成外积矩阵)、[§4.4 被动换基与主动施门](../01-math.md#44-换坐标还是动了态被动换基与主动施门)和[§5 本征值与谱分解](../01-math.md#5-本征值本征向量与谱分解22-零跳步配方) | 沿第一篇继续阅读[第 02–05 章](../02-single-qubit.md) |
+| **题 1–6 与选做 A 全部顺手通关** | 按需查[§6.3–§6.4 的矩阵指数、SVD 与求逆条件数](../01-math.md#63-矩阵指数从厄米算符生出酉门)和[§9 的复杂度口径](../01-math.md#9-进阶选读渐近复杂度口径与常数交叉点) | 从[第 02 章](../02-single-qubit.md)起步。若已能写出多比特态、逐门演算线路并给出测量概率，可进入[第 06 章](../06-algorithmic-primitives.md) |
+| **准备读传感、稳定子或连续变量专题** | 用**选做 B**检查对数似然求导，用**选做 C**检查 $\mathbb{F}_2$ 辛内积，用**题 7**检查三角积分 | 按上表补足相应先修，再进入[第 20 章](../20-quantum-sensing-metrology.md)、[第 10 章](../10-error-correction.md)或[第 21 章](../21-stabilizer-classical-simulation.md)、[Q4](../quantum-mechanics/04-wavefunctions-models.md)或[第 18 章 §9](../18-channels-capacities-complexity.md#9-连续变量cv量子信息正交分量wigner-相空间gkp-网格码与截断边界) |
 
 阅读过程中遇到不眼熟的符号或新词，随时翻查[符号表](notation.md)和[术语表](glossary.md)；做章末练习卡住时，先在[练习答案与推导提示](exercises.md)里展开该题的**核心提示**自己再推一步，最后核对四步零跳步全解。

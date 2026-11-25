@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
   <title id="title">超算符五表示互转与 Pauli 旋转随机化 PTM 热力矩阵对照</title>
-  <desc id="desc">左面板展示 Stinespring 扩张、Kraus 算符和、Choi 矩阵、Liouville 超算符与 Pauli 转移矩阵 (PTM) 五种等价量子信道表示的精确转换关系。右面板以 4×4 PTM 热力矩阵对照相干过旋转 Rz(0.2) 在 Pauli 旋转随机化前后的元素变化：非对角旋转元 ∓0.199 彻底清零，主对角线与平均门保真度保持不变。</desc>
+  <desc id="desc">左面板展示 Stinespring 扩张、Kraus 算符和、Choi 矩阵、Liouville 超算符与 Pauli 转移矩阵 (PTM) 五种等价量子信道表示的精确转换关系。右面板以 4×4 PTM 热力矩阵对照相干过旋转 Rz(0.2) 在 Pauli 旋转随机化前后的单步元素变化：非对角元归零，主对角线与平均门保真度不变。10 层独立刷新时错误概率为 9.12%，复用同一随机符号时为 70.81%。</desc>
   <style>
 :root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -233,10 +233,10 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <rect class="subpanel" x="510" y="384" width="448" height="148" rx="9"/>
   <text class="smb c3-txt" x="524" y="406">1. 非对角相干元精准清零（虚线框）</text>
   <text class="xs" x="524" y="426">I, Z 夹心保留 ±0.199，X, Y 翻号为 ∓0.199 ⇒ 四项平均精确抵消为 0</text>
-  <text class="smb c1-txt" x="524" y="452">2. 相干二次方累积 → 温和线性退相位</text>
-  <text class="xs" x="524" y="472">E<tspan dy="3" font-size="74%">twirl</tspan><tspan dy="-3">&#8203;</tspan>(ρ) = cos<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan>(0.1)ρ + sin<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan>(0.1)ZρZ（p<tspan dy="3" font-size="74%">Z</tspan><tspan dy="-3">&#8203;</tspan> ≈ 1.0%）</text>
-  <text class="xs" x="524" y="493">深 m 层相干误差由 O(m²ε²) 降至随机线性累积 O(mε²)</text>
+  <text class="smb c1-txt" x="524" y="452">2. 同一单步平均，序列累积可不同</text>
+  <text class="xs" x="524" y="472">10 层测得 X=−1：逐层独立刷新 9.12%，整条线路复用符号 70.81%</text>
+  <text class="xs" x="524" y="493">N 层的平均 ⟨X⟩：逐层刷新为 cos(ε)ᴺ，复用符号为 cos(Nε)</text>
   <text class="xs c4-txt" x="524" y="518">边界：主对角线不变 ⇒ 单步平均门保真度 F<tspan dy="3" font-size="74%">avg</tspan><tspan dy="-3">&#8203;</tspan> ≈ 0.9934 保持不变</text>
   <rect class="note" x="510" y="544" width="448" height="36" rx="8"/>
-  <text class="xs" x="734" y="566" text-anchor="middle">工程桥梁：Pauli Twirling 把复杂相干误差转为稀疏 Pauli 信道，支撑 PEC 与 QEC 阈值</text>
+  <text class="xs" x="734" y="566" text-anchor="middle">单步 PTM 对角化，不保证跨层误差独立</text>
 </svg>

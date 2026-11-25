@@ -18,6 +18,8 @@ python3 codes/algorithms/experiments.py all
 - `expected-results.json`：确定性参考输出；
 - `generate_figure.py`：从同一组计算重建 `handbook/assets/algorithm-lab-checks.svg`（可选依赖 `matplotlib` / `numpy`）。
 
+逆 QFT 接线与加法器字宽另用 `python3 codes/algorithms/qpe_modular_checks.py` 验证。逆变换中缺少入口反序时，以相位 $1/4$ 复现概率 $(0,1/4,1/2,1/4)$。模 21 的 $20+20$ 在六位工作寄存器得到 19 且清除比较位，并用五位输入暴露错误。脚本遍历四个小模数、控制开关和闲置地址。
+
 ## 二、第二篇全覆盖与 QSVT 共享验证（`v4_algorithms_lab.py`）
 
 覆盖第 06、07、08 章与第 16 章共用 QSVT 全部新增与扩展算例，纯 Python 3 标准库、零第三方依赖：
@@ -43,7 +45,7 @@ python3 codes/algorithms/v4_algorithms_lab.py all
 python3 codes/algorithms/simulation_engines_lab.py
 ```
 
-包含三大可独立阅读的教学迷你引擎：① Aaronson–Gottesman 稳定子表引擎（含去稳定子、$O(n)$ Clifford 门更新与 $O(n^2)$ 确定性测量）；② 3 比特矩阵乘积态（MPS）逐键精确 SVD 与截断误差核算；③ 海森堡绘景 Pauli 传播与含噪稀疏 Pauli 动力学（SPD）及算符范数截断误差界检验。
+包含三大可独立阅读的教学迷你引擎：① Aaronson–Gottesman 稳定子表引擎（含去稳定子、$O(n)$ Clifford 门更新与 $O(n^2)$ 确定性测量）；② 3 比特矩阵乘积态（MPS）用直接旋转列向量的薄 SVD 检查数值秩与截断误差；③ 海森堡绘景 Pauli 传播与含噪稀疏 Pauli 动力学（SPD）及算符范数截断误差界检验。
 
 ## 四、专题核验与反例归档脚本
 

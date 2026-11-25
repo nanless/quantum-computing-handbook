@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-25T13:30:10.251741+00:00",
+  "generatedAt": "2026-11-25T19:09:10.552778+00:00",
   "output": "dist/quantum-computing-handbook.pdf",
-  "edition": "2026-11-25",
+  "edition": "2026-11-26",
   "passed": true,
   "checks": {
     "fileUnder50MiB": true,
@@ -12,6 +12,7 @@
     "langZhCN": true,
     "pageLabelsAlignedZeroOffset": true,
     "tocPrintedPageNumbersComplete": true,
+    "chapterReadingOrderMatches": true,
     "noMisleadingPartialTagTree": true,
     "zeroKangxiRadicals": true,
     "zeroBlankPages": true,
@@ -19,12 +20,12 @@
     "hasEndSentinel": true
   },
   "metrics": {
-    "totalPages": 1041,
+    "totalPages": 1062,
     "coverPages": 1,
     "tocPages": 1,
-    "bodyPages": 1039,
+    "bodyPages": 1060,
     "chunkCount": 8,
-    "headersStamped": 1032,
+    "headersStamped": 1052,
     "suppressedHeaderLeaks": [],
     "footerMismatches": [],
     "pageLabels": [
@@ -47,73 +48,73 @@
       }
     ],
     "tocPageNumberCoverage": {
-      "total": 47,
-      "numbered": 47,
-      "alignedZeroOffset": 47,
+      "total": 49,
+      "numbered": 49,
+      "alignedZeroOffset": 49,
       "coveragePct": 100.0,
       "mismatches": []
     },
     "internalLinks": {
-      "resolved": 1987,
-      "tocResolved": 48,
+      "resolved": 2196,
+      "tocResolved": 50,
       "dropped": 0,
       "residualSentinels": 0
     },
     "embeddedFonts": {
-      "embeddedFontStreams": 274,
-      "embeddedFontBytes": 7509364,
-      "embeddedFontMiB": 7.161,
-      "uniquePageFontRefs": 5675
+      "embeddedFontStreams": 276,
+      "embeddedFontBytes": 7512901,
+      "embeddedFontMiB": 7.165,
+      "uniquePageFontRefs": 5758
     },
     "fontSubsetting": {
       "enabled": true,
       "error": null,
       "before": {
-        "embeddedFontStreams": 311,
-        "embeddedFontBytes": 7881784,
-        "embeddedFontMiB": 7.517,
-        "uniquePageFontRefs": 5698
+        "embeddedFontStreams": 319,
+        "embeddedFontBytes": 7896015,
+        "embeddedFontMiB": 7.53,
+        "uniquePageFontRefs": 5778
       },
       "after": {
-        "embeddedFontStreams": 274,
-        "embeddedFontBytes": 22308150,
-        "embeddedFontMiB": 21.275,
-        "uniquePageFontRefs": 5698
+        "embeddedFontStreams": 276,
+        "embeddedFontBytes": 22317173,
+        "embeddedFontMiB": 21.283,
+        "uniquePageFontRefs": 5778
       }
     },
     "streamDedup": {
-      "uniqueStreams": 10416,
-      "dedupedStreams": 25986,
-      "rewrittenObjects": 5406,
-      "smaskRebound": 158,
-      "uniqueImages": 137,
-      "dedupedImages": 154,
+      "uniqueStreams": 10466,
+      "dedupedStreams": 26093,
+      "rewrittenObjects": 5484,
+      "smaskRebound": 160,
+      "uniqueImages": 115,
+      "dedupedImages": 156,
       "rewrittenImageRefs": 0,
       "kangxiCmapFix": {
-        "cmapsScanned": 5696,
-        "cmapsFixed": 1022,
-        "glyphsNormalized": 1269
+        "cmapsScanned": 5777,
+        "cmapsFixed": 1023,
+        "glyphsNormalized": 1255
       }
     },
     "timingsSec": {
-      "merge": 0.54,
-      "stampHeadersFooters": 0.54,
-      "linksAndOutline": 0.64,
-      "subsetAndDedup": 13.39,
-      "save": 31.53,
-      "qaAuditAndPreviews": 16.16,
-      "postprocessTotal": 62.8
+      "merge": 2.88,
+      "stampHeadersFooters": 2.56,
+      "linksAndOutline": 3.26,
+      "subsetAndDedup": 55.78,
+      "save": 237.54,
+      "qaAuditAndPreviews": 46.75,
+      "postprocessTotal": 348.79
     },
-    "fileSizeBytes": 28811936,
-    "fileSizeMiB": 27.477,
-    "outlineTotal": 521,
+    "fileSizeBytes": 28907858,
+    "fileSizeMiB": 27.569,
+    "outlineTotal": 529,
     "outlineLevels": {
-      "level1": 10,
-      "level2": 46,
-      "level3": 465
+      "level1": 11,
+      "level2": 47,
+      "level3": 471
     },
     "outlineResolution": {
-      "namedDestHits": 519,
+      "namedDestHits": 527,
       "textMatchHits": 0,
       "fallbackCursorHits": 0
     },
@@ -122,14 +123,14 @@
     "blankPages": [],
     "sparsePages": [],
     "bodyFontPt": {
-      "samples": 3529,
+      "samples": 3646,
       "median": 9.48,
-      "p10": 8.8
+      "p10": 8.19
     },
     "rightMarginOverflowSamples": [],
     "unrenderedTexHints": [
       {
-        "page": 998,
+        "page": 1015,
         "hint": "$$"
       }
     ],
@@ -139,10 +140,10 @@
       "structTreeRoot": false,
       "lang": "zh-CN",
       "structParentsPages": 0,
-      "totalPages": 1041,
+      "totalPages": 1062,
       "structParentsCoverageRatio": 0.0,
       "accessibilityPreferredFormat": "EPUB 3 (Native MathML 3)",
-      "note": "本 PDF 专注高保真印刷排版；无障碍屏幕朗读请优先使用配套原生 MathML 3 EPUB 3 版本。"
+      "note": "本 PDF 用于印刷排版，配套 EPUB 提供可重排文本与原生 MathML。"
     },
     "metadata": {
       "title": "量子计算手册：从直觉、数学与物理到容错、传感与模拟边界",
@@ -167,14 +168,14 @@
       "dpi": 150
     },
     "sample1": {
-      "page": 84,
+      "page": 64,
       "file": "work/rendered/pdf-preview-sample1.png",
       "width": 1240,
       "height": 1754,
       "dpi": 150
     },
     "sample2": {
-      "page": 846,
+      "page": 863,
       "file": "work/rendered/pdf-preview-sample2.png",
       "width": 1240,
       "height": 1754,

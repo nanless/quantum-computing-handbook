@@ -1,6 +1,8 @@
 # 可复现实验与第三方源码
 
-在仓库根目录运行 `python3 codes/run_all.py`（或 `make test`）。该入口只执行本书的标准库教学程序，并核对第三方源码清单；不联网、不运行第三方摘录、不请求云设备。不要使用 `python3 -O` 关闭断言。
+在仓库根目录运行 `python3 codes/run_all.py`（或 `make test`）。该入口执行本书的标准库教学程序并核对第三方源码清单，全程离线。请保留 Python 断言。
+
+解压独立代码包后，在含 `codes/` 和 `CODE-VALIDATION.json` 的目录运行同一命令。发布清单将包内缺省的第三方快照核验标为不适用，其余项目照常运行。完整 Git 仓库仍要求核对快照。
 
 | 目录 | 内容 | 入口 |
 |---|---|---|
@@ -11,7 +13,7 @@
 | review | 交换复核的两组独立计算路径 | `python3 codes/review/cross_foundations.py` 与 `cross_systems.py` |
 | vendor | 31个上游项目的固定源码摘录与许可 | `python3 codes/snapshot_sources.py --verify` |
 
-教学实验结果是精确小模型、合成计数或固定种子模拟；不是新采集的真机数据。程序中的断言和各目录的 `expected-results.json` / `results.json` 提供复算依据。统一运行报告保存在 `work/research/code-validation.json`。
+教学实验结果来自精确小模型、合成计数或固定种子模拟。程序中的断言和各目录的 `expected-results.json`、`results.json` 提供复算依据。默认将当前批次结果写到 `work/research/code-validation.json`，子程序新结果写入同目录下的 `local-check-results/`。加 `--output-dir 路径` 可另选目录。某一检查超时后，入口保存超时和已捕获的输出，继续其余检查，最终以非零状态汇报失败。
 
 ## 科学插图生成器
 
@@ -42,6 +44,7 @@
 - 逐章细算与工业工作流核验：基础组 `python3 codes/foundations/round71_checks.py --case all`、算法组 `python3 codes/algorithms/round71_checks.py all`、系统组 `python3 codes/systems/round71_checks.py --case all`（为保持历史哈希与引用可追溯而沿用原文件名）；工业工作流独立模型为 `python3 codes/practice/workflow_checks.py`（结果见 `practice/workflow-results.json`）。以上脚本均接入统一入口，不导入或执行 `vendor` 摘录。
 - 跨库对照的纯标准库独立复算：基础组 `python3 codes/foundations/round72_stdlib.py --case all`、算法组 `python3 codes/algorithms/round72_checks.py all`、系统组 `python3 codes/systems/round72_checks.py --case all`，均已收录于统一入口。26 个核心开源项目的完整 SDK 实跑任务、依赖锁、原始样本与 C/C++ 构建说明单列于[SDK 隔离实跑总说明](sdk/README.md)，需在各自隔离环境中运行，不由默认入口联网安装。
 - 进阶核验与已存档实跑结果复算：统一入口同时收录基础/算法/系统三组 `round73_checks.py`（`codes/foundations/round73_checks.py`、`codes/algorithms/round73_checks.py`、`codes/systems/round73_checks.py`）以及 `codes/sdk/round73/check_saved.py`，后者仅用标准库独立复算原始计数、聚类方差、Liouville 乘积与 MPF 目标值。面向其余扩展项目与完整工作流的隔离 SDK 与编译说明另见[进阶集成工作流归档](sdk/round73/README.md)（含可选批量调度入口 `codes/sdk/round73/run_workflows.py`，不由默认入口联网安装）；各组 `sdk73/` 目录保留真实运行环境、原始失败记录与样本，与 [codes/vendor/](vendor/README.md) 中 31 个项目 122 份固定提交源码摘录一一对应。
+- `python3 codes/algorithms/round73_checks.py all` 对照固定档案中的四档非格点 HHL、两步数的行走概率和 QSVT 多项式及后选概率。只验数学时加 `--math-only`，报告会注明跳过 SDK 档案对照。SLC 归档校验逐批匹配种子身份，按实际读取的原始计数汇总随机化数和样本量，同时复算每批聚类标准误。
 - **隔离环境交叉复核脚本**（需在对应隔离环境中安装 `numpy`/`scipy`/`stim` 等科学计算依赖，不接入默认纯标准库入口 `run_all.py`）：
   - `codes/foundations/round72_cross_algorithms.py`、`codes/foundations/round73_cross_gst.py`
   - `codes/algorithms/round73_cross_root.py`、`codes/algorithms/round73_cross_systems.py`

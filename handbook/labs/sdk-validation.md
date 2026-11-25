@@ -15,7 +15,7 @@
 | 1 | Qiskit 2.5.2 | 线型连接图编译、布局校正、复相位态输出 | 比较完整酉矩阵与逐分量解析振幅；第 14 章及[基础集成记录](../../codes/sdk/workflows/results-all.json) |
 | 2 | Qiskit Algorithms 0.4.0 | Grover 搜索、VQE 变分寻优、迭代振幅估计（IAE） | 理想标记 `11`、最低能量 $-\sqrt{0.53}$、IAE 原始计数与置信区间；第 07/08 章及 `SDK-01` |
 | 3 | Cirq 1.7.0 | 可逆预言机、完整非对角 HHL 与负谱非网格 HHL | 反计算验证、成功概率 $5/8$、解态 $(3,1)^T/\sqrt{10}$、负谱带符号倒数旋转与残余分析；第 06/07 章 |
-| 4 | PennyLane 0.45.1 | 参数优化与两比特随机阴影采集/后处理 | VQE 解析基线；保存 $30000$ 次位串与随机测量基并逐项独立重算；第 08/13/16 章 |
+| 4 | PennyLane 0.45.1 | 参数优化与两比特随机阴影采集/后处理 | VQE 解析基线；保存 $30000$ 次位串与随机测量基。当次运行独立重算 $XX,YY,ZZ$，后续从同一归档补核 $ZI$；第 08/13/16 章 |
 | 5 | OpenFermion 1.8.1 | 二模式费米子哈密顿量 $\to$ Pauli 展开 $\to$ 矩阵谱 | 粒子数分块、独立 Jordan–Wigner 谱、粒子数罚项与错误全空间基线对照；第 08 章 |
 | 6 | Qualtran 0.7.0 | 模幂算法积木模块（`bloq`）与门分解 | 指数 0–7 的模算术经典语义与 Toffoli 完整张量验证；第 07/16 章 |
 | 7 | pyqsp 0.2.0 | 真正求解对称 QSP 相位序列 | 在 1001 个网格点上独立连乘校验目标虚部与酉性；第 16 章 |
@@ -118,6 +118,8 @@ $$
 
 - **对应验证脚本与原始归档**：[原始计数记录](../../codes/sdk/workflows/gst-counts.json)、[基础集成记录](../../codes/sdk/workflows/results-all.json)、[pyGSTi 官方 LGST 源码](https://github.com/sandialabs/pyGSTi/blob/master/pygsti/algorithms/core.py)。
 
+**过程层析的完整复偏迹。** Qiskit Experiments 0.14.2 的历史 `trace_preserving=True` 拟合即使报告收敛、Choi 半正定，完整 TP 偏迹的逐元残差仍为 $9.1311\times10^{-4}$。对同一 $4\times4$ 非归一化 Choi 的输出偏迹，计算 $J_{2a,2c}+J_{2a+1,2c+1}$ 并与 $I_2$ 比较。单组件改用 `partial_trace=np.array([I])` 后残差约 $1.9209\times10^{-12}$，独立多项最大似然约 $1.3098\times10^{-12}$。固定实现的多组件循环可能覆写先设约束，当前验收范围为单组件。计算基与相干输入的输出概率和应分别检查，归一 Choi 的目标偏迹对应 $I_2/2$。[原始反例](../../codes/foundations/sdk73/sdk-tp-counterexample.json) · [归档结果](../../codes/foundations/sdk73/qpt-results.json) · [固定源码](https://github.com/qiskit-community/qiskit-experiments/blob/0.14.2/qiskit_experiments/library/tomography/fitters/cvxpy_lstsq.py#L226-L247)
+
 ## 7. SDK-06｜子空间对角化（SQD-HPC）：无放回子采样不等于无限扩展子空间
 
 完整 C++ 驱动遍历全部 4 比特组态 `0000`–`1111`（对应整数 0–15，原始权重依次为 1–16），执行后选择过滤，只保留低两位（自旋向下轨道）和高两位（自旋向上轨道）各恰有 1 个 `1` 的粒子数守恒组态。
@@ -203,7 +205,7 @@ $$
 \widehat{\mathrm{SE}} = \sqrt{\frac{\sum_{a=1}^{R}(Y_a - \widehat{\mu})^2}{R(R - 1)}}.
 $$
 
-实测发现，`qiskit-mitigation 0.1.1` 的非**广播**（broadcast，即按数组维度自动展开多组随机化样本的批处理模式）接口存在两重坑：一是把方差错写进了名为 `stds` 的字段，二是把随机化维度直接展平并入普通采样，忽略了共享随机电路的聚类方差；若直接当作标准误会严重误判置信区间。验证脚本独立按上式重算，并调用广播路径的 `twirl_stds` 交叉核对；注意该字段采用自由度修正量（delta degrees of freedom，简称 `ddof`，方差分母减去的偏移量）`ddof = 0`（分母为 $R$），需乘 $\sqrt{R / (R - 1)}$ 才与无偏样本标准误（`ddof = 1`）一致。这再次提醒读者：点估计正确与不确定度口径正确是两次独立验收。
+实测发现，`qiskit-mitigation 0.1.1` 的非**广播**（broadcast，即按数组维度自动展开多组随机化样本的批处理模式）接口存在两重坑：一是把方差错写进了名为 `stds` 的字段，二是把随机化维度直接展平并入普通采样，忽略了共享随机电路的聚类方差；若直接当作标准误会严重误判置信区间。验证脚本独立按上式重算，并调用广播路径的 `twirl_stds` 交叉核对；注意该字段采用自由度修正量（delta degrees of freedom，简称 `ddof`，方差分母减去的偏移量）`ddof = 0`（分母为 $R$），需乘 $\sqrt{R / (R - 1)}$ 才与无偏样本标准误（`ddof = 1`）一致。归档中的三组分别有 1024 条随机电路，每条测量 64 次。全量缓解的聚类标准误为 0.01475625，逐次展平后为 0.00475337。在多个 Pauli 项共用随机电路时，先在每条随机电路内合成整个可观测量，或显式纳入协方差。固定版本 0.2.0 的同一非广播路径源码仍可看到该字段赋值，实际运行结论以 0.1.1 为准。[固定源码](https://github.com/Qiskit/qiskit-mitigation/blob/0.2.0/qiskit_mitigation/pec.py#L909)
 
 此外，当容忍界大到全部项都不缓解时，`qiskit-addon-slc 0.1.0` 会触发空掩码索引异常（原始异常日志已保存）。脚本以进程内窄防护显式构造全零选择掩码与成本 $1$，并真实运行第三批 $1024 \times 64$ 采样作为无缓解对照：估计值 $0.666199$、聚类标准误 $0.002818$（精确含噪对照 $0.663184$）；省略偏差 $0.248216$ 严格低于确定性界 $0.342178$。同样，窄防护不代表上游包缺陷已修复。
 

@@ -2,6 +2,9 @@
 """Eight independent small mathematical checks. Python >=3.9, standard library only."""
 import argparse, cmath, hashlib, json, math
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 from foundations_lab import I,X,Y,Z,mm,mv,dagger,outer,add,scale as matrix_scale,kron,close,matrix_close,trace,kraus_apply
 
 def scale(c,a):return matrix_scale(a,c)
@@ -101,6 +104,40 @@ def case04():
     matrix_close(total,I)
     return {'average_record_flip_probability':e,'pauli_error_weights':[(1-e)**2,e*(1-e),e*(1-e),e*e],'output_density':output,'output_bloch':[bx,by,bz],'boundary':'ideal resources and gates; record flips already drove physical corrections'}
 
+def archive_tomography():
+    directory = R / 'sdk73'
+    original = json.loads((directory / 'sdk-tp-counterexample.json').read_text())
+    fitted = json.loads((directory / 'qpt-results.json').read_text())['cases']['qpt']
+    assert original['version'] == '0.14.2' and fitted['status'] == 'passed'
+    sources = {
+        'default_trace_preserving': original['choi'],
+        'explicit_single_component_partial_trace': fitted['result']['sdk_gaussian_choi'],
+        'independent_multinomial_mle': fitted['result']['multinomial_mle_choi'],
+    }
+    input_states = {'zero': outer([1, 0]), 'one': outer([0, 1]),
+                    'plus_i': outer([2**-.5, 1j * 2**-.5]), 'minus_i': outer([2**-.5, -1j * 2**-.5])}
+    results = {}
+    for method, encoded in sources.items():
+        assert len(encoded) == 4 and all(len(row) == 4 for row in encoded)
+        choi = [[complex(*entry) for entry in row] for row in encoded]
+        partial = [[sum(choi[2*a+y][2*b+y] for y in range(2)) for b in range(2)] for a in range(2)]
+        residual = max(abs(partial[i][j] - (i == j)) for i in range(2) for j in range(2))
+        totals = {}
+        for name, state in input_states.items():
+            probability_sum = sum(state[j][i] * partial[i][j] for i in range(2) for j in range(2))
+            assert abs(probability_sum.imag) < 1e-12
+            totals[name] = probability_sum.real
+        results[method] = {'max_complex_tp_residual': residual, 'output_probability_sums': totals}
+    default = results['default_trace_preserving']
+    assert 9e-4 < default['max_complex_tp_residual'] < 9.3e-4
+    assert max(abs(default['output_probability_sums'][state] - 1) for state in ('zero', 'one')) < 1e-8
+    assert min(abs(default['output_probability_sums'][state] - 1) for state in ('plus_i', 'minus_i')) > 9e-4
+    for method in ('explicit_single_component_partial_trace', 'independent_multinomial_mle'):
+        assert results[method]['max_complex_tp_residual'] < 1e-8
+        assert all(abs(value - 1) < 1e-8 for value in results[method]['output_probability_sums'].values())
+    return results
+
+
 def case05():
     gamma=.36;r=.1;c=math.cos(math.pi/10);s=math.sin(math.pi/10);u=[[c,-s],[s,c]]
     ks=[scale(math.sqrt(1-r),[[1,0],[0,.8]]),scale(math.sqrt(1-r),[[0,.6],[0,0]]),scale(math.sqrt(r),[[.8,0],[0,1]]),scale(math.sqrt(r),[[0,0],[.6,0]])]
@@ -119,7 +156,7 @@ def case05():
     bad=add(scale(.5,kron(I,I)),scale(.1,kron(Y,I)))
     badptr=[[sum(bad[2*a+y][2*b+y] for y in (0,1)) for b in (0,1)] for a in (0,1)]
     matrix_close([[v.real for v in row] for row in badptr],I);assert abs(badptr[0][1])>.19
-    return {'hermitian_real_tp_counterexample':bad,'counterexample_full_partial_trace':badptr,'analytic_rotated_damping_choi':J,'output_partial_trace':ptr,'y_plus_probability':p,'choi_born_probability':choip,'binomial_mle_p':.3,'jeffreys_posterior_mean':3.5/11,'nll_at_mle':nll(.3),'nll_at_posterior_mean':nll(3.5/11)}
+    return {'hermitian_real_tp_counterexample':bad,'counterexample_full_partial_trace':badptr,'analytic_rotated_damping_choi':J,'output_partial_trace':ptr,'y_plus_probability':p,'choi_born_probability':choip,'binomial_mle_p':.3,'jeffreys_posterior_mean':3.5/11,'nll_at_mle':nll(.3),'nll_at_posterior_mean':nll(3.5/11),'archived_tomography':archive_tomography()}
 
 def caseq1():
     alpha,beta=.12,.23
@@ -156,5 +193,5 @@ def main():
     result={'scope':'synthetic mathematical checks, standard library only','cases':{}}
     for key,fn in CASES.items():
         if a.case in ('all',key):result['cases'][key]=packed(fn());print(key,'passed')
-    (R/('round73-'+a.case+'-results.json')).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    write_result(R/('round73-'+a.case+'-results.json'), json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 if __name__=='__main__':main()

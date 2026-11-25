@@ -19,7 +19,7 @@
 
     function formatFisherTag(pt) {
       const v2 = pt.vis * pt.vis;
-      if (pt.t <= 1e-9) return `${f4(pt.fisherC)} (V=1 理想态)`;
+      if (pt.t === 0) return `${f4(pt.fisherC)}（峰顶点值，理想内点极限为 1）`;
       if (pt.fisherC < 0.02 * Math.max(0.05, v2)) return `${f4(pt.fisherC)} (峰谷盲点)`;
       if (pt.fisherC >= 0.92 * v2) return `${f4(pt.fisherC)} (近最大灵敏度 V²=${f4(v2)})`;
       return `${f4(pt.fisherC)} (上限 V²=${f4(v2)})`;
@@ -54,6 +54,7 @@
       byId('ramsey-v-val').textContent = f4(pt.vis);
       byId('ramsey-p0-val').textContent = `${f4(pt.pDecay)} vs ${f4(pt.pWrong)}`;
       byId('ramsey-fc-val').textContent = formatFisherTag(pt);
+      byId('ramsey-freq-info-val').textContent = `${f4(pt.fisherFrequency)} Hz⁻²`;
     }
 
     function renderRamseySvg() {
@@ -138,7 +139,7 @@
         const v35 = Math.exp(-3.5 / ramseyT2);
         noteEl.textContent = `已高亮常见误区 V(t)cos²(πf_det t)：在 t = 3.5 s 处 V = ${f4(v35)}，误区曲线衰减趋近 0——但纯退相位不会让 |0⟩ 概率归零，真实结果是失去干涉起伏、收敛到均匀混合态 P₀ = P₁ = 0.50！`;
       } else {
-        noteEl.textContent = '真实纯退相位 P₀(t) = [1 + V(t)cos(2πf_det t)]/2：条纹振幅按 V(t) = e^(−t/T₂*) 指数收缩，但平均值始终锚定在 0.50；拖动游标到半高腰（如 0.25 s）可观察最大 Fisher 灵敏度 F_C = V²。';
+        noteEl.textContent = '真实纯退相位 P₀(t) = [1 + V(t)cos(2πf_det t)]/2：条纹振幅按 V(t) = e^(−t/T₂*) 指数收缩，但平均值始终锚定在 0.50；在相位正交点，给定可见度 V 时的相位信息达到 V²。估频信息还随询问时间与频率换算而变化。';
       }
       renderRamseySvg();
       updatePlayheadOnly();
@@ -148,7 +149,7 @@
       ramseyCursorT = Math.max(0, Math.min(DUR, targetSec));
       const pt = M.ramseyPoint(ramseyCursorT, ramseyFdet, ramseyT2);
       byId('ramsey-seek-status').textContent =
-        `已定位至 t = ${f2(ramseyCursorT)} s：理想 P₀ = ${f4(pt.pIdeal)}，真实退相干 P₀ = ${f4(pt.pDecay)}（误区 ${f4(pt.pWrong)}），Fisher 信息 F_C = ${f4(pt.fisherC)}。`;
+        `已定位至 t = ${f2(ramseyCursorT)} s：理想 P₀ = ${f4(pt.pIdeal)}，真实退相干 P₀ = ${f4(pt.pDecay)}（误区 ${f4(pt.pWrong)}），相位信息 ${f4(pt.fisherC)}，失谐频率信息 ${f4(pt.fisherFrequency)} Hz⁻²。`;
       updatePlayheadOnly();
     }
 
@@ -192,6 +193,7 @@
         updateRamseyStaticUi();
       });
     });
+    byId('ramsey-quadrature').addEventListener('click', () => jumpRamseyTo(1 / (4 * ramseyFdet)));
     document.querySelectorAll('[data-ramsey-jump]').forEach(btn => {
       btn.addEventListener('click', () => jumpRamseyTo(Number(btn.dataset.ramseyJump)));
     });

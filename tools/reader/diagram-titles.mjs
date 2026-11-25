@@ -2,7 +2,7 @@
 // Any Mermaid block may also override its own caption via a leading `%% title: ...` comment.
 
 export const diagramTitles = {
-  'README.md': ['主篇 00—21 与物理篇 Q1—Q4 共 26 章的五篇学习路线'],
+  'README.md': ['主篇 00—21 与物理篇 Q1—Q4 共 26 章的学习路线'],
   '00-overview.md': [
     '一次量子计算从输入到验证的五个环节',
     '相同测量概率的两态经 H 门干涉后的分流对照',

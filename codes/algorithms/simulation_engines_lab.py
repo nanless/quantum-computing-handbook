@@ -447,73 +447,60 @@ class StabilizerTableau:
 # =============================================================================
 
 
-def _hermitian_2x2_eig(h: Matrix) -> Tuple[List[float], Matrix]:
-    """对 2x2 厄米正半定矩阵做解析精确本征分解，按本征值降序返回 (evals, U)。"""
-    a = h[0][0].real
-    d = h[1][1].real
-    b = h[0][1]
-    assert abs(h[0][0].imag) < 1e-11 and abs(h[1][1].imag) < 1e-11
-    assert abs(h[1][0] - b.conjugate()) < 1e-11
+def _svd_4x2(m: Matrix) -> Tuple[Matrix, List[float], Matrix]:
+    """Rotate two complex columns and measure the singular values as norms.
 
-    b_abs = abs(b)
-    tr = a + d
-    diff = a - d
-    disc = math.hypot(diff, 2.0 * b_abs)
-    lam1 = 0.5 * (tr + disc)
-    lam2 = 0.5 * (tr - disc)
-
-    if b_abs < 1e-15:
-        if a >= d:
-            u = [[1 + 0j, 0j], [0j, 1 + 0j]]
-        else:
-            u = [[0j, 1 + 0j], [1 + 0j, 0j]]
-        return [max(0.0, lam1), max(0.0, lam2)], u
-
-    # 对应 lam1 的特征向量：选取数值最稳妥的一行求解
-    if diff >= 0.0:
-        v0 = lam1 - d + 0j
-        v1 = b.conjugate()
+    The 2x2 rotation uses the column inner products only for direction. The
+    small singular value comes from the rotated residual, avoiding subtraction
+    of two nearly equal squared singular values.
+    """
+    x, y = ([row[j] for row in m] for j in range(2))
+    overlap = vdot(x, y)
+    if overlap:
+        coupling = abs(overlap)
+        phase = overlap.conjugate() / coupling
+        difference = norm2(y) - norm2(x)
+        tangent = math.copysign(
+            2 * coupling / (abs(difference) + math.hypot(difference, 2 * coupling)),
+            difference,
+        )
+        cosine = 1 / math.hypot(1, tangent)
+        sine = cosine * tangent
+        columns = [
+            [cosine * a - sine * phase * b for a, b in zip(x, y)],
+            [sine * a + cosine * phase * b for a, b in zip(x, y)],
+        ]
+        right_rows = [[cosine, -sine * phase.conjugate()], [sine, cosine * phase.conjugate()]]
     else:
-        v0 = b
-        v1 = lam1 - a + 0j
-    inv = 1.0 / math.sqrt(abs(v0) ** 2 + abs(v1) ** 2)
-    u00, u10 = v0 * inv, v1 * inv
-    # 正交伙伴列（满足 u[:,0]^dagger u[:,1] = 0 且单位范数）
-    u01, u11 = -u10.conjugate(), u00.conjugate()
-    return [max(0.0, lam1), max(0.0, lam2)], [[u00, u01], [u10, u11]]
+        columns = [x, y]
+        right_rows = [[1 + 0j, 0j], [0j, 1 + 0j]]
+
+    left_columns, singular_values, vh = [], [], []
+    for j in sorted(range(2), key=lambda j: norm2(columns[j]), reverse=True):
+        column = columns[j]
+        if left_columns:
+            # Remove roundoff parallel to the first column before dividing
+            # by the small norm. The exact rotated columns are orthogonal.
+            larger = left_columns[0]
+            parallel = vdot(larger, column)
+            column = [value - parallel * basis for value, basis in zip(column, larger)]
+        sigma = math.sqrt(norm2(column))
+        if sigma > TOL:
+            left_columns.append([value / sigma for value in column])
+            singular_values.append(sigma)
+            vh.append(right_rows[j])
+    u = [[column[i] for column in left_columns] for i in range(len(m))]
+    return u, singular_values, vh
 
 
 def _svd_2x4(m: Matrix) -> Tuple[Matrix, List[float], Matrix]:
-    """对 2x4 复矩阵 M 做精简精确 SVD：M = U (2xr) @ diag(s) @ Vh (rx4)。"""
-    gram = matmul(m, dagger(m))  # 2x2 厄米半正定
-    evals, u_full = _hermitian_2x2_eig(gram)
-    sigmas = [math.sqrt(ev) for ev in evals]
-    kept = [idx for idx, s in enumerate(sigmas) if s > TOL]
-    u_cols = [[u_full[r][c] for c in kept] for r in range(2)]
-    s_kept = [sigmas[c] for c in kept]
-    # Vh = diag(1/s) @ U^dagger @ M
-    uh_m = matmul(dagger(u_cols), m)
-    vh = [[uh_m[i][j] / s_kept[i] for j in range(4)] for i in range(len(kept))]
-    return u_cols, s_kept, vh
-
-
-def _svd_4x2(m: Matrix) -> Tuple[Matrix, List[float], Matrix]:
-    """对 4x2 复矩阵 M 做精简精确 SVD：M = U (4xr) @ diag(s) @ Vh (rx2)。"""
-    gram = matmul(dagger(m), m)  # 2x2 厄米半正定
-    evals, v_full = _hermitian_2x2_eig(gram)
-    sigmas = [math.sqrt(ev) for ev in evals]
-    kept = [idx for idx, s in enumerate(sigmas) if s > TOL]
-    v_cols = [[v_full[r][c] for c in kept] for r in range(2)]
-    s_kept = [sigmas[c] for c in kept]
-    # U = M @ V @ diag(1/s)
-    mv = matmul(m, v_cols)
-    u = [[mv[i][j] / s_kept[j] for j in range(len(kept))] for i in range(4)]
-    vh = dagger(v_cols)
-    return u, s_kept, vh
+    """Apply the same two-column SVD to the conjugate transpose."""
+    u, singular_values, vh = _svd_4x2(dagger(m))
+    return dagger(vh), singular_values, dagger(u)
 
 
 class MPS3:
-    """3 比特开放边界左正则矩阵乘积态（纯标准库实现，支持任意 3 比特纯态精确拆解与截断）。"""
+    """3 比特开放边界左正则矩阵乘积态。浮点奇异值按 TOL 判定数值秩。"""
 
     def __init__(
         self,
@@ -963,7 +950,24 @@ def verify_mps_engine() -> dict:
         assert abs(norm2([a - b for a, b in zip(vec, raw_r)]) - eps_r) < TOL
         assert abs(abs(vdot(vec, renorm_r)) - math.sqrt(1.0 - eps_r)) < TOL
 
+    # The weak Schmidt direction can occur at either cut. Use complex input
+    # and check the small norm independently of reconstruction and isometry.
+    weak_cases = []
+    for small in (1e-6, 1e-8, 1e-9, 1e-10):
+        for index, dims in ((3, (1, 2)), (6, (2, 1)), (7, (2, 2))):
+            psi = [0j] * 8
+            psi[0], psi[index] = math.sqrt(1 - small ** 2), 1j * small
+            weak = MPS3.from_statevector(psi)
+            weak.assert_left_canonical()
+            assert tuple(map(len, (weak.sigma1, weak.sigma2))) == dims
+            assert max(abs(a - b) for a, b in zip(psi, weak.contract_statevector())) < TOL
+            for sigmas in (weak.sigma1, weak.sigma2):
+                if len(sigmas) == 2:
+                    assert abs(sigmas[1] - small) < small * 1e-11
+            weak_cases.append((index, small))
+
     return {
+        "weak_schmidt_cases": weak_cases,
         "ghz3_bond_dims": [len(mps_ghz.sigma1), len(mps_ghz.sigma2)],
         "ghz3_max_error": err_ghz,
         "w3_bond_dims": [len(mps_w3.sigma1), len(mps_w3.sigma2)],

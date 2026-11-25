@@ -6,7 +6,7 @@
 
 如果已经几年没碰数学，不必一口气啃完本章，可按“必读 ★ / 进阶按需 ☆”节奏推进：
 
-- **进入 [物理篇 Q1：从实验认识量子态](quantum-mechanics/01-experiments-states.md) 和 [第 02 章单量子比特](02-single-qubit.md) 前（★ 核心必读）**：先读第 1–4 节、第 5 节的 Pauli 矩阵与对易子，再看第 8 节的条件概率与期望。
+- **进入 [第 02 章单量子比特](02-single-qubit.md) 前（★ 核心必读）**：先读第 1–4 节。碰到 Pauli 矩阵和实验频率时，可回看第 5 节与第 8 节。这些计算也会用在[物理篇 Q1 的干涉和自旋实验](quantum-mechanics/01-experiments-states.md)中。
 - **读到谱分解、密度矩阵、量子演化与读出校准时（★ 核心进阶）**：回来看第 5–6 节的正规阵条件、Sylvester 正半定判据、矩阵指数与 SVD 条件数。
 - **进入 [第 03 章多量子比特与纠缠](03-multiple-qubits.md) 前（★ 多比特必读）**：补上第 7 节的张量积、混合乘积律与部分迹分块直觉。
 - **进入算法篇 [第 06 章](06-algorithmic-primitives.md)、[第 07 章](07-algorithms.md) 与信息论篇章时（☆ 按需回看）**：再读第 7.4 节（克罗内克和与 $\operatorname{vec}$）、第 8.5 节（二元信息熵）与第 9 节（渐近复杂度）。
@@ -941,14 +941,14 @@ flowchart LR
 
 实际手算矩阵指数时，有两条极省力的实用捷径（此处直接借用 $e^x, \cos\theta, \sin\theta$ 三个熟知的幂级数展开式——它们源自微积分中的泰勒级数，现阶段当作已知代数恒等式使用即可）：
 
-- **捷径 1（谱分解法，通用）**：若 $A = \sum_j \lambda_j P_j$，由于正交投影满足 $P_j^2 = P_j$ 且 $P_j P_k = 0$（$j \neq k$），交叉项全部消失，高次幂直接坍缩成 $A^m = \sum_j \lambda_j^m P_j$。代回级数，每一项只作用在本征值上：
+- **捷径 1（已有正交谱分解）**：若 $A = \sum_j \lambda_j P_j$，由于正交投影满足 $P_j^2 = P_j$ 且 $P_j P_k = 0$（$j \neq k$），交叉项全部消失，高次幂直接坍缩成 $A^m = \sum_j \lambda_j^m P_j$。代回级数，每一项只作用在本征值上：
 
   $$
   e^A = \sum_j e^{\lambda_j} P_j.
   $$
 
-  一句话记牢：**算矩阵指数，就是只给本征值取指数，不动投影方向**。
-- **捷径 2（$A^2 = I$ 偶奇拆分法，Pauli 门专享）**：$X, Y, Z$ 和 $H$ 都满足 $A^2 = I$，因此 $A^3 = A, A^4 = I, \dots$。把 $e^{\pm i\theta A}$ 的偶次幂和奇次幂分开，对照 $\cos\theta = 1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots$ 与 $\sin\theta = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots$，立刻收拢成
+  在这个前提下，矩阵指数只改各个本征值，投影方向保持不变。第 5.5 节的非正规矩阵 $N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$ 只有本征值 $0$，但由 $N^2=0$ 得 $e^N=I+N$。只有一个本征方向时，无法靠正交谱分解重建这个结果。第 6.4 节的 SVD 有两组奇异向量，不能将其中的奇异值当成本征值逐项取指数。
+- **捷径 2（$A^2=I$ 的偶奇拆分法）**：$X, Y, Z$ 和 $H$ 都满足 $A^2 = I$，因此 $A^3 = A, A^4 = I, \dots$。把 $e^{\pm i\theta A}$ 的偶次幂和奇次幂分开，对照 $\cos\theta = 1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots$ 与 $\sin\theta = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots$，立刻收拢成
 
   $$
   e^{\pm i\theta A} = (\cos\theta)\,I \pm i(\sin\theta)\,A \qquad (\text{当 } A^2 = I).
@@ -971,7 +971,7 @@ flowchart LR
 - **用捷径 2（$X^2 = I$）**：$\cos(\pi/4) I - i\sin(\pi/4) X = \frac{1}{\sqrt{2}}I - \frac{i}{\sqrt{2}}X = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & -i \\ -i & 1\end{bmatrix}$，一步出结果且两条路径完全吻合！核对第一列（输入 $|0\rangle$ 的输出）：$\frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)$，两项模平方各为 $1/2$，总和为 $1$。
 - **易错点 1（不要逐格取指数）**：如果错误地把 $-i\frac{\pi}{4}X = \begin{bmatrix}0 & -i\pi/4 \\ -i\pi/4 & 0\end{bmatrix}$ 的每一格单独取指数，零格会变成 $e^0 = 1$，算出 $\begin{bmatrix}1 & e^{-i\pi/4} \\ e^{-i\pi/4} & 1\end{bmatrix}$——它的每一列长度平方都是 $1^2 + |e^{-i\pi/4}|^2 = 2 \neq 1$，破坏了酉性。
 
-**算例 B（易错点 2：不对易矩阵不能直接把指数相加）**：对普通数总有 $e^a e^b = e^{a+b}$，但对矩阵一般**不成立**，因为 $(A + B)^2 = A^2 + AB + BA + B^2$；除非 $[A, B] = 0$（$AB = BA$），否则 $AB + BA \neq 2AB$。拿 $A = i\frac{\pi}{2}X$ 和 $B = i\frac{\pi}{2}Z$ 实算一次就明白：
+**算例 B（易错点 2：什么时候能合并两个矩阵指数）**：当 $[A,B]=0$ 时，$A$ 与 $B$ 的任意次幂可以交换，用二项式展开 $(A+B)^m$ 并对照两条指数级数，可得 $e^Ae^B=e^{A+B}$。如果 $[A,B]\ne 0$，合并的等式一般不成立。拿 $A = i\frac{\pi}{2}X$ 和 $B = i\frac{\pi}{2}Z$ 实算一次就明白：
 
 - 分别对正号情形应用捷径 2（把上式中的矩阵依次取为 $X$、$Z$，角度取 $\theta = \frac{\pi}{2}$）：$e^A = e^{i\frac{\pi}{2}X} = \cos(\frac{\pi}{2})I + i\sin(\frac{\pi}{2})X = iX$，同理 $e^B = e^{i\frac{\pi}{2}Z} = iZ$。相乘得
 
@@ -989,6 +989,10 @@ flowchart LR
 
   算具体数值：$\frac{\pi}{\sqrt{2}} \approx 2.2214$ 弧度（约 $127.3^\circ$），左上角主对角元为 $\cos(\frac{\pi}{\sqrt{2}}) + \frac{i}{\sqrt{2}}\sin(\frac{\pi}{\sqrt{2}}) \approx -0.6057 + 0.5626i \neq 0$！与 $e^A e^B$ 的零对角元截然不同。正是这个非对易差异，催生了 [第 06 章](06-algorithmic-primitives.md) 与 [第 07 章](07-algorithms.md) 的 Trotter 拆分模拟技术。
 
+**固定角度也可能巧合地相等。** 取 $A=6\pi iX$、$B=8\pi iZ$。利用 $XZ+ZX=0$，得到 $(3X+4Z)^2=(9+16)I=25I$。因此 $A,B,A+B$ 都能用捷径 2，角度分别为 $6\pi,8\pi,10\pi$，三个指数都等于 $I$。对易子却是 $[A,B]=96\pi^2iY\ne0$。这里仅比较了一个固定的参数点。
+
+若换成 $e^{tA}e^{tB}=e^{t(A+B)}$ 在 $t=0$ 附近对所有实数 $t$ 恒成立，就能比较 $t^2$ 的系数。左边是 $(A^2+B^2)/2+AB$，右边是 $(A^2+B^2)/2+(AB+BA)/2$。系数之差为 $[A,B]/2$，只能为零。这时才可由等式反推对易。
+
 ### 6.4 进阶选读：奇异值分解（SVD）、三大矩阵范数与读出条件数
 
 5.5 节说非正规矩阵（甚至非方阵）没有正交归一的本征基。那遇到一般 $m\times n$ 复矩阵 $A$（例如多比特纠缠的 Schmidt 系数阵、硬件读出混淆矩阵，或第 16 章 QSVT 要处理的非厄米矩阵）时，怎么看清它在各个方向上的拉伸倍数？
@@ -999,9 +1003,9 @@ $$
 A = W \Sigma V^\dagger = \sum_{j=1}^{r} \sigma_j |w_j\rangle\langle v_j|.
 $$
 
-这里 $W$（$m\times m$，各列为**左奇异向量** $|w_j\rangle$）和 $V$（$n\times n$，各列为**右奇异向量** $|v_j\rangle$）都是酉矩阵，$\Sigma$ 是 $m\times n$ 的矩形对角阵，主对角线上依次排列着 $r = \min(m, n)$ 个非负实数 $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r \ge 0$（称为**奇异值**），其余位置全为零。在几何上，**$A$ 把输入空间的单位圆（球）先用 $V^\dagger$ 旋转对齐坐标轴，再沿各轴按 $\sigma_j$ 拉伸压扁成椭圆，最后用 $W$ 旋转到输出方向**；因此最大奇异值 $\sigma_{\max}$ 是椭圆最长半轴，最小奇异值 $\sigma_{\min}$ 是最短半轴。
+这里 $W$（$m\times m$，各列为**左奇异向量** $|w_j\rangle$）和 $V$（$n\times n$，各列为**右奇异向量** $|v_j\rangle$）都是酉矩阵，$\Sigma$ 是 $m\times n$ 的矩形对角阵，主对角线上依次排列着 $r = \min(m, n)$ 个非负实数 $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r \ge 0$（称为**奇异值**），其余位置全为零。从输入空间看，$V^\dagger$ 先把坐标旋转到右奇异向量方向，$\Sigma$ 再伸缩或压掉各方向，$W$ 最后在输出空间旋转。方阵可逆时，最大和最小奇异值就是单位球像的最长和最短半轴。宽矩阵要额外计入被压掉的输入方向。例如 $A=[1\;0]$ 的薄 SVD 只列出奇异值 $1$，但 $A[0,1]^T=0$。在整个输入空间，$\min_{\lVert x\rVert_2=1}\lVert Ax\rVert_2=0$，可从 $A^\dagger A=\operatorname{diag}(1,0)$ 最小特征值开平方得到。
 
-怎么不用黑箱软件、靠手算求 SVD？核心只有一句话：对任意矩阵 $A$，乘积 $A^\dagger A$ 一定是**厄米且正半定**的方阵（因为 $\langle x|A^\dagger A|x\rangle = \|A|x\rangle\|^2 \ge 0$），且 $A^\dagger A = V\Sigma^\dagger\Sigma V^\dagger$——所以 **$A$ 的奇异值正是 $A^\dagger A$ 本征值的非负平方根 $\sigma_j = \sqrt{\mu_j}$，右奇异向量 $|v_j\rangle$ 就是 $A^\dagger A$ 的正交归一特征向量，而当 $\sigma_j > 0$ 时左奇异向量一步给出 $|w_j\rangle = \frac{1}{\sigma_j}A|v_j\rangle$**。
+怎么不用黑箱软件、靠手算求 SVD？核心只有一句话：对任意矩阵 $A$，乘积 $A^\dagger A$ 一定是**厄米且正半定**的方阵（因为 $\langle x|A^\dagger A|x\rangle = \|A|x\rangle\|^2 \ge 0$），且 $A^\dagger A = V\Sigma^\dagger\Sigma V^\dagger$——所以 对 $A^\dagger A$ 的本征值 $\mu_j$ 开非负平方根，就得到相应输入方向的伸长率 $\sigma_j=\sqrt{\mu_j}$。当 $\sigma_j>0$ 时，右奇异向量 $|v_j\rangle$ 对应的左奇异向量为 $|w_j\rangle=A|v_j\rangle/\sigma_j$。零本征值对应被压成零的方向，其中宽矩阵额外的 $n-m$ 个零不在薄 SVD 的列表中。手算可用这条关系。浮点实现中，$A^\dagger A$ 会平方伸长倍率之比，使弱奇异值更容易被舍入误差淹没，应优先使用直接 SVD，见[第 21 章](21-stabilizer-classical-simulation.md)。
 
 **算例 A（非对称 $2\times 2$ 矩阵的完整逐步 SVD 手算）**：考察实剪切矩阵 $A = \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}$。它不对称且非正规，无法做正交谱分解，但 SVD 可以按步算清：
 
@@ -1065,7 +1069,20 @@ A = \begin{bmatrix}1 - \alpha & \beta \\ \alpha & 1 - \beta\end{bmatrix},
 \det A = 1 - \alpha - \beta.
 $$
 
-这里 $p = (p_0, p_1)^T$ 是理想真实概率，$q = (q_0, q_1)^T$ 是仪器报告的概率，$\alpha$ 是“真 0 错报 1”的概率，$\beta$ 是“真 1 错报 0”的概率。当 $\det A \neq 0$ 时，逆矩阵为 $A^{-1} = \frac{1}{1 - \alpha - \beta}\begin{bmatrix}1 - \beta & -\beta \\ -\alpha & 1 - \alpha\end{bmatrix}$。
+在计算基经典混淆模型中，$p = (p_0, p_1)^T$ 是计算基的理想概率，$q = (q_0, q_1)^T$ 是仪器报告的概率，$\alpha$ 是“真 0 错报 1”的概率，$\beta$ 是“真 1 错报 0”的概率。当 $\det A \neq 0$ 时，逆矩阵为 $A^{-1} = \frac{1}{1 - \alpha - \beta}\begin{bmatrix}1 - \beta & -\beta \\ -\alpha & 1 - \alpha\end{bmatrix}$。
+
+**什么时候两列校准足够？** 若输入确实是按经典标签准备的 $|0\rangle$、$|1\rangle$ 混合，按全概率公式可得 $q=Ap$。对任意含相干的输入，需额外假定两个有效读出测量效应在计算基中是对角的。例如仪器先在计算基理想投影，再对经典结果作随机翻转。
+
+把报 1 的有效读出写成一对矩阵 $E_1$、$E_0=I-E_1$，概率是 $\langle\psi|E_1|\psi\rangle$。两次基态校准只测到 $E_1$ 的两个对角元。取
+
+$$
+E_1^{(0)}=\begin{bmatrix}0.05&0\\0&0.90\end{bmatrix},\qquad
+E_1^{(1)}=\begin{bmatrix}0.05&0.10\\0.10&0.90\end{bmatrix}.
+$$
+
+它们对 $|0\rangle$、$|1\rangle$ 的报 1 概率都分别为 $0.05$、$0.90$。两组 $E_1$ 和 $I-E_1$ 的对角元均非负，其中第二组的行列式分别为 $0.035$、$0.085$，所以各矩阵正半定，且每组成对相加为 $I$。它们都是合法的二结果测量（POVM）。
+
+现在用 $|\psi\rangle=\sqrt{0.9}|0\rangle+\sqrt{0.1}|1\rangle$ 试一下。第一组报 1 的概率为 $0.05\times0.9+0.90\times0.1=0.135$。第二组还多了两个非对角贡献 $2\times0.10\sqrt{0.9\times0.1}=0.060$，所以概率为 $0.195$。两列校准相同，此输入的实际报告概率却不相同。
 
 **什么时候求逆安全，什么时候求逆会把采样噪声吹成灾难？** 用刚才的 SVD 椭圆一看便知：最大与最小奇异值之比定义为**二范数条件数**：
 
@@ -1082,7 +1099,7 @@ $$
 \frac{\|\delta p\|_2}{\|p\|_2} \le \kappa_2(A)\,\frac{\|\delta q\|_2}{\|q\|_2}.
 $$
 
-酉矩阵保持单位圆不变（$\sigma_{\max} = \sigma_{\min} = 1$），所以绝对与相对放大倍数均为 $1$——**酉门绝不放大噪声**；上面剪切矩阵的 $1/\sigma_{\min} = \varphi \approx 1.618$、$\kappa_2 = \varphi / \varphi^{-1} = \varphi^2 \approx 2.618$；而当读出矩阵两列趋于平行时，$\sigma_{\min} \to 0$，两把尺子都会趋于无穷大。
+酉矩阵保持单位圆不变（$\sigma_{\max} = \sigma_{\min} = 1$），所以绝对与相对放大倍数均为 $1$——**同一酉矩阵保持输入扰动的二范数**；上面剪切矩阵的 $1/\sigma_{\min} = \varphi \approx 1.618$、$\kappa_2 = \varphi / \varphi^{-1} = \varphi^2 \approx 2.618$；而当读出矩阵两列趋于平行时，$\sigma_{\min} \to 0$，两把尺子都会趋于无穷大。
 
 ![奇异值分解几何椭圆与条件数噪声放大](assets/v3-01-svd-condition-ellipse.svg)
 
@@ -1097,7 +1114,7 @@ $$
 - **优质读出（$e = 0.05$）**：$\kappa_2 = \frac{1}{0.9} \approx 1.11$，$1\%$ 采样抖动 $\delta q = (0.01, -0.01)^T$ 反演后仅为 $(0.0111, -0.0111)^T$。
 - **糟糕读出（$e = 0.45$）**：$\kappa_2 = \frac{1}{0.1} = 10$，同样 $1\%$ 抖动反演后放大 10 倍成 $(0.10, -0.10)^T$；若某批样本碰巧测出 $q = (0.58, 0.42)^T$，直接乘 $A(0.45)^{-1} = \frac{1}{0.1}\begin{bmatrix}0.55 & -0.45 \\ -0.45 & 0.55\end{bmatrix}$ 会算出 $p = (1.30, -0.30)^T$——出现了落在 $[0, 1]$ 之外的负值！
 
-**算例 C（不对称读出矩阵的三把尺子辨析）**：一旦 $\alpha \neq \beta$，最大奇异值不再等于 $1$，三把放大尺子便各不相同。以[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)将完整演练的 $\alpha = 0.12,\; \beta = 0.23$ 为例（$\det A = 0.65$），由 $A^T A$ 配方求得 $\sigma_{\max}\approx 1.0103$、$\sigma_{\min}\approx 0.6434$，于是沿差值方向的倍率 $1/\det A \approx 1.538$、全方向绝对放大上界 $1/\sigma_{\min} \approx 1.554$ 与相对条件数 $\kappa_2(A) \approx 1.570$ 彼此分离；当 $\alpha + \beta = 1$ 时 $\det A = 0$，矩阵不可逆。完整的读出方差传播与校准流程见[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)、[第 09 章第 5.3 节](09-hardware.md)与[第 14 章第 9 节](14-compilation-control.md)。
+**算例 C（不对称读出矩阵的三把尺子辨析）**：一旦 $\alpha \neq \beta$，最大奇异值不再等于 $1$，三把放大尺子便各不相同。以[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)将完整演练的 $\alpha = 0.12,\; \beta = 0.23$ 为例（$\det A = 0.65$），由 $A^T A$ 配方求得 $\sigma_{\max}\approx 1.0103$、$\sigma_{\min}\approx 0.6434$，于是沿差值方向的倍率 $1/\det A \approx 1.538$、全方向绝对放大上界 $1/\sigma_{\min} \approx 1.554$ 与相对条件数 $\kappa_2(A) \approx 1.570$ 彼此分离；当 $\alpha + \beta = 1$ 时两列相同，两个基态连理想报告频率都无法区分，矩阵不可逆。上述误差增益适用于固定校准矩阵。若 $A$ 也由有限样本测得，从 $\mathrm{d}q=(\mathrm{d}A)p+A\,\mathrm{d}p$ 得 $\mathrm{d}p=A^{-1}(\mathrm{d}q-(\mathrm{d}A)p)$，还要追踪校准误差及其与报告频率是否共用数据。完整的读出方差传播与校准流程见[第 02 章第 8.3 节](02-single-qubit.md#83-不对称读出校准方差传播与-spam-边界)、[第 09 章第 5.3 节](09-hardware.md)与[第 14 章第 9 节](14-compilation-control.md)。
 
 ---
 
@@ -1299,9 +1316,11 @@ $$
 - **乘积算符 $A \otimes B = \begin{bmatrix}a_{00}B & a_{01}B \\ a_{10}B & a_{11}B\end{bmatrix}$**：逐块取迹得 $\operatorname{Tr}_B(A\otimes B) = A\,\operatorname{Tr}(B)$；主对角块相加得 $\operatorname{Tr}_A(A\otimes B) = (a_{00} + a_{11})B = \operatorname{Tr}(A)\,B$。
 - **Bell 态密度矩阵 $\rho_{\Phi^+} = |\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}\begin{bmatrix}1&0&0&1 \\ 0&0&0&0 \\ 0&0&0&0 \\ 1&0&0&1\end{bmatrix}$**：它的四个 $2\times 2$ 子块依次为 $M_{00}=\frac{1}{2}\begin{bmatrix}1&0\\0&0\end{bmatrix}$、$M_{01}=\frac{1}{2}\begin{bmatrix}0&1\\0&0\end{bmatrix}$、$M_{10}=\frac{1}{2}\begin{bmatrix}0&0\\1&0\end{bmatrix}$、$M_{11}=\frac{1}{2}\begin{bmatrix}0&0\\0&1\end{bmatrix}$。逐块取迹得 $\operatorname{Tr}_B(\rho_{\Phi^+}) = \frac{1}{2}\begin{bmatrix}1&0\\0&1\end{bmatrix} = \frac{I}{2}$，主对角块相加同样得 $\operatorname{Tr}_A(\rho_{\Phi^+}) = M_{00} + M_{11} = \frac{1}{2}\begin{bmatrix}1&0\\0&1\end{bmatrix} = \frac{I}{2}$——整体是纯态，但单独看其中任意一端都是完全随机的 $\frac{I}{2}$！
 
-![张量积升维与偏迹降维的互逆结构](assets/v4-01-tensor-partial-trace.svg)
+![张量积分块与偏迹如何从联合矩阵提取边缘](assets/v4-01-tensor-partial-trace.svg)
 
 上图把第 7.2 节的印章分块升维（$2\times 2 \to 4\times 4$）与本节的逐块取迹 / 主对角块相加降维（$4\times 4 \to 2\times 2$）并列对照，方便在[第 03 章](03-multiple-qubits.md)与[第 05 章](05-noise-channels.md)反复回查（可打开[原尺寸张量积与偏迹结构图](assets/v4-01-tensor-partial-trace.svg)查看细节）。
+
+**约化态一般不能反推联合态。** Bell 态 $\rho_{\Phi^+}$ 和均匀混合态 $I_4/4$ 的两个约化态都是 $I_2/2$。对后者，逐块取迹或主对角块相加都把每个留下的对角元变为 $1/4+1/4=1/2$。但在全书大端计算基下，两者的 $(00,11)$ 元分别是 $1/2$ 和 $0$。偏迹把这个关联信息丢掉了。若另已知联合态是乘积态，就能把两份边缘态重新张量积。
 
 **2. 克罗内克和（Kronecker sum）与无耦合多体演化**
 
@@ -1315,8 +1334,10 @@ $$
 
 在量子信道与超算符章节，常把 $d\times d$ 矩阵 $X$ 拉直成 $d^2$ 维列向量 $\operatorname{vec}(X)$，从而把双边夹心乘法 $AXB$ 写成单边矩阵乘向量。不同教材存在**行优先**与**列优先**两套约定，切忌混用（以 $2\times 2$ 矩阵 $X = \begin{bmatrix}x_{00} & x_{01} \\ x_{10} & x_{11}\end{bmatrix}$ 为例）：
 
-- **行优先拉直**（物理与 Choi 矩阵常用）：按行依次堆叠 $\operatorname{vec}_r(X) = [x_{00}, x_{01}, x_{10}, x_{11}]^T$，满足 $\operatorname{vec}_r(AXB) = (A \otimes B^T)\,\operatorname{vec}_r(X)$；
+- **行优先拉直**（本书的张量积编号约定）：按行依次堆叠 $\operatorname{vec}_r(X) = [x_{00}, x_{01}, x_{10}, x_{11}]^T$，满足 $\operatorname{vec}_r(AXB) = (A \otimes B^T)\,\operatorname{vec}_r(X)$；
 - **列优先拉直**（线性代数与控制论常用）：按列依次堆叠 $\operatorname{vec}_c(X) = [x_{00}, x_{10}, x_{01}, x_{11}]^T$，满足 $\operatorname{vec}_c(AXB) = (B^T \otimes A)\,\operatorname{vec}_c(X)$。
+
+**符号回验。** 取 $X=|0\rangle\langle0|$、$K=\operatorname{diag}(1,i)H$，将 $A=K$、$B=K^\dagger$ 代入行优先公式。直接算得 $K|0\rangle=(|0\rangle+i|1\rangle)/\sqrt{2}$，它的外积按行拉直为 $[1,-i,i,1]^T/2$。按右式做张量积，$B^T=K^*$ 也给同一结果。把公式中的普通转置误用成共轭转置会改变这些分量。
 
 ---
 
@@ -1350,7 +1371,7 @@ $$
 
 单看公式很容易头晕，也极易忽略“先验比例”（即基准率忽略）。最不容易算错的办法，是直接画一张 **1000 次采样的自然频率表**，把小数概率变成直观的整数计数。
 
-**算例（稀有 $|1\rangle$ 信号下的量子读出反推）**：设某个弱激发量子态只有 $10\%$ 的概率处于真 $|1\rangle$（$90\%$ 为真 $|0\rangle$）。读出仪器不算太差：真 $|1\rangle$ 有 $90\%$ 正确报 `1`（$10\%$ 漏报 `0`），真 $|0\rangle$ 有 $95\%$ 正确报 `0`（仅 $5\%$ 误报 `1`）。现在某次测量屏幕跳出了 `1`，它真的是 $|1\rangle$ 的概率有多大？
+**算例（由读出反推经典制备标签）**：每轮先随机选择制备标签：以 $10\%$ 概率选择 $|1\rangle$，以 $90\%$ 概率选择 $|0\rangle$。我们只看仪器读数，暂时不看标签记录。读出仪器不算太差：真 $|1\rangle$ 有 $90\%$ 正确报 `1`（$10\%$ 漏报 `0`），真 $|0\rangle$ 有 $95\%$ 正确报 `0`（仅 $5\%$ 误报 `1`）。现在某次测量屏幕跳出了 `1`，它真的是 $|1\rangle$ 的概率有多大？
 
 直接拿 $1000$ 次独立采样把结果分流进四格表：
 
@@ -1368,7 +1389,7 @@ $$
 
 同样可以把整件事画成一块 $1 \times 1$ 的单位正方形面积：先竖切一刀分成宽 $0.10$ 的左栏（真 $|1\rangle$）和宽 $0.90$ 的右栏（真 $|0\rangle$）；再把左栏涂高 $0.90$（面积 $0.090$），把右栏涂高 $0.05$（面积 $0.045$）。得知报了 `1`，相当于把没涂色的空白全部裁掉，只看左阴影占总阴影的比例 $\frac{0.090}{0.090 + 0.045} = \frac{2}{3}$。明明仪器对两种态的准确率分别高达 $90\%$ 和 $95\%$，可因为真 $|1\rangle$ 本身稀少，报出来的 `1` 里竟然仍有整整 $1/3$ 是假阳性！
 
-这里顺便划清一条重要边界：贝叶斯公式描述的是**得知经典信息后更新我们的知识概率**；而物理上的量子测量除了产生经典读数，还可能改变被测量子系统本身的状态（见 [第 02 章单量子比特](02-single-qubit.md)）。
+这里的 $2/3$ 是已知读数后对经典制备标签的后验。若输入总是同一个相干纯态，测量前并没有这样抽取的标签。读出效应还可能依赖相干项，见第 6.4 节反例。至于读出之后的量子状态，还须知道具体测量过程，见[第 02 章](02-single-qubit.md)。
 
 ### 8.3 期望、方差与重复测量的 $1/\sqrt{N}$ 波动
 
@@ -1502,7 +1523,7 @@ $$
 | :--- | :---: | :--- | :--- | :--- |
 | $O(g(n))$ | $\lesssim$（至多这么快） | **天花板（上界）** | 对所有 $n \ge n_0$，有 $0 \le T(n) \le c\,g(n)$ | $O(n^2)$（紧）；**$O(n^3)$ 也对**（只是偏松） |
 | $\Omega(g(n))$ | $\gtrsim$（至少这么快） | **地板（下界）** | 对所有 $n \ge n_0$，有 $0 \le c\,g(n) \le T(n)$ | $\Omega(n^2)$（紧）；**$\Omega(n)$ 也对**（只是偏松） |
-| $\Theta(g(n))$ | $\asymp$（夹在同阶） | **上下夹紧（紧界）** | 对所有 $n \ge n_0$，同时满足 $0 \le c_1 g(n) \le T(n) \le c_2 g(n)$ | **只有** $\Theta(n^2)$ |
+| $\Theta(g(n))$ | $\asymp$（夹在同阶） | **上下夹紧（紧界）** | 对所有 $n \ge n_0$，同时满足 $0 \le c_1 g(n) \le T(n) \le c_2 g(n)$ | 属于二次阶 $\Theta(n^2)$，也可等价写为 $\Theta(2n^2+n)$ |
 
 **算例 A（上下夹逼证 $\Theta$）**：考察步数函数 $T(n) = 3n^2 + 7n + 2$。对所有整数 $n \ge 1$，有 $7n \le 7n^2$ 和 $2 \le 2n^2$，而且低阶项均为正，于是
 
@@ -1540,7 +1561,7 @@ $$
 
 最后盯紧最容易被宣传话术混淆的一点：**查询复杂度（query complexity）不等于端到端墙钟时间**。查询模型把检查数据封装成一个“预言机（oracle）”黑箱，只数调用了几次黑箱。例如 Grover 搜索在 $N = 2^{20}$ 个候选项里找到目标，查询次数从经典 $O(N)$ 降到量子 $O(\sqrt{N})$，这里 $\sqrt{N} = 2^{10} = 1024$。但是：
 
-1. “大约一千次查询”不等于“大约一千个物理门”——如果每次黑箱内部要拆成 $100$ 个基本门，光黑箱本身就超过 $10^5$ 门，还没计入状态制备、路由、纠错、读出和重复采样；
+1. 例如恰做 $1000$ 次查询，每次拆成 $100$ 个基本门，黑箱部分一共 $10^5$ 个基本门。单轮还要计入初态制备、非查询门、路由、纠错与读出。按检验标准重复运行时，这些单轮成本也会重复；
 2. 对输入位数 $n$ 而言，$N = 2^n$ 降到 $\sqrt{N} = 2^{n/2}$，增速仍然是指数级的，这叫**平方根（二次）查询加速**，不能因为式子里出现了 $2^n$ 就误称为“指数加速”。
 
 ---
@@ -1551,8 +1572,8 @@ $$
 - **直接平方算概率**：把振幅 $\alpha$ 直接平方得到 $\alpha^2$，而不是取模平方 $|\alpha|^2 = \alpha^*\alpha$。
 - **混用被动换基与主动施门**：只把态改写到新基下，却忘了把测量算符也同步换成 $W^\dagger A W$。
 - **只看列归一就当酉门**：两列长度都为 $1$ 却不正交（如 $\begin{bmatrix}1&1\\0&0\end{bmatrix}$），在叠加态上立刻破坏归一化。
-- **只看对角线或顺序主子式就判正半定**：对角元全正的厄米矩阵（如 $\begin{bmatrix}1&2\\2&1\end{bmatrix}$）或顺序主子式均 $\ge 0$ 的矩阵（如 $\begin{bmatrix}0&0\\0&-1\end{bmatrix}$）仍可能有负本征值；同时非正规矩阵（如 $\begin{bmatrix}0&1\\0&0\end{bmatrix}$）不存在正交归一特征基，须改用 SVD。
-- **逐格取矩阵指数或把不对易指数硬相加**：$e^A$ 必须通过谱分解或级数算，不能把矩阵每个格子分别套一次 $e^x$；当 $[A, B] \neq 0$ 时，$e^A e^B \neq e^{A+B}$。
+- **只看对角线或顺序主子式就判正半定**：对角元全正的厄米矩阵（如 $\begin{bmatrix}1&2\\2&1\end{bmatrix}$）或顺序主子式均 $\ge 0$ 的矩阵（如 $\begin{bmatrix}0&0\\0&-1\end{bmatrix}$）仍可能有负本征值。
+- **逐格取矩阵指数或把不对易指数硬相加**：正交谱分解只在有正交本征基时可直接使用，其他矩阵仍可用级数。对易可以保证 $e^Ae^B=e^{A+B}$。不对易时通常不能合并，固定参数处仍可能相等。
 - **混淆张量积顺序与软件位序**：一般 $A \otimes B \neq B \otimes A$；跨教材和软件框架读多比特位串时必须核对是大端序（本手册将 $q_0$ 放在最左）还是小端序（如 Qiskit 将 $q_0$ 放在最右低位）。
 - **把大 $O$ 当秒表或把查询当物理门**：混淆渐近界（$O/\Omega/\Theta$）与输入情形（最坏/最好）；忽略常数交叉点、读出条件数噪声放大以及预言机的真实电路实现成本。
 
@@ -1566,12 +1587,14 @@ $$
 | :--- | :--- |
 | 左共轭内积 $\langle\phi\vert\psi\rangle = \sum_j \phi_j^*\psi_j$ | 右线性、左反线性；概率取模平方 $\lvert z\rvert^2 = z^*z$，绝不取 $z^2$ |
 | 酉门 $U^\dagger U = I$；厄米阵 $A = A^\dagger$ | 酉阵要求各列正交且归一（仅列归一不足够）；正规阵 $A^\dagger A = AA^\dagger$ 方有正交谱分解 |
-| 矩阵指数 $e^{\pm i\theta A} = (\cos\theta)I \pm i(\sin\theta)A$ | 仅当 $A^2 = I$ 成立；$[A,B]\neq 0$ 时 $e^A e^B \neq e^{A+B}$ |
-| SVD $A = W\Sigma V^\dagger$ 与求逆误差界 | 绝对误差放大上界为 $1/\sigma_{\min}$，相对误差放大上界为 $\kappa_2 = \sigma_{\max}/\sigma_{\min}$ |
+| 矩阵指数 $e^{\pm i\theta A} = (\cos\theta)I \pm i(\sin\theta)A$ | 偶奇拆分式由 $A^2=I$ 保证。对易保证 $e^Ae^B=e^{A+B}$，固定参数处也有非对易的巧合 |
+| SVD $A = W\Sigma V^\dagger$ 与求逆误差界 | 对可逆方阵，绝对误差增益上界 $1/\sigma_{\min}$，相对误差增益上界 $\sigma_{\max}/\sigma_{\min}$。宽矩阵须额外看输入核方向 |
 | 张量积 $(A\otimes B)(C\otimes D) = (AC)\otimes(BD)$ | 全书大端序（$q_0$ 在最左）；偏迹 $\operatorname{Tr}_B$ 逐块取迹，$\operatorname{Tr}_A$ 主对角块相加 |
 | 有限采样 $\operatorname{sd}(\hat p) = \sqrt{p(1-p)/N}$ 与 $O/\Omega/\Theta$ | 误差缩至 $1/10$ 需 $100\times$ 采样；$O/\Omega/\Theta$ 描述增速界，不等同最坏/最好情形 |
 
 **三句自检要点**：① 看到 Dirac 表达式先辨对象形状（标量、列向量还是方阵）；② 区分被动换基（态与算符同步变）与主动施门（只变态）；③ 判 $2\times 2$ 正半定须查齐 $a\ge 0,\;d\ge 0,\;\det A\ge 0$，不能只看对角线。
+
+先读[第 02 章](02-single-qubit.md)，把二维列向量和矩阵乘法用在同一个量子比特的制备、旋转与测量上。
 
 ---
 
@@ -1579,20 +1602,20 @@ $$
 
 先做 1–8 题把复数、向量、矩阵和张量积算稳，再做 9–14 题把概率和复杂度串起来。卡住时直接回翻对应小节的算例。
 
-1. 计算 $(1+2i)(3-i)$、$|1+i|^2$ 和 $1/(1+i)$；为什么 $|1+i|^2$ 虽然非负，却不能直接当作归一化态某结果的概率？
-2. 对 $|p\rangle=[1,i]^T$，写出 $\langle p|$、$\langle p|p\rangle$ 和归一化后的列向量。
-3. 把 $[1,1+i]^T$ 归一化，并检查两个分量的模平方之和。
-4. $|1\rangle$ 在 $\{|+\rangle,|-\rangle\}$ 基中的两个坐标是什么？用这两个坐标还原 $|1\rangle$。
-5. 对 $M=\bigl[\begin{smallmatrix}1&i\\0&2\end{smallmatrix}\bigr]$ 和 $|p\rangle=[1,i]^T$，计算 $M|p\rangle$ 与 $M^\dagger$。每个结果是数、列向量还是矩阵？
-6. 对 $|u\rangle=(|0\rangle+i|1\rangle)/\sqrt2$，逐格计算 $|u\rangle\langle u|$、它的迹，以及 $\operatorname{Tr}(|0\rangle\langle0|\,|u\rangle\langle u|)$。
-7. 验证 $X|+\rangle=|+\rangle$、$X|-\rangle=-|-\rangle$；两个本征值分别是多少？
-8. 按 $00,01,10,11$ 的顺序写出 $|1\rangle\otimes|+\rangle$，再用 $H\otimes I$ 作用于 $|01\rangle$。
-9. 某筛查中，1% 的样本有性质 $A$；若有 $A$，测试阳性的概率为 90%；若无 $A$，测试仍有 5% 的概率阳性。观察到阳性后，求 $\Pr(A\mid +)$。先算总阳性率。
-10. 独立做 100 次成功概率为 $1/4$ 的 $0/1$ 试验。成功次数的期望、频率的期望和频率的标准差分别是多少？是否保证恰好成功 25 次？
-11. 若 $|\psi\rangle=(|0\rangle+i|1\rangle)/\sqrt2$，求计算基测量概率与 $\langle X\rangle$。后者要实际算矩阵乘法。
-12. 对 $T(n)=3n^2+7n+2$，在 $n\ge1$ 时找两个常数倍的 $n^2$ 作上、下界，并说出 $T(n)$ 的 $\Theta$ 记号。
-13. 归一化 $[1,i,1-i]^T$；三维向量也用“先算各分量的模平方之和”这条规则。
-14. 为什么“量子算法只调用预言机（oracle）$O(\sqrt N)$ 次”还不能单独推出墙钟时间加速？
+1. 计算 $(1+2i)(3-i)$、$|1+i|^2$ 和 $1/(1+i)$；为什么 $|1+i|^2$ 虽然非负，却不能直接当作归一化态某结果的概率？ <!-- exercise-id: 01-01 -->
+2. 对 $|p\rangle=[1,i]^T$，写出 $\langle p|$、$\langle p|p\rangle$ 和归一化后的列向量。 <!-- exercise-id: 01-02 -->
+3. 把 $[1,1+i]^T$ 归一化，并检查两个分量的模平方之和。 <!-- exercise-id: 01-03 -->
+4. $|1\rangle$ 在 $\{|+\rangle,|-\rangle\}$ 基中的两个坐标是什么？用这两个坐标还原 $|1\rangle$。 <!-- exercise-id: 01-04 -->
+5. 对 $M=\bigl[\begin{smallmatrix}1&i\\0&2\end{smallmatrix}\bigr]$ 和 $|p\rangle=[1,i]^T$，计算 $M|p\rangle$ 与 $M^\dagger$。每个结果是数、列向量还是矩阵？ <!-- exercise-id: 01-05 -->
+6. 对 $|u\rangle=(|0\rangle+i|1\rangle)/\sqrt2$，逐格计算 $|u\rangle\langle u|$、它的迹，以及 $\operatorname{Tr}(|0\rangle\langle0|\,|u\rangle\langle u|)$。 <!-- exercise-id: 01-06 -->
+7. 验证 $X|+\rangle=|+\rangle$、$X|-\rangle=-|-\rangle$；两个本征值分别是多少？ <!-- exercise-id: 01-07 -->
+8. 按 $00,01,10,11$ 的顺序写出 $|1\rangle\otimes|+\rangle$，再用 $H\otimes I$ 作用于 $|01\rangle$。 <!-- exercise-id: 01-08 -->
+9. 某筛查中，1% 的样本有性质 $A$；若有 $A$，测试阳性的概率为 90%；若无 $A$，测试仍有 5% 的概率阳性。观察到阳性后，求 $\Pr(A\mid +)$。先算总阳性率。 <!-- exercise-id: 01-09 -->
+10. 独立做 100 次成功概率为 $1/4$ 的 $0/1$ 试验。成功次数的期望、频率的期望和频率的标准差分别是多少？是否保证恰好成功 25 次？ <!-- exercise-id: 01-10 -->
+11. 若 $|\psi\rangle=(|0\rangle+i|1\rangle)/\sqrt2$，求计算基测量概率与 $\langle X\rangle$。后者要实际算矩阵乘法。 <!-- exercise-id: 01-11 -->
+12. 对 $T(n)=3n^2+7n+2$，在 $n\ge1$ 时找两个常数倍的 $n^2$ 作上、下界，并说出 $T(n)$ 的 $\Theta$ 记号。 <!-- exercise-id: 01-12 -->
+13. 归一化 $[1,i,1-i]^T$；三维向量也用“先算各分量的模平方之和”这条规则。 <!-- exercise-id: 01-13 -->
+14. 为什么“量子算法只调用预言机（oracle）$O(\sqrt N)$ 次”还不能单独推出墙钟时间加速？ <!-- exercise-id: 01-14 -->
 
 完整逐步解答见 [练习与答案：第 1 章](appendices/exercises.md#第-1-章)。
 

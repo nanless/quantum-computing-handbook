@@ -1,6 +1,6 @@
 # 05｜混态、噪声与量子信道
 
-前四章里的量子比特都处于理想封闭环境：初始态是单个纯态列向量 $|\psi\rangle$，演化是可逆酉矩阵 $U$。进入真实量子处理器后，两条现实限制立刻出现：其一，比特不可避免地与周围电磁场、衬底缺陷或控制线路耦合，把相位与能量泄漏到环境中；其二，即使没有环境噪声，只要只观察纠缠对的一半或面对经典随机态制备，单个列向量 $|\psi\rangle$ 已不足以描述全部测量统计。
+[第 03 章](03-multiple-qubits.md)已经用约化密度矩阵描述了纠缠对的一半，[第 04 章](04-circuits-protocols.md)则主要用理想酉门追踪线路里的状态变化。本章把两种描述接起来。随机态制备与只观察纠缠对的一部分都可能产生混态。真实处理器中的比特还会与电磁场、材料缺陷或控制线路耦合，使相干性减弱或能量流出。本章用密度矩阵记录这些状态，再用量子信道描述它们的变化。
 
 本章把量子计算语言从封闭系统升级到开放系统，按两条阅读路径组织（通用记号汇总见[符号表](appendices/notation.md)）：
 
@@ -129,7 +129,7 @@ $$
 |\tilde\psi_j\rangle = \sum_k u_{jk} |\tilde\phi_k\rangle.
 $$
 
-背后的物理画面同样漂亮：把 $\rho$ 视作更大纠缠纯态 $|\Psi\rangle_{AE}$ 忽略环境 $E$ 后的约化态（纯化视角，[第 18 章](18-channels-capacities-complexity.md)展开证明）。在 $E$ 端按计算基 $\{|0\rangle_E, |1\rangle_E\}$ 测量，会把 $A$ 端拆成 $\{|0\rangle, |1\rangle\}$ 系综；改按 Hadamard 基 $\{|+\rangle_E, |-\rangle_E\}$ 测量，就会把同一个 $A$ 端拆成 $\{|+\rangle, |-\rangle\}$ 系综。不同的系综分解，恰好对应给远方环境换了一套正交测量基！
+仍取这里的 $\rho=I/2$，用 Bell 态 $\lvert\Phi^+\rangle_{AE}$ 纯化它。在 $E$ 端测计算基，$A$ 端得到等权的 $\lvert0\rangle,\lvert1\rangle$。改测 $X$ 基，得到等权的 $\lvert+\rangle,\lvert-\rangle$。换成 $\rho=\operatorname{diag}(3/4,1/4)$ 及其纯化 $\sqrt{3/4}\lvert00\rangle+\tfrac12\lvert11\rangle$，同样测 $X$ 基时，$A$ 的两个等权条件态却是 $\sqrt{3/4}\lvert0\rangle\pm\tfrac12\lvert1\rangle$。两组实验里，忽略 $E$ 端的标签都会恢复各自原来的 $\rho$。一般系综可用更大的参考系统或 POVM 实现，见[第 18 章](18-channels-capacities-complexity.md)。
 
 ---
 
@@ -335,7 +335,7 @@ $$
 
 | 测量描述层级 | 数学对象与完备条件 | 回答什么问题 | 能否唯一决定测后态 |
 | :--- | :--- | :--- | :--- |
-| **投影测量（PVM）** | 正交投影 $\{P_m\}$，$P_m P_n=\delta_{mn}P_m$，$\sum_m P_m=I$ | 锐利测量概率 + Lüders 塌缩 | 能（$\rho_m = P_m\rho P_m/p(m)$），且理想情形可重复得同结果 |
+| **投影测量（PVM）** | 正交投影 $\{P_m\}$，$P_m P_n=\delta_{mn}P_m$，$\sum_m P_m=I$ | 锐利测量概率 | 另须指定仪器。采用 Lüders 规则时，$\rho_m=P_m\rho P_m/p(m)$，立即复测得同一结果。 |
 | **广义测量（POVM）** | 正半定效果 $\{E_m\}$，$E_m\succeq 0$，$\sum_m E_m=I$ | **只回答**各结果概率 $p(m)=\operatorname{Tr}(E_m\rho)$ | **不能**；同一组 $\{E_m\}$ 可由多种物理仪器实现 |
 | **量子仪器** | 映射族 $\{\mathcal I_m\}$，$\sum_{m,\alpha}M_{m\alpha}^\dagger M_{m\alpha}=I$ | **同时回答**结果概率与一般测后态 | 能（含光子吸收、非锐利弱测量、测后主动复位） |
 
@@ -364,6 +364,8 @@ $$
 - **假设丢弃测量记录**：仪器甲的非选择后态是 $M_0\rho_+M_0^\dagger + M_1\rho_+M_1^\dagger = I/2$；仪器乙则是 $N_0\rho_+N_0^\dagger + N_1\rho_+N_1^\dagger = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|0\rangle\langle 0| = |0\rangle\langle 0|$！
 
 所以，如果一条电路在中途测量后还要继续使用这个比特（比如量子纠错里的中段测纠错症状或动态电路复位），光给 POVM 是不够的，必须交代清楚对应的量子仪器。
+
+读出矩阵也有这条区分。以计算基态标定得到的列随机矩阵 $A$，只能确定 $A_{m,b}=\langle b\vert E_m\vert b\rangle$。用 $q=Ap$ 推算含相干的任意输入还需效果算符在该基中对角。两台仪器也可以有相同 $A$ 却给出刚才那样不同的条件后态。反馈和复位应另测后态。标定的相干态反例见[第 01 章](01-math.md)。
 
 ---
 
@@ -405,7 +407,7 @@ $$
 \mathcal E(\rho) = \operatorname{Tr}_E\!\Bigl[U\bigl(\rho \otimes |0\rangle\langle 0|_E\bigr)U^\dagger\Bigr].
 $$
 
-物理前提是演化前系统与环境必须处于**无关联的乘积态** $\rho \otimes |0\rangle\langle 0|_E$ 且环境初态固定；一旦存在跨拍环境记忆，就会偏离单拍 CPTP 模型（第 7.2 节）。
+这个扩张在表示给定信道时使用固定、起初无关联的环境。真实装置若跨拍保留相关性，用一次输入到输出实验仍可能得到 CPTP 映射。要把它当作每拍独立的积木复用，需要另外检查跨时相关与干预下的行为，见第 7.2 节。
 
 #### 视角二：Kraus 算符和表示（日常手算利器）
 
@@ -649,7 +651,7 @@ $$
 (r_x',\; r_y',\; r_z') = \bigl(r_x,\; (1-2p)r_y,\; (1-2p)r_z\bigr).
 $$
 
-对照图中的面板 (a)（$p = 0.25$）：$r_x' = r_x$ 不变，$r_y' = 0.50\,r_y$，$r_z' = 0.50\,r_z$，整颗球沿 $x$ 轴挤成雪茄椭球，连接 $|+\rangle$ 与 $|-\rangle$ 的整条 $x$ 轴都是不动点。
+对照图中的面板 (a)（$p=0.25$），$r_x'=r_x$，$r_y'=0.50\,r_y$，$r_z'=0.50\,r_z$。输出为沿 $x$ 轴伸长的椭球，连接 $\lvert+\rangle$ 与 $\lvert-\rangle$ 的线段都是不动点。$p=0$ 时整个球都不动，$p=1/2$ 时只剩该线段，$p=1$ 时等同确定性的 $X$ 旋转。
 
 **手算提醒——一个输入不变不等于没有噪声**：取 $p = 1/4$。输入 $|0\rangle\langle 0|$ 时输出 $\mathcal F_{1/4}(|0\rangle\langle 0|) = \operatorname{diag}(3/4, 1/4)$；而改输入 $|+\rangle\langle +|$ 时因 $X|+\rangle = |+\rangle$，输出仍是 $|+\rangle\langle +|$！因此诊断量子信道时，绝不能只测一个输入态就宣布硬件无噪声。把 $X$ 换成 $Y$ 即得**比特–相位翻转信道（bit-phase flip）** $\mathcal E(\rho) = (1-p)\rho + p Y\rho Y$，其 Bloch 变换保留 $y$ 轴、压缩 $x, z$ 轴。
 
@@ -726,7 +728,7 @@ $$
 
 例如取 $p = 1/4$（对应 $\lambda = 3/4,\; \sqrt{1-\lambda} = 1/2$），酉阵 $u = \frac{1}{2}\begin{bmatrix}\sqrt{3} & 1 \\ 1 & -\sqrt{3}\end{bmatrix}$ 精确把 $\{\frac{\sqrt{3}}{2}I,\; \frac{1}{2}Z\}$ 旋成 $\{\operatorname{diag}(1, 1/2),\; \operatorname{diag}(0, \sqrt{3}/2)\}$。在物理上，对环境换一套正交基做 Stinespring 测量便给出不同的 Kraus 分解——这正是[量子力学 Q2 第 9.3 节](quantum-mechanics/02-observables-dynamics.md)中同一主方程存在多种量子跳跃展开（unraveling）的离散对应。
 
-连续纯退相位模型中 $p(t) = \frac{1 - e^{-t/T_\phi}}{2}$ 从 $0$ 单调趋近 $1/2$；若把 $p$ 调大超过 $1/2$，$|1-2p|$ 反而重新增大（相当于高频施加确定性 $Z$ 门），不再代表更强退相干。比较不同软件的“退相位参数”时，务必先看清写的是 $p$ 还是 $\lambda$。
+连续指数纯退相位模型的 $p(t)=(1-e^{-t/T_\phi})/2$ 从 $0$ 趋近 $1/2$。整个相位翻转信道族还允许 $p>1/2$，这时 $1-2p<0$，相干项反号，绝对值却随 $p$ 增大而回升。$p=1$ 是确定性的 $Z$ 门，保留全部相干的绝对值。比较软件参数前，应先区分翻转概率 $p$ 与阻尼参数 $\lambda$。
 
 ### 5.3 退极化信道（Depolarizing）：双参数换算与平均门错误率
 
@@ -766,6 +768,8 @@ $$
 p = \frac{4q}{3} \iff q = \frac{3p}{4}.
 $$
 
+混合替换的字面含义要求 $p\in[0,1]$，对应 $q\in[0,3/4]$。随机 Pauli 写法可以一直取到 $q=1$。例如 $q=3/4$ 使 Bloch 向量变零，$q=1$ 以各 $1/3$ 的概率选 $X,Y,Z$，使 $\vec r'=-\vec r/3$，把 $\lvert0\rangle\langle0\rvert$ 变成 $\operatorname{diag}(1/3,2/3)$。后者仍是 CPTP，对应同一仿射公式的延伸参数 $p=4/3$。Stim 1.16.0 的 `DEPOLARIZE1(q)` 接收总 Pauli 错误概率 $q$，Aer 0.17.2 的 `depolarizing_error(param, 1)` 接收仿射参数 $p$。$4/3$ 在这里是公式系数，不能作为替换概率。[Stim 1.16.0 门表](https://github.com/quantumlib/Stim/blob/v1.16.0/doc/gates.md#the-depolarize1-instruction) · [Aer 0.17.2 源码](https://github.com/Qiskit/qiskit-aer/blob/0.17.2/qiskit_aer/noise/errors/standard_errors.py)
+
 再顺手推导出文献里极常出现的**平均单比特门保真度 $F_{\mathrm{avg}}$ 与平均门错误率 $r = 1 - F_{\mathrm{avg}}$**（以恒等门叠加退极化噪声为例）：对任意单比特纯态 $|\psi\rangle$，输出态与原纯态的平方重叠为
 
 $$
@@ -797,7 +801,7 @@ K_0 = \begin{bmatrix} 1 & 0 \\ 0 & \sqrt{1-\gamma} \end{bmatrix}, \qquad
 K_1 = \begin{bmatrix} 0 & \sqrt{\gamma} \\ 0 & 0 \end{bmatrix}.
 $$
 
-物理含义清晰：$K_1 = \sqrt{\gamma}|0\rangle\langle 1|$ 对应“发射光子从 $|1\rangle$ 跌到 $|0\rangle$”；$K_0$ 对应“没检测到光子发射”，此时我们也获得了“系统更可能是基态 $|0\rangle$”的贝叶斯更新信息，故 $|1\rangle$ 振幅按 $\sqrt{1-\gamma}$ 衰减。核对完备性：$K_0^\dagger K_0 + K_1^\dagger K_1 = \operatorname{diag}(1, 1-\gamma) + \operatorname{diag}(0, \gamma) = I$。
+在这一种量子跳跃表示中，$K_1=\sqrt{\gamma}\lvert0\rangle\langle1\rvert$ 描述向下跃迁，$K_0$ 描述没有跃迁的分支。后者把 $\lvert1\rangle$ 的未归一化振幅乘上 $\sqrt{1-\gamma}$，报出条件态时还要按分支概率归一化。完全监测且无暗计数时，无点击才与无跃迁对应。核对完备性：$K_0^\dagger K_0+K_1^\dagger K_1=\operatorname{diag}(1,1-\gamma)+\operatorname{diag}(0,\gamma)=I$。
 
 对一般单比特密度矩阵 $\rho = \begin{bmatrix} 1-b & c \\ c^* & b \end{bmatrix}$（$b = \rho_{11} \in [0,1]$ 为激发态布居），展开两项相加得精确输出公式：
 
@@ -830,7 +834,9 @@ K_1 \rho_+ K_1^\dagger = \begin{bmatrix} 0.18 & 0 \\ 0 & 0 \end{bmatrix},
 \mathcal A_{0.36}(|+\rangle\langle +|) = \begin{bmatrix} 0.68 & 0.40 \\ 0.40 & 0.32 \end{bmatrix}.
 $$
 
-迹为 $1$，行列式 $0.68\times 0.32 - 0.16 = 0.0576 > 0$（两本征值约 $0.9386, 0.0614$）。可见**能量弛豫在压低布居（$0.50\to 0.32$）的同时，必然同步削弱相干项（$0.50\to 0.40$）**——这正是第 6.3 节 $T_2 \le 2T_1$ 的直接源头。
+迹为 $1$，行列式 $0.68\times0.32-0.16=0.0576$，两本征值约为 $0.9386,0.0614$。这个阻尼模型把布居从 $0.50$ 降为 $0.32$，同时把相干项从 $0.50$ 降为 $0.40$，是第 6.3 节推导的起点。
+
+现在让探测器只以效率 $\eta$ 记录真正的跃迁，无暗计数。无点击未归一化分支为 $K_0\rho K_0^\dagger+(1-\eta)K_1\rho K_1^\dagger$，有点击为 $\eta K_1\rho K_1^\dagger$。本例理想无跃迁概率为 $0.50+0.32=0.82$，条件激发占据为 $0.32/0.82\approx0.390244$。当 $\eta=0.5$ 时，无点击还混入权重为 $0.09$ 的漏记跃迁，概率为 $0.91$，条件激发占据变成 $0.32/0.91\approx0.351648$。不保留记录时，两种仪器的分支和都等于上面的 $\mathcal A_{0.36}(\rho_+)$。[量子力学 Q2 的量子轨迹](quantum-mechanics/02-observables-dynamics.md)
 
 #### 手算例 B：非保单位信道“局部降熵”与 Landauer 擦除热耗下限
 
@@ -847,11 +853,13 @@ $$
 S(\rho') = -0.75\log_2(0.75) - 0.25\log_2(0.25) \approx 0.8113\ \mathrm{bit} < 1\ \mathrm{bit}.
 $$
 
-这并未违反热力学第二定律：只有 **unital 信道**（$\mathcal E(I/d) = I/d$）保证对一切输入不减熵；非 unital 的振幅阻尼与复位信道把局部熵排进了低温环境。
+保单位信道在相同输入、输出维数下保证对所有输入不减熵，振幅阻尼则可降低局部熵。本例只降了 $1-h_2(1/4)\approx0.188722$ bit，现象学信道本身未指定热浴温度与热量。若热浴起初为温度 $T$ 的 Gibbs 态，和系统无初始关联，系统与浴间做联合酉演化，则浴吸收的热量满足 $Q\ge k_BT\ln2\,[S(\rho)-S(\rho')]$，其中熵采用以 2 为底的对数。本例对应下限为 $0.188722\,k_BT\ln 2$。
+
+同样的输入与输出也可由具体热浴构造。取与系统等能隙 $E=k_BT\ln3$ 的二能级浴，Gibbs 激发占据为 $1/4$。让它与 $I/2$ 的系统做保能交换。系统变成 $\operatorname{diag}(3/4,1/4)$，浴的激发占据升至 $1/2$，吸热 $E/4=k_BT\ln(3)/4$。这个数位于本次部分降熵的下限与完整复位一比特的下限之间。该交换只作为同一输入的热量示例。[Reeb 与 Wolf 的热浴假设与不等式](https://arxiv.org/abs/1306.4352)
 
 > **量子热力学注记：Landauer 擦除原理与制冷机的热力学底线**
 >
-> 把一个处于最大混态 $I/2$ 的比特彻底擦除复位到纯态 $|0\rangle$，系统的信息熵减少了 $\Delta S = -1\ \mathrm{bit}$。**Landauer 原理**（Landauer, 1961）指出：为了不违反整体热力学第二定律，在温度为 $T$ 的热浴中每不可逆擦除 $1\ \mathrm{bit}$ 信息，环境吸收的热量至少必须达到
+> 在相同的热浴假设下，将 $I/2$ 完全复位为 $\lvert0\rangle$ 才使熵减少完整的 1 bit。此时 Landauer 不等式给出理想热量下界
 >
 > $$
 > Q_{\min} = k_B T \ln 2, \qquad k_B \approx 1.380649 \times 10^{-23}\,\mathrm{J/K}.
@@ -862,7 +870,7 @@ $$
 > - **室温（$T = 300\,\mathrm{K}$）**：$Q_{\min} \approx 2.87 \times 10^{-21}\,\mathrm{J}$；
 > - **稀释制冷机混合腔（$T = 20\,\mathrm{mK}$）**：$Q_{\min} \approx 1.91 \times 10^{-25}\,\mathrm{J}$，整整低了 $15{,}000$ 倍！
 >
-> 换算成工程功率看看：就算一台千比特容错芯片每秒执行 $10^9$ 次比特复位，在 $20\,\mathrm{mK}$ 处由 Landauer 原理定下的绝对物理耗热下限也只有约 $1.9 \times 10^{-16}\,\mathrm{W}$——比当今稀释制冷机 $20\,\mathrm{mK}$ 级典型的 $10\text{–}20\,\mu\mathrm{W}$ 制冷预算足足低了 **10 个数量级以上**！也就是说，真实芯片在低温级撞上散热天花板的瓶颈，远不是信息擦除本身的热力学极限，而是同轴线漏热、微波衰减器发热与主动复位驱动脉冲带来的工程功耗（整机分温区制冷预算详见[第 19 章第 4 节](19-engineering-architecture.md)）。
+> 若假设每秒有 $10^9$ 个初态为 $I/2$ 的比特向同温热浴完全复位，且都计在 $20\,\mathrm{mK}$，该理论下界折算为约 $1.9\times10^{-16}\,\mathrm W$。实际的脉冲功耗、线缆热漏与不同温区的热预算须分别测算，见[第 19 章第 4 节](19-engineering-architecture.md)。
 
 ### 5.5 有限温度的广义振幅阻尼（Generalized Amplitude Damping）
 
@@ -902,7 +910,7 @@ $$
 - 输入激发态 $|1\rangle$（$b=1, c=0$）：$b' = 0.64 + 0.036 = 0.676$，$r_z' = -0.352$；
 - 输入叠加态 $|+\rangle$（$b=0.5, c=0.5$）：$b' = 0.64\times 0.5 + 0.036 = 0.356$，$r_z' = 0.288$，$c' = 0.40$。
 
-> **工程核查提醒**：在固定版本 Qiskit Aer `0.17.1` 的 `amplitude_damping_error` 文档中，参数 `excited_state_population` 曾误写为平衡态 $|0\rangle$ 占据，却与同页 Kraus 矩阵及实际源码不动点 $\operatorname{diag}(1-p_{\mathrm{eq}}, p_{\mathrm{eq}})$（实为 $|1\rangle$ 占据）矛盾。调用任何开源噪声接口前，请始终按“读出 Kraus 算符 $\to$ 验 $\sum_k K_k^\dagger K_k = I$ $\to$ 求不动点”独立核查（完整版本归档见[开源软件对照](appendices/software-practice.md#88-噪声模型名字相同先查-kraus-矩阵与固定点)）。
+> **固定版本的参数核对**。Aer 0.17.1 文档与 0.17.2 的 `amplitude_damping_error` 源码文档字符串均把 `excited_state_population` 写成 $\lvert0\rangle$ 的占据。0.17.2 的该函数却将参数原样交给 `phase_amplitude_damping_error`，后者的文档与 Kraus 构造按 $\lvert1\rangle$ 激发占据解释。独立代入上面的 $b'=(1-\gamma)b+\gamma p_{\mathrm{eq}}$，对 $\gamma>0$ 求不动点得到 $b=p_{\mathrm{eq}}$。当 $\gamma=0$ 时每个输入都不变，不能通过此端点识别参数含义。读接口时可从 Kraus 算符、完备性和非退化固定点依次核对。[Aer 0.17.1 API](https://qiskit.github.io/qiskit-aer/stubs/qiskit_aer.noise.amplitude_damping_error.html) · [Aer 0.17.2 固定源码](https://github.com/Qiskit/qiskit-aer/blob/0.17.2/qiskit_aer/noise/errors/standard_errors.py#L367-L462) · [开源软件对照](appendices/software-practice.md#88-噪声模型名字相同先查-kraus-矩阵与固定点)
 
 ### 5.6 五大类单比特噪声信道 Bloch 仿射变换总表（含相位翻转 / 相位阻尼等价对照）
 
@@ -912,8 +920,10 @@ $$
 | **相位翻转** | $K_0=\sqrt{1-p}\,I,\; K_1=\sqrt{p}\,Z$（$0\le p\le 1$） | $\bigl((1-2p)r_x,\; (1-2p)r_y,\; r_z\bigr)$ | 沿 $z$ 轴竖直椭球；不动点为 $z$ 轴（含 $\lvert 0\rangle,\lvert 1\rangle$） | 是（$\vec c=\vec 0$） |
 | **相位阻尼** | $K_0=\operatorname{diag}(1,\sqrt{1-\lambda}),\; K_1=\sqrt{\lambda}\lvert 1\rangle\langle 1\rvert$（$0\le\lambda\le 1$） | $\bigl(\sqrt{1-\lambda}\,r_x,\; \sqrt{1-\lambda}\,r_y,\; r_z\bigr)$ | 与 $p=\frac{1-\sqrt{1-\lambda}}{2}\in[0,\frac{1}{2}]$ 的相位翻转**同信道** | 是（$\vec c=\vec 0$） |
 | **退极化** | $\mathcal D_p(\rho)=(1-p)\rho+p\frac{I}{2}$（$0\le p\le 1$；等价随机 Pauli $q=\frac{3p}{4}$） | $\bigl((1-p)r_x,\; (1-p)r_y,\; (1-p)r_z\bigr)$ | 各向同性收缩同心小球；唯一不动点为球心 $I/2$ | 是（$\vec c=\vec 0$） |
-| **零温振幅阻尼** | $K_0=\operatorname{diag}(1,\sqrt{1-\gamma}),\; K_1=\sqrt{\gamma}\lvert 0\rangle\langle 1\rvert$（$0\le\gamma\le 1$） | $\bigl(\sqrt{1-\gamma}\,r_x,\; \sqrt{1-\gamma}\,r_y,\; (1-\gamma)r_z+\gamma\bigr)$ | 扁椭球上移至 $(0,0,\gamma)$；唯一不动点为北极 $\lvert 0\rangle$ | **否**（局部可降熵） |
-| **广义振幅阻尼** | 向下权重 $1-p_{\mathrm{eq}}$ + 向上权重 $p_{\mathrm{eq}}$（$0\le\gamma,p_{\mathrm{eq}}\le 1$） | $\bigl(\sqrt{1-\gamma}\,r_x,\; \sqrt{1-\gamma}\,r_y,\; (1-\gamma)r_z+\gamma(1-2p_{\mathrm{eq}})\bigr)$ | 椭球向热平衡点 $(0,0,1-2p_{\mathrm{eq}})$ 收缩；不动点 $\operatorname{diag}(1-p_{\mathrm{eq}},p_{\mathrm{eq}})$ | **否**（除非 $p_{\mathrm{eq}}=1/2$） |
+| **零温振幅阻尼** | $K_0=\operatorname{diag}(1,\sqrt{1-\gamma}),\; K_1=\sqrt{\gamma}\lvert 0\rangle\langle 1\rvert$（$0\le\gamma\le 1$） | $\bigl(\sqrt{1-\gamma}\,r_x,\; \sqrt{1-\gamma}\,r_y,\; (1-\gamma)r_z+\gamma\bigr)$ | $\gamma>0$ 时唯一不动点为 $\lvert0\rangle$ | 当且仅当 $\gamma=0$ |
+| **广义振幅阻尼** | 向下权重 $1-p_{\mathrm{eq}}$ + 向上权重 $p_{\mathrm{eq}}$（$0\le\gamma,p_{\mathrm{eq}}\le 1$） | $\bigl(\sqrt{1-\gamma}\,r_x,\; \sqrt{1-\gamma}\,r_y,\; (1-\gamma)r_z+\gamma(1-2p_{\mathrm{eq}})\bigr)$ | $\gamma>0$ 时唯一不动点为 $\operatorname{diag}(1-p_{\mathrm{eq}},p_{\mathrm{eq}})$ | 当且仅当 $\gamma(1-2p_{\mathrm{eq}})=0$ |
+
+上表在 $p=0$、$\lambda=0$ 或 $\gamma=0$ 的相应行均退化为恒等信道，所有输入皆为不动点。$p=1/2$ 的比特或相位翻转沿相应轴完全去掉横向分量。$p=1$ 的两种翻转分别是确定性的 $X$ 或 $Z$，$p=1$ 的替换式退极化则把所有输入送到 $I/2$。
 
 ### 5.7 噪声的先后次序很重要：信道一般不可交换
 
@@ -1057,7 +1067,7 @@ K_0 = \begin{bmatrix} 1 & 0 \\ 0 & 1 - \frac{\delta t}{2T_1} \end{bmatrix}
 K_1 = \begin{bmatrix} 0 & \sqrt{\delta t / T_1} \\ 0 & 0 \end{bmatrix}!
 $$
 
-  这与第 5.4 节取 $\gamma(\delta t) = \delta t / T_1$ 的零温振幅阻尼严丝合缝！而且你一眼就能看明白：Lindblad 方程里神秘的反对易衰减项 $-\frac{1}{2}\{L_k^\dagger L_k, \rho\}$，正是第 5.4 节“没探测到光子发射也要做贝叶斯振幅缩水 $\sqrt{1-\gamma}$”的微分版本！
+  这与取 $\gamma(\delta t)=\delta t/T_1$ 的零温振幅阻尼在一阶上一致。反对易衰减项 $-\tfrac12\{L_k^\dagger L_k,\rho\}$ 来自无跃迁分支的未归一化振幅缩放。探测效率低于 1 时，无点击记录还包含未检出的跃迁。
 - 同理，取纯退相位跳跃算符 $L_\phi = \sqrt{1/(2T_\phi)}\,Z$，得 $K_0 = \bigl(1 - \frac{\delta t}{4T_\phi}\bigr)I$、$K_1 = \sqrt{\frac{\delta t}{2T_\phi}}\,Z$，正好对应随机 $Z$ 翻转概率 $p_\phi(\delta t) = \frac{\delta t}{2T_\phi} = \frac{1 - e^{-\delta t/T_\phi}}{2} + O(\delta t^2)$。
 
 ### 6.3 亲手推导 $1/T_2 = 1/(2T_1) + 1/T_\phi$
@@ -1124,7 +1134,7 @@ $$
 1. **缓慢校准漂移（drift）**：微波振幅、驱动频率或激光功率在几分钟到几小时内缓慢飘走，同一套门在不同批次里的错误方向彼此相关，不再是独立随机硬币。
 2. **串扰（crosstalk）**：给比特 A 施加控制脉冲或读出脉冲时，电磁场或光斑边缘悄悄漏到旁观比特 B 上，引发多比特关联相位偏移（如超导芯片上常见的寄生 $ZZ$ 耦合）。
 3. **非计算能级泄漏（leakage）**：物理比特很少真的是孤立二能级系统——超导 transmon 有 $|2\rangle, |3\rangle$ 高能级，中性原子可能逃离光镊陷阱。一旦状态离开 $\{|0\rangle, |1\rangle\}$ 子空间，常规单比特 Pauli 信道甚至装不下它。
-4. **$1/f$ 低频噪声与非马尔可夫记忆效应**：衬底里的两能级缺陷（TLS）或磁通涨落带有长时记忆，环境记住系统上一拍做了什么，违反第 4.2 节“每拍重新从无关联环境出发”的假设。
+4. **$1/f$ 低频噪声与跨时相关**。慢磁通漂移或两能级缺陷（TLS）都可使不同时刻的误差相关。即使频率漂移只是经典随机变量，在一条实验轨迹内保持同一个值，逐拍独立模型也会失效。
 5. **高能粒子与突发相关错（correlated bursts）**：宇宙射线或芯片衬底微量放射性衰变撞击超导芯片，瞬间激发大量准粒子，让一大片区域的多个比特同时 $T_1$ 骤降。
 6. **状态制备与测量误差（SPAM）**：初态没清干净、读出窗口里发生 $|1\rangle\to|0\rangle$ 弛豫或分类阈值判错，在单次运行里和门错误缠在一起。
 
@@ -1132,7 +1142,7 @@ $$
 
 ### 7.2 $1/f$ 准静态高斯衰减 $e^{-(t/T_2^*)^2}$、时间非齐次性与自旋回波直觉
 
-为什么第 6.4 节 Ramsey 包络里，白噪声给出纯指数衰减 $e^{-t/T_\phi}$（$\alpha = 1$），而低频 $1/f$ 噪声常常给出高斯衰减 $e^{-(t/T_2^*)^2}$（$\alpha = 2$），而且 Hahn 自旋回波偏偏能救回后者却救不回前者？用一个四行即可算完的经典简化模型就能一步看清（综述见 Paladino et al., 2014）。
+白噪声模型给出指数 Ramsey 包络，低频漂移主导且在观察窗口内近似静态时，包络可接近高斯。下面取静态漂移在各实验轮次间呈高斯分布。对真实有限带宽的 $1/f$ 噪声，包络还取决于频带与观察时长，应按实验的滤波积分核对。[Ithier 等的实验模型](https://arxiv.org/abs/cond-mat/0508588)
 
 **准静态高斯频率抖动模型**：设比特能隙在单次实验时长 $t$ 内近乎静止不变，但在不同重复采样轮次之间按正态分布 $\delta\omega \sim \mathcal N(0, \sigma_\omega^2)$ 缓慢漂移。初态 $|+\rangle$ 自由演化时间 $t$ 后，单次实验的非对角相干元获得随机相位因子 $e^{-i\delta\omega\cdot t}$。对大量重复轮次取系综平均（正态分布的特征函数积分）：
 
@@ -1158,8 +1168,10 @@ e^{-(t_1+t_2)^2/(T_2^*)^2}
 = e^{-t_1^2/(T_2^*)^2}\,e^{-t_2^2/(T_2^*)^2}\cdot e^{-2 t_1 t_2 / (T_2^*)^2},
 $$
 
-   多出了一个跨时间段记忆因子 $e^{-2t_1 t_2/(T_2^*)^2}$，因此 $\mathcal E_{t_1+t_2}\ne\mathcal E_{t_2}\circ\mathcal E_{t_1}$，严格打破了**时间齐次半群律**！但必须划清关键概念边界：仅看单时间映射族 $\{\mathcal E_t\}$，对任意 $t \ge s \ge 0$ 的中间传播子 $\Lambda_{t,s} := \mathcal E_t\circ\mathcal E_s^{-1}$ 将非对角相干元缩放 $e^{-(t^2-s^2)/(T_2^*)^2}\in(0,1]$，瞬时退相位率 $\gamma_\phi(t) = -\frac{\mathrm d}{\mathrm dt}\ln\bigl(e^{-(t/T_2^*)^2}\bigr) = \frac{2t}{(T_2^*)^2} \ge 0$ 处处非负，因此纯准静态高斯退相干的**单时间映射仍严格 CP-可分**（CP-divisible）；它的环境记忆体现在时间非齐次的瞬时退相位率，以及插入回波脉冲等**多时间干预下的过程非马尔可夫性**。真正打破 CP-可分性的，是强耦合两能级缺陷（TLS）等非马尔可夫共振环境——此时瞬时退相干率会短暂转负（$\gamma_\phi(t) < 0$），中间传播子 $\Lambda_{t,s}$ 不再完全正，出现相干性局部回弹（**信息回流**）。
+   同一静态频偏同时参与两个时间段，因此多出的交叉因子破坏了时间齐次半群律。仅看从起点到各时刻的映射族，$\Lambda_{t,s}=\mathcal E_t\circ\mathcal E_s^{-1}$ 对 $t\ge s\ge0$ 的相干缩放为 $e^{-(t^2-s^2)/(T_2^*)^2}\in(0,1]$，是一条 CPTP 信道，故这个单时间映射族仍 **CP 可分**。这与在中间插入控制脉冲时能否用一套无记忆过程描述，是两个问题。前者只对照输入和各时刻的输出，后者还要预测干预后的条件统计。[Pollock 等的多时过程判据](https://arxiv.org/abs/1801.09811)
 3. **Hahn 自旋回波为何有效**：在演化中点 $t/2$ 插入一个翻转脉冲 $X$，前半段累积的慢漂移相位 $+\delta\omega\cdot(t/2)$ 与后半段反向累积的 $-\delta\omega\cdot(t/2)$ 精确相加归零！相反，白噪声前后两半段的随机踢动彼此独立，加了 $X$ 脉冲照样无法抵消。这直接解释了第 6.1 节中 $T_2 \gg T_2^*$ 的微观根源，也自然通向[第 14 章](14-compilation-control.md)的动态解耦滤波器函数。
+
+**一个经典频偏也会打破 CP 可分性。** 设 $\omega>0$，每条轨迹等概率选 $\delta\omega=\pm\omega$，选定后全程固定。非对角相干的乘数为 $(e^{-i\omega t}+e^{i\omega t})/2=\cos(\omega t)$。在 $s=\pi/(2\omega)$ 时，$\lvert+\rangle$ 和 $\lvert-\rangle$ 两个输入的输出都变为 $I/2$。到 $t=\pi/\omega$ 时，两个输出重新变成互相正交的纯态。若 $\mathcal E_t=\Lambda_{t,s}\circ\mathcal E_s$，同一个 $I/2$ 须被 $\Lambda_{t,s}$ 送到两个不同的态，因而连这样的线性分解也不存在。若 $\cos(\omega s)\ne0$，相干绝对值回升还会使中间缩放的模 $\lvert\cos(\omega t)/\cos(\omega s)\rvert$ 超过 1。这里没有量子热浴，时间关联只来自未观测的经典频偏。相对地，前面的静态高斯模型同样有跨时关联，但其相干绝对值单调下降，单时间映射维持 CP 可分。
 
 ---
 
@@ -1197,7 +1209,7 @@ $$
 | :--- | :--- | :--- |
 | **态保真度 / 迹距离** | 某一个输出态离目标态多接近 | 同一个门对其他未知输入的整体表现 |
 | **平均门保真度 $F_{\mathrm{avg}}$** | 门在所有纯态输入上均匀平均的质量 | 最坏输入情形与相干累积误差 |
-| **随机基准测试（RB）** | 剥离 SPAM 后的可扩展平均门错误率 | 具体的相干/非相干误差方向与机制 |
+| **随机基准测试（RB）** | 按实验与噪声模型拟合衰减参数，固定 SPAM 通常进入拟合系数 | 一般门依赖噪声的无条件平均门保真度，或具体相干误差方向，见[第 11 章](11-resources-benchmarks.md) |
 | **量子过程层析（QPT）** | 重构小系统的完整信道矩阵 $J_{\mathcal E}$ | 多比特可扩展性（代价 $O(16^n)$）与 SPAM 解耦 |
 | **钻石范数（Diamond norm）** | 允许纠缠辅助时的最坏情形信道距离 | 难以直接做实验估计，通常需从过程模型反推 |
 | **逻辑错误率** | 纠错编码下每轮逻辑操作的真实可靠性 | 未注明轮次耗时、码距与资源时不可横向对比 |
@@ -1286,9 +1298,9 @@ $$
 = I_2 + 2\epsilon Y!
 $$
 
-   实部完完全全等于 $I_2$，虚部却藏着 $\mp 0.2i$——对输入 $|{+i}\rangle\langle{+i}|$ 输出总迹竟变成 $0.8 \ne 1$！
+   实部等于 $I_2$，虚部却藏着 $\mp0.2i$。具体取 $\rho_{+i}=(I+Y)/2$，则 $\rho_{+i}^T=(I-Y)/2$。对输出求迹相当于取效果 $I_B$，得到 $\operatorname{Tr}[(I-Y)(I+0.2Y)/2]=0.8$。若公式漏掉转置，误算成 $\operatorname{Tr}[(I+Y)(I+0.2Y)/2]=1.2$。
 
-因此，任何可靠的 QPT 凸优化拟合（常见目标为高斯加权最小二乘或多项计数最大似然 Fiurášek & Hradil 2001，实测对比见[完整 SDK 实验册](labs/sdk-validation.md)），都必须同时显式施加**正半定约束 $J_{\mathcal E} \succeq 0$** 与**完整复偏迹等式 $\operatorname{Tr}_B(J_{\mathcal E}) = I_2$**（实部虚部缺一不可），并在求解后独立验算偏迹残差。
+因此，最终要报告为 CPTP 的估计必须同时满足 $J_{\mathcal E}\succeq0$ 和完整复偏迹 $\operatorname{Tr}_B J_{\mathcal E}=I_A$。可以在 Choi 拟合中直接加入两个约束，也可以用保证完备性的 Kraus 或等距参数化。验收时独立检查最小本征值、完整偏迹残差，并用带虚相干的输入核对 Born 概率。前述两种坏矩阵是编程回归输入。[实验册](labs/sdk-validation.md) · [Fiurášek 与 Hradil 的过程拟合](https://doi.org/10.1103/PhysRevA.63.020101)
 
 ### 8.3 Pauli 旋转随机化（Pauli Twirling）：把相干误差旋成随机 Pauli 信道
 
@@ -1300,9 +1312,9 @@ $$
 P_{\mathrm{err}}^{\mathrm{coh}}(N) = \sin^2\!\left(\frac{N\varepsilon}{2}\right) \approx \frac{N^2 \varepsilon^2}{4}
 $$
 
-**随深度 $N$ 二次方增长**（$N = 10$ 时高达 $\sin^2(1.0) \approx 70.8\%$）。相比之下，如果误差是无记忆的随机相位翻转 $p_z = \sin^2(\varepsilon/2) \approx 0.997\%$，串联 $N$ 次后错误概率只按 $\frac{1 - (1 - 2p_z)^N}{2} \approx N p_z$ **线性增长**（$N = 10$ 时仅约 $9.1\%$——两者相差近 **7.8 倍**）。
+在 $N\lvert\varepsilon\rvert\ll1$ 时近似随 $N$ 的平方增长。$N=10$ 的 $70.8\%$ 由精确的 $\sin^2(1.0)$ 算出。若每层都是独立的随机相位翻转，且 $p_z=\sin^2(\varepsilon/2)\approx0.997\%$，则精确误差为 $[1-(1-2p_z)^N]/2$，只在 $Np_z\ll1$ 时近似线性。本例 10 层的精确结果约为 $9.1\%$。
 
-怎么把危险的相干误差转化成温和的随机 Pauli 噪声？做法出奇地简单：**在噪声信道 $\mathcal E$ 前后均匀随机夹入同一个 Pauli 算符 $P \in \{I, X, Y, Z\}$**（对理想 Clifford 双比特门 $C$ 则在门前随机插 $P$、门后插共轭补偿 $P' = C P C^\dagger$，逻辑功能不变，且单比特 Pauli 门可吸收进相邻单比特层，不增加电路深度），取等权系综平均得到**旋转随机化信道**：
+单步 Pauli 旋转随机化在噪声前后均匀选取同一个 $P\in\{I,X,Y,Z\}$。对理想 Clifford 门 $C$，后侧的补偿取 $P^{\prime}=CPC^\dagger$，使理想功能不变。只有在补偿能够吸收进相邻层且无需新增物理操作时，才可沿用原线路深度。这里先看单步的等权平均：
 
 $$
 \mathcal E_{\mathrm{twirl}}(\rho) := \frac{1}{4}\sum_{P \in \{I, X, Y, Z\}} P\,\mathcal E(P\rho P)\,P.
@@ -1363,9 +1375,11 @@ $$
 1. **相干过旋转 $R_z(0.2)$**：原 PTM 在 $(X, Y)$ 块有非对角旋转元 $\mp\sin(0.2) \approx \mp 0.1987$，旋转随机化后非对角彻底归零，对角留下 $\operatorname{diag}(1,\; \cos 0.2,\; \cos 0.2,\; 1) \approx \operatorname{diag}(1,\; 0.9801,\; 0.9801,\; 1)$。
 2. **零温振幅阻尼 $\mathcal A_{0.36}$**：原 PTM 左下角有平移元 $R_{ZI} = 0.36$，旋转随机化把 $R_{ZI}$ 抹为零，只剩对角矩阵 $\operatorname{diag}(1,\; 0.8,\; 0.8,\; 0.64)$——反解对应 Pauli 概率分布恰好为 $p_I = 0.81,\; p_X = p_Y = 0.09,\; p_Z = 0.01$（核对：$p_I+p_X-p_Y-p_Z = 0.8$，$p_I-p_X-p_Y+p_Z = 0.64$）！
 
-![超算符五表示互转与 Pauli 旋转随机化对相干误差的压制](assets/v3-05-superoperator-ptm-twirling.svg)
+![超算符五表示互转，右侧比较单步 Pauli 平均前后的 PTM 以及独立刷新与复用随机符号的不同累积](assets/v3-05-superoperator-ptm-twirling.svg)
 
-最后记住两条核心边界：第一，因为单比特误差信道（即相对理想恒等门 $I$，对一般目标门 $U$ 对应 $\mathcal U_{\mathrm{ideal}}^\dagger\circ\widetilde{\mathcal U}$）的平均门保真度 $F_{\mathrm{avg}} = \frac{3 + R_{XX} + R_{YY} + R_{ZZ}}{6}$ 只看 PTM 主对角线，**Pauli Twirling 既不提高也不降低单步平均门错误率 $r$**，它的真正威力是消灭最坏情形的相干二次方累积，并把复杂非对角噪声化为简洁的随机 Pauli 信道——这正是[第 08 章](08-applications.md)稀疏 Pauli–Lindblad 概率误差抵消（PEC）与[第 10 章](10-error-correction.md)随机 Pauli 纠错阈值模型成立的现实桥梁；第二，Pauli Twirling 必须靠编译多组随机电路实例取系综平均实现，同组实例内共享同一随机化设置的全部 shots 不可当作独立样本，估算误差棒须使用[第 15 章](15-practice-research.md)的聚类标准误。
+**同一个单步平均，串起来可以不同。** 取 $\varepsilon=0.2\,\mathrm{rad}$，从 $\lvert+\rangle$ 出发，每层的 Pauli 夹心只决定转角符号 $s_j=\pm1$，测 $X$ 时得到 $-1$ 的概率为 $[1-\cos(\varepsilon\sum_j s_j)]/2$。若每层独立均匀刷新，复指数期望可因式分解成 $\cos^N\varepsilon$，十层错误概率为 $0.0911859661$。若每条电路只选一次符号，随后在十层复用，累计角为 $\pm N\varepsilon$，结果是 $(1-\cos(N\varepsilon))/2=0.7080734183$。两种方案的单步平均相同，单步 PTM 对角化并不足以推出整条电路的噪声独立。
+
+两种方案的单步平均门错误率都不因旋转随机化而变，因为 $F_{\mathrm{avg}}$ 只看 PTM 主对角线。对独立层的近似，可继续用[第 08 章](08-applications.md)与[第 10 章](10-error-correction.md)的模型分析。实验中还要区分一条电路内是否每层刷新，以及多少次测量来自同一个随机化电路。后者会影响区间计算，可按[第 15 章](15-practice-research.md)的随机设置作统计簇。[Wallman 与 Emerson 的随机化编译](https://doi.org/10.1103/PhysRevA.94.052325)
 
 ---
 
@@ -1389,10 +1403,10 @@ $$
 - **误区 2：POVM 唯一决定测后态，或正映射就是合法信道。** 同一个计算基 POVM 既可对应保留投影，也可对应测后立刻复位到 $|0\rangle$；矩阵转置单系统保正，但 $(T\otimes\mathcal I)(|\Phi^+\rangle\langle\Phi^+|)$ 吐出负本征值 $-1/2$，物理信道必须完全正（CP）。
 - **误区 3：单输入不变说明无噪声，或噪声信道满足交换律。** 比特翻转对 $|+\rangle$ 不动、振幅阻尼对 $|0\rangle$ 不动；而 $\mathcal A_\gamma\circ\mathcal F_p$ 与 $\mathcal F_p\circ\mathcal A_\gamma$ 交换次序会产生精确差值 $p\gamma Z$（PTM 中 $(Z, I)$ 元相差 $2p\gamma$）。
 - **误区 4：不同文献的退极化参数可以直接比数字，或写超算符代码不区分列堆叠与行堆叠。** $\mathcal D_p$ 与随机 Pauli $\widetilde{\mathcal D}_q$ 差因子 $q=3p/4$，平均门错误率为 $r = 2q/3$；列堆叠 $\operatorname{vec}_c(A\rho B)=(B^T\otimes A)\operatorname{vec}_c(\rho)$，而 NumPy 默认行堆叠变为 $(A\otimes B^T)\operatorname{vec}_r(\rho)$。
-- **误区 5：任何噪声信道都必然增大系统熵。** 只有保单位（unital）信道保证不减熵；零温振幅阻尼能把最大混态 $I/2$ 拉向基态 $|0\rangle$ 局部降熵，同时按 Landauer 下限向冷环境排热至少 $k_B T \ln 2$ 每比特。
+- **误区 5：所有噪声都提高熵。** 保单位信道保证对所有输入不减熵。零温阻尼可以降熵。初始无关联的 Gibbs 热浴模型下，应按实际熵降计算热量下限。
 - **误区 6：Choi 矩阵正半定且总迹为 $d_A$，或偏迹实部等于 $I$ 就保证保迹。** 必须同时满足完整复偏迹等式 $\operatorname{Tr}_B J_{\mathcal E} = I_A$（实部与虚部缺一不可）。
-- **误区 7：Pauli Twirling 能降低单步平均门错误率 $r$。** 并不正确：Pauli Twirling 保留 PTM 主对角线，单步 $F_{\mathrm{avg}}$ 与 $r$ 严格不变；它做的是清零非对角元，把相干二次方累加（$O(N^2\varepsilon^2)$）转化为随机 Pauli 线性累加（$O(N\varepsilon^2)$）。
-- **误区 8：任何退相干都是纯指数且无记忆的。** 低频 $1/f$ 准静态漂移产生高斯衰减 $e^{-(t/T_2^*)^2}$，其单时间映射因瞬时率 $2t/(T_2^*)^2 \ge 0$ 仍严格 CP-可分，但打破了时间齐次半群律（$\mathcal E_{t_1+t_2}\ne\mathcal E_{t_2}\circ\mathcal E_{t_1}$）与插入回波脉冲时的多时间无记忆性，从而能被 Hahn 自旋回波在 $t/2$ 处重聚焦抵消；而强耦合 TLS 等共振环境才会让瞬时率转负、出现信息回流并真正打破 CP-可分性。
+- **误区 7：单步随机化就能保证整条线路只有线性累积。** 单步平均保留 PTM 主对角线，平均门错误率不变。只有独立刷新等足以使序列平均分解的条件下，本节的随机翻转结果才成立。
+- **误区 8：用指数包络和单时间 CP 可分性就能概括时间记忆。** 静态高斯频偏产生非指数包络，单时间映射仍 CP 可分。静态双点频偏可出现相干复苏并破坏 CP 可分性。两种模型都需要另外用中途干预分析跨时记忆。
 
 ---
 
@@ -1405,13 +1419,15 @@ $$
 | 密度矩阵与 Bloch 球 | $\rho=\frac{1}{2}(I+\vec r\cdot\vec\sigma)$，$\lambda_\pm=\frac{1\pm|\vec r|}{2}$，$\operatorname{Tr}(\rho^2)=\frac{1+|\vec r|^2}{2}$ | 单比特 $\rho\succeq 0\iff|\vec r|\le 1$；$d\ge 3$ 合法态不再是实心球 |
 | 测量与量子仪器 | $p(m)=\operatorname{Tr}(E_m\rho)$；$\mathcal I_m(\rho)=\sum_\alpha M_{m\alpha}\rho M_{m\alpha}^\dagger$ | 同一 POVM 可对应不同测后态（如投影 vs 测后复位） |
 | CPTP 五表示 | $J_{\mathcal E}\succeq 0,\;\operatorname{Tr}_B J_{\mathcal E}=I_A$；$\mathcal S_{\mathcal E}=\sum_k K_k^*\otimes K_k$；$R_{ij}=\frac{1}{2}\operatorname{Tr}(\sigma_i\mathcal E(\sigma_j))$ | 单比特最小 Kraus 数 $\le 4$；Kraus 具酉自由度 $L_j=\sum_k u_{jk}K_k$；$\operatorname{vec}_c$ 与 $\operatorname{vec}_r$ 左右对调 |
-| 退极化与相干时间 | $q=\frac{3}{4}p$，$r=\frac{p}{2}=\frac{2}{3}q$；$\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$ | 核对参数是 $p/q/r$；马尔可夫下 $T_2^*\le T_2\le 2T_1$；非 unital 信道可局部降熵但受 Landauer 下限 $k_B T\ln 2$ 约束 |
-| QPT 与 Twirling | $p_{s,b,y}=\operatorname{Tr}[(\rho_s^T\otimes E_{b,y})J_{\mathcal E}]$；$R_{\mathrm{twirl}}=\operatorname{diag}(1,R_{XX},R_{YY},R_{ZZ})$ | QPT 必须同时约束 $J_{\mathcal E}\succeq 0$ 与完整复偏迹 $\operatorname{Tr}_B J_{\mathcal E}=I_2$；Twirling 不降单步 $r$，QEM 不能取代 QEC |
+| 退极化与相干时间 | $q=3p/4$，$r=p/2=2q/3$。$\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$ | 区分替换参数 $p\in[0,1]$ 和完整随机 Pauli 范围 $q\in[0,1]$。时间关系用于第 6.3 节的指数弛豫模型。 |
+| QPT 与 Twirling | $p_{s,b,y}=\operatorname{Tr}[(\rho_s^T\otimes E_{b,y})J_{\mathcal E}]$。$R_{\mathrm{twirl}}=\operatorname{diag}(1,R_{XX},R_{YY},R_{ZZ})$ | CPTP 估计验完整复偏迹与正半定性。单步不改 $r$，多步误差看随机化时间安排。 |
 
 **三句自检要点**：
 1. 能否写出 $\mathcal E(\rho)=\sum_k K_k\rho K_k^\dagger$ 与相位翻转 $\leftrightarrow$ 相位阻尼的 $2\times 2$ 酉矩阵换算？
 2. 能否用 $4\times 4$ PTM 两行乘法判定两条单比特噪声信道是否对易，并看出保迹与保单位条件？
 3. 能否从短时 Kraus 算符导出 Lindblad 主方程，并说清 $T_2\le 2T_1$ 与 $1/f$ 高斯包络的成因？
+
+接下来的物理篇从 [Q1](quantum-mechanics/01-experiments-states.md) 的干涉实验开始。可以用本章的密度矩阵和测量语言追问一条干涉条纹何时变浅、哪些测量能把原因区分开来。若只学离散电路算法，可从这里直接进入[第 06 章](06-algorithmic-primitives.md)。
 
 ---
 
@@ -1419,14 +1435,14 @@ $$
 
 先关上书拿纸笔独立算一遍，再去核对解答。第 1–2 题检验密度矩阵与纯度，第 3、5 题检验 Kraus 完备性与完全正性，第 4 题检验相干时间边界，第 6–8 题检验退极化参数换算、单比特信道与测量后态。
 
-1. 计算 $|+\rangle$ 的密度矩阵和纯度。
-2. 最大混态 $I/2$ 经任意单比特酉变换后是什么？
-3. 验证零温振幅阻尼的两个 Kraus 算符 $K_0 = \begin{bmatrix}1 & 0\\ 0 & \sqrt{1-\gamma}\end{bmatrix}$、$K_1 = \begin{bmatrix}0 & \sqrt{\gamma}\\ 0 & 0\end{bmatrix}$ 满足完备关系 $\sum_k K_k^\dagger K_k = I$。
-4. 为什么只报告 $T_1$ 不能说明一台处理器能运行多深的电路？
-5. 求部分转置例子 $(T\otimes\mathcal I)(|\Phi^+\rangle\langle\Phi^+|)$ 中间 $2\times 2$ 块的两个本征值，并解释“正”为什么不足以定义物理信道。
-6. 把 $p=0.20$ 的本书退极化参数换算成随机 Pauli 写法中的 $q$。
-7. 对概率 $p=1/4$ 的比特翻转信道，分别求输入 $|0\rangle\langle 0|$ 与 $|+\rangle\langle +|$ 的输出。为何第二个输入不变，不能说明信道等于恒等？
-8. 从 $|+\rangle\langle +|$ 出发，按计算基做理想投影测量。已知结果为 $0$ 时的条件后态是什么？丢弃结果时的非选择后态是什么？两者计算基概率是否相同？
+1. 计算 $|+\rangle$ 的密度矩阵和纯度。 <!-- exercise-id: 05-01 -->
+2. 最大混态 $I/2$ 经任意单比特酉变换后是什么？ <!-- exercise-id: 05-02 -->
+3. 验证零温振幅阻尼的两个 Kraus 算符 $K_0 = \begin{bmatrix}1 & 0\\ 0 & \sqrt{1-\gamma}\end{bmatrix}$、$K_1 = \begin{bmatrix}0 & \sqrt{\gamma}\\ 0 & 0\end{bmatrix}$ 满足完备关系 $\sum_k K_k^\dagger K_k = I$。 <!-- exercise-id: 05-03 -->
+4. 为什么只报告 $T_1$ 不能说明一台处理器能运行多深的电路？ <!-- exercise-id: 05-04 -->
+5. 求部分转置例子 $(T\otimes\mathcal I)(|\Phi^+\rangle\langle\Phi^+|)$ 中间 $2\times 2$ 块的两个本征值，并解释“正”为什么不足以定义物理信道。 <!-- exercise-id: 05-05 -->
+6. 把 $p=0.20$ 的本书退极化参数换算成随机 Pauli 写法中的 $q$。 <!-- exercise-id: 05-06 -->
+7. 对概率 $p=1/4$ 的比特翻转信道，分别求输入 $|0\rangle\langle 0|$ 与 $|+\rangle\langle +|$ 的输出。为何第二个输入不变，不能说明信道等于恒等？ <!-- exercise-id: 05-07 -->
+8. 从 $|+\rangle\langle +|$ 出发，按计算基做理想投影测量。已知结果为 $0$ 时的条件后态是什么？丢弃结果时的非选择后态是什么？两者计算基概率是否相同？ <!-- exercise-id: 05-08 -->
 
 完整答案与推导提示见[练习与答案：第 5 章](appendices/exercises.md#第-5-章)。
 
@@ -1451,6 +1467,7 @@ $$
 - **纯 Python 标准库数值实验**（详解见[基础实验册](labs/foundations.md)与[基础代码总览](../codes/foundations/README.md)）：
   - `python3 codes/foundations/foundations_lab.py --case 05`：组合 $T_1=T_\phi=60\,\mu\mathrm{s}$ 的振幅阻尼与纯退相位，逐格验证 $40\,\mu\mathrm{s}$ 后的布居与相干元，并检查 Kraus 完备性与恒等/复位边界；
   - `python3 codes/foundations/diagnostic_lab.py --case 05`：验证广义振幅阻尼（$\gamma=0.36,\; p_{\mathrm{eq}}=0.10$）的四个 Kraus 算符、三个输入态输出、热平衡固定点及多组边界参数；信道顺序不对易与远端阻尼无信号检验等补充脚本亦收录于[基础代码总览](../codes/foundations/README.md)。
+  - [线路与信道边界实验](../codes/foundations/circuit_channel_boundaries.py) `python3 codes/foundations/circuit_channel_boundaries.py`：穷举十层独立随机符号、与整段复用对照，核验静态失谐复苏、无点击的漏检项和 Choi 满迹但不保迹的反例。
 - **开源量子 SDK 实测与过程层析验证**：在隔离环境中基于 Qiskit Aer、Qiskit Experiments 与 CVXPY 实际运行单比特 12 设置过程层析（含低样本数事后修正破坏 TP、仅约束偏迹实部漏掉虚部的实测反例，以及高斯加权最小二乘与多项计数最大似然的完整复偏迹对比），全部锁定依赖、原始计数、复现脚本与工程防护记录汇总于[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 延伸阅读起点

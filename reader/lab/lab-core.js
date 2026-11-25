@@ -266,13 +266,12 @@
     const pDecay = (1 + vis * c) / 2;
     // Common misconception: multiplying ideal probability by V(t) so it decays to 0 instead of 0.5
     const pWrong = vis * pIdeal;
-    // Classical Fisher information F_C(phi; V) = V^2 sin^2(phi) / (1 - V^2 cos^2(phi));
-    // at V = 1 (t = 0) the limit is identically 1.
-    const denom = 1 - vis * vis * c * c;
-    const fisherC = vis >= 1 - 1e-12
-      ? 1
-      : cleanZero((vis * vis * s * s) / Math.max(1e-12, denom));
-    return { t, vis, phase, pIdeal, pDecay, pWrong, fisherC };
+    const numerator = vis * vis * s * s;
+    const denom = (1 - vis * vis) + numerator;
+    // Sum over the outcomes with positive probability at the current point.
+    const fisherC = denom > 0 ? cleanZero(numerator / denom) : 0;
+    const fisherFrequency = (2 * Math.PI * t) ** 2 * fisherC;
+    return { t, vis, phase, pIdeal, pDecay, pWrong, fisherC, fisherFrequency };
   }
 
   // ==================== 4. BELL STATE, PARTIAL TRACE & CHSH MODEL ====================
@@ -330,7 +329,7 @@
       absS: cleanZero(absS),
       pWin,
       pWinByPair: [pWin00, pWin01, pWin10, pWin11],
-      violatesBell: S > 2 + 1e-12,
+      violatesBell: absS > 2 + 1e-12,
       tsirelson: 2 * Math.SQRT2,
       quantumWinBound: 0.5 + Math.SQRT2 / 4,
     };

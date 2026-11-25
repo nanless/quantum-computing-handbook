@@ -1,8 +1,8 @@
 # Q2｜可观测量与量子态的时间演化
 
-在[量子力学基础篇 Q1](01-experiments-states.md)和[第 02 章](../02-single-qubit.md)里，我们已经学会用复数向量表示量子态，也看到了测量怎样把复振幅变成概率。顺着这条线往下走，立刻会冒出两个绕不开的问题：第一，实验室里测量一个物理量（比如能量或某个方向的自旋分量），在数学上到底对应什么对象？第二，在制备和测量之间什么都不测、只是静静等待或施加控制脉冲，量子态与可观测量又怎样随时间改变？
+[Q1](01-experiments-states.md)用自旋和偏振实验展示了测量结果怎样随测量方向改变。[第 02 章](../02-single-qubit.md)的单比特向量、Pauli 矩阵和投影测量，是本章算例的起点。顺着这条线往下走，立刻会冒出两个绕不开的问题：第一，实验室里测量一个物理量（比如能量或某个方向的自旋分量），在数学上到底对应什么对象？第二，在制备和测量之间什么都不测、只是静静等待或施加控制脉冲，量子态与可观测量又怎样随时间改变？
 
-本章专心回答这两个问题。阅读上分为两条清晰轨道：**第 1–6 节为核心主线**，完全不需要微积分，只靠初等矩阵乘法与三角函数即可从头算到底（掌握可观测量、对易子、不确定关系与定常进动/翻转，足以顺畅衔接后续电路与算法章节）；**第 7–9 节标为“进阶选读”**，引入了乘积求导与指数求导（以及密度矩阵和偏迹），涵盖动力学绘景、含时脉冲排序与开放系统 Lindblad 主方程，既可以顺着读完，也可以在学完[第 03 章](../03-multiple-qubits.md)和[第 05 章](../05-noise-channels.md)后再回来精读。
+**第 1–6 节是核心主线**。可观测量、对易子、不确定关系与定常进动、翻转的主干算例只需有限维矩阵与三角函数。第 5 节的 Ehrenfest 定理和标有“进阶选读”的**第 7–9 节**会用到求导，分别追踪期望值的运动、不同动力学绘景、含时脉冲的顺序和 Lindblad 演化。读第 9 节时，可翻查[第 03 章的偏迹](../03-multiple-qubits.md)和[第 05 章的密度矩阵、Kraus 算符](../05-noise-channels.md)。
 
 ---
 
@@ -125,7 +125,7 @@ $$
   \frac{1}{2}\cdot\frac{1}{2}+\frac{1}{2}\cdot\frac{1}{2}=\frac{1}{2}.
   $$
 
-两台装置的读数统计一模一样（用[第 02 章](../02-single-qubit.md)的语言说，它们的 POVM 元都是 $E_0=P_0, E_1=P_1$），测后状态却截然不同。**先细分再丢弃记录，绝不等于从未细分**——写下一个厄米算符 $A$ 只决定了读数概率分布，测后状态还取决于具体的物理测量工具（量子仪器）。本章后续默认采用保留子空间相干的理想 Lüders 投影；更一般的测量工具与 Kraus 描述可回看[第 02 章](../02-single-qubit.md)或继续阅读[第 05 章](../05-noise-channels.md)。
+两台装置的读数统计一模一样（用[第 02 章](../02-single-qubit.md)的语言说，它们的 POVM 元都是 $E_0=P_0, E_1=P_1$），测后状态却截然不同。**先细分再丢弃记录，绝不等于从未细分**——写下一个厄米算符 $A$ 只决定了读数概率分布，测后状态还取决于具体的物理测量工具（量子仪器）。本章后续默认采用保留子空间相干的理想 Lüders 投影；更一般的测量工具与 Kraus 描述可回看[第 02 章](../02-single-qubit.md)或查阅[第 05 章](../05-noise-channels.md)。
 
 ---
 
@@ -287,21 +287,23 @@ $$
 
   这说明 $B$ 把 $A$ 的每一个本征子空间都原封不动地映回该子空间内部，绝不“串门”！如果某个本征子空间是一维的，那么 $B|v\rangle$ 只能是 $|v\rangle$ 的常数倍，$|v\rangle$ 自动也是 $B$ 的本征态；如果该本征子空间是简并的多维空间，我们只需在这个子空间内部单独把厄米算符 $B$ 对角化，得到的新基向量既保持 $A$ 的本征值 $a$ 不变，又是 $B$ 的本征态。把各个本征子空间拼在一起，就凑齐了整个空间的共同正交归一本征基。
 
-当两个厄米算符对易时，我们称它们是**相容可观测量**（compatible observables）：存在能够同时确定两者取值的共同本征态，理想测量其中一个不会搅乱另一个的概率分布。反之，若 $[A,B]\ne 0$（如 $X$ 与 $Z$），就不存在铺满整个空间的共同本征基，它们是**不相容可观测量**。
+当两个厄米算符对易时，我们称它们是**相容可观测量**（compatible observables）。设 $P_a,Q_b$ 分别是它们的谱投影。所有 $P_aQ_b$ 给出一个联合投影测量，而单独做 $A$ 的理想 Lüders 测量并忽略 $a$ 时，后续 $B$ 的概率保持不变。计算是 $\sum_a\operatorname{Tr}(Q_bP_a\rho P_a)=\operatorname{Tr}(Q_b\rho)$，用到了 $P_aQ_b=Q_bP_a$ 和 $\sum_aP_a=I$。若 $[A,B]\ne0$，两者没有铺满整个空间的共同本征基。
+
+同样的 $A$ 读数可以由不同仪器产生。取三能级基 $|0\rangle,|1\rangle,|2\rangle$，令 $A=\operatorname{diag}(0,0,1)$、$B=\operatorname{diag}(1,-1,0)$。设一台 $A$ 仪器的两个算符为 $K_0=|1\rangle\langle0|+|0\rangle\langle1|$ 和 $K_1=|2\rangle\langle2|$。因为 $K_0^\dagger K_0=P_0$、$K_1^\dagger K_1=P_1$，它报告正确的 $A$ 概率，且测完仍在原 $A$ 本征子空间。可是输入 $|0\rangle$ 时，它给出 $a=0$ 后留下 $|1\rangle$，随后的 $B$ 值从 $+1$ 变成 $-1$。这个例子说明对易性保证可以选择相容的测量实现，子空间内的额外操作仍能扰动 $B$。
 
 ### 3.2 简并怎么办？完备对易可观测量集合（CSCO）
 
 回到第 1.3 节的简并问题：如果单个可观测量 $A$ 有简并本征值，单靠 $A$ 的读数没法唯一锁定一个态矢量。现在我们刚学会了用对易算符 $B$ 去“切分” $A$ 的简并子空间！
 
-把这套想法走到底：从 $A$ 出发，如果还有简并，就再找一个与 $A$ 对易的厄米算符 $B$ 来进一步细分；如果还有残余简并，再找与 $A,B$ 都对易的 $C$……一直加到**所有公共本征子空间全变成一维**为止。这样一组两两对易的厄米算符 $\{A, B, \dots\}$ 称为一个**完备对易可观测量集合**（Complete Set of Commuting Observables, CSCO）。只要联合报出这套集合里每个算符的读数，对应的量子态就在全局相位意义下被唯一钉死。
+把这套想法走到底：从 $A$ 出发，如果还有简并，就再找一个与 $A$ 对易的厄米算符 $B$ 来进一步细分；如果还有残余简并，再找与 $A,B$ 都对易的 $C$……一直加到**所有公共本征子空间全变成一维**为止。这样一组两两对易的厄米算符 $\{A, B, \dots\}$ 称为一个**完备对易可观测量集合**（Complete Set of Commuting Observables, CSCO）。每组允许的联合本征值唯一标记一个一维公共本征子空间。对该集合做理想联合 Lüders 测量后，给定读数的条件态位于对应的一维子空间，所以纯态只剩全局相位的自由度。
 
-用单比特和两比特的例子立刻就能摸清它的直觉（两比特张量积的细节将在[第 03 章](../03-multiple-qubits.md)展开，这里先看最简单的 $4\times 4$ 对角阵）：
+用单比特和两比特的例子立刻就能摸清它的直觉（两比特张量积的细节可回查[第 03 章](../03-multiple-qubits.md)，这里先看最简单的 $4\times 4$ 对角阵）：
 
 - **单比特**（2 维）：$Z=\operatorname{diag}(+1,-1)$ 的两个本征值互不相等，没有简并，因此单个算符 $\{Z\}$ 本身就是一套 CSCO。
 - **两比特**（4 维，基序 $|00\rangle,|01\rangle,|10\rangle,|11\rangle$）：
   - 只测第一个比特的 $Z\otimes I = \operatorname{diag}(+1,+1,-1,-1)$，它有两个二维简并子空间：读到 $+1$ 时态位于 $\operatorname{span}\{|00\rangle,|01\rangle\}$，读到 $-1$ 时位于 $\operatorname{span}\{|10\rangle,|11\rangle\}$，单个算符不够构成 CSCO。
   - 补入与它对易的第二个比特算符 $I\otimes Z = \operatorname{diag}(+1,-1,+1,-1)$ 后，四个基态对应的联合读数 $(Z\otimes I,\ I\otimes Z)$ 分别是 $(+1,+1)$、$(+1,-1)$、$(-1,+1)$、$(-1,-1)$，彼此各不相同！于是 $\{Z\otimes I,\ I\otimes Z\}$ 是一套 CSCO。
-  - 同一空间上的 CSCO 并不是唯一的：你也可以换选两个联合算符 $\{X\otimes X,\ Z\otimes Z\}$。它们彼此对易，四组联合本征值 $(\pm 1,\pm 1)$ 唯一锁定四个纠缠 Bell 态！这正是[第 10 章](../10-error-correction.md)稳定子量子纠错码用多比特对易测量锁定逻辑态和纠错症状的核心思路。
+  - 同一空间上的 CSCO 并不是唯一的：你也可以换选两个联合算符 $\{X\otimes X,\ Z\otimes Z\}$。它们彼此对易，四组联合本征值 $(\pm 1,\pm 1)$ 唯一锁定四个纠缠 Bell 态！[第 10 章](../10-error-correction.md)的纠错稳定子也能联合测量，读数标记的是**纠错症状**。设计上，联合本征子空间须保留码内逻辑自由度。例如三比特重复码的 $Z\otimes Z\otimes I$、$I\otimes Z\otimes Z$ 对 $|000\rangle$ 和 $|111\rangle$ 都给出 $(+1,+1)$，所以两者的任意叠加共享这一症状。
 
 ---
 
@@ -1155,9 +1157,11 @@ $$
 
 实际操控量子计算机时，我们不可能只开着一个永远不变的哈密顿量干等：我们需要先加一段 $X$ 脉冲，关掉后再加一段 $Z$ 脉冲，或者施加像钟形曲线那样平滑升降的**高斯脉冲**。一旦 $\mathcal{H}(t)$ 随时间改变，还能不能简单地把总积分塞进一个指数写成 $\exp\!\left[-\frac{i}{\hbar}\int_{t_0}^t \mathcal{H}(s)\,ds\right]$？
 
-答案非常明确：**只有当任意两个时刻的哈密顿量都两两对易，即 $[\mathcal{H}(t_1),\mathcal{H}(t_2)]=0$ 时，才能直接把普通积分放进单个指数里**。比如强度随时间变化、但始终沿着 $Z$ 轴的脉冲 $\mathcal{H}(t)=\frac{\hbar\omega(t)}{2}Z$，各时刻都对易，总转角就是 $\int_{t_0}^t \omega(s)\,ds$。
+一个常用的**充分条件**是任意两个时刻的哈密顿量都对易，即 $[\mathcal{H}(t_1),\mathcal{H}(t_2)]=0$。此时先按时间切片再连乘，每一段的指数可相加，取连续极限即得普通积分的单指数。比如方向始终沿 $Z$、只有强度变化的 $\mathcal{H}(t)=\frac{\hbar\omega(t)}2Z$，总转角就是 $\int_{t_0}^t\omega(s)\,ds$。这和[第 01 章第 6.3 节](../01-math.md#63-矩阵指数从厄米算符生出酉门)的矩阵指数规则相通。
 
-一旦不同时刻的哈密顿量**不对易**，把时间 $[t_0,t]$ 切成 $M$ 个极小的片段 $\delta t=(t-t_0)/M$，在第 $k$ 小段内近似把哈密顿量看成常数 $\mathcal{H}(t_k)$。记住矩阵乘法**从右向左作用**——先发生的脉冲乘在右边，后发生的脉冲乘在左边：
+存在不对易的脉冲，也可能在特定终点恰好得到相同结果。例如按早到晚施加三段等时长 $\tau$ 的常数哈密顿量 $\hbar aX/\tau,\ \hbar bZ/\tau,\ -\hbar bZ/\tau$，其中 $a,b$ 是无量纲脉冲面积。若 $ab\ne 0$ 则第一、二段的哈密顿量不对易，但完整演化 $e^{+ibZ}e^{-ibZ}e^{-iaX}=e^{-iaX}$，等于总积分的单指数。若在第二段末端停下，这项抵消便不存在，一般仍需时间排序。
+
+通常，求解时变演化的直接做法是把时间 $[t_0,t]$ 切成 $M$ 个极小的片段 $\delta t=(t-t_0)/M$，在第 $k$ 小段内近似把哈密顿量看成常数 $\mathcal{H}(t_k)$。记住矩阵乘法**从右向左作用**——先发生的脉冲乘在右边，后发生的脉冲乘在左边：
 
 $$
 U(t,t_0)
@@ -1491,7 +1495,7 @@ $$
 
 #### 第三步：一般 GKSL / Lindblad 主方程与纯退相位的“因子 2”核对
 
-在更一般的微观弱耦合（Born）、无记忆（Markov）与快振荡平均（Secular）条件下，Gorini–Kossakowski–Sudarshan 与 Lindblad（1976）证明，唯一在所有时刻保证密度矩阵完全正且保迹的连续时间主方程，就是把封闭 von Neumann 演化与多条耗散通道合并而成的 **GKSL（Lindblad）主方程**：
+在有限维中，Gorini–Kossakowski–Sudarshan 与 Lindblad（1976）给出了连续、时间齐次的完全正保迹动力学半群的生成元形式，即 **GKSL（Lindblad）主方程**。微观弱耦合、Markov 和长期平均（secular）近似是一条导出这类方程的常见路径。单凭每个 $t$ 的演化映射完全正且保迹，无法推出时间齐次半群性质，参见[第 05 章](../05-noise-channels.md)。
 
 $$
 \frac{d\rho}{dt}
@@ -1620,7 +1624,7 @@ $$
    = 1 - \delta p + O(\delta t^2),
    $$
 
-   再除以自身范数归一化得 $|\psi_{\mathrm{no\text{-}jump}}(t+\delta t)\rangle = |\widetilde{\psi}(t+\delta t)\rangle / \sqrt{1 - \delta p + O(\delta t^2)}$。在零温阻尼模型里，这条无跳跃分支使 $|1\rangle$ 的相对振幅平滑地按 $e^{-\kappa t/2}$ 往下滑，态矢量静静滑向基态 $|0\rangle$。
+   再除以自身范数归一化得 $|\psi_{\mathrm{no\text{-}jump}}(t+\delta t)\rangle = |\widetilde{\psi}(t+\delta t)\rangle / \sqrt{1 - \delta p + O(\delta t^2)}$。在无驱动的零温阻尼模型里，归一化之前的激发振幅乘 $e^{-\kappa t/2}$；若同时有基态成分，它们的相对模比也按这个因子下降。以 $|1\rangle$ 为初态时，理想监测下未发生跳跃的概率随时间降为 $e^{-\kappa t}$，只要该分支发生，归一化态仍是 $|1\rangle$。
 
 把这两类分支按概率加权平均成密度矩阵。注意无跳跃项分母的 $1-\delta p + O(\delta t^2)$ 与分子的 $(1-\delta p)$ 相除等于 $1 + O(\delta t^2)$，于是两项的权重因子在 $\delta t$ 一阶精确约掉（跳跃项约去 $\delta p_k$ 后，分母里的 $1/\delta t$ 翻回分子，凑出 $\delta t\,L_k|\psi\rangle\langle\psi|L_k^\dagger$）：
 
@@ -1636,11 +1640,29 @@ $$
 
 精确还原了 GKSL / Lindblad 主方程！而且这不只是纸面上的巧妙抽样技巧：2019 年，耶鲁大学团队（Minev et al., *Nature* 2019）在三维微波腔的超导人工原子中实时监测暗态跃迁前的无荧光信号，亲眼捕捉到了量子跳跃的连续相干“飞行过程”，甚至在中途打一发反向脉冲把正在发生的跳跃拦截了回来。
 
-不过请牢记一条物理边界：**同一套 Lindblad 主方程可以拆解成不止一种随机轨迹**（称为解缠不唯一性）。把光子计数换成连续零差测量，跳跃轨迹就会变成平滑的随机扩散轨迹，但大量轨迹平均后给出的 $\rho(t)$ 完全一模一样。因此，单条轨迹对应的是“装上某种特定环境探测器时的条件历史”；如果没有去监测环境，唯一可检验的物理对象仍是平均密度矩阵 $\rho(t)$。
+同一套 Lindblad 主方程可由不同的条件轨迹平均得到。把光子计数换成连续零差测量，条件轨迹可以从跳跃变为扩散，而忽略环境测量结果后的 $\rho(t)$ 相同。$\rho(t)$ 足以预测时刻 $t$ 的任意单次系统测量统计。要预测一整段监测记录或干预下的多时相关，还要给定测量安排及相应的动力学。
+
+#### 探测效率不足时，一直无点击包含哪些事件？
+
+考虑无驱动、零温、至多发射一个光子的阻尼过程，令 $s=e^{-\kappa t}$。按系统基序 $|0\rangle,|1\rangle$，无发射和发生发射的 Kraus 算符分别为 $K_0=\operatorname{diag}(1,\sqrt{s})$ 和 $K_1=\sqrt{1-s}|0\rangle\langle1|$。若光子计数器效率为 $\eta\in[0,1]$，无暗计数且只把每次真实发射独立标为检出或漏检，则
+
+$$
+\mathcal I_{\mathrm{no\,click}}(\rho)=K_0\rho K_0^\dagger+(1-\eta)K_1\rho K_1^\dagger,\qquad
+\mathcal I_{\mathrm{click}}(\rho)=\eta K_1\rho K_1^\dagger.
+$$
+
+每个分支的迹给出观测概率，除以这项概率才得到条件态。两分支相加仍给原来的阻尼信道。以 $|+\rangle$ 为初态，取 $s=1/2,\eta=1/2$。无发射贡献 $3/4$，发射但漏检贡献 $1/8$，所以观测到无点击的概率为 $7/8$，该分支的归一化态为
+
+$$
+\rho_{\mathrm{no\,click}}=\frac{8}{7}
+\begin{bmatrix}5/8 & 1/(2\sqrt2)\\1/(2\sqrt2)&1/4\end{bmatrix}.
+$$
+
+它的激发态概率为 $2/7$，行列式为 $2/49>0$，因此是混态。理想监测 $\eta=1$ 时，无点击的概率为 $3/4$，条件态纯且激发态概率为 $1/3$。同一漏检模型见[第 05 章](../05-noise-channels.md)。
 
 ![Lindblad 主方程光滑衰减与单次量子跳跃随机轨迹系综平均](../assets/v3-q2-lindblad-trajectories.svg)
 
-（可打开[原尺寸 SVG](../assets/v3-q2-lindblad-trajectories.svg)查看清晰细节。该图在无量纲时间 $\kappa t$ 下演示同一零温阻尼主方程的轨迹机制，其中能量弛豫速率统一记作 $\kappa$，以区别于第 9.2 节的无量纲阻尼概率 $\gamma(t)=1-e^{-\kappa t}$：左面板蓝色主曲线与 8 条突然跌落的阶梯轨迹取自完全激发初态 $|1\rangle$（$\rho_{11}(0)=1$，解析解为 $\rho_{11}(t)=e^{-\kappa t}$），绿色虚线则取自等权叠加初态 $|+\rangle$（$\rho_{11}(0)=1/2$），定格一直未检测到光子时的无跳跃贝叶斯下滑 $\frac{e^{-\kappa t}}{1+e^{-\kappa t}}$；右面板展示 $N=64, 512, 4096$ 条独立轨迹系综平均及其统计误差带按 $O(1/\sqrt{N})$ 向解析解收敛的过程。）
+（可打开[原尺寸 SVG](../assets/v3-q2-lindblad-trajectories.svg)查看清晰细节。该图在无量纲时间 $\kappa t$ 下演示同一零温阻尼主方程的轨迹机制，其中能量弛豫速率统一记作 $\kappa$，以区别于第 9.2 节的无量纲阻尼概率 $\gamma(t)=1-e^{-\kappa t}$：左面板蓝色主曲线与 8 条突然跌落的阶梯轨迹取自完全激发初态 $|1\rangle$（$\rho_{11}(0)=1$，解析解为 $\rho_{11}(t)=e^{-\kappa t}$），理想探测效率下的绿色虚线取自等权叠加初态 $|+\rangle$（$\rho_{11}(0)=1/2$），定格一直未检测到光子时的无跳跃贝叶斯下滑 $\frac{e^{-\kappa t}}{1+e^{-\kappa t}}$；右面板展示 $N=64, 512, 4096$ 条独立轨迹系综平均及其统计误差带按 $O(1/\sqrt{N})$ 向解析解收敛的过程。）
 
 回到第 9.2 节初态为 $|\psi(0)\rangle=\frac{\sqrt{3}}{2}|0\rangle+\frac{i}{2}|1\rangle$（$b(0)=1/4$）的无驱动零温模型，单条轨迹在 $[0, 4]\ \mu\mathrm{s}$ 内至多跳一次，总跳跃概率恰好等于激发态减少的份额 $p_J = b(0) - b(4) = \frac{1}{4}(1 - e^{-2.8}) \approx 0.2348$。由于 $N$ 条独立随机轨迹平均的**标准误**按 $O(1/\sqrt{N})$ 缩小，想把采样起伏压小 $10$ 倍，必须把轨迹数增加到 $100$ 倍；详细的大样本轨迹统计、残差复现与 QuTiP 实跑存档见[基础代码说明](../../codes/foundations/README.md)与[完整 SDK 实验册](../labs/sdk-validation.md)。
 
@@ -1690,8 +1712,8 @@ $$
 - **把定态当成态矢量完全静止**：能量本征态依然带着 $e^{-iE_n t/\hbar}$ 的全局相位旋转，只是不显含时间的测量概率永恒不变。
 - **写反 von Neumann 方程与海森堡方程的符号**：薛定谔绘景密度矩阵是 $i\hbar\dot{\rho} = +[\mathcal{H},\rho]$，海森堡绘景算符是 $i\hbar\dot{A}_H = [A_H,\mathcal{H}_H] = -[\mathcal{H}_H,A_H]$，两者严格差一个负号。
 - **忘记 $\hbar$、混用 $\mathrm{Hz}$ 与 $\mathrm{rad/s}$ 或静默翻转 $\mathcal{H}_Z$ 符号**：放进指数前先检查 $\mathcal{H}t/\hbar$ 是否无量纲；核实拉比频率是 $f=\Omega/(2\pi)$ 还是 $\Omega$；明确交代使用的是门几何约定 $+\frac{\hbar\omega}{2}Z$、物理基态约定 $-\frac{\hbar\omega_0}{2}Z$ 还是旋转框失谐 $+\frac{\hbar\Delta}{2}Z$。
-- **把不对易的时变哈密顿量直接塞进单个指数，或把有限阶 Dyson 级数当量子门**：先检查 $[\mathcal{H}(t_1),\mathcal{H}(t_2)]$ 是否恒为零；不为零时必须按“晚左早右”分段连乘或用保幺正的 Magnus 展开。
-- **漏写纯退相位跳跃算符里的 $\sqrt{1/2}$，或把单条 MCWF 轨迹当成唯一物理实在**：$L_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 中的 $1/2$ 抵消了 $Z\rho Z-\rho$ 自带的因子 $2$；同一 Lindblad 主方程存在多种等价随机解缠，未监测环境时可观测的仍是系综平均密度矩阵 $\rho(t)$。
+- **把不对易的时变哈密顿量直接塞进单个指数，或把有限阶 Dyson 级数当量子门**：先检查 $[\mathcal{H}(t_1),\mathcal{H}(t_2)]$ 是否恒为零；不为零时一般按“晚左早右”分段连乘或用保幺正的 Magnus 展开。
+- **漏写纯退相位跳跃算符里的 $\sqrt{1/2}$，或把无点击当作无跳跃**：$L_\phi = \sqrt{\Gamma_\phi/2}\,Z$ 中的 $1/2$ 抵消了 $Z\rho Z-\rho$ 自带的因子 $2$。无暗计数的理想计数器才以无点击精确标记无跳跃，有漏检时要把未发现的跳跃并入无点击分支。
 
 ---
 
@@ -1705,25 +1727,27 @@ $$
 | Schrödinger / Robertson 界 | $(\Delta A)^2(\Delta B)^2 \ge \operatorname{Cov}(A,B)^2 + \frac{1}{4}\lvert\langle[A,B]\rangle\rvert^2$（制备散布，非单次扰动） |
 | 薛定谔演化与量子速度极限 | $U(t)=e^{-i\mathcal H t/\hbar}$；$\tau_\perp \ge \max\!\left(\frac{\pi\hbar}{2\Delta E},\;\frac{\pi\hbar}{2(\langle\mathcal H\rangle-E_0)}\right)$，共振 $\pi$ 脉冲 $t_\pi=\pi/\lvert\Omega\rvert$ 饱和两界 |
 | 三种绘景与符号反差 | 密度矩阵 $i\hbar\dot\rho = +[\mathcal H,\rho]$；海森堡算符 $i\hbar\dot A_H = [A_H,\mathcal H_H]$（反号） |
-| 含时演化与 Magnus 展开 | $[\mathcal H(t_1),\mathcal H(t_2)]\ne 0$ 须“晚左早右”时间排序；Dyson 截断破幺正，Magnus 严格保幺正 |
+| 含时演化与 Magnus 展开 | 两两对易足以省去时间排序，一般含时演化按“晚左早右”连乘。Dyson 截断一般失去幺正性，Magnus 截断保持幺正 |
 | Lindblad 主方程与退相干 | $\dot\rho = -\frac{i}{\hbar}[\mathcal H,\rho] + \sum_k(L_k\rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k,\rho\})$；$L_\phi=\sqrt{\Gamma_\phi/2}\,Z$，$\frac{1}{T_2}=\frac{1}{2T_1}+\frac{1}{T_\phi}$ |
 
-**三句自检要点**：① 核对角频率 $\Omega$（$\mathrm{rad/s}$）与普通频率 $f=\Omega/(2\pi)$（$\mathrm{Hz}$），避免 $t_\pi$ 差 $2\pi$ 倍；② 区分门几何约定 $+\frac{\hbar\omega}{2}Z$ 与物理基态约定 $-\frac{\hbar\omega_0}{2}Z$；③ 单条 MCWF 轨迹依赖环境监测方式，系综平均 $\rho(t)$ 才是无监测时的唯一物理预测。
+**三句自检要点**：① 核对角频率 $\Omega$（$\mathrm{rad/s}$）与普通频率 $f=\Omega/(2\pi)$（$\mathrm{Hz}$），避免 $t_\pi$ 差 $2\pi$ 倍；② 区分门几何约定 $+\frac{\hbar\omega}{2}Z$ 与物理基态约定 $-\frac{\hbar\omega_0}{2}Z$；③ 光子计数轨迹依赖探测方式与效率，忽略记录时可用系综平均 $\rho(t)$ 预测固定时刻的系统测量。
+
+[Q3](03-levels-control.md)会给本章的哈密顿量和演化时间填上器件参数。先看能隙如何定出共振频率，再用驱动相位和脉冲时长控制翻转。
 
 ---
 
 ## 自检题
 
-1. 对 $A=2|0\rangle\langle 0|-|1\rangle\langle 1|$ 和 $|\psi\rangle=(|0\rangle+|1\rangle)/\sqrt{2}$，列出单次测量的可能结果与概率，并求 $\langle A\rangle$、$\Delta A$。为什么单次不会读到期望值？
-2. 从中心化算符和 Cauchy–Schwarz 不等式（或等价的 $2\times 2$ 格拉姆矩阵半正定性）出发，补全 Robertson 关系中从 $(\Delta A)^2(\Delta B)^2$ 到 $\frac{1}{4}|\langle[A,B]\rangle|^2$ 的推导，并指出保留复数实部后会多出哪一项。
-3. 在 $|{+i}\rangle$ 上计算 $\Delta X\,\Delta Z$ 与 Robertson 下界；二者是否相等？
-4. 对 $|\phi\rangle=\cos(\pi/8)|0\rangle+\sin(\pi/8)|1\rangle$，为什么 Robertson 右端为零，却不能说 $X,Z$ 都是确定的？（延伸：计算对称协方差 $\operatorname{Cov}_\phi(X,Z)$，检验 Schrödinger 不等式是否饱和。）
-5. 若 $\mathcal{H}=E_0|0\rangle\langle 0|+E_1|1\rangle\langle 1|$，写出 $U(t)$，并求初态 $|+\rangle$ 在时刻 $t$ 测得 $X=+1$ 的概率。
-6. 对 $\mathcal{H}_X=\frac{\hbar\Omega}{2}X$，从 $|0\rangle$ 出发求 $p(1,t)$。若实验报告 $\Omega/(2\pi)=25\ \mathrm{MHz}$，$\pi$ 脉冲多长？
-7. 为什么哈密顿量的能量本征态称为定态？这是否表示态矢量完全不随时间改变？
-8. 两段等时长的 $X$、$Z$ 哈密顿量具有相同的时间积分。为什么交换顺序仍可能改变结果？用本章 $\pi/2$ 两段例子的 $X$ 基测量概率回答。
+1. 对 $A=2|0\rangle\langle 0|-|1\rangle\langle 1|$ 和 $|\psi\rangle=(|0\rangle+|1\rangle)/\sqrt{2}$，列出单次测量的可能结果与概率，并求 $\langle A\rangle$、$\Delta A$。为什么单次不会读到期望值？ <!-- exercise-id: Q2-01 -->
+2. 从中心化算符和 Cauchy–Schwarz 不等式（或等价的 $2\times 2$ 格拉姆矩阵半正定性）出发，补全 Robertson 关系中从 $(\Delta A)^2(\Delta B)^2$ 到 $\frac{1}{4}|\langle[A,B]\rangle|^2$ 的推导，并指出保留复数实部后会多出哪一项。 <!-- exercise-id: Q2-02 -->
+3. 在 $|{+i}\rangle$ 上计算 $\Delta X\,\Delta Z$ 与 Robertson 下界；二者是否相等？ <!-- exercise-id: Q2-03 -->
+4. 对 $|\phi\rangle=\cos(\pi/8)|0\rangle+\sin(\pi/8)|1\rangle$，为什么 Robertson 右端为零，却不能说 $X,Z$ 都是确定的？（延伸：计算对称协方差 $\operatorname{Cov}_\phi(X,Z)$，检验 Schrödinger 不等式是否饱和。） <!-- exercise-id: Q2-04 -->
+5. 若 $\mathcal{H}=E_0|0\rangle\langle 0|+E_1|1\rangle\langle 1|$，写出 $U(t)$，并求初态 $|+\rangle$ 在时刻 $t$ 测得 $X=+1$ 的概率。 <!-- exercise-id: Q2-05 -->
+6. 对 $\mathcal{H}_X=\frac{\hbar\Omega}{2}X$，从 $|0\rangle$ 出发求 $p(1,t)$。若实验报告 $\Omega/(2\pi)=25\ \mathrm{MHz}$，$\pi$ 脉冲多长？ <!-- exercise-id: Q2-06 -->
+7. 为什么哈密顿量的能量本征态称为定态？这是否表示态矢量完全不随时间改变？ <!-- exercise-id: Q2-07 -->
+8. 两段等时长的 $X$、$Z$ 哈密顿量具有相同的时间积分。为什么交换顺序仍可能改变结果？用本章 $\pi/2$ 两段例子的 $X$ 基测量概率回答。 <!-- exercise-id: Q2-08 -->
 
-完整解答见[练习与答案：量子力学 Q2](../appendices/exercises.md#量子力学-q2)。
+完整解答和补充练习见[练习与答案：量子力学 Q2](../appendices/exercises.md#量子力学-q2)，其中练 Q2-D 比较两比特上的 X 测量与幺正门，练 Q2-E 从有限效率的点击记录求条件态。
 
 ---
 
@@ -1731,7 +1755,7 @@ $$
 
 想亲手把本章的矩阵、不确定关系、脉冲时序与开放演化全部跑一遍，可以顺着下面的本地实验与代码入口操作（所有教学脚本均在本地 CPU 运行，不请求云服务）：
 
-- **能量平移与脉冲时序实验**：见[基础实验册 FQ2](../labs/foundations.md#fq2子系统整体能量平移仍然只是全局相位)与[基础代码说明](../../codes/foundations/README.md)（运行 `python3 codes/foundations/foundations_lab.py --case q2`），逐项验证两段 $X/Z$ 门序差异，以及子系统整体能量平移与单分支相移的区别。
+- **能量平移与脉冲时序实验**：见[基础实验册 FQ2](../labs/foundations.md#fq2子系统整体能量平移仍然只是全局相位)与[基础代码说明](../../codes/foundations/README.md)（运行 `python3 codes/foundations/foundations_lab.py --case q2`），核验两段 $X/Z$ 脉冲的门序差异、三段脉冲的末端抵消、子系统能量平移、简并仪器与有限效率的无点击条件态。
 - **简并 Lüders 投影 vs 细分遗忘**：运行 `python3 codes/foundations/diagnostic_lab.py --case q2`，用 $3\times 3$ 矩阵直接核对回测 $|u\rangle\langle u|$ 的概率 $1$ 与 $1/2$。
 - **Schrödinger 协方差、自由阻尼随机轨迹与高斯驱动收敛复现**：上述数值检验脚本、容差收敛记录与独立 Bloch 方程交叉验证均收录于[基础代码说明](../../codes/foundations/README.md)、[完整 SDK 实验册](../labs/sdk-validation.md)与[全书实验总图谱](../labs/README.md)。
 

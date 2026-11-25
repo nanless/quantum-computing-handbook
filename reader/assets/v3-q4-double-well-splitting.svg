@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
   <title id="title">对称双势阱隧穿能级劈裂与自由高斯波包色散展宽</title>
-  <desc id="desc">左面板上部由精确有限差分求解绘制四次对称双势阱 V(ξ) = (ξ²−a²)²/(8a²)（a = 2.4）、偶基态波函数 ψ₊(ξ)（无节点）与奇第一激发态 ψ₋(ξ)（原点过零）及隧穿劈裂 ΔE；中部对数图对比 a = 3.0–5.0 精确劈裂与 Garg、Landau-Lifshitz 两条 WKB 曲线；底部标出 NH₃ 与 Fluxonium Φ₀/2 甜点。右面板绘制自由高斯波包在无量纲时间 τ = 0, 1, 2, 3 的精确概率密度 |ψ(x,t)|² 及宽度展宽 σ(t)/σ₀ = √(1+τ²)。</desc>
+  <desc id="desc">左面板上部用有限差分绘制四次对称双势阱 V(ξ) = (ξ²−a²)²/(8a²)（a = 2.4）、偶基态波函数 ψ₊(ξ)（无节点）与奇第一激发态 ψ₋(ξ)（原点过零）及隧穿劈裂 ΔE；中部对数图对比 a = 3.0–5.0 有限差分参考值与 Garg、Landau-Lifshitz 两条 WKB 曲线；底部标出 NH₃ 与 Fluxonium Φ₀/2 甜点。右面板绘制自由高斯波包在无量纲时间 τ = 0, 1, 2, 3 的精确概率密度 |ψ(x,t)|² 及宽度展宽 σ(t)/σ₀ = √(1+τ²)。</desc>
   <style>
 :root{color-scheme:light}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -127,8 +127,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <polygon class="axis-fill" points="478,446 472.5,448.64 472.5,443.36"/>
   <line class="axis" x1="84" y1="446" x2="84" y2="352"/>
   <polygon class="axis-fill" points="84,352 86.64,357.5 81.36,357.5"/>
-  <text class="xs c3-txt" x="308" y="376">● 精确解  — Garg (1/√eπ 贴合)</text>
-  <text class="xs c2-txt" x="308" y="393">-- LL (1/π 系统低估 ~7%)</text>
+  <text class="xs c3-txt" x="308" y="376">● 差分参考  — Garg (1/√(eπ))</text>
+  <text class="xs c2-txt" x="308" y="393">-- LL (1/π，偏差随 a 变号)</text>
   <rect class="note" x="44" y="478" width="432" height="60" rx="10"/>
   <text class="xsb" x="58" y="499">物理硬件桥梁：氨分子 NH<tspan dy="2.8" font-size="74%">3</tspan><tspan dy="-2.8">&#8203;</tspan> 反转劈裂 23.78 GHz（首台 Maser）</text>
   <text class="xs" x="58" y="521">超导 Fluxonium（Φ<tspan dy="2.8" font-size="74%">ext</tspan><tspan dy="-2.8">&#8203;</tspan> = Φ₀/2 甜点）：大非谐性且对低频磁通噪声一阶免疫</text>

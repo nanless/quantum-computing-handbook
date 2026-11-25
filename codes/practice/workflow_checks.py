@@ -12,6 +12,9 @@ import math
 import pathlib
 import random
 from fractions import Fraction
+import sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 
 
 def matmul(a, b):
@@ -196,8 +199,8 @@ def main():
     results = {'scope': 'independent authored ideal/synthetic models; no vendor execution',
                'MPF': mpf(), 'OBP_NOISE': obp_noise(), 'SQD': sqd(),
                'RNG': indexed_randomness(), 'TOMO': tomography()}
-    dest = pathlib.Path(__file__).with_name('workflow-results.json')
-    dest.write_text(json.dumps(results, ensure_ascii=False, indent=2) + '\n')
+    dest = pathlib.Path(__file__).resolve().with_name('workflow-results.json')
+    write_result(dest, json.dumps(results, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps(results, ensure_ascii=False, indent=2))
 
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
   <title id="title">20 任务 FIFO 实时解码排队尾延迟与停机并集可用率</title>
-  <desc id="desc">左面板按精确有理数复算 20 任务单服务台 FIFO 队列（每 1 μs 到达、常规服务 0.8 μs、n=2 突发 4.0 μs）：尽管平均服务 0.96 μs &lt; 1 μs，单次突发仍致 n=2 至 n=11 共 10 项（50%）击穿 2.0 μs 硬反馈截止线。右面板上部绘制 d=7 归档解码尾延迟分布（p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 与 SLA 红线），下部绘制 service_timeline.py 的 24 小时重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。</desc>
+  <desc id="desc">左面板按精确有理数复算 20 任务单服务台 FIFO 队列（每 1 μs 到达、常规服务 0.8 μs、n=2 突发 4.0 μs）：尽管平均服务 0.96 μs &lt; 1 μs，单次突发仍致 n=2 至 n=11 共 10 项（50%）击穿 2.0 μs 硬反馈截止线。右面板上部标出 d=7 归档解码的 p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 及 SLA 预算。曲线是以 p50 和 p99 校准的对数正态示意。下部绘制 service_timeline.py 的 24 小时合成重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。</desc>
   <style>
 :root{color-scheme:light dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -198,7 +198,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <rect class="pill" x="44" y="476" width="432" height="62" rx="10"/>
   <text class="xsb" x="58" y="497">FIFO 递推：b<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> = max(a<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan>, f<tspan dy="2.8" font-size="74%">n−1</tspan><tspan dy="-2.8">&#8203;</tspan>)，ℓ<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> = b<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> + s<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan> − a<tspan dy="2.8" font-size="74%">n</tspan><tspan dy="-2.8">&#8203;</tspan></text>
   <text class="xs" x="58" y="517">增配第二台解码器可即时消除 n≥3 排队积压，但仍无法把 s₂ = 4.0 μs 压进 2.0 μs</text>
-  <text class="xsb" x="522" y="154">① 离线解码尾延迟分布（d=7 归档 N=1,000；通信固定 +8 μs）</text>
+  <text class="xsb" x="522" y="154">① 归档分位点与示意密度（d=7；固定通信 +8 μs）</text>
   <line class="grid" x1="562" y1="174" x2="562" y2="290"/>
   <text class="xs" x="562" y="304" text-anchor="middle">0 μs</text>
   <line class="grid" x1="645.14" y1="174" x2="645.14" y2="290"/>
@@ -231,9 +231,9 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <polygon class="axis-fill" points="956,290 950,292.88 950,287.12"/>
   <line class="axis" x1="562" y1="290" x2="562" y2="168"/>
   <polygon class="axis-fill" points="562,168 564.88,174 559.12,174"/>
-  <text class="xs" x="526" y="232" text-anchor="middle" transform="rotate(-90 526 232)">概率密度</text>
+  <text class="xs" x="526" y="232" text-anchor="middle" transform="rotate(-90 526 232)">对数正态示意</text>
   <line class="grid" x1="520" y1="322" x2="958" y2="322"/>
-  <text class="xsb" x="522" y="342">② 24 h 重叠停机日志并集核算（service_timeline.py）</text>
+  <text class="xsb" x="522" y="342">② 24 h 合成日志的停机并集（service_timeline.py）</text>
   <line class="grid" x1="594" y1="354" x2="594" y2="458"/>
   <text class="xs" x="594" y="473" text-anchor="middle">0h</text>
   <line class="grid" x1="653" y1="354" x2="653" y2="458"/>

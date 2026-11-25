@@ -120,9 +120,9 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xsb" x="106" y="349">红/绿/蓝面元各载 X 与 Z 稳定子（H_X = H_Z 自对偶）</text>
   <circle class="qnode-err" cx="53" cy="368" r="4.8"/>
   <text class="xs c2-txt" x="66" y="372">内部单比特错同时点亮 3 色面元（超边，需 Chromobius 解码）</text>
-  <text class="xs c3-txt" x="46" y="388">比特密度 (3d²+1)/4 省 ~25%；全 Clifford 横向（逻辑 S = (S†)⊗ⁿ）</text>
+  <text class="xs c3-txt" x="46" y="388">横向 S：两子格分别用 S 和 S†；d = 3 可统一用 S†</text>
   <rect class="note" x="34.0" y="404.0" width="432.0" height="30.0" rx="8"/>
-  <text class="xsb" x="250.0" y="423.2" text-anchor="middle">二维颜色码以权重 6 校验与超边解码为代价，换取全 Clifford 群横向能力</text>
+  <text class="xsb" x="250.0" y="423.2" text-anchor="middle">权重 6 的面元在均匀 S† 下变号，交错相位门保持原校验扇区</text>
   <rect class="panel" x="492.0" y="68.0" width="448.0" height="376.0" rx="12.0"/>
   <path class="phead" d="M 504.0 69.0 H 928.0 Q 939.0 69.0 939.0 80.0 V 99.0 H 493.0 V 80.0 Q 493.0 69.0 504.0 69.0 Z"/>
   <line class="grid" x1="493.0" y1="99.0" x2="939.0" y2="99.0"/>

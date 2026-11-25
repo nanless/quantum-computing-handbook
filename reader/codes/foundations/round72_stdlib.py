@@ -2,6 +2,9 @@
 """Independent stdlib rechecks of saved F72 SDK outputs; no SDK imports/reruns."""
 import argparse, cmath, hashlib, json, math
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 HERE=Path(__file__).resolve().parent
 SOURCE=HERE/'round72-results.json'
 def matrix(values):return [[complex(*v) for v in row] for row in values]
@@ -70,6 +73,6 @@ def main():
     data=json.loads(SOURCE.read_text());selected=data['cases'] if args.case=='all' else {args.case:data['cases'][args.case]}
     results={key:recheck(key,value) for key,value in selected.items()}
     report={'source_sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'cases':results}
-    (HERE/('round72-stdlib-'+args.case+'.json')).write_text(json.dumps(report,indent=2)+'\n')
+    write_result(HERE/('round72-stdlib-'+args.case+'.json'), json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

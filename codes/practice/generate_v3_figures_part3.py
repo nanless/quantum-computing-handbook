@@ -317,6 +317,7 @@ def build_fig1_anyons_landau_zener() -> tuple[str, dict[str, float]]:
 
     assert abs(p_lz(x_half, 1.0) - 0.5) < 1e-12
     assert abs(p_slow - math.exp(-math.pi)) < 1e-12
+    assert abs(p_narrow_1 - math.exp(-0.18 * math.pi)) < 1e-12 and p_narrow_1 > p_one
     assert abs(phi_golden * phi_golden - (phi_golden + 1.0)) < 1e-12
 
     doc = SvgDoc(
@@ -325,7 +326,7 @@ def build_fig1_anyons_landau_zener() -> tuple[str, dict[str, float]]:
             "左面板对比 2+1 维非阿贝尔任意子世界线编织：Ising 任意子（σ×σ = 1+ψ）仅生成有限 Clifford 门群，"
             "非通用；Fibonacci 任意子（τ×τ = 1+τ，量子维数 φ ≈ 1.618）编织群在 SU(2) 稠密，纯编织即可通用。"
             "右面板上部绘制 Landau-Zener 避免交叉精确双曲线能级 E±(t) = ±½√((vt)²+Δ²)，下部精确绘制非绝热隧穿概率 "
-            "P_LZ = exp(−πΔ²/(2ℏv)) 随无量纲扫频速率 ℏv/Δ² 的变化，并对比窄隙 0.6Δ 下跃迁加速。"
+            "P_LZ = exp(−πΔ²/(2ℏv)) 随共同坐标 ℏv/Δ_ref² 变化，在同一物理扫速 v 比较两种最小能隙 Δ_ref 和 0.6Δ_ref。"
         ),
     )
     doc.add_header(
@@ -503,18 +504,18 @@ def build_fig1_anyons_landau_zener() -> tuple[str, dict[str, float]]:
     doc.add(arrow_head(lx1 + 6, ly_bot, 1, 0, 6.5))
     doc.add(f'<line class="axis" x1="{fmt(lx0)}" y1="{fmt(ly_bot)}" x2="{fmt(lx0)}" y2="{fmt(ly_top - 8)}"/>')
     doc.add(arrow_head(lx0, ly_top - 8, 0, -1, 6.5))
-    doc.add(f'<text class="xs" x="{fmt(0.5*(lx0+lx1))}" y="{fmt(ly_bot + 32)}" text-anchor="middle">无量纲扫频速率 ℏv / Δ²（越大越快）</text>')
+    doc.add(f'<text class="xs" x="{fmt(0.5*(lx0+lx1))}" y="{fmt(ly_bot + 32)}" text-anchor="middle">共同扫速坐标 ℏv / Δ_ref²</text>')
     doc.add(f'<text class="xs" x="520" y="{fmt(0.5*(ly_bot+ly_top))}" text-anchor="middle" transform="rotate(-90 520 {fmt(0.5*(ly_bot+ly_top))})">跃迁概率 P{sub("LZ")}</text>')
 
     # Markers & callouts in clean open spaces
     xh, yh = px_r(x_half), py_r(0.5)
     doc.add(f'<line class="guide" x1="{fmt(xh)}" y1="{fmt(yh)}" x2="{fmt(xh)}" y2="{fmt(ly_bot)}"/>')
     doc.add(f'<circle class="c1-fill" cx="{fmt(xh)}" cy="{fmt(yh)}" r="4.8"/>')
-    doc.add(f'<text class="xsb c1-txt" x="{fmt(xh + 12)}" y="{fmt(yh + 24)}">标准隙 Δ（P=0.5 在 2.27）</text>')
+    doc.add(f'<text class="xsb c1-txt" x="{fmt(xh + 12)}" y="{fmt(yh + 24)}">参考隙 Δ_ref（P=0.5 在 2.27）</text>')
 
     xn, yn = px_r(1.0), py_r(p_narrow_1)
     doc.add(f'<polygon class="c2-fill" points="{diamond_pts(xn, yn, 5.5)}"/>')
-    doc.add(f'<text class="xsb c2-txt" x="{fmt(px_r(1.92))}" y="{fmt(py_r(0.95))}">窄隙 0.6Δ（隧穿剧增）</text>')
+    doc.add(f'<text class="xsb c2-txt" x="{fmt(px_r(1.92))}" y="{fmt(py_r(0.95))}">窄隙 0.6Δ_ref</text>')
     doc.add(f'<line class="c2" stroke-width="1.1" x1="{fmt(xn + 5)}" y1="{fmt(yn - 3)}" x2="{fmt(px_r(1.88))}" y2="{fmt(py_r(0.93))}"/>')
 
     xs0, ys0 = px_r(0.5), py_r(p_slow)
@@ -950,8 +951,8 @@ def build_fig4_queue_tail_latency() -> tuple[str, dict[str, float]]:
         desc=(
             "左面板按精确有理数复算 20 任务单服务台 FIFO 队列（每 1 μs 到达、常规服务 0.8 μs、n=2 突发 4.0 μs）："
             "尽管平均服务 0.96 μs < 1 μs，单次突发仍致 n=2 至 n=11 共 10 项（50%）击穿 2.0 μs 硬反馈截止线。"
-            "右面板上部绘制 d=7 归档解码尾延迟分布（p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 与 SLA 红线），"
-            "下部绘制 service_timeline.py 的 24 小时重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。"
+            "右面板上部标出 d=7 归档解码的 p50 = 14.9 μs、p99 = 38.5 μs、max = 59.1 μs 及 SLA 预算。曲线是以 p50 和 p99 校准的对数正态示意。"
+            "下部绘制 service_timeline.py 的 24 小时合成重叠停机区间并集时间轴（在线 83.3%、合格 75.0%）。"
         ),
     )
     doc.add_header(
@@ -1040,7 +1041,7 @@ def build_fig4_queue_tail_latency() -> tuple[str, dict[str, float]]:
     doc.add('<text class="xs" x="58" y="517">增配第二台解码器可即时消除 n≥3 排队积压，但仍无法把 s₂ = 4.0 μs 压进 2.0 μs</text>')
 
     # --- Right Panel Top: Decoder Tail Latency Distribution ---
-    doc.add('<text class="xsb" x="522" y="154">① 离线解码尾延迟分布（d=7 归档 N=1,000；通信固定 +8 μs）</text>')
+    doc.add('<text class="xsb" x="522" y="154">① 归档分位点与示意密度（d=7；固定通信 +8 μs）</text>')
     dx0, dx1 = 562.0, 950.0
     dy_bot, dy_top = 290.0, 174.0
     t_max_d = 70.0
@@ -1088,11 +1089,11 @@ def build_fig4_queue_tail_latency() -> tuple[str, dict[str, float]]:
     doc.add(arrow_head(dx1 + 6, dy_bot, 1, 0, 6.0))
     doc.add(f'<line class="axis" x1="{fmt(dx0)}" y1="{fmt(dy_bot)}" x2="{fmt(dx0)}" y2="{fmt(dy_top - 6)}"/>')
     doc.add(arrow_head(dx0, dy_top - 6, 0, -1, 6.0))
-    doc.add('<text class="xs" x="526" y="232" text-anchor="middle" transform="rotate(-90 526 232)">概率密度</text>')
+    doc.add('<text class="xs" x="526" y="232" text-anchor="middle" transform="rotate(-90 526 232)">对数正态示意</text>')
 
     # --- Right Panel Bottom: 24-Hour Overlapping Downtime Union Timeline ---
     doc.add('<line class="grid" x1="520" y1="322" x2="958" y2="322"/>')
-    doc.add('<text class="xsb" x="522" y="342">② 24 h 重叠停机日志并集核算（service_timeline.py）</text>')
+    doc.add('<text class="xsb" x="522" y="342">② 24 h 合成日志的停机并集（service_timeline.py）</text>')
     tx0, tx1 = 594.0, 948.0
     th_h = 17.0
 
@@ -1133,7 +1134,7 @@ def build_fig4_queue_tail_latency() -> tuple[str, dict[str, float]]:
 # Figure 5: Q4 — Symmetric Double-Well Splitting + Free Gaussian Wavepacket
 # ---------------------------------------------------------------------------
 def build_fig5_double_well_splitting() -> tuple[str, dict[str, float]]:
-    # Exact numerical solve for V(x) = (x^2 - a^2)^2 / (8 a^2) at a = 2.4 (visual well)
+    # Finite-difference reference for V(x) = (x^2 - a^2)^2 / (8 a^2), at a = 2.4.
     a_vis = 2.4
     xs, e_plus, e_minus, psi_p, psi_m = _solve_quartic_double_well(a_vis, n_grid=241, x_lim=4.4)
     delta_vis = e_minus - e_plus
@@ -1142,7 +1143,7 @@ def build_fig5_double_well_splitting() -> tuple[str, dict[str, float]]:
     assert max(abs(psi_p[i] - psi_p[-1 - i]) for i in range(len(xs))) < 1e-10
     assert max(abs(psi_m[i] + psi_m[-1 - i]) for i in range(len(xs))) < 1e-10
 
-    # Exact vs Garg vs Landau-Lifshitz WKB across a in [3.0, 5.0] (matching Q4 §6.5)
+    # Finite differences vs. Garg and Landau-Lifshitz WKB over a in [3.0, 5.0].
     def wkb_action(a_val: float, e_avg: float) -> float:
         # Turning point b where (b^2 - a^2)^2 / (8 a^2) = e_avg -> b^2 = a^2 - a*sqrt(8*e_avg)
         rad = a_val * a_val - a_val * math.sqrt(8.0 * e_avg)
@@ -1168,9 +1169,10 @@ def build_fig5_double_well_splitting() -> tuple[str, dict[str, float]]:
         de_garg = math.exp(-s_tp) / math.sqrt(math.e * math.pi)
         de_ll = math.exp(-s_tp) / math.pi
         wkb_rows.append((av, de_ex, de_garg, de_ll))
-    # Verify exact benchmark range matching Q4 §6.5 (a=3.0 ~ 1.35e-2, a=5.0 ~ 6.1e-7)
+    # Verify the reference range and the change in sign of the LL error.
     assert 1.2e-2 < wkb_rows[0][1] < 1.5e-2
     assert 5.0e-7 < wkb_rows[-1][1] < 7.5e-7
+    assert wkb_rows[0][3] > wkb_rows[0][1] and wkb_rows[-1][3] < wkb_rows[-1][1]
     assert abs((wkb_rows[-1][2] / wkb_rows[-1][3]) - math.sqrt(math.pi / math.e)) < 1e-10
 
     # Exact Gaussian wavepacket normalization check at tau = 0, 1, 2, 3
@@ -1186,9 +1188,9 @@ def build_fig5_double_well_splitting() -> tuple[str, dict[str, float]]:
     doc = SvgDoc(
         title="对称双势阱隧穿能级劈裂与自由高斯波包色散展宽",
         desc=(
-            "左面板上部由精确有限差分求解绘制四次对称双势阱 V(ξ) = (ξ²−a²)²/(8a²)（a = 2.4）、"
+            "左面板上部用有限差分绘制四次对称双势阱 V(ξ) = (ξ²−a²)²/(8a²)（a = 2.4）、"
             "偶基态波函数 ψ₊(ξ)（无节点）与奇第一激发态 ψ₋(ξ)（原点过零）及隧穿劈裂 ΔE；"
-            "中部对数图对比 a = 3.0–5.0 精确劈裂与 Garg、Landau-Lifshitz 两条 WKB 曲线；底部标出 NH₃ 与 Fluxonium Φ₀/2 甜点。"
+            "中部对数图对比 a = 3.0–5.0 有限差分参考值与 Garg、Landau-Lifshitz 两条 WKB 曲线；底部标出 NH₃ 与 Fluxonium Φ₀/2 甜点。"
             "右面板绘制自由高斯波包在无量纲时间 τ = 0, 1, 2, 3 的精确概率密度 |ψ(x,t)|² 及宽度展宽 σ(t)/σ₀ = √(1+τ²)。"
         ),
     )
@@ -1292,8 +1294,8 @@ def build_fig5_double_well_splitting() -> tuple[str, dict[str, float]]:
     doc.add(arrow_head(kx1 + 6, ky_bot, 1, 0, 5.5))
     doc.add(f'<line class="axis" x1="{fmt(kx0)}" y1="{fmt(ky_bot)}" x2="{fmt(kx0)}" y2="{fmt(ky_top - 6)}"/>')
     doc.add(arrow_head(kx0, ky_top - 6, 0, -1, 5.5))
-    doc.add('<text class="xs c3-txt" x="308" y="376">● 精确解  — Garg (1/√eπ 贴合)</text>')
-    doc.add('<text class="xs c2-txt" x="308" y="393">-- LL (1/π 系统低估 ~7%)</text>')
+    doc.add('<text class="xs c3-txt" x="308" y="376">● 差分参考  — Garg (1/√(eπ))</text>')
+    doc.add('<text class="xs c2-txt" x="308" y="393">-- LL (1/π，偏差随 a 变号)</text>')
 
     # Bottom physical bridge pill in Left Panel
     doc.add('<rect class="note" x="44" y="478" width="432" height="60" rx="10"/>')
@@ -1535,7 +1537,7 @@ def build_fig6_sensing_limits() -> tuple[str, dict[str, float]]:
             "左面板在统一纵轴（固定总探测时长 T 下的归一化频率不确定度 T·Δω；无噪单轮等价于 Δφ，双对数 N = 1 至 10⁴）精确对比："
             "无噪标准量子极限 SQL（N⁻¹/²）、无噪海森堡极限 HL（N⁻¹）、Kitagawa-Ueda 单轴扭转 OAT（∝ N⁻⁵/⁶）、"
             "强相干光区（N ≥ 10，n̄ ≫ sinh²r）6 dB 光学压缩（0.5 N⁻¹/²）、独立马尔可夫退相位（γT = 2）下 Huelga 最优 GHZ 与含噪独立比特重合曲线"
-            "（在 N=1 与单比特精确重合为 2√e，全程严格位于 HL 上方），以及保留完整分母的 Escher 精确含噪终极界（N=1 等于 2√e，大 N 渐近比 GHZ 低 √e 倍）。"
+            "（在 N=1 与单比特精确重合为 2√e，全程严格位于 HL 上方），以及保留完整分母的 Escher 有限 N 精度下界（N=1 等于 2√e，大 N 渐近比 GHZ 低 √e 倍）。"
             "右面板绘制单比特 Ramsey 条纹 P(+|φ) 与经典 Fisher 信息 F_C(φ; V=0.90)，标出最大斜率点 φ = π/2 与盲点 φ = 0。"
         ),
     )
@@ -1562,7 +1564,7 @@ def build_fig6_sensing_limits() -> tuple[str, dict[str, float]]:
     doc.add('<line class="c2" stroke-width="2.4" stroke-dasharray="6 4" x1="42" y1="151" x2="66" y2="151"/>')
     doc.add('<text class="xs c2-txt" x="72" y="155">含噪 GHZ = 独立比特 (γT=2)</text>')
     doc.add('<line class="guide" x1="264" y1="151" x2="288" y2="151"/>')
-    doc.add('<text class="xs" x="294" y="155">Escher 精确含噪终极界 (γT=2)</text>')
+    doc.add('<text class="xs" x="294" y="155">Escher 有限 N 精度下界 (γT=2)</text>')
 
     doc.add('<line class="c1" stroke-width="2.4" x1="42" y1="171" x2="64" y2="171"/>')
     doc.add('<text class="xs c1-txt" x="69" y="175">无噪 SQL</text>')
@@ -1626,8 +1628,8 @@ def build_fig6_sensing_limits() -> tuple[str, dict[str, float]]:
     doc.add(f'<line class="c2" stroke-width="1.1" x1="{fmt(sx_n(220))}" y1="{fmt(sy_p(1.22))}" x2="{fmt(sx_n(110))}" y2="{fmt(sy_p(y_huelga_ghz(110)) - 5)}"/>')
     doc.add(f'<text class="xs" x="{fmt(sx_n(1750))}" y="{fmt(sy_p(0.45))}" text-anchor="middle">Escher 精确界（大 N 差 √e）</text>')
     doc.add(f'<line class="guide" x1="{fmt(sx_n(2100))}" y1="{fmt(sy_p(0.30))}" x2="{fmt(sx_n(2100))}" y2="{fmt(sy_p(y_escher_exact(2100)) - 3)}"/>')
-    doc.add('<text class="xsb c5-txt" x="424" y="340" text-anchor="middle" transform="rotate(14 424 340)">6 dB 压缩 (n̄≫sinh²r)</text>')
-    doc.add('<text class="xsb c4-txt" x="444" y="388" text-anchor="middle" transform="rotate(23 444 388)">OAT 斜率 −5/6</text>')
+    doc.add('<text class="xsb c5-txt" x="493" y="357" text-anchor="end" transform="rotate(14 493 357)">6 dB 压缩 (n̄≫sinh²r)</text>')
+    doc.add('<text class="xsb c4-txt" x="444" y="391" text-anchor="middle" transform="rotate(23 444 391)">OAT 斜率 −5/6</text>')
     doc.add(f'<text class="xsb c3-txt" x="{fmt(sx_n(38))}" y="{fmt(sy_p(0.00055))}" text-anchor="start">无噪 HL 斜率 −1</text>')
 
     # Bottom takeaway pill in Left Panel
@@ -1750,20 +1752,20 @@ def build_fig7_classical_sim_boundaries() -> tuple[str, dict[str, float]]:
     assert eps_area_chi8 < 2e-3 and abs(eps_vol_chi8 - 0.5) < 1e-12
 
     doc = SvgDoc(
-        title="经典模拟四大孤岛、四维量子优势铁壁与截断谱",
+        title="经典模拟的适用条件与截断谱",
         desc=(
-            "左面板绘制非 Clifford T 门数与纠缠键维 χ 相图，划分四大经典可解疆域（Clifford/稳定子表、低纠缠张量网络 MPS/BP-TN、"
-            "含噪 Pauli 传播 SPD，以及位于高纠缠高连续旋转角区的独立代数可解口袋——匹配门/高斯孤岛）与唯有容错 FTQC 跨越全部壁垒才可达的量子优势窗口。"
+            "左面板绘制非 Clifford T 门数与纠缠键维 χ 相图，划分几类经典方法（Clifford/稳定子表、低纠缠张量网络 MPS/BP-TN、"
+            "含噪 Pauli 传播 SPD，以及位于高纠缠高连续旋转角区的独立代数可解口袋——匹配门/高斯孤岛），并列比较量子与经典方法时需要固定的任务条件。区域和边界为示意。"
             "右面板上部精确绘制退极化噪声伴随映射按 Pauli 权重指数衰减 (1−p)^w（p = 0.001, 0.05, 0.15, 0.30），"
-            "下部精确对比一维面积律指数衰减与深线路体积律平坦 MPS 奇异值谱 σ_k² 及 χ′=8 截断误差。"
+            "下部精确对比两种归一化的 MPS 奇异值谱（指数衰减、平坦） σ_k² 及 χ′=8 截断误差。"
         ),
     )
     doc.add_header(
-        "经典模拟四大孤岛、四维量子优势铁壁与截断谱",
-        f"左：T 门数 × 纠缠键维 χ 相图与四大经典引擎疆域；右：含噪 Pauli 衰减 (1−p){sup('w')} 与 MPS 奇异值谱",
+        "经典模拟的适用条件与截断谱",
+        f"左：T 门数 × 纠缠键维 χ 与经典方法示意；右：含噪 Pauli 衰减 (1−p){sup('w')} 与 MPS 奇异值谱",
         raw_sub=True,
     )
-    doc.add_panel(28, 96, 486, 456, "四大经典可解孤岛与四维量子优势相图（示意）")
+    doc.add_panel(28, 96, 486, 456, "经典方法的适用条件（示意）")
     doc.add_panel(530, 96, 442, 456, f"含噪 Pauli 衰减 (1−p){sup('w')} 与 MPS 奇异值截断谱", raw_head=True)
 
     # --- Left Panel: Clean Non-Overlapping 4-Island + FTQC Advantage Phase Diagram ---
@@ -1775,41 +1777,41 @@ def build_fig7_classical_sim_boundaries() -> tuple[str, dict[str, float]]:
     doc.add('<rect fill="url(#hatch-blue)" x="94" y="152" width="140" height="194" rx="6"/>')
     doc.add('<text class="xsb c1-txt" x="164" y="192" text-anchor="middle">Clifford / 稳定子表</text>')
     doc.add('<text class="xs c1-txt" x="164" y="216" text-anchor="middle">Stim: 门 O(n) / 空间 O(n²)</text>')
-    doc.add(f'<text class="xs c1-txt" x="164" y="242" text-anchor="middle">少 T 扩展 2{sup("0.396t")}</text>')
+    doc.add(f'<text class="xs c1-txt" x="164" y="242" text-anchor="middle">少 T 分解另计精度</text>')
     doc.add('<text class="xs" x="164" y="274" text-anchor="middle">任意高纠缠</text>')
-    doc.add('<text class="xs" x="164" y="294" text-anchor="middle">仍可经典秒算</text>')
+    doc.add('<text class="xs" x="164" y="294" text-anchor="middle">仍可用稳定子表</text>')
 
     # Region 2 (Upper-middle): Noisy Pauli Propagation / SPD (x: 238..336, y: 152..346)
     doc.add('<rect class="c4-soft" x="238" y="152" width="98" height="194" rx="6"/>')
     doc.add('<rect fill="url(#hatch-amber)" x="238" y="152" width="98" height="194" rx="6"/>')
     doc.add('<text class="xsb c4-txt" x="287" y="192" text-anchor="middle">含噪 Pauli 传播</text>')
-    doc.add('<text class="xs c4-txt" x="287" y="216" text-anchor="middle">SPD / 噪声帘</text>')
+    doc.add('<text class="xs c4-txt" x="287" y="216" text-anchor="middle">SPD / 按权重截断</text>')
     doc.add(f'<text class="xs c4-txt" x="287" y="244" text-anchor="middle">按 (1−p){sup("w")} 剪枝</text>')
-    doc.add('<text class="xs" x="287" y="274" text-anchor="middle">中等物理噪声下</text>')
-    doc.add('<text class="xs" x="287" y="294" text-anchor="middle">高权项被绞杀</text>')
+    doc.add('<text class="xs" x="287" y="274" text-anchor="middle">给定局部退极化</text>')
+    doc.add('<text class="xs" x="287" y="294" text-anchor="middle">短层内高权项衰减</text>')
 
     # Region 3 (Top-right fortress): FTQC 4D Quantum Advantage (x: 340..500, y: 152..250)
     doc.add('<rect class="c2-soft" stroke-width="2.4" x="340" y="152" width="160" height="98" rx="6"/>')
     doc.add('<rect fill="url(#hatch-red)" x="340" y="152" width="160" height="98" rx="6"/>')
-    doc.add('<text class="xsb c2-txt" x="420" y="170" text-anchor="middle">★ 量子优势窗口 (FTQC)</text>')
-    doc.add('<text class="xs" x="420" y="188" text-anchor="middle">① n &gt; 45  ② 大量非 Clifford T</text>')
-    doc.add('<text class="xs" x="420" y="206" text-anchor="middle">③ 体积律高纠缠键维 χ</text>')
-    doc.add(f'<text class="xsb c2-txt" x="420" y="224" text-anchor="middle">④ 逻辑噪 &lt; 10{sup("−10")}</text>')
-    doc.add('<text class="xs c2-txt" x="420" y="241" text-anchor="middle">且须跳出右侧代数孤岛</text>')
+    doc.add('<text class="xsb c2-txt" x="420" y="170" text-anchor="middle">量子与经典方法对照</text>')
+    doc.add('<text class="xs" x="420" y="188" text-anchor="middle">固定电路族与输入</text>')
+    doc.add('<text class="xs" x="420" y="206" text-anchor="middle">对齐输出及允许误差</text>')
+    doc.add(f'<text class="xsb c2-txt" x="420" y="224" text-anchor="middle">记录运行时间与内存</text>')
+    doc.add('<text class="xs c2-txt" x="420" y="241" text-anchor="middle">加入测量与经典开销</text>')
 
     # Region 5 (Right high-t, high-chi independent algebraic pocket): Matchgates / Gaussian
     doc.add('<rect class="c5-soft" stroke-width="1.8" stroke-dasharray="5 3" x="340" y="256" width="160" height="90" rx="7"/>')
-    doc.add('<text class="xsb c5-txt" x="420" y="274" text-anchor="middle">匹配门 / 高斯代数口袋</text>')
-    doc.add('<text class="xs" x="420" y="292" text-anchor="middle">高纠缠 + 任意连续旋转角</text>')
+    doc.add('<text class="xsb c5-txt" x="420" y="274" text-anchor="middle">匹配门 / 高斯口袋</text>')
+    doc.add('<text class="xs" x="420" y="292" text-anchor="middle">允许可保结构的旋转</text>')
     doc.add('<text class="xs c5-txt" x="420" y="310" text-anchor="middle">自由费米子/高斯结构封闭</text>')
-    doc.add('<text class="xs c5-txt" x="420" y="328" text-anchor="middle">仍可多项式模拟 O(n³)/O(m³)</text>')
+    doc.add('<text class="xs c5-txt" x="420" y="328" text-anchor="middle">复杂度依赖输入与输出</text>')
 
     # Region 4 (Bottom horizontal): MPS / 1D Brickwork / BP-TN (x: 94..500, y: 352..424)
     doc.add('<rect class="c3-soft" x="94" y="352" width="406" height="72" rx="6"/>')
     doc.add('<rect fill="url(#hatch-green)" x="94" y="352" width="406" height="72" rx="6"/>')
-    doc.add('<text class="xsb c3-txt" x="297" y="373" text-anchor="middle">张量网络 MPS / 1D 砖墙 / BP-TN（低纠缠面积律）</text>')
-    doc.add('<text class="xs c3-txt" x="297" y="393" text-anchor="middle">可吸收任意单比特非 Clifford T 门，仅受切面键维 χ 限制</text>')
-    doc.add('<text class="xs" x="297" y="413" text-anchor="middle">（2026：468 T 门 1D 砖墙线路 37 min 经典算穿）</text>')
+    doc.add('<text class="xsb c3-txt" x="297" y="373" text-anchor="middle">张量网络 MPS / 1D 砖墙 / BP-TN（低秩或谱尾快衰减）</text>')
+    doc.add('<text class="xs c3-txt" x="297" y="393" text-anchor="middle">单比特 T 门不改变已有切分的键维 χ</text>')
+    doc.add('<text class="xs" x="297" y="413" text-anchor="middle">（2026：在已公开地址计算振幅与 log-XEB）</text>')
 
     # Frame axes & qualitative tick marks
     doc.add(f'<line class="axis" x1="{fmt(px0)}" y1="{fmt(py_bot)}" x2="{fmt(px1 + 7)}" y2="{fmt(py_bot)}"/>')
@@ -1818,19 +1820,19 @@ def build_fig7_classical_sim_boundaries() -> tuple[str, dict[str, float]]:
     doc.add(arrow_head(px0, py_top - 8, 0, -1, 6.5))
 
     doc.add('<text class="xs" x="106" y="441" text-anchor="middle">t = 0</text>')
-    doc.add('<text class="xs" x="230" y="441" text-anchor="middle">t ~ 50</text>')
-    doc.add('<text class="xs" x="454" y="441" text-anchor="middle">t ≫ 10² (大量 T 门)</text>')
-    doc.add('<text class="sm" x="297" y="462" text-anchor="middle">非 Clifford T 门数 t（魔术度 / 稳定子秩）</text>')
+    doc.add('<text class="xs" x="230" y="441" text-anchor="middle">较少 T</text>')
+    doc.add('<text class="xs" x="454" y="441" text-anchor="middle">较多 T</text>')
+    doc.add('<text class="sm" x="297" y="462" text-anchor="middle">非 Clifford T 门数 t</text>')
 
-    doc.add('<text class="xs" x="86" y="416" text-anchor="end">χ ~ 2</text>')
-    doc.add('<text class="xs" x="86" y="355" text-anchor="end">χ ~ 10³</text>')
-    doc.add(f'<text class="xs" x="86" y="168" text-anchor="end">2{sup("Ω(n)")}</text>')
-    doc.add('<text class="sm" x="44" y="288" text-anchor="middle" transform="rotate(-90 44 288)">纠缠键维 χ（拓扑深度）</text>')
+    doc.add('<text class="xs" x="86" y="416" text-anchor="end">小</text>')
+    doc.add('<text class="xs" x="86" y="355" text-anchor="end">中</text>')
+    doc.add(f'<text class="xs" x="86" y="168" text-anchor="end">大</text>')
+    doc.add('<text class="sm" x="44" y="288" text-anchor="middle" transform="rotate(-90 44 288)">切分键维 χ</text>')
 
     # Bottom four-wall summary pill
     doc.add('<rect class="pill" x="44" y="480" width="454" height="58" rx="9"/>')
-    doc.add('<text class="xsb" x="271" y="501" text-anchor="middle">四维壁垒缺一不可：少 n→态矢量 | 少 T→稳定子 | 低 χ→MPS | 高噪→SPD</text>')
-    doc.add('<text class="xs" x="271" y="522" text-anchor="middle">“难逐门模拟”仅为必要条件，实用优势还须战胜专用经典启发式算法</text>')
+    doc.add('<text class="xsb" x="271" y="501" text-anchor="middle">比较条件：规模、代数结构、收缩宽度与噪声模型</text>')
+    doc.add('<text class="xs" x="271" y="522" text-anchor="middle">分别记录指定振幅、全串采样与局域期望的误差和成本</text>')
 
     # --- Right Panel Upper: Exact Noisy Pauli Propagation Decay (1-p)^w ---
     doc.add(f'<text class="xsb" x="546" y="152">① 单层退极化伴随衰减 (1−p){sup("w")}（对数纵轴，w = 0–20）</text>')
@@ -1863,7 +1865,7 @@ def build_fig7_classical_sim_boundaries() -> tuple[str, dict[str, float]]:
         (0.001, "c3", "", "p = 0.001 (低噪存活)", 14.5, 1.28),
         (0.05, "c1", "6 4", "p = 0.05", 17.5, 0.21),
         (0.15, "c4", "7 3 2 3", "p = 0.15", 16.0, 0.023),
-        (0.30, "c2", "2.5 3", "p = 0.30 (秒杀)", 10.6, 0.0042),
+        (0.30, "c2", "2.5 3", "p = 0.30 (强衰减)", 15.2, 0.0067),
     ]
     for p_v, cls_p, dash_p, lbl_p, lx_w, ly_v in p_specs:
         pts_p = [(ux(float(w)), uy((1.0 - p_v) ** w)) for w in range(21) if (1.0 - p_v) ** w >= 1e-3]

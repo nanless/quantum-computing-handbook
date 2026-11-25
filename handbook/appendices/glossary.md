@@ -104,7 +104,7 @@
 
 **数据处理不等式（DPI）与强次可加性（SSA）**：DPI 指出任何 CPTP 量子信道都不会增大两态间的量子相对熵：$D(\mathcal E(\rho)\Vert\mathcal E(\sigma)) \le D(\rho\Vert\sigma)$（后处理不能凭空制造信息）。强次可加性（SSA）等价于三体条件互信息非负 $I(A:C\mid B) = S(AB) + S(BC) - S(B) - S(ABC) \ge 0$，是整个量子信息论最核心的基石不等式。见[第 13 章](../13-quantum-information.md)。
 
-**量子相对熵与量子 Stein 引理**：量子相对熵 $D(\rho\Vert\sigma) = \operatorname{Tr}[\rho(\log_2\rho - \log_2\sigma)]$（支撑集不满足 $\operatorname{supp}(\rho)\subseteq\operatorname{supp}(\sigma)$ 时为 $+\infty$）是非对称的态散度。量子 Stein 引理赋予其精确操作意义：给定 $n$ 份同分布态，在限制第一类错误率不超过 $\epsilon$ 的前提下，把 $\sigma^{\otimes n}$ 误判为 $\rho^{\otimes n}$ 的第二类错误率最优指数衰减率恰等于 $D(\rho\Vert\sigma)$。见[第 13 章](../13-quantum-information.md)与[第 18 章](../18-channels-capacities-complexity.md)。
+**量子相对熵与量子 Stein 引理**：量子相对熵 $D(\rho\Vert\sigma) = \operatorname{Tr}[\rho(\log_2\rho - \log_2\sigma)]$（支撑集不满足 $\operatorname{supp}(\rho)\subseteq\operatorname{supp}(\sigma)$ 时为 $+\infty$）是非对称的态散度。量子 Stein 引理赋予其精确操作意义：对两个独立同分布假设，固定 $0<\epsilon<1$，把拒绝 $\rho^{\otimes n}$ 的第一类错误约束为不超过 $\epsilon$，把 $\sigma^{\otimes n}$ 误判为 $\rho^{\otimes n}$ 的第二类错误率最优指数衰减率恰等于 $D(\rho\Vert\sigma)$（bit/副本）。见[第 13 章](../13-quantum-information.md)与[第 18 章](../18-channels-capacities-complexity.md)。
 
 **量子互信息与量子状态合并（quantum state merging）**：二分态量子互信息为 $I(A:B) = S(A) + S(B) - S(AB)$，衡量经典与量子总相关。条件熵 $S(A\mid B) = S(AB) - S(B)$ 在量子信息中可为负值，量子状态合并定理赋予其精确操作意义：当 $S(A\mid B) > 0$ 时，把 $A$ 合并给持有 $B$ 的接收方需消耗每副本 $S(A\mid B)$ 对纠缠；当 $S(A\mid B) < 0$ 时，合并过程反而净产出 $\lvert S(A\mid B)\rvert$ 对可用 Bell 纠缠。见[第 13 章](../13-quantum-information.md)。
 
@@ -114,7 +114,7 @@
 
 **Holevo 量、可访问信息与无歧义判别（USD / IDP）**：对量子态系综 $\{p_x, \rho_x\}$，Holevo 量 $\chi = S(\sum_x p_x \rho_x) - \sum_x p_x S(\rho_x)$ 给出任意测量所能提取的经典互信息（可访问信息 $I_{\mathrm{acc}}$）的普适上界。无歧义判别允许输出“无法判定”，一旦给出确定标签则要求零错误（对等先验纯态最优成功率为 $1 - \lvert\langle\psi_0\vert\psi_1\rangle\rvert$），比较成功率时须把放弃轮次计入总分母。见[第 13 章](../13-quantum-information.md)。
 
-**局域操作与经典通信（LOCC）与负性（negativity）**：LOCC 指各方仅在本地操控自己的量子系统并交换经典通信，它是纠缠资源理论中的标准免费操作。负性 $\mathcal N(\rho) = (\lVert\rho^{T_B}\rVert_1 - 1)/2$ 与对数负性 $E_N(\rho) = \log_2(1 + 2\mathcal N(\rho))$ 是基于部分转置的可计算纠缠单调量，给出可蒸馏纠缠上界，但在高维系统中无法检出 PPT 束缚纠缠态。见[第 18 章](../18-channels-capacities-complexity.md)。
+**局域操作与经典通信（LOCC）与负性（negativity）**：LOCC 指各方仅在本地操控自己的量子系统并交换经典通信，它是纠缠资源理论中的标准免费操作。负性 $\mathcal N(\rho) = (\lVert\rho^{T_B}\rVert_1 - 1)/2$ 与对数负性 $E_N(\rho) = \log_2(1 + 2\mathcal N(\rho))$ 是基于部分转置的可计算纠缠单调量，对数负性给出可蒸馏纠缠上界，但在高维系统中无法检出 PPT 束缚纠缠态。见[第 18 章](../18-channels-capacities-complexity.md)。
 
 **相干信息、互补信道与信道容量**：相干信息 $I_c(\rho,\mathcal E) = S(B) - S(RB)$ 正则化后决定量子容量 $Q$；互补信道把输入映向 Stinespring 扩张中的环境输出，用于分析私密容量 $P$。信道容量随传输任务与免费辅助资源不同分为无辅助经典容量 $C$、量子容量 $Q$、私密经典容量 $P$ 与纠缠辅助经典容量 $C_E$。
 
@@ -242,7 +242,7 @@
 
 **PLOB 无中继界与三代量子中继**：Pirandola–Laurenza–Ottaviani–Banchi（2017）证明，透过率为 $\eta$ 的纯损耗信道在无量子中继器时，任何双向量子通信协议的私密与量子容量严格受限于 $C_{\mathrm{PLOB}}(\eta) = -\log_2(1-\eta)$（远距离近似 $1.44\,\eta$）。突破该衰减墙须借助量子中继：第一代用先兆纠缠生成加纠缠纯化与交换；第二代以局部量子纠错替代端到端纯化；第三代直接用前向纠错码单向抗损耗，无需双程经典确认。见[第 12 章](../12-security-network-frontiers.md)。
 
-**剩余哈希引理（Leftover Hash Lemma）**：有限密钥隐私放大的数学核心：若窃听者持有的量子边信息 $E$ 满足平滑最小熵 $H_{\min}^{\varepsilon'}(X\mid E)$，对原始协商串施加通用哈希函数族压缩至长度 $\ell \le H_{\min}^{\varepsilon'}(X\mid E) - \mathrm{leak}_{\mathrm{EC}} - 2\log_2\frac{1}{2\varepsilon_{\mathrm{PA}}}$，所得密钥与窃听者完全无关且均匀分布的迹距离不超过总安全参数 $\varepsilon = 2\varepsilon' + \varepsilon_{\mathrm{PA}}$。见[第 12 章](../12-security-network-frontiers.md)与[第 13 章](../13-quantum-information.md)。
+**剩余哈希引理（Leftover Hash Lemma）** 验证二通用哈希输出的保密性。设 $C$ 为公开记录、$F$ 为独立公开种子，只要 $\ell\le H_{\min}^{\varepsilon'}(X\mid EC)-2\log_2[1/(2\varepsilon_{\rm PA})]$，就可用 $2\varepsilon'+\varepsilon_{\rm PA}$ 上界 $T(\rho_{KECF},(I_K/2^\ell)\otimes\rho_{ECF})$。若用纠错前的 $H_{\min}^{\varepsilon'}(X\mid E)$，需要先扣除相应的纠错记录泄露。见[第 12 章](../12-security-network-frontiers.md)与[第 13 章](../13-quantum-information.md)。
 
 **可认证随机性（Certified Randomness）**：向外部验证者证明一组随机比特确实在实时物理过程中新鲜生成、而非事先伪造的协议。主要分为两条路线：依赖无漏洞 Bell 违背的**信息论安全**设备无关随机性扩展（需空间分离或严格隔离两节点），以及依赖单台量子处理器随机电路采样（RCS）与响应时间窗的**计算安全**协议（如 Liu 等 *Nature* 2025），后者受限于验证端经典超算复算成本而仅适用于中规模窗口。见[第 12 章](../12-security-network-frontiers.md)。
 
@@ -272,13 +272,13 @@
 
 **M3 与 TREX 可扩展读出缓解**：完整 $2^n\times 2^n$ 混淆矩阵求逆随比特数指数爆炸。M3（无矩阵测量缓解）仅在实验实际观测到的稀疏位串子空间内迭代求解局域校准线性方程，大幅降低内存与计算成本；TREX（旋转读出误差消除）则在测量前随机插入 Pauli-$X$ 门做读出 twirling，将复杂读出错误对称化为可直接除以单标量衰减因子的对角校准模型。见[第 14 章](../14-compilation-control.md)。
 
-**零噪声外推（ZNE）与概率误差抵消（PEC）**：两类主流期望值量子误差缓解（QEM）协议。ZNE 通过门折叠或脉冲拉伸人为放大噪声倍率 $\lambda$ 后再经典外推至 $\lambda \to 0$，无需完整噪声层析但存在外推模型偏差与方差放大；PEC 先精确标定每层噪声并按逆信道准概率分解随机抽样线路，可在模型精确前提下无偏抵消偏差，但采样方差按 $\gamma_{\mathrm{PEC}}^{2L}$ 随线路体积指数增长，二者均不能替代容错纠错。见[第 08 章](../08-applications.md)与[第 14 章](../14-compilation-control.md)。
+**零噪声外推（ZNE）与概率误差抵消（PEC）**：两类主流期望值量子误差缓解（QEM）协议。ZNE 通过门折叠或脉冲拉伸人为放大噪声倍率 $\lambda$ 后再经典外推至 $\lambda \to 0$，无需完整噪声层析但存在外推模型偏差与方差放大；PEC 先精确标定每层噪声并按逆信道准概率分解随机抽样线路，可在模型精确前提下无偏抵消偏差，按层独立抽样、范数相同且读数为 $\pm1$ 时，深度 $L$ 的加权单次二阶矩为 $\gamma_{\mathrm{PEC}}^{2L}$，实际方差还要减去目标均值的平方，二者均不能替代容错纠错。见[第 08 章](../08-applications.md)与[第 14 章](../14-compilation-control.md)。
 
 **阴影光锥（SLC）与反噪声可观测量传播（PNA）**：面向中等规模电路的精细化误差缓解协议。阴影光锥（SLC）沿时空光锥界定电路中各局域 Pauli 噪声项对指定观测量的确定性偏差界，只在预算内对关键项执行 PEC；反噪声传播（PNA）则把逆伴随噪声映射 $(\mathcal E^\dagger)^{-1}$ 经典吸收进待测可观测量算符中，再在含噪电路上直接测量。两者均对噪声标定误差敏感，且与第 16 章“经典阴影”概念不同。见[完整 SDK 实验册](../labs/sdk-validation.md)。
 
 **误差缓解（QEM）、可观测量反向传播（OBP）与多乘积公式（MPF）**：误差缓解在不编码逻辑比特的前提下，用额外线路、采样预算和经典后处理减小期望值偏差。OBP 把线路末段共轭到待测可观测量上以缩短硬件深度；MPF 线性组合不同步长的 Trotter 期望值以抵消低阶模拟误差，负权重同样带来方差放大。见[第 08 章](../08-applications.md)与[开源实践对照](software-practice.md)。
 
-**随机基准（RB / XEB / QV）与门集层析（GST）**：评估处理器门质量的递进工具箱。随机基准（RB）通过不同长度随机 Clifford 序列的指数衰减提取不受 SPAM 污染的平均门错率；交叉熵基准（XEB）通过比对随机电路输出样本与理想振幅分布评估高维保真度（须防经典模拟伪造与噪声漂移）；量子体积（QV）综合衡量比特数、连通性与可实现平方深度；门集层析（GST）则通过长序列重复 germ 联合拟合制备、门与测量全部超算符（受规范自由度约束）。见[第 11 章](../11-resources-benchmarks.md)与[第 19 章](../19-engineering-architecture.md)。
+**随机基准（RB / XEB / QV）与门集层析（GST）**：评估处理器门质量的递进工具箱。随机基准（RB）从不同长度的随机 Clifford 序列拟合衰减参数。在门无关噪声和固定制备、读出条件下，制备与读出误差进入拟合幅度和偏置，衰减参数可换算为平均门不保真度；交叉熵基准（XEB）通过比对随机电路输出样本与理想振幅分布评估高维保真度（须防经典模拟伪造与噪声漂移）；量子体积（QV）综合衡量比特数、连通性与可实现平方深度；门集层析（GST）则通过长序列重复 germ 联合拟合制备、门与测量全部超算符（受规范自由度约束）。见[第 11 章](../11-resources-benchmarks.md)与[第 19 章](../19-engineering-architecture.md)。
 
 **量子非破坏测量（QND）、读出判决保真度与复位**：QND 测量要求测量反作用尽量不破坏被测可观测量的本征态；读出判决保真度衡量经典分类标签与真实制备的一致比例，不单独刻画测后态与旁观串扰；复位是将比特恢复至初态 $\lvert 0\rangle$ 的物理操作，须同时报告残余激发、耗时与泄漏。见[第 19 章](../19-engineering-architecture.md)。
 

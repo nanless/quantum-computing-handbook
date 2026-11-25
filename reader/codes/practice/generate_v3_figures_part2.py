@@ -564,7 +564,7 @@ def build_fig2_entangling_gates_six_platforms() -> tuple[str, dict]:
 
     # --- Panel 5: Silicon Spin Heisenberg Exchange ---
     x0, y0 = card_shell(
-        1, 1, "(5) 硅自旋：海森堡交换", "√SWAP / 原生 CZ · 20–200 ns", "accent",
+        1, 1, "(5) 硅自旋：海森堡交换", "√SWAP / CZ · 自旋 ↓ 对应 |0⟩", "accent",
         f"H{sub('ex')} = J(t) S{sub('1')}·S{sub('2')} = J(SWAP/2 − I/4)",
         f"ΔE{sub('Z')}≪J 得 √SWAP；|ΔE{sub('Z')}|≫J 抑翻转得 CZ",
     )
@@ -611,7 +611,7 @@ def build_fig2_entangling_gates_six_platforms() -> tuple[str, dict]:
 
     # --- Panel 6: Topological Kitaev Chain ---
     x0, y0 = card_shell(
-        2, 1, "(6) 拓扑候选：Kitaev 链零模", "理论非阿贝尔编织 / 宇称读出 ~3.7 μs", "warn",
+        2, 1, "(6) 拓扑候选：Kitaev 链零模", "编织为理论预言；器件宇称读出约 3.7 μs", "warn",
         f"H = it ∑ γ{sub('j,B')}γ{sub('j+1,A')}（甜点 μ=0, t=Δ）",
         f"端点零模脱钩 P{sub('12')}=−iγ{sub('1')}γ{sub('2')}；编织仅 Clifford",
     )
@@ -642,7 +642,7 @@ def build_fig2_entangling_gates_six_platforms() -> tuple[str, dict]:
     svg = wrap_svg(
         "v3-09-entangling-gates-six-platforms",
         "六大硬件平台双比特物理纠缠门核心机制对照",
-        "六宫格示意图并排展示超导 CR/可调耦合器、离子阱 MS 声子边带、中性原子里德堡阻塞、光子 HOM 聚束、硅自旋海森堡交换与拓扑 Kitaev 链端点零模的双比特纠缠物理机制。",
+        "六宫格示意图并排展示超导 CR/可调耦合器、离子阱 MS 声子边带、中性原子里德堡阻塞、光子 HOM 聚束、硅自旋海森堡交换（低能自旋向下为 |0⟩）与理论 Kitaev 链端点零模机制。单器件宇称读出时间单列。",
         "\n".join(parts),
     )
     return svg, {"rb_um": round(rb_um, 3), "ms_theta_rad": round(theta_ms, 6)}
@@ -664,7 +664,7 @@ def build_fig3_benchmark_scaling_eplg() -> tuple[str, dict]:
     assert 2.0e4 < pec_d5_05 < 2.1e4 and 4.3e8 < pec_d5_10 < 4.5e8
 
     parts = [
-        '  <text class="title ink" x="34" y="44">随机基准指数衰减与 100 比特链 EPLG / PEC 采样天花板</text>',
+        '  <text class="title ink" x="34" y="44">随机基准指数衰减与 100 比特链 EPLG / PEC 采样模型预算</text>',
         f'  <text class="subtitle muted" x="34" y="68">左：RB 衰减 P(m)=Aα{sup("m")}+B 剥离 SPAM 截距及门数标度 (1−r){sup("G")}；右：100 比特链层保真度 LF 与 PEC 采样放大倍数</text>',
     ]
 
@@ -766,7 +766,7 @@ def build_fig3_benchmark_scaling_eplg() -> tuple[str, dict]:
     # --- Right Card: 100-Qubit Chain LF & PEC Overhead ---
     rx0, ry0, rw, rh = 500, 84, 468, 446
     parts.append(f'  <rect class="card" x="{rx0}" y="{ry0}" width="{rw}" height="{rh}" rx="12"/>')
-    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="{ry0 + 24}">(b) 100 比特链层保真度 LF 与 PEC 天花板</text>')
+    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="{ry0 + 24}">(b) 100 比特链层保真度 LF 与 PEC 模型预算</text>')
 
     rpx, rpy, rpw, rph = 562.0, 134.0, 326.0, 306.0
 
@@ -839,15 +839,15 @@ def build_fig3_benchmark_scaling_eplg() -> tuple[str, dict]:
     parts.append(f'  <rect class="axis" x="{rpx:.1f}" y="{rpy:.1f}" width="{rpw:.1f}" height="{rph:.1f}"/>')
     parts.append(f'  <text class="lbl ink" x="{rpx + rpw / 2:.1f}" y="{rpy + rph + 44:.1f}" text-anchor="middle">每层门错误率 EPLG（%）</text>')
     parts.append(f'  <text class="lbl accent" x="518" y="{rpy + rph / 2:.1f}" text-anchor="middle" transform="rotate(-90 518 {rpy + rph / 2:.1f})">100 比特链层保真度 LF</text>')
-    parts.append(f'  <text class="lbl warn" x="952" y="{rpy + rph / 2:.1f}" text-anchor="middle" transform="rotate(90 952 {rpy + rph / 2:.1f})">PEC 采样放大倍数 LF{sup("−4D")}</text>')
-    parts.append(f'  <text class="xs muted" x="{rx0 + 16}" y="{ry0 + rh - 12}">每砖墙周期含奇偶两层并行门（99 条边）；方差开销 ≳ LF{sup("−4D")}。</text>')
+    parts.append(f'  <text class="lbl warn" x="952" y="{rpy + rph / 2:.1f}" text-anchor="middle" transform="rotate(90 952 {rpy + rph / 2:.1f})">PEC 样本预算 LF{sup("−4D")}</text>')
+    parts.append(f'  <text class="xs muted" x="{rx0 + 16}" y="{ry0 + rh - 12}">每周期含奇偶双层（99 边）；模型预算 LF{sup("−4D")}。</text>')
 
-    parts.append('  <text class="sm muted" x="34" y="554">注：RB 解决单/双门 SPAM 剥离，LF/EPLG 捕捉全链并行串扰，两者共同划定无纠错误差缓解（PEC）的深度上限。</text>')
+    parts.append('  <text class="sm muted" x="34" y="554">注：右图假设小噪声与独立的 Pauli 因子，实际 PEC 范数由所用逆信道决定。</text>')
 
     svg = wrap_svg(
         "v3-11-benchmark-scaling-eplg",
-        "随机基准指数衰减与 100 比特链 EPLG/PEC 采样天花板",
-        "左面板展示随机基准 P(m)=Aα^m+B 剥离 SPAM 截距的指数衰减曲线与无纠错电路存活标度 (1-r)^G；右面板双轴展示 100 比特连通链层保真度 LF=(1-EPLG)^99 与 D=2, 5 周期 PEC 采样放大倍数 LF^(-4D)。",
+        "随机基准指数衰减与 100 比特链 EPLG/PEC 采样模型预算",
+        "左面板展示随机基准 P(m)=Aα^m+B 剥离 SPAM 截距的指数衰减曲线与无纠错电路存活标度 (1-r)^G；右面板双轴展示 100 比特连通链层保真度 LF=(1-EPLG)^99 与 D=2, 5 周期 PEC 样本预算 LF^(-4D)。",
         "\n".join(parts),
     )
     return svg, {"lf_05": round(lf_05, 4), "lf_10": round(lf_10, 4), "pec_d5_10": f"{pec_d5_10:.2e}"}
@@ -1161,7 +1161,7 @@ def build_fig5_lwe_lattice_repeaters() -> tuple[str, dict]:
     # --- Right Card: 1G / 2G / 3G Repeaters 1000 km Log Latency ---
     rx0, ry0, rw, rh = 516, 84, 452, 446
     parts.append(f'  <rect class="card" x="{rx0}" y="{ry0}" width="{rw}" height="{rh}" rx="12"/>')
-    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="{ry0 + 24}">(b) 1000 km 光纤三代量子中继周期时延</text>')
+    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="{ry0 + 24}">(b) 1000 km 中继算例的三个时标</text>')
 
     rpx, rpy, rpw, rph = 594.0, 128.0, 352.0, 240.0
     y_lo, y_hi = -1.0, 5.0  # log10(us): 0.1 us to 100 ms
@@ -1177,9 +1177,9 @@ def build_fig5_lwe_lattice_repeaters() -> tuple[str, dict]:
         parts.append(f'  <text class="xs ink" x="{rpx - 9:.1f}" y="{gy + 4:.1f}" text-anchor="end">{lbl}</text>')
 
     bars = [
-        (658.0, math.log10(t_1g_us), "b-warn", "warn", "10 ms (100 Hz)", "1G 端到端纯化", f"2L/c{sub('f')} 双向 RTT"),
-        (772.0, math.log10(t_2g_us), "b-accent", "accent", "0.2 ms (5 kHz)", "2G 邻站先兆+QEC", f"2L{sub('0')}/c{sub('f')} (20 km)"),
-        (886.0, math.log10(t_3g_us), "b-green", "green", "1 μs (~1 MHz)", "3G 单向抗擦除", f"本地门 t{sub('local')}"),
+        (658.0, math.log10(t_1g_us), "b-warn", "warn", "10 ms", "1G 端到端纯化", f"2L/c{sub('f')} 双向 RTT"),
+        (772.0, math.log10(t_2g_us), "b-accent", "accent", "0.2 ms", "2G 全邻跳往返", f"2L{sub('0')}/c{sub('f')} (20 km)"),
+        (886.0, math.log10(t_3g_us), "b-green", "green", "1 μs", "3G 单个本地门", f"本地门 t{sub('local')}"),
     ]
     bw = 58.0
     tops = []
@@ -1191,34 +1191,22 @@ def build_fig5_lwe_lattice_repeaters() -> tuple[str, dict]:
         parts.append(f'  <text class="xs ink" style="font-weight:600" x="{xc:.1f}" y="{rpy + rph + 17:.1f}" text-anchor="middle">{n1}</text>')
         parts.append(f'  <text class="xs muted" x="{xc:.1f}" y="{rpy + rph + 33:.1f}" text-anchor="middle">{n2}</text>')
 
-    # Stepped speedup arrows (1G -> 2G: 50x, 2G -> 3G: 200x, total 10^4x)
-    parts.append(f'  <line class="s-accent" style="stroke-width:1.4;stroke-dasharray:4 3" x1="{tops[0][0] + bw / 2:.1f}" y1="{tops[0][1]:.1f}" x2="{tops[1][0]:.1f}" y2="{tops[0][1]:.1f}"/>')
-    parts.append(f'  <line class="s-accent" style="stroke-width:1.8" x1="{tops[1][0]:.1f}" y1="{tops[0][1]:.1f}" x2="{tops[1][0]:.1f}" y2="{tops[1][1] - 24:.1f}"/>')
-    parts.append(f'  <path class="accent" d="{arrow_poly(tops[1][0], tops[0][1], tops[1][0], tops[1][1] - 22, 7, 4.5)}"/>')
-    parts.append(f'  <text class="xs accent" style="font-weight:700" x="{tops[1][0] + 8:.1f}" y="{0.5 * (tops[0][1] + tops[1][1]) - 6:.1f}">↓ 50×</text>')
-
-    parts.append(f'  <line class="s-green" style="stroke-width:1.4;stroke-dasharray:4 3" x1="{tops[1][0] + bw / 2:.1f}" y1="{tops[1][1]:.1f}" x2="{tops[2][0]:.1f}" y2="{tops[1][1]:.1f}"/>')
-    parts.append(f'  <line class="s-green" style="stroke-width:1.8" x1="{tops[2][0]:.1f}" y1="{tops[1][1]:.1f}" x2="{tops[2][0]:.1f}" y2="{tops[2][1] - 24:.1f}"/>')
-    parts.append(f'  <path class="green" d="{arrow_poly(tops[2][0], tops[1][1], tops[2][0], tops[2][1] - 22, 7, 4.5)}"/>')
-    parts.append(f'  <text class="xs green" style="font-weight:700" x="844" y="268" text-anchor="middle">↓ 200×</text>')
-    parts.append(f'  <text class="xs green" x="844" y="287" text-anchor="middle">(总 10{sup("4")}×)</text>')
-
     parts.append(f'  <rect class="axis" x="{rpx:.1f}" y="{rpy:.1f}" width="{rpw:.1f}" height="{rph:.1f}"/>')
-    parts.append(f'  <text class="lbl ink" x="534" y="{rpy + rph / 2:.1f}" text-anchor="middle" transform="rotate(-90 534 {rpy + rph / 2:.1f})">单周期时延（对数刻度）</text>')
+    parts.append(f'  <text class="lbl ink" x="534" y="{rpy + rph / 2:.1f}" text-anchor="middle" transform="rotate(-90 534 {rpy + rph / 2:.1f})">分项时间（对数刻度）</text>')
 
     # 3G 50% erasure hard limit callout subcard
     parts.append(f'  <rect class="subcard" x="{rx0 + 14}" y="420" width="{rw - 28}" height="96" rx="8"/>')
     parts.append(f'  <text class="xs warn" style="font-weight:700" x="{rx0 + 24}" y="440">3G 物理硬红线：50% 擦除容量定理 Q(ℰ{sub("p")}) = max(0, 1 − 2p)</text>')
-    parts.append(f'  <text class="xs ink" x="{rx0 + 24}" y="461">单跳最大损耗 −10 log{sub("10")}(0.5) ≈ 3.01 dB ⇒ 纯光纤站距 L{sub("0")}{sup("max")} ≤ 15.05 km</text>')
+    parts.append(f'  <text class="xs ink" x="{rx0 + 24}" y="461">单跳最大损耗 −10 log{sub("10")}(0.5) ≈ 3.01 dB ⇒ 纯光纤站距上确界 ≈ 15.05 km</text>')
     parts.append(f'  <text class="xs muted" x="{rx0 + 24}" y="482">参数：L=1,000 km，c{sub("f")}=2×10{sup("5")} km/s，衰减 a=0.2 dB/km（2G 取 L{sub("0")}=20 km）</text>')
-    parts.append(f'  <text class="xs muted" x="{rx0 + 24}" y="503">计入发射、耦合与探测损耗后，实际 3G 中继站须密布至 1–5 km。</text>')
+    parts.append(f'  <text class="xs muted" x="{rx0 + 24}" y="503">效率 1/.8/.6：15.05/10.21/3.96 km；等号处容量为零。</text>')
 
-    parts.append('  <text class="sm muted" x="34" y="554">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图展示量子网络三代中继跨越 4 个量级的时延跃迁。</text>')
+    parts.append('  <text class="sm muted" x="34" y="554">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图为三个分项时标。两层本地门需 2 μs，中点先兆为 100 μs。</text>')
 
     svg = wrap_svg(
         "v3-12-lwe-lattice-repeaters",
         "LWE 模 17 解密噪声界与三代量子中继 1000 km 时延对照",
-        "左面板绘出模 q=17 圆形解码环、m=0 与 m=1 解码扇区、奇数模对称无歧义充分界 |w|<=3（m=0 容 [-4,4]、m=1 编于 8 容 [-3,4]，(m=1,w=-4) 与 (m=0,w=+4) 碰撞于余数 4）、正常解密 w=+2 及越界失败反例 w=+5；右面板用对数纵轴对比 1000 km 光纤上 1G(10 ms)、2G(0.2 ms)、3G(1 us) 中继周期时延及 15.05 km 擦除上限。",
+        "左面板绘出模 q=17 圆形解码环、m=0 与 m=1 解码扇区、奇数模对称无歧义充分界 |w|<=3（m=0 容 [-4,4]、m=1 编于 8 容 [-3,4]，(m=1,w=-4) 与 (m=0,w=+4) 碰撞于余数 4）、正常解密 w=+2 及越界失败反例 w=+5；右面板用对数纵轴对比 1000 km 光纤上 1G(10 ms)、2G(0.2 ms)、3G(1 us) 的不同操作时标及器件效率改变后的距离上确界。",
         "\n".join(parts),
     )
     return svg, {"lwe_fail_val": dec_bad, "l0_max_km": round(l0_max_km, 2)}
@@ -1251,7 +1239,7 @@ def build_fig6_weyl_chamber_zx() -> tuple[str, dict]:
 
     parts = [
         '  <text class="title ink" x="34" y="44">两比特 Weyl 室三维几何与 ZX 演算蜘蛛融合 / 相位传送</text>',
-        f'  <text class="subtitle muted" x="34" y="68">左：SU(4) Weyl 室 k{sub("z")}≥0 上半室正交投影（含镜像下半室 √SWAP）与 CNOT 数；右：ZX 重写与消 T 门（2 → 0）</text>',
+        f'  <text class="subtitle muted" x="34" y="68">左：按整体相位取商的 Weyl 室 k{sub("z")}≥0 上半室正交投影（含镜像下半室 √SWAP）与 CNOT 数；右：ZX 重写与消 T 门（2 → 0）</text>',
     ]
 
     # --- Left Card: 3D Orthographic Weyl Chamber Tetrahedron ---
@@ -1315,7 +1303,7 @@ def build_fig6_weyl_chamber_zx() -> tuple[str, dict]:
 
     # Non-overlapping gate labels with coordinates & CNOT counts
     parts.append(f'  <text class="xs ink" style="font-weight:700" x="{pO[0] - 10:.1f}" y="{pO[1] - 8:.1f}" text-anchor="end">I (0,0,0)</text>')
-    parts.append(f'  <text class="xs muted" x="{pO[0] - 10:.1f}" y="{pO[1] + 12:.1f}" text-anchor="end">0 CNOT</text>')
+    parts.append(f'  <text class="xs muted" x="{pO[0] - 10:.1f}" y="{pO[1] + 12:.1f}" text-anchor="end">I 与 iI 同坐标</text>')
 
     parts.append(f'  <text class="xs warn" style="font-weight:700" x="{pA3[0] - 12:.1f}" y="{pA3[1] - 7:.1f}" text-anchor="end">SWAP (π/4,π/4,π/4)</text>')
     parts.append(f'  <text class="xs warn" x="{pA3[0] - 12:.1f}" y="{pA3[1] + 13:.1f}" text-anchor="end">3 CNOT（极点 A{sub("3")}）</text>')
@@ -1345,7 +1333,7 @@ def build_fig6_weyl_chamber_zx() -> tuple[str, dict]:
 
     # Bottom summary subcard
     parts.append(f'  <rect class="subcard" x="{lx0 + 14}" y="440" width="{lw - 28}" height="76" rx="8"/>')
-    parts.append(f'  <text class="xs accent" style="font-weight:600" x="{lx0 + 24}" y="459">U = (k{sub("1")}⊗k{sub("2")}) exp[i(k{sub("x")}XX + k{sub("y")}YY + k{sub("z")}ZZ)] (k{sub("3")}⊗k{sub("4")})</text>')
+    parts.append(f'  <text class="xs accent" style="font-weight:600" x="{lx0 + 24}" y="459">U = e{sup("iφ")} (k{sub("1")}⊗k{sub("2")}) exp[i(k{sub("x")}XX + k{sub("y")}YY + k{sub("z")}ZZ)] (k{sub("3")}⊗k{sub("4")})</text>')
     parts.append(f'  <text class="xs ink" x="{lx0 + 24}" y="480">0/1 CNOT: I / A{sub("1")} · 绿棱 R{sub("ZZ")}(θ) · 2 CNOT: 底面 k{sub("z")}=0 (iSWAP, B)</text>')
     parts.append(f'  <text class="xs warn" x="{lx0 + 24}" y="501">主四面体绘 k{sub("z")}≥0 上半室；√SWAP 在镜像下半室，k{sub("z")}≠0 均需 3 CNOT</text>')
 

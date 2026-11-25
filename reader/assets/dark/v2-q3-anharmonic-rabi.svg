@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
-  <title id="title">谐振子与 transmon 非谐势能级对比及精确 Rabi 振荡曲线</title>
-  <desc id="desc">左面板对比理想谐振子抛物势（等间距能级 ℏω）与约瑟夫森结 transmon 余弦势（负非谐性 α &lt; 0 使 ω₁₂ &lt; ω₀₁，能量非等比例示意）。右面板按精确二能级公式绘制 Ω/2π = 10 MHz 下共振驱动（Δ = 0，首峰 50.0 ns、峰高 1.00）与失谐驱动（Δ/2π = 6 MHz，首峰 42.9 ns、峰高 100/136 ≈ 0.735）的激发态占据概率 P₁(t)。</desc>
+  <title id="title">谐振子与 transmon 非谐势能级对比及旋转波近似下的 Rabi 振荡</title>
+  <desc id="desc">左面板对比理想谐振子抛物势（等间距能级 ℏω）与约瑟夫森结 transmon 余弦势（负非谐性 α &lt; 0 使 ω₁₂ &lt; ω₀₁，能量非等比例示意）。右面板按二能级旋转波近似绘制 Ω/2π = 10 MHz 下共振驱动（Δ = 0，首峰 50.0 ns、峰高 1.00）与失谐驱动（Δ/2π = 6 MHz，首峰 42.9 ns、峰高 100/136 ≈ 0.735）的激发态占据概率 P₁(t)。</desc>
   <style>
 :root{color-scheme:dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -86,7 +86,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   </defs>
   <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title" x="34" y="54">非谐势能级寻址与共振 / 失谐 Rabi 振荡</text>
-  <text class="subtitle" x="34" y="79">左：抛物势（等间距）与 transmon 余弦势（负非谐性 α &lt; 0）对比；右：精确二能级 Rabi 振荡 P₁(t)</text>
+  <text class="subtitle" x="34" y="79">左：抛物势（等间距）与 transmon 余弦势（α &lt; 0）；右：二能级旋转波近似（RWA）下的振荡</text>
   <rect class="panel" x="28" y="96" width="460" height="456" rx="14"/>
   <path class="phead" d="M 42 97 H 474 Q 487 97 487 110 V 135 H 29 V 110 Q 29 97 42 97 Z"/>
   <line class="grid" x1="29" y1="135" x2="487" y2="135"/>
@@ -94,7 +94,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <rect class="panel" x="508" y="96" width="464" height="456" rx="14"/>
   <path class="phead" d="M 522 97 H 958 Q 971 97 971 110 V 135 H 509 V 110 Q 509 97 522 97 Z"/>
   <line class="grid" x1="509" y1="135" x2="971" y2="135"/>
-  <text class="sec" x="524" y="121">二能级 Rabi 振荡：共振与失谐（精确公式）</text>
+  <text class="sec" x="524" y="121">二能级 Rabi 振荡：共振与失谐（RWA）</text>
   <line class="axis" x1="66" y1="444" x2="66" y2="184"/>
   <polygon class="axis-fill" points="66,184 69.6,191.5 62.4,191.5"/>
   <line class="axis" x1="66" y1="444" x2="236" y2="444"/>
@@ -135,7 +135,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <line class="guide" x1="314" y1="242.6" x2="442" y2="242.6"/>
   <line class="guide" x1="428" y1="264.44" x2="442" y2="264.44"/>
   <line class="c2" stroke-width="1.5" x1="442" y1="242.6" x2="442" y2="264.44"/>
-  <text class="smb c2-txt" x="447" y="258.02">|α|</text>
+  <text class="smb c2-txt" x="447" y="258.02">ℏ|α|</text>
   <line class="c1" stroke-width="1.6" x1="366" y1="406.6" x2="366" y2="330.6"/>
   <polygon class="c1-fill" points="366,330.6 368.88,336.6 363.12,336.6"/>
   <polygon class="c1-fill" points="366,406.6 363.12,400.6 368.88,400.6"/>
@@ -191,5 +191,5 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <polygon class="c2-fill" points="679,149.2 683.8,154 679,158.8 674.2,154"/>
   <text class="sm" x="700" y="158">失谐 Δ/2π = 6 MHz（Ω/2π = 10 MHz）</text>
   <rect class="pill" x="524" y="502" width="432" height="34" rx="8"/>
-  <text class="sm" x="740" y="523" text-anchor="middle">P₁(t) = (Ω²/Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan>²) sin²(Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan> t/2)，Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan> = √(Ω²+Δ²) ≈ 2π × 11.66 MHz</text>
+  <text class="sm" x="740" y="523" text-anchor="middle">P₁(t) = (Ω²/Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan>²) sin²(Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan> t/2)，失谐时 Ω<tspan dy="3" font-size="75%">eff</tspan><tspan dy="-3">&#8203;</tspan>/2π ≈ 11.66 MHz</text>
 </svg>

@@ -1,16 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { marked } from 'marked';
-import { readingGroups, readingPlan } from './reading-order.mjs';
+import { readingPlan } from './reading-order.mjs';
+import { verifyExerciseAlignment } from './exercise-identity.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const handbookDir = path.join(root, 'handbook');
 const assetsDir = path.join(handbookDir, 'assets');
 const exercisesPath = path.join(handbookDir, 'appendices/exercises.md');
-
-const EXPECTED_TOTAL_EXERCISES = 271;
 
 const BINARY_EXTENSIONS = new Set([
   '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.bmp',
@@ -55,65 +53,10 @@ function excerptAround(text, index, len = 48) {
   return line.length > len * 2 ? line.slice(Math.max(0, index - lineStart - len), index - lineStart + len) : line;
 }
 
-function chapterIdFromFile(filePath) {
-  const rel = path.relative(handbookDir, filePath).replaceAll('\\', '/');
-  const qm = rel.match(/^quantum-mechanics\/0(\d)-/);
-  if (qm) return `Q${qm[1]}`;
-  const main = rel.match(/^(\d\d)-/);
-  if (main) return main[1];
-  return null;
-}
-
-function countOrderedListItems(markdownSlice) {
-  if (!markdownSlice || !markdownSlice.trim()) return 0;
-  // Shield display math blocks so `---` or blank lines inside math never split tokens.
-  const shielded = markdownSlice.replace(/\$\$[\s\S]*?\$\$/g, ' MATHBLOCK ');
-  const tokens = marked.lexer(shielded, { gfm: true });
-  let total = 0;
-  for (const token of tokens) {
-    if (token.type === 'list' && token.ordered) {
-      total += token.items.length;
-    }
-  }
-  return total;
-}
-
-function extractSelfCheckSlice(chapterText) {
-  const match = chapterText.match(/^##\s*自检题[^\n]*(?:\r?\n|$)/m);
-  if (!match) return null;
-  const start = match.index + match[0].length;
-  const rest = chapterText.slice(start);
-  const nextH2 = rest.search(/^##\s/m);
-  return nextH2 === -1 ? rest : rest.slice(0, nextH2);
-}
-
-function parseExercisesByChapter(exercisesText) {
-  const map = new Map();
-  const sections = exercisesText.split(/^(?=##\s)/m);
-  for (const sec of sections) {
-    const firstNewline = sec.indexOf('\n');
-    const heading = (firstNewline === -1 ? sec : sec.slice(0, firstNewline)).trim();
-    const body = firstNewline === -1 ? '' : sec.slice(firstNewline + 1);
-    let key = null;
-    const mMain = heading.match(/^##\s*第\s*(\d+)\s*章(?:\s*[｜|：:].*)?$/);
-    const mQm = heading.match(/^##\s*(?:量子力学(?:基础)?|物理(?:基础)?篇?)\s*Q(\d+)(?:\s*[｜|：:].*)?$/);
-    if (mMain) key = String(Number(mMain[1])).padStart(2, '0');
-    else if (mQm) key = `Q${Number(mQm[1])}`;
-    if (key) {
-      map.set(key, {
-        heading,
-        count: countOrderedListItems(body),
-      });
-    }
-  }
-  return map;
-}
-
 async function main() {
   const allMd = (await walk(handbookDir)).filter(f => f.endsWith('.md')).sort();
   const chapterFiles = allMd.filter(f => /^\d\d-/.test(path.basename(f)));
   const plan = readingPlan(chapterFiles);
-  const orderedIds = readingGroups.flatMap(([, ids]) => ids);
 
   // Target prose files: 26 chapters + READMEs + appendices/ (including audit-log.md) + labs/
   const scanFiles = allMd.filter(f => {
@@ -188,43 +131,16 @@ async function main() {
     }
   }
 
-  // Gate 5: All 26 chapters' ## 自检题 item counts match exercises.md top-level <li> counts.
+  // Gate 5: Check the exercise identity, number and answer structure in the Markdown sources.
+  const chapterSources = await Promise.all(plan.groups.flatMap(group =>
+    group.files.map(async (file, index) => ({
+      id: group.ids[index],
+      file: path.relative(root, file).replaceAll('\\', '/'),
+      text: await fs.readFile(file, 'utf8'),
+    })),
+  ));
   const exercisesRaw = await fs.readFile(exercisesPath, 'utf8');
-  const exercisesMap = parseExercisesByChapter(exercisesRaw);
-  const exerciseChecks = [];
-  const exerciseMismatches = [];
-  let totalChapterQuestions = 0;
-  let totalExerciseAnswers = 0;
-
-  const fileById = new Map(plan.sequence.map(f => [chapterIdFromFile(f), f]));
-  for (const id of orderedIds) {
-    const file = fileById.get(id);
-    const rel = file ? path.relative(root, file).replaceAll('\\', '/') : null;
-    const raw = file ? await fs.readFile(file, 'utf8') : '';
-    const slice = extractSelfCheckSlice(raw);
-    const chapterCount = slice === null ? 0 : countOrderedListItems(slice);
-    const exEntry = exercisesMap.get(id);
-    const exerciseCount = exEntry ? exEntry.count : 0;
-
-    totalChapterQuestions += chapterCount;
-    totalExerciseAnswers += exerciseCount;
-
-    const ok = slice !== null && chapterCount > 0 && chapterCount === exerciseCount;
-    const row = {
-      chapter: id,
-      file: rel,
-      hasSelfCheckHeading: slice !== null,
-      chapterQuestions: chapterCount,
-      exerciseAnswers: exerciseCount,
-      ok,
-    };
-    exerciseChecks.push(row);
-    if (!ok) exerciseMismatches.push(row);
-  }
-
-  const totalMatchesExpected =
-    totalChapterQuestions === EXPECTED_TOTAL_EXERCISES &&
-    totalExerciseAnswers === EXPECTED_TOTAL_EXERCISES;
+  const { appendixByChapter, fingerprints, ...exerciseAlignment } = verifyExerciseAlignment(chapterSources, exercisesRaw);
 
   // Gate 6: Local privacy path leakage blocker across handbook/, codes/ (excl vendor/), and tools/reader/.
   // Build regex segments dynamically so this gate script never false-positives on its own source.
@@ -287,17 +203,7 @@ async function main() {
         zeroTextCount: svgFailures.length,
         failures: svgFailures,
       },
-      gate5ExerciseAlignment: {
-        passed: exerciseMismatches.length === 0 && totalMatchesExpected,
-        chapterCount: orderedIds.length,
-        expectedTotal: EXPECTED_TOTAL_EXERCISES,
-        totalChapterQuestions,
-        totalExerciseAnswers,
-        totalMatchesExpected,
-        mismatchCount: exerciseMismatches.length,
-        mismatches: exerciseMismatches,
-        perChapter: exerciseChecks,
-      },
+      gate5ExerciseAlignment: exerciseAlignment,
       gate6PrivacyPaths: {
         passed: gate6PrivacyViolations.length === 0,
         scannedFiles: privacyTargets.length,

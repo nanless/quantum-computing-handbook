@@ -700,7 +700,7 @@
               <div class="btn-row">
                 <button type="button" class="btn" data-mzi-phi="0">0° 同相</button>
                 <button type="button" class="btn" data-mzi-phi="90">90°</button>
-                <button type="button" class="btn" data-mzi-phi="120">120° (P₀=1/4)</button>
+                <button type="button" class="btn" data-mzi-phi="120">120°</button>
                 <button type="button" class="btn" data-mzi-phi="180">180° 反相</button>
                 <button type="button" class="btn" data-mzi-phi="270">270°</button>
               </div>
@@ -844,10 +844,10 @@
             <p class="sub">比较理想 Ramsey（V = 1）、真实纯退相位概率 P₀(t) = [1 + V(t)cos(2πf_det t)]/2（振荡渐平并收敛至最大混合态 0.50）与常见误区曲线 V(t)cos²(πf_det t)（误以为衰减至 0）；可直接在曲线图上点击/拖动时间游标 t。</p>
             <div class="viz-wrap"><svg id="ramsey-svg" viewBox="0 0 640 296" role="img" aria-label="Ramsey 失谐与退相干概率条纹曲线"></svg></div>
             <div class="btn-row" role="group" aria-label="Ramsey 关键时间点快速定位">
-              <button type="button" class="btn" data-ramsey-jump="0">0.00s · 峰顶盲点</button>
-              <button type="button" class="btn" data-ramsey-jump="0.25">0.25s · 半高腰最陡点</button>
-              <button type="button" class="btn" data-ramsey-jump="1.5">1.50s · T₂ 谷底</button>
-              <button type="button" class="btn" data-ramsey-jump="3.5">3.50s · 稳态 0.50 vs 误区 0</button>
+              <button type="button" class="btn" data-ramsey-jump="0">0.00 s · 尚未询问</button>
+              <button type="button" class="btn" id="ramsey-quadrature">首个相位正交点</button>
+              <button type="button" class="btn" data-ramsey-jump="1.5">1.50 s</button>
+              <button type="button" class="btn" data-ramsey-jump="3.5">3.50 s</button>
             </div>
             <p id="ramsey-seek-status" class="status-line" role="status"></p>
           </div>
@@ -872,7 +872,8 @@
               <div class="kv-box"><span class="kv-lbl">当前游标时刻 t</span><span id="ramsey-t-val" class="kv-val">1.50 s</span></div>
               <div class="kv-box"><span class="kv-lbl">可见度 V(t) = e^(−t/T₂*)</span><span id="ramsey-v-val" class="kv-val">0.3679</span></div>
               <div class="kv-box"><span class="kv-lbl">P₀(t)（真实 vs 误区）</span><span id="ramsey-p0-val" class="kv-val">0.3161 vs 0.0000</span></div>
-              <div class="kv-box"><span class="kv-lbl">经典 Fisher 信息 F_C(φ; V)</span><span id="ramsey-fc-val" class="kv-val">0.0000 (盲点)</span></div>
+              <div class="kv-box"><span class="kv-lbl">每次相位信息 F_C(φ; V)</span><span id="ramsey-fc-val" class="kv-val">0.0000</span></div>
+              <div class="kv-box"><span class="kv-lbl">每次失谐频率信息</span><span id="ramsey-freq-info-val" class="kv-val">0 Hz⁻²</span></div>
             </div>
             <p id="ramsey-note" class="note-box" aria-live="polite"></p>
             <div class="btn-row" style="margin-top:0.7rem;">
@@ -978,6 +979,8 @@
               <button type="button" class="btn" data-grover-preset="n3m1" aria-pressed="true">n=3 (N=8, M=1 · 2 步 94.53% / 3 步过冲)</button>
               <button type="button" class="btn" data-grover-preset="n3m2" aria-pressed="false">n=3 (N=8, M=2 · 1 步 100%)</button>
             </div>
+            <h3>选择标记基态</h3>
+            <div id="grover-targets" class="btn-row" role="group" aria-label="Grover 标记基态"></div>
             <h3>半拍拆解与迭代控制</h3>
             <div class="btn-row">
               <button id="grover-oracle-btn" type="button" class="btn">① Oracle 反相（目标翻负）</button>
@@ -1010,13 +1013,13 @@
         <div class="stack">
           <div class="card">
             <h2>d = 3 旋转表面码 [[9, 1, 3]] 注错与症状解码沙箱（第 10 章）</h2>
-            <p class="sub">严格复刻手册 <code>v2-10-surface-lattice-surgery.svg</code> 拓扑（9 数据比特 + 4 Z 面 + 4 X 面）。点击数据比特注入 Pauli 错，看相邻稳定子实时亮红灯，再点一键最小权重解码亲手验证为何码距 3 只能保纠 1 错！</p>
+            <p class="sub">严格复刻手册 <code>v2-10-surface-lattice-surgery.svg</code> 拓扑（9 数据比特 + 4 Z 面 + 4 X 面）。点击数据比特注入 Pauli 错，看相邻稳定子实时亮红灯，再点一键分量解码亲手验证为何码距 3 只能保纠 1 错！</p>
             <div class="viz-wrap"><svg id="surface-svg" viewBox="0 0 544 444" role="img" aria-label="d=3 旋转表面码交互棋盘格与解码链视图"></svg></div>
           </div>
         </div>
         <div class="stack">
           <div class="card">
-            <h2>经典错误场景预设与最小权重解码</h2>
+            <h2>经典错误场景预设与分量解码</h2>
             <div class="btn-row">
               <button type="button" class="btn" data-surface-preset="x5">单错 X₅（精准纠回）</button>
               <button type="button" class="btn" data-surface-preset="x4">边错 X₄（简并等价）</button>
@@ -1025,7 +1028,7 @@
               <button type="button" class="btn" data-surface-preset="z3z6">双错 Z₃Z₆（逻辑 Z̄ 翻转！）</button>
             </div>
             <div class="btn-row" style="margin-top:0.55rem;">
-              <button id="surface-decode-btn" type="button" class="btn btn-primary">⚡ 一键最小权重解码</button>
+              <button id="surface-decode-btn" type="button" class="btn btn-primary">⚡ 分量解码</button>
               <button id="surface-clear-btn" type="button" class="btn">↺ 清空全部错误</button>
             </div>
             <h3>键盘快捷注错（点击循环 I → X → Z → Y）</h3>
@@ -1043,7 +1046,7 @@
             <div class="kv-grid">
               <div class="kv-box"><span class="kv-lbl">已注入物理错 E</span><span id="surface-err-val" class="kv-val">I（无）</span></div>
               <div class="kv-box"><span class="kv-lbl">实时稳定子症状（−1 亮灯）</span><span id="surface-syn-val" class="kv-val">全 +1</span></div>
-              <div class="kv-box"><span class="kv-lbl">最小权重修正链 C</span><span id="surface-corr-val" class="kv-val">—</span></div>
+              <div class="kv-box"><span class="kv-lbl">分量解码的修正链 C</span><span id="surface-corr-val" class="kv-val">—</span></div>
               <div class="kv-box"><span class="kv-lbl">逻辑态核验结论</span><span id="surface-verdict-val" class="kv-val">无错待检</span></div>
             </div>
             <p id="surface-note" class="note-box" aria-live="polite"></p>

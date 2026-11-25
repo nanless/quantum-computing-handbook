@@ -306,6 +306,9 @@
     const rawLink = dlg.querySelector('.lightbox-open-raw');
     const zoomBtn = dlg.querySelector('[data-lb-zoom]');
     stage.classList.remove('is-zoomed');
+    const originalWidth = Number(img.dataset.originalWidth) || img.naturalWidth;
+    stage.style.setProperty('--figure-original-width', originalWidth > 0 ? `${originalWidth}px` : 'auto');
+    stage.scrollLeft = 0;
     zoomBtn.textContent = '1:1 原始尺寸';
     const isDark = effectiveTheme() === 'dark';
     const lightSrc = img.getAttribute('data-light-src') || anchor.getAttribute('href');
@@ -487,7 +490,7 @@
       '<div class="search-modal-shell">' +
         '<div class="search-modal-head">' +
           '<span class="search-modal-icon" aria-hidden="true">🔍</span>' +
-          '<input type="search" id="qch-global-search-input" class="search-modal-input" autocomplete="off" placeholder="搜索全书 26 章、1,300+ 小节、术语与实验（如：表面码、Barren Plateau、Weyl 室、CHSH）…">' +
+          '<input type="search" id="qch-global-search-input" class="search-modal-input" role="combobox" aria-label="搜索全书" aria-controls="qch-search-results" aria-autocomplete="list" aria-expanded="false" autocomplete="off" placeholder="搜索全书 26 章、1,300+ 小节、术语与实验（如：表面码、Barren Plateau、Weyl 室、CHSH）…">' +
           '<button type="button" class="search-modal-close" data-search-close aria-label="关闭检索">Esc</button>' +
         '</div>' +
         '<div class="search-cat-bar" role="group" aria-label="按内容类型筛选">' +
@@ -496,7 +499,7 @@
           '<button type="button" class="search-cat-btn" data-search-cat="sec" aria-pressed="false">小节</button>' +
           '<button type="button" class="search-cat-btn" data-search-cat="term" aria-pressed="false">术语</button>' +
           '<button type="button" class="search-cat-btn" data-search-cat="lab" aria-pressed="false">实验</button>' +
-          '<span class="search-count" id="qch-search-count"></span>' +
+          '<span class="search-count" id="qch-search-count" role="status"></span>' +
         '</div>' +
         '<div class="search-results" id="qch-search-results" role="listbox" aria-label="检索结果"></div>' +
         '<div class="search-modal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 跳转 · <kbd>Esc</kbd> 关闭</span><span>100% 离线本地索引 · 零网络请求</span></div>' +
@@ -547,6 +550,8 @@
         : `共索引 ${idx.length} 条（输入中英文关键词即可检索）`;
 
       resultsEl.innerHTML = '';
+      input.removeAttribute('aria-activedescendant');
+      input.setAttribute('aria-expanded', String(searchResults.length > 0));
       if (!searchResults.length) {
         const empty = document.createElement('div');
         empty.className = 'search-empty';
@@ -558,6 +563,8 @@
       searchResults.forEach((item, i) => {
         const a = document.createElement('a');
         a.className = 'search-item' + (i === 0 ? ' is-selected' : '');
+        a.id = `qch-search-option-${i}`;
+        a.tabIndex = -1;
         a.setAttribute('role', 'option');
         a.setAttribute('aria-selected', String(i === 0));
         a.href = rootPrefix + item.u;
@@ -583,6 +590,7 @@
         a.addEventListener('click', () => dlg.close());
         resultsEl.appendChild(a);
       });
+      input.setAttribute('aria-activedescendant', resultsEl.firstElementChild.id);
     };
 
     const updateSelection = nextIdx => {
@@ -593,7 +601,10 @@
         const active = idx === searchSelected;
         r.classList.toggle('is-selected', active);
         r.setAttribute('aria-selected', String(active));
-        if (active) r.scrollIntoView({ block: 'nearest' });
+        if (active) {
+          input.setAttribute('aria-activedescendant', r.id);
+          r.scrollIntoView({ block: 'nearest' });
+        }
       });
     };
 
@@ -624,6 +635,10 @@
     });
     dlg.querySelector('[data-search-close]').addEventListener('click', () => dlg.close());
     dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => {
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+    });
     dlg._renderList = renderList;
     searchDialog = dlg;
     return dlg;
@@ -662,14 +677,19 @@
     btn.className = 'advanced-banner-btn';
     btn.textContent = '展开本节';
     btn.setAttribute('aria-expanded', 'false');
-    btn.addEventListener('click', () => {
-      const open = sec.classList.toggle('is-expanded');
-      btn.textContent = open ? '收起本节' : '展开本节';
-      btn.setAttribute('aria-expanded', String(open));
-    });
+    btn.addEventListener('click', () => setAdvancedExpanded(sec, !sec.classList.contains('is-expanded')));
     banner.append(label, btn);
     heading.insertAdjacentElement('afterend', banner);
   });
+
+  function setAdvancedExpanded(section, open) {
+    section.classList.toggle('is-expanded', open);
+    const button = section.querySelector(':scope > .advanced-banner .advanced-banner-btn');
+    if (button) {
+      button.textContent = open ? '收起本节' : '展开本节';
+      button.setAttribute('aria-expanded', String(open));
+    }
+  }
 
   function syncBeginnerButton() {
     const on = root.getAttribute('data-beginner-mode') === 'on';
@@ -893,7 +913,7 @@
       p = p.parentElement?.closest('details');
     }
     const adv = target.closest('.advanced-section');
-    if (adv) adv.classList.add('is-expanded');
+    if (adv) setAdvancedExpanded(adv, true);
     if (exToolbar) {
       const headerEl = document.querySelector('header.reader-header, header:not(.course-header)');
       const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;

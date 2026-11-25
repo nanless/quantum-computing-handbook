@@ -2,13 +2,13 @@
 
 几乎每一位刚学完多比特张量积的读者，脑海里都会先算一笔醒目的存储账：$50$ 个量子比特的纯态有 $2^{50} \approx 1.13 \times 10^{15}$ 个复振幅，按每个双精度复数占 $16$ 字节计算，单把这一个量子态存进内存就需要约 $18\,\mathrm{PB}$——远远超过普通工作站，甚至逼近大型超级计算机的整机内存。于是，一个看似顺理成章的误判便常出现在科普与新闻里：“只要芯片做到 $50$ 或 $100$ 个量子比特，经典计算机连态都存不下，量子计算就必然已经超越经典。”
 
-本章用严谨的数学推导与可运行代码厘清这一误判，并把评判“量子优势边界”的核心经典模拟工具箱系统交到你手上。
+[第 16 章](16-advanced-algorithms-verification.md)区分了验证输出和复现计算，[第 17 章](17-computation-models.md)比较了不同模型和输出任务。本章用纸笔与可运行代码检验：当线路具有特定结构，或只需估计指定的测量量时，经典模拟能走多远？
 
 学完本章后，你将自己算通、并仅用 Python 3 标准库跑通三类现代经典模拟迷你引擎——**Aaronson–Gottesman 稳定子表**、**矩阵乘积态（MPS）**与**海森堡绘景 Pauli 传播**——亲手验证它们各自如何将表面上 $2^n$ 维的演化压缩到多项式或可控开销内。把这几类经典模拟引擎的适用域拼合在一起，你也能从第一性原理看清真正避开全部经典模拟器的**四维量子优势边界**，并理解为什么**量子纠错与容错架构**是通向可扩展实用量子优势的必要门槛。
 
 **分层阅读建议**：**必读 ★** 建议通读第 1–3.3 节（辛代数与稳定子表）、第 4.1 与 4.3–4.5 节（四大经典可解孤岛）、第 5.1–5.3 节（MPS 逐键 SVD 与截断）、第 6.1–6.2 节（Pauli 传播与噪声衰减）及第 7 节（四维边界与开源工具选型）；标有 **进阶选读 ☆** 的第 3.4 节、第 4.2 节、第 5.4–5.5 节与第 6.3–6.4 节包含代码实现、稳定子秩推导、2D PEPS/BP-TN 与算符范数界证明，适合动手复现或研读前沿论文时精读。
 
-阅读本章前，建议先熟悉以下五个前序模块（遇到具体公式时随时回翻）：
+可按要学的引擎回查下面几章。稳定子表使用 Clifford 门与稳定子生成元，MPS 使用 Schmidt 分解，Pauli 传播使用噪声信道。运行程序时再查态矢量模拟与端序约定。
 
 - [第 03 章：多量子比特与纠缠](03-multiple-qubits.md#5-schmidt-分解与二分纯态的纠缠熵)（Schmidt 分解、二分纠缠熵、GHZ 态与 W 态）；
 - [第 04 章：量子电路与协议](04-circuits-protocols.md#10-clifford-群稳定子表与-gottesmanknill-定理手算)（Clifford 群 $\{H, S, \mathrm{CNOT}\}$、$T$ 门与 Gottesman–Knill 定理直觉）；
@@ -47,7 +47,7 @@
 但请你停下来想一个物理与计算机科学里反复上演的常识：**把一张 $1000 \times 1000$ 像素的纯白画面存成未压缩位图需要几兆字节，可如果你只写一句“宽 1000、高 1000、全白”，只需要二十个字节。** 量子态的 $2^n$ 个振幅同样常常充满高度对称或局域约束：
 
 1. **代数对称约束**：如果电路只使用 Clifford 门，那么哪怕 $n = 10{,}000$ 个比特已经纠缠成一片，这 $2^{10000}$ 个复振幅依然由区区 $10{,}000$ 条局域 Pauli 方程唯一锁死——你完全不必展开振幅，只需用 $O(n^2)$ 比特的表格追踪这 $n$ 条方程的演化。
-2. **空间纠缠结构约束**：如果比特排成一维链且跨切面的量子纠缠熵有界（满足面积律），$2^n$ 维张量就能无损或近无损地因式分解成 $n$ 个小矩阵连乘（矩阵乘积态 MPS），存储量从 $O(2^n)$ 骤降至 $O(n\chi^2)$。
+2. **空间纠缠与 MPS。** 一维排列下，若精确 Schmidt 秩或目标容差内所需的截断秩较小，可用 $O(n\chi^2)$ 存储复振幅。纠缠熵有界可提示检查，但仍须看奇异值尾与误差累积。
 3. **海森堡可观测量与噪声稀疏约束**：如果实验最终只关心某几个局域可观测量 $\langle Z_0\rangle$ 或 $\langle Z_i Z_j\rangle$，而且电路较浅、旋转角不大或存在真实物理噪声，那么我们根本不必正向推演整个量子态 $\rho$，只需把简单的末态算符 $O$ 沿电路**倒推**回初态——沿途高权重分支会被物理噪声指数级杀灭，留下极稀疏的 Pauli 展开。
 
 因此，**“态矢量模拟器内存爆炸”只说明最朴素的稠密数组表示失效了，绝不等于“经典计算机算不动这条电路”。**
@@ -68,7 +68,7 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **1. 态矢量 / 密度矩阵** | $2^n$ 复振幅向量或 $2^n \times 2^n$ 密度矩阵 | 空间 $O(2^n)$（纯态）/ $O(4^n)$（混态）；单门 $O(2^n)$ | 小比特数（$n \le 30\text{–}45$）任意深度、任意门集、任意纠缠与噪声的黄金精确对照 | 比特数超过 $\sim 45$（哪怕线路只有 1 层浅门） | 自编张量引擎（`15 §2`）、Qiskit Aer、QuTiP、PennyLane |
 | **2. 稳定子 / 扩展稳定子** | $2n \times (2n+1)$ 二元辛表（或 $\chi_{\mathrm{stab}}$ 个稳定子态叠加） | 纯 Clifford：空间 $O(n^2)$，门 $O(n)$，确定性测 $O(n^2)$（逆表 $O(n)$）；$t$ 个 $T$ 门：$O(2^{\alpha t}\operatorname{poly}(n))$ | 数千至数百万比特的 QEC 电路；或高比特数但非 Clifford $T$ 门较少（$t \lesssim 50$）的近 Clifford 线路 | 既含海量非 Clifford 门（$t \gg 100$）又无法被低纠缠张量网络吸收的通用线路 | CHP（Aaronson–Gottesman *PRA* 2004）、**Stim**（Gidney *Quantum* 2021）、Bravyi–Gosset（*PRL* 2016）、Qassim–Pashayan–Gosset（*Quantum* 2021） |
-| **3. 张量网络（MPS / PEPS / BP-TN）** | 局域低秩张量网（一维链键维 $\chi$、二维格点或时空张量网） | 1D MPS：空间 $O(n\chi^2)$，双比特门 $O(\chi^3)$；精确收缩随树宽（treewidth）指数增长 | 一维低纠缠/面积律态、浅层二维线路、弱环路格点（如重六角格）、或一维开放边界砖墙（单比特 $T$ 门可直接吸收！） | 深层二维或全连接拓扑上的**体积律纠缠**（键维 $\chi \sim 2^S$ 随切面面积指数爆发）且强长程环路破坏树近似 | ITensor、quimb、Schollwöck（*Ann. Phys.* 2011）、**BP-TN**（Tindall 等 *PRX Quantum* 2024; *Science* 2026）、Manabe–Gu–Pan（`arXiv:2608.13110`，2026） |
+| **3. 张量网络（MPS / PEPS / BP-TN）** | 局域低秩张量网（一维链键维 $\chi$、二维格点或时空张量网） | 1D MPS：空间 $O(n\chi^2)$，双比特门 $O(\chi^3)$；精确收缩随树宽（treewidth）指数增长 | 一维低纠缠/面积律态、浅层二维线路、弱环路格点（如重六角格）、或一维开放边界砖墙（单比特 $T$ 门可直接吸收！） | 深层二维或全连接拓扑上的**体积律纠缠**（若单切面熵随子系统体积增长，精确键维至少为 $2^S$）且强长程环路破坏树近似 | ITensor、quimb、Schollwöck（*Ann. Phys.* 2011）、**BP-TN**（Tindall 等 *PRX Quantum* 2024; *Science* 2026）、Manabe–Gu–Pan（`arXiv:2608.13110`，2026） |
 | **4. 海森堡 Pauli 传播 / SPD** | 反向演化后的稀疏 Pauli 串字典 $\sum_P c_P P$ | 与保留的稀疏 Pauli 项数 $M$ 线性成正比；含噪时高权重串按 $(1-p)^w$ 指数衰减 | 百比特级浅层线路、小角度 Trotter 步、变分线路及**含中等物理噪声的 NISQ 动力学**局域期望值 | **低噪声（容错级）+ 深层 + 大角度非 Clifford 门**引发的算符混沌增殖（高权重分支不被噪声压死） | **SPD**（Begušić–Gray–Chan *Sci. Adv.* 2024）、**`PauliPropagation.jl`**（Rudolph 等 *PRX Quantum* 2026）、Aharonov 等（*STOC* 2023） |
 
 接下来五节，我们就逐一打开第 2、3、4 号引擎的黑箱，把每一步代数、每一个相位负号和每一条误差界都拿纸笔算透，并用纯 Python 标准库代码与第 1 号精确参考引擎逐格对账。
@@ -428,6 +428,8 @@ $$
      - 再乘 $S_1'$：$Z_0 \cdot Z_0 = I_0$（$g=0$），$I_1 \cdot Z_1 = Z_1$（$g=0$），总相位 $2\cdot 1 + 2\cdot 0 + 0 = 2 \pmod 4 \implies r = 1$，得 **$-I_0 Z_1$**！
    - 读出暂存行相位位 $r_{\mathrm{scratch}} = 1$，因此确定性测量结果必为 **$m_1 = 1$**——与 Bell 态在测得 $q_0 = 1$ 后 $q_1$ 必为 $1$ 的物理事实分毫不差！若刚才随机分支取 $m_0 = 0$，则 $S_0' = +Z_0 I_1$，乘积给出 $+I_0 Z_1$，$r_{\mathrm{scratch}} = 0$，确定性测得 $m_1 = 0$。
 
+**随机测量的配对行。** 在 $2n$ 行表中，若枢轴行编号为 $p\ge n$，对应去稳定子行是 $p-n$，对应稳定子生成元是 $S_{p-n}$。随机分支的行乘积循环同时跳过这两行，随后把旧稳定子复制到其配对去稳定子，再用测得的 $\pm Z_a$ 写回枢轴。单比特 $H,S,H$ 后有 $D_0=+X,S_0=-Y$。若逐字采用 Aaronson–Gottesman arXiv v5 §III 的 $i\ne p$ 循环，在配对行算 $(-Y)X$ 会得到 $+iZ$，超出二值相位行表示。按上述顺序更新后，第二次测 $Z$ 在每一分支都重复第一次的数值。[Aaronson 与 Gottesman v5](https://arxiv.org/abs/quant-ph/0406196v5)
+
 ### 3.3 从 $O(n^3)$ 到 $O(n^2)$ 再到 Stim 的千赫兹级采样
 
 总结一下稳定子模拟在算法与工程上的三次代际跃升：
@@ -437,7 +439,7 @@ $$
 3. **Stim（Gidney, *Quantum* 5, 497, 2021）**：现代容错纠错仿真的工业引擎，靠三把手术刀把速度又推高了数个数量级：
    - **追踪逆稳定子表（inverse tableau）**：利用逆表把确定性测量的渐近复杂度进一步压到 **$O(n)$**；
    - **256 位宽 SIMD 缓存友好布局**：一次 CPU 指令同时异或 256 个比特；
-   - **参考样本 + 批量 Pauli 帧传播（reference sample & Pauli frame simulation）**：在纠错仿真里，我们往往要对同一条含随机 Pauli 噪声的电路采样数百万次（shots）。Stim **只运行一次**昂贵的无噪稳定子表得到一条“无错参考测量串”；随后数百万次含噪抽样中，完全不再跑稳定子表，只把每个随机注入的 Pauli 错误（一个极轻量的 2 比特/量子比特 Pauli 帧）沿 Clifford 门按位异或推向测量端口——任何与测量算符反对易的错误帧都会把对应参考测量比特取反！正因如此，Stim 模拟码距 $d = 100$、含 $20{,}000$ 比特、$800$ 万个门与 $100$ 万次测量的表面码电路，仅需约 $15$ 秒完成建表分析，此后便能以**千赫兹级速率**批量吐出完整含噪样本。
+   - **参考样本与批量 Pauli 帧。** Stim 先用无噪稳定子表生成合法参考样本。批量帧既传播随机物理 Pauli 错误，也在初始化、重置和测量处处理理想量子线路的内禀随机性。比如 $H|0\rangle$ 后测 $Z$ 本来各半；若只传播零物理误差，便只会重复参考比特。千赫兹数据对应论文里的指定表面码电路和平台。Stim v1.16.0 可显式提供参考样本，只有确认全零串满足相应条件时才可跳过实际参考。 [Gidney §6](https://arxiv.org/abs/2103.02202v3) · [Stim v1.16.0 API](https://github.com/quantumlib/Stim/blob/v1.16.0/doc/python_api_reference_vDev.md)
 
 ### 3.4 进阶选读：约 50 行纯 Python 稳定子表核心代码
 
@@ -537,6 +539,8 @@ class StabilizerTableau:
 >      相位位 $r = 1$，因此确定性测得 $m_2 = 1$（即 $q_2$ 处于 $\lvert 1\rangle$，与 MBQC 单步传送公式精准吻合）。
 
 ---
+
+若把表算法用于稳定子码，沿用第 10 章 $\overline S=\langle iI,S\rangle$。忽略 Pauli 相位的逻辑类可写为 $N(S)/\overline S$，码距在 $N(S)\setminus\overline S$ 中取最小权重。若错误乘积为 $\omega S_0$（$S_0\in S$），投影到码空间得到 $\omega P_C$，其中 $\omega$ 可含 $i$。若乘积与某稳定子反对易，投影交叉项才必为零。
 
 ## 4. 打破 Clifford 壁垒：魔术度、稳定子秩与四大经典可解孤岛
 
@@ -659,7 +663,7 @@ $$
 顺着“把多份 $\lvert T\rangle$ 打包进高维纠缠稳定子态”的思路继续挖深：
 
 - **Bravyi 与 Gosset（*Phys. Rev. Lett.* 116, 250501, 2016）** 奠定了扩展稳定子模拟（extended stabilizer simulation）的现代算法框架：一方面构造出 6 份魔法态的精确分解 $\chi_{\mathrm{stab}}(\lvert T\rangle^{\otimes 6}) \le 7$，将精确稳定子秩推进到 $7^{t/6} \approx 2^{0.468 t}$（配合快速范数估计算法，在普通硬件上成功模拟了 40 比特、近 50 个 $T$ 门的隐藏移位线路）；另一方面引入随机稀疏化，使**近似弱采样**复杂度直接受稳定子展度 $\xi(\lvert T\rangle)^t \approx 2^{0.228 t}$ 支配，达到 $\operatorname{poly}(n, m) + O(2^{0.228 t} t^3 w^3)$（$w$ 为测量比特数）。
-- **Qassim、Pashayan 与 Gosset（*Quantum* 5, 606, 2021）** 进一步利用递归猫态构造，将**精确**稳定子秩的渐近指数压低至 $\alpha \le 0.3963$，也就是文献中常引用的 **$O(2^{0.396 t})$** 标度！
+- **Qassim、Pashayan 与 Gosset（*Quantum* 5, 606, 2021）** 进一步利用递归猫态构造，将**精确**稳定子秩的渐近指数压低至 $\alpha \le 0.3963$，也就是文献中常引用的 **$O(2^{0.3963 t})$** 的秩上界！
 
 算一笔直观的对比账：当 $n = 100$ 比特、线路含 $t = 40$ 个 $T$ 门时，态矢量需要 $2^{100} \approx 1.27 \times 10^{30}$ 个复数（完全不可能）；而扩展稳定子方法只看 $t$ 不看 $n$，$2^{0.396 \times 40} \approx 5.9 \times 10^4$（近似采样 $2^{0.228 \times 40} \approx 5.6 \times 10^2$），在普通工作站上轻松拿下！反过来，一旦容错算法需要上千乃至数百万个 $T$ 门，扩展稳定子就会撞上指数硬墙。
 
@@ -693,9 +697,9 @@ $$
 U^\dagger c_\mu U = \sum_{\nu=0}^{2n-1} R_{\mu\nu}\, c_\nu, \qquad R \in \mathrm{SO}(2n).
 $$
 
-看见与稳定子表高度相似的结构了吗？你根本不需要跟踪 $2^n$ 维希尔伯特空间，只需维护一张 **$2n \times 2n$ 的实正交矩阵 $R$**（或二阶协方差矩阵），所有门乘法和局域计算基测量概率都化为 $2n \times 2n$ 矩阵乘法与 Pfaffian/行列式计算，全程多项式时间 $O(n^3)$！而且匹配门可以包含**任意连续旋转角**（例如 $R_z(\theta)$ 与 $e^{-i\theta(X_j X_{j+1} + Y_j Y_{j+1})/2}$），完全不需要落在 Clifford 群里。
+系数 $h$ 是实反对称矩阵，匹配门两宇称块的共同行列式只改变共同全局相位。对 $G$ 扇一维最近邻匹配门，从乘积态出发可维护 $2n\times2n$ 正交矩阵；一扇门更新常数个行或列，成本 $O(n)$。末端单线计算基测量用 $Z_j=-ic_{2j}c_{2j+1}$ 展开为 $O(n^2)$ 个二点项，在所需数字精度下由输入乘积态计算。计算基输入及二次费米子演化下的全串采样另有专门定理。在任意乘积输入下，单线计算结论不能自动扩展到任意联合测量或全串采样。[Jozsa 与 Miyake](https://arxiv.org/abs/0804.4050v2) · [Terhal 与 DiVincenzo](https://arxiv.org/abs/quant-ph/0108010v2)
 
-更锋利的是它的**破壁边界**（Jozsa & Miyake, *Proc. R. Soc. A* 2008）：只需打破“最近邻”拓扑限制——或者等价地，往匹配门集合里多塞进**一扇普通的 $\mathrm{SWAP}$ 门**——经典高效模拟瞬间崩塌，电路立刻跃升为通用量子计算！验证一下为什么 $\mathrm{SWAP}$ 不是匹配门：
+扩充门集若允许重复调用普通 SWAP，或允许最近邻及次近邻匹配门，可实现编码通用计算。这个结论关乎门集和线路族；一扇孤立 SWAP 不能证明通用。普通 SWAP 的宇称块如下。
 
 $$
 \mathrm{SWAP} =
@@ -711,15 +715,15 @@ A = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix},\;\det A = +1;
 B = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix},\;\det B = -1.
 $$
 
-就差这一个 $\det A \ne \det B$ 的负号！在费米子物理里，跨位交换会引入四次费米子相互作用（打破自由费米子封闭性），正好把体系从多项式可解孤岛推入通用量子多体世界。
+费米交换 $\mathrm{fSWAP}=\mathrm{CZ}\cdot\mathrm{SWAP}=G(Z,X)$ 则对 $|11\rangle$ 多乘 $-1$，两宇称块都满足行列式 $-1$，因此仍是匹配门。
 
 ### 4.4 连续变量高斯孤岛（衔接第 18 章第 9 节）
 
 把视角从离散量子比特跨到无限维光学/超导谐振腔系统，我们在[第 18 章第 9 节](18-channels-capacities-complexity.md#9-连续变量cv量子信息正交分量wigner-相空间gkp-网格码与截断边界)已经见过第三座平行孤岛——**连续变量高斯电路**。
 
-在 $m$ 模无量纲正交算符 $\hat{\mathbf R} = (\hat q_1, \hat p_1, \dots, \hat q_m, \hat p_m)^T$（满足 $[\hat q_j, \hat p_k] = i\delta_{jk}$）下，**Bartlett、Sanders、Braunstein 与 Nemoto（*Phys. Rev. Lett.* 88, 097904, 2002）** 证明：由高斯初态（真空态、相干态、压缩态）、高斯门（相移、分束器、单/双模压缩，对应 $2m \times 2m$ 实辛变换 $S \in \mathrm{Sp}(2m, \mathbb R)$）与零差/外差测量构成的电路，只需以 $O(m^3)$ 代价追踪 $2m$ 维均值向量 $\mathbf d$ 与 $2m \times 2m$ 协方差矩阵 $V$（$\mathbf d \mapsto S\mathbf d + \mathbf c,\; V \mapsto S V S^T$），经典计算机完全可高效模拟！随后 **Mari 与 Eisert（*Phys. Rev. Lett.* 109, 230503, 2012）** 将此边界进一步推广：只要电路的初态、门和测量的 Wigner 函数处处非负，仍可用经典蒙特卡洛高效采样。
+在 $m$ 模真空约定 $[\hat q_j,\hat p_k]=i\delta_{jk}$ 下，高斯初态、门及零差／外差测量可用均值向量和协方差描述。稠密辛变换的一次更新 $V\mapsto SVS^T$ 用常规矩阵乘法成本 $O(m^3)$，再按门和条件测量次数计全程。更广的正 Wigner 方案需要可有效采样的初始正分布、非负转移及测量核，并控制离散化和精度。等权混合 $|\alpha\rangle$ 与 $|-\alpha\rangle$ 在 $\alpha\ne0$ 时是非高斯态，仍具有正 Wigner 表示。[Bartlett 等](https://arxiv.org/abs/quant-ph/0109047v2) · [Mari 与 Eisert](https://arxiv.org/abs/1208.3660v2)
 
-打破高斯孤岛的必要资源，正是**非高斯性与 Wigner 负性**（如单光子 Fock 态、立方相位门或 GKP 码态）——它在连续变量世界里扮演的正是 $T$ 门魔术度在离散比特世界里的角色。
+单光子 Fock 态、立方相位操作或 GKP 编码可超出相应高斯模型。判定其是否超出另一种正 Wigner 模拟或是否产生优势，还需看全线路及输出。
 
 ### 4.5 四大经典可解孤岛全景图谱
 
@@ -766,7 +770,7 @@ $$
 - 最右端 $A^{[n-1] s_{n-1}}$ 是 $\chi_{n-1} \times 1$ 列向量；
 - 连乘结果恰好是 $1 \times 1$ 标量——正好还原复振幅 $c_{s_0 s_1 \cdots s_{n-1}}$！
 
-这里的 $\chi_k$ 称为第 $k$ 条**虚拟键（bond）的键维（bond dimension）**，它**严格等于把链在第 $k$ 条键处一刀剪断时的 Schmidt 秩**！令最大键维 $\chi = \max_k \chi_k$，存储整条 $n$ 比特 MPS 总共只需要至多 $2 n \chi^2$ 个复数。如果 $\chi$ 是一个小常数（比如 $\chi = 2$ 或 $64$），存储量从 $O(2^n)$ 瞬间塌缩为线性 **$O(n\chi^2)$**！而且通过把每次 SVD 得到的左酉矩阵 $U$ 原地做成格点张量，还可以让前面 $n - 1$ 个格点严格满足**左正则等距条件（left-canonical condition）**：
+键维是该切面 Schmidt 秩的上界。逐键薄 SVD 保留全部非零奇异值时，得到最小的精确键维，恰等于 Schmidt 秩。令 $\chi=\max_k\chi_k$，存储至多需要 $2n\chi^2$ 个复数。取每步 SVD 的左等距矩阵作张量，可使前 $n-1$ 个格点满足左正则条件。
 
 $$
 \sum_{s_k \in \{0, 1\}} \bigl(A^{[k] s_k}\bigr)^\dagger A^{[k] s_k} = I_{\chi_{k+1}}.
@@ -933,7 +937,7 @@ $$
 
 #### 奇异值截断误差逐步核算（以 $\lvert W_3\rangle$ 键 1 从 $\chi = 2$ 压到 $\chi' = 1$ 为例）
 
-在实际模拟长链电路时，每施加一扇跨键双比特门，键维最多翻倍（$\chi \to 2\chi$）。为了防止内存爆炸，MPS 算法必须在每步做完 SVD 后，**只保留最大的前 $\chi'$ 个奇异值，扔掉其余小奇异值**。根据 Eckart–Young–Mirsky 最佳低秩逼近定理，这样切出来的未归一化近似态 $\lvert\tilde\psi\rangle = \sum_{i=1}^{\chi'} \sigma_i \lvert u_i\rangle \lvert v_i\rangle$ 在所有键维不超过 $\chi'$ 的态中与精确态 $\lvert\psi\rangle$ 的欧氏距离最小，且平方误差严格等于**被舍弃奇异值的平方和**：
+跨键门若分解为 $\sum_{a=1}^{r} L_a\otimes R_a$，对含 $\chi$ 个乘积项的旧态作用后至多得到 $r\chi$ 项。任意两比特门跨键的最大 $r$ 为 4，CNOT 为 2。反例是在四位链准备 $|\Phi^+\rangle_{01}|\Phi^+\rangle_{23}$，施加 $\mathrm{SWAP}_{1,2}$。切面 $01\mid23$ 的振幅矩阵从秩 1 变为 $I_4/2$，秩 4。实际模拟可将该切面保留为最大的 $\chi^\prime$ 个奇异值。Eckart–Young–Mirsky 定理给一次未归一化裁剪的最佳平方误差。
 
 $$
 \epsilon_{\mathrm{trunc}}
@@ -956,9 +960,11 @@ $$
 
 同理，若把 $\lvert\mathrm{GHZ}_3\rangle$ 键 1 从 $\chi = 2$ 截到 $\chi' = 1$，因两奇异值相等（$1/\sqrt{2}$），$\epsilon_{\mathrm{trunc}} = 1/2$、$F = 1/\sqrt{2} \approx 0.707107$——截断损失比 $\lvert W_3\rangle$ 更大，正好对应 $\lvert\mathrm{GHZ}_3\rangle$ 更高的键 1 纠缠熵（$1\text{ bit} > 0.9183\text{ bit}$）。
 
+一次裁剪前的态若归一化，且丢弃权重为 $\epsilon_j<1$，重归一化后的迹距离恰为 $\sqrt{\epsilon_j}$。在多步模拟中，用实际近似轨道的每次权重，结合酉不变性与三角不等式，可得最终迹距离上界 $\min(1,\sum_j\sqrt{\epsilon_j})$。有限 von Neumann 熵只给 $S_{\rm cut}\le\log_2\chi$；全局近似还要检查各切面的 Schmidt 尾部及整个演化的累计误差。
+
 ### 5.4 进阶选读：纯标准库 3 比特 MPS 构造与截断迷你引擎
 
-在配套脚本 [simulation_engines_lab.py](../codes/algorithms/simulation_engines_lab.py) 中，我们仅用 Python 3 标准库的 $2 \times 2$ 厄米矩阵解析本征求解器，就对任意 3 比特纯态实现了精确的 $2 \times 4$ 与 $4 \times 2$ SVD 构造、左正则化验证与键截断（完全不依赖 `NumPy`！）：
+配套 [simulation_engines_lab.py](../codes/algorithms/simulation_engines_lab.py) 用标准库直接计算两列（或伴随的两列）薄 SVD，避免先做 Gram 矩阵再相减丢掉微弱方向。浮点秩判断仍有阈值，与数学精确秩区别。脚本用 $\sqrt{1-e^2}|000\rangle+ie|011\rangle$ 验第二键在 $e=10^{-6},10^{-8},10^{-9},10^{-10}$ 时保留正确小奇异值，并对照乘积、重根和两键均弱纠缠的算例。
 
 ```python
 # 摘自 codes/algorithms/simulation_engines_lab.py 核心主流程（完整 SVD 辅助函数见脚本）
@@ -989,7 +995,7 @@ class MPS3:
 
 看懂单键截断，你就握住了整个张量网络世界的命脉——**纠缠熵标度律**：
 
-1. **一维面积律（area law）与 MPS 的黄金主场**：如果切开系统任意一段子区域 $A$，二分纠缠熵 $S(A)$ 只正比于子区域的**边界大小** $\lvert\partial A\rvert$（在一维链上边界只是两个端点，即常数 $O(1)$），那么奇异值谱快速衰减，所需键维 $\chi \sim 2^{S(A)} = O(1)$ 不随比特数 $n$ 增长！一维有能隙局域哈密顿量的基态严格满足面积律，这也是 DMRG/MPS 在一维量子多体物理中统治三十余年的根本原因。
+1. **一维面积律与 MPS。** 很多有隙一维局域基态满足面积律。给定全局近似目标时，还要查看各键的 Schmidt 谱尾与系统长大后的误差积累。约化 von Neumann 熵只能给 $S\le\log_2\chi$，不能反推小键维。[Schuch 等](https://arxiv.org/abs/0705.0292v2)
 2. **深线路的体积律（volume law）与键维指数爆炸**：一旦在量子芯片上运行深度为 $d$ 的纠缠电路，光锥每深入一层就把纠缠跨过切面推进 $O(1)$ 比特，纠缠熵线性爬升为 $S \propto \min(d, n/2)$——切面纠缠随区域“体积”而非边界增长，这就是**体积律**。由于 $\chi \ge 2^{S_{\mathrm{cut}}}$，想要保持低截断误差，MPS 键维会按 $2^{\Omega(\min(d, n/2))}$ 指数爆炸。
 3. **二维 PEPS 局域张量、树宽复杂度与 BP-TN 消息传递（2024—2026）**：把一维链推广到 $L_x \times L_y$ 二维网格，自然得到**投影纠缠对态（PEPS）**——格点 $(r, c)$ 上的局域五阶张量写作 $T^{[r,c], s}_{u, d, l, r}$（物理指标 $s \in \{0, 1\}$，上、下、左、右四条虚拟键各有键维 $D$）。虽然 PEPS 天然兼容二维面积律，但它引入了**闭合环路（loops）**：在无环树图或一维链上，精确收缩是多项式时间的；而在含环图上，精确收缩任意张量网络属于 `#P`-难问题，复杂度按图的**树宽（treewidth）** $\mathrm{tw}$ 指数增长，规模为 $O\bigl(D^{O(\mathrm{tw})}\bigr)$（对 $L_x\times L_y$ 方形网格，$\mathrm{tw} \sim \min(L_x, L_y)$）。
    - **BP-TN（置信传播张量网络）的局域消息传递方程**：为绕开二维精确收缩的指数壁垒，**Tindall、Fishman、Stoudenmire 与 Sels（*PRX Quantum* 5, 010308, 2024）** 在重六角格（heavy-hex）上系统发扬了**置信传播张量网络（BP-TN）**。对每个格点 $i$ 构造双层约化张量 $\mathcal T_i = \sum_s T^{[i], s} \otimes (T^{[i], s})^*$，在相邻格点间传递正半定环境消息矩阵 $\mu_{i\to j}$ 并迭代至不动点：
@@ -1002,13 +1008,7 @@ class MPS3:
      其中 $\partial i \setminus j$ 表示格点 $i$ 除 $j$ 以外的全部近邻。收敛后，计算单个局域可观测量 $\langle Z_i\rangle$ 只需把 $\mathcal T_i$ 与周围 $z$ 条传入消息收缩，单点复杂度从 $O(D^{O(\mathrm{tw})})$ 骤降为 **$O(D^{z+1})$**（$z$ 为格点配位数）！
    - **Heavy-Hex 12-环 vs 方形格 4-环的结构差异**：标准 BP 隐含“局域近树状、环路关联弱”假设。IBM 127 比特 Eagle 芯片的重六角格（Heavy-Hex）最短闭合环长达 **12 条边**，浅中深度下环路回传关联极弱，因此标准 BP-TN 在普通工作站上即高精度复现了该踢动 Ising 实验的局域观测量；相比之下，**方形晶格最短环仅 4 条边**，短环关联会迅速破坏朴素树近似。针对此类短环二维/三维体系，**Tindall 等人（*Science* 392, 868–872, 2026）** 进一步发展了**团簇/环路修正置信传播（cluster / loop-corrected BP-TN）**，把短环打包成超级节点后再行消息传递，成功高效模拟了二维与三维无序自旋玻璃的量子动力学（亦见[第 17 章 §5.4](17-computation-models.md#54-2025-前沿案例自旋玻璃退火模拟与经典张量网络之争)）。
    - **超图收缩路径优化与指标切片（Slicing）**：若任务不是算局域期望值，而是计算随机线路（RCS）的单个精确振幅 $\langle x|U|0^n\rangle$，前沿经典工具（如 **Gray & Kourtis, *Quantum* 5, 410, 2021** 提出的 **`cotengra`**）把整张三维时空线路视作超图，利用社区划分搜索接近最优的收缩树，并将少数高权重虚拟键做**指标切片（slicing）**——把一次超内存的巨型张量收缩拆成海量互不通信、可分布式并行的轻量 GPU 子任务，正是现代超算复现 RCS 采样与计算 XEB 的主力技术。
-4. **2026 年代表性警示案例：为何 468 个 $T$ 门依然被 37 分钟算穿？**
-   2026 年 8 月，**Manabe、Gu 与 Pan（`arXiv:2608.13110`，预印本）** 针对 IBM 与芝加哥大学发布的“掺杂 Clifford 采样（Doped Clifford Sampling）”实验（在 97 个物理比特上编码 70 个逻辑比特、深度 70、掺入高达 **$468$ 个非 Clifford $T$ 门**的一维开放边界砖墙线路）完成了一次极具启发性的经典复算：
-   - 如果拿扩展稳定子去硬算 468 个 $T$ 门，$2^{0.396 \times 468} \approx 6.2 \times 10^{55}$ 完全不可行；
-   - 但作者敏锐地看到，这条电路的纠缠门排布在**一维开放边界砖墙**（1D open-boundary brickwork）上，且所有双比特纠缠门的算符 Schmidt 秩均为 $2$！改用确定性**时空边界张量网络收缩**时，**任意单比特门——包括全部 468 个 $T$ 门——都会被无损吸收进相邻格点或键张量里，丝毫不改变整张张量网络的拓扑与收缩宽度！**
-   - 最终，研究团队利用 32 个节点共 256 张 NVIDIA H100 GPU，仅用 **37.3 分钟**就算出了实验公开的全部 2,051 个输出比特串的精确振幅，所得对数交叉熵基准（log-XEB）与硬件认证保真度完全吻合！
-
-这个 2026 年真实案例清晰印证了本章的核心判断：**只堆高某一个维度的指标（比如 468 个 $T$ 门），如果放任另一维度（如一维开放边界拓扑）露出破绽，另一类经典模拟引擎仍能从侧翼高效求解。**
+4. **为何指定地址的振幅可以用张量网络复算？** Manabe、Gu 与 Pan 的预印本 v2 研究了原掺杂 Clifford 采样（DCS）实验中的一维开边界砖墙线路。每个双比特纠缠门的算符 Schmidt 秩为 $2$，单比特门可吸收到相邻张量。取 $n\ge4$ 个逻辑比特时，以 $7\le d\le 2n$ 表示纠缠层数。原文第 3.1 节的确定性路径最大中间张量宽度为 $\lceil d/2\rceil$，单比特 $T$ 门的数量不进入这一宽度。原始线路的复算输出包括给定地址的振幅和由此得到的 log-XEB。量子采集时间、经典运行时间和修订后的闭环线路参数见[第 08 章 DCS 对照](08-applications.md#dcs-版本与任务对照)。[Manabe 等 v2 第 3.1、5.2 节](https://arxiv.org/html/2608.13110v2#S3.SS1)
 
 ---
 
@@ -1067,6 +1067,8 @@ $$
 $$
 
 这条极简公式就是含噪量子线路的“达摩克利斯之剑”：**Pauli 串长得越长、牵扯的比特越多（权重 $w$ 越大），每穿过一层噪声就被乘以 $(1 - p)^w$ 指数级抹杀！** 当 $p = 0.05$ 时，权重 $w = 1$ 的局域项每层保留 $0.95$，而权重 $w = 20$ 的全局长程关联每层只剩 $0.95^{20} \approx 0.358$，走过 10 层就跌到 $3.5 \times 10^{-5}$！
+
+权重幂只针对各位置独立作用的单比特信道。以 $ZZ$ 为例，对整个两比特块使用 $\rho\mapsto(1-p)\rho+pI_4/4$ 得 $(1-p)ZZ$；分别对两位使用同参数单比特退极化，则得 $(1-p)^2ZZ$。若 $p=0.02$，两个缩放分别为 $0.98$ 与 $0.9604$。
 
 ### 6.2 逐步手算：2 比特 2 层含噪 $R_x(\theta) + \mathrm{CNOT} + \mathcal D_p$ 反向树
 
@@ -1175,7 +1177,7 @@ $$
 \end{aligned}
 $$
 
-如果在多层中都做了剪枝，把各层被裁掉项的系数绝对值全部累加，就是全过程严格成立的 $\ell_1$ **算符范数截断误差上界**！
+如果在多层中都做了剪枝，以实际近似反向轨道产生的每层丢弃算符为记录，逐层望远镜展开后将系数绝对值相加，就是全过程严格成立的 $\ell_1$ **算符范数截断误差上界**！
 
 立刻回代到刚手算的 2 比特 2 层例题（$\theta = \pi/6,\, p = 0.2$）：在第 1 层施加完噪声衰减 $(1 - p)^w$ 后，强制截断为只保留权重 $w \le 1$ 的项——于是权重 $w = 2$ 的分支 $\eta^3 s\, Y_0 X_1 = 0.512 \times 0.5\, Y_0 X_1 = 0.256\, Y_0 X_1$ 被裁掉，仅留 $\eta^2 c\, Z_0 I_1$：
 - 截断后算出的期望值：$\langle Z_0 I_1 \rangle_{\mathrm{trunc}(w\le 1)} = \eta^2 c^2 = 0.64 \times 0.75 = 0.480$；
@@ -1279,57 +1281,39 @@ class PauliPropagator:
 
 ### 7.1 四大引擎边界全景图与四关分流排查
 
-下图将四大经典模拟引擎各自覆盖的区域与同时避开全部四类引擎的“四维量子优势窗口”放在同一坐标系下呈现（[查看原尺寸科学图](assets/v3-21-classical-sim-boundaries.svg)）：
+下图给出四类经典候选及适用条件；可[查看原尺寸科学图](assets/v3-21-classical-sim-boundaries.svg)。
 
-![经典模拟四大引擎与四维量子优势边界全景](assets/v3-21-classical-sim-boundaries.svg)
+![四类经典模拟引擎的任务与适用范围](assets/v3-21-classical-sim-boundaries.svg)
 
-评审任何宣称“超越经典”的量子线路时，直接对照上图与下表按四关顺序排查即可快速定位最强的经典对手：先查有效比特数 $n$（$n \lesssim 45$ 落入态矢量/密度矩阵），再查非 Clifford 门数 $t$ 及是否落入匹配门/高斯孤岛，第三查拓扑与深度是否生成二维/长程体积律纠缠（否则落入 MPS / 时空张量网 / BP-TN），第四查物理或逻辑噪声是否足够低以防高权重 Pauli 串按 $(1-p)^w$ 衰减（否则局域观测量落入 Pauli 传播 SPD）。
+### 7.2 经典基线的四项筛查
 
-### 7.2 界定量子优势的四维经典模拟边界
+每项先固定线路、输出、误差、置信与预算。某个引擎可用时需实际测试；四项都看似困难，仍不能推出复杂性下界。
 
-把上述四关整理成一张可直接用于论文审读与实验设计的量化标尺——**一项真正的计算量子优势，必须同时跨过全部四个维度；只要任一维度存在缺口，对应的经典模拟引擎便能高效复现。**
+| 筛查项 | 要记录的量 | 经典候选 |
+| --- | --- | --- |
+| 状态规模 | 有效维度、精度、存储和通信带宽 | 态矢量需 $2^n$ 个复数，稠密密度矩阵需 $4^n$ 个 |
+| 代数结构 | Clifford 部分，非 Clifford 门或资源分解，输入和测量条件 | 稳定子表、扩展秩分解、匹配门及高斯方法 |
+| 线路与纠缠 | 收缩次序、实际 Schmidt 谱尾、演化中峰值和目标误差 | MPS、BP-TN、边界张量网或切片收缩 |
+| 传播与噪声 | 观测支持、反向光锥、噪声通道及近似误差 | Pauli 传播或局域张量网络，按目标估计误差 |
 
-| 边界维度 | 必须跨过的门槛 | 若仅此维度出现缺口，会被哪类经典引擎求解？ | 近年典型实证与教训 |
-| :--- | :--- | :--- | :--- |
-| **维度一：规模（比特数 $n$）** | $n \gtrsim 50$（实用容错算法常需上百至数千逻辑比特） | **态矢量 / 密度矩阵**（$O(2^n)$ 精确穷举） | 30–40 比特级演示线路在普通集群或超算上可直接全振幅精确求解 |
-| **维度二：非 Clifford 魔术度与代数非封闭性** | 大量不可消去的 $T$ 门 / 非高斯门（$t \gg 100$），且脱离最近邻匹配门与纯高斯过程 | **Stim / 扩展稳定子**（$O(2^{0.396 t})$ 精确 / $O(2^{0.228 t})$ 采样）、**匹配门** $O(n^3)$、**高斯协方差** $O(m^3)$ | 数千比特表面码纠错线路被 Stim 毫秒/秒级模拟；40 比特近 50 个 $T$ 门隐藏移位线路被 Bravyi–Gosset（2016）经典拿下 |
-| **维度三：拓扑维度与体积律纠缠深度** | 二维稠密/高维非树状拓扑 + 足够深度，使切面纠缠进入体积律且破坏局域树状环路近似 | **MPS / 时空张量网络 / BP-TN** | IBM 127 比特重六角格实验被 BP-TN 复算（Tindall 等 *PRX Quantum* 2024）；2D/3D 无序自旋玻璃被团簇 BP-TN 复算（Tindall 等 *Science* 2026）；**IBM 70 逻辑比特、468 个 $T$ 门一维砖墙电路被时空张量网络 37.3 分钟算穿**（Manabe–Gu–Pan `arXiv:2608.13110`，2026） |
-| **维度四：超低噪声（相干深度维持能力）** | 单门物理或逻辑错误率远低于线路总门数倒数（$p_{\mathrm{eff}} \ll 1/G$），避免高权重 Pauli 串按 $(1-p)^w$ 崩塌 | **海森堡 Pauli 传播 / SPD**（按权重或阈值剪枝） | IBM 127 比特含噪实验局域观测量被 SPD 几分钟算穿并暴露 ZNE 外推偏差（Begušić–Gray–Chan *Sci. Adv.* 2024）；`PauliPropagation.jl`（Rudolph 等 *PRX Quantum* 2026）系统刻画含噪变分与动力学可模拟疆界 |
+### 7.3 同一线路的三种输出
 
-### 7.3 近似模拟的误差边界（弱采样 TVD vs 局域期望值）与开源工具选型
+- **指定振幅或概率。** 给定输出地址，计算有限组振幅或概率，例如用于 XEB。Manabe、Gu 与 Pan 的固定 v2 在一维开放边界 DCS 的同一组 2051 个已公开输出地址上收缩，并报告 log-XEB。
+- **全串弱采样。** 要从近似分布生成独立样本，并交代对目标分布的总变差或其他误差。计算给定地址不直接提供这种结果。
+- **局域期望。** 给定 $O$、误差和置信度，按其反向光锥和噪声选择 Pauli 传播或张量网络。拟合局域期望无法单独界定全串分布误差。
 
-实操中选择经典模拟引擎时，还必须锐化**任务目标导致的近似边界差异**——同一条 100 比特含噪线路，做“局域期望值”与做“全分布弱采样”在经典难度和误差含义上截然不同：
+两项经典结果只有在使用同一线路、输出任务、目标精度、样本来源及资源预算时才能直接比较。DCS 的量子采集和固定地址经典核验记录见[第 08 章对照表](08-applications.md#dcs-版本与任务对照)。软件与固定依赖的实跑入口见[SDK 实验册](labs/sdk-validation.md)。[Manabe 等 v2 §5.2](https://arxiv.org/html/2608.13110v2#S5.SS2)
 
-- **局域可观测量期望值 $\langle O \rangle$（加性误差 $|\langle O\rangle_{\mathrm{sim}} - \langle O\rangle_{\mathrm{exact}}| \le \varepsilon$）**：仅依赖末态算符的反向光锥与低权重 Pauli 分量。**BP-TN** 与 **SPD / Pauli 传播**专为这一目标优化——它们不必重构 $2^n$ 概率分布，常能在分钟级给出百比特局域磁化或能量的高精度估计，且 SPD 还自带严格的 $\ell_1$ 截断误差上界。
-- **全分布弱采样（总变差距离 $\mathrm{TVD}(p, q) = \frac{1}{2}\sum_x |p(x)-q(x)| \le \varepsilon$）与单振幅 XEB 核验**：需要忠实匹配指数多比特串的全局干涉分布。此时 BP-TN 的局域边缘近似无法直接提供低 TVD 全局样本；经典侧通常转而使用 **`cotengra` 超图收缩路径优化 + 指标切片（slicing）** 批量计算给定输出串的精确振幅（用于 XEB 核验或条件采样），或在恒定门噪声足够强时借 Pauli 路径截断采样（Aharonov 等, *STOC* 2023）。
+### 7.4 容错的作用
 
-下表把四类引擎的主流开源工具、适用场景与本仓库可离线查阅的源码/复现入口整理成实操选型清单（仓库第三方源码元数据与许可核查见 [codes/vendor/manifest.json](../codes/vendor/manifest.json)，跨 SDK 实跑记录见[SDK 验证实验册](labs/sdk-validation.md)）：
-
-| 模拟引擎类别 | 推荐开源工具（CPU / GPU） | 核心算法与最适任务 | 本仓库参考入口 |
-| :--- | :--- | :--- | :--- |
-| **态矢量 / 密度矩阵** | Qiskit Aer、QuTiP、PennyLane、`cuStateVec`（GPU） | $n \le 30\text{–}45$ 精确对照、开放系统主方程与小规模算法调试 | [态矢量实验脚本](../codes/algorithms/simulation_engines_lab.py) |
-| **稳定子 / 扩展稳定子** | **Stim**（C++/Python）、CHP | 万比特 QEC 容错采样（参考样本 + 256-bit SIMD Pauli 帧）；少量 $T$ 门扩展稳定子 | [codes/vendor/stim](../codes/vendor/stim) |
-| **张量网络（MPS / PEPS / 收缩）** | **quimb** + **cotengra**、ITensor.jl、TensorNetwork、NVIDIA `cuTensorNet` | 一维面积律 MPS/DMRG、二维 BP-TN 局域期望、超图路径规划与切片单振幅计算 | [codes/vendor/quimb](../codes/vendor/quimb) |
-| **海森堡 Pauli 传播 / SPD** | **`PauliPropagation.jl`**（Julia）、IBM `pauli-prop` | 含噪或浅层多比特线路的局域期望值快速逼近与 $\ell_1$ 截断误差上界审计 | [codes/vendor/pauli-prop](../codes/vendor/pauli-prop) |
-
-### 7.4 为什么四维边界直接推出容错量子计算的必然性
-
-把维度三和维度四放在一起看，就能明白整部手册为什么花重墨讲[第 10 章：量子纠错与容错计算](10-error-correction.md)、[第 11 章：资源估算与基准测试](11-resources-benchmarks.md)与[第 19 章：可维护量子系统工程](19-engineering-architecture.md)：
-
-- 在没有量子纠错的裸物理（NISQ）芯片上，系统受限于一对结构性矛盾：
-  - **把线路做浅**（避开噪声）$\implies$ 纠缠光锥打不开，落入**张量网络（MPS / BP-TN）** 的适用区间；
-  - **把线路做深**（拉满二维体积律纠缠与上千个 $T$ 门）$\implies$ 裸物理门错误率（典型 $10^{-3}\text{–}10^{-2}$）在每层叠加退极化衰减 $(1-p)^w$，高权重长程关联迅速衰减，局域观测量落入**海森堡 Pauli 传播（SPD）** 的射程，整体分布则趋近均匀白噪声。
-- 误差缓解（QEM，见[第 08 章第 7 节](08-applications.md)）虽能在有限深度下放大微弱信号，但正如第 08 章所算，它的采样代价随总噪声量 $\gamma^2 \sim e^{O(p G)}$ 指数增长，无法突破深度限制。
-- **破局的关键路径是量子纠错与容错架构**：当物理错误率压过纠错阈值后，增大码距 $d$ 能把**逻辑错误率**指数压低到 $10^{-10}\text{–}10^{-15}$ 量级（跨越维度四的噪声剪枝），同时通过横向门、晶格手术与魔法态蒸馏/培育执行大量逻辑 $T$ 门（跨越维度二）并在上百至数千逻辑比特上维持深度体积律纠缠（跨越维度一与三）。
-
-此外，即使一台未来的容错机器跨过了全部四维经典模拟边界，还需牢记最后一条科学底线：**“难以用通用线路模拟器逐门模拟”只是量子优势的必要条件，不是充分条件。** 真正的实用量子优势还必须打赢该应用领域里**针对问题结构专门设计的经典启发式算法**（例如量子化学的张量分解/量子蒙特卡洛、组合优化的分支定界求解器），并满足端到端可验证性与真实墙钟时间优势——这正是第 11 章资源账与第 16 章验证梯子要共同守住的大门。
+深线路在指定噪声模型下会损失可读信号，能容忍的误差取决于目标输出与线路体积。容错方案在阈值以下可用码距压低逻辑故障，具体资源取决于噪声、解码器和总失败预算。计算优势仍需要在同一任务及输出误差下进行端到端比较，含状态制备、采样、验证和任务专用经典基线。见[第 10 章](10-error-correction.md)、[第 11 章](11-resources-benchmarks.md)及[第 19 章](19-engineering-architecture.md)。
 
 ### 7.5 本章高频误区速查
 
 - **误区 1：“50 比特以上态矢量存不下，所以经典计算机肯定模拟不了。”**
   **纠正**：态矢量只是四大经典模拟引擎中最朴素的一种。稳定子表（$O(n^2)$）、MPS（$O(n\chi^2)$）、BP-TN 与海森堡 Pauli 传播都不存储 $2^n$ 振幅，经常能在百比特乃至万比特规模上求解。
 - **误区 2：“只要线路里包含几百个非 Clifford $T$ 门，就击败了所有经典模拟。”**
-  **纠正**：468 个 $T$ 门只击败了**扩展稳定子**引擎；如果纠缠拓扑停在一维开放边界砖墙上，单比特 $T$ 门会被时空张量网络无损吸收，仍可在数十分钟内算出精确振幅（Manabe–Gu–Pan 2026）。
+  **纠正**：稳定子分解成本取决于实际秩和精度。一维开边界砖墙的指定振幅实例可利用线路拓扑收缩。评估时还要核对输出任务和精度。
 - **误区 3：“只要量子态具有高度纠缠（甚至体积律纠缠），经典就一定算不动。”**
   **纠正**：深层 Clifford 线路、自由费米子匹配门线路和高斯双模压缩光学线路都能生成极大纠缠，却分别被 $O(n^2)$ 稳定子表、$2n \times 2n$ 正交矩阵与 $2m \times 2m$ 协方差矩阵在经典多项式时间内精确模拟。
 - **误区 4：“Pauli 传播里的退极化伴随 $\mathcal D_p^\dagger$ 是在反演噪声，所以噪声越大越难算。”**
@@ -1341,16 +1325,18 @@ class PauliPropagator:
 
 ## 本章一页速记卡
 
-- **主线压缩**：态矢量 $O(2^n)$ 内存墙 $\to$ 二元辛内积与 $O(n^2)/O(n)$ 稳定子表（Stim）$\to$ 魔术度 $\chi_{\mathrm{stab}}$ 与四大经典可解孤岛 $\to$ 1D MPS 逐键 SVD、2D PEPS 树宽与 BP-TN 消息传递 $\to$ 海森堡 Pauli 传播 $(1-p)^w$ 噪声剪枝 $\to$ 规模 / 魔术度 / 纠缠拓扑 / 低噪声四维量子优势边界与容错必然性。
+- 依次检查态矢量内存、稳定子或高斯结构、各切分的 Schmidt 谱与收缩宽度，以及噪声下 Pauli 项的衰减。固定输出、精度和预算后再比较实验与经典引擎。
 
 | 引擎 / 关键概念 | 核心公式 / 标度 | 成立或高效条件 | 典型失效边界 |
 | :--- | :--- | :--- | :--- |
-| **稳定子表 / 扩展稳定子** | $\langle v,v'\rangle_{\mathrm{sp}} = \bigoplus_j(x_j z'_j \oplus z_j x'_j)$；$O(2^{0.396t})$ 精确 / $O(2^{0.228t})$ 采样 | 纯 Clifford（$O(n^2)$，Stim 逆表 $O(n)$）或少量 $T$ 门（$t\lesssim 50$） | 海量不可消去非 Clifford 门（$t \gg 100$） |
-| **MPS / PEPS / BP-TN** | $c_{s_0\dots s_{n-1}} = A^{[0]s_0}\cdots A^{[n-1]s_{n-1}}$；$\epsilon_{\mathrm{trunc}}=\sum_{i>\chi'}\sigma_i^2$；$\mu_{i\to j}^{(t+1)}\propto\operatorname{Tr}_{\setminus j}(\mathcal T_i\prod_{k\neq j}\mu_{k\to i}^{(t)})$ | 一维面积律（$\chi\sim 2^S$）或弱环路格点（如 Heavy-Hex 12-环） | 深层二维/三维体积律纠缠与强短环（4-环）关联 |
+| **稳定子表 / 扩展稳定子** | $\langle v,v'\rangle_{\mathrm{sp}} = \bigoplus_j(x_j z'_j \oplus z_j x'_j)$；精确秩与给定精度下的近似分解量分别核算 | 纯 Clifford 与稳定子输入、测量；扩展算法另计实际分解秩与精度 | 秩与实际内存、时间预算超过可用资源 |
+| **MPS / PEPS / BP-TN** | $c_{s_0\dots s_{n-1}} = A^{[0]s_0}\cdots A^{[n-1]s_{n-1}}$；$\epsilon_{\mathrm{trunc}}=\sum_{i>\chi'}\sigma_i^2$；$\mu_{i\to j}^{(t+1)}\propto\operatorname{Tr}_{\setminus j}(\mathcal T_i\prod_{k\neq j}\mu_{k\to i}^{(t)})$ | 沿演化检查各切面的 Schmidt 尾与累计误差或弱环路格点（如 Heavy-Hex 12-环） | 深层二维/三维体积律纠缠与强短环（4-环）关联 |
 | **海森堡 Pauli 传播（SPD）** | $(\mathcal D_p^{\otimes n})^\dagger(P) = (1-p)^{w(P)}P$；$|\Delta\langle O\rangle| \le \sum_{P\in\mathcal T_{\mathrm{pruned}}}|c_P|$ | 局域可观测量、浅层、小角度或中等物理噪声 | 容错级低噪声 + 深层大角度非 Clifford 算符增殖 |
-| **任务区分（TVD vs $\langle O\rangle$）** | 局域期望值选 BP-TN / SPD；单振幅与 XEB 选 `cotengra` + 切片 | 选型须匹配输出口径与硬件拓扑 | 跨过四维边界仍须战胜专用经典启发式算法并独立可验证 |
+| **任务区分（TVD vs $\langle O\rangle$）** | 局域期望值选 BP-TN / SPD；单振幅与 XEB 选 `cotengra` + 切片 | 选型须匹配输出口径与硬件拓扑 | 明确同一线路在指定振幅、全串采样与局域期望之间的区别 |
 
 - **三句自检**：① 看到“$n > 50$ 态矢量存不下”时，是否逐一排查了稳定子、匹配门/高斯、张量网络与 Pauli 传播四关？② 看到“几百个 $T$ 门”时，是否核查了纠缠拓扑是否退化为一维开放砖墙？③ 对比经典模拟器与硬件时，是否分清了局域期望值 $\langle O\rangle$ 与全局弱采样 TVD？
+
+做完本章自检后，可以用[实验总览](labs/README.md)挑一项待复核的任务。按[第 15 章](15-practice-research.md)保存输入、原始输出和误差口径，再用本章的模拟器判断这个任务需要多强的经典基线。
 
 ---
 
@@ -1358,16 +1344,16 @@ class PauliPropagator:
 
 请先合上正文、拿草稿纸逐题演算，再去核对答案与配套脚本输出。第 1–3 题检验辛二进制代数、Clifford 表更新与去稳定子/Stim 加速；第 4–5 题检验魔法态稳定子秩、匹配门与高斯孤岛边界；第 6–7 题检验 MPS 逐键 SVD、截断误差与一维砖墙张量吸收；第 8–10 题检验海森堡 Pauli 传播反向树、截断误差界与四维量子优势边界。
 
-1. 在本章二元辛编码 $(x \mid z)$ 约定下，写出 3 比特 Pauli 串 $P_1 = X_0 Y_1 Z_2$ 与 $P_2 = Y_0 X_1 Z_2$ 对应的 6 比特行向量，用二元辛内积判定二者是对易还是反对易，并直接用 Pauli 算符乘法独立回验。
-2. 推导 $\mathrm{CNOT}_{0 \to 1}$ 作用在两比特算符 $+X_0 Z_1$、$+Y_0 Y_1$ 与 $+X_0 Y_1$ 上的共轭结果，并逐一代入相位修正公式 $r' = r \oplus [x_0 z_1 (x_1 \oplus z_0 \oplus 1)]$ 核验哪两项变号、为何更新代码必须先算 $r'$ 再改写 $x_1$ 与 $z_0$。
-3. 在 Aaronson–Gottesman 稳定子表算法中，为什么引入 $n$ 条去稳定子 $D_0, \dots, D_{n-1}$ 能把确定性 $Z_a$ 测量的时间复杂度从 $O(n^3)$ 压到 $O(n^2)$？进一步说明 Stim 如何借助逆稳定子表与参考帧 Pauli 帧传播，在百万次含噪纠错采样中比逐次重跑稳定子表快出数个量级。
-4. 分别计算 $T\lvert 0\rangle$ 与 $\lvert T\rangle = T\lvert +\rangle$ 的精确稳定子秩 $\chi_{\mathrm{stab}}$；将 $\lvert T\rangle$ 写成 $\lvert +\rangle$ 与 $\lvert +i\rangle$ 的线性组合，求其稳定子展度 $\xi(\lvert T\rangle) = (\lvert c_1\rvert + \lvert c_2\rvert)^2$；再验证 $\lvert T\rangle^{\otimes 2}$ 可写成仅 $2$ 个纠缠稳定子态的线性组合，从而说明为何 $\chi_{\mathrm{stab}}(\lvert T\rangle^{\otimes t})$ 远低于朴素的 $2^t$。
-5. 验证 2 比特 $\mathrm{SWAP}$ 门为何不满足匹配门 $G(A, B)$ 的 $\det A = \det B$ 条件，并简述打破“最近邻匹配门”和打破“高斯连续变量”两座经典可解孤岛各自需要什么破壁资源。
-6. 对 3 比特态 $\lvert\psi\rangle = \frac{1}{\sqrt{2}}\lvert 000\rangle + \frac{1}{2}\lvert 011\rangle + \frac{1}{2}\lvert 111\rangle$，写出键 1（$q_0 \mid q_1 q_2$）的 $2 \times 4$ 矩阵 $\Psi^{[0 \mid 12]}$，通过计算 $2 \times 2$ 矩阵 $\Psi^{[0\mid 12]}(\Psi^{[0\mid 12]})^\dagger$ 的本征值求出两个非零奇异值 $\sigma_1, \sigma_2$、键维 $\chi_1$，以及截断到 $\chi' = 1$ 时的平方误差 $\epsilon_{\mathrm{trunc}}$ 与重归一化根保真度 $F$。
-7. 解释为何 $\lvert W_3\rangle$ 虽然不是稳定子态、却具有仅 $\chi = 2$ 的 MPS 键维；再结合 2026 年 Manabe–Gu–Pan 对 468 个 $T$ 门一维砖墙电路的 37.3 分钟复算，说明“单比特 $T$ 门极多”为何无法自动挡住张量网络模拟器。
-8. 推导单比特退极化信道 $\mathcal D_p(\rho) = (1 - p)\rho + p\frac{I}{2}$ 的海森堡伴随 $\mathcal D_p^\dagger$ 对 $I, X, Y, Z$ 的作用，证明 $n$ 比特并行退极化层对权重为 $w$ 的 Pauli 串乘以因子 $(1 - p)^w$，并写出当参数改用随机 Pauli 概率 $q$（$\widetilde{\mathcal D}_q$）时的对应衰减因子。
-9. 在第 6.2 节的 2 比特 2 层含噪线路（初态 $\lvert 0+\rangle$，观测 $O = Z_0 I_1$）中，取 $\theta = \pi/3$（$60^\circ$）与 $p = 0.1$：逐步算出精确期望值 $\langle Z_0 I_1 \rangle_{\mathrm{exact}}$、在第 1 层噪声后执行 $w \le 1$ 截断所得的近似值、真实截断误差以及算符范数误差上界 $(1 - p)^3 \sin\theta$。
-10. 某研究团队宣布在 80 比特超导芯片上运行了深度为 40、含 600 个 $T$ 门的线路，但芯片比特连成一条开放一维链，且平均双比特门退极化率 $p \approx 0.02$，最终只报告单比特磁化期望值 $\langle Z_j\rangle$。对照本章“四维量子优势边界”，指出该实验同时暴露在哪些经典模拟引擎的射程之内，并说明为何真正跨过全部四道边界离不开容错量子纠错。
+1. 在本章二元辛编码 $(x \mid z)$ 约定下，写出 3 比特 Pauli 串 $P_1 = X_0 Y_1 Z_2$ 与 $P_2 = Y_0 X_1 Z_2$ 对应的 6 比特行向量，用二元辛内积判定二者是对易还是反对易，并直接用 Pauli 算符乘法独立回验。 <!-- exercise-id: 21-01 -->
+2. 推导 $\mathrm{CNOT}_{0 \to 1}$ 作用在两比特算符 $+X_0 Z_1$、$+Y_0 Y_1$ 与 $+X_0 Y_1$ 上的共轭结果，并逐一代入相位修正公式 $r' = r \oplus [x_0 z_1 (x_1 \oplus z_0 \oplus 1)]$ 核验哪两项变号、为何更新代码必须先算 $r'$ 再改写 $x_1$ 与 $z_0$。 <!-- exercise-id: 21-02 -->
+3. 在 Aaronson–Gottesman 稳定子表算法中，为什么引入 $n$ 条去稳定子 $D_0, \dots, D_{n-1}$ 能把确定性 $Z_a$ 测量的时间复杂度从 $O(n^3)$ 压到 $O(n^2)$？进一步说明 Stim 如何借助逆稳定子表与参考帧 Pauli 帧传播，在百万次含噪纠错采样中比逐次重跑稳定子表快出数个量级。 <!-- exercise-id: 21-03 -->
+4. 分别计算 $T\lvert 0\rangle$ 与 $\lvert T\rangle = T\lvert +\rangle$ 的精确稳定子秩 $\chi_{\mathrm{stab}}$；将 $\lvert T\rangle$ 写成 $\lvert +\rangle$ 与 $\lvert +i\rangle$ 的线性组合，求其稳定子展度 $\xi(\lvert T\rangle) = (\lvert c_1\rvert + \lvert c_2\rvert)^2$；再验证 $\lvert T\rangle^{\otimes 2}$ 可写成仅 $2$ 个纠缠稳定子态的线性组合，从而说明为何 $\chi_{\mathrm{stab}}(\lvert T\rangle^{\otimes t})$ 远低于朴素的 $2^t$。 <!-- exercise-id: 21-04 -->
+5. 验证普通 $\mathrm{SWAP}$ 为何不满足匹配门 $G(A,B)$ 的 $\det A=\det B$，并用费米交换与正 Wigner 的非高斯态说明哪些改动仍符合第 4 节的模拟条件。 <!-- exercise-id: 21-05 -->
+6. 对 3 比特态 $\lvert\psi\rangle = \frac{1}{\sqrt{2}}\lvert 000\rangle + \frac{1}{2}\lvert 011\rangle + \frac{1}{2}\lvert 111\rangle$，写出键 1（$q_0 \mid q_1 q_2$）的 $2 \times 4$ 矩阵 $\Psi^{[0 \mid 12]}$，通过计算 $2 \times 2$ 矩阵 $\Psi^{[0\mid 12]}(\Psi^{[0\mid 12]})^\dagger$ 的本征值求出两个非零奇异值 $\sigma_1, \sigma_2$、键维 $\chi_1$，以及截断到 $\chi' = 1$ 时的平方误差 $\epsilon_{\mathrm{trunc}}$ 与重归一化根保真度 $F$。 <!-- exercise-id: 21-06 -->
+7. 解释为何 $\lvert W_3\rangle$ 虽然不是稳定子态、却具有仅 $\chi = 2$ 的 MPS 键维；再结合 2026 年 Manabe–Gu–Pan 对 468 个 $T$ 门一维砖墙电路的 37.3 分钟复算，说明“单比特 $T$ 门极多”为何无法自动挡住张量网络模拟器。 <!-- exercise-id: 21-07 -->
+8. 推导单比特退极化信道 $\mathcal D_p(\rho) = (1 - p)\rho + p\frac{I}{2}$ 的海森堡伴随 $\mathcal D_p^\dagger$ 对 $I, X, Y, Z$ 的作用，证明 $n$ 比特并行退极化层对权重为 $w$ 的 Pauli 串乘以因子 $(1 - p)^w$，并写出当参数改用随机 Pauli 概率 $q$（$\widetilde{\mathcal D}_q$）时的对应衰减因子。 <!-- exercise-id: 21-08 -->
+9. 在第 6.2 节的 2 比特 2 层含噪线路（初态 $\lvert 0+\rangle$，观测 $O = Z_0 I_1$）中，取 $\theta = \pi/3$（$60^\circ$）与 $p = 0.1$：逐步算出精确期望值 $\langle Z_0 I_1 \rangle_{\mathrm{exact}}$、在第 1 层噪声后执行 $w \le 1$ 截断所得的近似值、真实截断误差以及算符范数误差上界 $(1 - p)^3 \sin\theta$。 <!-- exercise-id: 21-09 -->
+10. 一条 80 比特一维开放链开展深度 40、含 600 个 $T$ 门的实验，只有一条单比特磁化数据，平均双比特门退极化率约 0.02。若要比较指定振幅、全串采样和局域期望，分别应核查哪些经典候选和误差条件？说明容错改善了哪类工程限制。 <!-- exercise-id: 21-10 -->
 
 完整逐步解答见[练习与答案：第 21 章](appendices/exercises.md#第-21-章)。
 
@@ -1385,8 +1371,10 @@ python3 codes/algorithms/simulation_engines_lab.py
 
 脚本内置独立的大端序精确态矢量与密度矩阵参考引擎，对本章三台迷你引擎逐一完成 `< 1e-12` 误差断言并打印结构化 JSON 报告（退出码 `0`）：
 - **引擎一（Aaronson–Gottesman 稳定子表）**：复现 Bell 态 $\lvert\Phi^+\rangle$ 与 3 比特 GHZ 态全部表项与测量分支（读者亦可用同一 `StabilizerTableau` 类 3 行复现 `练 21-A` 的 3 比特线性集群态 $\lvert C_3\rangle$）；对 12 组 4 比特随机 Clifford + 中段测量电路（固定种子 `20261125`）全量比对全部 $4^4 = 256$ 个 Pauli 期望值，最大误差 $2.22 \times 10^{-15}$；并精确核验 $\lvert T\rangle$ 稳定子展度与 $\lvert T\rangle^{\otimes 2}$ 的 2 项分解；
-- **引擎二（3 比特纯标准库 MPS）**：用解析 $2 \times 2$ 厄米本征分解实现 $2 \times 4$ 与 $4 \times 2$ 精确 SVD，验证 $\lvert\mathrm{GHZ}_3\rangle$、$\lvert W_3\rangle$ 及 10 组随机复振幅 3 比特态的左正则等距条件、全振幅收缩（最大误差 $2.48 \times 10^{-16}$）以及键截断误差与根保真度恒等式；
+- **引擎二（3 比特纯标准库 MPS）**。直接薄 SVD 验证左正则等距条件、全振幅重建、弱奇异值及单次裁剪的根保真度，并验跨键 SWAP 的 Schmidt 秩从 1 到 4。
 - **引擎三（海森堡 Pauli 传播 / SPD）**：核验 2 比特 2 层含噪反向树（精确解 `0.352`、$w \le 1$ 截断 `0.480`、算符范数界 `0.256`、`练 21-B` 精确解 `0.0625`）以及 3 比特 3 层含噪砖墙在 $p \in \{0.00, 0.05, 0.15, 0.30\}$ 下的误差衰减扫描（精确解对照 $8 \times 8$ 密度矩阵最大误差 $1.11 \times 10^{-15}$）。
+
+[模型边界算例](../codes/algorithms/verification_model_boundaries.py) 另核对随机测量配对行、弱奇异值、局域与整块噪声。运行 `python3 codes/algorithms/verification_model_boundaries.py`。
 
 ### 跨章衔接
 
@@ -1402,7 +1390,7 @@ python3 codes/algorithms/simulation_engines_lab.py
 - **魔术度、稳定子秩、匹配门与高斯孤岛（同行评审论文）**：
   - S. Bravyi & D. Gosset, *Improved Classical Simulation of Quantum Circuits Dominated by Clifford Gates*, *Phys. Rev. Lett.* **116**, 250501 (2016), `arXiv:1601.07601`；
   - S. Bravyi, D. Browne, P. Calpin, E. Campbell, D. Gosset & M. Howard, *Simulation of quantum circuits by low-rank stabilizer decompositions*, *Quantum* **3**, 181 (2019), `arXiv:1808.00128`（系统建立稳定子展度与稀疏化理论）；
-  - H. Qassim, H. Pashayan & D. Gosset, *Improved upper bounds on the stabilizer rank of magic states*, *Quantum* **5**, 606 (2021), `arXiv:2104.07522`（将精确稳定子秩上界推进至 $O(2^{0.3963 t})$）；
+  - H. Qassim, H. Pashayan & D. Gosset, *Improved upper bounds on the stabilizer rank of magic states*, *Quantum* **5**, 606 (2021), `arXiv:2106.07740`（将精确稳定子秩上界推进至 $O(2^{0.3963 t})$）；
   - L. G. Valiant, *Quantum circuits that can be simulated classically in polynomial time*, *SIAM J. Comput.* **31**(4), 1229–1254 (2002)；
   - B. M. Terhal & D. P. DiVincenzo, *Classical simulation of noninteracting-fermion quantum circuits*, *Phys. Rev. A* **65**, 032325 (2002), `quant-ph/0108010`；
   - R. Jozsa & A. Miyake, *Matchgates and classical simulation of quantum circuits*, *Proc. R. Soc. A* **464**, 3089–3106 (2008), `arXiv:0804.4050`；
@@ -1413,7 +1401,7 @@ python3 codes/algorithms/simulation_engines_lab.py
   - J. Gray & S. Kourtis, *Hyper-optimized tensor network contraction*, *Quantum* **5**, 410 (2021), `arXiv:2002.01935`（同行评审；超图收缩路径优化与指标切片 `cotengra`）；
   - J. Tindall, M. Fishman, E. M. Stoudenmire & D. Sels, *Efficient Tensor Network Simulation of IBM's Eagle Kicked Ising Experiment*, *PRX Quantum* **5**, 010308 (2024), `arXiv:2306.14887`（同行评审）；
   - J. Tindall, A. F. Mello, M. Fishman, E. M. Stoudenmire & D. Sels, *Dynamics of disordered quantum systems with two- and three-dimensional tensor networks*, *Science* **392**(6800), 868–872 (2026), `arXiv:2503.05693`（同行评审）；
-  - H. Manabe, H. Gu & F. Pan, *Classical Simulation and Design Frontiers for IBM's Doped Clifford Sampling Experiment*, `arXiv:2608.13110`（预印本，2026 年 8 月；以确定性时空边界张量网络在 256 张 H100 GPU 上 37.3 分钟算穿 70 逻辑比特、深度 70、含 468 个 $T$ 门的一维砖墙电路）。
+  - H. Manabe, H. Gu & F. Pan, *Classical Simulation and Design Frontiers for IBM's Doped Clifford Sampling Experiment*, [arXiv:2608.13110v2](https://arxiv.org/html/2608.13110v2)（预印本固定版，2026 年 10 月；在原始开边界线路的已发布地址上计算振幅并复算 log-XEB）。
 - **海森堡 Pauli 传播与稀疏 Pauli 动力学（同行评审论文）**：
   - D. Aharonov, X. Gao, Z. Landau, Y. Liu & U. Vazirani, *A Polynomial-Time Classical Algorithm for Noisy Random Circuit Sampling*, *STOC* (2023), `arXiv:2211.03999`；
   - T. Begušić, J. Gray & G. K.-L. Chan, *Fast and converged classical simulations of evidence for the utility of quantum computing before fault tolerance*, *Science Advances* **10**, eadk4321 (2024), `arXiv:2308.05077`；

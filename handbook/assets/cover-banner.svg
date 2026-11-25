@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="cover-title cover-desc">
   <title id="cover-title">量子计算：从直觉到研究入口 — 主视觉原理图</title>
-  <desc id="cover-desc">暖纸青绿制图台风格封面：左侧展示书名、定位及 26 章、46,000+ 公式、80+ 矢量图、271 题零跳步题答、36 离线验算脚本规模卡；右侧三合一原理图依次呈现 Mach–Zehnder 干涉波包、右手三维 Bloch 球 Larmor 进动与 d=3 旋转表面码 [[9,1,3]] 稳定子解码网格。</desc>
+  <desc id="cover-desc">封面左侧展示书名、章节、公式、矢量图、题答和离线验算入口。右侧三幅原理图依次呈现 Mach–Zehnder 干涉波包、右手三维 Bloch 球 Larmor 进动与 d=3 旋转表面码 [[9,1,3]] 稳定子解码网格。</desc>
   <defs>
     <pattern id="drafting-dots" width="20" height="20" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1" fill="#8D8577" opacity="0.22"/>
@@ -99,16 +99,16 @@
     <text x="42" y="246" class="stat-num">26 章</text>
     <text x="42" y="267" class="stat-sub">主篇 00–21 + 量子力学 Q1–Q4</text>
 
-    <!-- Scale Card 2: 46,000+ 公式 -->
+    <!-- Scale Card 2: 公式与推导 -->
     <rect x="246" y="216" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
     <rect x="248" y="224" width="3.8" height="48" rx="1.9" fill="#1F5A92"/>
-    <text x="262" y="246" class="stat-num">46,000+ 公式</text>
+    <text x="262" y="246" class="stat-num">公式与推导</text>
     <text x="262" y="267" class="stat-sub">本地 KaTeX 预渲染 · 逐步演算</text>
 
-    <!-- Scale Card 3: 80+ 矢量图 -->
+    <!-- Scale Card 3: 科学矢量图 -->
     <rect x="26" y="290" width="208" height="64" rx="8" fill="#FFFFFF" stroke="#DDD7CB" stroke-width="1.2"/>
     <rect x="28" y="298" width="3.8" height="48" rx="1.9" fill="#C28524"/>
-    <text x="42" y="320" class="stat-num">80+ 矢量图</text>
+    <text x="42" y="320" class="stat-num">科学矢量图</text>
     <text x="42" y="341" class="stat-sub">公式驱动 SVG + 架构流程图</text>
 
     <!-- Scale Card 4: 271 题零跳步题答 -->
@@ -117,13 +117,13 @@
     <text x="262" y="319" class="stat-num-sm">271 题零跳步题答</text>
     <text x="262" y="341" class="stat-sub">逐行矩阵展开与归一独立回验</text>
 
-    <!-- Scale Card 5 (Full-Width Dark Anchor): 38 离线验算脚本 -->
+    <!-- Scale Card 5 (Full-Width Dark Anchor): 离线复算 -->
     <rect x="26" y="364" width="428" height="66" rx="8" fill="#1B2D2A" stroke="#2D4944" stroke-width="1.2"/>
     <rect x="28" y="372" width="4" height="50" rx="2" fill="#DDA03B"/>
-    <text x="44" y="394" class="dark-num">38 离线验算脚本</text>
+    <text x="44" y="394" class="dark-num">离线复算</text>
     <rect x="224" y="376" width="216" height="22" rx="11" fill="#27403B" stroke="#3D615B" stroke-width="1"/>
     <text x="332" y="391" text-anchor="middle" class="dark-pill">纯标准库 · 零云依赖 · 6 模块实验台</text>
-    <text x="44" y="417" class="dark-sub">纸笔手算 → 离线复算 → 31 个开源项目对照 · 全册 100% 离线</text>
+    <text x="44" y="417" class="dark-sub">纸笔手算 → 离线复算 → 开源项目对照</text>
 
     <!-- Bottom Contract Strip -->
     <rect x="26" y="440" width="428" height="54" rx="8" fill="#F1EDE4" stroke="#DDD7CB" stroke-width="1.1"/>

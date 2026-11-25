@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 624" role="img" aria-labelledby="v3-12-lwe-lattice-repeaters-title v3-12-lwe-lattice-repeaters-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-12-lwe-lattice-repeaters-title v3-12-lwe-lattice-repeaters-desc">
   <title id="v3-12-lwe-lattice-repeaters-title">LWE 模 17 解密噪声界与三代量子中继 1000 km 时延对照</title>
-  <desc id="v3-12-lwe-lattice-repeaters-desc">左面板绘出模 q=17 圆形解码环、m=0 与 m=1 解码扇区、奇数模对称无歧义充分界 |w|&lt;=3（m=0 容 [-4,4]、m=1 编于 8 容 [-3,4]，(m=1,w=-4) 与 (m=0,w=+4) 碰撞于余数 4）、正常解密 w=+2 及越界失败反例 w=+5；右面板用对数纵轴对比 1000 km 光纤上 1G(10 ms)、2G(0.2 ms)、3G(1 us) 中继周期时延及 15.05 km 擦除上限。</desc>
+  <desc id="v3-12-lwe-lattice-repeaters-desc">左面板绘出模 q=17 圆形解码环、m=0 与 m=1 解码扇区、奇数模对称无歧义充分界 |w|&lt;=3（m=0 容 [-4,4]、m=1 编于 8 容 [-3,4]，(m=1,w=-4) 与 (m=0,w=+4) 碰撞于余数 4）、正常解密 w=+2 及越界失败反例 w=+5；右面板用对数纵轴对比 1000 km 光纤上 1G(10 ms)、2G(0.2 ms)、3G(1 us) 的不同操作时标及器件效率改变后的距离上确界。</desc>
   <style>
     :root{color-scheme:light dark}
     .bg{fill:#f8fafc}
@@ -84,16 +84,16 @@
       
     }
   </style>
-  <rect class="bg" width="1000" height="624" rx="20"/>
+  <rect class="bg" width="1000" height="580" rx="20"/>
   <text class="title ink" x="34" y="44">LWE 模 17 解密容错圆环与三代量子中继 1000 km 时延对照</text>
   <text class="subtitle muted" x="34" y="68">左：ℤ<tspan dy="3" font-size="9.2">17</tspan><tspan dy="-3">&#8203;</tspan> 奇数解码环对称安全界 |w| ≤ 3、余数 4 碰撞边界与 w=+5 越界反例；右：1000 km 三代中继时延</text>
-  <rect class="card" x="32" y="84" width="468" height="490" rx="12"/>
+  <rect class="card" x="32" y="84" width="468" height="446" rx="12"/>
   <text class="h2 ink" x="48" y="108">(a) LWE 模 q = 17 圆形解码环（对称界 |w| ≤ 3）</text>
   <path class="f-accent" style="fill-opacity:.22;stroke:none" d="M146.0 276.0A106.0 106.0 0 0 1 358.0 276.0Z"/>
   <path class="f-gold" style="fill-opacity:.22;stroke:none" d="M358.0 276.0A106.0 106.0 0 0 1 146.0 276.0Z"/>
   <circle class="axis" style="stroke-width:2.0" cx="252.0" cy="276.0" r="106.0"/>
-  <line class="s-warn" style="stroke-width:1.8;stroke-dasharray:6 4" x1="114.0" y1="276.0" x2="376.0" y2="276.0"/>
-  <text class="xs warn" style="font-weight:700" x="110.0" y="281.0" text-anchor="end">−4.25</text>
+  <line class="s-warn" style="stroke-width:1.8;stroke-dasharray:6 4" x1="128.0" y1="276.0" x2="376.0" y2="276.0"/>
+  <text class="xs warn" style="font-weight:700" x="124.0" y="280.0" text-anchor="end">−4.25</text>
   <text class="xs warn" style="font-weight:700" x="380.0" y="280.0">+4.25 边界</text>
   <text class="xs accent" style="font-weight:700" x="252.0" y="232.0" text-anchor="middle">m = 0 区间 [0 ± 4.25]</text>
   <text class="xs muted" x="252.0" y="249.0" text-anchor="middle">{13..16, 0..4} · 容 [−4,4]</text>
@@ -155,13 +155,13 @@
   <line class="s-green" style="stroke-width:1.2" x1="180.2" y1="378.1" x2="136" y2="392"/>
   <text class="xs green" style="font-weight:700" x="132" y="387" text-anchor="end">8+2=10</text>
   <text class="xs muted" x="132" y="406" text-anchor="end">精准判 1</text>
-  <rect class="subcard" x="46" y="440" width="440" height="120" rx="8"/>
-  <text class="xs accent" style="font-weight:600" x="56" y="464">解密：v − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>u ≡ w + 8m (mod 17)，w = e<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>r + e<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>e<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan></text>
-  <text class="xs ink" style="font-weight:700" x="56" y="491">对称无歧义充分界 |w| ≤ 3（m=0 容 [−4,4]，m=1 编于 8 容 [−3,4]）</text>
-  <text class="xs warn" x="56" y="518">碰撞边界：(m=1, w=−4) 与 (m=0, w=+4) 均落余数 4（等距歧义）</text>
-  <text class="xs muted" x="56" y="545">正常例 w=+2 (0→2, 8→10) 准判；反例 w=+5 落入 5，m=0 误判为 1</text>
-  <rect class="card" x="516" y="84" width="452" height="490" rx="12"/>
-  <text class="h2 ink" x="532" y="108">(b) 1000 km 光纤三代量子中继周期时延</text>
+  <rect class="subcard" x="46" y="434" width="440" height="86" rx="8"/>
+  <text class="xs accent" style="font-weight:600" x="56" y="452">解密：v − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>u ≡ w + 8m (mod 17)，w = e<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>r + e<tspan dy="3" font-size="9.2">2</tspan><tspan dy="-3">&#8203;</tspan> − s<tspan dy="-4.5" font-size="9.2">T</tspan><tspan dy="4.5">&#8203;</tspan>e<tspan dy="3" font-size="9.2">1</tspan><tspan dy="-3">&#8203;</tspan></text>
+  <text class="xs ink" style="font-weight:700" x="56" y="472">对称无歧义充分界 |w| ≤ 3（m=0 容 [−4,4]，m=1 编于 8 容 [−3,4]）</text>
+  <text class="xs warn" x="56" y="492">碰撞边界：(m=1, w=−4) 与 (m=0, w=+4) 均落余数 4（等距歧义）</text>
+  <text class="xs muted" x="56" y="512">正常例 w=+2 (0→2, 8→10) 准判；反例 w=+5 落入 5，m=0 误判为 1</text>
+  <rect class="card" x="516" y="84" width="452" height="446" rx="12"/>
+  <text class="h2 ink" x="532" y="108">(b) 1000 km 中继算例的三个时标</text>
   <line class="grid" x1="594.0" y1="368.0" x2="946.0" y2="368.0"/>
   <line class="axis" style="stroke-width:1.3" x1="589.0" y1="368.0" x2="594.0" y2="368.0"/>
   <text class="xs ink" x="585.0" y="372.0" text-anchor="end">0.1 μs</text>
@@ -184,32 +184,23 @@
   <line class="axis" style="stroke-width:1.3" x1="589.0" y1="128.0" x2="594.0" y2="128.0"/>
   <text class="xs ink" x="585.0" y="132.0" text-anchor="end">100 ms</text>
   <rect class="b-warn" x="629.0" y="168.0" width="58.0" height="200.0" rx="5"/>
-  <text class="xs warn" style="font-weight:700" x="658.0" y="160.0" text-anchor="middle">10 ms (100 Hz)</text>
+  <text class="xs warn" style="font-weight:700" x="658.0" y="160.0" text-anchor="middle">10 ms</text>
   <text class="xs ink" style="font-weight:600" x="658.0" y="385.0" text-anchor="middle">1G 端到端纯化</text>
   <text class="xs muted" x="658.0" y="401.0" text-anchor="middle">2L/c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan> 双向 RTT</text>
   <rect class="b-accent" x="743.0" y="236.0" width="58.0" height="132.0" rx="5"/>
-  <text class="xs accent" style="font-weight:700" x="772.0" y="228.0" text-anchor="middle">0.2 ms (5 kHz)</text>
-  <text class="xs ink" style="font-weight:600" x="772.0" y="385.0" text-anchor="middle">2G 邻站先兆+QEC</text>
+  <text class="xs accent" style="font-weight:700" x="772.0" y="228.0" text-anchor="middle">0.2 ms</text>
+  <text class="xs ink" style="font-weight:600" x="772.0" y="385.0" text-anchor="middle">2G 全邻跳往返</text>
   <text class="xs muted" x="772.0" y="401.0" text-anchor="middle">2L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan>/c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan> (20 km)</text>
   <rect class="b-green" x="857.0" y="328.0" width="58.0" height="40.0" rx="5"/>
-  <text class="xs green" style="font-weight:700" x="886.0" y="320.0" text-anchor="middle">1 μs (~1 MHz)</text>
-  <text class="xs ink" style="font-weight:600" x="886.0" y="385.0" text-anchor="middle">3G 单向抗擦除</text>
+  <text class="xs green" style="font-weight:700" x="886.0" y="320.0" text-anchor="middle">1 μs</text>
+  <text class="xs ink" style="font-weight:600" x="886.0" y="385.0" text-anchor="middle">3G 单个本地门</text>
   <text class="xs muted" x="886.0" y="401.0" text-anchor="middle">本地门 t<tspan dy="3" font-size="9.2">local</tspan><tspan dy="-3">&#8203;</tspan></text>
-  <line class="s-accent" style="stroke-width:1.4;stroke-dasharray:4 3" x1="687.0" y1="168.0" x2="772.0" y2="168.0"/>
-  <line class="s-accent" style="stroke-width:1.8" x1="772.0" y1="168.0" x2="772.0" y2="212.0"/>
-  <path class="accent" d="M772.00 213.96L769.75 206.96L774.25 206.96Z"/>
-  <text class="xs accent" style="font-weight:700" x="780.0" y="196.0">↓ 50×</text>
-  <line class="s-green" style="stroke-width:1.4;stroke-dasharray:4 3" x1="801.0" y1="236.0" x2="886.0" y2="236.0"/>
-  <line class="s-green" style="stroke-width:1.8" x1="886.0" y1="236.0" x2="886.0" y2="304.0"/>
-  <path class="green" d="M886.00 306.00L883.75 299.00L888.25 299.00Z"/>
-  <text class="xs green" style="font-weight:700" x="844" y="268" text-anchor="middle">↓ 200×</text>
-  <text class="xs green" x="844" y="287" text-anchor="middle">(总 10<tspan dy="-4.5" font-size="9.2">4</tspan><tspan dy="4.5">&#8203;</tspan>×)</text>
   <rect class="axis" x="594.0" y="128.0" width="352.0" height="240.0"/>
-  <text class="lbl ink" x="534" y="248.0" text-anchor="middle" transform="rotate(-90 534 248.0)">单周期时延（对数刻度）</text>
-  <rect class="subcard" x="530" y="434" width="424" height="126" rx="8"/>
-  <text class="xs warn" style="font-weight:700" x="540" y="460">3G 物理硬红线：50% 擦除容量定理 Q(ℰ<tspan dy="3" font-size="9.2">p</tspan><tspan dy="-3">&#8203;</tspan>) = max(0, 1 − 2p)</text>
-  <text class="xs ink" x="540" y="488">单跳最大损耗 −10 log<tspan dy="3" font-size="9.2">10</tspan><tspan dy="-3">&#8203;</tspan>(0.5) ≈ 3.01 dB ⇒ 纯光纤站距 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan><tspan dy="-4.5" font-size="9.2">max</tspan><tspan dy="4.5">&#8203;</tspan> ≤ 15.05 km</text>
-  <text class="xs muted" x="540" y="516">参数：L=1,000 km，c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan>=2×10<tspan dy="-4.5" font-size="9.2">5</tspan><tspan dy="4.5">&#8203;</tspan> km/s，衰减 a=0.2 dB/km（2G 取 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan>=20 km）</text>
-  <text class="xs muted" x="540" y="544">计入发射、耦合与探测损耗后，实际 3G 中继站须密布至 1–5 km。</text>
-  <text class="sm muted" x="34" y="600">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图展示量子网络三代中继跨越 4 个量级的时延跃迁。</text>
+  <text class="lbl ink" x="534" y="248.0" text-anchor="middle" transform="rotate(-90 534 248.0)">分项时间（对数刻度）</text>
+  <rect class="subcard" x="530" y="420" width="424" height="96" rx="8"/>
+  <text class="xs warn" style="font-weight:700" x="540" y="440">3G 物理硬红线：50% 擦除容量定理 Q(ℰ<tspan dy="3" font-size="9.2">p</tspan><tspan dy="-3">&#8203;</tspan>) = max(0, 1 − 2p)</text>
+  <text class="xs ink" x="540" y="461">单跳最大损耗 −10 log<tspan dy="3" font-size="9.2">10</tspan><tspan dy="-3">&#8203;</tspan>(0.5) ≈ 3.01 dB ⇒ 纯光纤站距上确界 ≈ 15.05 km</text>
+  <text class="xs muted" x="540" y="482">参数：L=1,000 km，c<tspan dy="3" font-size="9.2">f</tspan><tspan dy="-3">&#8203;</tspan>=2×10<tspan dy="-4.5" font-size="9.2">5</tspan><tspan dy="4.5">&#8203;</tspan> km/s，衰减 a=0.2 dB/km（2G 取 L<tspan dy="3" font-size="9.2">0</tspan><tspan dy="-3">&#8203;</tspan>=20 km）</text>
+  <text class="xs muted" x="540" y="503">效率 1/.8/.6：15.05/10.21/3.96 km；等号处容量为零。</text>
+  <text class="sm muted" x="34" y="554">注：左图展示后量子格密码核心噪声界（与 FIPS 203 ML-KEM 同源），右图为三个分项时标。两层本地门需 2 μs，中点先兆为 100 μs。</text>
 </svg>

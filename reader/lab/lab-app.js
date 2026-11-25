@@ -80,9 +80,14 @@
     }
   }
 
+  function selectTab(tabKey, moveFocus) {
+    history.replaceState(history.state, '', `#tab-${tabKey}`);
+    activateTab(tabKey, moveFocus);
+  }
+
   for (let i = 0; i < tabButtons.length; i++) {
     const btn = tabButtons[i];
-    btn.addEventListener('click', () => activateTab(btn.dataset.tab, false));
+    btn.addEventListener('click', () => selectTab(btn.dataset.tab, false));
     btn.addEventListener('keydown', e => {
       let targetIdx = null;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') targetIdx = (i + 1) % tabButtons.length;
@@ -91,7 +96,7 @@
       else if (e.key === 'End') targetIdx = tabButtons.length - 1;
       if (targetIdx !== null) {
         e.preventDefault();
-        activateTab(tabButtons[targetIdx].dataset.tab, true);
+        selectTab(tabButtons[targetIdx].dataset.tab, true);
       }
     });
   }

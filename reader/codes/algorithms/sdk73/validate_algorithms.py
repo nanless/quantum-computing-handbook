@@ -56,7 +56,6 @@ def hhl(a,b,t,scale=4.,cutoff=.5,constant=.5, name='case',shots=0):
     joint=sim.simulate(circuit,qubit_order=qs).final_state_vector.reshape(m,d,2)
     branch=joint[:,:,1]; p=float(np.vdot(branch,branch).real)
     pclean=float(np.vdot(branch[0],branch[0]).real)
-    rho=branch.T@branch.conj()/p; xclean=branch[0]/np.sqrt(pclean)
     target=np.linalg.solve(a,b); ptarget=float(constant**2*np.vdot(target,target).real); target/=np.linalg.norm(target)
     # Independent spectral Fourier construction, NOT SDK circuit matrix reuse.
     grid=np.arange(m); f=np.exp(2j*math.pi*np.outer(grid,grid)/m)/np.sqrt(m)
@@ -72,11 +71,19 @@ def hhl(a,b,t,scale=4.,cutoff=.5,constant=.5, name='case',shots=0):
     mismatch=float(np.max(abs(ref-branch))); assert mismatch<2e-12
     assert abs(p-sum(abs(beta)**2*np.array(tj)))<2e-12
     assert abs(pclean-sum(abs(beta)**2*np.array(fj)**2))<2e-12
-    root_f=float(np.sqrt(np.vdot(target,rho@target).real)); clean_f=float(abs(np.vdot(target,xclean)))
-    residual=float(np.linalg.norm(a@xclean-b*np.vdot(b,a@xclean)))
+    # A conditional branch can vanish even for an allowed spectrum. Comparing
+    # amplitudes before normalization avoids assigning a state to roundoff.
+    resolution = max(64 * float(np.finfo(float).eps), float(np.linalg.norm(ref - branch)))
+    flag_resolved = math.sqrt(p) > resolution
+    clean_resolved = math.sqrt(pclean) > resolution
+    rho = branch.T @ branch.conj() / p if flag_resolved else None
+    xclean = branch[0] / math.sqrt(pclean) if clean_resolved else None
+    root_f = math.sqrt(max(0., float(np.vdot(target, rho @ target).real))) if flag_resolved else None
+    clean_f = float(abs(np.vdot(target, xclean))) if clean_resolved else None
+    residual = float(np.linalg.norm(a @ xclean - b * np.vdot(b, a @ xclean))) if clean_resolved else None
     np.savez_compressed(ROOT/f'hhl-{name}-t{t}.npz',A=a,b=b,joint=joint,phase_labels=signed,rotation_amplitudes=r,ideal_target=target,seed=SEED+t)
     (ROOT/f'hhl-{name}-t{t}-circuit.txt').write_text(str(circuit)+'\n')
-    rec={'name':name,'phase_bits':t,'dimension':d,'basis_order':'phase (MSB first), system (MSB first), flag','scale':scale,'cutoff':cutoff,'C':constant,'A':encoded(a),'b':encoded(b),'eigenvalues':eig.tolist(),'ideal_success':ptarget,'flag_success':p,'phase_zero_and_flag_success':pclean,'garbage_probability':max(0.,p-pclean),'garbage_given_flag':max(0.,1-pclean/p),'mixed_root_fidelity':root_f,'mixed_squared_fidelity':root_f**2,'mixed_purity':float(np.trace(rho@rho).real),'clean_root_fidelity':clean_f,'clean_direction_residual':residual,'rho_given_flag':encoded(rho),'clean_amplitudes':encoded(xclean),'filter_mean_per_eigenvalue':fj,'filter_second_moment_per_eigenvalue':tj,'independent_max_amplitude_error':mismatch,'logical_operations':len(list(circuit.all_operations())),'qpe_base_controlled_U_calls_if_repeated':m-1,'forward_and_inverse_base_U_calls_if_repeated':2*(m-1)}
+    rec={'name':name,'phase_bits':t,'dimension':d,'basis_order':'phase (MSB first), system (MSB first), flag','scale':scale,'cutoff':cutoff,'C':constant,'A':encoded(a),'b':encoded(b),'eigenvalues':eig.tolist(),'ideal_success':ptarget,'flag_success':p,'phase_zero_and_flag_success':pclean,'garbage_probability':max(0.,p-pclean),'garbage_given_flag':max(0.,1-pclean/p) if flag_resolved else None,'mixed_root_fidelity':root_f,'mixed_squared_fidelity':root_f**2 if flag_resolved else None,'mixed_purity':float(np.trace(rho@rho).real) if flag_resolved else None,'clean_root_fidelity':clean_f,'clean_direction_residual':residual,'rho_given_flag':encoded(rho) if flag_resolved else None,'clean_amplitudes':encoded(xclean) if clean_resolved else None,'flag_state_resolved':flag_resolved,'clean_state_resolved':clean_resolved,'amplitude_resolution':resolution,'filter_mean_per_eigenvalue':fj,'filter_second_moment_per_eigenvalue':tj,'independent_max_amplitude_error':mismatch,'logical_operations':len(list(circuit.all_operations())),'qpe_base_controlled_U_calls_if_repeated':m-1,'forward_and_inverse_base_U_calls_if_repeated':2*(m-1)}
     if shots:
         measurement=circuit+cirq.Circuit(cirq.measure(*phase,key='phase'),cirq.measure(flag,key='flag'),cirq.measure(*system,key='system'))
         data=sim.run(measurement,repetitions=shots)
@@ -98,6 +105,11 @@ def hhl_case():
     a4=v4@np.diag([-1.3,-.7,1.1,2.2])@v4.T
     rows.append(hhl(a4,np.array([1,1j,-1,1])/2,5,name='four-dimension'))
     assert rows[4]['mixed_root_fidelity']>.99 and rows[4]['garbage_given_flag']<rows[1]['garbage_given_flag']
+    vanishing = hhl(3.1167157787684143 * np.eye(2), np.array([1., 0.]),
+                    2, cutoff=2., name='vanishing-clean-branch')
+    assert abs(vanishing['flag_success'] - .0337221092) < 1e-10
+    assert vanishing['flag_state_resolved'] and not vanishing['clean_state_resolved']
+    assert vanishing['clean_amplitudes'] is None and vanishing['clean_direction_residual'] is None
     # Reject singular/unsupported inputs rather than silently invert zero.
     rejected=[]
     for bad,label in [(np.diag([0.,1.]),'singular'),(np.array([[1.,1.],[0.,1.]]),'non-Hermitian'),(np.diag([-4.,1.]),'phase-alias-boundary')]:
@@ -108,7 +120,7 @@ def hhl_case():
         try: hhl(exact,b,bad_t)
         except ValueError: rejected.append('invalid-phase-size-'+str(bad_t))
         else: raise AssertionError('Invalid phase register accepted')
-    return {'cirq':md.version('cirq'),'cases':rows,'rejected':rejected,'scope':'Finite small Hermitian power-of-two dense matrix teaching interface, hard reciprocal cutoff; not full HHL filter/error theorem or sparse efficient implementation'}
+    return {'cirq':md.version('cirq-core'),'cases':rows,'vanishing_clean_branch':vanishing,'rejected':rejected,'scope':'Finite small Hermitian power-of-two dense matrix teaching interface, hard reciprocal cutoff; not full HHL filter/error theorem or sparse efficient implementation'}
 
 def walk_case():
     import cirq
@@ -153,7 +165,7 @@ def walk_case():
     assert np.allclose(abs(un)**2,1/dim)
     np.savez_compressed(ROOT/'walk-states-samples.npz',states=np.asarray(allstates),samples=data.measurements['position'],seed=SEED,shift=shift,coin=g,marked_step=w)
     (ROOT/'walk-circuit.txt').write_text(str(selected)+'\n')
-    return {'cirq':md.version('cirq'),'N':N,'hypercube_dimension':n,'marked_vertex':target,'basis_order':'coin label (MSB first), position x (MSB first)','rows':rows,'selected_steps':peak,'selection_rule':'precomputed earliest maximum within 0..8, before sampling; no measured-count selection','shots':20000,'histogram':hist.tolist(),'marked_count':int(hist[target]),'boundary':'SKW coined hypercube search, not CTQW or full MNRS; dense coin toy, exact simulations and one finite-shot regression, not scalable advantage evidence'}
+    return {'cirq':md.version('cirq-core'),'N':N,'hypercube_dimension':n,'marked_vertex':target,'basis_order':'coin label (MSB first), position x (MSB first)','rows':rows,'selected_steps':peak,'selection_rule':'precomputed earliest maximum within 0..8, before sampling; no measured-count selection','shots':20000,'histogram':hist.tolist(),'marked_count':int(hist[target]),'boundary':'SKW coined hypercube search, not CTQW or full MNRS; dense coin toy, exact simulations and one finite-shot regression, not scalable advantage evidence'}
 
 def qsvt_case():
     import pennylane as qml
@@ -211,7 +223,7 @@ def mbqc_case():
     hist=np.bincount(outcomes,minlength=4); assert np.max(abs(hist/20000-.25))<.02
     np.savez_compressed(ROOT/'mbqc-samples.npz',m0=data.measurements['m0'],m1=data.measurements['m1'],verification=data.measurements['verification'],seed=SEED+17)
     (ROOT/'mbqc-circuit.txt').write_text(str(c)+'\n')
-    return {'cirq':md.version('cirq'),'alpha':alpha,'beta':beta,'input':encoded(b),'target':encoded(target),'shots':20000,'branch_counts':hist.tolist(),'verification_failures':int(data.measurements['verification'].sum()),'boundary':'Real conditional midcircuit classical feedback in local ideal simulator; verifier has known target inverse, not blind delegated universal verification or physical feedforward latency measurement'}
+    return {'cirq':md.version('cirq-core'),'alpha':alpha,'beta':beta,'input':encoded(b),'target':encoded(target),'shots':20000,'branch_counts':hist.tolist(),'verification_failures':int(data.measurements['verification'].sum()),'boundary':'Real conditional midcircuit classical feedback in local ideal simulator; verifier has known target inverse, not blind delegated universal verification or physical feedforward latency measurement'}
 
 def main():
     parser=argparse.ArgumentParser(); parser.add_argument('case',nargs='?',choices=['all','hhl','walk','qsvt','mbqc'],default='all'); args=parser.parse_args()

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
   <title id="title">Lindblad 主方程光滑衰减与量子跳跃随机轨迹系综平均</title>
-  <desc id="desc">基于纯标准库固定种子 (202605) 蒙特卡洛波函数 (MCWF) 模拟：左面板绘制初态 |1⟩ 的零温弛豫解析解 ρ₁₁(t) = e^(−κt) 与 8 条初态 |1⟩ 单次量子跳跃阶梯轨迹，并附初态 |+⟩ 无跳跃贝叶斯下滑参考曲线 e^(−κt)/(1+e^(−κt))；右面板展示初态 |1⟩ 下 64、512 与 4096 条独立轨迹系综平均及其残差误差带按 1/√N 收敛至解析主方程解。</desc>
+  <desc id="desc">基于纯标准库固定种子 (202605) 蒙特卡洛波函数 (MCWF) 模拟：左面板绘制初态 |1⟩ 的零温弛豫解析解 ρ₁₁(t) = e^(−κt) 与 8 条初态 |1⟩ 单次量子跳跃阶梯轨迹，并附理想探测下初态 |+⟩ 的无跳跃条件曲线 e^(−κt)/(1+e^(−κt))；右面板展示初态 |1⟩ 下 64、512 与 4096 条独立轨迹系综平均及其残差误差带按 1/√N 收敛至解析主方程解。</desc>
   <style>
 :root{color-scheme:dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -195,7 +195,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <line class="c2" stroke-width="1.8" x1="272" y1="246" x2="294" y2="246"/>
   <text class="xs c2-txt" x="300" y="250">8 条跳跃阶梯 (初态 |1⟩→|0⟩)</text>
   <line class="c3" stroke-width="1.8" stroke-dasharray="5 3" x1="272" y1="265" x2="294" y2="265"/>
-  <text class="xs c3-txt" x="300" y="269">无跳跃贝叶斯下滑 (初态 |+⟩)</text>
+  <text class="xs c3-txt" x="300" y="269">理想计数：|+⟩ 无跳跃</text>
   <rect class="note" x="42" y="508" width="438" height="32" rx="8"/>
   <text class="xs" x="261" y="528" text-anchor="middle">单次实验非跳即停（阶梯）；唯有对大量随机轨迹系综平均才还原光滑指数衰减</text>
   <line class="grid" x1="576" y1="304" x2="952" y2="304"/>

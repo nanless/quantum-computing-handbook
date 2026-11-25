@@ -2,7 +2,7 @@
 
 走进算法世界前，先看清一件事：**量子算法并不是一串互不相干的灵光一闪，而是用寥寥几块通用积木反复搭出来的。** 无论是搜索无结构空间、分解大整数、解线性方程组还是模拟分子演化，背后反复上场的总是同一套原语：可逆预言机与反计算、相位回踢、振幅放大、量子傅里叶变换（QFT）、量子相位估计（QPE）、分片时间演化、单辅助位干涉测试以及受控数据查表（QRAM/QROM）。
 
-读完本章你将能独立算清三件事：① 用相位回踢与反计算写出可逆预言机并量化垃圾位退相干；② 用二维旋转矩阵算出振幅放大逐轮概率、最优步数与过旋转；③ 用有限网格 Dirichlet 核与 Trotter 分片核算 QFT/QPE 相位分布和演化误差。建议分两遍推进：
+本篇从[第 04 章](04-circuits-protocols.md)的受控门、逆计算和相位回踢出发。本章要算清三件事：① 用相位回踢与反计算写出可逆预言机并量化垃圾位退相干；② 用二维旋转矩阵算出振幅放大逐轮概率、首峰停步与过旋转；③ 用有限网格 Dirichlet 核与 Trotter 分片核算 QFT/QPE 相位分布和演化误差。建议分两遍推进：
 
 - **首遍主干（★ 必读）**：第 0 节、第 1–3 节、第 4.1–4.4 节、第 5 节、第 6.1–6.2 / 6.4 / 6.6 节、第 7 节、第 8.1 / 8.3 节与第 10 节。
 - **进阶选读（☆ 首遍可跳过）**：标有 `进阶选读：` 的第 4.5–4.6 节（多控门分解与固定点放大）、第 6.3 / 6.5 / 6.7 节（非网格 Dirichlet 核、有符号谱与早容错 QPE）及第 9.3 节（QRAM 工程批判与显式 `PREPARE/SELECT`/QROM 门级电路），待读完[第 07 章](07-algorithms.md)后回看体验更顺滑。
@@ -182,7 +182,7 @@ Charles Bennett（1973）给出了经典与量子可逆计算的标准解法—�
 2. **提取结果**：把计算基上的结果异或到真正的目标寄存器 $|y\rangle$（或施加相位门把 $f(x)$ 写进相位）；注意这里复制的是计算基上的经典比特值，并不违背不可克隆定理；
 3. **逆向清理**：施加逆电路 $C_f^\dagger$（把 $C_f$ 的每个门按反序取共轭转置倒跑一遍），将所有中间工作位精确退回 $|0^m\rangle_w$，和主寄存器彻底解耦。
 
-反计算的直接代价是：**基础预言机的门数与深度至少翻倍**。这就是为什么查询复杂度只记“1 次调用”，而门复杂度账本里必须把反计算单独算清。
+在这里的正算、写出、反算实现中，若正算成本为 $C$，门成本还须加反算的另一个 $C$ 和写出门。直接以 CNOT 实现的单比特位应答预言机不需要这套辅助线路。查询账把实现完的预言机记作一次调用，门账按实现逐项计数。
 
 先用一位输入 $x$、一位工作位 $w$、$f(x)=x$ 看看有无反计算的巨大差别。从 $|+\rangle_x |0\rangle_w$ 出发，正向做一次 $\mathrm{CNOT}(x \to w)$ 得到 Bell 态
 
@@ -354,7 +354,7 @@ Deutsch–Jozsa 的历史价值在于首次以最清晰的线路展示了量子�
 - **对照确定性、零错误经典算法**：在最坏情况下，经典算法连续查了 $2^{n-1}$ 个输入全拿到 $0$，还是不能排除平衡函数，至少需要 $2^{n-1} + 1$ 次查询才能 100% 确定。相比量子 $1$ 次查询，这是**精确确定性查询模型下的指数分离**。
 - **对照允许微小失败概率 $\delta$ 的随机经典算法**：经典计算机随机抽取 $k$ 个输入查询——一旦看到两个不同输出就立刻判平衡；若 $k$ 次全相同就猜恒定。恒定函数永不判错，而平衡函数被误判的精确概率要区分两种抽样方式：
   - **有放回独立抽样 $k$ 次**：全得 $0$ 的概率为 $(1/2)^k$，全得 $1$ 的概率也为 $(1/2)^k$，误判率**精确等于** $2 \cdot 2^{-k} = 2^{1-k}$；
-  - **无放回抽取 $k$ 个互异输入**：误判率为 $2\binom{2^{n-1}}{k} / \binom{2^n}{k} \le 2^{1-k}$（对 $k \ge 2$ 严格小于 $2^{1-k}$，且一旦 $k > 2^{n-1}$ 即为 $0$）。例如取 $k = 11$，两种方式下误判率都满足 $\le 1/1024 < 0.1\%$。也就是说，达到误差 $\delta$ 只需 $O(\log_2(1/\delta))$ 次查询，**与比特数 $n$ 完全无关**！
+  - **无放回抽取 $k$ 个互异输入**：误判率为 $2\binom{2^{n-1}}{k} / \binom{2^n}{k} \le 2^{1-k}$（对 $k \ge 2$ 严格小于 $2^{1-k}$，且一旦 $k > 2^{n-1}$ 即为 $0$）。无放回要求 $1\le k\le 2^n$。例如当 $2^n\ge11$ 时取 $k=11$，两种方式的误判率都满足 $\le 1/1024 < 0.1\%$。也就是说，达到误差 $\delta$ 只需 $O(\log_2(1/\delta))$ 次查询，**与比特数 $n$ 完全无关**！
 
 因此，不能把 Deutsch–Jozsa 笼统宣传成“相对经典计算机的指数加速”；它只给出确定性零错误查询模型里的指数分离，相对随机经典算法并无指数优势。
 
@@ -418,7 +418,10 @@ $$
 
 ### 3.3 经典对比与历史意义
 
-在经典查询模型里（哪怕允许随机化），每次查询只返回 1 个比特信息，想要确定未知的 $n$ 比特串 $s$，至少需要查询 $n$ 次（例如分别查 $n$ 个单位向量 $10\cdots0, \dots, 0\cdots01$）。Bernstein–Vazirani 用 1 次量子查询替代 $n$ 次经典查询，带来的是**线性查询加速**（$n$ 倍，而非指数倍）。不过，Bernstein 与 Vazirani（1993 / 1997）顺势将这个问题递归嵌套，构造出**递归傅里叶采样**（Recursive Fourier Sampling），在历史上第一次相对预言机给出了量子算法超越随机经典算法的超多项式（$n^{\log_2 n}$）分离，直接启发了随后的 Simon 与 Shor 算法。
+对同一个位应答接口，查询 $n$ 个单位向量就能分别得到 $s$ 的每一位。对下界，假设秘密 $s$ 在 $2^n$ 个串中均匀选取。固定算法的随机种子后，至多 $q$ 次经典查询给出至多 $2^q$ 个决策树叶子，每个叶子只输出一个秘密，所以平均成功率至多 $2^{q-n}$。对随机种子取平均后，上界不变。要求每个输入上的成功率都大于 $1/2$，便需要 $q\ge n$。Bernstein–Vazirani 在同一查询模型中只用一次量子查询。每个 $s$ 对应不同的黑盒映射，电路的输入准备和读出相同。
+
+Bernstein 与 Vazirani 还递归利用这类结构构造了递归傅里叶采样，证明相应的预言机问题排除了 $n^{o(\log n)}$ 时间的有界错误随机算法。[Bernstein–Vazirani，1997，第 8.4 节](https://people.eecs.berkeley.edu/~vazirani/pubs/bv.pdf)。
+
 
 ---
 
@@ -430,7 +433,7 @@ $$
 
 ### 4.1 把高维空间锁进一张二维平面
 
-（阅读节奏建议：初次学习时读完 4.1–4.4 节掌握几何旋转与最优步数后，可先直接进入第 5 节 QFT，待[第 07 章](07-algorithms.md)学完 Grover 搜索后再回看 4.5–4.6 节的门分解与固定点放大。）
+（阅读节奏建议：初次学习时读完 4.1–4.4 节掌握几何旋转与首峰停步后，可先直接进入第 5 节 QFT，待[第 07 章](07-algorithms.md)学完 Grover 搜索后再回看 4.5–4.6 节的门分解与固定点放大。）
 
 假设有一个可逆的答案检查规则 $g(x) \in \{0,1\}$：满足 $g(x)=1$ 的计算基态叫“好态”，其余叫“坏态”。把初态 $|\psi\rangle = A|0^n\rangle$ 拆成好、坏两部分的和：
 
@@ -583,18 +586,12 @@ $$
 对应的成功概率为 $(11/16)^2 = 121/256 \approx 47.27\%$，与图里 $k=1$ 一栏完全一致！接着继续旋转：
 
 - $k = 2$（$5\theta \approx 72.39^\circ$）：目标振幅为 $\frac{61}{64} = 0.953125$，成功率 $\frac{3721}{4096} \approx 90.84\%$；
-- $k = 3$（$7\theta \approx 101.34^\circ$）：目标振幅为 $\frac{251}{256} \approx 0.9805$，成功率 $\frac{63001}{65536} \approx 96.13\%$（峰值最优）；
+- $k = 3$（$7\theta \approx 101.34^\circ$）：目标振幅为 $\frac{251}{256} \approx 0.9805$，成功率 $\frac{63001}{65536} \approx 96.13\%$（首个连续峰附近最优）；
 - $k = 4$（$9\theta \approx 130.30^\circ$）：已经转过纵轴太远，目标振幅掉到 $\frac{781}{1024} \approx 0.7627$，成功率跌至 $58.17\%$。
 
-一般地，想让 $(2k+1)\theta_a$ 尽量贴近 $\pi/2$，需选最接近 $\frac{\pi}{4\theta_a} - \frac{1}{2}$ 的非负整数；由初等取整恒等式 $\operatorname{round}(x - 1/2) = \lfloor x \rfloor$，这恰好就是 BBHT（1998）给出的标准闭式最优步数
+固定 $0<a<1$，把角度 $(2k+1)\theta_a$ 转到最接近首个连续峰 $\pi/2$ 的整数步。也就是对 $\pi/(4\theta_a)-1/2$ 取最近的非负整数。取 $k=\lfloor\pi/(4\theta_a)\rfloor$ 是这一规则的一个实现，遇整数步平局也可取较小的 $k$。两步的角间距为 $2\theta_a$，因此存在一个就近步的角偏差不超过 $\theta_a$，成功率至少为 $\cos^2\theta_a=1-a$。在 $a$ 小时，$\theta_a=\arcsin\sqrt a\sim\sqrt a$，首峰停步耗费 $\Theta(1/\sqrt a)$ 次查询。
 
-$$
-k^* = \left\lfloor \frac{\pi}{4\theta_a} \right\rfloor \approx \left\lfloor \frac{\pi}{4}\sqrt{\frac{N}{M}} \right\rfloor
-$$
-
-（对 $a = 1/16$，精确 $\frac{\pi}{4\arcsin(1/4)} \approx 3.11$、小角近似 $\frac{\pi}{4}\cdot 4 \approx 3.14$，向下取整均为 $k^* = 3$；当 $0 < a \le 1/2$ 时，该公式严格保证成功概率 $\ge 1 - a$）。查询复杂度为 $\Theta(1/\sqrt{a}) = \Theta(\sqrt{N/M})$。
-
-**大占比边界反例（$a \ge 1/2$ 时不要盲目迭代）**。上述公式只在目标占比 $a < 1/2$ 时有效。如果目标本来就已经超过一半——例如 $a = M/N = 3/4$（$\sin\theta = \sqrt{3}/2 \implies \theta = \pi/3$）——盲目跑 $k = 1$ 轮反而把角度直接旋到 $3\theta = \pi$，成功概率暴跌成 $\sin^2(\pi) = \mathbf{0}$！遇到 $a \ge 1/2$ 时，直接随机采样一次命中率就已经不低于 $50\%$；如果必须作为确定性子程序嵌套进更大电路，只需加 1 根辅助位把搜索空间扩倍（将目标条件与辅助位 $|1\rangle$ 取逻辑与），立刻就能把有效占比压到 $a/2 \le 1/2$ 以下。
+例如 $a=1/16$ 时，$k=3$ 的概率约为 $0.961319$，转到后续峰附近的 $k=9$ 反而约为 $0.992182$。首峰停步用较少查询便达到高成功率。若 $a=1/2$，$k=0,1$ 都给 $1/2$；若 $a>1/2$，首峰最近的步数是 $k=0$。例如 $a=3/4$ 时再迭代一轮会把角度转到 $\pi$，成功率变为 $0$。把搜索空间加倍可降低目标占比，普通放大仍只保证近乎确定的成功。要求确定成功时，可在已知 $a$ 的情形选用相位匹配的精确放大，并另外计算受控相位与反计算成本。[BBHT，1998](https://arxiv.org/abs/quant-ph/9605034)；[BHMT，2002](https://arxiv.org/abs/quant-ph/0005055)。
 
 **反例：两个反射的先后次序绝不能随便交换**。有人听说“给迭代算符乘个整体 $-1$ 不影响测量概率”，便误以为“反正都是两个反射相乘，$D S_G$ 和 $S_G D$ 谁先谁后都一样”。拿 $a = 1/4$（$\theta = \pi/6$）当场算给它看：
 
@@ -880,7 +877,10 @@ $$
 - 阶段 ③ 结束：$q_0$ 相位为 $0.1_2 = \frac{1}{2}$，态为 $\frac{|0\rangle - |1\rangle}{\sqrt{2}}$；
 - 末尾 $\mathrm{SWAP}(q_2, q_0)$ 后，输出张量积为 $\frac{|0\rangle - |1\rangle}{\sqrt{2}} \otimes \frac{|0\rangle + i|1\rangle}{\sqrt{2}} \otimes \frac{|0\rangle + e^{i 5\pi/4}|1\rangle}{\sqrt{2}}$。随机抽查 $|y\rangle = |011\rangle$（$y=3$）的系数：$\frac{1}{\sqrt{8}} \cdot 1 \cdot i \cdot e^{i 5\pi/4} = \frac{1}{\sqrt{8}} e^{i(\pi/2 + 5\pi/4)} = \frac{1}{\sqrt{8}} e^{i 7\pi/4}$，对照定义式 $\frac{1}{\sqrt{8}} e^{2\pi i \cdot 5\cdot 3/8} = \frac{1}{\sqrt{8}} e^{i 15\pi/4} = \frac{1}{\sqrt{8}} e^{i 7\pi/4}$，完全吻合！
 
-> **端序与 SWAP 提醒**：标准电路里若省略末尾的 $\lfloor n/2 \rfloor$ 个 SWAP 门，输出比特的高低位顺序会完全颠倒。在线路紧接着测量的场景里（如 QPE 与 Shor 末尾），工程上常省略硬件 SWAP、改在经典读出后把测量位串倒序重排；但无论省不省，公式、电路图和代码必须明写端序约定。
+> **正、逆 QFT 的反序分别在输出和输入**。令 $P$ 反转比特、$C$ 是省去末尾 SWAP 的正向电路，则 $F=PC$，所以正向 $C=PF$ 的输出可以直接用反序的读出标签。逆向有 $F^\dagger=C^\dagger P$，此时 SWAP 在入口：单独删去它会把错误的相位态送入 $C^\dagger$。在 QPE 或 Shor 中，要省这组入口 SWAP，还须把制备相位态的受控幂反接，使输入从 $|\psi_\phi\rangle$ 变为 $P|\psi_\phi\rangle$。这样 $C^\dagger P|\psi_\phi\rangle=F^\dagger|\psi_\phi\rangle$，输出仍按原大端序读。
+
+以 $Q=4,\phi=1/4$ 为例，大端控制线原来从上到下接 $U^2,U$。完整接线确定读出 $01$；只删逆 QFT 入口 SWAP，或只反接受控幂并保留完整逆 QFT，两种情况都给大端概率 $(0,1/4,1/2,1/4)$。若改接 $U,U^2$ 并省入口 SWAP，就恢复确定读数 $01$。[相位估计原始线路](https://arxiv.org/abs/quant-ph/9708016)；[可复算接线与位宽的脚本](../codes/algorithms/qpe_modular_checks.py)。
+
 
 ### 5.3 QFT 与经典 FFT 的本质差异
 
@@ -890,7 +890,7 @@ $$
 |---|---|---|---|
 | **输入形式** | 内存里存好的经典复数组 $x \in \mathbb{C}^N$ | 已经准备好的 $n$ 比特量子振幅态 $\sum_x c_x \lvert x\rangle$ | 漏算把一般经典数组装载成量子态需 $\Omega(N)$ 门 |
 | **变换门数 / 步数** | $O(N\log_2 N) = O(n 2^n)$ 次算术运算 | 精确 $O(n^2)$ 门；近似 AQFT 为 $O(n\log_2(n/\epsilon))$ 门 | 把门数比直接当成“全频谱计算指数加速” |
-| **输出与读出** | 直接得到全部 $N$ 个复频谱系数 | 单次测量只能按 $\lvert y_k\rvert^2$ 随机抽样出 **1 个** 整数索引 | 想读出全部 $N$ 个系数至少要 $\Omega(N)$ 次重复测量 |
+| **输出与读出** | 直接得到全部 $N$ 个复频谱系数 | 单次测量只能按 $\lvert y_k\rvert^2$ 随机抽样出 **1 个** 整数索引 | 经典写出全部系数至少需 $N$ 个输出位置。量子端反复测计算基也只给出模平方，相对相位需其他测量 |
 | **真正擅长场景** | 通用信号处理、卷积、滤波、图像压缩 | 提取隐藏周期、本征相位等全局结构（Shor / QPE） | 试图用 QFT 替代日常工程里的音频或雷达 FFT |
 
 ### 5.4 近似 QFT 与动态电路前沿进展
@@ -1025,7 +1025,16 @@ $$
 \Pr(y^*) \ge \frac{4}{\pi^2} \approx 0.4053.
 $$
 
-即使在最坏情况下（$\phi$ 恰好卡在两个相邻网格点正中间，两边各距 $\frac{1}{2Q}$），那**两个最近网格点**各自概率都不低于 $4/\pi^2$，所以落在距离 $\phi$ 最近的这两个网格点之一的总概率恒满足 $\ge \frac{8}{\pi^2} \approx 0.8106$！
+若相位恰在格点，读数概率为 $1$。若 $Q=2$，两个最近格点已是全部可能输出。对 $Q>2$ 的非整格相位，记 $Q\phi$ 的小数部分为 $x\in(0,1)$，最近两个点的概率和是
+
+$$
+\frac{\sin^2(\pi x)}{Q^2}
+\left[\frac1{\sin^2(\pi x/Q)}+\frac1{\sin^2(\pi(1-x)/Q)}\right]
+\ \ge\ \frac{\sin^2(\pi x)}{\pi^2}\left[\frac1{x^2}+\frac1{(1-x)^2}\right]
+\ \ge\ \frac8{\pi^2}.
+$$
+
+第一步用 $\sin z\le z$，最后一步用右侧表达式在 $x=1/2$ 处的最小值。两点都在相位真值的一格圆周距离内。[BHMT，2002，定理 11 的证明](https://arxiv.org/pdf/quant-ph/0005055v1#page=17)。
 
 那如果要以至少 $1 - \delta$ 的概率保证圆周误差 $d_{\mathbb{T}}(\phi, y/Q) \le 2^{-n}$（注意这里的 $2^{-n}$ 是全格误差容差，不同于更严格的 $2^{-(n+1)}$ 半格四舍五入界），需要多少个控制比特？Nielsen 与 Chuang（§5.2.1）通过给远离峰值的旁瓣尾项求和，给出了标准额外控制位定理：除了目标精度所需的 $n$ 位之外，再多加几根辅助控制线，取总控制位数为
 
@@ -1103,7 +1112,7 @@ p(y) = \sum_j |c_j|^2\,|A_y(\phi_j)|^2, \qquad
 |\psi_y\rangle = \frac{\sum_j c_j A_y(\phi_j)\,|u_j\rangle}{\sqrt{p(y)}} \quad \bigl(p(y) > 0\bigr).
 $$
 
-只有当所有 $\phi_j$ 都精准落在**互不相同的网格点**上时，$A_y(\phi_j)$ 才是一张精准的“开关表”，测量才会把系统完美投影到对应本征态（若存在简并，则投影到该简并本征子空间）。在一般非精确网格下，不同本征相位的分布拖尾会互相重叠！
+互不相同的相位若全都在格点上，任意有效读数都精确投影到相应本征子空间。对指定读数 $y$，只须检查其振幅核是否恰好消去其余分量。例如取 $Q=4$、$\phi_0=1/3$、$\phi_1=1/2$，观测 $y=1$ 时 $|A_1(1/3)|^2=(6+3\sqrt3)/16\approx0.699760$，而 $A_1(1/2)=0$。若原来含有第一本征态，后选就精确留下它，虽然其相位并未落在格点上。一般的拖尾重叠会留下多项本征分量。
 
 算一个最小例子亲眼看看。取 $|\psi\rangle = \frac{|u_0\rangle + |u_1\rangle}{\sqrt{2}}$（$|c_0|^2 = |c_1|^2 = 1/2$），本征相位 $\phi_0 = 1/3,\, \phi_1 = 2/3$，控制位数 $t = 2$（$Q = 4$）。观察读出 $y = 1$（估计相位 $1/4$）时的情形：由对称性，$|A_1(2/3)|^2 = |A_3(1/3)|^2$，直接借用 6.3 节算例 1 的表，
 
@@ -1176,17 +1185,21 @@ QPE 原生输出的整数 $y \in \{0, \dots, Q-1\}$ 只对应圆周 $[0, 1)$ 上
 
   两个相反的特征值映射到了完全相同的酉本征值 $-1$（就像经典采样定理里的 **Nyquist 临界频率端点混叠**），哪怕用无限精度、零噪声的 QPE 也绝无可能把它们分开！所以谱界必须严格留出安全余量，把 $\pm\Lambda$ 排除在合法输入之外。
 
+有限网格的安全裕量还取决于相位误差。例如 $\Lambda=4,Q=8,\lambda=3.9$ 时，真实相位 $0.4875$ 已靠近补码分界，QPE 约以 $0.968029$ 的概率读到 $100$，按表解出 $-4$。若要在相位圆周误差不超过 $\epsilon_\phi$ 的事件内可靠搬回线性谱，须留出 $\Lambda-|\lambda|>2\Lambda\epsilon_\phi$；若还要求保住符号，也要让 $|\lambda|>2\Lambda\epsilon_\phi$。
+
 另外留个伏笔：若真实特征值不在整数网格上，例如 $\lambda = -1.1$，其相位为 $\phi = \frac{-1.1}{8} \pmod 1 = 0.8625$（介于 `110` 的 $0.75$ 和 `111` 的 $0.875$ 之间），QPE 之后八个标签全都会带上非零振幅。在[第 07 章第 6.4 节](07-algorithms.md#64-进阶选读第三级手算负特征值非网格谱泄漏与反计算垃圾方差)分析 HHL 时，这正是“非网格谱泄漏导致逆 QPE 无法彻底清零相位寄存器”的根源。
 
 ### 6.6 量子计数：$\mathcal{Q}$ 与 QPE 的首次合体
 
 现在把第 4 节的振幅放大与本节的 QPE 真正扣在一起，做出它们最经典的合体应用——**量子计数**（Quantum Counting；Brassard–Høyer–Tapp, ICALP 1998；Nielsen & Chuang §6.3）。
 
-**问题定义**：给定规模为 $N = 2^n$ 的搜索空间与好态相位预言机 $S_G$，但目标个数 $M \in \{0, 1, \dots, N\}$ 事先**完全未知**。如何不必把所有解逐一搜出来，就高效估出 $M$（甚至快速判断究竟有没有解）？经典随机抽样想把 $M$ 估到误差 $O(\sqrt{M} + 1)$，最坏需要 $\Omega(N)$ 次查询；量子计数仅需 $O(\sqrt{N})$ 次查询！
+给定规模 $N=2^n$ 的搜索空间和布尔谓词 $f$，设 $M$ 为满足 $f(x)=1$ 的个数。这里需要提供相位约定固定的受控 $S_G$，或提供位应答接口 $U_f:|x,b\rangle\mapsto|x,b\oplus f(x)\rangle$。后者可先在临时位上算出 $f(x)$，对控制线和这根临时线施 $\mathrm{CZ}$，再用 $U_f^\dagger$ 清回临时位。单独的相位黑盒 $S_G$ 和互补函数的 $-S_G$ 诱导同一无受控输入输出信道，却对应 $M$ 和 $N-M$ 两个计数。全不标记与全标记就是一对极端反例。[受控黑盒的相位限制](https://arxiv.org/abs/1309.7976)。
+
+对已有受控访问的计数线路，做到加性误差 $O(\sqrt M+1)$，固定成功率的量子查询数为 $O(\sqrt N)$，经典查同一位应答预言机在最坏情形需 $\Omega(N)$ 次。
 
 #### 串联推导与误差传递
 
-1. **直接复用第 4.3 节的谱分解**：令均匀叠加初态 $|s\rangle = H^{\otimes n}|0^n\rangle = \cos\theta\,|B\rangle + \sin\theta\,|G\rangle$，其中 $\sin^2\theta = M/N$、$\theta \in [0, \pi/2]$。第 4.3 节已经证明，Grover 算符 $\mathcal{Q} = D S_G$ 在二维平面内的两个正交本征态 $|\Psi_\pm\rangle$ 对应特征值 $e^{\pm 2i\theta} = e^{2\pi i(\pm\theta/\pi)}$，且初态恰好是两者的等权叠加：
+1. **对 $0<M<N$ 复用第 4.3 节的谱分解**：令均匀叠加初态 $|s\rangle = H^{\otimes n}|0^n\rangle = \cos\theta\,|B\rangle + \sin\theta\,|G\rangle$，其中 $\sin^2\theta = M/N$、$\theta \in [0, \pi/2]$。第 4.3 节已经证明，Grover 算符 $\mathcal{Q} = D S_G$ 在二维平面内的两个正交本征态 $|\Psi_\pm\rangle$ 对应特征值 $e^{\pm 2i\theta} = e^{2\pi i(\pm\theta/\pi)}$，且初态恰好是两者的等权叠加：
 
    $$
    |s\rangle = \frac{e^{i\theta}|\Psi_+\rangle + e^{-i\theta}|\Psi_-\rangle}{\sqrt{2}}.
@@ -1214,7 +1227,9 @@ QPE 原生输出的整数 $y \in \{0, \dots, Q-1\}$ 只对应圆周 $[0, 1)$ 上
    \end{aligned}
    $$
 
-这条不等式一目了然：只需取 $Q = \Theta(\sqrt{N})$（即 $t \approx n/2$ 个控制位，顺序消耗 $Q - 1 = O(\sqrt{N})$ 次受控 $\mathcal{Q}$），目标数误差立刻被压到 $|\widehat{M} - M| = O(\sqrt{M} + 1)$！更妙的是无解特例：$M = 0$ 时 $\theta = 0$，本征值恒为 $1$，QPE 以 **100% 确定概率**命中 $y = 0$（给出 $\widehat{M} = 0$），从而可用来高效检验搜索问题是否有解。
+若 $Q=\Theta(\sqrt N)$，总共调用 $Q-1$ 次受控 $\mathcal Q$，上界变为 $O(\sqrt M+1)$。端点可直接计算：$D|s\rangle=|s\rangle$，当 $M=0$ 时 $S_G=I$，所以确定读出 $y=0$。当 $M=N$ 时 $S_G=-I$，所以 $Q\ge2$ 时确定读出 $y=Q/2$。
+
+若只检验有没有解，$y=0$ 也可能来自正的非整格计数，属于单侧漏检。取 $Q>\pi/\arcsin(1/\sqrt N)$，则任何 $M\ge1$ 的两支相位都离零超过 $1/Q$，一格精度保证把单次漏检率限制在 $1-8/\pi^2$ 以下。独立运行 $r$ 次、任一次读出非零即报告有解，则漏检率至多 $(1-8/\pi^2)^r$。下节 $N=16,M=4,Q=16$ 的相位正好演示读零仍有概率 $|A_0(1/6)|^2=3/256$。
 
 #### 非精确网格实算（$N = 16,\, M = 4$）
 
@@ -1569,7 +1584,8 @@ U_{\mathrm{QRAM}} \sum_{j=0}^{N-1} \alpha_j |j\rangle_{\mathrm{addr}} |0\rangle_
 = \sum_{j=0}^{N-1} \alpha_j |j\rangle_{\mathrm{addr}} |D[j]\rangle_{\mathrm{bus}}.
 $$
 
-如果老老实实用常规量子门硬写这个查找表——也就是逐一检查地址是不是 $0, 1, \dots, N-1$，对每条记录放一个 $n$-控门把 $D[j]$ 写进总线（即朴素 **Fan-out** 架构或直接编译的 **QROM** 电路）——光是执行**一次**查询就需要 $\Theta(N)$ 个门！把 $\Theta(N)$ 的单次装载塞进原本只需 $O(\sqrt{N})$ 次查询的 Grover 搜索，总门数立刻变成 $\Omega(N^{3/2})$，比经典顺序扫描 $O(N)$ 还慢；塞进原本只需 $O(\operatorname{polylog} N)$ 的 HHL，指数优势当场清零。
+直接编译的 QROM 可逐个比较地址；每匹配一项便把该项的 $w$ 位字异或到总线上。若地址按串行扫描，最坏情形要经过 $\Theta(N)$ 个地址比较和至多 $Nw$ 个数据写门，量子分解成本还取决于 $n$ 控门的实现。并行 fan-out QRAM 是另一种路由电路，可在理想调度下降低深度，但需要全树硬件。比较两种方案时应单列建表、初始化、查询次数和单次线路成本。
+
 
 ### 9.2 桶队 QRAM（Bucket-Brigade）二叉树架构与 $N = 4$ 四步手算
 
@@ -1599,36 +1615,33 @@ $$
    \frac{|01\rangle_{\mathrm{addr}}|d_1\rangle_{\mathrm{bus}} + |10\rangle_{\mathrm{addr}}|d_2\rangle_{\mathrm{bus}}}{\sqrt{2}} \otimes |\text{wait}\rangle^{\otimes 3}!
    $$
 
-看清这里的核心直觉：**尽管整棵树的物理硬件总数仍是 $O(N)$ 个器件，但在每一条叠加分支中，每次查询真正被激活并参与相干交互的节点只有沿根到叶的 $n = \log_2 N$ 个开关**，其余 $N - 1 - \log_2 N$ 个节点全程休眠不动。因此，单次查询的**逻辑电路深度（延迟）从 $\Theta(N)$ 指数压缩到了 $O(\log_2 N)$**！
+看清这里的核心直觉：**尽管整棵树的物理硬件总数仍是 $O(N)$ 个器件，但在每一条叠加分支中，每次查询真正被激活并参与相干交互的节点只有沿根到叶的 $n = \log_2 N$ 个开关**，其余 $N - 1 - \log_2 N$ 个节点全程休眠不动。在并行访问各层路由器件的架构中，固定字长的查询深度可做成 $O(\log_2 N)$。若逐一传送地址位，路径上的活跃门交互总数与并行电路深度仍各自计费。
 
 ### 9.3 进阶选读：噪声韧性、工程机会成本批判与显式 `PREPARE/SELECT`、QROM 门级电路
 
 Bucket-Brigade 在纸面上如此优雅，为什么十几年过去了，还没有一台实用化的十亿级 QRAM 问世？近年两篇重量级论文把这场乐观与冷静的争论推进到了极为精确的定量层面：
 
 - **乐观面——意外强悍的噪声韧性（Hann–Lee–Girvin–Jiang, *PRX Quantum* 2, 020311, 2021）**：早期质疑者担心，路由树里有 $O(N)$ 个物理器件，只要任意一个节点发生退相干（物理误差率 $\epsilon_{\mathrm{phys}}$），整个查询就会报废（误差按 $O(\epsilon_{\mathrm{phys}} N)$ 爆炸）。Hann 等人严格证明这是误判：因为每条叠加分支只经过 $O(\log_2 N)$ 个激活节点，休眠分支上的局域噪声几乎不与主路径纠缠，Bucket-Brigade 的查询不保真度仅按 **$O\bigl(\epsilon_{\mathrm{phys}} \log_2^2 N\bigr)$**（多对数）缓慢增长，比 Fan-out 架构灾难性的 $O(\epsilon_{\mathrm{phys}} N)$ 强韧得多！
-- **冷静面——物理规模墙与“机会成本论证”（Jaques & Rattew, *Quantum* 9, 1666, 2025；原 `arXiv:2305.10310`）**：即便过了多对数噪声韧性这一关，Jaques 与 Rattew 系统指出了三道极难绕过的工程硬墙：
+- **冷静面——物理规模墙与“机会成本论证”（Jaques & Rattew, *Quantum* 9, 1922, 2025；原 `arXiv:2305.10310`）**：即便过了多对数噪声韧性这一关，Jaques 与 Rattew 系统指出了三道极难绕过的工程硬墙：
   1. **硬件、散热与控制线仍是 $\Omega(N)$**：存 $N = 10^9$ 条数据依然要造出并精密控制十亿个低温相干量子开关，其芯片面积、串扰与制冷功率按 $\Omega(N)$ 增长；
   2. **主动纠错 QRAM 的“机会成本论证”（Opportunity Cost Argument）**：如果要把路由树的每个开关都做成容错逻辑比特（主动 QRAM）来支撑深度算法，你就必须先拥有 $O(N)$ 个逻辑量子计算单元的庞大物理基础设施。把同等规模的硬件投入造一台经典并行处理器集群，本来就能在 $O(\log_2 N)$ 墙钟时间内并行扫完整个数据库——把硬件折算进同一条起跑线后，依赖主动 QRAM 的 Grover 搜索甚至彻底丧失了相对经典并行的墙钟优势！
   3. **被动/弹道式 QRAM 的容错极限**：若不做主动纠错（靠光子/声子路由），当算法需要连续调用百万次以上查询时，即便不保真度仅按 $\operatorname{polylog}(N)$ 增长，所需的物理组件保真度底线仍远超当今工艺水平。
 
 **务实替代方案：可编译 QROM 与 SelectSwap 时空折中**。正因大规模硬件 QRAM 短期难以落地，当前面向容错量子计算的严肃资源估算（如[第 07 章第 2.5 节](07-algorithms.md#25-进阶选读拆开黑盒模幂运算-ax-bmod-n-的可逆算术电路与门数演进)的 Gidney 窗口模幂与[第 5.4 节](07-algorithms.md#54-进阶选读多比特泡利指数门分解自旋费米子实算与-trotter-vs-量子化分水岭)的 FeMoco 张量超收缩）都不假设存在免费的十亿级硬件 QRAM，而是改用纯逻辑门编译的小规模 **QROM**（Quantum Read-Only Memory；Babbush et al., *PRX* 2018）以及 **SelectSwap** 时空权衡网络（Low–Kliuchnikov–Schaeffer, 2018）：借助可调参数 $\lambda_{\mathrm{sw}}$ 份辅助寄存器并行读出再交换，把 $T$ 门数与电路深度折中压到 $O(\sqrt{N})$ 量级，专门用来查几百到几万项的小型预计算常数表。
 
-| 存储查询方案 | 物理硬件 / 辅助位规模 | 单次查询电路深度 | 单次查询门数（全树 $T$ 门 vs 单分支活跃开销） | 局域噪声下查询不保真度 | 现实定位 |
-|---|---:|---:|---|---:|---|
-| **Fan-out QRAM** | $O(N)$ | $O(\log_2 N)$ | $\Theta(N)$（全树节点均被激活） | $O(\epsilon_{\mathrm{phys}} N)$（极脆弱） | 理论原型，噪声不可扩展 |
-| **桶队 QRAM**（Bucket-Brigade，Giovannetti 2008） | $O(N)$ 物理路由开关 | **$O(\log_2 N)$** | 主动容错全树总门数 **$\Theta(N)$**；单分支仅激活 $O(\log_2 N)$ 个路由器开关，逐位路由累计 **$\Theta(\log_2^2 N)$** 次活跃门交互 | **$O(\epsilon_{\mathrm{phys}}\log_2^2 N)$**（Hann 2021） | 延迟最优，但面临 $\Omega(N)$ 硬件、全树 $T$ 门与机会成本壁垒 |
-| **SelectSwap QROM**（Babbush 2018 / Low 2018） | $O(\sqrt{N})$ 逻辑辅助位（可调） | $O(\sqrt{N})$（可调） | **$O(\sqrt{N})$ Toffoli/$T$** | 经标准容错纠错保护 | **当今容错算法编译的务实主力**（小中规模查表） |
+| 存储查询方案 | 数据初始化 | 物理硬件 / 辅助位规模 | 单分支活跃开关 | 单次查询电路深度 | 单次查询门数与条件 |
+|---|---|---|---|---|---|
+| **Fan-out QRAM** | $N$ 个 $w$ 位字 | $O(N)$ 个路由器件 | $\Theta(N)$ | 固定 $w$、并行分层时 $O(\log_2 N)$ | 全树路由 $\Theta(N)$ 级门，另计数据访问 |
+| **桶队 QRAM** | $N$ 个 $w$ 位字 | $O(N)$ 个物理路由开关 | $O(\log_2 N)$ | 固定 $w$、并行分层时 $O(\log_2 N)$ | 逐位地址注入的单分支活跃交互 $\Theta(\log_2^2 N)$，遍历全树的主动电路另计 |
+| **SelectSwap QROM** | 编译经典常数表 | 分组宽度 $\lambda_{\mathrm{sw}}$ 需 $O(w\lambda_{\mathrm{sw}})$ 逻辑辅助位 | 不使用路由开关 | 依门分解、分组及并行度 | 非 Clifford 成本按 $O(N/\lambda_{\mathrm{sw}}+w\lambda_{\mathrm{sw}})$ 折中，固定 $w$ 时可取 $O(\sqrt N)$ |
 
 > 注：桶队 QRAM 的三项查询开销口径务必分清——① 单条计算基分支每次查询被激活的路由器**开关数**确为 $O(\log_2 N)$；② 将 $n = \log_2 N$ 位地址逐位送入树顶并沿已刻路径向下转发时，第 $k$ 位地址须经 $k$ 级开关交互，单分支累计的**活跃门交互次数**为 $\sum_{k=1}^{n} k = \Theta(\log_2^2 N)$，这正是 Hann（2021）查询不保真度 $O(\epsilon_{\mathrm{phys}}\log_2^2 N)$ 的直接来源；③ 而在标准主动容错电路（$T$/Toffoli 门）模型下，由于地址处于全部 $N$ 项的相干叠加，树上全部 $N - 1$ 个内部节点都必须部署受控路由门，全树单次查询总门数仍为 $\Theta(N)$。
 
 #### 显式 6 门 `PREPARE/SELECT` 块编码电路（$H = 0.6X + 0.8Z$）
 
-在现代容错算法（如[第 07 章第 5 节](07-algorithms.md#5-哈密顿量模拟从-trotter多体电路到-qdrift-与无快进定理)的量子化模拟与[第 16 章第 5—6 节](16-advanced-algorithms-verification.md#5-现代统一算法栈上输入模型lcu-与块编码)的 LCU/QSVT）中，哈密顿量 $H = \sum_{\ell=0}^{L-1} \alpha_\ell U_\ell$（$\alpha_\ell > 0$，$\alpha = \sum_\ell \alpha_\ell$）通过两个标准原语装进更大酉矩阵 $U = (\operatorname{PREPARE}^\dagger \otimes I)\operatorname{SELECT}(\operatorname{PREPARE}\otimes I)$ 的左上块 $H/\alpha$：
+这里用这一公共接口做门级接线。一般酉线性组合、相位约定、闲置地址和完整 $4\times4$ 矩阵见[第 16 章第 5.2 节](16-advanced-algorithms-verification.md#52-酉线性组合lcu用完整-4times-4-矩阵跑通-h--06x--08z)。本例把 $H=0.6X+0.8Z$ 按 $\alpha=1.4$ 归一化，准备两支权重 $3/7,4/7$，对系统位分别选择 $X,Z$，再反算系数制备。
 
-- **$\operatorname{PREPARE}$**：把辅助位 $|0\rangle_a$ 备成系数平方根叠加态 $\sum_\ell \sqrt{\alpha_\ell/\alpha}\,|\ell\rangle_a$；
-- **$\operatorname{SELECT}$**：按辅助位索引 $|\ell\rangle_a$ 对系统寄存器受控施加对应的酉门 $U_\ell$。
-
-为了不把它们停留在抽象方框里，我们把两项哈密顿量 $H = 0.6 X + 0.8 Z$（$\alpha = 0.6 + 0.8 = 1.4$，大端序 $|a\rangle|s\rangle$）直接编译成**仅仅 6 个基本量子门**的显式 2 比特块编码电路：
+取大端序 $|a\rangle|s\rangle$，将这三个操作编译成 6 个基本量子门。
 
 1. **编译 $\operatorname{PREPARE}$**：需将 $|0\rangle_a$ 映为 $\sqrt{3/7}\,|0\rangle_a + \sqrt{4/7}\,|1\rangle_a$。取单比特旋转门 $\operatorname{PREPARE} = R_y(\theta)$，其中 $\cos(\theta/2) = \sqrt{3/7}$、$\sin(\theta/2) = \sqrt{4/7}$，即 $\theta = 2\arccos\sqrt{3/7} \approx 1.7141\,\mathrm{rad}$。
 2. **编译 $\operatorname{SELECT} = |0\rangle\langle 0|\otimes X + |1\rangle\langle 1|\otimes Z$**：用 1 个 $\mathrm{CZ}$ 处理 $|1\rangle_a$ 分支的 $Z$，用两侧夹 $X_a$ 的 0-控 $\mathrm{CNOT}$ 处理 $|0\rangle_a$ 分支的 $X$：
@@ -1667,7 +1680,10 @@ Bucket-Brigade 在纸面上如此优雅，为什么十几年过去了，还没�
 3. **清零并切换右子树 `10`**：施 $X_{a_0}$ 后对 $(a_1, a_0 \to w)$ 做临时逻辑与反计算（0 个 $T$ 门，$w$ 清回 $|0\rangle$）；再施 $X_{a_1}, X_{a_0}$ 使地址位呈 $(a_1, \bar a_0)$，执行第 2 个临时逻辑与 $\mathrm{AND}(a_1, a_0 \to w)$ 得 $w = a_1 \wedge \bar a_0$；若 $d_2 = 1$ 则施 $\mathrm{CNOT}(w \to b)$。
 4. **零 $T$ 门切换至 `11` 并收尾**：施 $\mathrm{CNOT}(a_1 \to w)$ 得 $w = a_1 \wedge a_0$；若 $d_3 = 1$ 则施 $\mathrm{CNOT}(w \to b)$；最后施 $X_{a_0}$ 并对 $(a_1, a_0 \to w)$ 做反计算清零，$w$ 干净归回 $|0\rangle$，输出 $\sum_j \alpha_j |j\rangle |0\rangle_w |d_j\rangle_b$。
 
-若外加 1 根全局控制位 $c$（即受控 `SELECT`），则先用 1 个临时逻辑与算出 $w_1 = c \wedge \bar a_1$、切换右半树时仅用 1 个 $\mathrm{CNOT}(c \to w_1)$ 翻成 $c \wedge a_1$，共耗严格 $L - 1 = 3$ 个临时逻辑与（12 个 $T$ 门）。配合 Babbush 等人提出的**相干别名采样（Coherent Alias Sampling）** 实现 `PREPARE`——把经典预计算好的概率阈值与别名索引装进同一套 QROM 表，只需一次整数比较器和受控交换就能精确制备任意 $L$ 项权重叠加，绕开昂贵的量子平方根与 $\arcsin$ 算术——这套组合构成了现代容错化学与物理模拟块编码的基础工程构件（上述 6 门 `PREPARE/SELECT` 与全部 16 张 4 项 QROM 数据表均已在[第二篇综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)中逐振幅断言通过）。
+若外加 1 根全局控制位 $c$（即受控查表），先用一个临时逻辑与算出 $w_1=c\wedge\bar a_1$，切换右半树只用 $\mathrm{CNOT}(c\to w_1)$ 翻成 $c\wedge a_1$，共需 $L-1=3$ 个临时逻辑与（12 个 $T$ 门）。6 门块编码与全部 16 张 4 项一位 QROM 表均可用[算法综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)复算。
+
+**相干别名采样**用同一个 QROM 保存每个索引的整数阈值和别名，再由阈值比较和受控交换选择输出索引。若最初均匀叠加 $L$ 个地址和 $2^\mu$ 个阈值，输出的概率是 $1/(L2^\mu)$ 的整数倍。例如 $L=2$ 时，任意有限 $\mu$ 都无法精确表示 $1/3$；若 $\mu=2$，接近该值的格点是 $3/8$，相差 $1/24$。制备的联合态可写作 $\sum_j\sqrt{\widetilde p_j}|j\rangle|\mathrm{temp}_j\rangle$。只保留索引时，非对角项会乘上 $\langle\mathrm{temp}_k|\mathrm{temp}_j\rangle$。用于块编码时，$\operatorname{SELECT}$ 按索引控制但在临时位上作用恒等，然后用完整 $\operatorname{PREPARE}^\dagger$ 反算，避免跟踪得分所需的辅助态被误丢弃。[Babbush 等，2018，图 11 和式 (34)–(38)](https://arxiv.org/pdf/1805.03662#page=14)。
+
 
 ---
 
@@ -1749,26 +1765,28 @@ $$
 
 - **首遍通关自测三句话**：① 为什么把工作比特 reset 到 $|0\rangle$ 不能挽救干涉？② 为什么振幅放大迭代过多会让成功率下降，且把 $\mathcal{Q}$ 放进受控门时必须保留 $S_0$ 的负号？③ 为什么 QPE 的误差必须用圆周距离衡量，且顺序实现受控幂 $U^{2^j}$ 实际要调用 $2^t - 1$ 次 $U$？
 
+[第 07 章](07-algorithms.md)会用这些原语搭出完整算法。读到 Simon、Shor 或 Grover 时，先辨认预言机、干涉和测量各做了什么，再核对每个算法自己的成本口径。
+
 ---
 
 ## 自检题
 
 先合上书用纸笔一步步算完，再对照答案核查每一步的符号、归一化与边界条件。
 
-1. 逐行推导为什么 $U_f|x\rangle|-\rangle = (-1)^{f(x)}|x\rangle|-\rangle$。
-2. Deutsch–Jozsa 的精确经典基线与随机经典基线有何不同？
-3. 用振幅均值法完成目标为 $|01\rangle$ 的四项 Grover 算例。
-4. 计算 $\operatorname{QFT}_4|2\rangle$，并检查与 $\operatorname{QFT}_4|1\rangle$ 的输出正交。
-5. 为什么 QFT 高效不等于能高效输出完整经典傅里叶数组？
-6. 相位估计中 $U^{2^j}$ 的实现成本为什么必须单独说明？
-7. 把 Deutsch 问题的正确接受概率写成 $z_0, z_1$ 的多项式，并说明它为何不违背“一次查询最多得到二次接受概率”。
-8. 混合法（hybrid）下界直觉为什么只能推出特定预言机模型中的限制，而不能直接推出任意数据库系统的墙钟时间下界？
-9. 取 $f(0) = 0,\, f(1) = 1$。列出 $U_f$ 对 $|0,0\rangle, |0,1\rangle, |1,0\rangle, |1,1\rangle$ 的作用，并说明为何它可逆。
-10. 设 $U = \operatorname{diag}(1, i)$、本征态为 $|1\rangle$、用两个控制位。写出受控幂后的四个相位，说明逆 QFT 输出哪个两位串。
-11. 一般振幅放大中，初态电路为 $A$。如何由 $A$ 实现关于初态的反射？为何只数“标记查询”会低估实际线路？
-12. 对 $H = Z_A \otimes I_B + I_A \otimes X_B$、初态 $|00\rangle$，求时间 $t$ 后测得 $B=1$ 的概率。若改为同一个比特上的 $H = X + Z$，能否直接把两个指数相乘并当作精确等式？
-13. 对二选一任务，单次正确率 $2/3$，独立运行三次作多数判定，正确率是多少？若三次都受同一个系统偏差影响，为什么公式不能照搬？
-14. 令相位网格 $Q = 256$（部分文献记作 $M = 256$）、$\phi = 1/4 - 1/(10Q)$。真相位的前两位是什么？若相位估计给出 $y = 64$，只保留输出的前两位会报告什么？为什么这不代表数值估计很差？
+1. 逐行推导为什么 $U_f|x\rangle|-\rangle = (-1)^{f(x)}|x\rangle|-\rangle$。 <!-- exercise-id: 06-01 -->
+2. Deutsch–Jozsa 的精确经典基线与随机经典基线有何不同？ <!-- exercise-id: 06-02 -->
+3. 用振幅均值法完成目标为 $|01\rangle$ 的四项 Grover 算例。 <!-- exercise-id: 06-03 -->
+4. 计算 $\operatorname{QFT}_4|2\rangle$，并检查与 $\operatorname{QFT}_4|1\rangle$ 的输出正交。 <!-- exercise-id: 06-04 -->
+5. 为什么 QFT 高效不等于能高效输出完整经典傅里叶数组？ <!-- exercise-id: 06-05 -->
+6. 相位估计中 $U^{2^j}$ 的实现成本为什么必须单独说明？ <!-- exercise-id: 06-06 -->
+7. 把 Deutsch 问题中算法输出“平衡”的概率写成 $z_0,z_1$ 的多项式，并说明它为何不违背“一次查询最多得到二次接受概率”。 <!-- exercise-id: 06-07 -->
+8. 混合法（hybrid）下界直觉为什么只能推出特定预言机模型中的限制，而不能直接推出任意数据库系统的墙钟时间下界？ <!-- exercise-id: 06-08 -->
+9. 取 $f(0) = 0,\, f(1) = 1$。列出 $U_f$ 对 $|0,0\rangle, |0,1\rangle, |1,0\rangle, |1,1\rangle$ 的作用，并说明为何它可逆。 <!-- exercise-id: 06-09 -->
+10. 设 $U = \operatorname{diag}(1, i)$、本征态为 $|1\rangle$、用两个控制位。写出受控幂后的四个相位和完整逆 QFT 的输出。若只反接受控幂，或只删逆 QFT 入口 SWAP，按大端序写出四项概率。哪两处同时改变后能还原？ <!-- exercise-id: 06-10 -->
+11. 一般振幅放大中，初态电路为 $A$。如何由 $A$ 实现关于初态的反射？为何只数“标记查询”会低估实际线路？ <!-- exercise-id: 06-11 -->
+12. 对 $H = Z_A \otimes I_B + I_A \otimes X_B$、初态 $|00\rangle$，求时间 $t$ 后测得 $B=1$ 的概率。若改为同一个比特上的 $H = X + Z$，能否直接把两个指数相乘并当作精确等式？ <!-- exercise-id: 06-12 -->
+13. 对二选一任务，单次正确率 $2/3$，独立运行三次作多数判定，正确率是多少？若三次都受同一个系统偏差影响，为什么公式不能照搬？ <!-- exercise-id: 06-13 -->
+14. 令相位网格 $Q = 256$（部分文献记作 $M = 256$）、$\phi = 1/4 - 1/(10Q)$。真相位的前两位是什么？若相位估计给出 $y = 64$，只保留输出的前两位会报告什么？为什么这不代表数值估计很差？ <!-- exercise-id: 06-14 -->
 
 完整答案见[练习与答案：第 6 章](appendices/exercises.md#第-6-章)。
 
@@ -1779,7 +1797,7 @@ $$
 本章所有核心算例和反例都可以用本地纯 Python 代码复算，无需联网也不消耗云端额度，入口汇总见[算法实验册](labs/algorithms.md#实验-06-a有限相位网格与圆周距离)与[算法代码说明](../codes/algorithms/README.md)：
 
 - **有限相位网格与圆周绕回**：运行[主干实验脚本](../codes/algorithms/experiments.py)（`python3 codes/algorithms/experiments.py 06`），用复指数求和直接计算 $\phi = 1/3,\, t = 2$ 的四项分布与 $\phi = 63/64,\, t = 4$ 的绕回主峰，核对概率归一化与 $2^t - 1$ 受控调用成本；
-- **6 门 `PREPARE/SELECT`、4 项 QROM 一元迭代与固定点放大**：运行[第二篇综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)（`python3 codes/algorithms/v4_algorithms_lab.py 06`），逐格核对 $H = 0.6X + 0.8Z$ 的 6 门块编码、全部 16 张 4 项 QROM 数据表（无控 2 对 / 受控 3 对临时逻辑与）、固定点放大 $L = 3, 7$ 闭式与矩阵双路一致性及量子计数 $N = 16, M = 4$；
+- **6 门 `PREPARE/SELECT`、4 项 QROM 一元迭代与固定点放大**：运行[算法综合验算脚本](../codes/algorithms/v4_algorithms_lab.py)（`python3 codes/algorithms/v4_algorithms_lab.py 06`），逐格核对 $H = 0.6X + 0.8Z$ 的 6 门块编码、全部 16 张 4 项 QROM 数据表（无控 2 对 / 受控 3 对临时逻辑与）、固定点放大 $L = 3, 7$ 闭式与矩阵双路一致性及量子计数 $N = 16, M = 4$；
 - **Hadamard 测试符号陷阱与垃圾位偏迹**：运行[接口符号反例验算脚本](../codes/algorithms/round70_checks.py)（参数 `06`）与[偏迹与纯度独立核验脚本](../codes/algorithms/round71_checks.py)（参数 `06`），分别验算 $U = \operatorname{diag}(1, \pm i)$ 下的实部/虚部符号反转以及 $c = 3/5$ 时的密度矩阵、纯度 $17/25$ 与 $p_0 = 4/5$；
 - **有符号谱解码与端点混叠**：运行[有符号谱与端点混叠核验脚本](../codes/algorithms/round73_checks.py)（参数 `06`）核对 $\Lambda = 4,\, t = 3$ 全部八个有符号标签与 $\pm 4$ 端点混叠，也可在[受控幂与逆 QFT 完整电路复现](../codes/algorithms/sdk73/README.md)及[可逆预言机 SDK 复现实验](../codes/algorithms/sdk/README.md)中查看对应的 Cirq 与 Qualtran 本地理想模拟实现。
 
@@ -1804,6 +1822,6 @@ $$
   - C. Gidney (2018), *Halving the cost of quantum addition*, *Quantum* 2, 74（临时逻辑与 $4(n-2)$ $T$ 门）；R. Babbush et al. (2018), *Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity*, *Phys. Rev. X* 8, 041015（QROM）；G. H. Low, V. Kliuchnikov & L. Schaeffer (2018 预印本), `arXiv:1812.00954`（SelectSwap）；
   - S. Aaronson & P. Rall (2020), *Quantum Approximate Counting, Simplified*, SODA 2020；Y. Nam, Y. Su & D. Maslov (2020), *Approximate quantum Fourier transform with $O(n\log_2 n)$ T gates*, *npj Quantum Inf.* 6, 26；
   - S. Aaronson, S. Ben-David, R. Kothari, S. Rao & A. Tal (2021), *Degree vs. Approximate Degree and Quantum Implications of Huang's Sensitivity Theorem*, STOC 2021（全布尔函数 $D(f) = O(Q(f)^4)$）；
-  - C. T. Hann, G. Lee, S. M. Girvin & L. Jiang (2021), *Resilience of Quantum Random Access Memory to Generic Noise*, *PRX Quantum* 2, 020311；S. Jaques & A. G. Rattew (2025), *QRAM: A Survey and Critique*, *Quantum* 9, 1666（原 `arXiv:2305.10310`）；
+  - C. T. Hann, G. Lee, S. M. Girvin & L. Jiang (2021), *Resilience of Quantum Random Access Memory to Generic Noise*, *PRX Quantum* 2, 020311；S. Jaques & A. G. Rattew (2025), *QRAM: A Survey and Critique*, *Quantum* 9, 1922（原 `arXiv:2305.10310`）；
   - Z. Ding & L. Lin (2023), *PRX Quantum* 4, 020331 & *Quantum* 7, 1136（QCELS）；S. Greenaway, W. Pol & S. Sim (2024 预印本), `arXiv:2404.01396`（Kaiser 窗 QPE）；
   - E. Bäumer et al. (2024), *Phys. Rev. Lett.* 133, 150602（动态电路 QFT）；E. Bäumer, D. Sutter & S. Woerner (2025 预印本), `arXiv:2504.20832`（一维近邻对数深度 AQFT）；T. Khattar & C. Gidney (2025), *Rise of conditionally clean ancillae for optimizing quantum circuits*, *Quantum* 9, 1791（原 `arXiv:2407.17966`，2 辅助位对数深度多控门）。

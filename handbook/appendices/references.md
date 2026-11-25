@@ -32,7 +32,7 @@
 - C. H. Bennett, G. Brassard, C. Crépeau, R. Jozsa, A. Peres & W. K. Wootters, [Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels](https://doi.org/10.1103/PhysRevLett.70.1895), *Phys. Rev. Lett.* **70**, 1895–1899 (1993，量子隐形传态) [A｜同行评审]。
 - A. Peres, [Separability criterion for density matrices](https://doi.org/10.1103/PhysRevLett.77.1413), *Phys. Rev. Lett.* **77**, 1413–1415 (1996)；M. Horodecki, P. Horodecki & R. Horodecki, [Separability of mixed states: necessary and sufficient conditions](https://doi.org/10.1016/S0375-9601(96)00706-2), *Phys. Lett. A* **223**, 1–8 (1996，PPT 判据) [A｜同行评审]。
 - R. Landauer, [Irreversibility and Heat Generation in the Computing Process](https://doi.org/10.1147/rd.53.0183), *IBM J. Res. Dev.* **5**(3), 183–191 (1961，Landauer 擦除原理) [A｜同行评审]。
-- C. W. Helstrom, [Quantum Detection and Estimation Theory](https://doi.org/10.1016/S0076-5392(08)60869-3), Academic Press (1976，Helstrom 最优量子态判别) [A｜权威专著]。
+- C. W. Helstrom, [Quantum Detection and Estimation Theory](https://shop.elsevier.com/books/quantum-detection-and-estimation-theory/helstrom/978-0-12-340050-5), Academic Press (1976，Helstrom 最优量子态判别) [A｜权威专著]。
 - A. C. Elitzur & L. Vaidman, [Quantum mechanical interaction-free measurements](https://doi.org/10.1007/BF00736012), *Found. Phys.* **23**, 987–997 (1993)；B.-G. Englert, [Fringe visibility and which-way information: An inequality](https://doi.org/10.1103/PhysRevLett.77.2154), *Phys. Rev. Lett.* **77**, 2154–2157 (1996) [A｜同行评审]。
 
 ## 2. 算法、变分理论、微分方程与前沿计算模型

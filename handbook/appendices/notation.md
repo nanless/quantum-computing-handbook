@@ -1,6 +1,6 @@
 # 符号表与全书统一契约
 
-全书 26 章（主篇 `00`–`21` 与量子力学基础篇 `Q1`–`Q4`）、附录与配套代码共享同一套核心符号与单位约定。阅读不同章节或对接开源 SDK 时，若遇到复用字母（例如 $H$、$\Omega$、$\alpha$、$\gamma$、$\chi$），先看上下文给出的对象类型、维度与单位即可准确区分。
+全书 26 章（`00`–`21` 与 `Q1`–`Q4`）、附录与配套代码共享同一套核心符号与单位约定。阅读不同章节或对接开源 SDK 时，若遇到复用字母（例如 $H$、$\Omega$、$\alpha$、$\gamma$、$\chi$），先看上下文给出的对象类型、维度与单位即可准确区分。
 
 ## 1. 量子计算与信息核心符号
 
@@ -33,7 +33,7 @@
 | $L_k,\; \mathcal D[L](\rho)$ | 连续时间马尔可夫主方程的 Lindblad 跃迁（塌缩）算符（单位 $\mathrm{s}^{-1/2}$）及耗散超算符 $\mathcal D[L](\rho) = L\rho L^\dagger - \frac{1}{2}\{L^\dagger L, \rho\}$（见 Q2、第 05 章与第 20 章 HNLS 判据） |
 | $E_m$ | POVM 测量元素，满足 $E_m \succeq 0$ 且 $\sum_m E_m = I$，结果概率 $p_m = \operatorname{Tr}(\rho E_m)$ |
 | $\mathcal I_m$ | 量子仪器（quantum instrument）的第 $m$ 个分支映射（完全正、迹不增），$\sum_m \mathcal I_m$ 保迹；当 $p_m = \operatorname{Tr}\mathcal I_m(\rho) > 0$ 时，条件后态为 $\rho_m = \mathcal I_m(\rho)/p_m$ |
-| $\mathcal D_p,\; \widetilde{\mathcal D}_q$ | 退极化信道：$\mathcal D_p(\rho) = (1-p)\rho + p\frac{I}{2}$ 等价于随机 Pauli 形式 $\widetilde{\mathcal D}_q(\rho) = (1-q)\rho + \frac{q}{3}(X\rho X + Y\rho Y + Z\rho Z)$，其中 $q = \frac{3}{4}p$；Stim `DEPOLARIZE1(q)` 对应平均门不保真度 $r = 2q/3$ |
+| $\mathcal D_p,\; \widetilde{\mathcal D}_q$ | 单比特退极化信道：$\mathcal D_p(\rho) = (1-p)\rho + p I/2$ 的替换概率为 $0\le p\le 1$；$\widetilde{\mathcal D}_q(\rho)=(1-q)\rho+\frac{q}{3}(X\rho X+Y\rho Y+Z\rho Z)$ 的总 Pauli 错误概率为 $0\le q\le1$，两式按 $q=3p/4$ 对应。$q>3/4$ 映到 $p>1$，此时 $p$ 是仿射参数。Stim `DEPOLARIZE1(q)` 对应平均门不保真度 $r=2q/3$ |
 | $q = A p$ | 读出混淆矩阵约定：全书统一按**列随机**定义（列对应真实态、行对应报告结果）；部分软件按行存储，二者互为转置 |
 | $z_i,\; s_i$（QUBO / Ising） | Pauli 特征值变量 $z_i = 1 - 2x_i$（$x_i=0 \leftrightarrow +1,\; x_i=1 \leftrightarrow -1$）；退火软件常用自旋 $s_i = 2x_i - 1 = -z_i$，一阶项反号、二阶项同号 |
 | $\lVert v\rVert,\; \lVert A\rVert_1,\; \lVert A\rVert_\infty$ | 向量欧氏范数、矩阵迹范数 $\operatorname{Tr}\sqrt{A^\dagger A}$、算符谱范数（最大奇异值） |
@@ -45,6 +45,8 @@
 | $\oplus,\; \mathbb F_2,\; x \cdot y$ | 模 2 加法（异或）、二元有限域 $\{0,1\}$、$\mathbb F_2$ 上按位内积（结果取模 2） |
 | $\mathcal P_n,\; \mathcal C_n,\; \mathcal S$ | $n$-比特 Pauli 群（含全局相位 $\{\pm 1,\pm i\}$）、将 $\mathcal P_n$ 共轭映射到自身的 Clifford 群 $\mathcal C_n$，以及不含 $-I$ 的阿贝尔稳定子群 $\mathcal S \subset \mathcal P_n$ |
 | $[[n, k, d]]$ | 用 $n$ 个物理量子比特编码 $k$ 个逻辑量子比特、码距为 $d$ 的量子纠错码 |
+| $\mathcal S,\overline{\mathcal S}$ | $\mathcal S$ 是定义共同 $+1$ 码空间的稳定子群，$\overline{\mathcal S}=\langle iI,\mathcal S\rangle$ 纳入 Pauli 的四个全局相位 |
+| $N(\mathcal S)/\overline{\mathcal S}$ | 第 10、21 章的射影逻辑 Pauli 群。码距在 $N(\mathcal S)\setminus\overline{\mathcal S}$ 中取最小 Pauli 权重 |
 | $H(X),\; h_2(p),\; S(\rho)$ | 经典 Shannon 熵 $-\sum_x p(x)\log_2 p(x)$、二元熵函数 $h_2(p) = -p\log_2 p - (1-p)\log_2(1-p)$（$p\in[0,1]$，约定 $0\log_2 0 = 0$）、量子 von Neumann 熵 $-\operatorname{Tr}(\rho\log_2 \rho)$ |
 | $I(A:B),\; I(A:C\mid B)$ | 量子互信息 $S(A)+S(B)-S(AB)$、条件互信息 $S(AB)+S(BC)-S(B)-S(ABC)$ |
 | $T(\rho,\sigma)$ | 迹距离 $\lVert\rho - \sigma\rVert_1 / 2$，决定最优单次量子态判别成功率 |
@@ -56,18 +58,18 @@
 | $D(\rho\Vert\sigma),\; D_H^\epsilon(\rho\Vert\sigma)$ | 量子相对熵 $\operatorname{Tr}[\rho(\log_2\rho - \log_2\sigma)]$、第一类错误不超过 $\epsilon$ 的假设检验相对熵 |
 | $I_c(\rho,\mathcal E)$ | 相干信息 $S(B) - S(RB) = -S(R\mid B)$，正则化后决定量子容量 |
 | $C, Q, P, C_E,\; C_{\mathrm{PLOB}}(\eta)$ | 无辅助经典容量、量子容量、私密经典容量、纠缠辅助经典容量，以及纯损耗信道透过率 $\eta\in(0,1)$ 下的无中继私密/量子容量上限 $C_{\mathrm{PLOB}}(\eta) = -\log_2(1-\eta)$（单位 $\mathrm{bit/use}$） |
-| $\mathcal N(\rho),\; E_N(\rho),\; C_{\mathrm{conc}}(\rho)$ | 二分态**负性** $\mathcal N(\rho) = (\lVert\rho^{T_B}\rVert_1 - 1)/2$、对数负性 $E_N(\rho) = \log_2(1 + 2\mathcal N(\rho))$、两比特共生度 $C_{\mathrm{conc}}(\rho)$（避免与经典容量 $C$ 混淆） |
+| $\mathcal N(\rho),\; E_N(\rho),\; C_{\mathrm{conc}}(\rho)$ | 二分态**负性** $\mathcal N(\rho) = (\lVert\rho^{T_B}\rVert_1 - 1)/2$、对数负性 $E_N(\rho) = \log_2(1 + 2\mathcal N(\rho))$、两比特共生度 $C_{\mathrm{conc}}(\rho)$。纯二分态的 $E_N$ 是约化态的 $1/2$ 阶 Rényi 熵，有别于可蒸馏纠缠与约化 von Neumann 熵的一般关系 |
 | $\hat q, \hat p,\; V,\; W(q,p)$ | 第 18 章连续变量无量纲正交分量（满足 $[\hat q,\hat p] = i$）、协方差矩阵（真空态 $V = I/2$）与相空间 Wigner 准概率函数 |
 | $\Omega$（连续变量辛形式） | 交错排序 $(q_1, p_1, \ldots, q_m, p_m)$ 下的块对角辛形式 $\bigoplus_j \bigl(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\bigr)$，使 $[R_j, R_k] = i\Omega_{jk}$ |
-| $p_{\mathrm{eq}}$ | 第 05 章广义振幅阻尼（GAD）稳态的激发态 $\lvert 1\rangle$ 占据概率（无量纲，$p_{\mathrm{eq}}\in[0,1]$，不动点 $\rho_{\mathrm{eq}}=\operatorname{diag}(1-p_{\mathrm{eq}}, p_{\mathrm{eq}})$）；专记 $p_{\mathrm{eq}}$ 以区别于 Bloch 坐标 $r_z$ 与门错误率 $r$ |
-| $\Lambda$ | 第 10、11 章量子纠错码的逻辑错误抑制因子（无量纲），刻画码距每增 $\Delta d = 2$ 时每轮逻辑错误率的压低倍数 $\Lambda \approx p_L(d)/p_L(d+2)$；$\Lambda > 1$ 表征物理噪声低于阈值 |
+| $p_{\mathrm{eq}}$ | 第 05 章广义振幅阻尼（GAD）指定的激发态 $\lvert 1\rangle$ 平衡占据（无量纲，$0\le p_{\mathrm{eq}}\le1$）。弛豫概率 $\gamma>0$ 时，唯一不动密度矩阵为 $\operatorname{diag}(1-p_{\mathrm{eq}},p_{\mathrm{eq}})$；$\gamma=0$ 时信道为恒等，任意态都不变。$p_{\mathrm{eq}}$ 区别于 Bloch 坐标 $r_z$ 与门错误率 $r$ |
+| $\Lambda$ | 第 10、11 章量子纠错码的逻辑错误抑制因子（无量纲），刻画码距每增 $\Delta d = 2$ 时每轮逻辑错误率的压低倍数 $\Lambda \approx p_L(d)/p_L(d+2)$；$\Lambda>1$ 表示给定比较中误差随码距降低，外推阈值需声明模型和实证工况 |
 | $\mathrm{LF},\; \mathrm{EPLG}$ | 第 11 章并行门层系统基准（无量纲）：全链层保真度 $\mathrm{LF} = \prod_{\ell}\prod_{j\in\ell} F_{p,j}$ 与每层单双比特门等效错误率 $\mathrm{EPLG} = 1 - \mathrm{LF}^{1/n_{2Q}}$ |
-| $\gamma_{\mathrm{PEC}}$ | 第 08、11、14 章概率误差抵消（PEC）的准概率 1-范数采样开销因子（无量纲，$\gamma_{\mathrm{PEC}} = e^{2\sum r_j} \ge 1$）；单层方差按 $\gamma_{\mathrm{PEC}}^2$ 放大，深 $L$ 层线路按 $\gamma_{\mathrm{PEC}}^{2L}$ 放大 |
+| $\gamma_{\mathrm{PEC}}$ | 第 08、11、14 章概率误差抵消的准概率系数绝对值之和，最小为 $1$。按系数绝对值抽样，并将单位振幅读数乘以符号和 $\gamma_{\mathrm{PEC}}$ 时，单次变量的二阶矩为 $\gamma_{\mathrm{PEC}}^2$，方差为 $\gamma_{\mathrm{PEC}}^2-\mu^2$，其中 $\mu$ 为目标均值。独立分解的各层范数可相乘，共用随机电路的重复测量应按电路分簇计算误差。 |
 | $S_q, S_p$（GKP 晶胞 $4\pi$） | 第 18 章无量纲相空间 $[\hat q,\hat p]=i$ 下方形 GKP 码位移稳定子 $S_q = e^{i2\sqrt\pi\hat q}$、$S_p = e^{-i2\sqrt\pi\hat p}$；对易相因子 $e^{4\pi i}=1$，围出相空间晶胞面积 $(2\sqrt\pi)^2 = 4\pi$，恰好容纳 $2$ 维逻辑量子比特 |
 | $F_C(\theta)$ | 第 20 章经典 Fisher 信息，$F_C(\theta) = \sum_{x:\,p(x\mid\theta)>0}[\partial_\theta p(x\mid\theta)]^2 / p(x\mid\theta)$，单位 $[\theta]^{-2}$；决定固定测量装置下的经典 Cramér–Rao 下界 $\Delta\theta \ge 1/\sqrt{\nu F_C(\theta)}$ |
 | $F_Q(\rho_\theta)$ | 第 20 章量子 Fisher 信息，$F_Q(\rho_\theta) = \operatorname{Tr}(\rho_\theta L_\theta^2)$，单位 $[\theta]^{-2}$；纯态幺正演化 $\lvert\psi_\theta\rangle = e^{-i\theta H}\lvert\psi_0\rangle$ 下化为 $F_Q = 4(\Delta H)^2$，给出一切合法量子测量的精度终极下界 |
 | $L_\theta$ | 第 20 章对称对数导数（SLD），满足 $\partial_\theta\rho_\theta = \frac{1}{2}(\rho_\theta L_\theta + L_\theta\rho_\theta)$ 的厄米算符，单位 $[\theta]^{-1}$；其本征基构成饱和量子 Cramér–Rao 界的最优投影测量 |
-| $d_B(\rho,\sigma)$ | 第 20 章 Bures 距离（无量纲），按本书根保真度定义为 $d_B(\rho,\sigma) = \sqrt{2\bigl(1 - F(\rho,\sigma)\bigr)}$；在无穷小步长下满足 $F_Q(\rho_\theta) = 4\lim_{\delta\to 0} d_B^2(\rho_\theta,\rho_{\theta+\delta})/\delta^2$ |
+| $d_B(\rho,\sigma)$ | 第 20 章 Bures 距离（无量纲），按本书根保真度定义为 $d_B(\rho,\sigma) = \sqrt{2\bigl(1 - F(\rho,\sigma)\bigr)}$；在光滑、局部保持秩的模型下满足 $F_Q(\rho_\theta) = 4\lim_{\delta\to 0} d_B^2(\rho_\theta,\rho_{\theta+\delta})/\delta^2$ |
 | $\eta,\; F_{\mathrm{CPMG},n}(\omega T)$ | 第 20 章量子传感灵敏度 $\eta = \delta B_{\min}\sqrt{T_{\mathrm{tot}}}$（磁场探测单位 $\mathrm{T/\sqrt{Hz}}$；注意在光学损耗与 QKD 中 $\eta\in[0,1]$ 为无量纲透过率）及 $n$ 脉冲 CPMG 交流锁相滤波函数 $F_{\mathrm{CPMG},n}(\omega T)$ |
 | $\xi_R^2$ | 第 20 章 Wineland 自旋压缩参数（无量纲），$\xi_R^2 = N(\Delta J_\perp)^2 / \lvert\langle\vec J\rangle\rvert^2$；相干自旋态取 $\xi_R^2 = 1$，$\xi_R^2 < 1$ 表征突破标准量子极限且为多体纠缠的充分判据 |
 | $\mathrm{SQL},\; \mathrm{HL}$ | 第 20 章精密测量基准标度：标准量子极限（$\Delta\phi_{\mathrm{SQL}} = 1/\sqrt{N}$，无纠缠探针满足 $F_Q \le N$）与海森堡极限（$\Delta\phi_{\mathrm{HL}} = 1/N$，$F_Q = N^2$）；对应无量纲相位估计误差随探针数 $N$ 的标度 |
@@ -129,22 +131,25 @@
 
 ## 5. 一页高频核心公式速查表
 
-下表按全书五篇 26 章归纳最常翻查的核心公式；全部沿用左共轭内积、大端序、$\log_2/\ln$ 明确底数与根保真度 $F$ 契约。
+下表按[全书六篇的阅读顺序](../README.md)列出常用核心公式，沿用左共轭内积、大端序、以 $\log_2$ 和 $\ln$ 区分底数，以及根保真度 $F$ 的统一约定。
 
 | 篇目与主题 | 高频核心公式 |
 |---|---|
-| **第一篇｜量子态、测量与 Bloch 球**（00–05、Q1–Q2） | $p_m = \operatorname{Tr}(\rho E_m)$，$\rho = \frac{1}{2}(I + r_x X + r_y Y + r_z Z)$（$\lvert\vec r\rvert \le 1$） |
-| **第一篇｜动力学、不确定关系与 GAD**（Q2、05） | $U(t) = e^{-i\mathcal H t/\hbar}$，$\Delta A\,\Delta B \ge \frac{1}{2}\lvert\langle[A,B]\rangle\rvert$；$r_z' = (1-\gamma)r_z + \gamma(1-2p_{\mathrm{eq}})$ |
-| **第二篇｜振幅放大与相位估计**（06–07） | $\lvert\psi_k\rangle = \sin((2k+1)\theta)\lvert\mathrm{good}\rangle + \cos((2k+1)\theta)\lvert\mathrm{bad}\rangle$，$k_{\mathrm{opt}} \approx \frac{\pi}{4}\sqrt{N/M}$ |
-| **第二篇｜参数移位与零失败统计**（08、15） | $\partial_\theta\langle O\rangle = \frac{1}{2}\bigl(\langle O\rangle_{\theta+\pi/2} - \langle O\rangle_{\theta-\pi/2}\bigr)$；$p_{\mathrm{upper}} = 1 - \alpha^{1/N}$ |
-| **第三篇｜驱动控制、退相干与 DRAG**（Q3、09、14） | $\Delta = \omega_d - \omega_0$，$\frac{1}{T_2} = \frac{1}{2T_1} + \frac{1}{T_\phi}$，$Q(t) = -\frac{\beta}{\alpha}\dot I(t)$ |
-| **第三篇｜纠错界与表面码压错**（10–11） | $2t + e < d$，$p_L(d) \approx A\Lambda^{-(d+1)/2}$（$\Lambda \approx p_{\mathrm{th}}/p > 1$） |
-| **第三篇｜并行基准与 PEC 采样开销**（11、14、19） | $\mathrm{EPLG} = 1 - \mathrm{LF}^{1/n_{2Q}}$，$\gamma_{\mathrm{PEC}} = e^{2\sum r_j}$（$L$ 层方差放大 $\gamma_{\mathrm{PEC}}^{2L}$） |
-| **第四篇｜QKD 安全率与无中继 PLOB 界**（12） | $r \ge 1 - h_2(e_b) - h_2(e_p)$，$C_{\mathrm{PLOB}}(\eta) = -\log_2(1-\eta)$ |
-| **第四篇｜量子 Cramér–Rao 界与纯态 QFI**（20） | $\Delta\theta \ge \frac{1}{\sqrt{\nu F_Q(\rho_\theta)}}$，$F_Q(\lvert\psi_\theta\rangle) = 4(\Delta H)^2$ |
-| **第四篇｜SQL / 海森堡极限与自旋压缩**（20） | $\Delta\phi_{\mathrm{SQL}} = \frac{1}{\sqrt{N}}$ vs. $\Delta\phi_{\mathrm{HL}} = \frac{1}{N}$，$\xi_R^2 = \frac{N(\Delta J_\perp)^2}{\lvert\langle\vec J\rangle\rvert^2} < 1$ |
-| **第五篇｜熵、根保真度与 Holevo 界**（13、16、18） | $S(\rho) = -\operatorname{Tr}(\rho\log_2\rho)$，$F(\rho,\sigma) = \lVert\sqrt\rho\sqrt\sigma\rVert_1$，$I_{\mathrm{acc}} \le \chi$ |
-| **第五篇｜稳定子辛内积与 MPS 截断**（21） | $(x_1\mid z_1)\odot(x_2\mid z_2) = x_1\cdot z_2 \oplus z_1\cdot x_2$，$\epsilon_{\mathrm{trunc}} = \sum_{i>\chi'}\sigma_i^2 = 1 - F^2$ |
-| **第五篇｜含噪 Pauli 传播与 GKP 晶胞**（21、18） | $\mathcal D_p^\dagger(P) = (1-p)^{w(P)} P$，$S_q S_p = e^{4\pi i} S_p S_q$（$[\hat q,\hat p]=i$） |
+| **第一篇｜量子态、测量与 Bloch 球**（02、05） | $p_m = \operatorname{Tr}(\rho E_m)$，$\rho = \frac{1}{2}(I + r_x X + r_y Y + r_z Z)$（$\lvert\vec r\rvert \le 1$） |
+| **第一篇｜广义振幅阻尼（GAD）**（05） | $r_z' = (1-\gamma)r_z + \gamma(1-2p_{\mathrm{eq}})$ |
+| **第二篇｜动力学与不确定关系**（Q2） | $U(t) = e^{-i\mathcal H t/\hbar}$，$\Delta A\,\Delta B \ge \frac{1}{2}\lvert\langle[A,B]\rangle\rvert$ |
+| **第二篇｜失谐与退相干**（Q3） | $\Delta = \omega_d - \omega_0$，$\frac{1}{T_2} = \frac{1}{2T_1} + \frac{1}{T_\phi}$ |
+| **第三篇｜Grover 振幅放大**（06–07） | $\lvert\psi_k\rangle = \sin((2k+1)\theta)\lvert\mathrm{good}\rangle + \cos((2k+1)\theta)\lvert\mathrm{bad}\rangle$，$k_{\mathrm{opt}} \approx \frac{\pi}{4}\sqrt{N/M}$ |
+| **第三篇｜参数移位与零失败统计**（08、15） | $\partial_\theta\langle O\rangle = \frac{1}{2}\bigl(\langle O\rangle_{\theta+\pi/2} - \langle O\rangle_{\theta-\pi/2}\bigr)$；$p_{\mathrm{upper}} = 1 - \alpha^{1/N}$ |
+| **第四篇｜纠错界与表面码压错**（10–11） | $2t + e < d$，$p_L(d) \approx A\Lambda^{-(d+1)/2}$（$\Lambda \approx p_{\mathrm{th}}/p > 1$） |
+| **第四篇｜并行基准与 PEC 采样开销**（11、14、19） | $\mathrm{EPLG} = 1 - \mathrm{LF}^{1/n_{2Q}}$，$\gamma_{\mathrm{PEC}} = e^{2\sum r_j}$（$L$ 层方差放大 $\gamma_{\mathrm{PEC}}^{2L}$） |
+| **第四篇｜DRAG 脉冲**（14） | $Q(t) = -\frac{\beta}{\alpha}\dot I(t)$ |
+| **第五篇｜熵、根保真度与 Holevo 界**（13、18） | $S(\rho) = -\operatorname{Tr}(\rho\log_2\rho)$，$F(\rho,\sigma) = \lVert\sqrt\rho\sqrt\sigma\rVert_1$，$I_{\mathrm{acc}} \le \chi$ |
+| **第五篇｜QKD 安全率与无中继 PLOB 界**（12） | $r \ge 1 - h_2(e_b) - h_2(e_p)$，$C_{\mathrm{PLOB}}(\eta) = -\log_2(1-\eta)$ |
+| **第五篇｜GKP 晶胞**（18） | $S_q S_p = e^{4\pi i} S_p S_q$（$[\hat q,\hat p]=i$） |
+| **第五篇｜量子 Cramér–Rao 界与纯态 QFI**（20） | $\Delta\theta \ge \frac{1}{\sqrt{\nu F_Q(\rho_\theta)}}$，$F_Q(\lvert\psi_\theta\rangle) = 4(\Delta H)^2$ |
+| **第五篇｜标准量子极限、海森堡极限与自旋压缩**（20） | $\Delta\phi_{\mathrm{SQL}} = \frac{1}{\sqrt{N}}$，$\Delta\phi_{\mathrm{HL}} = \frac{1}{N}$，$\xi_R^2 = \frac{N(\Delta J_\perp)^2}{\lvert\langle\vec J\rangle\rvert^2} < 1$ |
+| **第六篇｜稳定子辛内积与 MPS 截断**（21） | $(x_1\mid z_1)\odot(x_2\mid z_2) = x_1\cdot z_2 \oplus z_1\cdot x_2$，$\epsilon_{\mathrm{trunc}} = \sum_{i>\chi'}\sigma_i^2 = 1 - F^2$ |
+| **第六篇｜含噪 Pauli 传播**（21） | $\mathcal D_p^\dagger(P) = (1-p)^{w(P)} P$ |
 
 配套程序校验与开源代码约定详见[逐章实验总览](../labs/README.md)与[算法、工业实践与开源代码对照](software-practice.md)。

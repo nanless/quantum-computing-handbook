@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
   <title id="title">双比特 Schmidt 分解曲线与混态纠缠判据决策树</title>
-  <desc id="desc">左面板绘出双比特纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的 Schmidt 奇异值 (cosθ, sinθ) 与纠缠熵 S(ρ_A) 实算曲线，在 θ=π/4 达最大纠缠 1 ebit；右面板整合纯态与混态纠缠判据决策树，依次覆盖 PPT、纠缠见证与设备无关 Bell-CHSH 检验。</desc>
+  <desc id="desc">左面板绘出双比特纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的 Schmidt 奇异值 (cosθ, sinθ) 与纠缠熵 S(ρ_A) 实算曲线，在 θ=π/4 达最大纠缠 1 ebit；右面板整合纯态与混态纠缠判据决策树，分别列出 PPT、固定纠缠见证和 Bell 检验的条件，并单列非局域、可导引与纠缠的物理层级。</desc>
   <style>
 :root{color-scheme:light dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -112,7 +112,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   </style>
   <rect class="bg" width="960" height="460" rx="16"/>
   <text class="title" x="22" y="34">双比特 Schmidt 分解曲线与混态纠缠判据决策树</text>
-  <text class="subtitle" x="22" y="54">左：纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的奇异值 (λ₀, λ₁) 与纠缠熵 S(ρ_A)；右：纯态与混态纠缠分层判据</text>
+  <text class="subtitle" x="22" y="54">左：纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的奇异值 (s₀, s₁) 与纠缠熵 S(ρ_A)；右：纯态与混态纠缠分层判据</text>
   <rect class="panel" x="20.0" y="68.0" width="444.0" height="376.0" rx="12.0"/>
   <path class="phead" d="M 32.0 69.0 H 452.0 Q 463.0 69.0 463.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
   <line class="grid" x1="21.0" y1="99.0" x2="463.0" y2="99.0"/>
@@ -120,9 +120,9 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <line class="c2" stroke-width="2.6" x1="74" y1="118" x2="96" y2="118"/>
   <text class="xsb c2-txt" x="102" y="122">S(ρ_A) 纠缠熵</text>
   <line class="c3" stroke-width="2.2" x1="202" y1="118" x2="224" y2="118"/>
-  <text class="xsb c3-txt" x="230" y="122">λ₀ = cosθ</text>
+  <text class="xsb c3-txt" x="230" y="122">s₀ = cosθ</text>
   <line class="c1" stroke-width="2.2" stroke-dasharray="6 4" x1="316" y1="118" x2="338" y2="118"/>
-  <text class="xsb c1-txt" x="344" y="122">λ₁ = sinθ</text>
+  <text class="xsb c1-txt" x="344" y="122">s₁ = sinθ</text>
   <line class="grid" x1="78.0" y1="352.0" x2="444.0" y2="352.0"/>
   <text class="xs" x="70.0" y="356.0" text-anchor="end">0.00</text>
   <line class="grid" x1="78.0" y1="298.5" x2="444.0" y2="298.5"/>
@@ -154,7 +154,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <path class="c2" stroke-width="2.8" d="M 78.00 352.00 L 81.05 351.49 L 84.10 350.25 L 87.15 348.44 L 90.20 346.17 L 93.25 343.48 L 96.30 340.43 L 99.35 337.06 L 102.40 333.41 L 105.45 329.50 L 108.50 325.36 L 111.55 321.03 L 114.60 316.51 L 117.65 311.83 L 120.70 307.01 L 123.75 302.07 L 126.80 297.02 L 129.85 291.89 L 132.90 286.69 L 135.95 281.43 L 139.00 276.12 L 142.05 270.79 L 145.10 265.43 L 148.15 260.08 L 151.20 254.73 L 154.25 249.40 L 157.30 244.10 L 160.35 238.84 L 163.40 233.63 L 166.45 228.49 L 169.50 223.41 L 172.55 218.42 L 175.60 213.51 L 178.65 208.70 L 181.70 203.99 L 184.75 199.40 L 187.80 194.93 L 190.85 190.59 L 193.90 186.38 L 196.95 182.31 L 200.00 178.39 L 203.05 174.62 L 206.10 171.01 L 209.15 167.57 L 212.20 164.29 L 215.25 161.19 L 218.30 158.27 L 221.35 155.54 L 224.40 152.98 L 227.45 150.63 L 230.50 148.46 L 233.55 146.49 L 236.60 144.72 L 239.65 143.16 L 242.70 141.79 L 245.75 140.64 L 248.80 139.69 L 251.85 138.95 L 254.90 138.42 L 257.95 138.11 L 261.00 138.00 L 264.05 138.11 L 267.10 138.42 L 270.15 138.95 L 273.20 139.69 L 276.25 140.64 L 279.30 141.79 L 282.35 143.16 L 285.40 144.72 L 288.45 146.49 L 291.50 148.46 L 294.55 150.63 L 297.60 152.98 L 300.65 155.54 L 303.70 158.27 L 306.75 161.19 L 309.80 164.29 L 312.85 167.57 L 315.90 171.01 L 318.95 174.62 L 322.00 178.39 L 325.05 182.31 L 328.10 186.38 L 331.15 190.59 L 334.20 194.93 L 337.25 199.40 L 340.30 203.99 L 343.35 208.70 L 346.40 213.51 L 349.45 218.42 L 352.50 223.41 L 355.55 228.49 L 358.60 233.63 L 361.65 238.84 L 364.70 244.10 L 367.75 249.40 L 370.80 254.73 L 373.85 260.08 L 376.90 265.43 L 379.95 270.79 L 383.00 276.12 L 386.05 281.43 L 389.10 286.69 L 392.15 291.89 L 395.20 297.02 L 398.25 302.07 L 401.30 307.01 L 404.35 311.83 L 407.40 316.51 L 410.45 321.03 L 413.50 325.36 L 416.55 329.50 L 419.60 333.41 L 422.65 337.06 L 425.70 340.43 L 428.75 343.48 L 431.80 346.17 L 434.85 348.44 L 437.90 350.25 L 440.95 351.49 L 444.00 352.00"/>
   <rect class="axis" stroke-width="1.4" x="78.0" y="138.0" width="366.0" height="214.0"/>
   <text class="smb" x="261.0" y="391" text-anchor="middle">叠加角 θ（|ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩）</text>
-  <text class="smb" x="34" y="245" transform="rotate(-90 34 245)" text-anchor="middle">奇异值 λᵢ / 纠缠熵 S (ebit)</text>
+  <text class="smb" x="34" y="245" transform="rotate(-90 34 245)" text-anchor="middle">奇异值 sᵢ / 纠缠熵 S (ebit)</text>
   <line class="guide" x1="261.0" y1="138.0" x2="261.0" y2="275"/>
   <circle class="c2-fill" cx="261.0" cy="138.0" r="4.6"/>
   <circle class="c3-fill" cx="261.0" cy="200.7" r="4.4"/>
@@ -162,7 +162,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <circle class="qnode" cx="444.0" cy="352.0" r="4.0"/>
   <rect class="pill-bg" x="172" y="275" width="178" height="62" rx="8"/>
   <text class="xsb c2-txt" x="261" y="293" text-anchor="middle">θ = π/4（最大纠缠 Bell 态）</text>
-  <text class="xs" x="261" y="311" text-anchor="middle">λ₀ = λ₁ = 1/√2 ≈ 0.707</text>
+  <text class="xs" x="261" y="311" text-anchor="middle">s₀ = s₁ = 1/√2 ≈ 0.707</text>
   <text class="xsb c3-txt" x="261" y="329" text-anchor="middle">S(ρ_A) = 1.00 ebit，r = 2</text>
   <rect class="note" x="34.0" y="404.0" width="416.0" height="30.0" rx="8"/>
   <text class="xsb" x="242.0" y="423.2" text-anchor="middle">纯态充要：Schmidt 秩 r = 2 ⇔ S(ρ_A) &gt; 0；混态中 S(ρ_A) 失效！</text>
@@ -184,29 +184,29 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xs" x="570" y="236" text-anchor="middle">r ≥ 2 ⇔ S(ρ_A) &gt; 0</text>
   <text class="xs c3-txt" x="570" y="256" text-anchor="middle">2×2 等价于 2|ad−bc|&gt;0</text>
   <rect class="subpanel" x="492" y="285" width="156" height="107" rx="9"/>
-  <text class="xsb" x="570" y="304" text-anchor="middle">混态判据严格包含链</text>
-  <text class="xs c2-txt" x="504" y="324">CHSH 违背 (|S| &gt; 2)</text>
-  <text class="xs c4-txt" x="504" y="342">⊂ 纠缠见证 Tr(Wρ)&lt;0</text>
-  <text class="xs c1-txt" x="504" y="360">⊂ PPT 负特征值 N&gt;0</text>
-  <text class="xs c3-txt" x="504" y="378">⊂ 全部纠缠(含束缚)</text>
+  <text class="xsb" x="570" y="304" text-anchor="middle">混态的物理层级</text>
+  <text class="xs c2-txt" x="504" y="324">CHSH 等 Bell 违背</text>
+  <text class="xs c4-txt" x="504" y="342">⊂ EPR 可导引</text>
+  <text class="xs c1-txt" x="504" y="360">⊂ 量子纠缠</text>
+  <text class="xs c3-txt" x="504" y="378">例：两比特 Werner 态</text>
   <rect class="c1-soft" x="666" y="175" width="260" height="58" rx="9"/>
   <text class="xsb c1-txt" x="678" y="194">① PPT 判据：求部分转置 ρᵀᴮ 特征值</text>
   <text class="xs" x="678" y="212">λ_min &lt; 0 ⇒ 必纠缠（负性 N(ρ) &gt; 0）</text>
-  <text class="xsb" x="678" y="227">2×2, 2×3 充要；d ≥ 3×3 仅充分</text>
+  <text class="xsb" x="678" y="227">2×2、2×3 充要；其他维数仅充分</text>
   <line class="axis" stroke-width="1.50" x1="796.00" y1="234.00" x2="796.00" y2="249.15"/>
   <polygon class="axis-fill" points="796.00,253.00 792.80,246.00 799.20,246.00"/>
-  <text class="xs" x="804" y="247">λ_min≥0 或需少测</text>
+  <text class="xs" x="804" y="247">只测少量关联</text>
   <rect class="c4-soft" x="666" y="255" width="260" height="58" rx="9"/>
   <text class="xsb c4-txt" x="678" y="274">② 纠缠见证 W（如 C_X + C_Z）</text>
   <text class="xs" x="678" y="292">Tr(Wρ) &lt; 0 ⇒ 必纠缠（仅充分）</text>
   <text class="xs" x="678" y="307">免完整层析，但依赖测量基校准可信</text>
   <line class="axis" stroke-width="1.50" x1="796.00" y1="314.00" x2="796.00" y2="329.15"/>
   <polygon class="axis-fill" points="796.00,333.00 792.80,326.00 799.20,326.00"/>
-  <text class="xs" x="804" y="327">零信任/黑盒检验</text>
+  <text class="xs" x="804" y="327">仅用输入与输出</text>
   <rect class="c2-soft" x="666" y="335" width="260" height="57" rx="9"/>
-  <text class="xsb c2-txt" x="678" y="353">③ Bell–CHSH 检验（设备无关）</text>
+  <text class="xsb c2-txt" x="678" y="353">③ Bell 检验（如 CHSH）</text>
   <text class="xs" x="678" y="371">|S| &gt; 2 ⇒ 非局域且必纠缠（比纠缠更强）</text>
-  <text class="xs" x="678" y="386">仅充分：Werner 态 p∈(1/3, 1/√2] 不违背</text>
+  <text class="xs" x="678" y="386">Werner 态 q≤1/√2 不违背 CHSH</text>
   <rect class="note" x="492.0" y="404.0" width="434.0" height="30.0" rx="8"/>
-  <text class="xsb" x="709.0" y="423.2" text-anchor="middle">速查：2×2 混态首选 PPT/共生度；省测选见证 W；设备无关必测 CHSH</text>
+  <text class="xsb" x="709.0" y="423.2" text-anchor="middle">2×2 混态可用 PPT；少量校准测量可用见证；黑盒还可用其他 Bell 检验</text>
 </svg>

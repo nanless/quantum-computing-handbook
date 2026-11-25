@@ -13,3 +13,6 @@ dist/release/
 __pycache__/
 *.pyc
 reader/work/
+work/release-provenance/
+work/research/local-check-results/
+dist/.release-*/

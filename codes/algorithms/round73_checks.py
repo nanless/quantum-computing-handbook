@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Independent stdlib mathematics for A73 exercises; no SDK/network/cloud.
-all / 06 / 07 / 08 / 13 / 16 / 17 / 18 / q4, writes fresh round73-results.json.
-"""
-import argparse, cmath, json, math, pathlib
+"""Independent standard-library checks, with explicit SDK archive comparison."""
+import argparse, cmath, json, math, pathlib, sys
 if not __debug__: raise RuntimeError('Assertions must be enabled')
 ROOT=pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT.parent))
+from validation_reports import ROOT as REPOSITORY, write_result
 
 def mv(a,v): return [sum(x*y for x,y in zip(row,v)) for row in a]
 def inner(a,b): return sum(x.conjugate()*y for x,y in zip(a,b))
@@ -36,14 +36,12 @@ def hhl():
         p=sum(abs(z)**2*s for z,s in zip(beta,second)); pc=sum(abs(z)**2*s*s for z,s in zip(beta,f))
         rows.append({'phase_bits':t,'flag_success':p,'clean_success':pc,'garbage_given_flag':1-pc/p})
     assert rows[1]['garbage_given_flag']>rows[0]['garbage_given_flag']
-    # Compare recorded SDK against separately summed scalar Fourier amplitudes.
-    path=ROOT/'sdk73/results-all.json'
-    if path.exists():
-        recorded=json.loads(path.read_text())['cases']['hhl']['cases'][1:5]
-        for x,y in zip(rows,recorded):
-            assert abs(x['flag_success']-y['flag_success'])<1e-12
-            assert abs(x['clean_success']-y['phase_zero_and_flag_success'])<1e-12
-    return {'C':c,'cutoff':cutoff,'scale':scale,'rows':rows,'variance_identity':'garbage per eigenbranch = E[r^2]-(E[r])^2'}
+    low, high = -1.1, 2.3
+    off = ca*sa*(low-high)
+    matrix = [[ca*ca*low+sa*sa*high, off], [off, sa*sa*low+ca*ca*high]]
+    return {'C':c,'cutoff':cutoff,'scale':scale,'A':matrix,'b':encode(b),
+            'eigenvalues':[low,high], 'rows':rows,
+            'variance_identity':'garbage per eigenbranch = E[r^2]-(E[r])^2'}
 
 def penalty():
     energy=(3-math.sqrt(2))/2; rows=[]
@@ -71,11 +69,6 @@ def polynomial():
     p=norm([poly[0][0],poly[1][0]])**2
     assert abs(p-.00444112)<1e-14
     x=.5; assert abs(.8*x**3-.3*x+.05)<1e-12
-    walk=ROOT/'sdk73/results-all.json'
-    if walk.exists():
-        r=json.loads(walk.read_text())['cases']['walk']
-        assert abs(r['rows'][4]['marked_probability']-25/64)<1e-12
-        assert abs(r['rows'][8]['marked_probability']-1/256)<1e-12
     return {'A':a,'P_A':poly,'selected_probability':p,'mean_retries':1/p,'walk_step4':25/64,'walk_step8':1/256}
 
 def mbqc():
@@ -127,8 +120,87 @@ def fock():
     return {'alpha':1,'construction':'finite generator exponential compared with projection of known infinite coherent state','rows':rows,'series_80_100_agreement_boundary':'floating point convergence check, not interval arithmetic proof'}
 
 CASES={'06':phase,'07':hhl,'08':penalty,'13':mixed,'16':polynomial,'17':mbqc,'18':tail,'q4':fock}
+
+
+def compare_archive(data, path):
+    """Compare the selected documented cases by identity, rather than row position."""
+    if not path.is_file():
+        raise FileNotFoundError(f'Missing required SDK archive {path}; use --math-only for stand-alone mathematics')
+    recorded = json.loads(path.read_text(encoding='utf-8'))['cases']
+    compared = []
+
+    def close(observed, expected):
+        assert math.isclose(observed, expected, rel_tol=0, abs_tol=1e-12), (observed, expected)
+
+    def vector(observed, expected):
+        assert len(observed) == len(expected), 'SDK vector length mismatch'
+        for actual, target in zip(observed, expected):
+            close(actual, target)
+
+    def matrix(observed, expected):
+        assert len(observed) == len(expected), 'SDK matrix row count mismatch'
+        for actual_row, target_row in zip(observed, expected):
+            vector(actual_row, target_row)
+
+    if '07' in data:
+        expected = data['07']
+        rows = [row for row in recorded['hhl']['cases'] if row['name'] == 'signed-offgrid']
+        by_bits = {row['phase_bits']: row for row in rows}
+        assert len(rows) == 4 and set(by_bits) == {3, 4, 5, 6}, 'Missing or duplicate HHL signed-offgrid cases'
+        for row in expected['rows']:
+            archived = by_bits[row['phase_bits']]
+            assert archived['dimension'] == 2, 'Unexpected HHL dimension'
+            for field in ('C', 'cutoff', 'scale'):
+                close(archived[field], expected[field])
+            matrix(archived['A']['real'], expected['A'])
+            matrix(archived['A']['imag'], [[0, 0], [0, 0]])
+            vector(archived['b']['real'], expected['b']['real'])
+            vector(archived['b']['imag'], expected['b']['imag'])
+            vector(archived['eigenvalues'], expected['eigenvalues'])
+            close(archived['flag_success'], row['flag_success'])
+            close(archived['phase_zero_and_flag_success'], row['clean_success'])
+        compared.append('hhl-signed-offgrid-3-4-5-6')
+
+    if '16' in data:
+        expected = data['16']
+        rows = recorded['walk']['rows']
+        by_step = {row['steps']: row for row in rows}
+        assert len(rows) == len(by_step) and {4, 8} <= by_step.keys(), 'Missing or duplicate SDK walk steps'
+        for step in (4, 8):
+            close(by_step[step]['marked_probability'], expected[f'walk_step{step}'])
+        qsvt = recorded['qsvt']
+        vector(qsvt['polynomial_power_coefficients'], [0, -.3, 0, .8])
+        matrix(qsvt['target']['real'], expected['P_A'])
+        matrix(qsvt['target']['imag'], [[0, 0], [0, 0]])
+        matrix(qsvt['unextracted_block']['real'], expected['P_A'])
+        close(qsvt['extracted_success_probability'], expected['selected_probability'])
+        compared.extend(['walk-4-and-8', 'qsvt-polynomial-and-success'])
+
+    return compared
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('case',nargs='?',default='all',choices=['all',*CASES]);args=p.parse_args()
-    data={k:f() for k,f in CASES.items() if args.case in ['all',k]};(ROOT/('round73-results.json' if args.case=='all' else f'round73-{args.case}-results.json')).write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n')
-    print('round73 algorithms:',', '.join(data),'passed')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('case', nargs='?', default='all', choices=['all', *CASES])
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--math-only', action='store_true', help='Skip SDK archive comparisons explicitly')
+    mode.add_argument('--sdk-archive', type=pathlib.Path, default=ROOT/'sdk73/results-all.json',
+                      help='Fixed archive to compare for chapters 07 and 16')
+    args = parser.parse_args()
+    data = {key: check() for key, check in CASES.items() if args.case in ('all', key)}
+    if args.math_only or not {'07', '16'} & data.keys():
+        compared = []
+        status = 'skipped' if args.math_only else 'not_applicable'
+    else:
+        compared = compare_archive(data, args.sdk_archive)
+        status = 'passed'
+    print('round73 algorithms:', ', '.join(data), 'passed')
+    print('SDK archive comparison:', status, ', '.join(compared))
+    data['sdk_archive_comparison'] = {'status': status, 'comparisons': compared}
+    suffix = 'math-only' if args.math_only else 'archive-comparison'
+    name = f'algorithm-validation-{args.case}-{suffix}.json'
+    write_result(REPOSITORY/'work/research'/name,
+                 json.dumps(data, indent=2, ensure_ascii=False)+'\n')
+
+
 if __name__=='__main__':main()

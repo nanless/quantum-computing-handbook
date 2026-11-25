@@ -434,7 +434,7 @@ def fig_13_entropy_dpi_chain() -> str:
 
     doc.rect(406, 200, 144, 44, "c5-soft", rx=7)
     doc.text(478, 218, "最大相对熵 D_max", "smb c5-txt", "middle")
-    doc.text(478, 236, "H_min 有限长 QKD", "sm", "middle")
+    doc.text(478, 236, "QKD：H_min(X|EC)", "sm", "middle")
 
     # Fan-out arrows from D(rho||sigma) / I(A:B) to SSA, Holevo, Pinsker
     doc.line(291, 244, 291, 255, "c3", 'stroke-width="1.6"')
@@ -461,9 +461,9 @@ def fig_13_entropy_dpi_chain() -> str:
 
     # Row 4: Channel capacity convergence box
     doc.rect(32, 337, 518, 86, "subpanel", rx=8)
-    doc.text(291, 356, "向上衔接第 18 章：四类量子信道容量（均受 DPI 单调锁死）", "lblb c1-txt", "middle")
+    doc.text(291, 356, "向上衔接第 18 章：无记忆信道的四类渐近容量", "lblb c1-txt", "middle")
     doc.text(44, 377, "• 经典容量 C（HSW）：Holevo 信息 χ 的正则化渐近极限", "sm")
-    doc.text(44, 396, "• 纠缠辅助容量 C_E（BSST）：SSA 直接保证 max I(R:B) 单字母可加", "sm")
+    doc.text(44, 396, "• 纠缠辅助容量 C_E（BSST）：单次最大互信息可加", "sm")
     doc.text(44, 415, "• 量子容量 Q（LSD）与私密容量 P：串接前后处理均满足 Cap(D∘ε∘A) ≤ Cap(ε)", "sm")
 
     # Right panel: exact depolarizing curves
@@ -605,14 +605,14 @@ def fig_16_walk_shadows() -> str:
     doc = SvgDoc(
         title="一维量子行走双峰弹道扩散与经典影子随机测量流程",
         desc=(
-            f"左面板实算 t={steps} 步一维经典随机游走高斯分布（σ_cl={sig_cl:.2f}=√t）与对称初态 "
+            f"左面板实算 t={steps} 步一维经典随机游走二项分布（偶格点，高斯轮廓）（σ_cl={sig_cl:.2f}=√t）与对称初态 "
             f"1D Hadamard 量子行走双峰弹道扩散（σ_Q={sig_q:.2f}∝t，双峰位于 ±t/√2 附近）；"
             "右面板展示随机单比特 Clifford 经典影子（Classical Shadows）四步流程："
             "随机单比特旋转、计算基快照采样、离线逆通道重构及中位数均值估计 M 个局域观测量。"
         ),
         heading="一维量子行走双峰弹道扩散与经典影子采样流程",
         subtitle=f"左：t = {steps} 步经典随机游走（σ = √t）vs Hadamard 量子行走（σ ∝ t）实算；右：单比特 Clifford 经典影子工作流",
-        footer="数学验证：第 16 章 §4.3、§8.3；t=30 偶数格点实算 ∑P_cl = ∑P_Q = 1.0000，量子行走标准差相对经典放大近 3 倍。",
+        footer="数学验证：第 16 章 §4.1、§8.3；t=30 偶数格点实算 ∑P_cl = ∑P_Q = 1.0000，量子行走标准差相对经典放大近 3 倍。",
     )
 
     # Left panel: exact t=30 walk distribution
@@ -688,7 +688,7 @@ def fig_16_walk_shadows() -> str:
         ),
         (
             168, 48, "c1-soft", "c1-fill", "c1-txt", "2",
-            "计算基单次投影快照（重复 N 轮）",
+            "计算基单次投影快照（独立抽基 N 轮）",
             "测得比特串 b̂^(m) ∈ {0,1}ⁿ，经典存储 {(U^(m), b̂^(m))}_{m=1}^N",
         ),
         (
@@ -714,8 +714,8 @@ def fig_16_walk_shadows() -> str:
 
     # Bottom trade-off note
     doc.rect(510, 368, 418, 56, "note", rx=7)
-    doc.text(520, 388, "核心优势：先采样、后提问，样本数仅按 log M 缓慢增长", "smb")
-    doc.text(520, 409, "适用边界：单比特随机 Pauli 影子方差按 3^w 增长（限于低权重 w）", "sm")
+    doc.text(520, 388, "统计单位：独立抽基；同一基的 shots 是一个簇", "smb")
+    doc.text(520, 409, "Z 例的标准差：200 次独立抽基 0.1；同一基重复 √2", "sm")
 
     return doc.render()
 
@@ -729,7 +729,7 @@ def fig_18_capacity_complexity_ladder() -> str:
         desc=(
             "左面板以精确解析公式绘出单比特擦除信道四类容量阶梯 Q = P = max(0,1−2ε) ≤ C = 1−ε ≤ C_E = 2(1−ε)、"
             "单比特退相位量子容量 Q_deph(p) = 1 − h₂(p) 与纯损耗玻色信道 PLOB 双向上界 −log₂(ε)（η = 1 − ε），"
-            "并标出 ε = 1/2 处可降解/反降解相变点；右面板以嵌套层级展示 P ⊆ BPP ⊆ BQP ⊆ QCMA ⊆ QMA ⊆ QIP = PSPACE ⊆ MIP* = RE。"
+            "并标出 ε = 1/2 时可降解和反降解同时成立；右面板以嵌套层级展示 P ⊆ BPP ⊆ BQP ⊆ QCMA ⊆ QMA ⊆ QIP = PSPACE ⊆ MIP* = RE。"
         ),
         heading="量子信道容量阶梯与核心计算复杂度类谱系",
         subtitle="左：擦除/退相位容量阶梯 Q ≤ P ≤ C ≤ C_E 与纯损耗 PLOB 上界实算；右：P ⊆ BPP ⊆ BQP ⊆ QMA ⊆ PSPACE ⊆ MIP* = RE",
@@ -760,8 +760,8 @@ def fig_18_capacity_complexity_ladder() -> str:
         doc.line(px0, gy, px1, gy, "grid")
         doc.line(px0 - 4, gy, px0, gy, "axis")
         doc.text(px0 - 8, gy + 4, f"{yv:.1f}", "sm", "end")
-    doc.text(px0 - 4, py0 - 6, "bit/use", "sm", "end")
-    doc.text((px0 + px1) / 2, py1 + 35, "擦除/损耗率 ε（透射率 η = 1 − ε；退相位 p = ε）", "smb", "middle")
+    doc.text(px0 - 4, py0 - 6, "每次使用", "sm", "end")
+    doc.text((px0 + px1) / 2, py1 + 35, "曲线参数：擦除 ε、相位翻转 p、纯损耗 1−η", "smb", "middle")
 
     # Degradable / antidegradable divider at eps = 0.5
     x_half = sx(0.5)
@@ -809,7 +809,7 @@ def fig_18_capacity_complexity_ladder() -> str:
     # Legend in empty upper-right quadrant (x=274..464, y=113..217)
     doc.rect(274, 113, 190, 104, "pill-bg", rx=6)
     leg_entries = [
-        (130, "c2", 'stroke-dasharray="6 3.5"', "PLOB −log₂(ε)（纯损耗）"),
+        (130, "c2", 'stroke-dasharray="6 3.5"', "PLOB −log₂(1−η)"),
         (149, "c5", "", "C_E = 2(1−ε)（纠缠辅助）"),
         (168, "c3", "", "C = 1−ε（擦除经典）"),
         (187, "c1", "", "Q = P = (1−2ε)₊（擦除）"),
@@ -821,8 +821,8 @@ def fig_18_capacity_complexity_ladder() -> str:
 
     # Left bottom summary box
     doc.rect(32, 355, 440, 69, "note", rx=7)
-    doc.text(42, 374, "ε = ¼ 擦除阶梯：Q = P = 0.50 ≤ C = 0.75 ≤ C_E = 1.50 bit/use", "smb")
-    doc.text(42, 394, "ε = ½ 相变点：右区反降解使 Q = P = 0，但预共享纠缠 C_E > 0 仍非零", "sm")
+    doc.text(42, 374, "ε = ¼：C = 0.75 bit，Q = 0.50 qubit，P = 0.50 私密 bit，C_E = 1.50 bit", "smb")
+    doc.text(42, 394, "ε = ½ 同时可降解、反降解；ε ≥ ½ 时 Q = P = 0", "sm")
     doc.text(42, 414, "PLOB 上界 −log₂(1−η) 约束无量子中继的纯损耗光纤双向量子容量", "sm c2-txt")
 
     # Right panel: nested complexity class inclusion ladder
@@ -830,7 +830,7 @@ def fig_18_capacity_complexity_ladder() -> str:
 
     tiers = [
         (508, 102, 420, 270, "c2-soft", "c2-txt", "MIP* = RE", "纠缠多证明者交互验证（含停机问题）"),
-        (518, 132, 400, 234, "c5-soft", "c5-txt", "QIP = IP = PSPACE", "多项式空间 / 3 轮量子交互"),
+        (518, 132, 400, 234, "c5-soft", "c5-txt", "QIP = IP = PSPACE", "多项式空间 / 已证三消息并行化"),
         (528, 162, 380, 198, "c4-soft", "c4-txt", "QMA", "量子见证态 + BQP（k-局域哈密顿量）"),
         (538, 192, 360, 162, "c3-soft", "c3-txt", "QCMA", "经典见证串 + BQP 验证（含 NP）"),
         (548, 222, 340, 126, "c1-soft", "c1-txt", "BQP", "量子多项式时间（Shor · QSVT · 模拟）"),
@@ -847,7 +847,7 @@ def fig_18_capacity_complexity_ladder() -> str:
     # Right bottom note on open questions & sampling
     doc.rect(508, 380, 420, 44, "subpanel", rx=7)
     doc.text(518, 398, "已证 P ⊆ NP ⊆ QCMA ⊆ QMA；BQP 与 NP 相互包含关系仍未决", "smb")
-    doc.text(518, 416, "量子采样优势（RCS / IQP / BosonSampling）依赖 PH 不坍塌假设", "sm")
+    doc.text(518, 416, "近似采样难度还依赖各线路族的平均情形猜想", "sm")
 
     return doc.render()
 
@@ -856,6 +856,14 @@ def fig_18_capacity_complexity_ladder() -> str:
 # Figure 5 (Ch 20): v4-20-sensing-ramsey-qfi.svg
 # ---------------------------------------------------------------------------
 def fig_20_sensing_ramsey_qfi() -> str:
+    omega_0 = 2.697e15
+    atoms = 10_000
+    interrogation = 1.0
+    cycle = 1.2
+    averaging_time = 1.0
+    sigma_y = math.sqrt(cycle / averaging_time) / (omega_0 * math.sqrt(atoms) * interrogation)
+    sigma_in_units = sigma_y / 1e-18
+    assert abs(sigma_in_units - 4.0617171) < 1e-7
     doc = SvgDoc(
         title="Ramsey 相位干涉、量子费舍尔信息标度与原子钟/重力仪机制",
         desc=(
@@ -866,7 +874,7 @@ def fig_20_sensing_ramsey_qfi() -> str:
         ),
         heading="Ramsey 干涉条纹、QFI 精度标度与原子钟 / 重力仪机制",
         subtitle="左：Ramsey π/2–τ–π/2 脉冲时序与条纹斜率 / Fisher 信息；右：SQL vs 海森堡标度与原子钟阿兰偏差 / 重力仪机理",
-        footer="公式与算例口径：第 20 章 §2.3、§3.3、§6.1 与 §8.1（V=0.85 时 F_Q=V²=0.7225；⁸⁷Sr 钟 4.06×10⁻¹⁸；⁸⁷Rb T=0.1 s 得 1.58×10⁶ rad）。",
+        footer=f"公式与算例口径：第 20 章 §2.3、§3.3、§6.1 与 §8.1（V=0.85 时 F_Q=V²=0.7225，⁸⁷Sr 钟 {sigma_in_units:.2f}×10⁻¹⁸，⁸⁷Rb T=0.1 s 时相位 1.58×10⁶ rad）。",
     )
 
     # Left panel: Ramsey sequence + fringe & CFI/QFI plot
@@ -892,7 +900,7 @@ def fig_20_sensing_ramsey_qfi() -> str:
     # Horizontal legend row cleanly above plot
     doc.line(36, 168, 56, 168, "c3", 'stroke-width="2.2"')
     doc.text(61, 172, "P₊(φ; V=0.85)", "sm c3-txt")
-    doc.line(166, 168, 186, 168, "c2", 'stroke-width="2.2"')
+    doc.line(166, 168, 186, 168, "c2", 'stroke-width="2.2" stroke-dasharray="5 3"')
     doc.text(191, 172, "经典 Fisher F_C(φ)", "sm c2-txt")
     doc.line(316, 168, 336, 168, "c4", 'stroke-width="1.8" stroke-dasharray="4 3"')
     doc.text(341, 172, "QFI 上界 V²=0.723", "sm c4-txt")
@@ -945,7 +953,7 @@ def fig_20_sensing_ramsey_qfi() -> str:
     doc.line(px0, py1, px1, py1, "axis")
     doc.polyline(pts_p_ideal, "guide", 'stroke-width="1.2"')
     doc.polyline(pts_p_vis, "c3", 'stroke-width="2.2"')
-    doc.polyline(pts_fc, "c2", 'stroke-width="2.3"')
+    doc.polyline(pts_fc, "c2", 'stroke-width="2.3" stroke-dasharray="5 3"')
 
     # Tangent slope segment at phi = pi/2 on P_+(phi; V)
     phi_opt = 0.5 * math.pi
@@ -1024,10 +1032,10 @@ def fig_20_sensing_ramsey_qfi() -> str:
     doc.rect(500, 298, 210, 126, "c1-soft", rx=8)
     doc.text(510, 317, "⁸⁷Sr 光晶格原子钟", "lblb c1-txt")
     doc.text(510, 337, "阿兰偏差（QPN 极限）：", "smb")
-    doc.text(510, 356, "σ_y = ξ_R / (ω₀√(N T_R τ))", "mono")
-    doc.text(510, 377, "• 白频噪斜率 ∝ τ⁻¹/²", "sm")
+    doc.text(510, 356, "σ_y = ξ_R√(T_c/τ)/(ω₀√N T_R)", "mono")
+    doc.text(510, 377, "• 询问 T_R=1 s，循环 T_c=1.2 s", "sm")
     doc.text(510, 396, "• 死时间引起 Dick 混叠", "sm")
-    doc.text(510, 415, "• N=10⁴, 1s ⇒ 4.1×10⁻¹⁸", "sm c1-txt")
+    doc.text(510, 415, f"• N=10⁴，外推 1 s：{sigma_in_units:.1f}×10⁻¹⁸", "sm c1-txt")
 
     doc.rect(720, 298, 208, 126, "c4-soft", rx=8)
     doc.text(730, 317, "⁸⁷Rb 冷原子重力仪", "lblb c4-txt")

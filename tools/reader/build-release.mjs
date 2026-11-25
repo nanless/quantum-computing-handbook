@@ -3,14 +3,15 @@
  * Build and verify the full GitHub Release artifact suite for the Quantum Computing Handbook.
  *
  * Usage:
- *   node tools/reader/build-release.mjs [--version v1.0.0]
+ *   node tools/reader/build-release.mjs [--version v1.0.0] [--source-commit SHA]
  *
  * Outputs (in dist/release/, gitignored):
  *   1. quantum-computing-handbook.pdf
  *   2. quantum-computing-handbook.epub
  *   3. quantum-computing-handbook-<ver>-web.zip   (complete self-contained offline flagship site)
  *   4. quantum-computing-handbook-<ver>-codes.zip (self-authored stdlib suite, excl. vendor/)
- *   5. SHA256SUMS.txt                             (sorted SHA-256 manifest for the 4 release artifacts)
+ *   5. BUILDINFO.json                             (source identity and artifact hashes)
+ *   6. SHA256SUMS.txt                             (sorted SHA-256 manifest)
  */
 
 import fs from 'node:fs/promises';
@@ -20,6 +21,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { verifyDeliveryBuilds } from './build-provenance.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
@@ -34,23 +36,62 @@ const TEXT_EXTENSIONS = new Set([
   '.json', '.md', '.txt', '.py', '.csv', '.log', '.sh', '.yml', '.yaml', '.toml',
 ]);
 
-function parseVersionArg(argv) {
+function parseArgs(argv) {
   let version = 'v1.0.0';
+  let sourceCommit;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--version' && argv[i + 1]) {
       version = argv[++i];
     } else if (arg.startsWith('--version=')) {
       version = arg.slice('--version='.length);
+    } else if (arg === '--source-commit' && argv[i + 1]) {
+      sourceCommit = argv[++i];
     } else if (arg === '-h' || arg === '--help') {
-      console.log('Usage: node tools/reader/build-release.mjs [--version v1.0.0]');
+      console.log('Usage: node tools/reader/build-release.mjs [--version v1.0.0] [--source-commit SHA]');
       process.exit(0);
+    } else {
+      throw new Error(`Unknown release argument: ${arg}`);
     }
   }
-  if (!/^v?[0-9A-Za-z._-]+$/.test(version) || version.includes('..')) {
+  if (!/^v?[0-9][0-9A-Za-z._-]*$/.test(version) || version.includes('..')) {
     throw new Error(`Invalid --version value: ${version}`);
   }
-  return version;
+  return { version, sourceCommit };
+}
+
+function readSourceIdentity(expectedCommit) {
+  if (!fsSync.existsSync(path.join(root, '.git'))) {
+    if (expectedCommit !== undefined) throw new Error('Cannot verify a commit outside a Git checkout');
+    return { sourceCommit: null, sourceState: 'exported' };
+  }
+  const git = args => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+  const sourceCommit = git(['rev-parse', 'HEAD']);
+  const hasSourceChanges = Boolean(git([
+    'status', '--porcelain', '--untracked-files=normal', '--',
+    'handbook', 'codes', 'tools/reader', '.github/workflows', 'Makefile', 'LICENSE',
+  ]));
+  if (expectedCommit !== undefined && (sourceCommit !== expectedCommit || hasSourceChanges)) {
+    throw new Error(`Release needs unchanged source at ${expectedCommit}; HEAD=${sourceCommit}, source changes=${hasSourceChanges}`);
+  }
+  return { sourceCommit, sourceState: hasSourceChanges ? 'working-tree' : 'clean' };
+}
+
+async function installRelease(ready, previous) {
+  const lock = path.join(distDir, '.release-install');
+  await fs.mkdir(lock);
+  try {
+    if (fsSync.existsSync(releaseDir)) await fs.rename(releaseDir, previous);
+    try {
+      await fs.rename(ready, releaseDir);
+    } catch (error) {
+      if (fsSync.existsSync(previous)) await fs.rename(previous, releaseDir);
+      throw error;
+    }
+    await fs.rm(previous, { recursive: true, force: true });
+  } finally {
+    await fs.rmdir(lock);
+  }
 }
 
 async function assertFileNonEmpty(absPath, hint = '') {
@@ -322,8 +363,29 @@ function verifyZipIntegrity(zipPath, { forbidVendor = false } = {}) {
   return entries.length;
 }
 
+function verifyCodePackage(zipPath, scratch, folderName) {
+  const unpacked = path.join(scratch, 'verify-codes');
+  const reportDir = path.join(scratch, 'code-validation');
+  execFileSync('unzip', ['-q', zipPath, '-d', unpacked], { stdio: 'inherit' });
+  execFileSync(process.env.PYTHON || 'python3', [
+    'codes/run_all.py', '--output-dir', reportDir,
+  ], {
+    cwd: path.join(unpacked, folderName),
+    env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
+    stdio: 'inherit',
+  });
+  const report = JSON.parse(fsSync.readFileSync(path.join(reportDir, 'code-validation.json'), 'utf8'));
+  const excluded = report.checks.filter(check => check.status === 'not_applicable');
+  if (report.profile !== 'authored-code-release' || report.status !== 'passed' ||
+      excluded.length !== 1 || excluded[0].command !== 'python3 codes/snapshot_sources.py --verify' ||
+      report.checks.length < 2 || report.passed !== report.checks.length - 1) {
+    throw new Error('The extracted code package did not verify its declared standalone scope');
+  }
+}
+
 async function main() {
-  const version = parseVersionArg(process.argv.slice(2));
+  const { version, sourceCommit } = parseArgs(process.argv.slice(2));
+  const identity = readSourceIdentity(sourceCommit);
   const edition = await readEditionDate();
 
   // 1. Precondition assertions (all required inputs must exist and be non-empty)
@@ -337,18 +399,33 @@ async function main() {
   await assertFileNonEmpty(path.join(codesDir, 'run_all.py'));
   await assertFileNonEmpty(path.join(codesDir, 'README.md'));
 
+  const artifacts = { web: readerDir, pdf: pdfSrc, epub: epubSrc };
+  const sourceDigest = await verifyDeliveryBuilds(root, artifacts);
+  const nodeLock = path.join(here, 'package-lock.json');
+  const pdfLock = path.join(here, 'requirements-pdf.txt');
+  const packageLock = JSON.parse(await fs.readFile(nodeLock, 'utf8'));
+  const dependencies = {
+    nodeLockSha256: await sha256File(nodeLock),
+    pdfLockSha256: await sha256File(pdfLock),
+    readerPackages: Object.fromEntries(
+      ['katex', 'marked', 'mermaid', 'playwright'].map(name => [name, packageLock.packages[`node_modules/${name}`].version]),
+    ),
+    pdfRequirements: (await fs.readFile(pdfLock, 'utf8')).split(/\r?\n/).filter(line => line.includes('==')),
+  };
+
   const [pdfSrcSha, epubSrcSha] = await Promise.all([sha256File(pdfSrc), sha256File(epubSrc)]);
 
-  await fs.rm(releaseDir, { recursive: true, force: true });
-  await fs.mkdir(releaseDir, { recursive: true });
-
+  const packageDir = await fs.mkdtemp(path.join(distDir, '.release-'));
   const stageDir = await fs.mkdtemp(path.join(os.tmpdir(), 'qch-release-'));
+  const previous = path.join(packageDir, 'previous');
+  const ready = path.join(packageDir, 'ready');
   try {
+    await fs.mkdir(ready);
     // 2. Artifact 1 & 2: Copy PDF and EPUB and verify exact byte count + SHA-256
     const pdfName = 'quantum-computing-handbook.pdf';
     const epubName = 'quantum-computing-handbook.epub';
-    const pdfDst = path.join(releaseDir, pdfName);
-    const epubDst = path.join(releaseDir, epubName);
+    const pdfDst = path.join(ready, pdfName);
+    const epubDst = path.join(ready, epubName);
     await Promise.all([fs.copyFile(pdfSrc, pdfDst), fs.copyFile(epubSrc, epubDst)]);
 
     const [pdfDstBytes, epubDstBytes, pdfDstSha, epubDstSha] = await Promise.all([
@@ -392,6 +469,7 @@ async function main() {
       path.join(webDistDir, 'README.txt'),
       [
         `Quantum Computing Handbook ${version} (Edition ${edition}) — Offline eBook Quick Guide`,
+        `Source: ${identity.sourceCommit || 'commit unavailable'} (${identity.sourceState})`,
         '',
         '1. Double-click ../index.html to browse the full offline flagship site immediately.',
         '2. Double-click ../lab/quantum-lab.html to open the 6-module interactive lab offline.',
@@ -406,9 +484,14 @@ async function main() {
     );
 
     const webFileCount = await auditStagedTree(webStage, 'web');
-    const webZipPath = path.join(releaseDir, webZipName);
+    const webZipPath = path.join(ready, webZipName);
     zipMaxCompression(stageDir, webFolder, webZipPath);
     const webZipEntries = verifyZipIntegrity(webZipPath);
+    const webUnpacked = path.join(stageDir, 'verify-web');
+    execFileSync('unzip', ['-q', webZipPath, '-d', webUnpacked], { stdio: 'inherit' });
+    execFileSync(process.execPath, [
+      path.join(here, 'verify-offline-bundle.mjs'), path.join(webUnpacked, webFolder),
+    ], { stdio: 'inherit' });
 
     // 4. Artifact 4: Complete self-authored offline Python verification suite ZIP (excl. codes/vendor & __pycache__)
     const codesFolder = `quantum-computing-handbook-${version}-codes`;
@@ -429,10 +512,14 @@ async function main() {
 
     const thirdPartyText = await buildThirdPartySourcesText(version, edition);
     await fs.writeFile(path.join(codesStage, 'THIRD-PARTY-SOURCES.txt'), thirdPartyText, 'utf8');
+    await fs.writeFile(path.join(codesStage, 'CODE-VALIDATION.json'), JSON.stringify({
+      schema_version: 1, profile: 'authored-code-release', vendor_snapshot: 'excluded',
+    }, null, 2) + '\n');
     await fs.writeFile(
       path.join(codesStage, 'README-RELEASE.txt'),
       [
         `Quantum Computing Handbook ${version} (Edition ${edition}) — Offline Self-Authored Codes Suite`,
+        `Source: ${identity.sourceCommit || 'commit unavailable'} (${identity.sourceState})`,
         '',
         'Included:',
         '  - codes/                  All self-authored Python stdlib verification scripts, JSON baselines & docs',
@@ -443,6 +530,7 @@ async function main() {
         '  - __pycache__/            Excluded build caches.',
         '',
         'Quick start (Python 3.9+, stdlib only, zero paid APIs):',
+        '  python3 codes/run_all.py',
         '  python3 codes/foundations/foundations_lab.py --case all',
         '  python3 codes/algorithms/experiments.py all',
         '  python3 codes/systems/sensing_lab.py',
@@ -454,28 +542,52 @@ async function main() {
     );
 
     const codesFileCount = await auditStagedTree(codesStage, 'codes', { forbidVendor: true });
-    const codesZipPath = path.join(releaseDir, codesZipName);
+    const codesZipPath = path.join(ready, codesZipName);
     zipMaxCompression(stageDir, codesFolder, codesZipPath);
     const codesZipEntries = verifyZipIntegrity(codesZipPath, { forbidVendor: true });
+    verifyCodePackage(codesZipPath, stageDir, codesFolder);
 
-    // 5. Artifact 5: SHA256SUMS.txt (sorted by filename)
+    // 5. Bind the packaged bytes to the build source before writing the checksum file.
     const artifactNames = [pdfName, epubName, webZipName, codesZipName].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
     const records = [];
     for (const name of artifactNames) {
-      const fullPath = path.join(releaseDir, name);
+      const fullPath = path.join(ready, name);
       const bytes = await assertFileNonEmpty(fullPath);
       const sha256 = await sha256File(fullPath);
       records.push({ name, bytes, sha256 });
     }
-    const sumsContent = records.map(r => `${r.sha256}  ${r.name}`).join('\n') + '\n';
-    const sumsPath = path.join(releaseDir, 'SHA256SUMS.txt');
+    const manifestName = 'BUILDINFO.json';
+    const manifestPath = path.join(ready, manifestName);
+    await fs.writeFile(manifestPath, JSON.stringify({
+      schemaVersion: 1,
+      version,
+      edition,
+      ...identity,
+      sourceDigest,
+      dependencies,
+      packagedAtUtc: new Date().toISOString(),
+      workflowRun: process.env.GITHUB_RUN_ID || null,
+      artifacts: records,
+    }, null, 2) + '\n');
+    const manifestSha = await sha256File(manifestPath);
+    const sumsContent = [
+      `${manifestSha}  ${manifestName}`,
+      ...records.map(r => `${r.sha256}  ${r.name}`),
+    ].join('\n') + '\n';
+    const sumsPath = path.join(ready, 'SHA256SUMS.txt');
     await fs.writeFile(sumsPath, sumsContent, 'utf8');
 
     // Final cross-check of SHA256SUMS.txt
     const parsedSums = (await fs.readFile(sumsPath, 'utf8')).trim().split('\n');
-    if (parsedSums.length !== records.length) {
+    if (parsedSums.length !== records.length + 1) {
       throw new Error('SHA256SUMS.txt line count mismatch');
     }
+    const sumsBytes = await assertFileNonEmpty(sumsPath);
+    if (await verifyDeliveryBuilds(root, artifacts) !== sourceDigest) {
+      throw new Error('Rebuild the complete suite after source changes');
+    }
+    readSourceIdentity(sourceCommit);
+    await installRelease(ready, previous);
 
     console.log(`\n[build-release] PASS — Quantum Computing Handbook ${version} (edition ${edition})`);
     console.log(`[build-release] Audited: web (${webFileCount} files, ${webZipEntries} ZIP entries) | codes (${codesFileCount} files, ${codesZipEntries} ZIP entries)`);
@@ -484,10 +596,15 @@ async function main() {
     for (const r of records) {
       console.log(`  ${r.name.padEnd(48)} ${fmtMiB(r.bytes).padStart(10)}  ${r.sha256}`);
     }
-    const sumsBytes = await assertFileNonEmpty(sumsPath);
-    console.log(`  ${'SHA256SUMS.txt'.padEnd(48)} ${(sumsBytes + ' B').padStart(10)}  (${records.length} entries)\n`);
+    console.log(`  ${manifestName.padEnd(48)} ${' '.repeat(10)}  ${manifestSha}`);
+    console.log(`  ${'SHA256SUMS.txt'.padEnd(48)} ${(sumsBytes + ' B').padStart(10)}  (${records.length + 1} entries)\n`);
   } finally {
     await fs.rm(stageDir, { recursive: true, force: true }).catch(() => {});
+    if (!fsSync.existsSync(previous)) {
+      await fs.rm(packageDir, { recursive: true, force: true }).catch(() => {});
+    } else {
+      console.error(`[build-release] Previous release retained at ${previous}`);
+    }
   }
 }
 

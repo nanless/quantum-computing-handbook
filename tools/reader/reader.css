@@ -47,6 +47,10 @@
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  :root { scroll-behavior: auto; }
+}
+
 :root[data-theme="light"] {
   color-scheme: light;
 }
@@ -437,6 +441,19 @@ main {
   background: var(--accent);
   border-radius: 999px;
   transition: width 220ms ease;
+}
+.nav-reading-position,
+.chapter-reading-position {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+.nav-reading-position {
+  display: block;
+  margin-top: 2px;
+}
+.chapter-reading-position {
+  margin: 0.2rem 0 0.7rem;
 }
 .chapters nav a.is-mastered {
   display: flex;
@@ -1040,6 +1057,8 @@ dialog.figure-lightbox::backdrop {
 .lightbox-stage.is-zoomed img {
   max-width: none;
   max-height: none;
+  flex: none;
+  width: var(--figure-original-width, auto);
 }
 
 /* Two-Level Spoiler Hint/Answer & Exercises Chapter Filter UI */
@@ -1233,7 +1252,6 @@ dialog.search-modal::backdrop, dialog.shortcut-modal::backdrop {
   figure.scientific-figure { padding: 10px; }
   .scientific-svg { overflow-x: auto; }
   .scientific-svg img { max-width: 100%; width: 100%; height: auto; }
-  .scientific-svg > span::before { content: "点击放大查看 · "; }
   .ex-toolbar {
     position: static;
     top: auto;
@@ -1253,6 +1271,13 @@ dialog.search-modal::backdrop, dialog.shortcut-modal::backdrop {
   }
   .page-turn { flex-direction: column; }
   .katex-display { padding: 14px 6px 12px; }
+}
+
+@media (max-width: 360px) {
+  header:not(.course-header) { padding-inline: 8px; gap: 4px; }
+  .brand { font-size: 14px; }
+  .header-actions { gap: 4px; }
+  .header-lab-label { display: none; }
 }
 
 /* Print Styles */

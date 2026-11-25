@@ -10,7 +10,7 @@ in handbook/20-quantum-sensing-metrology.md:
      and strict GHZ degradation under finite dead time t_d > 0.
   4. Spin squeezing (exact 3x3 spin-1 OAT for N=2 + Kitagawa-Ueda general-N
      Wineland parameter) and optical quadrature squeezing under loss + LIGO dB.
-  5. CPMG-n AC lock-in phase (2/pi rectification) and bandpass filter peak
+  5. CPMG-n synchronous lock-in and finite-pulse-count filter response
      |Y(omega_0)|^2 = 4 / pi^2.
   6. HNLS (Hamiltonian-Not-in-Lindblad-Span) subspace test for dephasing,
      bit-flip, and amplitude damping, plus 2-qubit QEC sensing code check.
@@ -426,7 +426,7 @@ def check_spin_and_optical_squeezing():
 
 
 def check_cpmg_filter_and_lockin():
-    """Verify Section 7: CPMG-n AC lock-in phase 2/pi and filter peak 4/pi^2."""
+    """Verify synchronous response and distinguish it from the primary maximum."""
     def switching_sign(t, total_t, n_pulses):
         # Symmetric CPMG: pi pulses at t_k = (2k - 1)/(2n) * T, k=1..n
         count = 0
@@ -446,10 +446,19 @@ def check_cpmg_filter_and_lockin():
         return num / den
 
     total_t = 1.0
-    steps = 16000  # Exact multiple of 2*n for n=2, 4, 8 so pulse flips land on grid edges
+    steps = 16_000  # Multiple of 2*n for n=2, 4, 10
     dt = total_t / steps
     out = {}
-    for n in (2, 4, 8):
+    for n, expected_peak in [(2, 7.212024), (4, 13.085143), (10, 31.632108)]:
+        boundaries = [0, *((2 * pulse - 1) / (2 * n) for pulse in range(1, n + 1)), 1]
+
+        def power(z):
+            integral = sum(
+                (-1) ** index * (cmath.exp(1j * z * end) - cmath.exp(1j * z * start)) / (1j * z)
+                for index, (start, end) in enumerate(zip(boundaries, boundaries[1:]))
+            )
+            return abs(integral) ** 2
+
         omega_res = n * math.pi / total_t
         # Midpoint Riemann integration for AC lock-in phase & |Y(omega)|^2
         phase_acc = 0.0
@@ -461,7 +470,7 @@ def check_cpmg_filter_and_lockin():
             y_res += s_val * cmath.exp(1j * omega_res * t_mid) * dt
         y_sq = (abs(y_res) / total_t) ** 2
         assert abs(phase_acc - 2.0 / math.pi) < 1e-6, f"CPMG-{n} phase mismatch: {phase_acc}"
-        assert abs(y_sq - 4.0 / (math.pi ** 2)) < 1e-6, f"CPMG-{n} peak mismatch: {y_sq}"
+        assert abs(y_sq - 4.0 / (math.pi ** 2)) < 1e-6, f"CPMG-{n} synchronous power mismatch: {y_sq}"
 
         # Also check off-resonance frequency z = 0.7 * n * pi against closed form
         z_test = 0.7 * n * math.pi
@@ -473,9 +482,14 @@ def check_cpmg_filter_and_lockin():
         closed_off = cpmg_filter_closed(z_test, n)
         assert abs(y_off_sq - closed_off) < 1e-5, f"CPMG-{n} off-res mismatch: {y_off_sq} vs {closed_off}"
 
+        peak, peak_power = golden_section_max(power, n * math.pi - math.pi / 2, n * math.pi + math.pi / 2, tol=1e-9)
+        assert abs(peak - expected_peak) < 1e-5 and peak_power > y_sq
+        assert abs(power(omega_res) - 4 / math.pi ** 2) < 1e-12
         out[f"CPMG-{n}"] = {
             "lockin_phase_ratio": round(phase_acc, 6),
-            "peak_Y2": round(y_sq, 6),
+            "synchronous_Y2": round(y_sq, 6),
+            "first_band_argmax_omega_T": peak,
+            "first_band_peak_Y2": peak_power,
             "off_res_Y2_num": round(y_off_sq, 6),
             "off_res_Y2_closed": round(closed_off, 6),
         }
@@ -517,6 +531,7 @@ def check_hnls_and_qec_code():
     cases = {
         "dephasing_L=Z": z2,
         "bitflip_L=X": x2,
+        "bitflip_with_identity_L=I+X": [[1, 1], [1, 1]],
         "amplitude_damping_L=|0><1|": l_ad,
     }
     hnls_res = {}
@@ -530,6 +545,18 @@ def check_hnls_and_qec_code():
     assert not hnls_res["dephasing_L=Z"]["hnls_holds"]
     assert hnls_res["bitflip_L=X"]["hnls_holds"]
     assert not hnls_res["amplitude_damping_L=|0><1|"]["hnls_holds"]
+
+    assert hnls_res["bitflip_with_identity_L=I+X"]["hnls_holds"]
+    shifted = cases["bitflip_with_identity_L=I+X"]
+    dt = 0.01
+    l_dag_l = mat_mul(mat_dag(shifted), shifted)
+    k0 = [[i2[i][j] - dt * (1j * h_sig[i][j] + l_dag_l[i][j] / 2)
+           for j in range(2)] for i in range(2)]
+    k1 = [[math.sqrt(dt) * value for value in row] for row in shifted]
+    cross = mat_mul(mat_dag(k0), k1)
+    extracted = [[(cross[i][j] - cross[j][i].conjugate()) / (1j * dt ** 1.5)
+                  for j in range(2)] for i in range(2)]
+    assert all(abs(extracted[i][j] - z2[i][j]) < 1e-12 for i in range(2) for j in range(2))
 
     # 2-qubit QEC sensing code: |0_L> = |00>, |1_L> = |11>, probe = qubit 0 (MSB)
     c0 = [1 + 0j, 0j, 0j, 0j]
@@ -564,15 +591,69 @@ def check_nv_sensitivity_example():
     tau_dc = 1e-6  # 1 us
     tau_ac = 1e-3  # 1 ms
     eta_dc_ideal = 1.0 / (gamma_e * math.sqrt(tau_dc))
-    eta_ac_ideal = 1.0 / (gamma_e * math.sqrt(tau_ac))
-    assert 5.5e-9 < eta_dc_ideal < 5.8e-9
-    assert 1.7e-10 < eta_ac_ideal < 1.9e-10
+    eta_unit_response = 1.0 / (gamma_e * math.sqrt(tau_ac))
+    eta_synchronous_sinusoid = eta_unit_response / (2 / math.pi)
+    assert math.isclose(eta_dc_ideal * 1e9, 5.679, abs_tol=.001)
+    assert math.isclose(eta_unit_response * 1e9, .17958684, abs_tol=1e-8)
+    assert math.isclose(eta_synchronous_sinusoid * 1e9, .28209435, abs_tol=1e-8)
     return {
         "gamma_e_rad_per_s_T": round(gamma_e, 2),
         "nv_dc_ideal_nT_per_sqrtHz": round(eta_dc_ideal * 1e9, 3),
-        "nv_ac_ideal_nT_per_sqrtHz": round(eta_ac_ideal * 1e9, 4),
+        "nv_1ms_unit_response_nT_per_sqrtHz": eta_unit_response * 1e9,
+        "nv_1ms_synchronous_sine_nT_per_sqrtHz": eta_synchronous_sinusoid * 1e9,
     }
 
+
+
+def check_clock_and_gravity():
+    """Evaluate adjacent independent full-cycle averages and gravity fringe aliasing."""
+    single_cycle_sigma = 1 / (2 * math.pi * 4.292e14 * 1 * math.sqrt(10_000))
+    sigma_1_2 = single_cycle_sigma
+    sigma_120 = single_cycle_sigma / math.sqrt(100)
+    sigma_longer_cycle = single_cycle_sigma / math.sqrt(60)
+    assert math.isclose(sigma_1_2, 3.70818e-18, rel_tol=2e-6)
+    assert math.isclose(sigma_120, 3.70818e-19, rel_tol=2e-6)
+    assert math.isclose(sigma_longer_cycle / sigma_120, math.sqrt(2 / 1.2), rel_tol=1e-12)
+
+    effective_wavevector = 4 * math.pi / 780e-9
+    pulse_spacing = 0.1
+    phase_per_acceleration = effective_wavevector * pulse_spacing ** 2
+    local_resolution = 1e-3 / phase_per_acceleration
+    period = 2 * math.pi / phase_per_acceleration
+    gravity = 9.80665
+    assert math.isclose(local_resolution, 6.20704e-9, rel_tol=2e-6)
+    assert math.isclose(period, 3.9e-5, rel_tol=1e-12)
+    assert abs(math.cos(gravity * phase_per_acceleration)
+               - math.cos((gravity + period) * phase_per_acceleration)) < 5e-10
+    return {
+        "allan_qpn_1_2s": sigma_1_2,
+        "allan_qpn_120s": sigma_120,
+        "allan_qpn_120s_with_2s_cycle": sigma_longer_cycle,
+        "local_acceleration_resolution_m_per_s2": local_resolution,
+        "equal_fringe_spacing_m_per_s2": period,
+    }
+
+
+def check_multi_parameter_and_rank_change():
+    """Check a jointly attainable qutrit example and a Bures/SLD rank boundary."""
+    basis = [
+        [1 / math.sqrt(3), 1 / math.sqrt(2), 1 / math.sqrt(6)],
+        [1 / math.sqrt(3), -1 / math.sqrt(2), 1 / math.sqrt(6)],
+        [1 / math.sqrt(3), 0, -2 / math.sqrt(6)],
+    ]
+    classical = [[sum(4 * row[i] * row[j] for row in basis)
+                  for j in (1, 2)] for i in (1, 2)]
+    assert all(abs(classical[i][j] - 4 * (i == j)) < 1e-12 for i in (0, 1) for j in (0, 1))
+    sld_x = [[0, 2, 0], [2, 0, 0], [0, 0, 0]]
+    sld_y = [[0, 0, 2], [0, 0, 0], [2, 0, 0]]
+    sld_commutator_entry = mat_mul(sld_x, sld_y)[1][2] - mat_mul(sld_y, sld_x)[1][2]
+    assert sld_commutator_entry == 4
+    delta = 1e-4
+    # Rationalize 8*(1-sqrt(1-delta^2))/delta^2 for stable evaluation.
+    bures = 8 / (1 + math.sqrt(1 - delta ** 2))
+    assert abs(bures - 4) < 2e-8
+    return {"joint_cfi": classical, "sld_commutator_1_2": sld_commutator_entry,
+            "rank_boundary_sld_qfi": 0, "rank_boundary_bures_scaled": bures}
 
 def main():
     summary = {
@@ -583,6 +664,8 @@ def main():
         "spin_and_optical_squeezing": check_spin_and_optical_squeezing(),
         "cpmg_lockin_filter": check_cpmg_filter_and_lockin(),
         "hnls_and_qec_code": check_hnls_and_qec_code(),
+        "clock_and_gravity": check_clock_and_gravity(),
+        "multi_parameter_and_rank_change": check_multi_parameter_and_rank_change(),
         "status": "PASS",
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))

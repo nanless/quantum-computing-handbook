@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Chapter 15: reproducible statistical checks; Python 3.9+, standard library."""
-import json, math, pathlib
+import json, math, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 
 def bell_lower(counts, alpha=0.05):
     correlations=[]; radii=[]
@@ -38,7 +40,7 @@ def main():
       'zne':{'estimate':estimate,'equal_allocation_variance_upper':equal_worst,
              'optimal_allocation_variance_upper':optimal_worst,'optimal_shots':optimal_n},
       'twenty_independent_tests_false_positive_probability':familywise}
-    target=pathlib.Path(__file__).with_name('results.json')
-    target.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    target=pathlib.Path(__file__).resolve().with_name('results.json')
+    write_result(target, json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__': main()

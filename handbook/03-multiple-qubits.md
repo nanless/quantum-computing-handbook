@@ -1,6 +1,6 @@
 # 03｜多量子比特、量子纠缠与非局域性
 
-单个量子比特已经能展现叠加与干涉，但量子计算真正把经典世界甩在身后的起点，是**两个以上的量子比特放到一起的时候**。从这一章开始，我们不再只盯着一根孤零零的态矢量，而是亲手走进多比特的联合空间，直面量子力学里最反直觉、也最核心的资源——**量子纠缠**（quantum entanglement）与**非局域关联**（nonlocality）。
+[第 02 章](02-single-qubit.md)用复振幅解释了单比特的相位与干涉。把两个比特放在一起以后，只记录每个比特各自的状态会丢失关联信息。例如，两个各自看起来都像公平硬币的测量结果，却可能每次都相同。本章从联合态写起，弄清哪些关联可由经典随机变量解释，哪些需要用**量子纠缠**（quantum entanglement）或**非局域关联**（nonlocality）描述。
 
 读完这一章，你应该能拿一张草稿纸独立算清楚五件事：
 
@@ -8,7 +8,7 @@
 2. 用四格判据 $ad - bc = 0$ 判断任意两比特纯态是否纠缠，并写出四个 Bell 态在不同测量基下的关联；
 3. 对联合密度矩阵做**偏迹**，求出只观察其中一方时的约化态，并看懂为什么纠缠不能用来超光速传信；
 4. 用**奇异值分解**（SVD）桥接 **Schmidt 分解**、**纯化唯一性**与**纠缠熵**，再用**纠缠见证**、**Peres–Horodecki PPT 判据**（及负性 $\mathcal{N}$）与 **LOCC 单调性**分辨经典关联混态与真正的量子纠缠；
-5. 通过 **CHSH 合作博弈**把经典的 $75\%$ 赢率天花板与量子的 $85.36\%$ 赢率逐行算透，用 **Mermin–GHZ 悖论**见识单次决定性矛盾，并理解三比特纠缠为何受**单配性**约束。
+5. 通过 **CHSH 合作博弈**逐行算出经典 $75\%$ 与量子 $85.36\%$ 的最高赢率，用 **Mermin–GHZ 悖论**理解四组理想预测为何不能同时由局域模型给出，并理解三比特纠缠的**单配性**。
 
 读本章前，建议先熟悉[第 01 章：数学工具](01-math.md)的列向量、矩阵乘法与张量积，以及[第 02 章：单量子比特](02-single-qubit.md)的 Bloch 球和投影测量。初次阅读可按两轨推进：**★ 首遍主线**聚焦 §1–§4、§5.1、§5.3、§6.1 与 §7.1–§7.3、§7.5；**☆ 进阶选读**（文中已标明）涵盖复系数 SVD 手算、纯化、PPT/LOCC、Tsirelson 界、Mermin–GHZ 悖论与三比特单配性。全章严格沿用本书**高位在左（大端序）** 约定（$|00\rangle, |01\rangle, |10\rangle, |11\rangle$，左 $A$ 右 $B$；与小端序软件如 Qiskit 的位序对照见[符号表](appendices/notation.md)）。
 
@@ -529,7 +529,7 @@ $$
 
    因为这对所有 $O_A$ 均成立，所以 $\rho'_A = \rho_A$ 丝毫未变！
 
-换个日常视角理解这件事：纠缠在测量发生时确实建立了跨越空间的强关联，但必须等到 Alice 把她的经典记录（光速以内）发给 Bob，两人把数据按轮次对齐分组之后，才能看见那份超越经典的条件关联。纠缠与相对论的因果律和平共处。
+已约定双方都测 $Z$，并已知 Alice 确实执行了测量时，Bob 可以从自己的同轮结果推断 Alice 的随机标签，因为 $P(a=b\mid Z,Z)=1$。这种推断依赖事先知道的实验方案。单看 Bob 的数据，无法判断 Alice 选择了测 $Z$、测 $X$，还是完全没有测。实际验证两边的关联时，两人要通过经典通信交换设置和记录，再按轮次对齐。
 
 **马上核对**：对单态 $|\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}$，Alice 在计算基测得 $0$ 时，Bob 的条件态是什么？只保留 $A = 0$ 的项得未归一化向量 $\frac{1}{\sqrt{2}}|01\rangle$，概率 $p_0 = 1/2$，归一化条件联合后态为 $|01\rangle$，因此 Bob 确定处于 $|1\rangle$。
 
@@ -849,7 +849,7 @@ $$
    |\psi_2\rangle_{AR} = (I_A \otimes H_R)\,|\psi_1\rangle_{AR}.
    $$
 
-   这不是巧合！因为任何纯化 $|\psi\rangle_{AR}$ 的 Schmidt 分解里，$A$ 侧的权重 $\{\lambda_j\}$ 与本征子空间都被 $\rho_A$ 钉死了，唯一能自由挑选的只有 $R$ 侧那组正交归一基。因此，**同一个 $\rho_A$ 的任意两个同维纯化之间，必然且仅相差参考系统 $R$ 上的一个局域酉变换 $I_A \otimes U_R$**（若两纯化的参考系统维数不同，则相差一个等距变换 $I_A \otimes V_R$）。第 8.1 节证明极端纠缠单配性时，全靠这条性质两行收官。
+   一般情形先为 $\rho_A$ 选定同一套本征基，再分别在两个纯化中从该基取偏内积。除以对应的 $\sqrt{\lambda_j}$ 后得到两组 $R$ 侧正交向量。将一组向量逐一映到另一组，即得到参考支撑上的等距映射。参考空间同维时，可把该映射扩展成酉门。维数不同时，可从较小的参考空间等距嵌入较大的空间，或只在对应的支撑上比较。第 8.1 节只用到 Schmidt 秩为 $1$ 的结论。
 
 3. **Uhlmann 定理的几何直觉**：在[第 13 章](13-quantum-information.md)与[第 18 章](18-channels-capacities-complexity.md)里，两张混态密度矩阵 $\rho, \sigma$ 的**根保真度**定义为 $F(\rho, \sigma) = \operatorname{Tr}\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}}$。为什么它会写成这么一个带着双层根号的公式？**Uhlmann 定理**（1976）给出了极其干净的几何解释：把 $\rho$ 和 $\sigma$ 各自纯化成 $|\psi_\rho\rangle_{AR}$ 和 $|\psi_\sigma\rangle_{AR}$，然后不动 $A$、只旋转隐身参考系统 $R$ 上的局域酉门 $U_R$，所能对齐到的**最大纯态重叠**恰好就是根保真度：
 
@@ -944,7 +944,17 @@ C_X &= \langle X \otimes X \rangle = P_X(++) + P_X(--) - P_X(+-) - P_X(-+).
 \end{aligned}
 $$
 
-（实验上，把同一来源制备的样本分成两批，一批测 $Z \otimes Z$，另一批测 $X \otimes X$，不是单次同时测两个不对易的量。）
+**同一对比特能否同时读出两个关联？** 在每一端，$X$ 和 $Z$ 反对易。只用两地各自的单比特读出时，可以将同一制备的样本分成两组，分别测 $Z$ 与 $X$ 后汇总两端的结果。两个联合算符本身却对易：
+
+$$
+(X\otimes X)(Z\otimes Z)=(XZ)\otimes(XZ)=(-iY)\otimes(-iY)=-Y\otimes Y,
+$$
+
+$$
+(Z\otimes Z)(X\otimes X)=(ZX)\otimes(ZX)=(iY)\otimes(iY)=-Y\otimes Y.
+$$
+
+第 3.1 节的四个 Bell 态正是共同本征基。按 $\Phi^+,\Phi^-,\Psi^+,\Psi^-$ 顺序，$(X\otimes X,Z\otimes Z)$ 的本征标签是 $(+,+),(-,+),(+,-),(-,-)$。若可把两个比特送入可信的联合测量电路，就能一次 Bell 基测量同时读出两个标签。第 04 章会用 CNOT、Hadamard 门与计算基读出实现它。两种方案需要的物理操作不同。
 
 我们来证明：**对一切可分两比特态，必然满足 $C_X + C_Z \le 1$！**
 
@@ -1118,17 +1128,19 @@ $$
 \mathcal{N}(\rho_q) = \max\!\left(0,\; \frac{3q - 1}{4}\right).
 $$
 
-把 PPT 判据与负性、双轴见证 $C_X + C_Z = 2q > 1$、三轴见证 $C_X - C_Y + C_Z = 3q > 1$（利用 $|\Phi^+\rangle$ 的 $\langle YY \rangle = -1$）、投影测量下的 EPR 导引精确门槛（$q > 1/2$，Wiseman–Jones–Doherty 2007），以及第 7 节马上要算的 **CHSH 专项**门槛 $S = 2\sqrt{2}\,q > 2 \iff q > 1/\sqrt{2}$ 摆在同一张表里对照：
+下表对照同一态族的几种检验。纠缠由 PPT 判据确定。EPR 导引中，被导引一侧的测量设备可信，另一侧可选任意单比特 POVM。门槛 $q>1/2$ 对这一测量范围也成立。第 7 节的 CHSH 列给出指定 Pauli 测量设置下的值，不能用它替代任意 Bell 检验。[Zhang 与 Chitambar](https://doi.org/10.1103/PhysRevLett.132.250201) · [Renner](https://doi.org/10.1103/PhysRevLett.132.250202)
 
 | 权重 $q$ | 最小本征值 $\frac{1-3q}{4}$ | 负性 $\mathcal{N}(\rho_q)$ | 双轴见证 $2q$ | 三轴见证 $3q$ | CHSH 值 $2\sqrt{2}\,q$ | 物理归类 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | $0$ | $+0.2500$ | $0$ | $0$ | $0$ | $0$ | 完全白噪声（可分） |
 | $1/3 \approx 0.3333$ | $0$ | $0$ | $0.6667$ | $1$ | $0.9428$ | 可分与纠缠的精确边界 |
-| $1/2 = 0.5000$ | $-0.1250$ | $0.1250$ | $1$ | $1.5000$ | $1.4142$ | 纠缠；投影 EPR 导引精确边界，不违背 CHSH |
+| $1/2 = 0.5000$ | $-0.1250$ | $0.1250$ | $1$ | $1.5000$ | $1.4142$ | 纠缠，在任意单比特 POVM 下仍不可导引，不违背 CHSH |
 | $1/\sqrt{2} \approx 0.7071$ | $-0.2803$ | $0.2803$ | $1.4142$ | $2.1213$ | $2.0000$ | **CHSH 专项**违背门槛 |
 | $1$ | $-0.5000$ | $0.5000$ | $2$ | $3$ | $2.8284$ | 纯 Bell 态 $\lvert\Phi^+\rangle$ |
 
-请盯紧两个精准界碑：第一，$q = \frac{1}{2}$ 时 $\mathcal{N}(\rho_{1/2}) = \frac{1}{8} > 0$，它千真万确是纠缠态，却既无法突破投影 EPR 导引门槛、也无法违背 CHSH；第二，$q > \frac{1}{\sqrt{2}} \approx 0.7071$ 是**两输入两输出 CHSH 不等式**的精确门槛，而非全部可能 Bell 不等式的绝对下限（若允许双方选用更多测量设置，已有构造表明两比特 Werner 态在略低于 $1/\sqrt{2}$ 的 $q \approx 0.6964$ 处即可违背某个多设置 Bell 不等式，而对所有投影测量仍存在 $q \le 0.6595$ 的显式局域隐变量模型）。无论怎么细分，量子混态世界里严格成立三层包含层级：
+$q=1/2$ 的负性为 $1/8$，但这个点仍有能解释导引统计的局域隐态模型。对于 CHSH，只有 $q>1/\sqrt{2}$ 才会违背，等号恰到经典界。对于任意设置数的二值投影测量，Designolle 等的工作构造了覆盖到约 $q=0.6875$ 的局域模型，并给出约 $q=0.6961$ 的多设置 Bell 违背上界。两数是对阈值的夹逼，适用对象是两比特 Werner 态及局域投影测量。该文修订版更新了多体边缘项的处理，现有 GHZ 和 W 的界未证明两者的临界值严格分离。[Designolle 等修订版，2026-10-05，表 1 及附录 E](https://arxiv.org/html/2302.04721v4)
+
+在各自允许所述全部局域测量的标准定义下，这三个概念的关系是：
 
 $$
 \text{Bell 非局域（能违背某个 Bell 不等式）} \;\subsetneq\; \text{EPR 可导引（steering）} \;\subsetneq\; \text{量子纠缠（不可分）}.
@@ -1174,7 +1186,7 @@ $$
   = \frac{\sqrt{3}}{2}|00\rangle + \frac{1}{2}|11\rangle!
   $$
 
-不管弱测量落进哪一支，经过这轮单向 LOCC，两人都能以 **$100\%$ 确定性**把 $|\Phi^+\rangle$（$1\ \mathrm{ebit}$）转换成部分纠缠态 $\frac{\sqrt{3}}{2}|00\rangle + \frac{1}{2}|11\rangle$（$0.811\ \mathrm{ebit}$）。反过来呢？单凭一份 $0.811\ \mathrm{ebit}$ 的纯态，因为纠缠单调性 $0.811 < 1$，**绝不可能**用任何 LOCC 确定性地把纠缠抬回 $1\ \mathrm{ebit}$ 的 $|\Phi^+\rangle$（单份至多按概率提取，多份渐近浓缩则属于[第 13 章](13-quantum-information.md)与[第 18 章](18-channels-capacities-complexity.md)的纠缠蒸馏与 Nielsen 优超理论；[第 04 章](04-circuits-protocols.md)的量子隐形传态正是 LOCC 消耗 $1\ \mathrm{ebit}$ 换取传输 $1$ 量子比特的代表性协议）。
+两条分支经过条件修正，都得到 $\sqrt{3}\lvert00\rangle/2+\lvert11\rangle/2$，所以这是从 $1$ 到约 $0.811\ \mathrm{ebit}$ 的确定性转换。逆向的单份确定转换被纠缠单调性排除，但可以牺牲成功率。Alice 施加两分支局部滤波，成功算符为 $K_{\mathrm{s}}=\operatorname{diag}(1/\sqrt3,1)$，失败算符为 $K_{\mathrm{f}}=\operatorname{diag}(\sqrt{2/3},0)$。逐格核对 $K_{\mathrm{s}}^\dagger K_{\mathrm{s}}+K_{\mathrm{f}}^\dagger K_{\mathrm{f}}=I$。成功时未归一化联合态是 $(\lvert00\rangle+\lvert11\rangle)/2$，概率 $1/2$，归一化后为 $\lvert\Phi^+\rangle$。失败时得到乘积态 $\lvert00\rangle$。平均纠缠为 $1/2\ \mathrm{ebit}$，仍低于输入的 $0.811\ \mathrm{ebit}$。[Vidal 的单份随机转换](https://arxiv.org/abs/quant-ph/9902033)
 
 把本章前半段学过的全部两体纠缠判据与度量收入一张总表，随时查准适用范围：
 
@@ -1295,8 +1307,10 @@ $$
 因为 $b_0, b_1 \in \{+1, -1\}$，如果 $b_0 = b_1$，那么第一个括号是 $\pm 2$、第二个括号是 $0$；如果 $b_0 = -b_1$，第一个括号是 $0$、第二个括号是 $\pm 2$。无论如何，每一轮都有 $s(\lambda) \in \{+2, -2\}$！对所有 $\lambda$ 按概率 $p(\lambda)$ 加权平均（包括把局部额外随机性并入 $\lambda$），由三角不等式立刻得到 **CHSH 不等式**：
 
 $$
-\boxed{|S| \le 2 \quad \Longleftrightarrow \quad p_{\mathrm{win}}^{\mathrm{cl}} = \frac{1}{2} + \frac{S}{8} \le \frac{3}{4} = 75\%.}
+\boxed{|S|\leq2 \quad\Longleftrightarrow\quad \frac14\leq p_{\mathrm{win}}=\frac12+\frac{S}{8}\leq\frac34.}
 $$
+
+固定游戏规则时，超过 $75\%$ 对应 $S>2$，低于 $25\%$ 对应 $S<-2$，两侧都违背 CHSH 局域界。给 Alice 的两个输出同时换标签会反转所有关联的符号，也会交换胜率的上下侧。
 
 ### 7.3 共享 Bell 态的量子策略：赢率突破至 $85.36\%$（$S = 2\sqrt{2}$）
 
@@ -1441,7 +1455,7 @@ $$
 
 1. **局域性漏洞**（locality loophole）：如果 Alice 选定测量设置 $x$ 的时刻太早，慢于光速的经典信号就有足够时间溜到 Bob 那边提前通风报信。堵法是拉远距离，并在粒子飞行途中极快地随机选定设置，保证“Alice 选设置”和“Bob 出结果”处于相对论**类空间隔**内。
 2. **探测 / 公平采样漏洞**（detection / fair-sampling loophole）：如果探测器大量漏掉光子，一个狡猾的局域隐变量模型可以让粒子在“答不上来时干脆装死不被探测”，只把碰巧凑出高关联的样本送进统计，从而伪造出 $S > 2$。堵法是把全链路探测效率抬到临界阈值以上（或像 Delft 2015 实验用事件就绪方案），不再把丢失样本剔除出分母。
-3. **自由选择 / 设置独立性漏洞**（freedom-of-choice loophole）：万一裁判的随机数发生器和纠缠源在宇宙大爆炸早期就存在某种隐蔽共同因果（所谓“超决定论”），那 $p(\lambda \mid x, y) \ne p(\lambda)$。这一条在逻辑上无法靠任何有限实验彻底证伪，但物理学家已经用来自数十亿光年外遥远类星体的星光控制测量设置（星光 Bell 实验），把任何可能的“合谋时间点”推回到了几十亿年前。
+3. **自由选择 / 设置独立性漏洞**（freedom-of-choice loophole）。若设定选择与隐变量共享因果来源，可能有 $p(\lambda\mid x,y)\ne p(\lambda)$。类星体实验以遥远天体的光控制设置。在假定探测样本公平、用于选设置的波长未被选择性改变或预知时，Rauch 等把能利用该漏洞解释观测违背的局域影响推到至少约 $78$ 亿年前。Delft 事件就绪实验采用不同设计。以就绪信号定义的 $245$ 次试验给出 $S=2.42\pm0.20$、$p=0.039$，统计检验允许装置有记忆。两种实验分别限制不同的替代解释。[Rauch 等](https://arxiv.org/abs/1808.05966) · [Hensen 等](https://arxiv.org/abs/1508.05949)
 
 最后牢记两句冷静的科学边界：Bell 不等式的实验违背，排除了满足局域性与设置独立性的经典隐变量理论；它**绝不意味着可以超光速通信**（第 4.4 节无信号定理依然严格成立），也**与“人类意识决定物理现实”毫无关系**——探测器只是冷冰冰的物理器件，有没有人盯着屏幕看结果，统计分布丝毫不差。
 
@@ -1487,7 +1501,7 @@ $$
    (Y\otimes Y\otimes X)|\mathrm{GHZ}\rangle = -1\,|\mathrm{GHZ}\rangle.
    $$
 
-这四条方程告诉我们：$|\mathrm{GHZ}\rangle$ 是这四个互相两两对易的三体算符的**共同本征态**！也就是说，在理想实验里，每一次测量根本没有统计随机性，三人乘积**以 $100\%$ 确定性**分别等于 $+1, -1, -1, -1$。
+这四条方程说明 $\lvert\mathrm{GHZ}\rangle$ 是四个两两对易的三体算符的共同本征态。每轮选定一组局域设置后，三人的乘积必为对应的 $+1,-1,-1,-1$ 之一。单人输出仍可随机，各方也无法在同一轮用局域设备分别测完自己的 $X$ 和 $Y$。
 
 现在把任何**局域隐变量理论**请上被告席。如果每个粒子离开源头时，早就预先揣好了一张写着“被测 $X$ 就报 $A_X$、被测 $Y$ 就报 $A_Y$”的确定剧本，即存在六个事先定好的数字
 
@@ -1517,7 +1531,7 @@ $$
 A_X B_X C_X = -1!
 $$
 
-**一切局域隐变量理论都必然预言：三人同时测 $X$ 时，乘积 $100\%$ 必须是 $-1$！** 可我们第一步刚刚亲手算过，量子力学预言 $X\otimes X\otimes X$ 的乘积 **$100\%$ 必须是 $+1$**！
+任何能精确复现前三条 $Y$ 设置预测的局域模型，都被迫在 $XXX$ 设置下给出乘积 $-1$。而量子力学在这个设置下给出乘积 $+1$。
 
 $$
 \text{局域隐变量预测：} A_X B_X C_X = -1
@@ -1525,7 +1539,7 @@ $$
 \text{量子力学预测：} \langle X\otimes X\otimes X\rangle = +1.
 $$
 
-不是 $75\%$ 对 $85.36\%$，而是 **$0\%$ 对 $100\%$**——在理想无噪条件下，单次 $XXX$ 测量就足以与一切局域隐变量模型直接矛盾。
+矛盾来自需要同时复现四组设置的理想预测。一轮 $XXX$ 比如读到三个 $+1$，本身也能由某个局域模型给出。实验需要从四类设置收集多轮数据，检验同一个局域模型还能否解释它们。
 
 **现实实验的统计边界**：真实光学或超导芯片总存在制备误差和探测器噪声，不可能测出绝对 $100\%$ 无误差的单个事件。因此在真实实验检验中（如潘建伟、Bouwmeester、Daniell、Weinfurter 与 Zeilinger 于 *Nature* 2000 报道的首次三光子 GHZ 检验，也是 2022 诺奖奠基工作之一），物理学家把上述四组设置写成 **Mermin 不等式**：
 
@@ -1544,7 +1558,7 @@ $$
 
 > **练 03-B（Mermin–GHZ 负相位变体与 Werner 负性核对）**：(1) 把三比特态换成 $|\mathrm{GHZ}^-\rangle = \frac{|000\rangle - |111\rangle}{\sqrt{2}}$，逐项手算 $XXX, XYY, YXY, YYX$ 在该态上的本征值，并推导出局域隐变量理论给出的决定性矛盾；(2) 对第 6.3 节的 Werner 态 $\rho_q$ 取 $q = \frac{1}{2}$，直接由 $\rho_{1/2}^{T_B}$ 的本征值算出负性 $\mathcal{N}(\rho_{1/2})$，说明为何此时它既纠缠又不违背 CHSH。
 >
-> **自检核对**：(1) $(X\otimes X\otimes X)|\mathrm{GHZ}^-\rangle = \frac{|111\rangle - |000\rangle}{\sqrt{2}} = -1|\mathrm{GHZ}^-\rangle$；$(X\otimes Y\otimes Y)|\mathrm{GHZ}^-\rangle = \frac{-|111\rangle - (-|000\rangle)}{\sqrt{2}} = +1|\mathrm{GHZ}^-\rangle$，同理 $YXY, YYX$ 均为 $+1$。局域隐变量满足 $A_X B_Y C_Y = A_Y B_X C_Y = A_Y B_Y C_X = +1$，三式相乘消去平方项得 $A_X B_X C_X = (+1)^3 = +1$，与量子力学必得 $-1$ 再次爆发 $+1 = -1$ 死矛盾！(2) $q = 1/2$ 时 $\rho_{1/2}^{T_B}$ 四个本征值为 $\frac{3}{8}, \frac{3}{8}, \frac{3}{8}, -\frac{1}{8}$，故负性 $\mathcal{N}(\rho_{1/2}) = \frac{1}{8} > 0$，证明它严格纠缠；但其 CHSH 最大值仅为 $S = 2\sqrt{2}\cdot\frac{1}{2} = \sqrt{2} \approx 1.4142 < 2$，落在经典 CHSH 边界之内。
+> **自检核对**：(1) $(X\otimes X\otimes X)|\mathrm{GHZ}^-\rangle = \frac{|111\rangle - |000\rangle}{\sqrt{2}} = -1|\mathrm{GHZ}^-\rangle$；$(X\otimes Y\otimes Y)|\mathrm{GHZ}^-\rangle = \frac{-|111\rangle - (-|000\rangle)}{\sqrt{2}} = +1|\mathrm{GHZ}^-\rangle$，同理 $YXY, YYX$ 均为 $+1$。局域隐变量满足 $A_X B_Y C_Y = A_Y B_X C_Y = A_Y B_Y C_X = +1$，三式相乘消去平方项得 $A_X B_X C_X = (+1)^3 = +1$，与量子力学必得 $-1$ 再次爆发 $+1 = -1$ 死矛盾！(2) $q = 1/2$ 时 $\rho_{1/2}^{T_B}$ 四个本征值为 $\frac{3}{8}, \frac{3}{8}, \frac{3}{8}, -\frac{1}{8}$，故负性 $\mathcal{N}(\rho_{1/2}) = \frac{1}{8} > 0$，证明它严格纠缠；而在非平凡二值投影测量下，其 CHSH 最大值为 $2\sqrt{2}\cdot\frac{1}{2}=\sqrt{2}\approx1.4142$。若允许一律报告同一个结果的平凡测量，则可达到 $2$。两种情况都没有违背 CHSH。
 
 ---
 
@@ -1574,9 +1588,9 @@ $$
    = \frac{I_A}{2} \otimes \rho_C!
    $$
 
-   $\rho_{AC}$ 退化成了毫无关联的纯乘积态——$C$ 不仅不能与 $A$（或 $B$）纠缠，甚至连**一丝经典关联都分不到**！对比一下经典的“最大相关态” $\rho_{\mathrm{mix}} = \frac{1}{2}(|00\rangle\langle 00| + |11\rangle\langle 11|)$：它可以毫不费力地扩成三方经典共享态 $\frac{1}{2}(|000\rangle\langle 000| + |111\rangle\langle 111|)$，让 $A$ 与 $B$、$A$ 与 $C$ 同时保持 $100\%$ 经典关联！量子最大纠缠之所以彻底锁死第三者，正是因为它必须是全局纯态且局部最大混态。
+   $\rho_{AC}$ 是混合乘积态。其纯度为 $\operatorname{Tr}[(I_A/2)^2]\operatorname{Tr}(\rho_C^2)=\operatorname{Tr}(\rho_C^2)/2\leq1/2$，即使 $\rho_C$ 是纯态也一样。乘积形式说明 $A$ 与 $C$ 没有相关性，对 $B,C$ 同理。相比之下，经典混态 $\rho_{\mathrm{mix}}$ 可扩展成三方共享态 $\bigl(\lvert000\rangle\langle000\rvert+\lvert111\rangle\langle111\rvert\bigr)/2$，此时 $A,B$ 与 $A,C$ 都保持计算基下的完全相关。
 
-在[第 12 章](12-security-network-frontiers.md)的纠缠量子密钥分发（E91 协议）中，这正是核心安全支柱：只要 Alice 和 Bob 通过 CHSH 检验确认手里共享的是近乎完美的 Bell 态，物理定律就直接封死了窃听者 Eve 偷取密钥信息的空间（当然，实际工程安全还要把设备模型、探测漏洞与有限密钥统计全部核算清楚）。
+在[第 12 章](12-security-network-frontiers.md)的纠缠型量子密钥分发中，纯 Bell 对与外部系统无关联提供了理想模型。实际观测到有限大小的 Bell 违背后，还需按所用协议、探测与设备假设推导 Eve 的信息界，并纳入有限样本和公开记录。
 
 ### 8.2 CKW 定量不等式与三体纠缠残余
 
@@ -1735,13 +1749,13 @@ $$
 | $\lvert\mathrm{GHZ}\rangle$ | $\frac{1}{2}\lvert 00\rangle\langle 00\rvert + \frac{1}{2}\lvert 11\rangle\langle 11\rvert$（可分） | $0$ | $1$ | $1$ | 全部为纯三体纠缠，丢失任一比特即彻底退纠缠 |
 | $\lvert W\rangle$ | $\frac{1}{3}\lvert 00\rangle\langle 00\rvert + \frac{2}{3}\lvert\Psi^+\rangle\langle\Psi^+\rvert$（纠缠） | $\frac{2}{3}$ | $\frac{8}{9}$ | $0$ | 纠缠稳健地分摊给两两配对，恰取 CKW 等号，抗单比特丢失 |
 
-纠缠单配性并不禁止三方之间存在两体纠缠——$|W\rangle$ 态就在最大限度上把纠缠匀给了每一对伙伴，只是每一对最多只能分到 $C_{\mathrm{conc}} = 2/3$，再也不可能同时变成两个满分 $1$ 的 Bell 态。
+纠缠单配性允许三方同时存在两体纠缠。$|W\rangle$ 中每一对的共生度都等于 $2/3$。换一种三比特态，某一对的共生度可以更高，但 CKW 界排除了两对共享一方的比特同时各有共生度 $1$。
 
 ---
 
 ## 9. 常见误区速查
 
-- **误区 1：测量结果强相关，就说明两个比特纠缠。** 错。经典共享随机数 $\rho_{\mathrm{mix}} = \frac{1}{2}|00\rangle\langle 00| + \frac{1}{2}|11\rangle\langle 11|$ 在计算基下同样 $100\%$ 同号相关，但它是毫无纠缠的可分混态；必须至少在另一组不相容的基（如 $X$ 基）下联合检验相干性。
+- **误区 1：测量结果强相关，就说明两个比特纠缠。** 经典共享随机数 $\rho_{\mathrm{mix}}=(\lvert00\rangle\langle00\rvert+\lvert11\rangle\langle11\rvert)/2$ 在计算基下也总给同号结果。只区分这一混态和 $\lvert\Phi^+\rangle$ 时，可比较 $X\otimes X$ 的统计。要排除全部可分态，可用第 6.2 节的双轴见证或可信 Bell 基测量。
 - **误区 2：展开式里非零项越多，就越纠缠。** 错。$\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2} = |+\rangle \otimes |+\rangle$ 四项全满却完全可分，而只有两项的 $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$ 反而是最大纠缠态。
 - **误区 3：可分混态等于“能写成一个单乘积 $\rho_A \otimes \rho_B$”。** 错。可分混态允许写成若干乘积态的概率混合 $\sum_j p_j \rho_A^{(j)} \otimes \rho_B^{(j)}$；$\rho_{\mathrm{mix}}$ 写不成单个乘积，却仍是可分态。
 - **误区 4：约化态的熵 $S(\rho_A) = 1\ \mathrm{bit}$，就代表联合态有 $1\ \mathrm{bit}$ 纠缠。** 错。这一公式只对**二分纯态**成立；对混态（如 $\rho_{\mathrm{mix}}$），局部熵里混杂了经典无知，不能直接当纠缠度量。
@@ -1761,11 +1775,14 @@ $$
 | 两比特纯态判据与 Bell 基 | 可分 $\iff ad-bc = 0$；四 Bell 态两两正交，局部约化态皆为 $I/2$ |
 | 偏迹与无信号定理 | $(\rho_A)_{a,c}=\rho_{a0,c0}+\rho_{a1,c1}$；远端局域酉门或非选择测量不改 $\rho_A$ |
 | SVD 与 Schmidt 分解 | $C = W\Sigma V^\dagger$，$\rho_A = CC^\dagger$、$\rho_B = C^T C^* \ne C^\dagger C$；纯态熵 $S(\rho_A)=-\sum\lambda_j\log_2\lambda_j$（混态失效） |
-| 混态判据层级 | 非局域（$q > 1/\sqrt{2}$ 违背 CHSH）$\subsetneq$ 投影导引（$q>1/2$）$\subsetneq$ 纠缠（$2\times 2$ 下 PPT 充要，$q>1/3$） |
-| CHSH 与 Tsirelson 界 | 经典 $\lvert S\rvert \le 2$（$75\%$），量子 $\lvert S\rvert \le 2\sqrt{2}$（$85.36\%$）；Mermin–GHZ 呈 $+1=-1$ 决定性矛盾 |
+| 联合关联的读出 | $X\otimes X$ 与 $Z\otimes Z$ 对易，Bell 基同时读出两个本征标签。两地单比特协议分别用同一制备的两组样本测 $X$ 与 $Z$ |
+| 两比特 Werner 态 | $q>1/3$ 才纠缠，$q>1/2$ 才可导引，$q>1/\sqrt{2}$ 才违反 CHSH。任意设置数的投影 Bell 检验另有阈值夹逼 |
+| CHSH 与 Tsirelson 界 | 经典 $\lvert S\rvert\leq2$，量子 $\lvert S\rvert\leq2\sqrt{2}$。固定游戏用有符号的 $p_{\mathrm{win}}=1/2+S/8$。Mermin–GHZ 的矛盾牵涉四组理想设置 |
 | 纠缠单配性（CKW） | $C_{\mathrm{conc},AB}^2 + C_{\mathrm{conc},AC}^2 \le 4\det\rho_A$；GHZ $\tau=1$（丢一退纠缠），W $\tau=0$（两体分摊 $C_{\mathrm{conc}}=2/3$） |
 
 **三句自检要点**：① 四项全非零也可分（如 $\lvert +\rangle\lvert +\rangle$），仅测计算基无法区分 $\lvert\Phi^+\rangle$ 与经典硬币混态；② 偏迹单比特熵仅在整体为纯态时才等于纠缠度量；③ 纠缠见证依赖仪器校准，设备无关检验须看 Bell 违背并堵住实验漏洞。
+
+[第 04 章](04-circuits-protocols.md)会用这里的 Bell 态搭出隐形传态与超密编码线路。届时可以逐项核对哪条线传的是普通比特，哪一步消耗了共享纠缠。
 
 ---
 
@@ -1773,17 +1790,17 @@ $$
 
 请先合上正文、拿草稿纸一步步独立算完，再去对照答案。第 1、5、6 题练张量积与 $ad - bc$；第 2、4、8、9 题练偏迹、局部测量与无信号；第 3、7、10、11 题练 $X$ 基相干性与经典混态辨别。
 
-1. 用 $ad - bc$ 判断 $(|00\rangle + |10\rangle)/\sqrt{2}$ 是否纠缠，并给出分解。
-2. 求 $|\Psi^-\rangle$ 的任一单比特约化态。
-3. 为什么只在计算基测量，无法区分 $\rho_{\mathrm{ent}}$ 与 $\rho_{\mathrm{mix}}$？
-4. “Alice 一测量，Bob 立即知道她的结果”错在哪里？
-5. 按本章的基顺序，把 $|+\rangle_A|1\rangle_B$ 写成四维列向量；列出计算基测量的四个概率。
-6. 判断 $(|00\rangle + |01\rangle + |10\rangle + |11\rangle)/2$ 是否纠缠。不要只凭“有四项”猜测。
-7. 在 $X$ 基测两边：分别列出 $|\Phi^+\rangle$ 与 $\rho_{\mathrm{mix}}$ 的 $++, +-, -+, --$ 概率，并核对每组和为 $1$。
-8. 对 $|\psi\rangle = (\sqrt{3}|00\rangle + |11\rangle)/2$，把 $\rho_A$ 的四格都从 $\rho_{AB}$ 的对应两格相加算出来。
-9. 对第 8 题的态，在 $A$ 的计算基测量：写出两个结果概率、各自的条件联合后态，以及丢弃记录后的联合态。
-10. 若 $|\Phi^-\rangle = (|00\rangle - |11\rangle)/\sqrt{2}$，两边在 $X$ 基测量，哪些联合结果有可能出现？各是多少概率？
-11. 为什么 $\rho_{\mathrm{mix}}$ 的单比特约化态也有 $1\ \mathrm{bit}$ 熵，却不能据此断言联合态有 $1\ \mathrm{bit}$ 纠缠？
+1. 用 $ad - bc$ 判断 $(|00\rangle + |10\rangle)/\sqrt{2}$ 是否纠缠，并给出分解。 <!-- exercise-id: 03-01 -->
+2. 求 $|\Psi^-\rangle$ 的任一单比特约化态。 <!-- exercise-id: 03-02 -->
+3. 为什么只在计算基测量，无法区分 $\rho_{\mathrm{ent}}$ 与 $\rho_{\mathrm{mix}}$？ <!-- exercise-id: 03-03 -->
+4. 共享 $\lvert\Phi^+\rangle$ 时，Bob 能只凭本地统计区分 Alice 选择测 $Z$、测 $X$ 或完全不测吗？若双方已约定都测 $Z$，Bob 又能推断什么？ <!-- exercise-id: 03-04 -->
+5. 按本章的基顺序，把 $|+\rangle_A|1\rangle_B$ 写成四维列向量；列出计算基测量的四个概率。 <!-- exercise-id: 03-05 -->
+6. 判断 $(|00\rangle + |01\rangle + |10\rangle + |11\rangle)/2$ 是否纠缠。不要只凭“有四项”猜测。 <!-- exercise-id: 03-06 -->
+7. 在 $X$ 基测两边：分别列出 $|\Phi^+\rangle$ 与 $\rho_{\mathrm{mix}}$ 的 $++, +-, -+, --$ 概率，并核对每组和为 $1$。 <!-- exercise-id: 03-07 -->
+8. 对 $|\psi\rangle = (\sqrt{3}|00\rangle + |11\rangle)/2$，把 $\rho_A$ 的四格都从 $\rho_{AB}$ 的对应两格相加算出来。 <!-- exercise-id: 03-08 -->
+9. 对第 8 题的态，在 $A$ 的计算基测量：写出两个结果概率、各自的条件联合后态，以及丢弃记录后的联合态。 <!-- exercise-id: 03-09 -->
+10. 若 $|\Phi^-\rangle = (|00\rangle - |11\rangle)/\sqrt{2}$，两边在 $X$ 基测量，哪些联合结果有可能出现？各是多少概率？ <!-- exercise-id: 03-10 -->
+11. 为什么 $\rho_{\mathrm{mix}}$ 的单比特约化态也有 $1\ \mathrm{bit}$ 熵，却不能据此断言联合态有 $1\ \mathrm{bit}$ 纠缠？ <!-- exercise-id: 03-11 -->
 
 完整答案与分步解析见[练习与答案：第 3 章](appendices/exercises.md#第-3-章)。
 
@@ -1795,6 +1812,7 @@ $$
 
 - **非均匀纠缠态偏迹与远端旋转无信号检验**：运行 `python3 codes/foundations/foundations_lab.py --case 03`（验证对 $B$ 施加局域旋转 $R_y(0.731)$ 后 $\rho_A$ 保持不变而 $\rho_B$ 改变，专门抓出取错偏迹方向的程序错误）；
 - **复相位旋转导致的见证漏检与 $S^\dagger$ 轴修正**：运行 `python3 codes/foundations/diagnostic_lab.py --case 03`（核对 $|\psi_i\rangle = (|00\rangle + i|11\rangle)/\sqrt{2}$ 的 $C_Z = 1, C_X = 0, C_{XY} = 1$）；
+- **共同 Bell 基、无信号与局部滤波**。运行[测量口径核验程序](../codes/foundations/measurement_validation.py)检查联合测量的两位标签、远端设置改变时的边缘概率，以及滤波成功率 $1/2$。这些是理想矩阵算例。
 - **复系数 Schmidt 分解、双端读出偏差与单侧热噪声 PPT 检验**：完整复现脚本与固定数值核验记录见[全书实验总图谱](labs/README.md)、[基础代码说明](../codes/foundations/README.md)与[完整 SDK 实验册](labs/sdk-validation.md)。
 
 ### 延伸阅读起点

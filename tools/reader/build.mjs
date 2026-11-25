@@ -6,9 +6,11 @@ import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
-import katex from 'katex';
+import { renderWebMath } from './epub-mathml.mjs';
 import { readingPlan } from './reading-order.mjs';
+import { exerciseChapterId, exerciseIdOf, requireExerciseAlignment, verifyExerciseAlignment } from './exercise-identity.mjs';
 import { resolveDiagramTitle } from './diagram-titles.mjs';
+import { recordDeliveryBuild, snapshotDeliverySource } from './build-provenance.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
@@ -47,14 +49,6 @@ const slug = s => s.toLowerCase().replace(/[\p{P}\p{S}]/gu, c => (c === '-' || c
 const walk = async dir => (await Promise.all((await fs.readdir(dir, { withFileTypes: true })).map(e => (e.isDirectory() ? walk(path.join(dir, e.name)) : path.join(dir, e.name))))).flat();
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 
-await fs.mkdir(output, { recursive: true });
-await fs.mkdir(cache, { recursive: true });
-// Clean legacy / orphan output directories before build (Scheme C: no reader/research, no STYLE.html).
-await fs.rm(path.join(output, 'research'), { recursive: true, force: true });
-await fs.rm(path.join(output, 'STYLE.html'), { force: true });
-await fs.rm(path.join(output, 'assets'), { recursive: true, force: true });
-await fs.rm(path.join(output, 'lab'), { recursive: true, force: true });
-
 const files = (await walk(source))
   .filter(f => f.endsWith('.md') && path.basename(f) !== 'STYLE.md')
   .sort();
@@ -67,6 +61,26 @@ const titleOf = f => contents.get(f).match(/^# (.+)/m)[1];
 const outputName = f => path.relative(source, f).replace(/README\.md$/, 'index.html').replace(/\.md$/, '.html');
 const chapters = files.filter(f => /^\d\d-/.test(path.basename(f)));
 const orderedReading = readingPlan(chapters);
+const readingPositions = new Map(orderedReading.sequence.map((file, index) => [file, index + 1]));
+const readingPosition = file => `阅读顺序 ${readingPositions.get(file)} / ${orderedReading.sequence.length}`;
+const exercisesFile = path.join(source, 'appendices/exercises.md');
+const exerciseAlignment = verifyExerciseAlignment(chapters.map(file => ({
+  id: chapterIdOf(file),
+  file: path.relative(root, file),
+  text: contents.get(file),
+})), contents.get(exercisesFile));
+requireExerciseAlignment(exerciseAlignment);
+const exercisesMap = exerciseAlignment.appendixByChapter;
+const exerciseIdsByChapter = new Map(exerciseAlignment.perChapter.map(chapter => [chapter.chapter, chapter]));
+
+await fs.mkdir(output, { recursive: true });
+await fs.mkdir(cache, { recursive: true });
+// Clean legacy / orphan output directories before build (Scheme C: no reader/research, no STYLE.html).
+await fs.rm(path.join(output, 'research'), { recursive: true, force: true });
+await fs.rm(path.join(output, 'STYLE.html'), { force: true });
+await fs.rm(path.join(output, 'assets'), { recursive: true, force: true });
+await fs.rm(path.join(output, 'lab'), { recursive: true, force: true });
+
 const appendixOrder = ['prerequisites.md', 'notation.md', 'glossary.md', 'exercises.md', 'references.md', 'software-practice.md', 'audit-log.md'];
 const labs = files.filter(f => f.includes('/labs/'));
 const appendices = files.filter(f => f.includes('/appendices/')).sort((a, b) => appendixOrder.indexOf(path.basename(a)) - appendixOrder.indexOf(path.basename(b)));
@@ -225,8 +239,7 @@ async function diagram(code, themeMode = 'light') {
 }
 
 // Protect math before Markdown tokenization, including bars inside table cells.
-// Scheme C: KaTeX `output: 'html'` cuts HTML size by ~55% while preserving exact LaTeX
-// on every display formula via `data-tex="..."` for lazy copy buttons and verify.mjs checks.
+// Keep visual HTML and MathML semantics together. Display formulas also keep exact TeX for copying.
 function protectMath(text, f, { trackInReport = true } = {}) {
   const fragments = [];
   const meta = [];
@@ -240,7 +253,7 @@ function protectMath(text, f, { trackInReport = true } = {}) {
     latexSources.push(latex);
     let html;
     try {
-      html = katex.renderToString(latex, { displayMode: display, throwOnError: true, strict: 'ignore', trust: false, output: 'html' });
+      html = renderWebMath(latex, display);
       if (display) {
         const trimmed = latex.trim();
         displaySources.push(trimmed);
@@ -438,7 +451,7 @@ function wrapAdvancedSections(html) {
 // Assign deterministic id="term-N" anchors to glossary term paragraphs for direct search jump.
 function annotateGlossaryTerms(html) {
   let idx = 0;
-  return html.replace(/<p><strong>((?:(?!<\/strong>)[\s\S]){1,800})<\/strong>([：:])/g, (full, term, colon) => {
+  return html.replace(/<p><strong>((?:(?!<\/strong>|<\/p>)[\s\S])+)<\/strong>([：:])/g, (full, term, colon) => {
     idx++;
     return `<p id="term-${idx}" class="glossary-entry"><strong>${term}</strong>${colon}`;
   });
@@ -484,24 +497,6 @@ function createLinkRewriter(sourceFile, targetOutputFile) {
     }
     return href;
   };
-}
-
-function parseExercisesByChapter(exercisesRaw) {
-  const map = new Map();
-  if (!exercisesRaw) return map;
-  const sections = exercisesRaw.split(/^(?=##\s)/m);
-  for (const sec of sections) {
-    const nl = sec.indexOf('\n');
-    const heading = (nl === -1 ? sec : sec.slice(0, nl)).trim();
-    const body = nl === -1 ? '' : sec.slice(nl + 1);
-    let key = null;
-    const mMain = heading.match(/^##\s*第\s*(\d+)\s*章(?:\s*[｜|].*)?$/);
-    const mQm = heading.match(/^##\s*(?:量子力学|物理篇)\s*Q(\d+)(?:\s*[｜|].*)?$/);
-    if (mMain) key = String(Number(mMain[1])).padStart(2, '0');
-    else if (mQm) key = `Q${Number(mQm[1])}`;
-    if (key) map.set(key, body);
-  }
-  return map;
 }
 
 // Split an exercise ordered-list item into { stemHtml, hintHtml, answerHtml }.
@@ -559,15 +554,15 @@ function buildChapterSolutionsHtml(chId, targetOutputFile, prefix, exercisesFile
   };
 
   const renderedItems = [];
-  let qIndex = 0;
   for (const token of tokens) {
     if (token.type !== 'list' || !token.ordered) continue;
     for (const item of token.items) {
-      qIndex++;
+      const exerciseId = exerciseIdOf(item);
+      const qIndex = Number(exerciseId.split('-')[1]);
       const { stemHtml, hintHtml, answerHtml } = renderExerciseItemParts(item.tokens, solRenderer, restore);
       if (hintHtml) {
         renderedItems.push(
-          `<div class="solution-item solution-two-level">` +
+          `<div class="solution-item solution-two-level" data-exercise-id="${exerciseId}">` +
             `<div class="solution-item-head"><span class="sol-num">第 ${qIndex} 题</span><span class="sol-stem">${stemHtml}</span></div>` +
             `<div class="solution-two-level-body">` +
               `<details class="ex-hint-box"><summary>💡 查看核心提示</summary><div class="ex-hint-body">${hintHtml}</div></details>` +
@@ -578,7 +573,7 @@ function buildChapterSolutionsHtml(chId, targetOutputFile, prefix, exercisesFile
       } else {
         const fullHtml = stemHtml ? `<p>${stemHtml}</p>${answerHtml}` : answerHtml;
         renderedItems.push(
-          `<details class="solution-item">` +
+          `<details class="solution-item" data-exercise-id="${exerciseId}">` +
             `<summary><span class="sol-num">第 ${qIndex} 题参考解答</span><span class="sol-hint">展开零跳步推导</span></summary>` +
             `<div class="solution-body">${fullHtml}</div>` +
           `</details>`,
@@ -613,23 +608,15 @@ function buildExercisesPageBody(protectedText, headings, renderer, restore) {
   let currentChapter = null;
   let seenChapter = false;
 
-  const parseChKey = title => {
-    const mMain = title.match(/^第\s*(\d+)\s*章(?:\s*[｜|].*)?$/);
-    if (mMain) return { key: String(Number(mMain[1])).padStart(2, '0'), chip: String(Number(mMain[1])).padStart(2, '0') };
-    const mQm = title.match(/^(?:量子力学|物理篇)\s*Q(\d+)(?:\s*[｜|].*)?$/);
-    if (mQm) return { key: `Q${Number(mQm[1])}`, chip: `Q${Number(mQm[1])}` };
-    return null;
-  };
-
   for (const tok of tokens) {
     if (tok.type === 'heading') {
       const h = headings[hi++];
       const innerHtml = restore(marked.parser([{ ...tok, type: 'paragraph' }], { renderer, gfm: true }).replace(/^<p>([\s\S]*)<\/p>\s*$/, '$1'));
       if (tok.depth === 2) {
-        const ch = parseChKey(h.title);
-        if (ch) {
+        const key = exerciseChapterId(h.title);
+        if (key) {
           seenChapter = true;
-          currentChapter = { ...ch, id: h.id, title: h.title, titleHtml: innerHtml, qCount: 0, htmlParts: [] };
+          currentChapter = { key, chip: key, id: h.id, title: h.title, titleHtml: innerHtml, qCount: 0, htmlParts: [] };
           chapterBlocks.push(currentChapter);
           continue;
         }
@@ -643,20 +630,20 @@ function buildExercisesPageBody(protectedText, headings, renderer, restore) {
     }
 
     if (currentChapter && tok.type === 'list' && tok.ordered) {
-      let qIdx = currentChapter.qCount;
       for (const item of tok.items) {
-        qIdx++;
+        const exerciseId = exerciseIdOf(item);
+        const qIdx = Number(exerciseId.split('-')[1]);
         const { stemHtml, hintHtml, answerHtml } = renderExerciseItemParts(item.tokens, renderer, restore);
         const searchKey = `${currentChapter.chip} ${qIdx} ${stemHtml.replace(/<[^>]+>/g, ' ')}`.replace(/\s+/g, ' ').trim();
         currentChapter.htmlParts.push(
-          `<div class="ex-question-card" data-ex-q="${qIdx}" data-ex-search="${esc(searchKey.toLowerCase())}">` +
+          `<div class="ex-question-card" data-ex-q="${qIdx}" data-exercise-id="${exerciseId}" data-ex-search="${esc(searchKey.toLowerCase())}">` +
             `<div class="ex-question-head"><span class="ex-q-badge">第 ${qIdx} 题</span><div class="ex-q-stem">${stemHtml || `第 ${qIdx} 题`}</div></div>` +
             (hintHtml ? `<details class="ex-hint-box"><summary>💡 查看核心提示</summary><div class="ex-hint-body">${hintHtml}</div></details>` : '') +
             `<details class="ex-answer-box"><summary>📖 查看完整四步解答</summary><div class="ex-answer-body">${answerHtml}</div></details>` +
           `</div>`,
         );
       }
-      currentChapter.qCount = qIdx;
+      currentChapter.qCount += tok.items.length;
       continue;
     }
 
@@ -776,15 +763,23 @@ for (const [f, text] of contents) {
   );
 }
 
+const courseReadingGroups = orderedReading.groups.map(group =>
+  `<li data-reading-part="${group.number}"><span>${esc(group.tag)}</span><h3>${esc(group.title)}</h3><div>` +
+    group.files.map((file, index) =>
+      `<a data-reading-chapter="${group.ids[index]}" href="${esc(outputName(file))}">${esc(titleOf(file))}</a>`,
+    ).join('') +
+  `</div></li>`,
+).join('\n');
 const courseHomeHtml = (await fs.readFile(path.join(courseHomeDir, 'index.html'), 'utf8'))
+  .replaceAll('{{reading-chapters}}', String(orderedReading.sequence.length))
+  .replaceAll('{{reading-parts}}', String(orderedReading.groups.length))
+  .replace('<!-- READING GROUPS -->', courseReadingGroups)
   .replace(/href="([^"]*\/)?README\.html(#[^"]*)?"/g, 'href="$1index.html$2"');
 // Register all local assets referenced in course-home/index.html.
 for (const m of courseHomeHtml.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
   recordAssetTarget(path.join(source, m[1]));
 }
 
-const exercisesFile = path.join(source, 'appendices/exercises.md');
-const exercisesMap = parseExercisesByChapter(contents.get(exercisesFile));
 const searchIndex = [];
 const generatedHtmlRel = new Set();
 
@@ -848,6 +843,7 @@ function collectPageSearchEntries(f, raw, outRel, headings) {
 }
 
 try {
+  const originalDigest = await snapshotDeliverySource(root);
   await fs.mkdir(path.join(output, 'assets/dark'), { recursive: true });
 
   for (const [f, raw] of contents) {
@@ -910,10 +906,18 @@ try {
         }
       }
       if (/\.svg(?:$|[?#])/i.test(resolvedHref)) {
+        const svgFile = /^(?:https?:|data:)/i.test(href) ? '' : path.resolve(path.dirname(f), href.split(/[?#]/)[0]);
+        let widthAttr = '';
+        if (svgFile && fsSync.existsSync(svgFile)) {
+          const svg = fsSync.readFileSync(svgFile, 'utf8');
+          const box = svg.match(/<svg\b[^>]*\bviewBox=["']([^"']+)["']/i)?.[1];
+          const width = box?.trim().split(/[\s,]+/).map(Number)[2];
+          if (Number.isFinite(width) && width > 0) widthAttr = ` data-original-width="${width}"`;
+        }
         return (
           `<figure class="scientific-figure">` +
             `<a class="image-open scientific-svg" href="${safeHref}"${darkAttrsLink} aria-label="打开原尺寸图：${safeAlt}">` +
-              `<img src="${safeHref}"${darkAttrsImg} alt="${safeAlt}"${titleAttr} loading="lazy">` +
+              `<img src="${safeHref}"${darkAttrsImg}${widthAttr} alt="${safeAlt}"${titleAttr} loading="lazy">` +
               `<span>放大查看 ↗</span>` +
             `</a>` +
             (safeAlt ? `<figcaption class="scientific-caption">${safeAlt}</figcaption>` : '') +
@@ -926,6 +930,12 @@ try {
           `<span>放大查看 ↗</span>` +
         `</a>`
       );
+    };
+
+    renderer.listitem = function (item) {
+      const html = marked.Renderer.prototype.listitem.call(this, item);
+      const exerciseId = exerciseIdOf(item);
+      return exerciseId ? html.replace('<li>', `<li data-exercise-id="${exerciseId}">`) : html;
     };
 
     renderer.heading = function ({ tokens, depth }) {
@@ -951,14 +961,16 @@ try {
 
     const chapterLinks = list => list.map(c => {
       const cid = chapterIdOf(c);
-      return `<a ${c === f ? 'aria-current="page" ' : ''}${cid ? `data-ch-id="${cid}" ` : ''}href="${prefix + outputName(c)}">${esc(titleOf(c))}</a>`;
+      const title = esc(titleOf(c));
+      const caption = cid ? `<span>${title}<small class="nav-reading-position">${readingPosition(c)}</small></span>` : title;
+      return `<a ${c === f ? 'aria-current="page" ' : ''}${cid ? `data-ch-id="${cid}" ` : ''}href="${prefix + outputName(c)}">${caption}</a>`;
     }).join('');
     const qmGuideCurrent = outRel === 'quantum-mechanics/index.html' ? 'aria-current="page" ' : '';
     const nav =
       orderedReading.groups
         .map(
           group =>
-            `<div class="nav-label">${esc(group.label)}</div>` +
+            `<div class="nav-label" data-reading-part="${group.number}">${esc(group.label)}</div>` +
             `${group.ids.includes('Q1') ? `<a ${qmGuideCurrent}href="${prefix}quantum-mechanics/index.html">物理篇导读与先修说明</a>` : ''}` +
             `${chapterLinks(group.files)}`,
         )
@@ -977,6 +989,7 @@ try {
 
     const sequence = orderedReading.sequence;
     const index = sequence.indexOf(f);
+    const chapterPosition = index >= 0 ? `<p class="chapter-reading-position">${readingPosition(f)}</p>` : '';
     const prev = index > 0 ? `<a data-nav-prev href="${prefix + outputName(sequence[index - 1])}">← ${esc(titleOf(sequence[index - 1]))}</a>` : '';
     const next = index >= 0 && index < sequence.length - 1 ? `<a data-nav-next href="${prefix + outputName(sequence[index + 1])}">${esc(titleOf(sequence[index + 1]))} →</a>` : '';
 
@@ -1012,7 +1025,7 @@ try {
             `<button type="button" id="theme-toggle" aria-pressed="false" aria-label="切换为暗色模式" title="切换为暗色模式 (t)">` +
               `<span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">暗色</span>` +
             `</button>` +
-            `<a class="header-btn header-lab-link" href="${prefix}lab/quantum-lab.html">⚡ 实验台</a>` +
+            `<a class="header-btn header-lab-link" href="${prefix}lab/quantum-lab.html" aria-label="实验台"><span aria-hidden="true">⚡</span><span class="header-lab-label">实验台</span></a>` +
             `<button type="button" class="header-print-btn" onclick="window.print()">打印<span class="header-print-label-long">本章</span></button>` +
           `</div>` +
         `</header>`;
@@ -1036,10 +1049,10 @@ try {
       `<div class="layout" id="main-content">` +
         `<aside class="chapters"><details open><summary>全书目录</summary>` +
           `<input type="search" id="nav-search" aria-label="筛选目录章节" placeholder="筛选目录…（全书按 ⌘K）">` +
-          `<div class="sidebar-progress" id="qch-sidebar-progress" hidden><div class="sidebar-progress-head"><span>已掌握进度</span><strong id="qch-progress-count">0 / 26 章</strong></div><div class="sidebar-progress-track"><span id="qch-progress-fill" style="width:0%"></span></div></div>` +
+          `<div class="sidebar-progress" id="qch-sidebar-progress" hidden><div class="sidebar-progress-head"><span>已掌握进度</span><strong id="qch-progress-count">0 / ${sequence.length} 章</strong></div><div class="sidebar-progress-track"><span id="qch-progress-fill" style="width:0%"></span></div></div>` +
           `<nav aria-label="全书章节目录">${nav}<div class="nav-label">附录</div>${appNav}</nav>` +
         `</details></aside>` +
-        `<main id="content"><div class="eyebrow">QUANTUM COMPUTING · V4 离线学习手册</div>${mobileToc}<article>${body}</article>${solutionsHtml}${checkinHtml}<div class="page-turn">${prev}${next}</div><footer>${edition} 版 · 公式、双主题矢量图、字体与 6 模块交互实验台均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main>` +
+        `<main id="content"><div class="eyebrow">QUANTUM COMPUTING · V4 离线学习手册</div>${chapterPosition}${mobileToc}<article>${body}</article>${solutionsHtml}${checkinHtml}<div class="page-turn">${prev}${next}</div><footer>${edition} 版 · 公式、双主题矢量图、字体与 6 模块交互实验台均保存在本地<br>配套 Markdown 为可编辑原稿；事实更新与审校范围见审校记录。</footer></main>` +
         `<aside class="contents"><strong>本页内容</strong><nav aria-label="本页小节目录">${toc}</nav><a class="top" href="#content">↑ 返回顶部</a></aside>` +
       `</div>` +
       `<script src="${prefix}assets/search-index.js" defer></script>` +
@@ -1054,6 +1067,12 @@ try {
       output: path.relative(root, target),
       sourceSha256: digest(raw),
       outputSha256: digest(html),
+      exerciseIds: relSource === 'appendices/exercises.md'
+        ? { questionIds: [], answerIds: [...exercisesMap.keys()].flatMap(id => exerciseIdsByChapter.get(id).answerIds) }
+        : {
+            questionIds: exerciseIdsByChapter.get(chId)?.questionIds || [],
+            answerIds: exerciseIdsByChapter.get(chId)?.answerIds || [],
+          },
       mathSourceDigest,
       displayMathDigest,
       displayFormulas,
@@ -1197,6 +1216,10 @@ try {
   const inputFiles = [
     fileURLToPath(import.meta.url),
     path.join(here, 'reading-order.mjs'),
+    path.join(here, 'exercise-identity.mjs'),
+    path.join(here, 'exercise-answer-fingerprints.json'),
+    path.join(here, 'epub-mathml.mjs'),
+    path.join(here, 'build-provenance.mjs'),
     path.join(here, 'diagram-titles.mjs'),
     path.join(here, 'reader.css'),
     path.join(here, 'reader.js'),
@@ -1223,7 +1246,11 @@ try {
     mathErrors: report.mathErrors,
     diagramErrors: report.diagramErrors,
   }, null, 2));
-  if (report.mathErrors.length || report.diagramErrors.length) process.exitCode = 1;
+  if (report.mathErrors.length || report.diagramErrors.length) {
+    process.exitCode = 1;
+  } else {
+    await recordDeliveryBuild(root, 'web', output, originalDigest);
+  }
 } finally {
   if (browser) await browser.close();
   if (server) await new Promise(resolve => server.close(resolve));

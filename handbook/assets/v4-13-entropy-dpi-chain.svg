@@ -151,7 +151,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <text class="sm" x="291.0" y="236.0" text-anchor="middle">I(A:B) = D(ρ_AB ‖ ρ_A⊗ρ_B)</text>
   <rect class="c5-soft" x="406.0" y="200.0" width="144.0" height="44.0" rx="7.0"/>
   <text class="smb c5-txt" x="478.0" y="218.0" text-anchor="middle">最大相对熵 D_max</text>
-  <text class="sm" x="478.0" y="236.0" text-anchor="middle">H_min 有限长 QKD</text>
+  <text class="sm" x="478.0" y="236.0" text-anchor="middle">QKD：H_min(X|EC)</text>
   <line class="c3" x1="291.0" y1="244.0" x2="291.0" y2="255.0" stroke-width="1.6"/>
   <line class="c3" x1="114.0" y1="255.0" x2="468.0" y2="255.0" stroke-width="1.6"/>
   <line class="c3" x1="114.0" y1="255.0" x2="114.0" y2="267.0" stroke-width="1.6" marker-end="url(#arr-c3)"/>
@@ -169,9 +169,9 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <line class="c1" x1="114.0" y1="315.0" x2="114.0" y2="335.0" stroke-width="1.6" marker-end="url(#arr-c1)"/>
   <line class="c2" x1="291.0" y1="315.0" x2="291.0" y2="335.0" stroke-width="1.6" marker-end="url(#arr-c2)"/>
   <rect class="subpanel" x="32.0" y="337.0" width="518.0" height="86.0" rx="8.0"/>
-  <text class="lblb c1-txt" x="291.0" y="356.0" text-anchor="middle">向上衔接第 18 章：四类量子信道容量（均受 DPI 单调锁死）</text>
+  <text class="lblb c1-txt" x="291.0" y="356.0" text-anchor="middle">向上衔接第 18 章：无记忆信道的四类渐近容量</text>
   <text class="sm" x="44.0" y="377.0">• 经典容量 C（HSW）：Holevo 信息 χ 的正则化渐近极限</text>
-  <text class="sm" x="44.0" y="396.0">• 纠缠辅助容量 C_E（BSST）：SSA 直接保证 max I(R:B) 单字母可加</text>
+  <text class="sm" x="44.0" y="396.0">• 纠缠辅助容量 C_E（BSST）：单次最大互信息可加</text>
   <text class="sm" x="44.0" y="415.0">• 量子容量 Q（LSD）与私密容量 P：串接前后处理均满足 Cap(D∘ε∘A) ≤ Cap(ε)</text>
   <rect class="panel" x="574.0" y="64.0" width="366.0" height="370.0" rx="10.0"/>
   <rect class="phead" x="575.0" y="65.0" width="364.0" height="28.0" rx="9.0"/>

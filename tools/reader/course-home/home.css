@@ -913,6 +913,8 @@
   gap: 7px 9px;
 }
 .course-stops a {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 0.87rem;
   font-weight: 620;
   padding: 3px 10px;

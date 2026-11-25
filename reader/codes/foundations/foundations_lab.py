@@ -127,11 +127,39 @@ def case00(seed):
     exact_balanced = math.comb(n, n // 2) / (2 ** n)
     close(sum(abs(x)**2 for x in mv(H, ZERO)), 1)
     assert 0 <= ones <= n and 0 < exact_balanced < 0.026
+    # Ideal and imperfect diagonal resets agree after H but not on a direct Z control.
+    reset_weights = (0.0, 0.2)
+    direct_p1 = []
+    h_p1 = []
+    for excited in reset_weights:
+        rho = [[1 - excited, 0], [0, excited]]
+        direct_p1.append(rho[1][1])
+        h_p1.append(mm(mm(H, rho), dagger(H))[1][1].real)
+    close(h_p1[0], .5)
+    close(h_p1[1], .5)
+    assert direct_p1 == [0, .2]
+
+    alpha, beta = .12, .23
+    confusion = [[1 - alpha, beta], [alpha, 1 - beta]]
+    balanced_report = mv(confusion, [.5, .5])[1]
+    cancellation_p1 = 12 / 35
+    cancellation_report = mv(confusion, [1 - cancellation_p1, cancellation_p1])[1]
+    close(balanced_report - .5, (alpha - beta) / 2)
+    close(cancellation_report, cancellation_p1)
+
+    bell = outer([1 / math.sqrt(2), 0, 0, 1 / math.sqrt(2)])
+    unequal = outer([math.sqrt(3) / 2, 0, 0, .5])
+    matrix_close(reduced_a(bell), scale(I, .5))
+    matrix_close(reduced_a(unequal), [[.75, 0], [0, .25]])
     # No assertion that every random batch must lie in a confidence interval.
     return dict(shots=n, zeros=n-ones, ones=ones, frequency=ones/n,
                 theoretical_standard_deviation=math.sqrt(.25/n),
                 hoeffding_radius_95=radius,
-                probability_exactly_500_ones=exact_balanced)
+                probability_exactly_500_ones=exact_balanced,
+                reset_p1_without_h=direct_p1, reset_p1_after_h=h_p1,
+                reported_p1_for_balanced_input=balanced_report,
+                reported_p1_at_cancellation=cancellation_report,
+                unequal_entangled_marginal=[reduced_a(unequal)[i][i].real for i in range(2)])
 
 
 def case01(seed):
@@ -143,10 +171,58 @@ def case01(seed):
     w = mv(H, v)
     close(inner(w, w), 1)
     matrix_close(mm(rho, rho), rho)
-    return dict(norm_squared=inner(v,v).real,
+
+    # For each of the three Pauli generators, verify the square used by the closed form.
+    combined = add(scale(X, 3), scale(Z, 4))
+    matrix_close(mm(combined, combined), scale(I, 25))
+    exps = [add(scale(I, math.cos(angle)), scale(operator, 1j * math.sin(angle)))
+            for operator, angle in ((X, 6 * math.pi), (Z, 8 * math.pi),
+                                    (scale(combined, .2), 10 * math.pi))]
+    matrix_close(mm(exps[0], exps[1]), I)
+    matrix_close(exps[2], I)
+    a, b = scale(X, 6j * math.pi), scale(Z, 8j * math.pi)
+    commutator = add(mm(a, b), scale(mm(b, a), -1))
+    matrix_close(commutator, scale(Y, 96j * math.pi**2))
+    nilpotent = [[0, 1], [0, 0]]
+    matrix_close(mm(nilpotent, nilpotent), scale(I, 0))
+    assert add(I, nilpotent) != I
+    wide = [[1, 0]]
+    matrix_close(mm(dagger(wide), wide), [[1, 0], [0, 0]])
+    assert mv(wide, [0, 1]) == [0]
+
+    bell = outer([1 / math.sqrt(2), 0, 0, 1 / math.sqrt(2)])
+    mixed = scale(kron(I, I), .25)
+    matrix_close(reduced_a(bell), reduced_a(mixed))
+    close(bell[0][3] - mixed[0][3], .5)
+    k = mm([[1, 0], [0, 1j]], H)
+    k_conjugated = [[complex(x).conjugate() for x in row] for row in k]
+    pair_vec = mv(kron(k, k_conjugated), [1, 0, 0, 0])
+    projector = mm(mm(k, outer(ZERO)), dagger(k))
+    for direct, vectorized in zip([x for row in projector for x in row], pair_vec):
+        close(direct, vectorized)
+    for computed, expected in zip(pair_vec, [.5, -.5j, .5j, .5]):
+        close(computed, expected)
+
+    effects = ([[.05, 0], [0, .90]], [[.05, .10], [.10, .90]])
+    probe = [math.sqrt(.9), math.sqrt(.1)]
+    probabilities = []
+    for effect in effects:
+        assert min(eig2(effect)) >= 0
+        assert min(eig2(add(I, scale(effect, -1)))) >= 0
+        close(effect[0][0], .05)
+        close(effect[1][1], .90)
+        probabilities.append(inner(probe, mv(effect, probe)).real)
+    close(probabilities[0], .135)
+    close(probabilities[1], .195)
+
+    return dict(norm_squared=inner(v, v).real,
                 wrong_no_conjugation=[sum(x*x for x in v).real,
                                       sum(x*x for x in v).imag],
-                output_probabilities=[abs(x)**2 for x in w], purity=trace(mm(rho,rho)).real)
+                output_probabilities=[abs(x)**2 for x in w], purity=trace(mm(rho, rho)).real,
+                noncommuting_exponentials_agree_at_fixed_angles=True,
+                wide_matrix_null_input=[0, 1],
+                equal_marginal_unequal_joint_entry=[bell[0][3].real, mixed[0][3]],
+                coherent_readout_probability=probabilities)
 
 
 def case02(seed):
@@ -261,7 +337,42 @@ def caseq1(seed):
         values.append(dict(phase_rad=phi,p0=p0))
     close(values[1]['p0'],.8)
     close(values[3]['p0'],.2)
-    return dict(record_overlap_magnitude=.6, visibility=.6, phase_scan=values)
+
+    # Spin is the first factor, and each space vector is normalized.
+    minus = [PLUS[0], -PLUS[1]]
+    recombined = []
+    for space, phase in [(ZERO, 0), (ZERO, math.pi), ([0, 1], 0)]:
+        first = tensor(PLUS, ZERO)
+        second = tensor(minus, space)
+        joint = [(u + cmath.exp(1j * phase) * v) / math.sqrt(2)
+                 for u, v in zip(first, second)]
+        recombined.append(sum(abs(amplitude) ** 2 for amplitude in joint[:2]))
+    for observed, expected in zip(recombined, [1, 0, 1 / 2]):
+        close(observed, expected)
+
+    coherent_filter = [[1, 0], [0, 1 / 2]]
+    port_filters = [[[1, 0], [0, 0]], [[0, 0], [0, 1 / 2]]]
+    successful = {}
+    for name, filters in [("coherent", [coherent_filter]), ("resolved", port_filters)]:
+        state = add(*(outer(mv(k, PLUS)) for k in filters))
+        success = trace(state).real
+        conditional = scale(state, 1 / success)
+        state_check(conditional)
+        close(success, 5 / 8)
+        close(conditional[0][0], 4 / 5)
+        successful[name] = inner(PLUS, mv(conditional, PLUS)).real
+    close(successful["coherent"], 9 / 10)
+    close(successful["resolved"], 1 / 2)
+
+    bright, dark, absorption = 1 / 4, 1 / 4, 1 / 2
+    second_round = bright * dark
+    close(second_round, 1 / 16)
+    close(dark / (1 - bright), 1 / 3)
+    close(absorption / (1 - bright), 2 / 3)
+    return dict(record_overlap_magnitude=.6, visibility=.6, phase_scan=values,
+                stern_gerlach_z_plus=recombined, filter_x_plus=successful,
+                bomb_dark_second_round=second_round,
+                bomb_dark_second_given_first_bright=dark)
 
 
 def caseq2(seed):
@@ -278,10 +389,67 @@ def caseq2(seed):
     branch_phase=kron([[1,0],[0,-1]],I)
     shifted=mv(branch_phase,bell)
     close(abs(inner(bell,shifted))**2,0)
+    matrix_close(mm(mm(dagger(rz), rz), rx), rx)
+    assert abs(mm(rx, rz)[0][1] - mm(rz, rx)[0][1]) > TOL
+
+    # An instrument can keep the A label and still change B within a degenerate block.
+    swap_a0 = [[0, 1, 0], [1, 0, 0], [0, 0, 0]]
+    a0 = [[1, 0, 0], [0, 1, 0], [0, 0, 0]]
+    b = [[1, 0, 0], [0, -1, 0], [0, 0, 0]]
+    matrix_close(mm(dagger(swap_a0), swap_a0), a0)
+    initial = [1, 0, 0]
+    after_a = mv(swap_a0, initial)
+    b_before = inner(initial, mv(b, initial)).real
+    b_after = inner(after_a, mv(b, after_a)).real
+    close(b_before, 1)
+    close(b_after, -1)
+
+    # A = ZI + IZ has labels (+2, 0, 0, -2), in that order.
+    alpha, beta = math.sqrt(3) / 2, 0.5j
+    state_a0 = [0, alpha, beta, 0]
+    x0 = kron(X, I)
+    conditioned_a = []
+    for sign in [1, -1]:
+        projector = scale(add(kron(I, I), scale(x0, sign)), 1 / 2)
+        projected = mv(projector, state_a0)
+        probability = sum(abs(amplitude) ** 2 for amplitude in projected)
+        close(probability, 1 / 2)
+        p = [abs(amplitude) ** 2 / probability for amplitude in projected]
+        result = [p[0], p[1] + p[2], p[3]]
+        for observed, expected in zip(result, [1 / 8, 1 / 2, 3 / 8]):
+            close(observed, expected)
+        conditioned_a.append(result)
+    flipped = mv(x0, state_a0)
+    close(abs(flipped[1]) ** 2 + abs(flipped[2]) ** 2, 0)
+
+    k0 = [[1, 0], [0, math.sqrt(1 / 2)]]
+    k1 = [[0, math.sqrt(1 / 2)], [0, 0]]
+    no_emission = outer(mv(k0, PLUS))
+    emission = outer(mv(k1, PLUS))
+    total_state = kraus_apply([k0, k1], outer(PLUS))
+    detection = {}
+    for efficiency, expected in [(1, (3 / 4, 1 / 3, 0)), (1 / 2, (7 / 8, 2 / 7, 2 / 49))]:
+        no_click = add(no_emission, scale(emission, 1 - efficiency))
+        matrix_close(add(no_click, scale(emission, efficiency)), total_state)
+        p_no_click = trace(no_click).real
+        conditional = scale(no_click, 1 / p_no_click)
+        state_check(conditional)
+        excited = conditional[1][1].real
+        determinant = (conditional[0][0] * conditional[1][1]).real - abs(conditional[0][1]) ** 2
+        for observed, target in zip([p_no_click, excited, determinant], expected):
+            close(observed, target)
+        detection[str(efficiency)] = dict(probability=p_no_click, excited=excited,
+                                           determinant=determinant)
+    excited_no_emission = mv(k0, [0, 1])
+    close(inner(excited_no_emission, excited_no_emission), 1 / 2)
+    close(abs(excited_no_emission[1]) ** 2 / trace(outer(excited_no_emission)), 1)
     return dict(x_plus_forward=abs(inner(PLUS,forward))**2,
                 x_plus_reverse=abs(inner(PLUS,reverse))**2,
                 subsystem_identity_shift_changes_density_matrix=False,
-                branch_phase_pi_bell_overlap_squared=abs(inner(bell,shifted))**2)
+                branch_phase_pi_bell_overlap_squared=abs(inner(bell,shifted))**2,
+                cancelling_noncommuting_pulses=True, degenerate_b_before=b_before,
+                degenerate_b_after=b_after, a_distribution_after_x0=conditioned_a,
+                no_click=detection)
 
 
 def caseq3(seed):

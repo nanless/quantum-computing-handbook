@@ -24,17 +24,24 @@ import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { marked } from 'marked';
 import katex from 'katex';
+import { splitExercisesByPart } from './exercise-ebook.mjs';
 import { readingPlan } from './reading-order.mjs';
 import { resolveDiagramTitle } from './diagram-titles.mjs';
+import { recordDeliveryBuild, snapshotDeliverySource } from './build-provenance.mjs';
+import { renderEpubMathMl } from './epub-mathml.mjs';
+import { requireExerciseAlignment, verifyExerciseAlignment } from './exercise-identity.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const source = path.join(root, 'handbook');
 const readerDir = path.join(root, 'reader');
 const workCache = path.join(root, 'work/render-cache');
-const distDir = path.join(root, 'dist');
-const finalEpubPath = path.join(distDir, 'quantum-computing-handbook.epub');
-const reportPath = path.join(root, 'work/research/epub-build-report.json');
+const finalEpubPath = path.resolve(process.env.HANDBOOK_EPUB_OUTPUT || path.join(root, 'dist/quantum-computing-handbook.epub'));
+const reportPath = path.resolve(process.env.HANDBOOK_EPUB_REPORT || path.join(root, 'work/research/epub-build-report.json'));
+const releaseTag = process.env.HANDBOOK_RELEASE_TAG || '';
+const repository = process.env.GITHUB_REPOSITORY || 'nanless/quantum-computing-handbook';
+const companionPage = 'companion-files.xhtml';
+const figurePage = 'linked-figures.xhtml';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.HANDBOOK_NODE_MODULES
@@ -113,7 +120,6 @@ const LAB_ORDER = [
   'sdk-validation.md',
 ];
 
-const CN_NUM = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 
 const safeDecode = s => {
   try { return decodeURIComponent(s); } catch { return s; }
@@ -143,7 +149,7 @@ const walk = async dir => (
 function xhtmlNameFor(file) {
   const rel = path.relative(source, file).replaceAll('\\', '/');
   if (rel === 'README.md') return 'intro.xhtml';
-  if (rel === 'quantum-mechanics/README.md') return 'ch-q1.xhtml';
+  if (rel === 'quantum-mechanics/README.md') return 'qm-guide.xhtml';
   const qmMatch = rel.match(/^quantum-mechanics\/0(\d)-/);
   if (qmMatch) return `ch-q${qmMatch[1]}.xhtml`;
   const chMatch = rel.match(/^(\d\d)-/);
@@ -203,41 +209,16 @@ const HTML_ENTITY_MAP = {
 };
 
 function renderMathMl(latex, display, filePath, mathErrors, stats) {
-  let raw;
   try {
-    raw = katex.renderToString(latex, {
-      displayMode: display,
-      throwOnError: true,
-      strict: 'ignore',
-      trust: false,
-      output: 'mathml',
-    });
+    const mathEl = renderEpubMathMl(latex, display);
+    stats.formulas++;
+    return display
+      ? `<div class="math-display">${mathEl}</div>`
+      : `<span class="math-inline">${mathEl}</span>`;
   } catch (e) {
     mathErrors.push({ file: path.relative(root, filePath), latex, error: e.message });
     return `<code class="math-error">${escXml(latex)}</code>`;
   }
-  stats.formulas++;
-  // Extract inner <math ...>...</math> from KaTeX's <span class="katex"> wrapper
-  const m = raw.match(/<math[\s\S]*<\/math>/);
-  let mathEl = m ? m[0] : raw;
-  // Strip redundant <annotation encoding="application/x-tex"> (saves ~16.8% XHTML & DOM load)
-  mathEl = mathEl.replace(/<annotation\s+encoding="application\/x-tex">[\s\S]*?<\/annotation>/g, '');
-  if (!/<annotation\b/.test(mathEl)) {
-    mathEl = mathEl.replace(/<semantics>([\s\S]*?)<\/semantics>/g, '$1');
-  }
-  if (!/\bxmlns=/.test(mathEl)) {
-    mathEl = mathEl.replace(/^<math\b/, '<math xmlns="http://www.w3.org/1998/Math/MathML"');
-  }
-  if (display) {
-    if (!/\bdisplay=/.test(mathEl)) {
-      mathEl = mathEl.replace(/^<math\b/, '<math display="block"');
-    }
-    return `<div class="math-display">${mathEl}</div>`;
-  }
-  if (!/\bdisplay=/.test(mathEl)) {
-    mathEl = mathEl.replace(/^<math\b/, '<math display="inline"');
-  }
-  return `<span class="math-inline">${mathEl}</span>`;
 }
 
 function protectMathForEpub(text, filePath, mathErrors, stats) {
@@ -491,6 +472,8 @@ th, td {
   overflow-wrap: break-word;
 }
 th { background: var(--surface); font-weight: 700; }
+.cell-center { text-align: center; }
+.cell-right { text-align: right; }
 figure {
   margin: 1em 0;
   padding: 0.55em;
@@ -538,7 +521,14 @@ math[display="block"] {
   overflow-x: auto;
   max-width: 100%;
 }
-.math-inline { white-space: normal; }
+.math-inline {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+  white-space: normal;
+}
 .eyebrow {
   font-size: 0.76em;
   letter-spacing: 0.08em;
@@ -572,10 +562,9 @@ nav#toc > ol > li { margin: 0.45em 0; }
   width: auto;
   height: auto;
 }
-.code-ref-pill {
-  font-family: Menlo, Consolas, monospace;
-  font-size: 0.86em;
+.companion-path {
   color: var(--muted);
+  overflow-wrap: break-word;
 }
 `;
 
@@ -628,7 +617,7 @@ else:
                     arcname = p.relative_to(stage).as_posix()
                     zf.write(p, arcname=arcname, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
-# 2. Strict EPUB 3 + EPUB 2 NCX + Accessibility verification directly from written archive
+# 2. Verify the EPUB container, navigation and configured discovery metadata.
 errors = []
 xml_checked = 0
 math_elements = 0
@@ -644,6 +633,10 @@ links_to_check = []
 has_nav_in_spine = False
 has_ncx_toc = False
 has_a11y_meta = False
+expected_groups = meta_json["readingGroups"]
+expected_main = [document for group in expected_groups for document in group["documents"]]
+expected_spine_order = expected_main + meta_json["exerciseParts"]
+order_checks = {"readingOrderInSpine": False, "readingOrderInNav": False, "readingOrderInNcx": False}
 
 with zipfile.ZipFile(epub_path, "r") as zf:
     infos = zf.infolist()
@@ -678,10 +671,36 @@ with zipfile.ZipFile(epub_path, "r") as zf:
                     else:
                         errors.append(f"Mermaid SVG missing warm-white bg rect: {name}")
             if low.endswith(".ncx"):
+                ns = {"ncx": "http://www.daisy.org/z3986/2005/ncx/"}
+                points = root.findall("./ncx:navMap/ncx:navPoint", ns)[3:3 + len(expected_groups)]
+                groups = [{
+                    "label": point.findtext("./ncx:navLabel/ncx:text", default="", namespaces=ns),
+                    "documents": [c.get("src", "") for c in point.findall("./ncx:navPoint/ncx:content", ns)],
+                } for point in points]
+                order_checks["readingOrderInNcx"] = groups == expected_groups
+                order_by_target = {}
+                target_by_order = {}
                 for el in root.iter():
-                    if el.tag.rsplit("}", 1)[-1] == "content" and el.attrib.get("src"):
-                        links_to_check.append((name, "src", el.attrib["src"]))
+                    if el.tag.rsplit("}", 1)[-1] != "navPoint":
+                        continue
+                    content = el.find("{http://www.daisy.org/z3986/2005/ncx/}content")
+                    target = content.get("src") if content is not None else None
+                    order = el.get("playOrder")
+                    if not target or not order:
+                        errors.append(f"NCX entry missing content target or playOrder: {el.get('id')}")
+                        continue
+                    if order_by_target.setdefault(target, order) != order or target_by_order.setdefault(order, target) != target:
+                        errors.append(f"Inconsistent NCX playOrder for {target}: {order}")
+                    links_to_check.append((name, "src", target))
             if low.endswith(".xhtml"):
+                if name == "OEBPS/nav.xhtml":
+                    ns = {"h": "http://www.w3.org/1999/xhtml"}
+                    items = root.findall(".//h:nav[@id='toc']/h:ol/h:li", ns)[3:3 + len(expected_groups)]
+                    groups = [{
+                        "label": item.findtext("./h:a", default="", namespaces=ns),
+                        "documents": [a.get("href", "") for a in item.findall("./h:ol/h:li/h:a", ns)],
+                    } for item in items]
+                    order_checks["readingOrderInNav"] = groups == expected_groups
                 xhtml_files.append(name)
                 if len(raw) > max_xhtml_bytes:
                     max_xhtml_bytes = len(raw)
@@ -693,6 +712,10 @@ with zipfile.ZipFile(epub_path, "r") as zf:
                         math_elements += 1
                     elif tag_local == "annotation":
                         annotation_count += 1
+                    elif tag_local in ("th", "td") and "align" in el.attrib:
+                        errors.append(f"Legacy XHTML table alignment in {name}")
+                    if "code-ref-pill" in el.attrib.get("class", "").split():
+                        errors.append(f"Companion link lost its target in {name}")
                     eid = el.attrib.get("id")
                     if eid:
                         id_set.add(eid)
@@ -705,7 +728,7 @@ with zipfile.ZipFile(epub_path, "r") as zf:
     if annotation_count > 0:
         errors.append(f"Found {annotation_count} redundant <annotation> nodes in XHTML")
 
-    # Verify container.xml -> OPF -> manifest, spine, NCX & Accessibility 1.1 metadata
+    # Verify container.xml -> OPF -> manifest, spine, NCX and discovery metadata.
     if "META-INF/container.xml" not in names:
         errors.append("Missing META-INF/container.xml")
     else:
@@ -731,12 +754,18 @@ with zipfile.ZipFile(epub_path, "r") as zf:
                 has_ncx_toc = True
             else:
                 errors.append("Spine missing toc='ncx' or manifest missing ncx item")
+            spine_order = []
             for ref in opf_root.findall(".//opf:spine/opf:itemref", ns):
                 idref = ref.attrib.get("idref", "")
                 if idref == "nav":
                     has_nav_in_spine = True
                 if idref not in manifest_ids:
                     errors.append(f"Spine idref missing in manifest: {idref}")
+                else:
+                    href = pathlib.PurePosixPath(manifest_ids[idref]).relative_to(opf_dir).as_posix()
+                    if href in expected_main or href.startswith("text/app-exercises-p"):
+                        spine_order.append(href)
+            order_checks["readingOrderInSpine"] = spine_order == expected_spine_order
             if not has_nav_in_spine:
                 errors.append("nav.xhtml is not included in <spine>")
             meta_props = {}
@@ -747,12 +776,13 @@ with zipfile.ZipFile(epub_path, "r") as zf:
             feats = set(meta_props.get("schema:accessibilityFeature", []))
             if (
                 "schema:accessMode" in meta_props
-                and "dcterms:conformsTo" in meta_props
                 and {"MathML", "alternativeText", "tableOfContents"}.issubset(feats)
             ):
                 has_a11y_meta = True
             else:
-                errors.append("Missing EPUB Accessibility 1.1 schema.org or dcterms:conformsTo metadata")
+                errors.append("Missing EPUB accessibility discovery metadata")
+            if "dcterms:conformsTo" in meta_props and "a11y:certifiedBy" not in meta_props:
+                errors.append("Accessibility conformance declared without an evaluator")
 
     # Verify every relative href/src and #fragment across all XHTML and toc.ncx documents
     for src_arc, attr, val in links_to_check:
@@ -781,6 +811,7 @@ with zipfile.ZipFile(epub_path, "r") as zf:
         elif frag and target_arc in ids_by_arc and frag not in ids_by_arc[target_arc]:
             errors.append(f"Broken fragment #{frag} in {src_arc} -> {target_arc}")
 
+errors.extend(f"EPUB order differs from the reading plan: {name}" for name, passed in order_checks.items() if not passed)
 size_bytes = epub_path.stat().st_size
 report = {
     "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -800,6 +831,7 @@ report = {
         "svgAssets": svg_assets,
         "mermaidSvgsWithWarmBg": f"{flow_svg_with_bg}/{flow_svg_count}",
         "linksValidated": len(links_to_check),
+        "sourceLinkMappings": meta_json["sourceLinkMappings"],
         "diagramsRendered": meta_json["diagrams"],
         "formulasRendered": meta_json["formulas"],
     },
@@ -813,6 +845,7 @@ report = {
         "allMermaidDarkSafe": flow_svg_with_bg == flow_svg_count,
         "zeroMathAnnotations": annotation_count == 0,
         "zeroBrokenLinksOrFragments": not any("Broken " in e for e in errors),
+        **order_checks,
     },
     "errors": errors[:50],
 }
@@ -876,91 +909,6 @@ function scanMarkdownHeadings(rawMd) {
   return { list, mapRawToSafe };
 }
 
-function splitExercisesByPart(rawMd, orderedGroups) {
-  const lines = rawMd.split('\n');
-  let inFence = false;
-  let fenceChar = '';
-  const preambleLines = [];
-  const sections = [];
-  let current = null;
-
-  for (const line of lines) {
-    const fenceMatch = line.match(/^[ \t]*(`{3,}|~{3,})/);
-    if (fenceMatch) {
-      if (!inFence) {
-        inFence = true;
-        fenceChar = fenceMatch[1][0];
-      } else if (fenceMatch[1][0] === fenceChar) {
-        inFence = false;
-        fenceChar = '';
-      }
-    }
-    if (!inFence && /^##\s+/.test(line)) {
-      if (current) sections.push(current);
-      current = { heading: line.replace(/^##\s+/, '').trim(), lines: [line] };
-    } else if (current) {
-      current.lines.push(line);
-    } else {
-      preambleLines.push(line);
-    }
-  }
-  if (current) sections.push(current);
-
-  const introBody = preambleLines.filter(l => !/^#\s+/.test(l)).join('\n').trim();
-  const sectionByChapterId = new Map();
-  const trailingSections = [];
-
-  for (const sec of sections) {
-    const mainMatch = sec.heading.match(/^第\s*(\d+)\s*章/);
-    const qmMatch = sec.heading.match(/^量子力学\s+Q(\d+)/i);
-    if (mainMatch) {
-      sectionByChapterId.set(String(Number(mainMatch[1])).padStart(2, '0'), sec);
-    } else if (qmMatch) {
-      sectionByChapterId.set(`Q${qmMatch[1]}`, sec);
-    } else {
-      trailingSections.push(sec);
-    }
-  }
-
-  let assignedCount = 0;
-  const parts = orderedGroups.map((grp, idx) => {
-    const partNum = idx + 1;
-    const cn = CN_NUM[idx] || String(partNum);
-    const shortPart = `第${cn}篇`;
-    const partSecs = [];
-    for (const cid of grp.ids) {
-      const sec = sectionByChapterId.get(cid);
-      if (sec) {
-        partSecs.push(sec);
-        assignedCount++;
-      }
-    }
-    if (idx === orderedGroups.length - 1 && trailingSections.length) {
-      partSecs.push(...trailingSections);
-      assignedCount += trailingSections.length;
-    }
-    const cleanPartLabel = grp.label.replace(/^第[一二三四五六七八九十\d]+篇\s*[·｜|]\s*/, '');
-    const h1 = `附录 D（${shortPart}）· 自检题参考解答：${cleanPartLabel}`;
-    const leadPara = idx === 0 && introBody
-      ? introBody
-      : `本分册收录**${grp.label}**（共 ${grp.ids.length} 章）的全部章末自检题零跳步参考解答。`;
-    const markdown = `# ${h1}\n\n${leadPara}\n\n${partSecs.map(s => s.lines.join('\n')).join('\n\n')}\n`;
-    return {
-      partNum,
-      shortPart,
-      xname: `app-exercises-p${partNum}.xhtml`,
-      navLabel: `${shortPart}解答 · ${cleanPartLabel}`,
-      title: h1,
-      markdown,
-    };
-  });
-
-  if (assignedCount !== sections.length) {
-    throw new Error(`exercises.md split mismatch: assigned ${assignedCount} of ${sections.length} H2 sections`);
-  }
-  return parts;
-}
-
 function renderNavListHtml(items, indent = '      ') {
   return items.map(item => {
     const link = `<a href="${escXml(item.href)}">${escXml(item.label)}</a>`;
@@ -973,8 +921,11 @@ function renderNavListHtml(items, indent = '      ') {
 
 function renderNcxNavPoints(items, state, indent = '    ') {
   return items.map(item => {
-    const order = ++state.playOrder;
-    const npId = `navPoint-${order}`;
+    if (!state.orderByTarget.has(item.href)) {
+      state.orderByTarget.set(item.href, state.orderByTarget.size + 1);
+    }
+    const order = state.orderByTarget.get(item.href);
+    const npId = `navPoint-${++state.id}`;
     const childrenXml = item.children && item.children.length
       ? `\n${renderNcxNavPoints(item.children, state, indent + '  ')}\n${indent}`
       : '';
@@ -993,6 +944,9 @@ function maxTreeDepth(items, depth = 1) {
 }
 
 async function main() {
+  if (releaseTag && !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(releaseTag)) throw new Error('Invalid release tag');
+  if (!/^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/.test(repository)) throw new Error('Invalid GitHub repository');
+  const originalDigest = await snapshotDeliverySource(root);
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'qch-epub-'));
   const oebpsDir = path.join(tmpDir, 'OEBPS');
   const textDir = path.join(oebpsDir, 'text');
@@ -1005,13 +959,13 @@ async function main() {
     fs.mkdir(assetsDir, { recursive: true }),
     fs.mkdir(stylesDir, { recursive: true }),
     fs.mkdir(metaInfDir, { recursive: true }),
-    fs.mkdir(distDir, { recursive: true }),
   ]);
 
   const allMdFiles = (await walk(source)).filter(f => f.endsWith('.md')).sort();
   const contents = new Map(await Promise.all(allMdFiles.map(async f => [f, await fs.readFile(f, 'utf8')])));
 
   const readmePath = path.join(source, 'README.md');
+  const qmReadme = path.join(source, 'quantum-mechanics/README.md');
   const exercisesFile = path.join(source, 'appendices/exercises.md');
   const edition = (contents.get(readmePath) || '').match(/^>\s*版本：(\d{4}-\d{2}-\d{2})/m)?.[1];
   if (!edition) throw new Error('handbook/README.md must declare "> 版本：YYYY-MM-DD"');
@@ -1023,6 +977,11 @@ async function main() {
 
   const chapterFiles = allMdFiles.filter(f => /^\d\d-/.test(path.basename(f)));
   const orderedReading = readingPlan(chapterFiles);
+  const qmGroup = orderedReading.groups.find(group => group.ids.includes('Q1'));
+  const exerciseSources = orderedReading.groups.flatMap(group => group.files.map((file, index) => ({
+    id: group.ids[index], file, text: contents.get(file),
+  })));
+  requireExerciseAlignment(verifyExerciseAlignment(exerciseSources, contents.get(exercisesFile)));
 
   const appendixFiles = APPENDIX_ORDER
     .map(name => path.join(source, 'appendices', name))
@@ -1034,13 +993,11 @@ async function main() {
     ...allLabFiles.filter(f => !LAB_ORDER.includes(path.basename(f))).sort(),
   ];
 
-  const groups = orderedReading.groups.map((g, idx) => {
-    const cn = CN_NUM[idx] || String(idx + 1);
-    const fullTitle = /^第[一二三四五六七八九十\d]+篇/.test(g.label)
-      ? g.label
-      : `第${cn}篇 · ${g.label}`;
-    return { title: fullTitle, label: g.label, files: g.files };
-  });
+  const groups = orderedReading.groups.map(group => ({
+    title: group.label,
+    label: group.label,
+    files: group === qmGroup ? [qmReadme, ...group.files] : group.files,
+  }));
   if (appendixFiles.length) groups.push({ title: '附录工具书', label: '附录', files: appendixFiles });
   if (labFiles.length) groups.push({ title: '离线动手实验册', label: '实验册', files: labFiles });
 
@@ -1053,8 +1010,6 @@ async function main() {
   for (const f of includedFiles) {
     fileToXhtml.set(f, f === exercisesFile && exercisesParts.length ? exercisesParts[0].xname : xhtmlNameFor(f));
   }
-  const qmReadme = path.join(source, 'quantum-mechanics/README.md');
-  if (!fileToXhtml.has(qmReadme)) fileToXhtml.set(qmReadme, 'ch-q1.xhtml');
   const styleFile = path.join(source, 'STYLE.md');
   if (!fileToXhtml.has(styleFile)) fileToXhtml.set(styleFile, 'intro.xhtml');
 
@@ -1211,9 +1166,9 @@ async function main() {
         <p class="deck">从草稿纸能算透的二维小例出发，打通线性代数、量子干涉、核心算法、噪声与容错全链路。</p>
         <div class="metrics">
           <div class="card"><strong>${orderedReading.groups.length} 篇 ${orderedReading.sequence.length} 章</strong><span>主篇 00–21 + 物理 Q1–Q4</span></div>
-          <div class="card c2"><strong>50,900+ 公式</strong><span>原生 MathML 3 矢量排版</span></div>
-          <div class="card c3"><strong>122 矢量图</strong><span>92 科学图 + 30 流程图</span></div>
-          <div class="card c4"><strong>271 题全解</strong><span>零跳步题答 · 38 标准库脚本</span></div>
+          <div class="card c2"><strong>公式与推导</strong><span>原生 MathML 3 矢量排版</span></div>
+          <div class="card c3"><strong>科学矢量图</strong><span>科学图与流程图</span></div>
+          <div class="card c4"><strong>271 题全解</strong><span>按章题答 · 标准库验证</span></div>
         </div>
       </div>
       <div class="plate-wrap">
@@ -1236,8 +1191,15 @@ async function main() {
   }
 
   const mathErrors = [];
-  const stats = { formulas: 0, diagrams: 0 };
+  const stats = { formulas: 0, diagrams: 0, exactFragments: 0, chapterFallbacks: 0, bundledResourceLinks: 0, companionLinks: 0 };
   const spineDocs = [];
+  const companionResources = new Map();
+  const webEntrySources = new Map([
+    ['reader/index.html', path.join(here, 'course-home/index.html')],
+    ['reader/lab/quantum-lab.html', path.join(here, 'quantum-lab.html')],
+  ]);
+  const linkedFigures = new Map();
+  const captionsByAsset = new Map();
 
   async function renderMarkdownToXhtmlDoc({
     sourceFile,
@@ -1271,6 +1233,11 @@ async function main() {
       const h = headings[hi++];
       return `<h${depth} id="${escXml(h.id)}">${this.parser.parseInline(tokens)}</h${depth}>\n`;
     };
+    renderer.tablecell = function ({ tokens, header, align }) {
+      const tag = header ? 'th' : 'td';
+      const alignment = align === 'center' || align === 'right' ? ` class="cell-${align}"` : '';
+      return `<${tag}${alignment}>${this.parser.parseInline(tokens)}</${tag}>\n`;
+    };
     renderer.image = function ({ href, text: altText, title }) {
       const caption = altText || title || '科学原理图';
       if (/^(https?:|data:)/i.test(href)) {
@@ -1280,42 +1247,67 @@ async function main() {
       const baseName = path.basename(resolved);
       const ext = path.extname(baseName).toLowerCase();
       const mediaType = ext === '.svg' ? 'image/svg+xml' : ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : 'application/octet-stream';
+      if (altText || title) captionsByAsset.set(resolved, caption);
       pendingImages.push({ resolved, baseName, mediaType });
       return `<figure class="science-figure"><img src="../assets/${escXml(baseName)}" alt="${escXml(caption)}"/><figcaption>${escXml(caption)}</figcaption></figure>`;
     };
     renderer.link = function ({ href, title, tokens }) {
       const label = this.parser.parseInline(tokens);
+      const link = target => `<a href="${escXml(target)}"${title ? ` title="${escXml(title)}"` : ''}>${label}</a>`;
+      const exactFragment = target => { stats.exactFragments++; return link(target); };
+      const chapterFallback = target => { stats.chapterFallbacks++; return link(target); };
       if (/^(https?:|mailto:)/i.test(href)) {
-        return `<a href="${escXml(href)}"${title ? ` title="${escXml(title)}"` : ''}>${label}</a>`;
+        return link(href);
       }
       if (href.startsWith('#')) {
         const frag = safeDecode(href.slice(1));
         const mapped = idMap.get(frag);
-        if (mapped) return `<a href="#${escXml(mapped)}">${label}</a>`;
+        if (mapped) return exactFragment(`#${mapped}`);
         if (isExercisesPart && exercisesFragToTarget.has(frag)) {
           const hit = exercisesFragToTarget.get(frag);
-          return `<a href="${escXml(`${hit.xname}#${hit.id}`)}">${label}</a>`;
+          return exactFragment(`${hit.xname}#${hit.id}`);
         }
-        return `<a href="${escXml(xname)}">${label}</a>`;
+        return chapterFallback(xname);
       }
       const [p, rawFrag] = href.split('#');
       const frag = rawFrag ? safeDecode(rawFrag) : '';
-      const target = path.resolve(path.dirname(sourceFile), p);
+      const target = path.resolve(path.dirname(sourceFile), safeDecode(p));
       if (target === exercisesFile && exercisesParts.length) {
         if (frag && exercisesFragToTarget.has(frag)) {
           const hit = exercisesFragToTarget.get(frag);
-          return `<a href="${escXml(`${hit.xname}#${hit.id}`)}">${label}</a>`;
+          return exactFragment(`${hit.xname}#${hit.id}`);
         }
-        return `<a href="${escXml(exercisesParts[0].xname)}">${label}</a>`;
+        return frag ? chapterFallback(exercisesParts[0].xname) : link(exercisesParts[0].xname);
       }
       if (fileToXhtml.has(target)) {
         const targetXhtml = fileToXhtml.get(target);
         const targetIds = validIdsByXhtml.get(targetXhtml);
         const mapped = frag && targetIds?.get(frag);
-        const dest = mapped ? `${targetXhtml}#${mapped}` : targetXhtml;
-        return `<a href="${escXml(dest)}">${label}</a>`;
+        if (mapped) return exactFragment(`${targetXhtml}#${mapped}`);
+        return frag ? chapterFallback(targetXhtml) : link(targetXhtml);
       }
-      return `<span class="code-ref-pill">${label}</span>`;
+      const relative = path.relative(root, target).split(path.sep).join('/');
+      if (relative.startsWith('handbook/assets/') && /\.svg$/i.test(relative) && fsSync.existsSync(target)) {
+        const baseName = path.basename(target);
+        pendingImages.push({ resolved: target, baseName, mediaType: 'image/svg+xml' });
+        if (!linkedFigures.has(target)) {
+          linkedFigures.set(target, { id: `figure-${linkedFigures.size + 1}`, baseName });
+        }
+        stats.bundledResourceLinks++;
+        return link(`${figurePage}#${linkedFigures.get(target).id}`);
+      }
+      const companionSource = webEntrySources.get(relative) || (relative.startsWith('codes/') ? target : null);
+      if (companionSource && fsSync.existsSync(companionSource)) {
+        const bundle = /^(reader|codes\/vendor)\//.test(relative) ? 'web' : 'codes';
+        const zipPath = relative.replace(/^reader\//, '') + (frag ? `#${frag}` : '');
+        const key = `${bundle}:${zipPath}`;
+        if (!companionResources.has(key)) {
+          companionResources.set(key, { id: `file-${companionResources.size + 1}`, bundle, zipPath });
+        }
+        stats.companionLinks++;
+        return link(`${companionPage}#${companionResources.get(key).id}`);
+      }
+      throw new Error(`Unmapped EPUB link in ${relSource}: ${href}`);
     };
 
     let bodyHtml = restore(marked.parse(protectedText, { renderer, gfm: true }));
@@ -1386,7 +1378,7 @@ async function main() {
       const xname = fileToXhtml.get(f);
       const relSource = path.relative(source, f).replaceAll('\\', '/');
       const appCode = appendixCodeFor(f);
-      const eyebrow = relSource === 'README.md'
+      const eyebrow = f === qmReadme ? `${qmGroup.tag} · 卷首导读` : relSource === 'README.md'
         ? '导读与统一约定'
         : appCode
           ? `${appCode} · 附录工具书`
@@ -1406,6 +1398,49 @@ async function main() {
 
     if (mathErrors.length) {
       throw new Error(`KaTeX MathML errors (${mathErrors.length}): ${JSON.stringify(mathErrors.slice(0, 5))}`);
+    }
+
+    // An EPUB cannot open a neighboring ZIP member. Point each reference to
+    // its exact path in the appropriate companion bundle instead.
+    const releaseListUrl = `https://github.com/${repository}/releases`;
+    const bundleName = bundle => releaseTag
+      ? `quantum-computing-handbook-${releaseTag}-${bundle}.zip`
+      : `*-${bundle}.zip`;
+    const download = bundle => {
+      const name = bundleName(bundle);
+      if (!releaseTag) return `<code>${escXml(name)}</code>`;
+      const url = `${releaseListUrl}/download/${encodeURIComponent(releaseTag)}/${encodeURIComponent(name)}`;
+      return `<a href="${escXml(url)}"><code>${escXml(name)}</code></a>`;
+    };
+    const resourceGroups = [
+      { bundle: 'codes', title: '自编代码包', intro: '解压后在包含 codes/ 的目录中，按实验册给出的命令运行。' },
+      { bundle: 'web', title: '离线网站包', intro: '解压并保留整个目录。打开 index.html 阅读，打开 lab/quantum-lab.html 访问实验台。路径末尾的 # 用于定位页面内的入口。' },
+    ];
+    const resourcesHtml = resourceGroups.map(({ bundle, title, intro }) => {
+      const entries = [...companionResources.values()].filter(item => item.bundle === bundle);
+      entries.sort((a, b) => a.zipPath.localeCompare(b.zipPath, 'en'));
+      return `<section><h2>${title}</h2><p>${download(bundle)}。${intro}</p>\n<ul>\n${entries.map(({ id, zipPath }) =>
+        `<li id="${id}"><code class="companion-path">${escXml(zipPath)}</code></li>`
+      ).join('\n')}\n</ul></section>`;
+    }).join('\n');
+    const releaseInfo = releaseTag
+      ? `本电子书的配套版本为 <code>${escXml(releaseTag)}</code>。`
+      : '本地构建未指定发行标签。请使用同次构建的配套压缩包。若持有已发行的电子书，按原下载页的标签选择同版压缩包。';
+    const companionHtml = `<h1>配套文件</h1><p>正文与实验册的链接会定位到下方文件。${releaseInfo}压缩包下载后，所列文件可离线打开。</p>
+<p><a href="${escXml(releaseTag ? `${releaseListUrl}/tag/${encodeURIComponent(releaseTag)}` : releaseListUrl)}">${releaseTag ? '查看本版发行文件与校验和' : '查看公开发行列表'}</a></p>
+${resourcesHtml}`;
+    await fs.writeFile(path.join(textDir, companionPage), wrapXhtml('配套文件', companionHtml), 'utf8');
+    spineDocs.push({ id: 'doc-companion-files', href: `text/${companionPage}`, title: '配套文件' });
+
+    if (linkedFigures.size) {
+      // Linked originals need XHTML spine targets. Reuse the SVG files already
+      // in the manifest and avoid adding non-spine image links.
+      const figuresHtml = [...linkedFigures.entries()].map(([file, { id, baseName }]) => {
+        const caption = escXml(captionsByAsset.get(file) || baseName);
+        return `<figure id="${id}"><img src="../assets/${encodeURIComponent(baseName)}" alt="${caption}"/><figcaption>${caption}</figcaption></figure>`;
+      }).join('\n');
+      await fs.writeFile(path.join(textDir, figurePage), wrapXhtml('矢量原图', `<h1>矢量原图</h1>\n${figuresHtml}`), 'utf8');
+      spineDocs.push({ id: 'doc-linked-figures', href: `text/${figurePage}`, title: '矢量原图' });
     }
 
     // Build unified TOC tree shared by EPUB 3 nav.xhtml and EPUB 2 toc.ncx
@@ -1445,6 +1480,8 @@ async function main() {
       const firstX = fileToXhtml.get(g.files[0]);
       tocTree.push({ label: g.title, href: `text/${firstX}`, children: chNodes });
     }
+    tocTree.push({ label: '配套文件', href: `text/${companionPage}` });
+    if (linkedFigures.size) tocTree.push({ label: '矢量原图', href: `text/${figurePage}` });
 
     // Write OEBPS/nav.xhtml (nested Part -> Chapter -> H2 TOC + Landmarks, included in <spine>)
     const firstBodyXhtml = orderedReading.sequence.length ? fileToXhtml.get(orderedReading.sequence[0]) : 'intro.xhtml';
@@ -1467,7 +1504,7 @@ ${renderNavListHtml(tocTree, '      ')}
     await fs.writeFile(path.join(oebpsDir, 'nav.xhtml'), wrapXhtml('目录 · 量子计算手册', navBody, { cssHref: 'styles/epub.css' }), 'utf8');
 
     // Write EPUB 2 compatible OEBPS/toc.ncx fallback
-    const ncxState = { playOrder: 0 };
+    const ncxState = { id: 0, orderByTarget: new Map() };
     const ncxDepth = maxTreeDepth(tocTree);
     const ncxXml = `<?xml version="1.0" encoding="utf-8"?>
 <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="zh-CN">
@@ -1495,7 +1532,7 @@ ${renderNcxNavPoints(tocTree, ncxState, '    ')}
 `;
     await fs.writeFile(path.join(metaInfDir, 'container.xml'), containerXml, 'utf8');
 
-    // Write OEBPS/content.opf (EPUB 3 + Accessibility 1.1 schema.org + EPUB 2 NCX + nav in spine)
+    // Write OEBPS/content.opf with discovery metadata and NCX fallback.
     const modifiedUtc = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
     const manifestLines = [
       `    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
@@ -1532,7 +1569,6 @@ ${renderNcxNavPoints(tocTree, ncxState, '    ')}
     <dc:description>系统量子计算与量子力学教材（${orderedReading.groups.length} 篇 ${orderedReading.sequence.length} 章 + ${appendixFiles.length} 附录 + ${labFiles.length} 实验册），采用原生 MathML 3 公式与矢量 SVG 离线出版。</dc:description>
     <dc:date>${escXml(edition)}</dc:date>
     <meta property="dcterms:modified">${modifiedUtc}</meta>
-    <meta property="dcterms:conformsTo">EPUB Accessibility 1.1 - WCAG 2.1 Level AA</meta>
     <meta name="cover" content="cover-image"/>
     <meta property="schema:accessMode">textual</meta>
     <meta property="schema:accessMode">visual</meta>
@@ -1566,8 +1602,22 @@ ${spineLines.join('\n')}
         edition,
         diagrams: stats.diagrams,
         formulas: stats.formulas,
+        readingGroups: groups.slice(0, orderedReading.groups.length).map(group => ({
+          label: group.title,
+          documents: group.files.map(file => `text/${fileToXhtml.get(file)}`),
+        })),
+        exerciseParts: exercisesParts.map(part => `text/${part.xname}`),
+        sourceLinkMappings: {
+          exactFragments: stats.exactFragments,
+          chapterFallbacks: stats.chapterFallbacks,
+          bundledResources: stats.bundledResourceLinks,
+          companionResources: stats.companionLinks,
+        },
       }),
     ], { stdio: 'inherit', cwd: root });
+    if (!process.env.HANDBOOK_EPUB_OUTPUT) {
+      await recordDeliveryBuild(root, 'epub', finalEpubPath, originalDigest);
+    }
   } finally {
     if (browser) await browser.close();
     if (mermaidServer) await new Promise(resolve => mermaidServer.close(resolve));

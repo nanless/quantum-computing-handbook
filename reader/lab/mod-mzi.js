@@ -198,17 +198,17 @@
 
       const noteEl = byId('mzi-note');
       noteEl.className = 'note-box';
-      if (mziVis < 0.05) {
+      if (mziVis === 0) {
         noteEl.classList.add('amber');
-        noteEl.textContent = `完全路径标记（V ≈ 0）：系统退化为经典混态 ρ = diag(0.5, 0.5)，非对角相干项 |ρ₀₁| = 0，无论怎么转动 φ，P(0) 与 P(1) 都固定为 50% / 50%。`;
+        noteEl.textContent = `完全路径标记（V = 0）：系统退化为经典混态 ρ = diag(0.5, 0.5)，非对角相干项 |ρ₀₁| = 0，无论怎么转动 φ，P(0) 与 P(1) 都固定为 50% / 50%。`;
       } else if (m.isMixed) {
         noteEl.classList.add('amber');
         noteEl.textContent = `部分退相干混态（V = ${f2(mziVis)}）：相干项 |ρ₀₁| = V/2 = ${f3(m.coh)}，纯度 Tr(ρ²) = ${f3(m.purity)} < 1，条纹对比度按 V 线性压缩。`;
       } else if (m.p0 > 0.98) {
-        noteEl.textContent = '相长干涉（φ ≈ 0°）：两臂复振幅同向相加，全部概率汇入端口 0，端口 1 相消归零。';
+        noteEl.textContent = '相长干涉（φ ≈ 0°）：两臂复振幅同向相加，端口 0 的概率接近 1。相位恰为 0° 时全部概率汇入端口 0。';
       } else if (m.p0 < 0.02) {
         noteEl.classList.add('warn');
-        noteEl.textContent = '相消干涉（φ ≈ 180°，即 H·Z·H|0⟩ = |1⟩）：端口 0 振幅精确抵消为零，输出全部转向端口 1！';
+        noteEl.textContent = '相消干涉（φ ≈ 180°，即 H·Z·H|0⟩ = |1⟩）：当相位恰为 180° 时，端口 0 振幅为零。邻近点仍有小量概率。';
       } else if (Math.abs(mziPhiDeg - 120) <= 2) {
         noteEl.textContent = '典型相位例题（φ = 120° = 2π/3）：端口 0 复振幅模长为 1/2，测量概率 P(0) = |1 + e^(i2π/3)|² / 4 = (1/2)² = 1/4 = 25.0%。';
       } else {

@@ -985,6 +985,23 @@ def run_qa_audit(
     font_stats = count_embedded_fonts(doc)
     page_labels_raw = doc.get_page_labels()
 
+    reading_order = manifest.get("readingOrder", [])
+    chapter_titles = {
+        chapter["id"]: clean_outline_title(chapter["title"])
+        for part in manifest.get("parts", [])
+        for chapter in part.get("chapters", [])
+        if chapter["id"] in reading_order
+    }
+    chapter_outline = [(title, page) for level, title, page in toc if level == 2 and title in chapter_titles.values()]
+    chapter_pages = [page for _, page in chapter_outline]
+    toc_order = [entry["id"] for entry in manifest.get("tocEntries", []) if entry["id"] in reading_order]
+    reading_order_ok = (
+        len(chapter_titles) == len(reading_order)
+        and toc_order == reading_order
+        and [title for title, _ in chapter_outline] == [chapter_titles.get(chapter) for chapter in reading_order]
+        and all(previous < current for previous, current in zip(chapter_pages, chapter_pages[1:]))
+    )
+
     part_pages_1 = {p0 + 1 for p0 in part_pages_0}
     part_pages_1.update(outline_stats.get("partPages", []))
 
@@ -1162,6 +1179,7 @@ def run_qa_audit(
             page_labels_ok and len(footer_mismatches) == 0 and len(suppressed_header_leaks) == 0
         ),
         "tocPrintedPageNumbersComplete": (toc_total == 0) or (toc_aligned == toc_total),
+        "chapterReadingOrderMatches": reading_order_ok,
         "noMisleadingPartialTagTree": (not marked_true and not has_struct_tree) or (struct_parents_coverage_ratio >= 0.98),
         "zeroKangxiRadicals": kangxi_total == 0,
         "zeroBlankPages": len(blank_pages) == 0,

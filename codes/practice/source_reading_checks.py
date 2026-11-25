@@ -7,6 +7,9 @@ not a claim that a numerical unit test certifies a control system.
 import json
 import math
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 
 
 def main():
@@ -36,7 +39,7 @@ def main():
               'S06_shadow': {'matrix': snapshot, 'eigenvalues': [2, -1], 'trace': 1},
               'S08_order': {'correct': correct_order, 'swapped': swapped_order}}
     text = json.dumps(result, ensure_ascii=False, indent=2)+'\n'
-    Path(__file__).with_name('source-reading-results.json').write_text(text)
+    write_result(Path(__file__).resolve().with_name('source-reading-results.json'), text)
     print(text, end='')
 
 

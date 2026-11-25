@@ -4,6 +4,7 @@ Matrix primitives come only from this handbook's foundations helpers; physical
 circuits, recurrence, subgroup enumeration and probability propagation are new.
 """
 import cmath
+from datetime import datetime, timezone
 import itertools
 import json
 import math
@@ -14,8 +15,10 @@ if not __debug__:
     raise RuntimeError('Independent numerical review requires assertions; run without -O.')
 
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT/'codes'))
 sys.path.insert(0,str(ROOT/'codes/foundations'))
 from foundations_lab import I,X,Y,Z,H,mm,mv,kron,tensor,outer,trace,inner,rotation
+from validation_reports import write_result
 
 
 def check(a,b,tol=1e-10):
@@ -186,6 +189,6 @@ out['software_11_16']={'MPF_polynomial':comb,'variance_upper':variance,
    'matrix_model_exact':exact,'step_estimates':approx,'MPF_matrix_estimate':estimate,
    'duplicate_physical_energy':physical.real,'qpt_5_settings':12**5,
    'qpt_10_settings':12**10}
-payload=json.dumps({'date':'2026-10-13','independent_review':out},indent=2)+'\n'
-(ROOT/'work/research/latest-cross-foundations-systems-results.json').write_text(payload)
+payload=json.dumps({'date_utc':datetime.now(timezone.utc).isoformat(),'independent_review':out},indent=2)+'\n'
+write_result(ROOT/'work/research/systems-cross-validation.json',payload)
 print(payload)

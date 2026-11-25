@@ -727,7 +727,7 @@ def build_fig3_stern_gerlach_cascade() -> tuple[str, dict[str, float]]:
         desc=(
             "上栏展示 8000 个未偏振银原子依次通过竖直 SGz（挡住 z−，留 4000 个 |z+⟩）、水平 SGx（挡住 x−，留 2000 个 |x+⟩）"
             "与末级竖直 SGz 的完整原子束与挡板；下栏左图以柱图正面对比经典预贴标签假说预言（100% z+, 0% z−）与量子理论预言"
-            "（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基原理与相干重聚对照。"
+            "（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基与理想重聚对照，重聚要求波包重合且补偿相位。"
         ),
     )
     doc.add_header(
@@ -860,9 +860,9 @@ def build_fig3_stern_gerlach_cascade() -> tuple[str, dict[str, float]]:
     doc.add('<text class="xs" x="608" y="445">强制筛选到 x+ 态后，z 方向结果立刻重新均分</text>')
 
     doc.add('<rect class="c3-soft" x="594" y="468" width="362" height="72" rx="9"/>')
-    doc.add('<text class="smb c3-txt" x="608" y="488">2. 对照：撤掉 x− 挡板并相干重聚</text>')
+    doc.add('<text class="smb c3-txt" x="608" y="488">2. 对照：重合空间模式并补偿相位</text>')
     doc.add('<text class="xs" x="608" y="507">(|x+⟩⟨x+| + |x−⟩⟨x−|)|z+⟩ = I|z+⟩ = |z+⟩</text>')
-    doc.add('<text class="xs" x="608" y="525">4000 原子 100% 重回 z+（与 MZI 路径干涉完全同源）</text>')
+    doc.add('<text class="xs" x="608" y="525">两模式相同、净相位为零：4000 个原子全走 z+</text>')
 
     return doc.render(), {"n_final_zp": n3_zp, "n_final_zm": n3_zm}
 
@@ -1171,7 +1171,7 @@ def build_fig5_lindblad_trajectories() -> tuple[str, dict[str, float]]:
         title="Lindblad 主方程光滑衰减与量子跳跃随机轨迹系综平均",
         desc=(
             "基于纯标准库固定种子 (202605) 蒙特卡洛波函数 (MCWF) 模拟：左面板绘制初态 |1⟩ 的零温弛豫解析解 "
-            "ρ₁₁(t) = e^(−κt) 与 8 条初态 |1⟩ 单次量子跳跃阶梯轨迹，并附初态 |+⟩ 无跳跃贝叶斯下滑参考曲线 e^(−κt)/(1+e^(−κt))；"
+            "ρ₁₁(t) = e^(−κt) 与 8 条初态 |1⟩ 单次量子跳跃阶梯轨迹，并附理想探测下初态 |+⟩ 的无跳跃条件曲线 e^(−κt)/(1+e^(−κt))；"
             "右面板展示初态 |1⟩ 下 64、512 与 4096 条独立轨迹系综平均及其残差误差带按 1/√N 收敛至解析主方程解。"
         ),
     )
@@ -1245,7 +1245,7 @@ def build_fig5_lindblad_trajectories() -> tuple[str, dict[str, float]]:
     doc.add('<line class="c2" stroke-width="1.8" x1="272" y1="246" x2="294" y2="246"/>')
     doc.add('<text class="xs c2-txt" x="300" y="250">8 条跳跃阶梯 (初态 |1⟩→|0⟩)</text>')
     doc.add('<line class="c3" stroke-width="1.8" stroke-dasharray="5 3" x1="272" y1="265" x2="294" y2="265"/>')
-    doc.add('<text class="xs c3-txt" x="300" y="269">无跳跃贝叶斯下滑 (初态 |+⟩)</text>')
+    doc.add('<text class="xs c3-txt" x="300" y="269">理想计数：|+⟩ 无跳跃</text>')
 
     doc.add('<rect class="note" x="42" y="508" width="438" height="32" rx="8"/>')
     doc.add('<text class="xs" x="261" y="528" text-anchor="middle">单次实验非跳即停（阶梯）；唯有对大量随机轨迹系综平均才还原光滑指数衰减</text>')
@@ -1357,6 +1357,9 @@ def build_fig5_lindblad_trajectories() -> tuple[str, dict[str, float]]:
 # ---------------------------------------------------------------------------
 # Figure 6: Ch 05 — 5 superoperator representations & Pauli twirling PTM heatmaps
 # ---------------------------------------------------------------------------
+PTM_HEIGHT = 620
+
+
 def build_fig6_superoperator_ptm_twirling() -> tuple[str, dict[str, float]]:
     # Exact 2x2 Pauli basis {I, X, Y, Z} and Rz(eps) PTM computation
     eps = 0.2
@@ -1406,84 +1409,89 @@ def build_fig6_superoperator_ptm_twirling() -> tuple[str, dict[str, float]]:
     f_avg_before = (3.0 + r_before[1][1] + r_before[2][2] + r_before[3][3]) / 6.0
     f_avg_after = (3.0 + r_after[1][1] + r_after[2][2] + r_after[3][3]) / 6.0
     assert abs(f_avg_before - f_avg_after) < TOL
+    depth = 10
+    refreshed = (1.0 - math.cos(eps)**depth) / 2.0
+    reused = (1.0 - math.cos(depth * eps)) / 2.0
 
     doc = SvgDoc(
         title="超算符五表示互转与 Pauli 旋转随机化 PTM 热力矩阵对照",
         desc=(
             "左面板展示 Stinespring 扩张、Kraus 算符和、Choi 矩阵、Liouville 超算符与 Pauli 转移矩阵 (PTM) "
             "五种等价量子信道表示的精确转换关系。右面板以 4×4 PTM 热力矩阵对照相干过旋转 Rz(0.2) 在 Pauli "
-            "旋转随机化前后的元素变化：非对角旋转元 ∓0.199 彻底清零，主对角线与平均门保真度保持不变。"
+            "旋转随机化前后的单步元素变化：非对角元归零，主对角线与平均门保真度不变。"
+            f"{depth} 层独立刷新时错误概率为 {refreshed:.2%}，复用同一随机符号时为 {reused:.2%}。"
         ),
+        height=PTM_HEIGHT,
     )
     doc.add_header(
         "超算符五种等价表示互转与 Pauli 旋转随机化 PTM 对照",
         "左：Stinespring ↔ Kraus ↔ Choi ↔ Liouville ↔ PTM 转换网络；右：Rz(0.2) 随机化后非对角相干元 ∓0.199 归零",
     )
-    doc.add_panel(28, 94, 452, 458, "五种超算符表示的精确互转网络")
-    doc.add_panel(496, 94, 476, 458, "Rz(0.2) 经 Pauli 旋转随机化前后 4×4 PTM 热力矩阵")
+    doc.add_panel(28, 94, 452, 498, "五种超算符表示的精确互转网络")
+    doc.add_panel(496, 94, 476, 498, "Rz(0.2) 经 Pauli 旋转随机化前后 4×4 PTM 热力矩阵")
 
     # --- Left Panel: 5-node superoperator conversion graph ---
     # 1. Stinespring (top center)
-    doc.add('<rect class="c5-soft" x="132" y="142" width="244" height="58" rx="9"/>')
-    doc.add('<text class="smb c5-txt" x="254" y="161" text-anchor="middle">① Stinespring 扩张</text>')
-    doc.add(f'<text class="xs" x="254" y="177" text-anchor="middle">Tr{sub("E")}[ U (ρ ⊗ |0⟩⟨0|{sub("E")}) U† ]</text>')
-    doc.add('<text class="xs c5-txt" x="254" y="192" text-anchor="middle">自动满足 CP+TP · 微观物理图像</text>')
+    doc.add('<rect class="c5-soft" x="132" y="144" width="244" height="64" rx="9"/>')
+    doc.add('<text class="smb c5-txt" x="254" y="164" text-anchor="middle">① Stinespring 扩张</text>')
+    doc.add(f'<text class="xs" x="254" y="182" text-anchor="middle">Tr{sub("E")}[ U (ρ ⊗ |0⟩⟨0|{sub("E")}) U† ]</text>')
+    doc.add('<text class="xs c5-txt" x="254" y="199" text-anchor="middle">自动满足 CP+TP · 微观物理图像</text>')
 
     # Bidirectional arrow 1 <-> 2
-    doc.add('<line class="axis" stroke-width="1.6" x1="254" y1="201" x2="254" y2="235"/>')
-    doc.add(arrow_head(254, 201, 0, -1, 5.5))
-    doc.add(arrow_head(254, 235, 0, 1, 5.5))
-    doc.add(f'<text class="xs" x="244" y="222" text-anchor="end">K{sub("k")} = {sub("E")}⟨k|U|0⟩{sub("E")}</text>')
-    doc.add(f'<text class="xs" x="264" y="222">V = ∑ K{sub("k")} ⊗ |k⟩{sub("E")}</text>')
+    doc.add('<line class="axis" stroke-width="1.6" x1="254" y1="210" x2="254" y2="246"/>')
+    doc.add(arrow_head(254, 210, 0, -1, 5.5))
+    doc.add(arrow_head(254, 246, 0, 1, 5.5))
+    doc.add(f'<text class="xs" x="242" y="232" text-anchor="end">K{sub("k")} = {sub("E")}⟨k|U|0⟩{sub("E")}</text>')
+    doc.add(f'<text class="xs" x="266" y="232">V = ∑ K{sub("k")} ⊗ |k⟩{sub("E")}</text>')
 
     # 2. Kraus (upper-mid center)
-    doc.add('<rect class="c1-soft" x="132" y="238" width="244" height="58" rx="9"/>')
-    doc.add('<text class="smb c1-txt" x="254" y="257" text-anchor="middle">② Kraus 算符和 {Kₖ}</text>')
-    doc.add(f'<text class="xs" x="254" y="273" text-anchor="middle">E(ρ) = ∑ K{sub("k")} ρ K{sub("k")}†，∑ K{sub("k")}†K{sub("k")} = I</text>')
-    doc.add('<text class="xs c1-txt" x="254" y="288" text-anchor="middle">极易判 TP · 适配量子跳跃轨迹</text>')
+    doc.add('<rect class="c1-soft" x="132" y="249" width="244" height="64" rx="9"/>')
+    doc.add('<text class="smb c1-txt" x="254" y="269" text-anchor="middle">② Kraus 算符和 {Kₖ}</text>')
+    doc.add(f'<text class="xs" x="254" y="287" text-anchor="middle">E(ρ) = ∑ K{sub("k")} ρ K{sub("k")}†，∑ K{sub("k")}†K{sub("k")} = I</text>')
+    doc.add('<text class="xs c1-txt" x="254" y="304" text-anchor="middle">极易判 TP · 适配量子跳跃轨迹</text>')
 
     # 3. Choi (lower-left) and 4. Liouville (lower-right)
-    doc.add('<rect class="c3-soft" x="42" y="336" width="184" height="64" rx="9"/>')
-    doc.add(f'<text class="smb c3-txt" x="134" y="356" text-anchor="middle">③ Choi 矩阵 J{sub("E")}</text>')
-    doc.add(f'<text class="xs" x="134" y="373" text-anchor="middle">∑ vec(K{sub("k")}) vec(K{sub("k")})†</text>')
-    doc.add(f'<text class="xs c3-txt" x="134" y="390" text-anchor="middle">最易判 CP：J{sub("E")} ⪰ 0</text>')
+    doc.add('<rect class="c3-soft" x="42" y="354" width="184" height="68" rx="9"/>')
+    doc.add(f'<text class="smb c3-txt" x="134" y="375" text-anchor="middle">③ Choi 矩阵 J{sub("E")}</text>')
+    doc.add(f'<text class="xs" x="134" y="394" text-anchor="middle">∑ vec(K{sub("k")}) vec(K{sub("k")})†</text>')
+    doc.add(f'<text class="xs c3-txt" x="134" y="413" text-anchor="middle">最易判 CP：J{sub("E")} ⪰ 0</text>')
 
-    doc.add('<rect class="c4-soft" x="282" y="336" width="184" height="64" rx="9"/>')
-    doc.add(f'<text class="smb c4-txt" x="374" y="356" text-anchor="middle">④ Liouville 超算符 S{sub("E")}</text>')
-    doc.add(f'<text class="xs" x="374" y="373" text-anchor="middle">∑ K{sub("k")}* ⊗ K{sub("k")} (列堆叠)</text>')
-    doc.add(f'<text class="xs c4-txt" x="374" y="390" text-anchor="middle">串联即矩阵乘 S{sub("2")}S{sub("1")}</text>')
+    doc.add('<rect class="c4-soft" x="282" y="354" width="184" height="68" rx="9"/>')
+    doc.add(f'<text class="smb c4-txt" x="374" y="375" text-anchor="middle">④ Liouville 超算符 S{sub("E")}</text>')
+    doc.add(f'<text class="xs" x="374" y="394" text-anchor="middle">∑ K{sub("k")}* ⊗ K{sub("k")} (列堆叠)</text>')
+    doc.add(f'<text class="xs c4-txt" x="374" y="413" text-anchor="middle">串联即矩阵乘 S{sub("2")}S{sub("1")}</text>')
 
     # Arrows 2 <-> 3, 2 <-> 4, 3 <-> 4
-    doc.add('<line class="axis" stroke-width="1.5" x1="194" y1="297" x2="148" y2="334"/>')
-    doc.add(arrow_head(194, 297, 46, -37, 5.5))
-    doc.add(arrow_head(148, 334, -46, 37, 5.5))
-    doc.add('<text class="xs" x="150" y="314" text-anchor="end">谱分解 ↔ vec</text>')
+    doc.add('<line class="axis" stroke-width="1.5" x1="194" y1="315" x2="148" y2="352"/>')
+    doc.add(arrow_head(194, 315, 46, -37, 5.5))
+    doc.add(arrow_head(148, 352, -46, 37, 5.5))
+    doc.add('<text class="xs" x="148" y="332" text-anchor="end">谱分解 ↔ vec</text>')
 
-    doc.add('<line class="axis" stroke-width="1.5" x1="314" y1="297" x2="360" y2="334"/>')
-    doc.add(arrow_head(314, 297, -46, -37, 5.5))
-    doc.add(arrow_head(360, 334, 46, 37, 5.5))
-    doc.add('<text class="xs" x="358" y="314">张量求和</text>')
+    doc.add('<line class="axis" stroke-width="1.5" x1="314" y1="315" x2="360" y2="352"/>')
+    doc.add(arrow_head(314, 315, -46, -37, 5.5))
+    doc.add(arrow_head(360, 352, 46, 37, 5.5))
+    doc.add('<text class="xs" x="360" y="332">张量求和</text>')
 
-    doc.add('<line class="axis" stroke-width="1.6" x1="229" y1="368" x2="279" y2="368"/>')
-    doc.add(arrow_head(229, 368, -1, 0, 5.5))
-    doc.add(arrow_head(279, 368, 1, 0, 5.5))
-    doc.add('<text class="xs" x="254" y="360" text-anchor="middle">重排</text>')
-    doc.add('<text class="xs" x="254" y="384" text-anchor="middle">(p, n)</text>')
+    doc.add('<line class="axis" stroke-width="1.6" x1="229" y1="388" x2="279" y2="388"/>')
+    doc.add(arrow_head(229, 388, -1, 0, 5.5))
+    doc.add(arrow_head(279, 388, 1, 0, 5.5))
+    doc.add('<text class="xs" x="254" y="379" text-anchor="middle">重排</text>')
+    doc.add('<text class="xs" x="254" y="405" text-anchor="middle">(p, n)</text>')
 
     # 5. PTM (bottom center-right)
-    doc.add('<rect class="c2-soft" x="132" y="438" width="244" height="58" rx="9"/>')
-    doc.add('<text class="smb c2-txt" x="254" y="457" text-anchor="middle">⑤ Pauli 转移矩阵 (PTM) R</text>')
-    doc.add(f'<text class="xs" x="254" y="473" text-anchor="middle">R{sub("ij")} = ½Tr(σ{sub("i")} E(σ{sub("j")})) = (M† S{sub("E")} M){sub("ij")}</text>')
-    doc.add('<text class="xs c2-txt" x="254" y="488" text-anchor="middle">全实数 · 装入 Bloch 仿射 · 随机化对角化</text>')
+    doc.add('<rect class="c2-soft" x="132" y="464" width="244" height="64" rx="9"/>')
+    doc.add('<text class="smb c2-txt" x="254" y="484" text-anchor="middle">⑤ Pauli 转移矩阵 (PTM) R</text>')
+    doc.add(f'<text class="xs" x="254" y="502" text-anchor="middle">R{sub("ij")} = ½Tr(σ{sub("i")} E(σ{sub("j")})) = (M† S{sub("E")} M){sub("ij")}</text>')
+    doc.add('<text class="xs c2-txt" x="254" y="519" text-anchor="middle">全实数 · 装入 Bloch 仿射 · 随机化对角化</text>')
 
     # Arrow 4 <-> 5
-    doc.add('<line class="axis" stroke-width="1.6" x1="352" y1="402" x2="314" y2="436"/>')
-    doc.add(arrow_head(352, 402, 38, -34, 5.5))
-    doc.add(arrow_head(314, 436, -38, 34, 5.5))
-    doc.add('<text class="xs" x="354" y="426">酉换基 M† S M</text>')
+    doc.add('<line class="axis" stroke-width="1.6" x1="352" y1="424" x2="314" y2="462"/>')
+    doc.add(arrow_head(352, 424, 38, -34, 5.5))
+    doc.add(arrow_head(314, 462, -38, 34, 5.5))
+    doc.add('<text class="xs" x="356" y="448">酉换基 M† S M</text>')
 
-    doc.add('<rect class="note" x="42" y="508" width="424" height="32" rx="8"/>')
-    doc.add('<text class="xs" x="254" y="528" text-anchor="middle">五表示完全等价：判 CP 用 Choi，串联用 S / R，分析 Bloch 与随机化首选 PTM</text>')
+    doc.add('<rect class="note" x="42" y="544" width="424" height="36" rx="8"/>')
+    doc.add('<text class="xs" x="254" y="566" text-anchor="middle">五表示完全等价：判 CP 用 Choi，串联用 S / R，分析 Bloch 与随机化首选 PTM</text>')
 
     # --- Right Panel: Before vs After Pauli Twirling 4x4 PTM Heatmaps ---
     p_labels = ["I", "X", "Y", "Z"]
@@ -1542,17 +1550,19 @@ def build_fig6_superoperator_ptm_twirling() -> tuple[str, dict[str, float]]:
         doc.add(f'<text class="xs" x="{sx_w + 21}" y="366">{sw_lbl}</text>')
 
     # Bottom explanation cards inside right panel
-    doc.add('<rect class="subpanel" x="510" y="384" width="448" height="114" rx="9"/>')
-    doc.add('<text class="smb c3-txt" x="522" y="404">1. 非对角相干元精准清零（虚线框）</text>')
-    doc.add('<text class="xs" x="522" y="422">I, Z 夹心保留 ±0.199，X, Y 翻号为 ∓0.199 ⇒ 四项平均精确抵消为 0</text>')
-    doc.add('<text class="smb c1-txt" x="522" y="446">2. 相干二次方累积 → 温和线性退相位</text>')
-    doc.add(f'<text class="xs" x="522" y="464">E{sub("twirl")}(ρ) = cos{sup("2")}(0.1)ρ + sin{sup("2")}(0.1)ZρZ（p{sub("Z")}≈1.0%），深 m 层 O(m²ε²)→O(mε²)</text>')
-    doc.add(f'<text class="xs c4-txt" x="522" y="485">边界：主对角线不变 ⇒ 单步平均门保真度 F{sub("avg")} ≈ 0.9934 保持不变</text>')
+    doc.add('<rect class="subpanel" x="510" y="384" width="448" height="148" rx="9"/>')
+    doc.add('<text class="smb c3-txt" x="524" y="406">1. 非对角相干元精准清零（虚线框）</text>')
+    doc.add('<text class="xs" x="524" y="426">I, Z 夹心保留 ±0.199，X, Y 翻号为 ∓0.199 ⇒ 四项平均精确抵消为 0</text>')
+    doc.add('<text class="smb c1-txt" x="524" y="452">2. 同一单步平均，序列累积可不同</text>')
+    doc.add(f'<text class="xs" x="524" y="472">{depth} 层测得 X=−1：逐层独立刷新 {refreshed:.2%}，整条线路复用符号 {reused:.2%}</text>')
+    doc.add('<text class="xs" x="524" y="493">N 层的平均 ⟨X⟩：逐层刷新为 cos(ε)ᴺ，复用符号为 cos(Nε)</text>')
+    doc.add(f'<text class="xs c4-txt" x="524" y="518">边界：主对角线不变 ⇒ 单步平均门保真度 F{sub("avg")} ≈ 0.9934 保持不变</text>')
 
-    doc.add('<rect class="note" x="510" y="508" width="448" height="32" rx="8"/>')
-    doc.add('<text class="xs" x="734" y="528" text-anchor="middle">工程桥梁：Pauli Twirling 把复杂相干误差转为稀疏 Pauli 信道，支撑 PEC 与 QEC 阈值</text>')
+    doc.add('<rect class="note" x="510" y="544" width="448" height="36" rx="8"/>')
+    doc.add('<text class="xs" x="734" y="566" text-anchor="middle">单步 PTM 对角化，不保证跨层误差独立</text>')
 
-    return doc.render(), {"r_xx": round(r_after[1][1], 5), "r_xy_before": round(r_before[1][2], 5), "f_avg": round(f_avg_after, 5)}
+    return doc.render(), {"r_xx": round(r_after[1][1], 5), "r_xy_before": round(r_before[1][2], 5),
+                          "f_avg": round(f_avg_after, 5), "refreshed": refreshed, "reused": reused}
 
 
 # ---------------------------------------------------------------------------
@@ -1662,7 +1672,7 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     assert abs(e_fci_eq - (-1.13731)) < 5e-4
     assert e_rhf_far - e_fci_far > 0.20  # strong static correlation > 200 mHa
 
-    # DLA gradient variance scaling Var(dC) ~ 1 / dim(g) for n = 2..16
+    # DLA loss variance with a fixed numerator of 1 for n = 2..16
     n_list = list(range(2, 17))
     var_so2n = [1.0 / (n * (2 * n - 1)) for n in n_list]
     var_poly3 = [1.0 / (math.comb(n + 3, 3) - 1) for n in n_list]
@@ -1672,18 +1682,17 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     doc = SvgDoc(
         title="H₂ 分子 STO-3G 解离势能面与动力李代数贫瘠高原标度",
         desc=(
-            "左面板从头计算最小基组 STO-3G 下 H₂ 分子解离势能面（R = 0.4–2.6 Å）：精确 FCI、单参数 UCCSD-VQE 与 "
-            "SQD 曲线重合，并附化学精度带（±1.6 mHa，示意加宽）；限制 Hartree–Fock (RHF) 在拉键区因静关联误差剧烈飙升。"
-            "右面板在对数纵轴展示单位纯度/全局观测量条件下的梯度方差标度 1/dim(g) 随量子比特数 n 的变化：指数 DLA su(2^n) 坠入采样噪声地板，"
-            "而多项式 DLA so(2n) 与 O(n³) 保持缓慢衰减。"
+            "左面板比较 STO-3G 下 H₂ 的 FCI 和限制 Hartree–Fock 解离曲线，"
+            "化学精度带示意加宽。右面板比较固定分子为 1 时三种损失方差的标度，"
+            "虚线表示独立正负一读数在一百万次测量时的方差上界。"
         ),
     )
     doc.add_header(
         "H₂ (STO-3G) 分子解离势能面与动力李代数贫瘠高原标度",
-        "左：第一性原理 STO-3G 精确 FCI / VQE / SQD vs 限制 RHF 解离失真；右：单位纯度/全局观测量条件 1/dim(g) 梯度方差标度",
+        "左：STO-3G 下 FCI 和 RHF 的解离曲线　右：固定方差公式的分子为 1",
     )
     doc.add_panel(28, 94, 472, 458, "H₂ (STO-3G) 解离势能面与化学精度 1.6 mHa")
-    doc.add_panel(516, 94, 456, 458, "贫瘠高原标度：1/dim(g)（单位纯度/全局观测量条件）")
+    doc.add_panel(516, 94, 456, 458, "损失方差的示意标度 1/dim(g)")
 
     # --- Left Panel: Exact H2 STO-3G Potential Energy Surface ---
     lx0, lx1 = 96.0, 480.0
@@ -1727,14 +1736,6 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     doc.add(f'<path class="c2" stroke-width="2.4" stroke-dasharray="8 4" d="{path_from_points(rhf_pts)}"/>')
     doc.add(f'<path class="c1" stroke-width="2.8" d="{path_from_points(fci_pts)}"/>')
 
-    # VQE (UCCSD) & SQD exact sample markers along FCI curve
-    for r_vqe in [0.50, 0.735, 1.00, 1.40, 1.80, 2.20, 2.50]:
-        _, e_v, _ = _h2_sto3g_exact(r_vqe)
-        doc.add(f'<circle class="c1-fill" cx="{fmt(lmap_r(r_vqe))}" cy="{fmt(lmap_e(e_v))}" r="4.0"/>')
-    for r_sqd in [0.60, 0.90, 1.20, 1.60, 2.00, 2.40]:
-        _, e_s, _ = _h2_sto3g_exact(r_sqd)
-        doc.add(f'<polygon class="c3-fill" points="{triangle_pts(lmap_r(r_sqd), lmap_e(e_s), 4.6)}"/>')
-
     # Vertical static correlation error gap at R = 2.5 A
     x_25 = lmap_r(2.50)
     y_rhf25, y_fci25 = lmap_e(e_rhf_far), lmap_e(e_fci_far)
@@ -1746,16 +1747,13 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     doc.add('<text class="xs" x="392" y="284" text-anchor="middle">(145× 化学精度)</text>')
 
     # Legend in upper-left open zone (R=0.8..1.9, E=-0.82..-0.60)
-    doc.add('<rect class="pill-bg" x="150" y="150" width="224" height="78" rx="7"/>')
+    doc.add('<rect class="pill-bg" x="150" y="150" width="224" height="60" rx="7"/>')
     doc.add('<line class="c2" stroke-width="2.3" stroke-dasharray="7 3" x1="160" y1="166" x2="184" y2="166"/>')
     doc.add('<text class="xs c2-txt" x="190" y="170">限制 RHF（单行列式）</text>')
     doc.add('<line class="c1" stroke-width="2.6" x1="160" y1="184" x2="184" y2="184"/>')
-    doc.add('<circle class="c1-fill" cx="172" cy="184" r="3.4"/>')
-    doc.add('<text class="xs c1-txt" x="190" y="188">精确 FCI / UCCSD-VQE</text>')
-    doc.add(f'<polygon class="c3-fill" points="{triangle_pts(172, 202, 4.2)}"/>')
-    doc.add('<text class="xs c3-txt" x="190" y="206">SQD 子空间精确对角化</text>')
-    doc.add('<rect class="area3" stroke="#1e7a5c" stroke-width="0.9" x="160" y="214" width="24" height="7" rx="2"/>')
-    doc.add('<text class="xs" x="190" y="221">化学精度带 (±1.6 mHa，示意加宽)</text>')
+    doc.add('<text class="xs c1-txt" x="190" y="188">精确 FCI</text>')
+    doc.add('<rect class="area3" stroke="#1e7a5c" stroke-width="0.9" x="160" y="196" width="24" height="7" rx="2"/>')
+    doc.add('<text class="xs" x="190" y="203">化学精度带 (±1.6 mHa，示意加宽)</text>')
 
     # Equilibrium point annotation (R=0.735 A, E=-1.137 Ha)
     x_eq, y_eq = lmap_r(0.735), lmap_e(e_fci_eq)
@@ -1765,7 +1763,7 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     doc.add(f'<line class="guide" x1="174" y1="426" x2="{fmt(x_eq + 5)}" y2="{fmt(y_eq + 1)}"/>')
 
     doc.add('<rect class="note" x="42" y="508" width="444" height="32" rx="8"/>')
-    doc.add('<text class="xs" x="264" y="528" text-anchor="middle">阴影带示意加宽（真实 ±1.6 mHa 窄于线宽）；RHF 拉键混入离子态失真</text>')
+    doc.add('<text class="xs" x="264" y="528" text-anchor="middle">化学精度阴影带示意加宽，RHF 拉键时含离子成分</text>')
 
     # --- Right Panel: Barren Plateau Log-Variance Scaling vs DLA dim(g) ---
     rx0, rx1 = 586.0, 954.0
@@ -1787,9 +1785,8 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
         doc.add(f'<line class="grid" x1="{fmt(xx)}" y1="{fmt(ry1)}" x2="{fmt(xx)}" y2="{fmt(ry0)}"/>')
         doc.add(f'<text class="sm" x="{fmt(xx)}" y="{fmt(ry0 + 17)}" text-anchor="middle">{nt}</text>')
 
-    # Shot-noise floor shaded region below 10^-6 (S = 10^6 shots)
+    # Variance bound of the mean of S=10^6 independent ±1 readings
     y_floor = rmap_lv(-6.0)
-    doc.add(f'<rect class="area2" x="{fmt(rx0)}" y="{fmt(y_floor)}" width="{fmt(rx1 - rx0)}" height="{fmt(ry0 - y_floor)}"/>')
     doc.add(f'<line class="c2" stroke-width="1.5" stroke-dasharray="6 4" x1="{fmt(rx0)}" y1="{fmt(y_floor)}" x2="{fmt(rx1)}" y2="{fmt(y_floor)}"/>')
 
     doc.add(f'<line class="axis" x1="{fmt(rx0)}" y1="{fmt(ry0)}" x2="{fmt(rx1 + 8)}" y2="{fmt(ry0)}"/>')
@@ -1799,7 +1796,7 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
     doc.add(f'<text class="sm" x="{fmt(0.5 * (rx0 + rx1))}" y="494" text-anchor="middle">量子比特数 n (个)</text>')
     doc.add(
         f'<text class="sm" x="530" y="{fmt(0.5 * (ry0 + ry1))}" text-anchor="middle" '
-        f'transform="rotate(-90 530 {fmt(0.5 * (ry0 + ry1))})">梯度方差 Var(∂θC) (对数刻度)</text>'
+        f'transform="rotate(-90 530 {fmt(0.5 * (ry0 + ry1))})">损失方差 Var(ℓ)（对数刻度）</text>'
     )
 
     # Plot the 3 DLA curves
@@ -1830,12 +1827,12 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
 
     # Floor & exponential plunge callout in lower-left open zone
     doc.add('<rect class="pill-bg" x="594" y="384" width="214" height="54" rx="7"/>')
-    doc.add(f'<text class="xsb c2-txt" x="701" y="401" text-anchor="middle">采样噪声地板 (S = 10{sup("6")} 次采样)</text>')
-    doc.add('<text class="xs" x="701" y="418" text-anchor="middle">单位纯度/全局观测量：n ≥ 10 淹没</text>')
-    doc.add(f'<text class="xs" x="701" y="433" text-anchor="middle">局域 Z{sub("0")} 按 1/(2{sup("n")}+1)：n ≈ 20</text>')
+    doc.add(f'<text class="xsb c2-txt" x="701" y="401" text-anchor="middle">读数均值方差上界 1/S</text>')
+    doc.add('<text class="xs" x="701" y="418" text-anchor="middle">固定分子 = 1 曲线在 n=10 低于此线</text>')
+    doc.add(f'<text class="xs" x="701" y="433" text-anchor="middle">独立 ±1 读数，S = 10{sup("6")}</text>')
 
     doc.add('<rect class="note" x="530" y="508" width="428" height="32" rx="8"/>')
-    doc.add('<text class="xs" x="744" y="528" text-anchor="middle">多项式 dim(g) 避开指数贫瘠高原，却常落入经典可高效模拟区（可训练-可模拟权衡）</text>')
+    doc.add('<text class="xs" x="744" y="528" text-anchor="middle">真实方差还取决于态、观测量和随机线路的分布</text>')
 
     return doc.render(), {"h2_fci_eq": round(e_fci_eq, 5), "h2_corr_25_mHa": round((e_fci_far - e_rhf_far) * 1000.0, 2)}
 
@@ -1846,7 +1843,8 @@ def build_fig7_h2_vqe_barren_plateau() -> tuple[str, dict[str, float]]:
 def verify_svg_xml(svg_text: str, filename: str) -> dict[str, int]:
     root = ET.fromstring(svg_text)
     vb = root.attrib.get("viewBox", "")
-    assert vb == f"0 0 {W} {H}", f"{filename}: unexpected viewBox {vb!r}"
+    height = PTM_HEIGHT if filename == "v3-05-superoperator-ptm-twirling.svg" else H
+    assert vb == f"0 0 {W} {height}", f"{filename}: unexpected viewBox {vb!r}"
     assert ":root{color-scheme:light dark}" in svg_text, f"{filename}: missing light/dark color-scheme"
     assert "@media(prefers-color-scheme:dark)" in svg_text, f"{filename}: missing dark mode media query"
 
@@ -1862,7 +1860,7 @@ def verify_svg_xml(svg_text: str, filename: str) -> dict[str, int]:
         x = float(el.attrib["x"])
         y = float(el.attrib["y"])
         assert MARGIN <= x <= W - MARGIN, f"{filename}: text x={x} violates margin ({el.text!r})"
-        assert MARGIN <= y <= H - MARGIN, f"{filename}: text y={y} violates margin ({el.text!r})"
+        assert MARGIN <= y <= height - MARGIN, f"{filename}: text y={y} violates margin ({el.text!r})"
 
     return {"text_count": len(text_nodes), "bytes": len(svg_text.encode("utf-8"))}
 

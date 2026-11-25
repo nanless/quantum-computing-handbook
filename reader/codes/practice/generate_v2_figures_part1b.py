@@ -598,16 +598,16 @@ def build_fig2_grover_geometry() -> tuple[str, dict]:
     for idx, (k, deg, amp, prob) in enumerate(rows[:4]):
         ry = 318 + idx * 24
         cls = "mono purple" if k == 1 else ("mono green" if k == 3 else "mono ink")
-        tag = " (最优)" if k == 3 else ""
+        tag = " (首峰)" if k == 3 else ""
         parts.append(f'  <text class="{cls}" x="{c1}" y="{ry}">k={k}</text>')
         parts.append(f'  <text class="{cls}" x="{c2_x}" y="{ry}">{2 * k + 1}θ={deg:5.2f}°</text>')
         parts.append(f'  <text class="{cls}" x="{c3}" y="{ry}">{amp:.4f}</text>')
         parts.append(f'  <text class="{cls}" x="{c4}" y="{ry}">{prob * 100:5.2f}%{tag}</text>')
 
     parts.append(f'  <rect class="card" x="{rx0}" y="414" width="{rw}" height="106" rx="12"/>')
-    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="440">最优步数与过旋警告</text>')
+    parts.append(f'  <text class="h2 ink" x="{rx0 + 16}" y="440">首峰停步与过旋</text>')
     parts.append(f'  <text class="sm ink" x="{rx0 + 16}" y="464">k 轮后：𝒬ᵏ|s⟩ = cos((2k+1)θ)|B⟩ + sin((2k+1)θ)|G⟩</text>')
-    parts.append(f'  <text class="sm ink" x="{rx0 + 16}" y="486">最优 k* ≈ (π/4)√(N/M) − 1/2 ≈ 2.64 → 取 k = 3</text>')
+    parts.append(f'  <text class="sm ink" x="{rx0 + 16}" y="486">首峰连续步数约 2.61 → 就近取 k = 3</text>')
     parts.append(f'  <text class="sm warn" x="{rx0 + 16}" y="508">若继续至 k = 4 (9θ ≈ 130.3°)，P(G) 降至 {rows[4][3] * 100:.1f}%</text>')
 
     parts.append(
@@ -769,7 +769,7 @@ def build_fig3_qft_circuit() -> tuple[str, dict]:
 
     parts.append(
         '  <text class="sm muted" x="50" y="358">'
-        '符号说明：● = 控制端（仅 |1⟩ 触发）  |  [H] = Hadamard 门  |  [Rₖ] = 受控相位门  |  ×—× = SWAP（省略则输出位序颠倒）'
+        '符号说明：● = 控制端（仅 |1⟩ 触发）  |  [H] = Hadamard 门  |  [Rₖ] = 受控相位门  |  ×—× = 正向末尾的 SWAP'
         '</text>'
     )
 
@@ -784,8 +784,8 @@ def build_fig3_qft_circuit() -> tuple[str, dict]:
     parts.append('  <text class="h2 ink" x="360" y="411">二进制小数相位与整体变换</text>')
     parts.append('  <text class="mono ink" x="360" y="437">0.x₂x₁x₀ := x₂/2 + x₁/4 + x₀/8</text>')
     parts.append(f'  <text class="mono accent" x="360" y="461">QFT₈|x⟩ = (1/√8) ∑ᵧ e{sup("2πixy/8", 10)}|y⟩</text>')
-    parts.append('  <text class="sm ink" x="360" y="485">逆变换 QFT₃⁻¹：倒序执行并将 Rₖ 换为 Rₖ†</text>')
-    parts.append('  <text class="sm muted" x="360" y="507">测量仅给出单一样本，无法直接读出全部系数</text>')
+    parts.append('  <text class="sm ink" x="360" y="485">逆 QFT 按倒序执行：先 SWAP，Rₖ 取共轭</text>')
+    parts.append('  <text class="sm muted" x="360" y="507">QPE 省逆 QFT 的 SWAP 时须反接受控幂</text>')
 
     parts.append('  <rect class="card" x="662" y="386" width="302" height="134" rx="12"/>')
     parts.append('  <text class="h2 ink" x="676" y="411">门开销与精确核验</text>')
@@ -796,7 +796,7 @@ def build_fig3_qft_circuit() -> tuple[str, dict]:
 
     parts.append(
         '  <text class="sm muted" x="38" y="544">'
-        '注：图示按逻辑时间自左向右排列；若将此线路嵌入相位估计或 Shor 找阶，常与经典测量次序合并以省去显式 SWAP。'
+        '注：图示是正向 QFT。去掉末尾 SWAP 会倒序输出。逆 QFT 的 SWAP 在入口，QPE 须同时调整输入接线。'
         '</text>'
     )
 

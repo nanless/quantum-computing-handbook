@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
-  <title id="title">经典模拟四大孤岛、四维量子优势边界与截断谱</title>
-  <desc id="desc">左面板绘制非 Clifford T 门数与纠缠键维 χ 相图，划分四大经典可解疆域（Clifford/稳定子表、低纠缠张量网络 MPS/BP-TN、含噪 Pauli 传播 SPD，以及位于高纠缠高连续旋转角区的独立代数可解口袋——匹配门/高斯孤岛）与唯有容错 FTQC 跨越全部壁垒才可达的量子优势窗口。右面板上部精确绘制退极化噪声伴随映射按 Pauli 权重指数衰减 (1−p)^w（p = 0.001, 0.05, 0.15, 0.30），下部精确对比一维面积律指数衰减与深线路体积律平坦 MPS 奇异值谱 σ_k² 及 χ′=8 截断误差。</desc>
+  <title id="title">经典模拟的适用条件与截断谱</title>
+  <desc id="desc">左面板绘制非 Clifford T 门数与纠缠键维 χ 相图，划分几类经典方法（Clifford/稳定子表、低纠缠张量网络 MPS/BP-TN、含噪 Pauli 传播 SPD，以及位于高纠缠高连续旋转角区的独立代数可解口袋——匹配门/高斯孤岛），并列比较量子与经典方法时需要固定的任务条件。区域和边界为示意。右面板上部精确绘制退极化噪声伴随映射按 Pauli 权重指数衰减 (1−p)^w（p = 0.001, 0.05, 0.15, 0.30），下部精确对比两种归一化的 MPS 奇异值谱（指数衰减、平坦） σ_k² 及 χ′=8 截断误差。</desc>
   <style>
 :root{color-scheme:light dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -106,12 +106,12 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
     <pattern id="hatch-amber" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line class="hatch-stroke4" x1="0" y1="0" x2="0" y2="9"/></pattern>
   </defs>
   <rect class="bg" width="1000" height="580" rx="20"/>
-  <text class="title" x="32" y="52">经典模拟四大孤岛、四维量子优势边界与截断谱</text>
-  <text class="subtitle" x="32" y="77">左：T 门数 × 纠缠键维 χ 相图与四大经典引擎疆域；右：含噪 Pauli 衰减 (1−p)<tspan dy="-4" font-size="72%">w</tspan><tspan dy="4">&#8203;</tspan> 与 MPS 奇异值谱</text>
+  <text class="title" x="32" y="52">经典模拟的适用条件与截断谱</text>
+  <text class="subtitle" x="32" y="77">左：T 门数 × 纠缠键维 χ 与经典方法示意；右：含噪 Pauli 衰减 (1−p)<tspan dy="-4" font-size="72%">w</tspan><tspan dy="4">&#8203;</tspan> 与 MPS 奇异值谱</text>
   <rect class="panel" x="28" y="96" width="486" height="456" rx="14"/>
   <path class="phead" d="M 42 97 H 500 Q 513 97 513 110 V 134 H 29 V 110 Q 29 97 42 97 Z"/>
   <line class="grid" x1="29" y1="134" x2="513" y2="134"/>
-  <text class="sec" x="44" y="120">四大经典可解孤岛与四维量子优势相图（示意）</text>
+  <text class="sec" x="44" y="120">经典方法的适用条件（示意）</text>
   <rect class="panel" x="530" y="96" width="442" height="456" rx="14"/>
   <path class="phead" d="M 544 97 H 958 Q 971 97 971 110 V 134 H 531 V 110 Q 531 97 544 97 Z"/>
   <line class="grid" x1="531" y1="134" x2="971" y2="134"/>
@@ -120,48 +120,48 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <rect fill="url(#hatch-blue)" x="94" y="152" width="140" height="194" rx="6"/>
   <text class="xsb c1-txt" x="164" y="192" text-anchor="middle">Clifford / 稳定子表</text>
   <text class="xs c1-txt" x="164" y="216" text-anchor="middle">Stim: 门 O(n) / 空间 O(n²)</text>
-  <text class="xs c1-txt" x="164" y="242" text-anchor="middle">少 T 扩展 2<tspan dy="-4" font-size="72%">0.396t</tspan><tspan dy="4">&#8203;</tspan></text>
+  <text class="xs c1-txt" x="164" y="242" text-anchor="middle">少 T 分解另计精度</text>
   <text class="xs" x="164" y="274" text-anchor="middle">任意高纠缠</text>
-  <text class="xs" x="164" y="294" text-anchor="middle">仍可经典秒算</text>
+  <text class="xs" x="164" y="294" text-anchor="middle">仍可用稳定子表</text>
   <rect class="c4-soft" x="238" y="152" width="98" height="194" rx="6"/>
   <rect fill="url(#hatch-amber)" x="238" y="152" width="98" height="194" rx="6"/>
   <text class="xsb c4-txt" x="287" y="192" text-anchor="middle">含噪 Pauli 传播</text>
-  <text class="xs c4-txt" x="287" y="216" text-anchor="middle">SPD / 噪声帘</text>
+  <text class="xs c4-txt" x="287" y="216" text-anchor="middle">SPD / 按权重截断</text>
   <text class="xs c4-txt" x="287" y="244" text-anchor="middle">按 (1−p)<tspan dy="-4" font-size="72%">w</tspan><tspan dy="4">&#8203;</tspan> 剪枝</text>
-  <text class="xs" x="287" y="274" text-anchor="middle">中等物理噪声下</text>
-  <text class="xs" x="287" y="294" text-anchor="middle">高权项被绞杀</text>
+  <text class="xs" x="287" y="274" text-anchor="middle">给定局部退极化</text>
+  <text class="xs" x="287" y="294" text-anchor="middle">短层内高权项衰减</text>
   <rect class="c2-soft" stroke-width="2.4" x="340" y="152" width="160" height="98" rx="6"/>
   <rect fill="url(#hatch-red)" x="340" y="152" width="160" height="98" rx="6"/>
-  <text class="xsb c2-txt" x="420" y="170" text-anchor="middle">★ 量子优势窗口 (FTQC)</text>
-  <text class="xs" x="420" y="188" text-anchor="middle">① n &gt; 45  ② 大量非 Clifford T</text>
-  <text class="xs" x="420" y="206" text-anchor="middle">③ 体积律高纠缠键维 χ</text>
-  <text class="xsb c2-txt" x="420" y="224" text-anchor="middle">④ 逻辑噪 &lt; 10<tspan dy="-4" font-size="72%">−10</tspan><tspan dy="4">&#8203;</tspan></text>
-  <text class="xs c2-txt" x="420" y="241" text-anchor="middle">且须跳出右侧代数孤岛</text>
+  <text class="xsb c2-txt" x="420" y="170" text-anchor="middle">量子与经典方法对照</text>
+  <text class="xs" x="420" y="188" text-anchor="middle">固定电路族与输入</text>
+  <text class="xs" x="420" y="206" text-anchor="middle">对齐输出及允许误差</text>
+  <text class="xsb c2-txt" x="420" y="224" text-anchor="middle">记录运行时间与内存</text>
+  <text class="xs c2-txt" x="420" y="241" text-anchor="middle">加入测量与经典开销</text>
   <rect class="c5-soft" stroke-width="1.8" stroke-dasharray="5 3" x="340" y="256" width="160" height="90" rx="7"/>
   <text class="xsb c5-txt" x="420" y="274" text-anchor="middle">匹配门 / 高斯口袋</text>
-  <text class="xs" x="420" y="292" text-anchor="middle">高纠缠 + 任意连续角</text>
-  <text class="xs c5-txt" x="420" y="310" text-anchor="middle">自由费米子代数封闭</text>
-  <text class="xs c5-txt" x="420" y="328" text-anchor="middle">多项式模拟 O(n³)/O(m³)</text>
+  <text class="xs" x="420" y="292" text-anchor="middle">允许可保结构的旋转</text>
+  <text class="xs c5-txt" x="420" y="310" text-anchor="middle">自由费米子/高斯结构封闭</text>
+  <text class="xs c5-txt" x="420" y="328" text-anchor="middle">复杂度依赖输入与输出</text>
   <rect class="c3-soft" x="94" y="352" width="406" height="72" rx="6"/>
   <rect fill="url(#hatch-green)" x="94" y="352" width="406" height="72" rx="6"/>
-  <text class="xsb c3-txt" x="297" y="373" text-anchor="middle">张量网络 MPS / 1D 砖墙 / BP-TN（低纠缠面积律）</text>
-  <text class="xs c3-txt" x="297" y="393" text-anchor="middle">可吸收任意单比特非 Clifford T 门，仅受切面键维 χ 限制</text>
-  <text class="xs" x="297" y="413" text-anchor="middle">（2026：468 T 门 1D 砖墙线路 37 min 经典算穿）</text>
+  <text class="xsb c3-txt" x="297" y="373" text-anchor="middle">张量网络 MPS / 1D 砖墙 / BP-TN（低秩或谱尾快衰减）</text>
+  <text class="xs c3-txt" x="297" y="393" text-anchor="middle">单比特 T 门不改变已有切分的键维 χ</text>
+  <text class="xs" x="297" y="413" text-anchor="middle">（2026：在已公开地址计算振幅与 log-XEB）</text>
   <line class="axis" x1="94" y1="424" x2="507" y2="424"/>
   <polygon class="axis-fill" points="507,424 500.5,427.12 500.5,420.88"/>
   <line class="axis" x1="94" y1="424" x2="94" y2="144"/>
   <polygon class="axis-fill" points="94,144 97.12,150.5 90.88,150.5"/>
   <text class="xs" x="106" y="441" text-anchor="middle">t = 0</text>
-  <text class="xs" x="230" y="441" text-anchor="middle">t ~ 50</text>
-  <text class="xs" x="454" y="441" text-anchor="middle">t ≫ 10² (大量 T 门)</text>
-  <text class="sm" x="297" y="462" text-anchor="middle">非 Clifford T 门数 t（魔术度 / 稳定子秩）</text>
-  <text class="xs" x="86" y="416" text-anchor="end">χ ~ 2</text>
-  <text class="xs" x="86" y="355" text-anchor="end">χ ~ 10³</text>
-  <text class="xs" x="86" y="168" text-anchor="end">2<tspan dy="-4" font-size="72%">Ω(n)</tspan><tspan dy="4">&#8203;</tspan></text>
-  <text class="sm" x="44" y="288" text-anchor="middle" transform="rotate(-90 44 288)">纠缠键维 χ（拓扑深度）</text>
+  <text class="xs" x="230" y="441" text-anchor="middle">较少 T</text>
+  <text class="xs" x="454" y="441" text-anchor="middle">较多 T</text>
+  <text class="sm" x="297" y="462" text-anchor="middle">非 Clifford T 门数 t</text>
+  <text class="xs" x="86" y="416" text-anchor="end">小</text>
+  <text class="xs" x="86" y="355" text-anchor="end">中</text>
+  <text class="xs" x="86" y="168" text-anchor="end">大</text>
+  <text class="sm" x="44" y="288" text-anchor="middle" transform="rotate(-90 44 288)">切分键维 χ</text>
   <rect class="pill" x="44" y="480" width="454" height="58" rx="9"/>
-  <text class="xsb" x="271" y="501" text-anchor="middle">四维壁垒缺一不可：少 n→态矢量 | 少 T→稳定子 | 低 χ→MPS | 高噪→SPD</text>
-  <text class="xs" x="271" y="522" text-anchor="middle">“难逐门模拟”仅为必要条件，实用优势还须战胜专用经典启发式算法</text>
+  <text class="xsb" x="271" y="501" text-anchor="middle">比较条件：规模、代数结构、收缩宽度与噪声模型</text>
+  <text class="xs" x="271" y="522" text-anchor="middle">分别记录指定振幅、全串采样与局域期望的误差和成本</text>
   <text class="xsb" x="546" y="152">① 单层退极化伴随衰减 (1−p)<tspan dy="-4" font-size="72%">w</tspan><tspan dy="4">&#8203;</tspan>（对数纵轴，w = 0–20）</text>
   <line class="grid" x1="594" y1="181.16" x2="952" y2="181.16"/>
   <text class="xs" x="588" y="184.66" text-anchor="end">10⁰</text>
@@ -188,10 +188,10 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <path class="c1" stroke-width="2.3" stroke-dasharray="6 4" d="M 594 181.16 L 611.9 182 L 629.8 182.84 L 647.7 183.68 L 665.6 184.52 L 683.5 185.35 L 701.4 186.19 L 719.3 187.03 L 737.2 187.87 L 755.1 188.7 L 773 189.54 L 790.9 190.38 L 808.8 191.22 L 826.7 192.06 L 844.6 192.89 L 862.5 193.73 L 880.4 194.57 L 898.3 195.41 L 916.2 196.25 L 934.1 197.08 L 952 197.92"/>
   <text class="xsb c1-txt" x="907.25" y="206.66" text-anchor="middle">p = 0.05</text>
   <path class="c4" stroke-width="2.3" stroke-dasharray="7 3 2 3" d="M 594 181.16 L 611.9 183.82 L 629.8 186.47 L 647.7 189.13 L 665.6 191.78 L 683.5 194.44 L 701.4 197.09 L 719.3 199.75 L 737.2 202.4 L 755.1 205.06 L 773 207.71 L 790.9 210.37 L 808.8 213.02 L 826.7 215.68 L 844.6 218.33 L 862.5 220.98 L 880.4 223.64 L 898.3 226.29 L 916.2 228.95 L 934.1 231.6 L 952 234.26"/>
-  <text class="xsb c4-txt" x="924" y="218" text-anchor="middle">p = 0.15</text>
+  <text class="xsb c4-txt" x="880.4" y="242.78" text-anchor="middle">p = 0.15</text>
   <path class="c2" stroke-width="2.3" stroke-dasharray="2.5 3" d="M 594 181.16 L 611.9 186.99 L 629.8 192.82 L 647.7 198.64 L 665.6 204.47 L 683.5 210.29 L 701.4 216.12 L 719.3 221.95 L 737.2 227.77 L 755.1 233.6 L 773 239.43 L 790.9 245.25 L 808.8 251.08 L 826.7 256.9 L 844.6 262.73 L 862.5 268.56 L 880.4 274.38 L 898.3 280.21 L 916.2 286.04 L 934.1 291.86 L 940.67 294"/>
-  <text class="xsb c2-txt" x="884" y="249" text-anchor="middle">p = 0.30 (强衰减)</text>
-  <text class="xs c2-txt" x="678" y="280" text-anchor="middle">剪枝丢弃区 (&lt;10⁻²)</text>
+  <text class="xsb c2-txt" x="866.08" y="262.93" text-anchor="middle">p = 0.30 (强衰减)</text>
+  <text class="xs c2-txt" x="662.02" y="275" text-anchor="middle">剪枝丢弃区 (&lt;10⁻²)</text>
   <line class="axis" x1="594" y1="294" x2="958" y2="294"/>
   <polygon class="axis-fill" points="958,294 952.5,296.64 952.5,291.36"/>
   <line class="axis" x1="594" y1="294" x2="594" y2="162"/>
@@ -240,7 +240,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xsb c1-txt" x="641.73" y="363.77">|W₃⟩ 仅 2 项 (χ=2)</text>
   <text class="xsb c2-txt" x="861.31" y="372.68" text-anchor="middle">体积律：截断丢 50%!</text>
   <text class="xsb c3-txt" x="861.31" y="415.53" text-anchor="middle">面积律：误差 &lt; 0.2%</text>
-  <text class="xsb c2-txt" x="748" y="454" text-anchor="end">截断 χ′=8 →</text>
+  <text class="xsb c2-txt" x="755.07" y="439.88" text-anchor="end">截断 χ′=8 →</text>
   <line class="axis" x1="594" y1="468" x2="958" y2="468"/>
   <polygon class="axis-fill" points="958,468 952.5,470.64 952.5,465.36"/>
   <line class="axis" x1="594" y1="468" x2="594" y2="350"/>

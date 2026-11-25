@@ -111,7 +111,7 @@
         ${corrHtml}
         ${nodesHtml}
 
-        <text x="16" y="424" fill="var(--muted)" font-size="11">蓝面 Z₁–Z₄ 检 X/Y 错 · 红面 X₁–X₄ 检 Z/Y 错 · 绿色虚圈为最小权重解码修正链</text>
+        <text x="16" y="424" fill="var(--muted)" font-size="11">蓝面 Z₁–Z₄ 检 X/Y 错 · 红面 X₁–X₄ 检 Z/Y 错 · 绿色虚圈为分别最小化 X/Z 分量所得修正链</text>
       `;
 
       byId('surface-svg').querySelectorAll('[data-surface-q]').forEach(g => {
@@ -132,7 +132,7 @@
         `Z 症状: ${an.zLit.length ? an.zLit.join(', ') : '全 +1'} ｜ X 症状: ${an.xLit.length ? an.xLit.join(', ') : '全 +1'}`;
       byId('surface-corr-val').textContent = showDecode
         ? fmtPauliList(an.corrPaulis, p => p !== 'I')
-        : '（点击“⚡ 一键最小权重解码”计算修正链）';
+        : '（点击“⚡ 分量解码”计算修正链）';
 
       const verdictEl = byId('surface-verdict-val');
       const noteEl = byId('surface-note');
@@ -141,13 +141,13 @@
         verdictEl.textContent = an.totalWeight === 0 ? '无错待检' : `已注入 ${an.totalWeight} 比特错 · 待解码`;
         noteEl.textContent = an.totalWeight === 0
           ? '码空间洁净：8 个稳定子全为 +1。点击左侧任意数据比特（或下方预设）注入 X / Z / Y 错误，观察症状红灯如何亮起！'
-          : `已点亮 ${an.zLit.length + an.xLit.length} 盏稳定子症状灯（Z 型测 X/Y 错，X 型测 Z/Y 错）。点击「⚡ 一键最小权重解码」核查码距 d=3 能否成功救回！`;
+          : `已点亮 ${an.zLit.length + an.xLit.length} 盏稳定子症状灯（Z 型测 X/Y 错，X 型测 Z/Y 错）。点击「⚡ 分量解码」核查码距 d=3 能否成功救回！`;
       } else if (an.verdict === 'clean') {
         verdictEl.textContent = '✓ 无错误';
         noteEl.textContent = '无错误注入，无需修正，逻辑态保持原样。';
       } else if (an.verdict === 'corrected') {
         verdictEl.textContent = '✓ 精准纠回（残余 I）';
-        noteEl.textContent = `最小权重解码器给出的修正 ${fmtPauliList(an.corrPaulis, p => p !== 'I')} 与物理错完全抵消（C·E = I），逻辑 X̄ 与 Z̄ 均保持不变！`;
+        noteEl.textContent = `分量解码器给出的修正 ${fmtPauliList(an.corrPaulis, p => p !== 'I')} 与物理错完全抵消（C·E = I），逻辑 X̄ 与 Z̄ 均保持不变！`;
       } else if (an.verdict === 'degenerate') {
         verdictEl.textContent = '✓ 简并纠回（差稳定子）';
         noteEl.classList.add('amber');

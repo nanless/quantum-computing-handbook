@@ -1380,16 +1380,17 @@ def build_fig5_deferred_measurement() -> tuple[str, dict[str, float]]:
         desc=(
             "上面板展示四个多比特核心量子门的标准电路符号与计算基作用（时间从左到右）："
             "CNOT、对称受控相位门 CZ、三 CNOT 交替分解的 SWAP 门以及经典可逆通用的 Toffoli (CCNOT) 门。"
-            "下面板展示延迟测量原理：将电路中段测量与经典双线条件门 U，等价替换为量子受控门 C-U 并将测量推迟至电路末端。"
+            "下面板比较中段测量后按标签反馈与相干控制后再读标签。"
+            "画的是原控制线保留标签的情形。若数据线继续使用，可另设干净记录位。"
         ),
     )
     doc.add_header(
         "多比特核心量子门与延迟测量原理",
-        "上：CNOT、CZ、SWAP (= 3 CNOT) 与 Toffoli (CCNOT) 门符号与作用；下：中段测量加经典控门 ≡ 量子受控门加末端测量",
+        "上：CNOT、CZ、SWAP (= 3 CNOT) 与 Toffoli (CCNOT) 门符号与作用；下：控制位保留读出标签时的延迟测量",
     )
 
     doc.add_panel(28, 96, 944, 208, "多比特核心量子门：符号、恒等分解与计算基作用（时间从左到右）")
-    doc.add_panel(28, 316, 944, 236, "延迟测量原理（Principle of Deferred Measurement）：动态经典反馈 ≡ 量子受控门 + 末端测量")
+    doc.add_panel(28, 316, 944, 236, "延迟测量原理（Principle of Deferred Measurement）：控制位保留原标签")
 
     # Helper drawing primitives for quantum circuits
     def draw_cnot(x_c: float, y_ctrl: float, y_targ: float, r_t: float = 10.0) -> None:
@@ -1521,8 +1522,8 @@ def build_fig5_deferred_measurement() -> tuple[str, dict[str, float]]:
 
     # Center equivalence symbol
     doc.add('<text class="title c1-txt" x="500" y="430" text-anchor="middle">≡</text>')
-    doc.add('<text class="xs c1-txt" x="500" y="450" text-anchor="middle">统计与末态</text>')
-    doc.add('<text class="xs c1-txt" x="500" y="465" text-anchor="middle">完全等价</text>')
+    doc.add('<text class="xs c1-txt" x="500" y="450" text-anchor="middle">末端读出</text>')
+    doc.add('<text class="xs c1-txt" x="500" y="465" text-anchor="middle">分支相同</text>')
 
     # Right Circuit: Quantum controlled-U + terminal measurement
     doc.add('<rect class="subpanel" x="540" y="362" width="418" height="132" rx="10"/>')
@@ -1561,7 +1562,7 @@ def build_fig5_deferred_measurement() -> tuple[str, dict[str, float]]:
     )
     doc.add(
         '<text class="xs" x="500" y="535" text-anchor="middle">'
-        '核心前提：测后不对控制位 A 施非对角门或复位复用（注：异地隐形传态仍需中途测量与经典通信）'
+        '本图沿用控制位 A 保持标签。若继续操作数据位，可另设干净记录位；跨站点相干门另计通信资源。'
         '</text>'
     )
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
-  <title id="title">张量积升维与偏迹降维的互逆结构</title>
-  <desc id="desc">左面板展示 2×2 矩阵 A 与印章 B 通过张量积生成 4×4 块矩阵的升维过程及数值验算；右面板以 Bell 态密度矩阵为例，展示偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）将 4×4 压回 2×2 约化密度矩阵 I/2 的降维结构。</desc>
+  <title id="title">张量积组合系统，偏迹提取边缘</title>
+  <desc id="desc">左面板展示 2×2 矩阵 A 与印章 B 通过张量积生成 4×4 块矩阵的升维过程及数值验算；右面板以 Bell 态密度矩阵为例，展示偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）从 4×4 矩阵提取 2×2 约化态 I/2。均匀混合态 I₄/4 的两个边缘也都是 I/2，无法只靠边缘确定联合态。</desc>
   <style>
 :root{color-scheme:dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -111,7 +111,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
 
   </style>
   <rect class="bg" width="960" height="460" rx="16"/>
-  <text class="title" x="22" y="34">张量积升维与偏迹降维的互逆结构</text>
+  <text class="title" x="22" y="34">张量积组合系统，偏迹提取边缘</text>
   <text class="subtitle" x="22" y="54">左：印章分块法则将 2×2 矩阵张成 4×4 块矩阵；右：偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）压回 2×2 约化态</text>
   <rect class="panel" x="20.0" y="68.0" width="452.0" height="376.0" rx="12.0"/>
   <path class="phead" d="M 32.0 69.0 H 460.0 Q 471.0 69.0 471.0 80.0 V 99.0 H 21.0 V 80.0 Q 21.0 69.0 32.0 69.0 Z"/>
@@ -250,5 +250,5 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xsb c2-txt" x="732" y="368">Bell 态 → diag(½, ½) = I/2</text>
   <text class="xs" x="732" y="386">乘积态 A⊗B → Tr(A)·B = B</text>
   <rect class="note" x="502.0" y="404.0" width="424.0" height="30.0" rx="8"/>
-  <text class="xsb" x="714.0" y="423.2" text-anchor="middle">仅乘积态可无损还原 ρ_A⊗ρ_B；纠缠态偏迹丢弃关联相干，单端成混态 I/2</text>
+  <text class="xsb" x="714.0" y="423.2" text-anchor="middle">Bell 态与 I₄/4 的边缘相同；联合矩阵的 (00,11) 元却不同</text>
 </svg>

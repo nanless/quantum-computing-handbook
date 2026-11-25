@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
   <title id="title">一维量子行走双峰弹道扩散与经典影子随机测量流程</title>
-  <desc id="desc">左面板实算 t=30 步一维经典随机游走高斯分布（σ_cl=5.48=√t）与对称初态 1D Hadamard 量子行走双峰弹道扩散（σ_Q=16.25∝t，双峰位于 ±t/√2 附近）；右面板展示随机单比特 Clifford 经典影子（Classical Shadows）四步流程：随机单比特旋转、计算基快照采样、离线逆通道重构及中位数均值估计 M 个局域观测量。</desc>
+  <desc id="desc">左面板实算 t=30 步一维经典随机游走二项分布（偶格点，高斯轮廓）（σ_cl=5.48=√t）与对称初态 1D Hadamard 量子行走双峰弹道扩散（σ_Q=16.25∝t，双峰位于 ±t/√2 附近）；右面板展示随机单比特 Clifford 经典影子（Classical Shadows）四步流程：随机单比特旋转、计算基快照采样、离线逆通道重构及中位数均值估计 M 个局域观测量。</desc>
   <style>
 :root{color-scheme:light dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
@@ -201,7 +201,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <rect class="c1-soft" x="510.0" y="168.0" width="418.0" height="48.0" rx="7.0"/>
   <rect class="c1-fill" x="519.0" y="180.0" width="24.0" height="24.0" rx="5.0"/>
   <text class="badge-txt" x="531.0" y="196.5" text-anchor="middle">2</text>
-  <text class="smb c1-txt" x="552.0" y="188.0">计算基单次投影快照（重复 N 轮）</text>
+  <text class="smb c1-txt" x="552.0" y="188.0">计算基单次投影快照（独立抽基 N 轮）</text>
   <text class="sm" x="552.0" y="205.0">测得比特串 b̂^(m) ∈ {0,1}ⁿ，经典存储 {(U^(m), b̂^(m))}_{m=1}^N</text>
   <line class="axis" x1="719.0" y1="216.0" x2="719.0" y2="230.0" stroke-width="1.5" marker-end="url(#arr-ink)"/>
   <rect class="c4-soft" x="510.0" y="232.0" width="418.0" height="54.0" rx="7.0"/>
@@ -216,7 +216,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <text class="smb c5-txt" x="552.0" y="322.0">中位数均值估计 M 个局域观测量 {O_i}</text>
   <text class="sm" x="552.0" y="345.0">ô_i = median_k Tr(O_i ρ̂̄_k) ｜ N = O(log(M/δ) · 3^w / ε²)</text>
   <rect class="note" x="510.0" y="368.0" width="418.0" height="56.0" rx="7.0"/>
-  <text class="smb" x="520.0" y="388.0">核心优势：先采样、后提问，样本数仅按 log M 缓慢增长</text>
-  <text class="sm" x="520.0" y="409.0">适用边界：单比特随机 Pauli 影子方差按 3^w 增长（限于低权重 w）</text>
-  <text class="sm" x="22.0" y="450.0">数学验证：第 16 章 §4.3、§8.3；t=30 偶数格点实算 ∑P_cl = ∑P_Q = 1.0000，量子行走标准差相对经典放大近 3 倍。</text>
+  <text class="smb" x="520.0" y="388.0">统计单位：独立抽基；同一基的 shots 是一个簇</text>
+  <text class="sm" x="520.0" y="409.0">Z 例的标准差：200 次独立抽基 0.1；同一基重复 √2</text>
+  <text class="sm" x="22.0" y="450.0">数学验证：第 16 章 §4.1、§8.3；t=30 偶数格点实算 ∑P_cl = ∑P_Q = 1.0000，量子行走标准差相对经典放大近 3 倍。</text>
 </svg>

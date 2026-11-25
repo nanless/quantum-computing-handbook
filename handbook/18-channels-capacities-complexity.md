@@ -1,6 +1,6 @@
 # 18｜量子信道、通信容量、复杂度与连续变量
 
-前面十几章里，我们已经搭好了两套顺手的工具：在[第 05 章](05-noise-channels.md)里，噪声与开放演化被写成密度矩阵和 Kraus 算符；在[第 13 章](13-quantum-information.md)里，量子态配上了冯·诺依曼熵、相对熵、迹距离、根保真度和 Holevo 量。可当你真正打开一篇量子信息、计算复杂性或连续变量光量子研究论文时，很快会碰上一批新的“拦路虎”：
+读过[第 12 章](12-security-network-frontiers.md)的链路与中继后，可以把问题精确成一条信道在给定资源下能传多少经典消息或量子态。计算会用到两套工具：在[第 05 章](05-noise-channels.md)里，噪声与开放演化被写成密度矩阵和 Kraus 算符；在[第 13 章](13-quantum-information.md)里，量子态配上了冯·诺依曼熵、相对熵、迹距离、根保真度和 Holevo 量。可当你真正打开一篇量子信息、计算复杂性或连续变量光量子研究论文时，很快会碰上一批新的“拦路虎”：
 
 - 论文里动不动就画出一个叫 **Choi 矩阵**的方阵，说“它半正定、偏迹等于单位阵，这就是一条合法信道”——它和 Kraus 算符到底是什么关系？
 - 评估一个带噪量子门有多准时，为什么审稿人总追问**钻石范数**，而不满足于把孤立态挨个送进去测一测？
@@ -10,10 +10,11 @@
 
 本章按**上、中、下三篇**推进，并提供**分层阅读建议**：
 
-- **必读 ★**：上篇第 1–3 节（纯化、Uhlmann、Choi 同构与钻石范数）、第 5 节（四类容量与擦除信道手算）；中篇第 7.1–7.2 节（$\mathrm{QCMA}/\mathrm{QMA}/\mathrm{QIP}$ 谱系）；下篇第 9.1–9.4 节（无量纲正交分量、Wigner 负性与高斯辛变换）。
+- **必读 ★**：上篇第 1–3 节（纯化、Uhlmann、Choi 同构与钻石范数）、第 5 节（四类容量与擦除信道手算）；中篇第 7.1–7.2 节（$\mathrm{QCMA}/\mathrm{QMA}/\mathrm{QIP}$ 谱系）。
+- **连续变量专题**：第 9.1–9.4 节从无量纲正交分量讲到 Wigner 负性与高斯辛变换。只读有限维信道、通信容量和复杂度时，可以跳过第 9 节。
 - **进阶选读 ☆**：第 4 节（量子 Stein 引理）、第 6 节（混态纠缠资源论）、第 7.3–7.4 节（$\mathrm{MIP}^*=\mathrm{RE}$ 与量子采样复杂度）、第 8 节（量子通信复杂度与指纹）、第 9.5–9.6 节（GKP 网格码、CV-MBQC 与能量受限钻石范数）。
 
-**先修衔接提示**：上篇与中篇承接[第 03 章](03-multiple-qubits.md)、[第 05 章](05-noise-channels.md)、[第 07 章](07-algorithms.md)和[第 13 章](13-quantum-information.md)；下篇（第 9 节连续变量）直接承接[Q4：波函数、势阱、谐振子与隧穿](quantum-mechanics/04-wavefunctions-models.md)（物理谐振子 $[\hat x,\hat p]=i\hbar$、升降算符与 Fock 截断），并向下直连[第 19 章](19-engineering-architecture.md)的玻色猫态与 GKP 硬件实证。
+**按主题回查先修**。信道与容量用到[第 03 章](03-multiple-qubits.md)的偏迹、[第 05 章](05-noise-channels.md)的 Kraus 算符及[第 13 章](13-quantum-information.md)的熵和根保真度。读验证复杂度前，可回看[第 07 章](07-algorithms.md)的复杂度类与承诺问题。第 9 节才需要 [Q4](quantum-mechanics/04-wavefunctions-models.md)的谐振子、升降算符与 Fock 截断。
 
 <details>
 <summary>本章局部符号对照（按需展开，已与附录符号表对齐）</summary>
@@ -254,13 +255,13 @@ $$
 3. **保迹（TP）**：$\mathcal E$ 保迹 $\iff \operatorname{Tr}_B(J_{\mathcal E}) = I_{A'}$；
 4. **最小 Kraus 秩与显式构造**：若 $J_{\mathcal E} \succeq 0$，将其做谱分解 $J_{\mathcal E} = \sum_{k=1}^{r} |v_k\rangle\langle v_k|$（其中 $r = \operatorname{rank}(J_{\mathcal E}) \le d_A d_B$，各向量 $|v_k\rangle \in \mathcal H_{A'}\otimes\mathcal H_B$ 已把本征值平方根吸收进去），把每个向量 $|v_k\rangle = \sum_{i,m} (v_k)_{im}|i\rangle_{A'}|m\rangle_B$ **按列重排**为 $d_B\times d_A$ 矩阵 $(K_k)_{mi} = (v_k)_{im}$（即把每个输入指标 $i$ 对应的连续 $d_B$ 个分量竖排作第 $i$ 列，或在代码里先按行排成 $d_A\times d_B$ 矩阵再取转置，满足 $|v_k\rangle = (I_{A'}\otimes K_k)|\Omega\rangle$），那么 $\{K_k\}_{k=1}^r$ 恰好构成 $\mathcal E$ 的一组**最小数目** Kraus 算符！
 
-**归一化约定对照**：不少教材（如 Wilde《量子信息论》）喜欢把输入换成归一化最大纠缠态 $|\Phi_{d_A}\rangle = |\Omega\rangle/\sqrt{d_A}$，从而定义总迹为 $1$ 的**归一化 Choi 态** $\Phi^{\mathcal E} = J_{\mathcal E}/d_A$。两套约定的换算十分简单：
+**归一化约定。** 用单位最大纠缠态 $|\Phi_{d_A}\rangle=|\Omega\rangle/\sqrt{d_A}$ 定义矩阵 $\Phi^{\mathcal E}=J_{\mathcal E}/d_A$。若 $\mathcal E$ 是 CPTP，所得矩阵才必然为密度矩阵。一般线性映射也可用这一缩放约定，正性、总迹与输入边缘仍须检查。
 
-- $\operatorname{Tr}(J_{\mathcal E}) = d_A \longleftrightarrow \operatorname{Tr}(\Phi^{\mathcal E}) = 1$；
+- 若 $\mathcal E$ 保迹，则 $\operatorname{Tr}(J_{\mathcal E})=d_A$，$\operatorname{Tr}(\Phi^{\mathcal E})=1$。只核总迹无法判定保迹。
 - 保迹条件 $\operatorname{Tr}_B(J_{\mathcal E}) = I_{A'} \longleftrightarrow \operatorname{Tr}_B(\Phi^{\mathcal E}) = I_{A'}/d_A$；
 - 恢复公式 $\mathcal E(X) = \operatorname{Tr}_{A'}[(X^T\otimes I_B)J_{\mathcal E}] \longleftrightarrow \mathcal E(X) = d_A \operatorname{Tr}_{A'}[(X^T\otimes I_B)\Phi^{\mathcal E}]$。
 
-读论文见到 Choi 矩阵时，第一件事就是看总迹是 $d_A$ 还是 $1$，不要把两套公式混拼。
+例如单比特 CP 映射 $X\mapsto X/2$ 的缩放矩阵 $\Phi^{\mathcal E}$ 只有总迹 $1/2$。反过来，取 $K=\sqrt2|0\rangle\langle0|$，则 $J_{\mathcal E}/2=|00\rangle\langle00|$ 虽是密度矩阵，输出侧偏迹却是 $|0\rangle\langle0|$，故该映射并不保迹。
 
 ### 2.2 三个手算样板：恒等信道、转置反例与复位信道
 
@@ -279,7 +280,7 @@ J_{\mathcal I} = |\Omega\rangle\langle\Omega|
 \end{pmatrix}.
 $$
 
-检查 CP：因为 $|\Phi^+\rangle = |\Omega\rangle/\sqrt 2$ 是单位向量，所以 $J_{\mathcal I} = 2|\Phi^+\rangle\langle\Phi^+|$，它是一个秩一矩阵，四个本征值分别是 $2, 0, 0, 0$，全非负，故完全正。检查 TP：按 $2\times 2$ 分块看，$J_{\mathcal I} = \begin{pmatrix} |0\rangle\langle 0| & |0\rangle\langle 1| \\ |1\rangle\langle 0| & |1\rangle\langle 1| \end{pmatrix}$，对输出侧 $B$ 取每个子块的迹，得到 $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I_2$，保迹！总迹为 $2 = d_A$。唯一非零本征向量 $|\Omega\rangle$ 重排成 $2\times 2$ 矩阵正是 $K_0 = I_2$。
+检查 CP：因为 $|\Phi^+\rangle = |\Omega\rangle/\sqrt 2$ 是单位向量，所以 $J_{\mathcal I} = 2|\Phi^+\rangle\langle\Phi^+|$，它是一个秩一矩阵，四个本征值分别是 $2, 0, 0, 0$，全非负，故完全正。检查 TP：按 $2\times 2$ 分块看，$J_{\mathcal I} = \begin{pmatrix} |0\rangle\langle 0| & |0\rangle\langle 1| \\ |1\rangle\langle 0| & |1\rangle\langle 1| \end{pmatrix}$，对输出侧 $B$ 取每个子块的迹，得到 $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I_2$，保迹！总迹为 $2 = d_A$。唯一非零特征值的单位向量是 $|\Phi^+\rangle$。乘特征值平方根得到谱因子 $|\Omega\rangle$，重排为 $K_0=I_2$。
 
 **样板二：转置映射 $\mathcal T(X) = X^T$（正但非完全正的反例）。**
 把基矩阵逐个喂进 $\mathcal T$：$\mathcal T(|0\rangle\langle 0|) = |0\rangle\langle 0|$，$\mathcal T(|0\rangle\langle 1|) = |1\rangle\langle 0|$，$\mathcal T(|1\rangle\langle 0|) = |0\rangle\langle 1|$，$\mathcal T(|1\rangle\langle 1|) = |1\rangle\langle 1|$。按分块拼成 $4\times 4$ 矩阵，恰好得到两比特交换算符（SWAP）$W_2$：
@@ -330,9 +331,9 @@ $$
 
 | 表示方法 | 核心数学对象 | 最擅长解决的问题 | 读论文时最容易踩的坑 |
 | :--- | :--- | :--- | :--- |
-| **Kraus 表示** | 一组算符 $\{K_k\}$（$\sum_k K_k^\dagger K_k = I$） | 数值噪声模拟、逐分支状态更新 | 同一信道的 Kraus 分解不唯一（差一个酉混合） |
+| **Kraus 表示** | 一组算符 $\{K_k\}$（$\sum_k K_k^\dagger K_k = I$） | 数值噪声模拟、逐分支状态更新 | 同一信道的 Kraus 分解不唯一，分解不等长时先补零，再用酉矩阵混合 |
 | **Stinespring 扩张** | 等距 $V: A\to BE$ 或系统—环境酉演化 | 追踪环境拿走的信息、构造互补信道 | 环境辅助维数和基的选取也不唯一 |
-| **Choi 矩阵** | 二分算符 $J_{\mathcal E} \in L(\mathcal H_{A'}\otimes\mathcal H_B)$ | 一步检验 CP/TP、过程层析、半定规划优化 | 须先核对未归一化（$\operatorname{Tr}=d_A$）还是归一化（$\operatorname{Tr}=1$） |
+| **Choi 矩阵** | 二分算符 $J_{\mathcal E} \in L(\mathcal H_{A'}\otimes\mathcal H_B)$ | 一步检验 CP/TP、过程层析、半定规划优化 | TP 时两约定总迹分别为 $d_A$ 和 $1$；检查 TP 用输出侧偏迹 |
 | **Pauli 转移矩阵（PTM）** | Pauli 基下的实矩阵 $R_{ab} = \frac{1}{d}\operatorname{Tr}(\sigma_a\mathcal E(\sigma_b))$ | 多门串联相乘、门集层析拟合 | Pauli 基的归一化系数与排列顺序因库而异 |
 
 ---
@@ -528,7 +529,7 @@ r = 1 - \frac{4\cos^2(\theta/2) + 2}{6}
 = \frac{2}{3}\sin^2\!\left(\frac{\theta}{2}\right).
 $$
 
-   - 再算钻石距离：输入 $|+\rangle = \frac{1}{\sqrt 2}(|0\rangle+|1\rangle)$，输出为 $U_\theta|+\rangle = \frac{1}{\sqrt 2}(e^{-i\theta/2}|0\rangle + e^{i\theta/2}|1\rangle)$，两纯态内积 $\langle +|U_\theta|+\rangle = \cos(\theta/2)$，故迹距离为 $\sqrt{1-\cos^2(\theta/2)} = \sin(\theta/2)$（对 $|\theta|\le \pi$，两酉门之差的钻石距离恰好等于特征相位最大弦长的一半，即 $\frac{1}{2}\|\mathcal U_\theta - \mathcal I\|_\diamond = \sin(\theta/2)$）。
+   - 再算钻石距离。输入 $|+\rangle$ 时，输出与原态的内积为 $\cos(\theta/2)$，迹距离为 $|\sin(\theta/2)|$。对任意纯化输入，重叠为 $\operatorname{Tr}(\rho_AU_\theta)$，是 $e^{\pm i\theta/2}$ 的凸组合。当 $|\theta|\le\pi$，该连线距原点最近的位置为中点，$|+\rangle$ 已达到，故 $\frac12\|\mathcal U_\theta-\mathcal I\|_\diamond=|\sin(\theta/2)|$。
 
 代入一个真实的微小校准偏差 $\theta = 0.02\text{ rad}$（约 $1.15^\circ$）：
 
@@ -538,7 +539,7 @@ r = \frac{2}{3}\sin^2(0.01) \approx 6.67 \times 10^{-5},
 \frac{1}{2}\|\mathcal U_\theta - \mathcal I\|_\diamond = \sin(0.01) \approx 1.00 \times 10^{-2}.
 $$
 
-**两者整整差了 $150$ 倍**！面对相干系统误差，平均门不保真度按 $O(\theta^2)$ 缩小，钻石距离却只按 $O(\theta) = O(\sqrt r)$ 缩小。如果把 $r \approx 6.7\times 10^{-5}$ 误当成最坏情况误差，就会严重低估相干误差在深电路里同向叠加的破坏力。好在 Watrous（2009）证明：只要拿到小系统的 Choi 矩阵，钻石范数可以写成标准的**半定规划**（SDP），在多项式时间内精确算出来，不需要真的去穷举所有高维纯态。
+**两者整整差了 $150$ 倍**！面对相干系统误差，平均门不保真度按 $O(\theta^2)$ 缩小，钻石距离却只按 $O(\theta) = O(\sqrt r)$ 缩小。如果把 $r \approx 6.7\times 10^{-5}$ 误当成最坏情况误差，就会严重低估相干误差在深电路里同向叠加的破坏力。好在 Watrous（2009）证明：只要拿到小系统的 Choi 矩阵，钻石范数可以写成标准的**半定规划**（SDP），给定有限维 Choi 矩阵和数值精度后可按半定规划求解，成本取决于维数及精度。
 
 ---
 
@@ -648,7 +649,7 @@ $$
 | **量子 Stein 引理** | $n\to\infty$ | $\alpha_n\le\epsilon$ 下 $\beta_n$ 指数 | $D(\rho\Vert\sigma) \approx 0.2781$ | bit / 副本 |
 | **量子 Chernoff 界** | $n\to\infty$ | 最小化 $\frac{1}{2}(\alpha_n+\beta_n)$ 指数 | $\xi_Q(\rho,\sigma) \approx 0.0761$ | bit / 副本 |
 
-> **前沿注记（广义量子 Stein 引理的近年风波与新证明）**：标准量子 Stein 引理的备择假设是单一态 $\sigma^{\otimes n}$。如果把备择假设换成资源理论里一整族“免费态集合”$\mathcal F_n$（例如所有 $n$ 份可分态），就得到**广义量子 Stein 引理（GQSL）**，它直接决定资源理论是否存在类似热力学第二定律的渐近可逆性。Brandão 与 Plenio（2010）曾给出该定理的证明；2023 年 Berta 等人（*Quantum* 7, 1103）公开指出了原证明中的逻辑漏洞；随后在 2024 年 8 月，Hayashi–Yamasaki（`arXiv:2408.02722`）与 Lami（`arXiv:2408.06410`）分别以不同数学框架独立提出了新证明（目前属预印本/前沿评审进展，与已确立数十年的标准 i.i.d. 量子 Stein 引理分属不同成熟层级）。
+> **广义量子 Stein 引理的证据进展。** 标准问题的备择态为 $\sigma^{\otimes n}$。广义问题可取整个免费态集合 $\mathcal F_n$，如跨 $A^n:B^n$ 可分的全部状态。Berta 等在 2023 年发表文章指出 Brandão–Plenio 旧证明的缺口。Hayashi–Yamasaki 与 Lami 此后给出新证明，已分别发表于 *Nature Physics* **21**, 1988–1993（2025）和 *IEEE Transactions on Information Theory* **71**, 4454–4484（2025）。资源可逆性只在定理规定的免费态集合、渐近误差和渐近资源非生成操作下成立；本章第 6 节采用的 LOCC 下，混态蒸馏与制备仍可能不等价。[旧证明缺口](https://quantum-journal.org/papers/q-2023-09-07-1103/) · [Hayashi–Yamasaki 正式刊文](https://www.nature.com/articles/s41567-025-03047-9) · [Lami 正式刊文](https://doi.org/10.1109/TIT.2025.3543610)
 
 ---
 
@@ -676,9 +677,9 @@ $$
 
 ### 5.1 四大编码定理的物理直觉与非可加性机理
 
-为什么量子信道容量比经典香农容量难算得多？根源在于两个经典世界里没有的现象：一是输出态彼此非正交时，接收方需要跨整块做联合量子测量或解耦解码；二是**超加性（superadditivity）**——把多条信道并排一起用、跨信道送入纠缠码字时，能传的信息有时严格大于“各自单独用再相加”！下面逐条看清四大编码定理的**构造直觉、数学公式与非可加性边界**。
+这里讨论有限维无记忆信道。正则化公式中的 $Q^{(1)}(\mathcal E^{\otimes n})/n$、$P^{(1)}(\mathcal E^{\otimes n})/n$、$\chi(\mathcal E^{\otimes n})/n$ 都按每次使用计，先允许在 $n$ 份输入与输出上联合操作，再增大块长度。为什么量子信道容量比经典香农容量难算得多？根源在于两个经典世界里没有的现象：一是输出态彼此非正交时，接收方需要跨整块做联合量子测量或解耦解码；二是**超加性（superadditivity）**——把多条信道并排一起用、跨信道送入纠缠码字时，能传的信息有时严格大于“各自单独用再相加”！下面逐条看清四大编码定理的**构造直觉、数学公式与非可加性边界**。
 
-**1. 无辅助经典容量 $C(\mathcal E)$（HSW 定理：典型子空间打包与漂亮好测量）。**
+**1. 无辅助经典容量 $C(\mathcal E)$（HSW 定理与联合测量）。**
 回顾[第 13 章](13-quantum-information.md)的 Holevo 信息。对单次使用信道 $\mathcal E$，遍历所有合法输入态系综 $\{p_x, \rho_x\}$，定义单次 Holevo 容量：
 
 $$
@@ -695,7 +696,7 @@ $$
 C(\mathcal E) = \lim_{n\to\infty} \frac{1}{n}\,\chi\bigl(\mathcal E^{\otimes n}\bigr).
 $$
 
-- **编码与解码直觉（PGM / 平方根联合测量）**：发送方按典型序列分布随机挑选 $2^{nR}$ 条码字态 $\rho_{x^n}$，经过 $\mathcal E^{\otimes n}$ 后在输出端落入各自的条件典型子空间（投影为 $\Pi_{x^n}$，维数约 $2^{n \sum_x p_x S(\mathcal E(\rho_x))}$），而所有码字共同落在平均输出态 $\bar\rho^{\otimes n}$ 的全局典型子空间内（维数约 $2^{n S(\bar\rho)}$）。由于不同输出态未必正交，接收方不能逐位单比特测量，而必须在全局典型子空间上施加联合 POVM——**漂亮好测量（Pretty Good Measurement, PGM，又称平方根测量）**：
+- **编码与解码直觉（PGM / 平方根联合测量）**：发送方按典型序列分布随机挑选 $2^{nR}$ 条码字态 $\rho_{x^n}$，经过 $\mathcal E^{\otimes n}$ 后在输出端落入各自的条件典型子空间（投影为 $\Pi_{x^n}$，维数约 $2^{n \sum_x p_x S(\mathcal E(\rho_x))}$），而所有码字共同落在平均输出态 $\bar\rho^{\otimes n}$ 的全局典型子空间内（维数约 $2^{n S(\bar\rho)}$）。由于不同输出态未必正交，该构造用全局典型投影与码字投影建立联合 POVM——**漂亮好测量（Pretty Good Measurement, PGM，又称平方根测量）**：
 
   $$
   \Lambda_{x^n} = \left(\sum_{y^n} \Pi_{y^n}\right)^{-1/2} \Pi_{x^n} \left(\sum_{y^n} \Pi_{y^n}\right)^{-1/2}.
@@ -708,7 +709,7 @@ $$
   S_{\min}(\mathcal E \otimes \bar{\mathcal E}) < S_{\min}(\mathcal E) + S_{\min}(\bar{\mathcal E}),
   $$
 
-  这直接压低了 Holevo 公式中的减项，证明 $\chi(\mathcal E\otimes\bar{\mathcal E}) > \chi(\mathcal E) + \chi(\bar{\mathcal E})$ 确实可以发生——在发送端跨信道输入纠缠码字真的能传出更多经典比特！也要分清三个不同层次的量：给定一组态的 $\chi$（第 13 章）、单次信道优化后的 $\chi(\mathcal E)$，以及取极限后的完整容量 $C(\mathcal E)$。
+  Shor 的归约把最小输出熵非可加性转为 Holevo 量非可加性；额外构造控制了平均输出熵的优化。这里的 $S_{\min}$ 反例与归约共同说明完整经典容量一般要正则化。给定系综的 $\chi$、单次信道最大 $\chi(\mathcal E)$、以及完整 $C(\mathcal E)$ 是三种优化范围。[Shor 2004](https://arxiv.org/abs/quant-ph/0305035) · [Hastings 2009](https://doi.org/10.1038/nphys1226)
 
 **2. 无辅助量子容量 $Q(\mathcal E)$（LSD 定理：解耦原理与为何必须正则化）。**
 把输入态 $\rho_A$ 纯化为 $|\psi_\rho\rangle_{RA}$，保持参考系统 $R$ 不动、把 $A$ 送入信道 $\mathcal E$，记输出联态为 $\omega_{RB} = (\mathcal I_R \otimes \mathcal E_{A\to B})(|\psi_\rho\rangle\langle\psi_\rho|_{RA})$。定义**相干信息（coherent information）**：
@@ -729,10 +730,10 @@ $$
   \omega_{RE} \approx \omega_R \otimes \omega_E,
   $$
 
-  那么环境对参考系统 $R$ 几乎一无所知！回到本章 1.2—1.3 节的 **Uhlmann 纯化唯一性定理**：既然 $\omega_{RBE}$ 与（$|\Phi\rangle_{R\hat B} \otimes |\text{env}\rangle_{B'E}$）在 $RE$ 侧有几乎相同的约化态，Bob 就**必然存在一条本地等距解码映射**，只动自己手里的 $B$ 就能完美还原出与 $R$ 最大纠缠的纯态！随机编码满足解耦条件的最大码率，恰好就是 $R < S(B) - S(E) = I_c$。
+  那么环境对参考系统 $R$ 几乎一无所知！回到本章 1.2—1.3 节的 **Uhlmann 纯化唯一性定理**：既然 $\omega_{RBE}$ 与（$|\Phi\rangle_{R\hat B} \otimes |\text{env}\rangle_{B'E}$）在 $RE$ 侧有几乎相同的约化态，Bob 就**必然存在一条本地等距解码映射**，只作用于 $B$ 即可输出逼近与 $R$ 最大纠缠的理想态，输出的保真度由 $RE$ 的接近程度控制。随机编码满足解耦条件的最大码率，恰好就是 $R < S(B) - S(E) = I_c$。
 - **非负性回验**：对高噪声信道和某些输入，$I_c(\rho,\mathcal E)$ 可以为负，但取纯态输入 $\rho = |\phi\rangle\langle\phi|$ 时参考系统 $R$ 退化为一维，$S(RB)=S(B) \implies I_c = 0$，因此在全部输入上取最大值后 $Q^{(1)}(\mathcal E) \ge 0$ 恒成立。
-- **为什么必须保留正则化极限 $\lim_{n\to\infty}\frac{1}{n}Q^{(1)}(\mathcal E^{\otimes n})$（两大经典超加性反例）**：
-  - **简并量子码打破单字母极限（DiVincenzo–Shor–Smolin, *Phys. Rev. A* 1998）**：考虑单比特退极化信道，按随机 Pauli 错误率 $q$ 写作 $\mathcal E(\rho) = (1-q)\rho + \frac{q}{3}(X\rho X + Y\rho Y + Z\rho Z)$（严格换算为本书[第 05 章](05-noise-channels.md)的 $\mathcal D_p(\rho) = (1-p)\rho + p\frac{I}{2}$ 参数，因 $\frac{I}{2} = \frac{1}{4}(\rho + X\rho X + Y\rho Y + Z\rho Z)$，两套口径换算关系为 $q = \frac{3}{4}p \iff p = \frac{4}{3}q$）。当随机 Pauli 错率超过散列阈 **$q \ge 0.1893$**（折合本书参数 **$p \ge 0.2524$**）时，单次最大相干信息 $Q^{(1)}(\mathcal D_p)$ 已经跌至 $0$；可 DiVincenzo 等人证明，把 5 次使用捆成 5 比特**简并重复码**块后，在窗口 **$q \in (0.1893,\, 0.1909)$**（折合本书口径 **$p = \frac{4}{3}q \in (0.2524,\, 0.2545)$**）内，仍有 $\frac{1}{5}Q^{(1)}(\mathcal D_p^{\otimes 5}) > 0$！机理在于简并码允许 Bob 测量部分纠错症状而不必分辨同类的多个具体错误，使环境窃走的有效熵下降得比 Bob 损失的信息更快——单字母 $Q^{(1)}$ 完全看不到这种多块简并增益，因此正则化极限绝不能省略！
+- **为什么必须保留正则化极限 $\lim_{n\to\infty}\frac{1}{n}Q^{(1)}(\mathcal E^{\otimes n})$（简并码与超激活）**：
+  - **五比特简并重复码。** 采用第 05 章的总 Pauli 错率 $q$，即 $I$ 的概率为 $1-q$，$X,Y,Z$ 各为 $q/3$。仿射退极化参数为 $p=4q/3$。单副本最大混态输入的相干信息为 $1-H(1-q,q/3,q/3,q/3)$，在 $q\approx0.189289625$ 变号。固定五比特重复码输入 $(|0^5\rangle\langle0^5|+|1^5\rangle\langle1^5|)/2$ 的相干信息在 $q\approx0.190356088$ 变号。比如 $q=0.19035$ 时为 $+0.000013282763$ bit/五次使用，$q=0.1908$ 时为 $-0.000967816017$ bit/五次使用。对固定输入，正值除以 5 给出量子容量的可达下界；负值只说明这次输入未给出正下界。将两个五比特码串接的 25 位内码门槛是另一结果。以上零点不确定单次优化值或真实容量的零点。[DiVincenzo、Shor 与 Smolin 原稿 v3，表 I 与 §V.B](https://arxiv.org/abs/quant-ph/9706061v3)
   - **零容量超激活（Smith–Yard, *Science* 2008）**：把一条量子容量严格为 $0$ 的 Horodecki PPT 私有信道 $\mathcal E_1$（因 PPT 封锁无法蒸馏出纯纠缠，$Q(\mathcal E_1) = 0$，却能依靠束缚纠缠盾牌传递私密经典位，$P(\mathcal E_1) > 0$），与一条量子容量同样严格为 $0$ 的 $50\%$ 量子擦除信道 $\mathcal E_2$（因反降解性 $Q(\mathcal E_2) = 0$）并联起来：把私有态的“屏蔽盾牌”送进 $\mathcal E_2$、把“密钥壳”送进 $\mathcal E_1$，Bob 在输出端联合处理两路信号，竟同时击穿了 PPT 与反降解两道封锁，获得**严格大于 $0$ 的量子容量**（$Q(\mathcal E_1)=0,\ Q(\mathcal E_2)=0$，却有 $Q(\mathcal E_1\otimes\mathcal E_2) > 0$）！
 
 **3. 私密经典容量 $P(\mathcal E)$（Devetak 定理）与可降解 / 反降解信道。**
@@ -751,7 +752,7 @@ $$
 - **可降解信道（degradable）**：若存在一条后处理信道 $\mathcal D$ 使得 $\mathcal E^c = \mathcal D \circ \mathcal E$（Bob 把自己收到的态再人为加点噪，就能完美模拟环境拿到的东西——说明 Bob 比环境强），那么相干信息与私密信息都满足单字母可加性，直接有 $Q(\mathcal E) = P(\mathcal E) = Q^{(1)}(\mathcal E)$！
 - **反降解信道（anti-degradable）**：若反过来存在 $\tilde{\mathcal D}$ 使得 $\mathcal E = \tilde{\mathcal D} \circ \mathcal E^c$（环境能单方面模拟 Bob 收到的一切），由不可克隆原理与数据处理不等式立得 $Q(\mathcal E) = P(\mathcal E) = 0$！
 
-**4. 纠缠辅助经典容量 $C_E(\mathcal E)$（BSST 定理：态合并与单字母可加性）。**
+**4. 纠缠辅助经典容量 $C_E(\mathcal E)$（BSST 定理与互信息可加性）。**
 在四类容量里，只要允许 Alice 和 Bob 预先共享无限多对纠缠态，正则化难题就会完全消失。Bennett 等人证明了简洁精确的**单字母公式**：
 
 $$
@@ -759,7 +760,7 @@ C_E(\mathcal E) = \max_{\rho_A} I(R:B)_\omega
 = \max_{\rho_A} \bigl[S(R)_\omega + S(B)_\omega - S(RB)_\omega\bigr],
 $$
 
-其中 $\omega_{RB} = (\mathcal I_R\otimes\mathcal E)(|\psi_\rho\rangle\langle\psi_\rho|_{RA})$。为什么预共享无限纠缠能一举消灭正则化？核心直觉来自[第 04 章](04-circuits-protocols.md)的超密编码与[第 13 章](13-quantum-information.md)的**量子态合并（state merging）**：当纠缠变成免费资源时，发送方与接收方可以把任意量子信道转化为等效的经典相关传输资源（结合态合并协议把多余的关联悉数抵消），跨信道输入纠缠态不再产生新的信息红利；随后冯·诺依曼熵的强次可加性直接迫使量子互信息 $\max_{\rho} I(R:B)$ 满足严格单字母可加性！对理想单比特恒等信道，$S(R)=S(B)=1$、$S(RB)=0$，给出 $C_E(\mathcal I) = 2\text{ bit/use}$（即超密编码极限）；结合超密编码与量子隐形传态的双向互换，纠缠辅助量子容量 $Q_E(\mathcal E)$ 永远精确等于 $C_E(\mathcal E)$ 的一半：
+其中 $\omega_{RB}=(\mathcal I_R\otimes\mathcal E)(|\psi_\rho\rangle\langle\psi_\rho|)$。BSST 定理把该互信息的单次最大值与渐近容量对应，且最大值对张量积信道可加。单字母是公式的优化规模，达到容量一般仍需长码块。理想单比特恒等信道取 Bell 纯化，得到 $S(R)=S(B)=1$、$S(RB)=0$，故 $C_E(\mathcal I)=2$ bit/use。超密编码给 $C_E\ge2Q_E$；反过来用同一纠缠辅助信道承载传态所需的经典消息，给 $Q_E\ge C_E/2$。[BSST 编码定理](https://arxiv.org/abs/quant-ph/0106052)
 
 $$
 Q_E(\mathcal E) = \frac{1}{2}\,C_E(\mathcal E).
@@ -905,7 +906,7 @@ $$
 | 私密容量 $P$ | $\max\{0,\,(1-2\varepsilon)\log_2 d\}$ | $\max\{0,\,1 - 2\varepsilon\}$ | **$0.50\text{ secret bit/use}$** |
 | 纠缠辅助经典容量 $C_E$ | $2(1-\varepsilon)\log_2 d$ | $2(1 - \varepsilon)$ | **$1.50\text{ bit/use}$** |
 
-同一条 $\varepsilon = 1/4$ 的单比特擦除信道，一口气交出 $0.75, 0.50, 0.50, 1.50$ 这组数字。以后看到任何论文报“信道容量”，第一反应就该先找清楚下标和辅助资源清单。
+这里是四项通信任务，其中 $Q$ 与 $P$ 数值相等、单位各异。在 $\varepsilon=1/2$ 时，Bob 和环境的信道经输出重标即可互换，因此两种降解条件都成立。若一次均匀发送一个正交编码位，$\varepsilon=1/4$ 时收到旗标后随机猜测的错误率是 $1/8$；若选择报告失败，则失败率是 $1/4$。两项单次性能都不同于渐近容量 $C=3/4$ bit/use。此处 $C,Q,P$ 均无辅助，$C_E$ 只加预共享纠缠，免费双向经典通信会定义另一种容量。[Bennett、DiVincenzo 与 Smolin 1997](https://arxiv.org/abs/quant-ph/9701015)
 
 ### 5.3 有限块长可靠性与信道级数据处理
 
@@ -959,8 +960,8 @@ $$
 
 任务不同，催生出不同的纠缠量，混态纠缠没有唯一的“纠缠百分比”：
 
-- **可蒸馏纠缠 $E_D(\rho)$（操作下界）**：手握 $n$ 份相同的混态 $\rho^{\otimes n}$，只允许用 LOCC 提纯出高保真 Bell 对，渐近每份最多能提炼出多少 ebit。
-- **纠缠形成成本 $E_C(\rho)$ 与形成纠缠 $E_F(\rho)$（操作上界）**：反过来，想只靠 LOCC 从纯 Bell 对出发渐近制备 $\rho^{\otimes n}$，每份最少需要消耗多少 ebit，这就是 $E_C(\rho)$；它的单副本版本叫**形成纠缠** $E_F(\rho) = \min_{\{p_k, |\psi_k\rangle\}} \sum_k p_k S(\operatorname{Tr}_B|\psi_k\rangle\langle\psi_k|)$，满足 $E_C(\rho) = \lim_{n\to\infty}\frac{1}{n}E_F(\rho^{\otimes n})$。
+- **可蒸馏纠缠 $E_D(\rho)$（渐近可提取速率）**：手握 $n$ 份相同的混态 $\rho^{\otimes n}$，只允许用 LOCC 提纯出高保真 Bell 对，渐近每份最多能提炼出多少 ebit。
+- **纠缠形成成本 $E_C(\rho)$ 与形成纠缠 $E_F(\rho)$（渐近制备速率与单副本度量）**：反过来，想只靠 LOCC 从纯 Bell 对出发渐近制备 $\rho^{\otimes n}$，每份最少需要消耗多少 ebit，这就是 $E_C(\rho)$；它的单副本版本叫**形成纠缠** $E_F(\rho) = \min_{\{p_k, |\psi_k\rangle\}} \sum_k p_k S(\operatorname{Tr}_B|\psi_k\rangle\langle\psi_k|)$，满足 $E_C(\rho) = \lim_{n\to\infty}\frac{1}{n}E_F(\rho^{\otimes n})$。
 - **Wootters 共生度（concurrence）闭式**：对任意两量子比特混态 $\rho$，Wootters（1998）给出了 $E_F(\rho)$ 的精确解析解！文献里常把共生度简记为 $C(\rho)$，为了避免和第 5 节的经典容量 $C(\mathcal E)$ 混写，本节统一记作 $C_{\mathrm{conc}}(\rho)$。定义自旋翻转态 $\tilde\rho = (Y \otimes Y)\rho^*(Y \otimes Y)$（其中 $\rho^*$ 是计算基下逐元复共轭），算出矩阵 $\sqrt{\sqrt\rho\,\tilde\rho\,\sqrt\rho}$ 的四个非负本征值并降序排为 $\lambda_1 \ge \lambda_2 \ge \lambda_3 \ge \lambda_4$，则
 
 $$
@@ -980,13 +981,15 @@ $$
 
   对数负性满足张量可加性 $E_N(\rho\otimes\sigma)=E_N(\rho)+E_N(\sigma)$、LOCC 单调性，并且直接给出可蒸馏纠缠的易算上界 $E_D(\rho) \le E_N(\rho)$（但它会漏检所有高维 PPT 束缚纠缠态）。
 
-加上[第 13 章](13-quantum-information.md)提到的压扁纠缠 $E_{\mathrm{sq}}(\rho)$，几大主流纠缠量排成一条清晰的序链（对纯态全部坍缩为同一个数 $S(\rho_A)$，对混态则层层拉开）：
+加上[第 13 章](13-quantum-information.md)提到的压扁纠缠 $E_{\mathrm{sq}}(\rho)$，这些量满足以下界：
 
 $$
 E_D(\rho) \le E_{\mathrm{sq}}(\rho) \le E_C(\rho) \le E_F(\rho),
 \qquad
 E_D(\rho) \le E_N(\rho).
 $$
+
+在纯二分态上 $E_D=E_{\rm sq}=E_C=E_F=S(\rho_A)$。对数负性则是约化态的 $1/2$ 阶 Rényi 熵。若 Schmidt 概率为 $\lambda_j$，部分转置谱含 $\lambda_j$ 与各对 $\pm\sqrt{\lambda_i\lambda_j}$，因此 $E_N=2\log_2\sum_j\sqrt{\lambda_j}$。以 $\sqrt{0.8}|00\rangle+\sqrt{0.2}|11\rangle$ 为例，部分转置谱为 $(0.8,0.2,0.4,-0.4)$，$E_N=\log_2(1.8)\approx0.847997$ ebit，而 $S(\rho_A)=h_2(0.2)\approx0.721928$ bit。[Vidal 与 Werner §V.A](https://arxiv.org/abs/quant-ph/0102117)
 
 ```mermaid
 flowchart LR
@@ -997,7 +1000,7 @@ flowchart LR
   E["可计算判据：部分转置 T_B"] --> F["负性 N 与对数负性 E_N（上界 E_D）"]
 ```
 
-### 6.2 手算样板：加白噪声 Bell 态（Werner 态）的四指标对照
+### 6.2 手算样板：加白噪声 Bell 态的四指标对照
 
 拿两比特量子通信里最常遇到的**加白噪声 Bell 态**（与两比特 Werner 态局域酉等价）亲自算一遍四个纠缠指标（注意跨章参数对齐：本节可见度参数 $p$ 与[第 12 章 §3.2](12-security-network-frontiers.md)及[第 13 章 §2.2](13-quantum-information.md)中的 Werner 参数 $v$ 为同一物理量，与 Bell 平方保真度 $f = \langle\Phi^+|\rho_p|\Phi^+\rangle$ 满足 $p \equiv v = \frac{4f - 1}{3}$）：
 
@@ -1100,7 +1103,7 @@ $$
 
 ### 7.1 完备性与可靠性的量词结构
 
-对于带见证（witness）的验证类，设输入为 $x$，验证者运行一个多项式规模的量子电路 $V_x$，读入见证 $w$ 后输出单个比特 `1`（接受）或 `0`（拒绝）。要求存在完备性阈值 $c$ 与可靠性阈值 $s$，满足间隙 $c - s \ge 1/\operatorname{poly}(|x|)$（通过重复放大总可调成 $c = 2/3, s = 1/3$），使得：
+对于带见证（witness）的验证类，设输入为 $x$，验证者运行一个多项式规模的量子电路 $V_x$，读入见证 $w$ 后输出单个比特 `1`（接受）或 `0`（拒绝）。要求存在完备性阈值 $c$ 与可靠性阈值 $s$，满足间隙 $c - s \ge 1/\operatorname{poly}(|x|)$（QCMA 可对同一经典串重复验证；QMA 可用同一量子见证的 Marriott–Watrous 放大），使得：
 
 $$
 \begin{aligned}
@@ -1130,7 +1133,7 @@ $$
 | :--- | :--- | :--- | :--- |
 | **QCMA** | 1 个多项式长度**经典**位串见证 | 量子多项式时间 | 注意“C”修饰的是经典见证，验证者依然是量子计算机；$\mathrm{QCMA} \stackrel{?}{=} \mathrm{QMA}$ 仍公开 |
 | **QMA** | 1 个多项式量子比特**量子态**见证 | 量子多项式时间 | 代表完备问题见[第 07 章](07-algorithms.md) 2-局域哈密顿量（承诺间隙须 $\ge 1/\operatorname{poly}(n)$） |
-| **QIP** | 1 个算力不受限证明者，多轮量子交互 | 量子多项式时间 | $\mathrm{QIP}(3) = \mathrm{QIP} = \mathrm{PSPACE}$（Jain–Ji–Upadhyay–Watrous 2011；3 轮已达上限） |
+| **QIP** | 1 个算力不受限证明者，多轮量子交互 | 量子多项式时间 | $\mathrm{QIP}(3) = \mathrm{QIP} = \mathrm{PSPACE}$（Kitaev–Watrous 三消息并行化；Jain–Ji–Upadhyay–Watrous 的 PSPACE 刻画） |
 | **MIP** | $\ge 2$ 个**互不通信**、无纠缠的证明者 | 经典多项式时间 | $\mathrm{MIP} = \mathrm{NEXP}$（隔离审讯交叉核对，验证能力跃升指数级） |
 | **$\mathrm{MIP}^*$** | $\ge 2$ 个**互不通信但共享任意量子纠缠**的证明者 | 经典多项式时间 | **$\mathrm{MIP}^* = \mathrm{RE}$**（包含图灵机停机问题！） |
 
@@ -1140,12 +1143,13 @@ $$
 sequenceDiagram
   participant V as 多项式时间验证者 V
   participant P as 算力不受限证明者 P
-  V->>P: 第 1 轮：发送量子/经典挑战消息
-  P->>V: 返回中间量子态或经典答复
-  V->>P: 后续轮次：基于已收消息继续质询
-  P->>V: 返回最终回复（QIP 仅需 3 轮即达上限）
-  V->>V: 执行局部测量并按完备性 / 可靠性判决
+  P->>V: 消息 1，证明者发送初始寄存器
+  V->>P: 消息 2，验证者发回挑战寄存器
+  P->>V: 消息 3，证明者发送最终寄存器
+  Note over V: 验证者本地测量并作判决
 ```
+
+三条箭头是三个单向消息，本地判决不计作消息。三消息并行化见 Kitaev–Watrous（STOC 2000），$\mathrm{QIP}=\mathrm{PSPACE}$ 的正式刊文见 Jain、Ji、Upadhyay 与 Watrous（*J. ACM* 58，文章 30，2011）。Liu 的 2026-11-23 预印本 v1 定理 1.1 报告 $\mathrm{QIP}(2)=\mathrm{QIP}$：验证者先发送若干 EPR 对各自的一半，证明者回复，验证者本地检验。这一两消息结论按该固定预印本引用。[三消息并行化原文](https://crypto.cs.mcgill.ca/~crepeau/COMP647/2007/TOPIC09/KW00-parallel_qip.pdf) · [《JACM》刊文机构存档](https://opus.lib.uts.edu.au/handle/10453/116267) · [Liu v1 定理 1.1](https://arxiv.org/html/2611.31236v1#S1.SS1) · [Marriott–Watrous](https://cs.uwaterloo.ca/~watrous/Papers/QuantumArthurMerlinGames.pdf)
 
 ### 7.3 进阶选读：多证明者纠缠的奇观——$\mathrm{MIP}^* = \mathrm{RE}$ 的直观定位
 
@@ -1188,7 +1192,7 @@ $$
 \langle T|\hat{\mathcal U}|S\rangle = \operatorname{Perm}(U_{S,T}) = \sum_{\sigma \in S_n} \prod_{i=1}^{n} (U_{S,T})_{i,\sigma(i)}.
 $$
 
-积和式长得和行列式 $\det(M) = \sum_{\sigma\in S_n} \operatorname{sgn}(\sigma)\prod_i M_{i,\sigma(i)}$ 几乎一模一样，仅仅是**去掉了奇偶置换的负号 $\operatorname{sgn}(\sigma)$**！可就是这一正负号之差，把计算复杂度劈成了两重天：行列式靠高斯消元在经典多项式时间 $\mathrm{P}$ 内即可算完；而 **Valiant（1979）** 证明计算一般矩阵的积和式是 **`#P`-完备**问题（目前已知最快的精确算法 Ryser 公式仍需 $O(n 2^n)$ 步）。
+积和式长得和行列式 $\det(M) = \sum_{\sigma\in S_n} \operatorname{sgn}(\sigma)\prod_i M_{i,\sigma(i)}$ 几乎一模一样，仅仅是**去掉了奇偶置换的负号 $\operatorname{sgn}(\sigma)$**！可就是这一正负号之差，把计算复杂度劈成了两重天：行列式靠高斯消元在经典多项式时间 $\mathrm{P}$ 内即可算完；而 **Valiant（1979）** 证明即使在元素为 0 或 1 的矩阵上，精确计算积和式也是 **`#P`-完备**问题；Ryser 公式需要 $O(n2^n)$ 次算术操作。
 
 拿最简单的 $2\times 2$ 50:50 分束器 $U_{\mathrm{BS}} = \frac{1}{\sqrt 2}\begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}$ 手算一次，亲眼见证积和式与行列式的物理分岔（两全同粒子分别从端口 1、2 同时入射，求它们各自从端口 1、2 分开射出的符合振幅）：
 
@@ -1205,7 +1209,7 @@ $$
   \operatorname{Perm}(U_{\mathrm{BS}}) = \frac{1}{2}\Bigl(1\cdot(-1) + 1\cdot 1\Bigr) = 0 \quad\Longrightarrow\quad p_{\text{分开}} = 0!
   $$
 
-  两束全同单光子从两侧同时撞进 50:50 分束器时，两条“都透射”与“都反射”路径严格相消，分开射出的概率精确为 $0$，两光子必然成对抱团从同一个端口射出——这正是量子光学最经典的 **Hong–Ou–Mandel（HOM）干涉效应**！把 2 光子推广到 $n$ 光子，$n$ 项排列的相干叠加就自然编进了 `#P`-难的积和式。
+  两个全同单光子从两侧同时进入 50:50 分束器时，两条“都透射”与“都反射”路径严格相消，分开射出的概率精确为 $0$，两光子必然成对抱团从同一个端口射出——这正是量子光学最经典的 **Hong–Ou–Mandel（HOM）干涉效应**！把 2 光子推广到 $n$ 光子，$n!$ 项排列的相干叠加就自然编进了 `#P`-难的积和式。
 
 与 BosonSampling 并立的还有两类共享同一套 `#P`-难内核的采样族：
 - **IQP（瞬时量子多项式线路，Bremner–Jozsa–Shepherd 2011; Bremner–Montanaro–Shepherd 2016）**：结构为 $H^{\otimes n} D H^{\otimes n}|0^n\rangle$，其中 $D$ 由在计算基下两两对易的相位门组成；其输出振幅对应复温度 Ising 模型的配分函数，同样为 `#P`-难。
@@ -1223,7 +1227,7 @@ $$
    \Pr_{U}\!\left[p_x \ge \frac{\alpha}{2^n}\right] \ge \beta.
    $$
 
-   只要反集中成立（随机线路在达到近似 2-design 深度后已严格证实满足反集中），再借助把待测实例随机隐藏到固定输出 $x = 0^n$ 的**隐藏技巧**，加性误差 $O(\varepsilon/2^n)$ 除以量级 $\Omega(2^{-n})$ 的 $p_x$ 立刻转化成可控的**乘性相对误差** $O(\varepsilon)$！于是 $\mathrm{BPP}^{\mathrm{NP}}$ 能够以高概率在乘性误差内算出大多数随机实例的输出概率 $p_x$。
+   只要反集中成立（随机线路在达到近似 2-design 深度后已严格证实满足反集中），并在相应线路族有输出隐藏或对称性的条件下，加性误差 $O(\varepsilon/2^n)$ 除以量级 $\Omega(2^{-n})$ 的 $p_x$ 立刻转化成可控的**乘性相对误差** $O(\varepsilon)$！这里只在反集中与低加性误差两事件的交集上给相对误差。若反集中概率至少为常数 $\beta$，选取加性误差常数使坏事件概率小于 $\beta/2$，交集概率至少为 $\beta/2$。再核对具体困难性归约要求的实例份额与误差。
 4. **平均情形 `#P`-难猜想 + Toda 定理 $\implies$ $\mathrm{PH}$ 坍塌**：如果再成立**平均情形抗噪 `#P`-难猜想**（对 BosonSampling 是高斯随机矩阵积和式猜想 PGC 与反集中猜想 PACC；对 RCS 是随机线路输出概率的平均情形 `#P`-难猜想），那么就能在 $\mathrm{BPP}^{\mathrm{NP}}$ 里求解 `#P`-难问题；再联立 **Toda 定理（1991，即 $\mathrm{PH} \subseteq \mathrm{P}^{\#\mathrm{P}}$）**，整座无穷层的多项式层级 $\mathrm{PH}$ 就会**坍塌至第 3 层**（被复杂度界普遍认为与 $\mathrm{P}=\mathrm{NP}$ 一样极不可能发生）！
 
 把三大采样模型的核心结构与边界收成一张速查表：
@@ -1232,20 +1236,20 @@ $$
 | :--- | :--- | :--- | :--- | :--- |
 | **BosonSampling** | $n\times n$ 子矩阵积和式 $\operatorname{Perm}(U_{S,T})$ | 依赖 PACC 猜想 | 高斯矩阵积和式猜想（PGC） | 光子损耗与部分不可分辨性高时退化为经典可采 |
 | **IQP 线路** | 复温度 Ising 配分函数 | 特定随机族已证 | 复温度 Ising 平均情形 `#P`-难 | 浅层弱纠缠或高噪时被经典张量网 / 泡利传播逼近 |
-| **RCS（随机线路）** | 随机线路振幅（Porter–Thomas 分布） | 近似 2-design 深度已证 | 抗加性 $O(\varepsilon/2^n)$ 误差的平均 `#P`-难 | **恒定门噪声下已被 Aharonov 等（STOC 2023）多项式攻破** |
+| **RCS（随机线路）** | 随机线路振幅（Porter–Thomas 分布） | 近似 2-design 深度已证 | 抗加性 $O(\varepsilon/2^n)$ 误差的平均 `#P`-难 | **所定随机线路和恒定局部噪声模型下可多项式近似采样** |
 
 #### 3. 评审量子采样优越性的三条清醒边界
 
 1. **条件性复杂度证据**：上述结论全部依赖尚未完全证明的平均情形 `#P`-难猜想（与依赖 $\mathrm{P}\ne\mathrm{NP}$ 类似，属理论条件性证据而非无条件证明）。
-2. **仅针对无噪或极低噪理想分布**：一旦电路每个门都存在恒定退极化噪声，随着深度增加，高权泡利干涉项按权重 $|s|$ 以 $(1-\gamma)^{|s|}$ 指数衰减，输出分布会指数趋近均匀分布 $2^{-n}$。注意不要误将此表述为“噪声打破了反集中”——均匀分布 $p_x = 2^{-n}$ 本身平凡满足 $\Pr[p_x \ge \alpha/2^n] = 1$（$\alpha \le 1$）的反集中不等式！恒定退极化噪声真正摧毁并抹平的是**偏离均匀分布的 Porter–Thomas 散斑涨落与平均情形 `#P`-难干涉信号**（同时使 XEB 对比度 $F_{\mathrm{XEB}} \to 0$）——**Aharonov、Gao、Landau、Liu 与 Vazirani（STOC 2023）** 正是结合高权泡利衰减（并借助随机线路的反集中性质控制低权截断后的总变差距离误差），严格证明了恒定噪声随机线路采样存在多项式时间经典采样算法（直接呼应[第 11 章第 5.2 节](11-resources-benchmarks.md)的 XEB 攻防与[第 21 章](21-stabilizer-classical-simulation.md)的含噪泡利传播剪枝！）。
-3. **采样难 $\neq$ 普遍实用加速，且受限于验证窗口悖论**：需要修正过去常见的绝对化说法“RCS 采样全无实用用途”——2025 年 Quantinuum 与摩根大通团队在 56 比特 H2-1 离子阱上基于 RCS 与超算 XEB 核验，已演示生成 **71,313 比特**面向加密与金融审计的**可认证量子随机数**（Liu et al., *Nature* **640**, 343–348, 2025，协议机理详见[第 12 章 §4.5](12-security-network-frontiers.md)）。但这一应用恰恰同时暴露了无结构采样的**验证窗口悖论**：纯经典验证者若只靠多项式份黑箱样本，无法在不付出指数代价（用超算计算理想概率以跑 XEB）的前提下独立核验无结构随机分布——因此该协议被夹在“经典难以伪造、超算仍能事后验算”的窄窗口（约 50–60 比特）内，无法像结构化容错算法那样随规模自由外推。
+2. **指定噪声模型下的平均情形算法。** Aharonov 等给出反集中线路族在常数局域退极化噪声下的经典多项式时间近似采样，以逆多项式总变差误差为目标，保证针对论文规定的随机线路集合及成功份额。其证明用高权泡利路径衰减控制截断；反集中不因噪声而必然消失，均匀分布也满足相应的反集中下界。此结果与无噪概率的平均情形困难性、单个确定线路的仿真性能分属不同的条件。[Aharonov 等正式论文](https://doi.org/10.1137/23M1596557)
+3. **可认证随机数的实验范围。** 2025 年 Quantinuum 与摩根大通团队在 H2 离子阱上按指定噪声与攻击模型演示了基于 RCS 的可认证随机性。协议的置信与最终输出长度依赖采样、诚实设备质量、轮次时限和经典端核验资源；这是一套具体协议的实验，相关随机比特口径见[第 12 章 §4.5](12-security-network-frontiers.md)。[Liu 等，Nature 2025](https://doi.org/10.1038/s41586-025-08737-1)
 
 > **练 18-A｜积和式手算与采样优越性反证链（就地练习）**
 >
 > 1. 对 50:50 分束器 $U_{\mathrm{BS}} = \frac{1}{\sqrt 2}\begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}$，分别手算行列式 $\det(U_{\mathrm{BS}})$ 与积和式 $\operatorname{Perm}(U_{\mathrm{BS}})$，并用两者解释两全同光子与两全同费米子在分束器出口截然相反的物理行为。
 > 2. 按“经典 TVD-$\varepsilon$ 采样器 $\to$ Stockmeyer $\to$ 反集中 $\to$ $\mathrm{PH}$ 坍塌”四步写出反证逻辑，并指出：如果去掉反集中条件，或给每个门加上恒定退极化噪声，哪一步会立刻断裂？
 >
-> **核验要点**：(1) $\det(U_{\mathrm{BS}}) = \frac{1}{2}(-1-1) = -1$（费米子分开射出概率 $1$），$\operatorname{Perm}(U_{\mathrm{BS}}) = \frac{1}{2}(-1+1) = 0$（光子 Hong–Ou–Mandel 抱团，分开概率 $0$）。(2) 缺少反集中时，第 3 步断裂——绝大多数 $p_x$ 可能远小于 $2^{-n}$，平均加性误差 $O(\varepsilon/2^n)$ 无法转化为可控的乘性相对误差；加入恒定门噪声后，均匀分布 $p_x = 2^{-n}$ 本身仍平凡满足反集中不等式，真正被摧毁的是第 4 步所依赖的偏离均匀分布的 Porter–Thomas 散斑涨落与平均情形 `#P`-难干涉信号——深线路高权泡利项指数衰减，Aharonov 等（STOC 2023）正是结合高权泡利衰减构造出多项式时间经典采样器。
+> **核验要点**：(1) $\det(U_{\mathrm{BS}}) = \frac{1}{2}(-1-1) = -1$（费米子分开射出概率 $1$），$\operatorname{Perm}(U_{\mathrm{BS}}) = \frac{1}{2}(-1+1) = 0$（光子 Hong–Ou–Mandel 抱团，分开概率 $0$）。(2) 缺少反集中时，第 3 步断裂——绝大多数 $p_x$ 可能远小于 $2^{-n}$，平均加性误差 $O(\varepsilon/2^n)$ 无法转化为可控的乘性相对误差。有噪模拟要核对指定的随机线路、噪声和近似指标；均匀分布本身仍满足反集中下界。
 
 ---
 
@@ -1267,7 +1271,7 @@ $$
 
 Alice 握着一份 $n$ 比特文件 $x$，Bob 握着一份 $n$ 比特文件 $y$。两人不能互相说话，也不共享公共随机数或纠缠，只能各自压缩出一小段“指纹”同时寄给第三方裁判，裁判要判断 $x$ 和 $y$ 是否完全相同。
 
-**经典私有随机下界**：在没有公共随机数的 SMP 模型里，经典玩家能做的最好策略基于生日悖论思想——把文件拆块随机抽样，Newman & Szegedy（1996）与 Babai & Kimmel（1997）严格证明经典通信量下界为 **$\Theta(\sqrt n)$ 比特**（例如 $n = 10^8$ 位文件大约要传上万比特）。
+**经典私有随机通信。** 在固定有界错误的 SMP 模型中，发送者及裁判都没有预共享随机种子。经典上界为 $O(\sqrt n)$，下界为 $\Omega(\sqrt n)$。因此该模型的最优通信复杂度是 $\Theta(\sqrt n)$ 比特。[Buhrman 等原论文及其经典下界引文](https://arxiv.org/abs/quant-ph/0102001)
 
 **量子指纹协议（仅需 $O(\log_2 n)$ 个量子比特）**：
 先选定一个把 $n$ 位串映到 $m = O(n)$ 位码字的经典二元纠错码 $E: \{0,1\}^n \to \{0,1\}^m$。记任意两个不同输入 $x \ne y$ 对应码字的相对 Hamming 距离为
@@ -1320,7 +1324,7 @@ $$
 < 2^{2n-1} \cdot 2 e^{-m/8} = 2^{2n} e^{-m/8}.
 $$
 
-只要右边严格小于 $1$，即 $2n \ln 2 - m/8 < 0 \iff m > 16 n \ln 2 \approx 11.09\,n$，就必然存在至少一套满足全双侧条件 $\Delta_{xy} \in [1/4, 3/4]$ 的码（而在工程与显式构造里，用 Justesen 码或 Reed–Solomon 与 Hadamard 级联码，还能让本地编码同样在多项式时间内完成）。
+只要右边严格小于 $1$，即 $2n \ln 2 - m/8 < 0 \iff m > 16 n \ln 2 \approx 11.09\,n$，就必然存在至少一套满足全双侧条件 $\Delta_{xy} \in [1/4, 3/4]$ 的码。这项概率法只证存在性。若要显式构造此处的相位指纹，可取相对最小距离至少 $\delta_0>0$ 的显式二元码，再为每个码字拼接等长的全零后缀，新的相对距离落在 $[\delta_0/2,1/2]$。长度只增一倍，指纹仍占 $O(\log n)$ 量子比特，误报常数按新距离范围重算。原论文以码字位置和码位构造振幅指纹。
 
 现在两人把各自仅含 $\lceil\log_2 m\rceil = O(\log_2 n)$ 个量子比特的指纹态寄给裁判，裁判拿一个辅助比特做一次 **SWAP 测试**（[第 06 章](06-algorithmic-primitives.md) Hadamard 测试的变体：辅助比特初态 $|0\rangle \xrightarrow{H} \text{受控 SWAP} \xrightarrow{H} Z$ 测量），输出 `0`（判为“相同”）的概率精确为
 
@@ -1344,7 +1348,7 @@ flowchart LR
   R --> C["全通过判相同，否则判不同"]
 ```
 
-回过头检查模型开关有多敏感：在**无共享随机数**的 SMP 模型里，量子指纹把经典 $\Theta(\sqrt n)$ 比特压缩成 $O(\log_2 n)$ 量子比特，构成严格的**指数分离**；但如果把开关一拨，允许 Alice 和 Bob 预先共享一串**公共随机数**，两人只需用同一组随机向量对 $x,y$ 做模 2 内积哈希，经典 SMP 仅需 **$O(1)$ 比特**就能完成相等性测试，指数差距瞬间消失！因此绝对不能把量子指纹笼统说成“量子通信算相等性永远指数更快”。
+在无共享随机性的 SMP 中，$\Theta(\sqrt n)$ 的经典通信量与 $O(\log n)$ 的量子指纹形成指数分离。若只给两位发送者同一个公用随机种子，他们就能对输入与同一随机向量做模 2 内积，再将哈希值发给裁判。不同输入的单次碰撞概率为 $1/2$，用常数个独立种子可降到固定错误率之下，通信量为 $O(1)$ bit。裁判可只比较哈希值，不必知道种子。
 
 ---
 
@@ -1422,7 +1426,7 @@ $$
 | **Serafini 教材（2017/2023）** | $i$（$\hbar = 1$） | $\langle\{\Delta\hat r_j,\Delta\hat r_k\}\rangle$（**无 $\frac{1}{2}$**） | $I_{2n}$ | $\sigma + i\Omega \succeq 0$ | 交错 $(x_1,p_1,x_2,p_2,\dots)^T$ |
 | **The Walrus（默认配置）** | $2i$（`hbar=2`） | $\frac{1}{2}\langle\{\Delta\hat r_j,\Delta\hat r_k\}\rangle$ | $I_{2n}$ | $V + \frac{i\hbar}{2}\Omega \succeq 0$ | **分块 `xxpp`** $(q_1,\dots,q_n,p_1,\dots,p_n)^T$ |
 
-留意一个细节：Weedbrook（2012）和 Serafini（2017/2023）虽然都把真空协方差写成单位阵 $I_{2n}$，但原因完全不同——前者是把 $\hbar$ 放大为 $2$，后者是保持 $\hbar=1$ 却在协方差定义里省去了 $1/2$（即 $\sigma_{\mathrm{Serafini}} = 2V_{\text{本书}}$）。而把多模协方差传给默认 `xxpp` 排序的软件库时，必须用置换矩阵 $P$ 同时变换行和列（$V_{\mathrm{xxpp}} = P V P^T$），不能只改标签不换矩阵块。
+Weedbrook 与 Serafini 都把真空协方差写为 $I_{2n}$，原因分别是取 $\hbar=2$ 和在协方差定义中省去 $1/2$。在本书与 The Walrus 默认设置之间换算，先选置换 $P$，同步变换 $V$、$\Omega$ 和一阶矩 $\mathbf d$ 的排列，再按 $\hbar=2$ 缩放，使 $V_{\rm W}=2PVP^T$、$\Omega_{\rm W}=P\Omega P^T$、$\mathbf d_{\rm W}=\sqrt2 P\mathbf d$。例如在 $\hbar=1$ 下，交错序 $V=\operatorname{diag}(1/4,1,1/8,2)$ 代表两个独立最小不确定性模式。同时置换 $V$ 和 $\Omega$ 后，物理性矩阵的谱仍为 $(0,0,1.25,2.125)$；只置换 $V$ 时最小本征值约为 $-0.316391$。
 
 ### 9.2 协方差矩阵的物理性判据与非物理反例
 
@@ -1479,7 +1483,7 @@ $$
 = \left(\frac{1}{2} - \lambda\right)^2 - \frac{41}{100} = 0,
 $$
 
-解出 $\lambda_\pm = \frac{1}{2} \pm \frac{\sqrt{41}}{10}$，较小本征值 $\approx -0.1403 < 0$！如果把合法的 $V_2 = \operatorname{diag}(1/4, 1)$ 送进默认 `hbar=2`（即 $[q',p']=2i$）的软件，必须同步缩放 $q'=\sqrt 2 q,\,p'=\sqrt 2 p$，把整个协方差矩阵乘以 $2$ 变成 $V_2' = \operatorname{diag}(1/2, 2)$，检验不等式同步变为 $V' + i\Omega \succeq 0$（$\det V' \ge 1$）；如果不加缩放直接把 $\operatorname{diag}(1/4,1)$ 喂进 `hbar=2` 检查函数，程序会立刻报错拒收。
+解出 $\lambda_\pm = \frac{1}{2} \pm \frac{\sqrt{41}}{10}$，较小本征值 $\approx -0.1403 < 0$！如果把合法的 $V_2 = \operatorname{diag}(1/4, 1)$ 送进默认 `hbar=2`（即 $[q',p']=2i$）的软件，必须同步缩放 $q'=\sqrt 2 q,\,p'=\sqrt 2 p$，把整个协方差矩阵乘以 $2$ 变成 $V_2' = \operatorname{diag}(1/2, 2)$，检验不等式同步变为 $V' + i\Omega \succeq 0$（$\det V' \ge 1$）；如果不加缩放直接把 $\operatorname{diag}(1/4,1)$ 喂进 `hbar=2` 检查函数，程序会立刻返回 False。
 
 ### 9.3 Wigner 准概率函数：高斯正值椭圆 vs Fock $|1\rangle$ 负值非经典区
 
@@ -1579,7 +1583,7 @@ $$
 Wigner 负值绝不仅仅是画图好看，它背后站着两条决定连续变量计算能力的奠基定理：
 
 - **Hudson 定理（Hudson, 1974；多模推广 Soto & Claverie, 1983）**：对任意纯态 $|\psi\rangle$，其 Wigner 函数处处非负（$W_{|\psi\rangle}(\mathbf r) \ge 0$）**当且仅当 $|\psi\rangle$ 是高斯态**！因此任何非高斯纯态（Fock 态 $|n\ge 1\rangle$、猫态、GKP 态）必然带有 Wigner 负值区。（混态例外：高斯态的经典凸组合是非高斯混态，但 Wigner 函数仍处处为正。）
-- **Mari–Eisert 定理（2012）与 Veitch 等（2013）**：如果一条连续变量量子线路的初态、所有门操作和测量效应的 Wigner 函数都处处非负，那么整个线路的测量结果都可以用经典蒙特卡洛采样高效模拟！这赋予 Wigner 负性与离散变量“非 Clifford 魔法态”完全平行的地位：**Wigner 负性是连续变量实现超越经典高效模拟的必要资源**（同时也是[第 09 章](09-hardware.md)与[第 19 章](19-engineering-architecture.md)中容错 GKP 码不可绕过的非高斯门槛）。
+- **Mari–Eisert 与 Veitch 等的经典模拟。** 在相应的输入、转移与测量的 Wigner 表示非负，并满足可有效表示、采样和有限精度控制的条件时，可以用经典随机模拟得到测量统计。出现负性会使这条充分的模拟路线不再直接适用，其本身不足以证明计算优势。[Mari 与 Eisert 2012](https://arxiv.org/abs/1208.3660)
 
 ### 9.4 多模辛变换、双模压缩纠缠与两大结构定理
 
@@ -1641,7 +1645,7 @@ $$
 
 ### 9.5 进阶选读：连续变量 GKP 网格态与光量子 CV-MBQC
 
-读完 9.3—9.4 节，你已经知道纯高斯线路逃不出经典模拟，而要在无限维谐振子里实现容错逻辑量子比特，必须引入具有 Wigner 负性的非高斯玻色编码。在所有玻色码中，**GKP 网格态（Gottesman–Kitaev–Preskill 码，*Phys. Rev. A* 2001）** 是最具代表性的容错架构——它把离散量子比特的“稳定子子空间”思想直接搬进了连续的 $(q, p)$ 相空间，将连续的小位移误差离散化为格点上的纠错症状！
+纯高斯电路的可模拟范围见第 9.3 节。下面讨论 **GKP 网格码** 如何用两个位移稳定子给连续误差产生离散症状，并在有限能量器件中近似实现编码。
 
 #### 1. Weyl 形式 BCH 恒等式与相空间平移方向
 
@@ -1687,7 +1691,7 @@ $$
    [S_q, S_p] = 0!
    $$
 
-   这背后的几何意义极为清晰：两条稳定子在 $(q, p)$ 相空间里围出的**单位晶胞面积**恰好是 $(2\sqrt\pi)\times(2\sqrt\pi) = 4\pi = 2 \times (2\pi\hbar)$（在 $\hbar = 1$ 下）。量子力学中每个正交量子态占相空间普朗克面积 $2\pi\hbar = 2\pi$，因此面积 $4\pi$ 刚好容纳 **$d = 2$ 维逻辑量子比特**！反过来想：如果把步长缩小到 $\sqrt{2\pi}$，那么 $[i\sqrt{2\pi}\hat q, -i\sqrt{2\pi}\hat p] = 2\pi i$，同样满足 $e^{2\pi i} = 1$，但晶胞面积缩成 $2\pi$，只能容下 **$1$ 维唯一量子态**——这就是常用于量子传感与双模辅助纠错的 GKP **零比特态（qunaught state）** $|\emptyset\rangle$！
+   在 $q$ 表象，$S_q=+1$ 要求理想梳齿落在 $q=k\sqrt\pi$，$S_p=+1$ 识别相隔 $2\sqrt\pi$ 的梳齿，即连接 $k$ 与 $k+2$。余下独立的偶、奇两族，因此理想代码编码一个逻辑比特。对应稳定子晶胞面积为 $4\pi$。两个位移步长均为 $\sqrt{2\pi}$ 时，同样的支撑和周期条件只剩一个梳状族，即 GKP 零比特态。
 2. **逻辑算符与稳定子严格对易（相因子 $e^{2\pi i} = +1$ 精确出现在这里！）**：检验 $[\bar Z, S_p]$，取 $A = i\sqrt\pi\,\hat q$、$B = -i 2\sqrt\pi\,\hat p$：
 
    $$
@@ -1719,15 +1723,15 @@ $$
 
 逐项回验本征方程：$\bar Z|0_L\rangle = \sum_s e^{i\sqrt\pi(2s\sqrt\pi)}|2s\sqrt\pi\rangle = \sum_s e^{i 2s\pi}|2s\sqrt\pi\rangle = +|0_L\rangle$，$\bar Z|1_L\rangle = \sum_s e^{i(2s+1)\pi}|(2s+1)\sqrt\pi\rangle = -|1_L\rangle$；$\bar X$ 把所有梳齿右移 $\sqrt\pi$，精确实现 $|0_L\rangle \leftrightarrow |1_L\rangle$；而稳定子 $S_p = \bar X^2$ 把梳齿右移 $2\sqrt\pi$，同时保持 $|0_L\rangle$ 和 $|1_L\rangle$ 不变！
 
-**小位移纠错机制与物理边界**：只要位置误差与动量误差分别落在 Voronoi 纠错窗口 $|\delta q| < \frac{\sqrt\pi}{2} \approx 0.886$、$|\delta p| < \frac{\sqrt\pi}{2}$ 之内，测量稳定子相位（即 $q \bmod \sqrt\pi$ 与 $p \bmod \sqrt\pi$）就能唯一锁定偏差并将其拉回最近格点；只有当位移超过半格距 $\sqrt\pi/2$ 时，才会错跳到相邻异色格点引发逻辑翻转。当然，理想狄拉克梳需要无限压缩与无穷大平均光子数，真实物理实验必须施加有限能量阻尼包络 $\hat E_\Delta = e^{-\Delta^2 \hat a^\dagger \hat a}$（$\Delta > 0$），将每个 $\delta$ 尖峰展宽为宽度 $\sim\Delta$ 的窄高斯峰并包上外层宽度 $\sim 1/\Delta$ 的高斯包络（有限能量 GKP 态 $|0_\Delta\rangle \propto \hat E_\Delta|0_L\rangle$）——这正是[第 19 章](19-engineering-architecture.md)中超导微波腔与离子阱 GKP 突破收支平衡纠错实验的直接理论骨架！
+**小位移纠错。** 测量稳定子相位得到位移在模 $\sqrt\pi$ 下的剩余。以最近格点解码，最近格索引 $k_q,k_p$ 的奇偶决定是否发生逻辑 $\bar X,\bar Z$；模糊的半格边界需明确破平规则。若 $|\delta q|,|\delta p|<\sqrt\pi/2$，两索引均为零。越界时也可能没有逻辑错误，例如 $(\delta q,\delta p)=(2\sqrt\pi,0)$ 恰为稳定子。理想梳不是归一化有限能量态。$|0_\Delta\rangle\propto e^{-\Delta^2\hat a^\dagger\hat a}|0_L\rangle$ 是常用的有限能量正则化之一；实际态也可通过具体器件的测量或脉冲序列合成。[Gottesman、Kitaev 与 Preskill](https://arxiv.org/abs/quant-ph/0008040)
 
 #### 4. 连续变量光量子集群态（CV-MBQC）与 Xanadu Aurora（2025）
 
 把 GKP 编码与[第 17 章 §3.5](17-computation-models.md)的测量型光量子架构结合，就构成了与离散单光子 FBQC 并行的另一条主流光子路线——**连续变量测量型量子计算（CV-MBQC）**（Menicucci et al., *Phys. Rev. Lett.* **97**, 110501, 2006）：
 
-- **确定性高斯集群态制备**：把离散比特的 $|+\rangle$ 替换为动量压缩真空态 $|p \approx 0\rangle$，把离散 $\mathrm{CZ}$ 门替换为连续变量双模纠缠门 $\mathrm{CZ}_{\mathrm{CV}} = e^{i\hat q_1 \hat q_2}$（在光路中可完全由线性分束器与单模压缩器等效实现，不再像离散单光子融合那样有 50% 概率失败！）。配合**时间复用（time-domain multiplexing）** 光纤延迟环，实验团队早在 2019 年就确定性生成了数万至百万级模式的二维连续变量集群态（Larsen et al. 与 Asavanant et al., *Science* **366**, 2019）。
-- **GKP 态打破高斯可模拟性并带来容错**：由 9.3 节的 Mari–Eisert 定理可知，纯高斯集群态配合高斯零差探测仍可被经典高效模拟。只有在集群节点中注入具有 Wigner 负性的**非高斯 GKP 资源态**，才能同时实现两件事：① 打破高斯经典可模拟孤岛、补全通用非 Clifford 能力；② 把连续零差读出的模拟噪声离散化为可纠错的格点比特误差。
-- **2025 年模块化光量子里程碑——Xanadu Aurora（Aghaee Rad et al., *Nature* **638**, 912–919, 2025，同行评审硬件原型）**：Xanadu 团队展示了首台跨机柜模块化光量子原型机 Aurora——由 4 台标准机柜、35 块集成光子芯片与总长 $13\,\mathrm{km}$ 的光纤互联组成，全部在室温下运行（仅少数光子数分辨探测器置冷），在实时前馈下跨网络确定性编织出高达 **$8.64\times 10^{10}$（864 亿）个时空模式**的纠缠光量子集群态，并演示了 GKP 态合成与实时解码闭环。同时必须清晰记录其当前工程边界：该原型机目前的总光路损耗与有效压缩度尚未跨过容错 GKP 码的收支平衡阈值，距离逻辑容错计算仍有赖低损光子集成与高效 GKP 光源的进一步攻关（与[第 17 章 §3.5](17-computation-models.md)的 PsiQuantum Omega 离散 FBQC 架构形成鲜明互补）。
+- **高斯集群态制备。** 动量压缩真空输入和双模耦合 $\mathrm{CZ}_{\rm CV}=e^{i\hat q_1\hat q_2}$ 可构成 CV 集群态。时间复用实验在 2019 年分别报告二维模式阵列。此前的一维百万级模式实验属于不同的连通结构。[Larsen 等 2019](https://doi.org/10.1126/science.aay4354) · [Asavanant 等 2019](https://doi.org/10.1126/science.aay2645)
+- **非高斯资源与纠错。** 原始 CV-MBQC 方案允许保留高斯集群，在测量端引入合适的非高斯测量以补充通用性。在 GKP 架构中，稳定子读出可把连续位移归成离散症状。通用逻辑门集仍需具体的非 Clifford 资源，例如逻辑魔法态制备和注入。[Menicucci 等 2006](https://arxiv.org/abs/quant-ph/0605198)
+- **Aurora（2025 年同行评审硬件原型）。** 论文图 3b 的规模基准用 $1\,\mathrm{MHz}$、$7200\,\mathrm s$ 和 12 个通道得到 $8.64\times10^{10}$ 个时空模式，并通过成对压缩关联表征；图中的 SNU 以真空方差 1 为基准，与本章方差相差因子 2。图 3c/d 另报告实时前馈的自适应和对照操作。距离 2 重复码又是独立实验，使用两光子宣告的偶宇称压缩猫态，宣告失败时使用压缩态。论文的阈值分析依赖选定的 GKP、表面码和解码模型。模式数、前馈和小码结果相应报告了规模、控制和纠错原型能力。[Aurora 论文图 3 与方法](https://doi.org/10.1038/s41586-024-08406-9)
 
 下面这张双面板科学图将本章的两大进阶支柱——**GKP 相空间网格稳定子**（本节）与**量子采样复杂度反证链**（第 7.4 节）——定格在同一视角下：
 
@@ -1786,7 +1790,7 @@ $$
 \tau_{2K}(|r\rangle) \le \frac{\cosh r}{\sqrt{\pi K}}\,\tanh^{2K} r.
 $$
 
-  在 $r = \frac{\ln 2}{2},\,d = 20$（$K=10$）时，精确尾概率为 $5.33\times 10^{-11}$，解析上界为 $5.43\times 10^{-11}$，误差不到 $2\%$！
+  在 $r = \frac{\ln 2}{2},\,d = 20$（$K=10$）时，尾概率为 $\tau_{20}\approx5.329826\times10^{-11}$（解析上界 $5.43\times10^{-11}$），对应的归一化纯态迹距离为 $\sqrt{\tau_{20}}\approx7.300566\times10^{-6}$，光子数尾矩 $\sum_{n\ge20} n p_n\approx1.078625\times10^{-9}$。三个数分别考察概率、态的可区分度和尾部携带的光子数。
 
 **第二层：只知道平均能量上限 $\bar n \le \nu$ 时的无分布普适界（Markov 界）。**
 如果算法中间步骤生成了未知的非高斯态，只知道平均光子数不超过 $\nu$，那就绝不能借用压缩真空的 $10^{-11}$ 尾概率。仅凭概率非负性即可三行证出普适 **Markov 界**：
@@ -1807,20 +1811,20 @@ $$
 \sqrt{\frac{1/8}{d}} \le 0.01 \quad\Longrightarrow\quad d \ge \frac{1/8}{10^{-4}} = 1250!
 $$
 
-  相比已知高斯分布时 $d = 20$ 就已经达到 $10^{-11}$ 精度，缺乏分布承诺会让保守截断维数暴涨几十倍。
-- **一般混态截断** $\tilde\rho_d = \frac{\Pi_d\rho\Pi_d}{1-\tau_d}$：利用第 1.3 节的 Uhlmann 定理，四行就能证出**温和测量引理**（Gentle Measurement Lemma）的紧版本——取 $\rho$ 纯化 $|\psi\rangle_{RA}$，则 $(I_R\otimes\Pi_d)|\psi\rangle_{RA}/\sqrt{1-\tau_d}$ 是 $\tilde\rho_d$ 的合法纯化，两纯化内积为 $\sqrt{1-\tau_d}$，于是 $F(\rho,\tilde\rho_d) \ge \sqrt{1-\tau_d}$；再由[第 13 章](13-quantum-information.md)的 Fuchs–van de Graaf 上界立得
+  相比已知高斯分布时 $d=20$ 已使这个已知纯态的迹距离低于 $10^{-5}$，缺乏分布承诺会让保守截断维数暴涨几十倍。
+- **一般混态截断。** 当 $1-\tau_d>0$ 时定义 $\tilde\rho_d=\Pi_d\rho\Pi_d/(1-\tau_d)$。利用第 1.3 节的 Uhlmann 定理，四行就能证出**温和测量引理**（Gentle Measurement Lemma）的紧版本——取 $\rho$ 纯化 $|\psi\rangle_{RA}$，则 $(I_R\otimes\Pi_d)|\psi\rangle_{RA}/\sqrt{1-\tau_d}$ 是 $\tilde\rho_d$ 的合法纯化，两纯化内积为 $\sqrt{1-\tau_d}$，于是 $F(\rho,\tilde\rho_d) \ge \sqrt{1-\tau_d}$；再由[第 13 章](13-quantum-information.md)的 Fuchs–van de Graaf 上界立得
 
 $$
 T(\rho, \tilde\rho_d) \le \sqrt{1 - F(\rho,\tilde\rho_d)^2} \le \sqrt{\tau_d} \le \sqrt{\frac{\nu}{d}}.
 $$
 
-- **两条无限维工程红线**：第一，迹距离 $T(\rho,\tilde\rho_d) \le \sqrt{\tau_d}$ 只控制**有界**可观测量的误差（$|\operatorname{Tr}[O(\rho-\tilde\rho_d)]| \le 2\|O\|_\infty\sqrt{\tau_d}$），不自动控制无界算符（如平均光子数 $\hat n$ 或方差 $\hat q^2$），后者必须另控高阶尾矩 $\sum_{n\ge d} n p_n$；第二，在无限维空间里，第 3 节的普通钻石范数会完全失效——哪怕是一个极微小的相移门 $\hat R(\theta) = e^{-i\theta\hat n}$ 与恒等门 $I$（只要 $\theta \notin 2\pi\mathbb Z$，无论多小），其无约束钻石范数恒等于最大值 $2$！具体构造须区分无理角与有理角：当 $\theta/(2\pi)$ 为无理数时，可挑足够大 $n$ 使 $n\theta \bmod 2\pi$ 任意逼近 $\pi$，让两能级态 $\frac{|0\rangle + |n\rangle}{\sqrt 2}$ 的输出重叠 $\bigl|\frac{1+e^{-in\theta}}{2}\bigr| \to 0$；而当 $\theta = 2\pi r/q$ 为**有理角**（$\gcd(r,q)=1,\ q\ge 2$，例如 $\theta = 2\pi/3$ 时任意两能级态重叠模长总 $\ge 1/2$ 达不到正交），只需改取 **$q$ 态均匀叠加** $|\psi_q\rangle = \frac{1}{\sqrt q}\sum_{k=0}^{q-1}|k\rangle$，由单位根求和立得
+- **两条无限维工程红线**：第一，迹距离 $T(\rho,\tilde\rho_d) \le \sqrt{\tau_d}$ 只控制**有界**可观测量的误差（$|\operatorname{Tr}[O(\rho-\tilde\rho_d)]| \le 2\|O\|_\infty\sqrt{\tau_d}$），不自动控制无界算符（如平均光子数 $\hat n$ 或方差 $\hat q^2$），后者必须另控高阶尾矩 $\sum_{n\ge d} n p_n$；第二，无约束钻石范数计算允许任意能量输入的最坏情形——哪怕是一个极微小的相移门 $\hat R(\theta) = e^{-i\theta\hat n}$ 与恒等门 $I$（只要 $\theta \notin 2\pi\mathbb Z$，无论多小），其无约束钻石范数恒等于最大值 $2$！具体构造须区分无理角与有理角：当 $\theta/(2\pi)$ 为无理数时，可挑足够大 $n$ 使 $n\theta \bmod 2\pi$ 任意逼近 $\pi$，让两能级态 $\frac{|0\rangle + |n\rangle}{\sqrt 2}$ 的输出重叠 $\bigl|\frac{1+e^{-in\theta}}{2}\bigr| \to 0$；而当 $\theta = 2\pi r/q$ 为**有理角**（$\gcd(r,q)=1,\ q\ge 2$，例如 $\theta = 2\pi/3$ 时任意两能级态重叠模长总 $\ge 1/2$ 达不到正交），只需改取 **$q$ 态均匀叠加** $|\psi_q\rangle = \frac{1}{\sqrt q}\sum_{k=0}^{q-1}|k\rangle$，由单位根求和立得
 
 $$
 \langle\psi_q|\hat R(\theta)|\psi_q\rangle = \frac{1}{q}\sum_{k=0}^{q-1} e^{-i 2\pi r k / q} = 0,
 $$
 
-  两输出严格正交，同样精确给出 $\|\hat{\mathcal R}(\theta) - \mathcal I\|_\diamond = 2$！为此，**Winter（2017）** 引入了**能量受限钻石范数（energy-constrained diamond norm）**：
+  两输出严格正交，同样精确给出 $\|\hat{\mathcal R}(\theta) - \mathcal I\|_\diamond = 2$！为约束物理上的输入集合，可用 Shirokov 定义、Winter 应用的**能量受限钻石范数**：
 
 $$
 \|\mathcal E - \mathcal F\|_{\diamond, E}
@@ -1828,7 +1832,9 @@ $$
 \Bigl\|\bigl((\mathcal E - \mathcal F) \otimes \mathcal I_R\bigr)(\rho_{RA})\Bigr\|_1.
 $$
 
-  加上平均能量上限 $E$ 后，连续变量高斯门逼近与截断动力学误差界（Becker, Datta, Lami & Rouzé, 2021）才重新恢复清晰的物理连续性。
+  对相移例取 $\hat H_A=\hat n$。给输入态纯化，令 $z=\sum_n p_ne^{-in\theta}$，则 $1-\Re z\le\sum_n p_nn|\theta|\le E|\theta|$。纯态迹距离公式与偏迹收缩给 $\|\mathcal R_\theta-\mathcal I\|_{\diamond,E}\le2\min(1,\sqrt{2E|\theta|})$。
+
+  能量预算仍不能单独保证无界观测量的截断误差趋零。取 $E=1/8$、$d\ge3$，$|\psi_d\rangle=\sqrt{1-E/d}|0\rangle+\sqrt{E/d}|d\rangle$，归一化截断后为真空，迹距离 $\sqrt{E/d}$ 趋于零。平均光子数差仍为 $E$。由于 $\hat q^2$ 只连接相差 0 或 2 的光子层，两个态的 $q$ 方差差也为 $E$；光子数方差差为 $Ed-E^2$。验证无界量需要它所涉及的尾矩或相干项。[Shirokov 2018](https://arxiv.org/abs/1706.00361) · [Winter 2017](https://arxiv.org/abs/1712.10267)
 
 ---
 
@@ -1855,7 +1861,7 @@ $$
 - **误区四：“一条信道的容量是唯一数字，而且单位是 bit/s。”** 同一条擦除信道在 $\varepsilon=1/4$ 时有 $C=0.75, Q=0.50, P=0.50, C_E=1.50$；且全部按每次使用（per use）计。
 - **误区五：“混态的局部熵 $S(A)=1$ bit 就意味着 1 对 Bell 纠缠。”** 经典相关可分态 $\frac{1}{2}(|00\rangle\langle 00|+|11\rangle\langle 11|)$ 也有 $S(A)=1$ bit，却毫无纠缠。
 - **误区六：“$\mathrm{QCMA}$ 是经典验证者；$\mathrm{QIP}=\mathrm{PSPACE}$ 或 $\mathrm{MIP}^*=\mathrm{RE}$ 说明量子计算机能解 $\mathrm{PSPACE}$ 甚至停机问题。”** $\mathrm{QCMA}$ 的“C”修饰经典见证，验证者仍是量子机器；$\mathrm{QIP}$ 与 $\mathrm{MIP}^*$ 都依赖算力无限的外部证明者，不是单机 $\mathrm{BQP}$ 算法。
-- **误区七：“压缩态在两个正交分量上都更精确；纯高斯光学就能做通用量子计算。”** 压缩一个正交分量必然放大共轭分量且提高平均能量；纯高斯过程（以及处处非负的 Wigner 线路）都可被经典高效模拟，通用容错必须引入 Wigner 负性等非高斯资源。
+- **误区七：“压缩态在两个正交分量上都更精确；纯高斯光学就能做通用量子计算。”** 压缩一个正交分量必然放大共轭分量且提高平均能量；纯高斯过程在第 9.3 节的效率条件下可被经典模拟。通用 CV-MBQC 要具体说明所用非高斯资源。
 
 ---
 
@@ -1865,31 +1871,33 @@ $$
 
 | 核心主题 | 关键公式 / 判据 | 成立条件与口径 | 典型数值 / 边界 |
 | :--- | :--- | :--- | :--- |
-| **Choi 同构与钻石范数** | $J_{\mathcal E} \succeq 0$（CP），$\operatorname{Tr}_B J_{\mathcal E} = I_{A'}$（TP）；$\|\Phi\|_\diamond = \|\Phi\otimes\mathcal I_A\|_{1\to 1}$ | 未归一化约定 $\operatorname{Tr} J_{\mathcal E} = d_A$ | 相干误差 $R_z(0.02)$：$r \approx 6.7\times 10^{-5}$，钻石距离 $10^{-2}$（差 150 倍） |
+| **Choi 同构与钻石范数** | $J_{\mathcal E} \succeq 0$（CP），$\operatorname{Tr}_B J_{\mathcal E} = I_{A'}$（TP）；$\|\Phi\|_\diamond = \|\Phi\otimes\mathcal I_A\|_{1\to 1}$ | 未归一化约定下，TP 时 $\operatorname{Tr} J_{\mathcal E} = d_A$ | 相干误差 $R_z(0.02)$：$r \approx 6.7\times 10^{-5}$，钻石距离 $10^{-2}$（差 150 倍） |
 | **四类信道容量** | 擦除信道：$C=1-\varepsilon$，$Q=P=\max\{0,1-2\varepsilon\}$，$C_E=2(1-\varepsilon)$ | $C,Q,P$ 一般需正则化；$C_E$ 单字母精确 | $\varepsilon=1/4, d=2$：$0.75 / 0.50 / 0.50 / 1.50$（per use） |
-| **复杂度与采样支柱** | $\mathrm{BQP}\subseteq\mathrm{QCMA}\subseteq\mathrm{QMA}\subseteq\mathrm{QIP}=\mathrm{PSPACE}\subset\mathrm{MIP}^*=\mathrm{RE}$ | RCS 采样难依赖平均 `#P`-难猜想与低噪 | 恒定门噪下 RCS 可经典多项式采样（STOC 2023）；RCS 可认证随机性受 50–60q 验证窗制约 |
-| **连续变量与 GKP / CV-MBQC** | $[\hat q,\hat p]=i$，$V+\frac{i}{2}\Omega \succeq 0$；$S_q=e^{i2\sqrt\pi\hat q}, S_p=e^{-i2\sqrt\pi\hat p}$；$\mathrm{CZ}_{\mathrm{CV}}=e^{i\hat q_1\hat q_2}$ | 核对 $\hbar=1$ vs $2$ 与交错/`xxpp` 排序；纯高斯可经典模拟 | GKP 晶胞面积 $4\pi$ 容 1 逻辑比特；无限维须用能量受限钻石范数 $\|\cdot\|_{\diamond,E}$ |
+| **复杂度与采样支柱** | $\mathrm{BQP}\subseteq\mathrm{QCMA}\subseteq\mathrm{QMA}\subseteq\mathrm{QIP}=\mathrm{PSPACE}\subset\mathrm{MIP}^*=\mathrm{RE}$ | RCS 采样难依赖平均 `#P`-难猜想与低噪 | 所定随机族与恒定局域噪声下可经典多项式近似采样；可认证随机性受具体协议的核验成本约束 |
+| **连续变量与 GKP / CV-MBQC** | $[\hat q,\hat p]=i$，$V+\frac{i}{2}\Omega \succeq 0$；$S_q=e^{i2\sqrt\pi\hat q}, S_p=e^{-i2\sqrt\pi\hat p}$；$\mathrm{CZ}_{\mathrm{CV}}=e^{i\hat q_1\hat q_2}$ | 核对 $\hbar=1$ vs $2$ 与交错/`xxpp` 排序；纯高斯可经典模拟 | GKP 晶胞面积 $4\pi$ 容 1 逻辑比特；有限能量输入可用受限钻石范数 $\|\cdot\|_{\diamond,E}$ |
 
 - **三句自检**：① 读论文见到 Choi 矩阵或信道容量时，是否核对了归一化（$d_A$ vs $1$）、任务类型（$C/Q/P/C_E$）与单位（per use）？② 读到 $\mathrm{MIP}^*=\mathrm{RE}$ 或 RCS 采样时，是否分清了“无限算力证明者/验证窗口”与单机 $\mathrm{BQP}$？③ 调用连续变量库（如 The Walrus）时，是否核对了 `hbar`、协方差 $1/2$ 系数、`xxpp` 排序与能量受限截断界？
+
+从传信转到测参量，[第 20 章](20-quantum-sensing-metrology.md)会用 Fisher 信息衡量细微相位能从测量读数中辨认到什么程度，并用有噪声的 Ramsey 实验核对这把标尺。
 
 ---
 
 ## 自检题
 
-1. 为 $\rho = 0.8|0\rangle\langle 0| + 0.2|1\rangle\langle 1|$ 构造一个两比特纯化，并逐项对参考系统 $R$ 做偏迹验证还原。
-2. 在本章未归一化 $|\Omega\rangle = |00\rangle + |11\rangle$ 约定下，求单比特复位信道 $\mathcal R(X) = \operatorname{Tr}(X)|0\rangle\langle 0|$ 的 Choi 矩阵 $J_{\mathcal R}$，并分别检查它为何满足完全正（CP）与保迹（TP）。
-3. 若改用归一化最大纠缠态 $|\Phi_d\rangle = |\Omega\rangle/\sqrt d$ 定义 Choi 态，其总迹与保迹偏迹条件会如何变化？
-4. 对 $\rho = \operatorname{diag}(0.8, 0.2)$ 与 $\sigma = I/2$，复算量子相对熵 $D(\rho\|\sigma)$，并解释它为什么不能与 Helstrom 单副本猜对概率直接比较。
-5. 单比特量子擦除信道的擦除概率为 $\varepsilon = 1/4$。分别计算 $C, Q, P, C_E$，并说明为什么报告信道容量必须同时交代任务与免费辅助资源。
-6. 对加白噪声 Bell 态 $\rho_p = p|\Phi^+\rangle\langle\Phi^+| + (1-p)I/4$ 取 $p = 0.6$。求部分转置 $\rho_{0.6}^{T_B}$ 的唯一负本征值与负性 $\mathcal N(\rho_{0.6})$（可顺手复算对数负性 $E_N$ 与共生度 $C_{\mathrm{conc}}$ 作对照）。
-7. 用量词写出 $\mathrm{QCMA}$ 与 $\mathrm{QMA}$ 的完备性（yes）与可靠性（no）条件。两者的验证者是否不同？见证的类型是否不同？
-8. 为什么 $\mathrm{QIP} = \mathrm{PSPACE}$ 不能解读成“普通量子计算机拥有求解全部 $\mathrm{PSPACE}$ 问题的高效算法”？
-9. 量子指纹所用的双侧平衡码满足：任意两个不同码字的相对 Hamming 距离都在 $[1/4, 3/4]$ 内。当输入不同时，单次 SWAP 测试误报“相同”的概率上界是多少？独立重复 $10$ 次且全部通过才判“相同”时，误报上界是多少？
-10. 在 $[\hat q, \hat p] = i$ 约定下，取压缩参数 $r = (\ln 2)/2$。求单模压缩真空态的 $\operatorname{Var}(\hat q)$、$\operatorname{Var}(\hat p)$ 及两者乘积，并说明为何没有违反不确定性关系。
-11. 写出单比特恒等信道 $\mathcal I$ 的未归一化 Choi 矩阵 $J_{\mathcal I}$，求其全部本征值与输出侧偏迹；再说明转置映射 $\mathcal T(X)=X^T$ 的 Choi 矩阵为何无法通过完全正判据。
-12. 对 $\rho = \operatorname{diag}(0.8, 0.2)$ 与 $\sigma = I/2$ 做单副本非对称假设检验，约束第一类错误 $\alpha \le 0.1$。若测得 $0$ 时必定接受 $\rho$、测得 $1$ 时以概率 $t$ 接受 $\rho$，求允许的最小 $t$、此时对应的第二类错误 $\beta$ 以及 $D_H^{0.1}(\rho\|\sigma)$。
-13. 对经典相关混态 $\rho_{AB}^{\mathrm{sep}} = \frac{1}{2}|00\rangle\langle 00| + \frac{1}{2}|11\rangle\langle 11|$，计算约化态 $\rho_A$ 与局部熵 $S(A)$，并说明为何它并不代表 $1\text{ ebit}$ 的量子纠缠。
-14. 对第 9 节中 $r = (\ln 2)/2$ 的单模压缩真空态，计算平均光子数 $\bar n$，并结合它说明为什么讨论连续变量近似精度与信道距离时必须施加能量约束。
+1. 为 $\rho = 0.8|0\rangle\langle 0| + 0.2|1\rangle\langle 1|$ 构造一个两比特纯化，并逐项对参考系统 $R$ 做偏迹验证还原。 <!-- exercise-id: 18-01 -->
+2. 在本章未归一化 $|\Omega\rangle = |00\rangle + |11\rangle$ 约定下，求单比特复位信道 $\mathcal R(X) = \operatorname{Tr}(X)|0\rangle\langle 0|$ 的 Choi 矩阵 $J_{\mathcal R}$，并分别检查它为何满足完全正（CP）与保迹（TP）。 <!-- exercise-id: 18-02 -->
+3. 若改用归一化最大纠缠态 $|\Phi_d\rangle = |\Omega\rangle/\sqrt d$ 定义 Choi 态，其总迹与保迹偏迹条件会如何变化？ <!-- exercise-id: 18-03 -->
+4. 对 $\rho = \operatorname{diag}(0.8, 0.2)$ 与 $\sigma = I/2$，复算量子相对熵 $D(\rho\|\sigma)$，并解释它为什么不能与 Helstrom 单副本猜对概率直接比较。 <!-- exercise-id: 18-04 -->
+5. 单比特量子擦除信道的擦除概率为 $\varepsilon = 1/4$。分别计算 $C, Q, P, C_E$，并说明为什么报告信道容量必须同时交代任务与免费辅助资源。 <!-- exercise-id: 18-05 -->
+6. 对加白噪声 Bell 态 $\rho_p = p|\Phi^+\rangle\langle\Phi^+| + (1-p)I/4$ 取 $p = 0.6$。求部分转置 $\rho_{0.6}^{T_B}$ 的唯一负本征值与负性 $\mathcal N(\rho_{0.6})$（可顺手复算对数负性 $E_N$ 与共生度 $C_{\mathrm{conc}}$ 作对照）。 <!-- exercise-id: 18-06 -->
+7. 用量词写出 $\mathrm{QCMA}$ 与 $\mathrm{QMA}$ 的完备性（yes）与可靠性（no）条件。两者的验证者是否不同？见证的类型是否不同？ <!-- exercise-id: 18-07 -->
+8. 为什么 $\mathrm{QIP} = \mathrm{PSPACE}$ 不能解读成“普通量子计算机拥有求解全部 $\mathrm{PSPACE}$ 问题的高效算法”？ <!-- exercise-id: 18-08 -->
+9. 量子指纹所用的双侧平衡码满足：任意两个不同码字的相对 Hamming 距离都在 $[1/4, 3/4]$ 内。当输入不同时，单次 SWAP 测试误报“相同”的概率上界是多少？独立重复 $10$ 次且全部通过才判“相同”时，误报上界是多少？ <!-- exercise-id: 18-09 -->
+10. 在 $[\hat q, \hat p] = i$ 约定下，取压缩参数 $r = (\ln 2)/2$。求单模压缩真空态的 $\operatorname{Var}(\hat q)$、$\operatorname{Var}(\hat p)$ 及两者乘积，并说明为何没有违反不确定性关系。 <!-- exercise-id: 18-10 -->
+11. 写出单比特恒等信道 $\mathcal I$ 的未归一化 Choi 矩阵 $J_{\mathcal I}$，求其全部本征值与输出侧偏迹；再说明转置映射 $\mathcal T(X)=X^T$ 的 Choi 矩阵为何无法通过完全正判据。 <!-- exercise-id: 18-11 -->
+12. 对 $\rho = \operatorname{diag}(0.8, 0.2)$ 与 $\sigma = I/2$ 做单副本非对称假设检验，约束第一类错误 $\alpha \le 0.1$。若测得 $0$ 时必定接受 $\rho$、测得 $1$ 时以概率 $t$ 接受 $\rho$，求允许的最小 $t$、此时对应的第二类错误 $\beta$ 以及 $D_H^{0.1}(\rho\|\sigma)$。 <!-- exercise-id: 18-12 -->
+13. 对经典相关混态 $\rho_{AB}^{\mathrm{sep}} = \frac{1}{2}|00\rangle\langle 00| + \frac{1}{2}|11\rangle\langle 11|$，计算约化态 $\rho_A$ 与局部熵 $S(A)$，并说明为何它并不代表 $1\text{ ebit}$ 的量子纠缠。 <!-- exercise-id: 18-13 -->
+14. 对第 9 节中 $r = (\ln 2)/2$ 的单模压缩真空态，计算平均光子数 $\bar n$，并结合它说明为什么讨论连续变量近似精度与信道距离时必须施加能量约束。 <!-- exercise-id: 18-14 -->
 
 答案见[练习与答案：第 18 章](appendices/exercises.md#第-18-章)。
 
@@ -1899,13 +1907,14 @@ $$
 
 ### 跨章衔接
 
-- **向下衔接**：[第 19 章：可维护量子系统工程](19-engineering-architecture.md)（玻色猫态 / GKP 码的有限能量实现、实时解码排队延迟与整机能耗账本）；
-- **核心回看**：[第 05 章：混态、噪声与量子信道](05-noise-channels.md)（Kraus 与 Stinespring 基础）、[第 11 章：资源估算与基准测试](11-resources-benchmarks.md)（XEB 与有噪采样边界）、[第 13 章：量子信息量度](13-quantum-information.md)（熵、相对熵、根保真度与 Holevo 界）、[第 16 章：高级算法与验证](16-advanced-algorithms-verification.md)（实验态验证与经典阴影）、[第 17 章：量子计算模型](17-computation-models.md)（$\mathrm{QMA}$ 承诺间隙与物理谱隙辨析）、[第 21 章：稳定子形式、经典模拟引擎与量子优势边界](21-stabilizer-classical-simulation.md)（四大经典模拟器与有噪泡利传播）、[Q4：波函数、势阱、谐振子与隧穿](quantum-mechanics/04-wavefunctions-models.md)（已前移至本章之前的连续变量先修：物理谐振子 $[\hat x,\hat p]=i\hbar$ 与 Fock 截断迹距离公式）。
+- 进入[第 20 章](20-quantum-sensing-metrology.md)，把信息量用在相位估计和传感上。对照玻色码硬件的能量和实时解码开销时，可回查[第 19 章](19-engineering-architecture.md)。
+- 读有限维信道时，回查[第 05 章](05-noise-channels.md)的 Kraus 与 Stinespring 表示或[第 13 章](13-quantum-information.md)的熵、根保真度与 Holevo 界。读采样复杂度时，可对照[第 11 章](11-resources-benchmarks.md)的 XEB，并在[第 16 章](16-advanced-algorithms-verification.md)查实验态如何验证。读连续变量时可按需回查 [Q4](quantum-mechanics/04-wavefunctions-models.md) 的物理谐振子与 Fock 截断，并在[第 17 章](17-computation-models.md)比较离散和连续的测量型计算。
 
 ### 动手实验与本地核验脚本
 
 全部脚本均可本地纯 Python 运行，不调用付费云服务：
 
+- **五比特码、纯态对数负性与 Fock 尾量**。运行[第 13、18 章边界算例](../codes/foundations/information_capacity_boundaries.py) `python3 codes/foundations/information_capacity_boundaries.py`。程序穷举 Pauli 串并分组，核对固定编码的相干信息变号；另复算截断的三种尾量与协方差排序。
 - **擦除信道四类容量与相干信息网格核验**：见[算法实验册：擦除信道的四种任务](labs/algorithms.md#实验-18-a擦除信道的四种任务)，运行 `python3 codes/algorithms/experiments.py 18`（脚本见 [experiments.py](../codes/algorithms/experiments.py)）；
 - **有限块长短码、连续变量协方差谱与 Fock 截断核验**：可通过统一回归脚本 `python3 codes/run_all.py` 或单独运行仓库附带的[有限块长短码枚举脚本](../codes/algorithms/round70_checks.py)、[连续变量协方差与 $\hbar$ 缩放检验脚本](../codes/algorithms/round71_checks.py)与[Fock 截断 Markov 尾界与 The Walrus 对照脚本](../codes/algorithms/round73_checks.py)核验，并参考 [Gaussian SDK 核验文档](../codes/algorithms/sdk/README.md)。
 

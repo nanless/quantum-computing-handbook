@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
   <title id="title">Stern–Gerlach 三级级联实验与经典预贴标签假说对照</title>
-  <desc id="desc">上栏展示 8000 个未偏振银原子依次通过竖直 SGz（挡住 z−，留 4000 个 |z+⟩）、水平 SGx（挡住 x−，留 2000 个 |x+⟩）与末级竖直 SGz 的完整原子束与挡板；下栏左图以柱图正面对比经典预贴标签假说预言（100% z+, 0% z−）与量子理论预言（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基原理与相干重聚对照。</desc>
+  <desc id="desc">上栏展示 8000 个未偏振银原子依次通过竖直 SGz（挡住 z−，留 4000 个 |z+⟩）、水平 SGx（挡住 x−，留 2000 个 |x+⟩）与末级竖直 SGz 的完整原子束与挡板；下栏左图以柱图正面对比经典预贴标签假说预言（100% z+, 0% z−）与量子理论预言（50% z+, 50% z−，被剔除的 z− 复活）；下栏右图给出互补基与理想重聚对照，重聚要求波包重合且补偿相位。</desc>
   <style>
 :root{color-scheme:light dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
@@ -217,7 +217,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-se
   <text class="xs" x="608" y="427">|x+⟩ = (|z+⟩ + |z−⟩)/√2，满足 |⟨z±|x+⟩|<tspan dy="-4.5" font-size="74%">2</tspan><tspan dy="4.5">&#8203;</tspan> = 1/2</text>
   <text class="xs" x="608" y="445">强制筛选到 x+ 态后，z 方向结果立刻重新均分</text>
   <rect class="c3-soft" x="594" y="468" width="362" height="72" rx="9"/>
-  <text class="smb c3-txt" x="608" y="488">2. 对照：撤掉 x− 挡板并相干重聚</text>
+  <text class="smb c3-txt" x="608" y="488">2. 对照：重合空间模式并补偿相位</text>
   <text class="xs" x="608" y="507">(|x+⟩⟨x+| + |x−⟩⟨x−|)|z+⟩ = I|z+⟩ = |z+⟩</text>
-  <text class="xs" x="608" y="525">4000 原子 100% 重回 z+（与 MZI 路径干涉完全同源）</text>
+  <text class="xs" x="608" y="525">两模式相同、净相位为零：4000 个原子全走 z+</text>
 </svg>

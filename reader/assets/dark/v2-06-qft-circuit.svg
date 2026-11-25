@@ -124,7 +124,7 @@
   <text class="lbl ink" x="752" y="179.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
   <text class="lbl ink" x="752" y="249.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₁x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
   <text class="lbl ink" x="752" y="319.0">(|0⟩ + e<tspan dy="-6" font-size="11">2πi·0.x₂x₁x₀</tspan><tspan dy="6">|1⟩)/√2</tspan></text>
-  <text class="sm muted" x="50" y="358">符号说明：● = 控制端（仅 |1⟩ 触发）  |  [H] = Hadamard 门  |  [Rₖ] = 受控相位门  |  ×—× = SWAP（省略则输出位序颠倒）</text>
+  <text class="sm muted" x="50" y="358">符号说明：● = 控制端（仅 |1⟩ 触发）  |  [H] = Hadamard 门  |  [Rₖ] = 受控相位门  |  ×—× = 正向末尾的 SWAP</text>
   <rect class="card" x="36" y="386" width="298" height="134" rx="12"/>
   <text class="h2 ink" x="50" y="411">受控相位门 Rₖ 定义（相位单位：rad）</text>
   <text class="mono accent" x="50" y="437">Rₖ = diag(1, e<tspan dy="-5" font-size="10">2πi/2ᵏ</tspan><tspan dy="5">&#8203;</tspan>)</text>
@@ -135,13 +135,13 @@
   <text class="h2 ink" x="360" y="411">二进制小数相位与整体变换</text>
   <text class="mono ink" x="360" y="437">0.x₂x₁x₀ := x₂/2 + x₁/4 + x₀/8</text>
   <text class="mono accent" x="360" y="461">QFT₈|x⟩ = (1/√8) ∑ᵧ e<tspan dy="-5" font-size="10">2πixy/8</tspan><tspan dy="5">&#8203;</tspan>|y⟩</text>
-  <text class="sm ink" x="360" y="485">逆变换 QFT₃⁻¹：倒序执行并将 Rₖ 换为 Rₖ†</text>
-  <text class="sm muted" x="360" y="507">测量仅给出单一样本，无法直接读出全部系数</text>
+  <text class="sm ink" x="360" y="485">逆 QFT 按倒序执行：先 SWAP，Rₖ 取共轭</text>
+  <text class="sm muted" x="360" y="507">QPE 省逆 QFT 的 SWAP 时须反接受控幂</text>
   <rect class="card" x="662" y="386" width="302" height="134" rx="12"/>
   <text class="h2 ink" x="676" y="411">门开销与精确核验</text>
   <text class="sm ink" x="676" y="437">n = 3 精确门数：3 H + 3 CRₖ + 1 SWAP</text>
   <text class="sm ink" x="676" y="461">一般 n 位：n(n+1)/2 门，另含 ⌊n/2⌋ 个 SWAP</text>
   <text class="sm muted" x="676" y="485">有限硬件门集合成小角度旋转门数另计</text>
   <text class="sm green" x="676" y="507">8×8 酉矩阵已逐元素核验（误差 &lt; 10⁻¹²）</text>
-  <text class="sm muted" x="38" y="544">注：图示按逻辑时间自左向右排列；若将此线路嵌入相位估计或 Shor 找阶，常与经典测量次序合并以省去显式 SWAP。</text>
+  <text class="sm muted" x="38" y="544">注：图示是正向 QFT。去掉末尾 SWAP 会倒序输出。逆 QFT 的 SWAP 在入口，QPE 须同时调整输入接线。</text>
 </svg>

@@ -2,14 +2,14 @@
 
 先修：[第 03 章：多量子比特、纠缠与约化态](03-multiple-qubits.md)、[第 05 章：混态、噪声与量子信道](05-noise-channels.md)。阅读路线：**必读 ★** 第 1 节、第 2.1–2.2 节、第 2.4 节、第 3.1–3.2 节、第 3.4 节、第 4.1 节、第 5 节与第 8 节；**进阶选读 ☆** 第 2.3 节（状态合并）、第 2.5 节（三元互信息）、第 3.3 节（无歧义判别）、第 4.2–4.3 节（夹心 Rényi DPI 与 Petz 恢复）、第 6 节（无广播与量子马尔可夫链）及第 7 节（单次最小/最大熵与有限长 QKD）。
 
-上一章在 QKD 与量子网络中已经用到二元熵 $h_2(x)$、纠缠单配性与保真度。本章把这些散落在应用里的标尺摆到草稿纸上，围绕**不确定性与压缩、子系统关联、单次区分与相似、信道单调性、极限传信与单次有限长安全**六大核心问题，建立严密自洽的态级量子信息量度体系（通用基序、对数底数与根保真度约定统一遵循[符号表](appendices/notation.md)）。
+第五篇先问三个可以算的问题。一个量子态有多不确定？给出一个样本时，两种候选态能分得多准？系统经过带噪信道后，这份可区分程度怎样变化？本章由熵、距离和数据处理不等式一路推到压缩、经典信息提取和有限长的安全证明。[第 12 章](12-security-network-frontiers.md)会把这些量用到密钥分发与网络中的纠缠交换。
 
 <details>
 <summary>全章核心信息量度速查（按需展开）</summary>
 
 | 核心问题 | 主要量度 | 最小操作含义 | 所在章节 |
 | :--- | :--- | :--- | :--- |
-| 一个态有多混合？压缩底线是多少？ | von Neumann 熵 $S(\rho)$ | 纯态为 $0$，最大混态为 $\log_2 d$；决定 Schumacher 无损量子压缩极限 | §1 |
+| 一个态有多混合？压缩底线是多少？ | von Neumann 熵 $S(\rho)$ | 纯态为 $0$，最大混态为 $\log_2 d$；决定 Schumacher 渐近保真量子压缩极限 | §1 |
 | 子系统间有多少关联？ | 条件熵 $S(A\mid B)$、互信息 $I(A:B)$、纠缠熵 $E$ | $S(A\mid B)$ 决定状态合并净纠缠代价；cq 态互信息等于 Holevo 量 | §2 |
 | 单次测量多容易区分 / 两态多相似？ | 迹距离 $T(\rho,\sigma)$、根保真度 $F(\rho,\sigma)$ | $T$ 精确决定 Helstrom 判别率；$F$ 与 $T$ 经 Fuchs–van de Graaf 互锁 | §3 |
 | 经过信道后统计差异如何演化？ | 量子相对熵 $D(\rho\Vert\sigma)$ 与夹心 Rényi 散度 $\tilde D_\alpha$ | 广义数据处理不等式（DPI）与 Petz 恢复的总母定理 | §4 |
@@ -131,7 +131,7 @@ von Neumann 熵在量子信息论里拥有一组干净利落的核心性质：
 
 经典信息论中，Shannon 熵 $H(X)$ 的灵魂在于无损数据压缩：把 $n$ 个独立同分布符号打包，压缩率只要大于 $H(X)$ 就能几乎无损还原。那么量子世界里的 von Neumann 熵 $S(\rho)$ 是否也有一模一样的操作地位？1995 年，Benjamin Schumacher 给出了奠基性的肯定回答。
 
-**核心困惑与物理直觉**：设量子信源 $\mathscr S = \{p_x, |\psi_x\rangle\}$ 每次独立地按概率 $p_x$ 发射一个纯态 $|\psi_x\rangle$，接收方并不知道具体发了哪一个 $x$（因此称为**盲压缩**），只拿到一串由 $n$ 个量子比特组成的物理态 $|\psi_{x_1}\rangle\otimes\cdots\otimes|\psi_{x_n}\rangle$。如果用经典思路记录标签 $x_1\cdots x_n$，每份至少需要 $H(X)$ 比特。可要是 $|\psi_x\rangle$ 彼此**非正交**，它们在希尔伯特空间里挤在相近方向上，并不需要占满整个 $2^n$ 维空间！把大量独立样本打包后，几乎全部概率权重都会像经典大数定律一样，高度浓缩进一个维数远小于 $2^n$ 的薄壳——这就是**典型子空间**（typical subspace）。
+设纯态信源 $\mathscr S=\{p_x,|\psi_x\rangle\}$ 每次独立按 $p_x$ 发射一份单比特态。盲压缩的编码器只拿到量子系统，看不到经典标签；可见压缩的编码器知道标签。恢复整个标签串的经典任务每符号需要 $H(X)$ bit，量子压缩则要恢复原量子态。多个独立信号的平均态可以把大部分概率权重集中到一个比 $2^n$ 小得多的典型子空间。
 
 **严格定义与 Schumacher 压缩定理（1995）**：先写出单份信源的平均密度矩阵及其谱分解
 
@@ -152,10 +152,14 @@ $$
 
 由此立刻拼出极简的**压缩—解压协议**：
 
-- **压缩端**：对收到的 $n$ 比特态做二元正交投影测量 $\{\Pi_{n,\delta},\ I - \Pi_{n,\delta}\}$。若结果落入典型子空间（概率 $\ge 1-\varepsilon$），施加一个事先约定的酉变换 $U_{\mathrm{comp}}$，把 $\mathcal T_{n,\delta}$ 嵌入前 $m = \lceil n(S(\rho)+\delta)\rceil$ 个量子比特中，把后 $n-m$ 个已归零为 $|0\rangle$ 的量子比特安全丢弃，只传输前 $m$ 个量子比特；若结果落入极罕见的非典型分支（概率 $\le \varepsilon$），直接用 $\mathcal T_{n,\delta}$ 内的固定哑态 $|\phi_0\rangle$ 代替发送。
-- **解压端**：给收到的 $m$ 个量子比特补上 $n-m$ 个辅助态 $|0\rangle$，再施加逆酉变换 $U_{\mathrm{comp}}^\dagger$。
+- **压缩端。** 测量 $\{\Pi_{n,\delta},I-\Pi_{n,\delta}\}$。若通过，用约定的等距编码把典型子空间装进 $m=\lceil n(S(\rho)+\delta)\rceil$ 个比特；未通过则发送固定哑态的编码。这个方案用于 $S(\rho)+\delta<1$；若该和达到或超过 $1$，可直接传原来的 $n$ 个比特。
+- **解压端。** 把通过和替换分支的编码嵌回原空间。综合信道为 $\mathcal E_{\mathrm{comp}}(\sigma)=\Pi_{n,\delta}\sigma\Pi_{n,\delta}+\operatorname{Tr}[(I-\Pi_{n,\delta})\sigma]|\phi_0\rangle\langle\phi_0|$，其中哑态 $|\phi_0\rangle$ 在典型子空间内。
 
-综合信道写为 $\mathcal E_{\mathrm{comp}}(\sigma) = \Pi_{n,\delta}\,\sigma\,\Pi_{n,\delta} + \operatorname{Tr}\bigl[(I-\Pi_{n,\delta})\sigma\bigr]|\phi_0\rangle\langle\phi_0|$。**Schumacher 定理**证明：只要压缩率 $R = m/n > S(\rho)$，当 $n \to \infty$ 时，不仅平均码字保真度趋于 $1$，连同信源与外部参考系统 $R$ 的**纠缠保真度**（entanglement fidelity）也趋于 $1$；反之若 $R < S(\rho)$，任何压缩—解压方案的保真度必然趋于 $0$。对纯态信源而言，只给量子态的盲压缩与知道标签 $x$ 的可见压缩具有完全相同的极限 $S(\rho)$；只要信号态彼此非正交，就有 $S(\rho) < H(X)$，实打实超越经典压缩底线！
+接受率 $1-\varepsilon$ 是关于发射标签串的平均下界。比如正交源以 $0.9,0.1$ 发射 $|0\rangle,|1\rangle$，$S=h_2(0.1)\approx0.4690$ bit。取 $\delta=0.1$ bit，全零码字每份自信息 $-\log_2 0.9\approx0.1520$ bit，永远在典型窗口之外。该串被发射的概率 $0.9^n$ 趋于零，平均通过率仍趋于 1。
+
+**三个保真度口径。** 令 $|\psi_{x^n}\rangle$ 为输入、$\sigma_{x^n}$ 为解压输出。码字平方重叠为 $f_{x^n}=\langle\psi_{x^n}|\sigma_{x^n}|\psi_{x^n}\rangle$，平均平方重叠是 $\sum_{x^n}p_{x^n} f_{x^n}$，平均根保真度是 $\sum_{x^n}p_{x^n}\sqrt{f_{x^n}}$。另一项是把平均态 $\rho^{\otimes n}$ 与参考 $R_{\mathrm{ref}}$ 一起纯化得到 $|\Psi\rangle$，比较 $|\Psi\rangle\langle\Psi|$ 和 $(\mathrm{id}_{R_{\mathrm{ref}}}\otimes\mathcal E_{\mathrm{comp}})(|\Psi\rangle\langle\Psi|)$ 的根保真度 $F_e$，检验外部相关性是否保留。
+
+**渐近极限。** 对独立同分布纯态源、固定最大压缩空间维数 $2^m$，当每信号压缩率 $r=m/n>S(\rho)$ 时可使平均重叠和盲压缩的 $F_e$ 趋于 1。固定率 $r<S(\rho)$ 时，强反定理给出即使编码器知道标签，平均平方重叠仍趋于 0。平均根保真度由 Jensen 不等式也趋于 0；盲压缩的 $F_e^2$ 可由平均平方重叠上界。非正交态的 $S(\rho)$ 可能严格低于 $H(X)$，两数衡量的是恢复量子信号和恢复原始标签这两项任务。[Schumacher 1995](https://doi.org/10.1103/PhysRevA.51.2738) · [Winter 定理 I.19](https://arxiv.org/pdf/quant-ph/9907077)
 
 #### 8 维具体手算例：把 $\{|0\rangle, |+\rangle\}^{\otimes 3}$ 压进 2 个量子比特
 
@@ -205,7 +209,7 @@ $$
 p_{\mathrm{typ}} = \operatorname{Tr}\bigl(\Pi_{\mathrm{top4}}\,\rho^{\otimes 3}\bigr) = \lambda_+^3 + 3\lambda_+^2\lambda_- \approx 0.621859 + 0.320083 = 0.941942 \quad (94.19\%).
 $$
 
-仅占 $5.81\%$ 的非典型分支被替换成哑态 $|\phi_0\rangle = |e_+e_+e_+\rangle$。我们把两种常用保真度口径全部精确算透：
+仅占 $5.81\%$ 的非典型分支被替换成哑态 $|\phi_0\rangle = |e_+e_+e_+\rangle$。我们分别算码字平方重叠、平均根保真度及参考系保真度：
 
 1. **平均码字保真度**（对全部 $2^3 = 8$ 种等概率输入纯态 $|\psi_x\rangle \in \{|0\rangle, |+\rangle\}^{\otimes 3}$）：因为 $|\langle 0|e_+\rangle|^2 = |\langle +|e_+\rangle|^2 = \lambda_+$，每一条码字落在典型子空间里的权重都精确等于 $p_{\mathrm{typ}}$，与哑态 $|e_+e_+e_+\rangle$ 的平方重叠都精确等于 $\lambda_+^3$！于是每一条码字压缩解压后的平方重叠都是
 
@@ -216,8 +220,8 @@ $$
    \approx 0.923358,
    $$
 
-   换算为本书统一的**根保真度**高达 **$\bar F = \sqrt{\bar f} \approx 0.9609$**！
-2. **纠缠保真度**（纯化参考系统口径，检验压缩是否完整保留信源与外界的纠缠）：写出综合信道的 Kraus 算符 $K_0 = \Pi_{\mathrm{top4}}$ 与 4 个非典型替换算符 $K_j = |e_+e_+e_+\rangle\langle e_j|$（$j$ 遍历 4 个非典型特征基）。由于每个非典型 $|e_j\rangle$ 都与 $|e_+e_+e_+\rangle$ 正交，有 $\operatorname{Tr}(\rho^{\otimes 3}K_j) = \lambda_+^3\langle e_j|e_+e_+e_+\rangle = 0$，只剩 $K_0$ 贡献，因此纠缠平方保真度为 $F_e^2 = |\operatorname{Tr}(\rho^{\otimes 3}\Pi_{\mathrm{top4}})|^2 = p_{\mathrm{typ}}^2 \approx 0.887254$，按本书根保真度口径为 **$F_e = p_{\mathrm{typ}} \approx 0.9419$**（严格满足 $\bar f \ge F_e^2$）。仅仅打包 3 个比特，两种保真度就双双站上 $94\%$–$96\%$！
+   本例每条码字的平方重叠相同，故平均根保真度 $\bar F=\sqrt{\bar f}\approx0.960915$。一般须分别平均，不能交换开方和平均。
+2. **纠缠保真度**（纯化参考系统口径，检验压缩是否完整保留信源与外界的纠缠）：写出综合信道的 Kraus 算符 $K_0 = \Pi_{\mathrm{top4}}$ 与 4 个非典型替换算符 $K_j = |e_+e_+e_+\rangle\langle e_j|$（$j$ 遍历 4 个非典型特征基）。由于每个非典型 $|e_j\rangle$ 都与 $|e_+e_+e_+\rangle$ 正交，有 $\operatorname{Tr}(\rho^{\otimes 3}K_j) = \lambda_+^3\langle e_j|e_+e_+e_+\rangle = 0$，只剩 $K_0$ 贡献，因此纠缠平方保真度为 $F_e^2 = |\operatorname{Tr}(\rho^{\otimes 3}\Pi_{\mathrm{top4}})|^2 = p_{\mathrm{typ}}^2 \approx 0.887254$，按本书根保真度口径为 **$F_e = p_{\mathrm{typ}} \approx 0.9419$**（严格满足 $\bar f \ge F_e^2$）。两项根保真度分别约为 $0.9609$ 与 $0.9419$；后者检验的是与参考系统的相干性。
 
 **鲜明反差对照**：如果换成经典正交信源 $\{|0\rangle, |1\rangle\}$（$S(\rho) = 1\text{ bit}$），$\rho^{\otimes 3} = I_8/8$ 的 8 个特征值全都是 $1/8 = 0.125$。强行压进 2 个量子比特（4 维子空间）只能保住 $4/8 = 50\%$ 的权重，纠缠根保真度暴跌至 $F_e = 0.50$（$F_e^2 = 0.25$），平均码字平方重叠也只有 $4/8 = 0.50$，压缩失效。只需一个 8 维手算例，von Neumann 熵决定量子压缩极限的几何本质就清晰明了。
 
@@ -225,7 +229,7 @@ $$
 >
 > 设单比特量子信源等概率发射 $|0\rangle$ 或 $|\phi\rangle = \frac{\sqrt 3}{2}|0\rangle + \frac{1}{2}|1\rangle$（两态重叠 $|\langle 0|\phi\rangle| = \frac{\sqrt 3}{2}$）。请计算单份平均态 $\rho$ 的特征值 $\lambda_\pm$ 与 von Neumann 熵 $S(\rho)$；若将 $n = 2$ 个量子比特（4 维）压缩进 $1$ 个量子比特（保留最大的 2 个特征态），计算典型子空间捕获的概率权重 $p_{\mathrm{typ}}$。
 >
-> **参考核对**：$\rho = \begin{bmatrix}7/8 & \sqrt 3/8\\ \sqrt 3/8 & 1/8\end{bmatrix}$，迹为 $1$、行列式为 $\frac{7 - 3}{64} = \frac{1}{16}$，得 $\lambda_\pm = \frac{1 \pm \sqrt 3/2}{2} \approx 0.933013,\ 0.066987$，$S(\rho) = h_2(\lambda_+) \approx 0.354579\text{ bit}$。打包 $n = 2$ 时，4 个特征值为 $\lambda_+^2 \approx 0.870513$、两重 $\lambda_+\lambda_- = 1/16 = 0.062500$ 与 $\lambda_-^2 \approx 0.004487$；保留最大 2 维子空间捕获总权重 $p_{\mathrm{typ}} = \lambda_+^2 + \lambda_+\lambda_- = \lambda_+(\lambda_+ + \lambda_-) = \lambda_+ \approx 93.30\%$（$2 \to 1$ 压缩率 $0.5 > 0.355$，仅 2 比特即可保住 $93.3\%$ 权重）。
+> **参考核对**：$\rho = \begin{bmatrix}7/8 & \sqrt 3/8\\ \sqrt 3/8 & 1/8\end{bmatrix}$，迹为 $1$、行列式为 $\frac{7 - 3}{64} = \frac{1}{16}$，得 $\lambda_\pm = \frac{1 \pm \sqrt 3/2}{2} \approx 0.933013,\ 0.066987$，$S(\rho) = h_2(\lambda_+) \approx 0.354579\text{ bit}$。打包 $n = 2$ 时，4 个特征值为 $\lambda_+^2 \approx 0.870513$、两重 $\lambda_+\lambda_- = 1/16 = 0.062500$ 与 $\lambda_-^2 \approx 0.004487$；保留最大 2 维子空间捕获总权重 $p_{\mathrm{typ}} = \lambda_+^2 + \lambda_+\lambda_- = \lambda_+(\lambda_+ + \lambda_-) = \lambda_+ \approx 93.30\%$（$2 \to 1$ 压缩率 $0.5 > 0.355$，保留权重约 $93.3\%$，第二个保留特征向量可从二重简并空间任取）。
 
 ---
 
@@ -1029,11 +1033,17 @@ $$
   $$
   \mathcal E_{\mathrm{th}}(\rho) = \operatorname{Tr}_B\!\bigl[U(\rho \otimes \gamma_B)U^\dagger\bigr].
   $$
-- **微观尺度的“多条第二定律”**：Brandão、Horodecki、Ng、Oppenheim 与 Wehner（*PNAS* **112**, 3275–3279, 2015；证据层级 A）证明，在允许催化辅助的单份微观量子态转化 $\rho \to \sigma$ 中，仅满足宏观自由能不增 $F_{\mathrm{th}}(\sigma) \le F_{\mathrm{th}}(\rho)$ 远远不够——由广义量子 Rényi 散度定义的整族广义自由能
-  $$
-  F_\alpha(\rho) = k_B T(\ln 2)\,D_\alpha(\rho\Vert\gamma_\beta) + F_{\mathrm{th}}(\gamma_\beta), \qquad \forall\,\alpha \ge 0
-  $$
-  必须**全部**单调不增（对于能量本征基对角态，这组充要条件等价于几何上的**热优超** thermo-majorization 判据）。在单次确定性做功任务里，最大可提取功由 $D_0 / D_{\min}$ 封顶，最小形成功由 $D_\infty / D_{\max}$ 封底，两者之间存在不可逆鸿沟；唯有在 $n \to \infty$ 的独立同分布宏观极限下，整族 $F_\alpha$ 才集体坍缩回唯一的传统亥姆霍兹自由能 $F_1 = F_{\mathrm{th}}$。此外，能量守恒 $[U, H_S + H_B] = 0$ 迫使热操作满足时间平移协变性，意味着不同能级间的**量子相干性无法靠热操作无中生有**，形成独立于布居热优超的额外相干性约束。
+- **无催化、对角态。** 分别将初、末态布居按其与 Gibbs 布居之比从大到小排列。以累积 Gibbs 布居为横坐标、累积实际布居为纵坐标连线，得到热优超曲线。初态曲线始终在末态曲线上方才满足相应热操作的判据。简并到 $H=0$ 时，Gibbs 分布均匀，此判据就是比较降序布居的所有前缀和。
+- **带催化、对角态。** 把催化剂加到联合系统，要求返回的催化态与目标态无相关；对角 Rényi 自由能为 $F_\alpha=k_BT\ln2\,D_\alpha(p\Vert g)+F_{\rm th}(\gamma_\beta)$，其中 $g$ 是正的 Gibbs 概率。充要条件取决于归还要求。例如原文定理 20 的 $\alpha\ge0$ 充分性允许近似系统目标，并额外借用一枚可近似归还的纯态比特。固定阶的 Rényi 散度对乘积可加，逐份数值不会仅因复制 $n$ 份而变成 $D_1$；宏观可逆结论涉及平滑及误差趋零。能级间相干还受时间平移协变性约束。[Horodecki 与 Oppenheim](https://arxiv.org/abs/1111.3834) · [Brandão 等，定理 20](https://arxiv.org/abs/1305.5278)
+
+**可复算的催化差别。** 取系统和催化剂的哈密顿量均为零，布居 $p=(1/2,1/4,1/4,0)$、$q=(2/5,2/5,1/10,1/10)$。裸系统的第二项前缀由 $3/4$ 升到 $4/5$，故 $p$ 无法普通优超 $q$。加上 $c=(3/5,2/5)$ 后，比较降序前缀：
+
+| 联合分布 | 第 1 至第 8 项的累积和 |
+| --- | --- |
+| $p\otimes c$ | $.30,\ .50,\ .65,\ .80,\ .90,\ 1,\ 1,\ 1$ |
+| $q\otimes c$ | $.24,\ .48,\ .64,\ .80,\ .86,\ .92,\ .96,\ 1$ |
+
+联合优超成立，末态可取乘积 $q\otimes c$，精确归还 $c$。由于乘积上 Rényi 熵可加，优超时熵不降，故全部非负阶满足 $D_\alpha(p\Vert u_4)\ge D_\alpha(q\Vert u_4)$；裸系统的第二前缀仍然失败。[Jonathan 与 Plenio 的原始概率例](https://arxiv.org/abs/quant-ph/9905071)
 
 ### 4.2 进阶选读：广义夹心 Rényi 散度 DPI、Jordan 分解收缩与后选择辨析
 
@@ -1167,7 +1177,7 @@ $$
 
 **必须补清的退化边界条件（Moore–Penrose 广义逆）**：哪怕输入参考态满秩（$\sigma > 0$），经过信道后的输出态 $\mathcal E(\sigma)$ 仍可能是奇异不可逆的——例如上一节刚举过的复位信道 $\mathcal E_{\mathrm{reset}}(\tau) = |0\rangle\langle 0|$，哪怕输入 $\sigma = I/2 > 0$，输出 $\mathcal E(\sigma) = |0\rangle\langle 0|$ 也存在零特征值，根本没有普通矩阵逆！因此式中的 $\mathcal E(\sigma)^{-1/2}$ 严格定义为**限制在输出支撑子空间 $\operatorname{supp}(\mathcal E(\sigma))$ 上的 Moore–Penrose 广义逆**（在零特征值方向上取 $0$）。若要让 $\mathcal R_{\sigma,\mathcal E}$ 在整个输出希尔伯特空间上构成全局严格保迹的 CPTP 信道，只需在正交补投影 $P_\perp = I - \Pi_{\operatorname{supp}(\mathcal E(\sigma))}$ 上附加一项保迹补项（如 $+\operatorname{Tr}(P_\perp Y)\,\sigma$）；这一补项对所有落在 $\operatorname{supp}(\mathcal E(\sigma))$ 内的态 $\mathcal E(\rho), \mathcal E(\sigma)$ 作用为零，完全不影响恢复性质。在经典对角情形下，$\mathcal R_{\sigma,\mathcal E}$ 退化为教科书里的贝叶斯反演公式；在量子世界里，它成了非对易版本的“物理倒带键”。
 
-至于量子相对熵 $D(\rho\Vert\sigma)$ 自身的操作意义：它并不直接等于单份样本的猜对概率，而是对应**多份样本的非对称假设检验**（固定第一类错误上限，最小化第二类错误的渐近衰减指数）——这就是将在[第 18 章](18-channels-capacities-complexity.md)深入展开的**量子 Stein 引理**。
+量子 Stein 引理给出相对熵的操作含义。用 $0\preceq M_n\preceq I$ 接受原假设 $\rho^{\otimes n}$，两种独立同分布假设下的错误分别为 $\alpha_n=1-\operatorname{Tr}(M_n\rho^{\otimes n})$ 和 $\beta_n=\operatorname{Tr}(M_n\sigma^{\otimes n})$。固定 $0<\varepsilon<1$，在 $\alpha_n\le\varepsilon$ 的集体检验中求最小 $\beta_n^*(\varepsilon)$，则 $-\log_2\beta_n^*(\varepsilon)/n$ 趋于 $D(\rho\Vert\sigma)$，单位是 bit/副本。端点有别：取满秩 $\rho=\operatorname{diag}(3/4,1/4)$、$\sigma=I/2$，$D\approx0.188722$；若要求 $\alpha_n=0$，则 $M_n=I$，$\beta_n^*=1$，指数为零。[第 18 章第 4 节](18-channels-capacities-complexity.md) · [Ogawa 与 Nagaoka 正式刊文](https://doi.org/10.1109/18.887855)
 
 ---
 
@@ -1219,9 +1229,9 @@ $$
 I(X:Y) \;\le\; I_{\mathrm{acc}}(\mathscr E) \;\le\; \chi(\mathscr E) \;\le\; \min\bigl\{H(X),\ \log_2 d\bigr\}.
 $$
 
-这条定理给开头的幻想浇了一盆清醒的冷水：**在没有预共享纠缠的通信模型里，只发送一个 $n$ 量子比特寄存器（$d = 2^n$），无论编码多么精巧、测量多么花哨，接收方最多只能可靠提取出 $\log_2(2^n) = n\text{ bit}$ 经典信息**——一点不比发送 $n$ 个普通经典比特多！（再次核对边界：超密编码传 $2\text{ bit}$ 必须额外消耗 $1$ 个预共享 Bell 对，改变了通信资源模型，与无辅助维数上界并不矛盾。）
+没有预共享纠缠时，$n$ 比特量子寄存器使接收方得到的经典互信息至多 $n$ bit。若考察实际解码的消息数，设 $M\ge2$ 条消息等先验、平均错误率 $\varepsilon$。Fano 不等式给 $\log_2 M\le I(X:Y)+h_2(\varepsilon)+\varepsilon\log_2(M-1)$，进而 $(1-\varepsilon)\log_2M\le n+h_2(\varepsilon)$。预共享 Bell 对改变了接收者的有效系统和通信模型，超密编码使用的正是这种辅助资源。
 
-什么时候单次测量就能恰好摸到 $\chi(\mathscr E)$ 的上界？Ruskai（2002）指出：对单份样本，$I_{\mathrm{acc}}(\mathscr E) = \chi(\mathscr E)$ **当且仅当所有信号态 $\rho_x$ 彼此对易**（即它们可以在同一组正交基下同时对角化，实质上退化为经典编码）。只要信号态之间彼此不对易（对纯态而言即非正交且不重合），单次测量就必然留下严格缺口。
+对有限系综的一次测量，$I_{\rm acc}(\mathscr E)=\chi(\mathscr E)$ 当且仅当所有 $p_x>0$ 的信号态彼此对易。对易时在共同本征基测量即可。零权重标签从未发送，例如 $(|0\rangle,|1\rangle,|+\rangle)$ 配权重 $(1/2,1/2,0)$，计算基测量仍达到 $\chi=1$ bit。[Ruskai 2002](https://arxiv.org/abs/quant-ph/0205064)
 
 ### 5.2 算例对比：正交编码 vs 非正交 $\{|0\rangle, |+\rangle\}$ 的严格间隙
 
@@ -1292,7 +1302,9 @@ $$
 
 对照这张图，先看左栏：二元香农熵曲线在 $p = 0.5$ 达到 $1.00\text{ bit}$ 峰值，在错误率 $p_e \approx 0.146$ 处高度恰好是 $0.601\text{ bit}$；再看右栏上部：$|0\rangle$ 与 $|+\rangle$ 在 Bloch $x$-$z$ 截面呈 $90^\circ$，最优 Helstrom 测量轴 $\{|m_0\rangle, |m_+\rangle\}$ 向两侧各偏转 $45^\circ$（对应态空间 $22.5^\circ$），锁定 $85.36\%$ 最高单次猜对率；最后看右栏下部柱状图：单次测量能读出的极限 $I_{\mathrm{acc}} = 0.399\text{ bit}$ 距离 Holevo 上界 $\chi = 0.601\text{ bit}$ 实实在在差了 $0.202\text{ bit}$。
 
-既然单次测量最高只能拿到 $0.399\text{ bit}$，那为什么还要费劲算 $0.601\text{ bit}$ 的 Holevo 上界？如果 Alice 一次发送 $n$ 个量子比特（把长经典消息编码进由 $|0\rangle$ 与 $|+\rangle$ 拼成的长码字序列），而 Bob **不再逐个单独测量**（逐个测量每轮都锁死在 $0.399\text{ bit}$），而是把整整 $n$ 个量子比特攒齐，对整体执行一次精巧设计的**联合纠缠测量**（collective measurement），那么 Holevo–Schumacher–Westmoreland（HSW）编码定理保证：当 $n \to \infty$ 时，平均每个量子比特能够可靠提取的经典信息率可以一路突破 $0.399\text{ bit}$，**渐近精确达到 $\chi \approx 0.601\text{ bit}$**！单份 $I_{\mathrm{acc}}$ 和渐近 $\chi$ 之间的 $0.202\text{ bit}$ 间隙，就是“联合纠缠解码超越逐个独立测量”的直接定量证据。关于如何从给定系综的 $\chi$ 进一步优化编码、并建立四大信道容量体系，我们将在[第 18 章](18-channels-capacities-complexity.md)完整展开。
+**独立信源与编码通信。** 若要从联合测量 $Y$ 读取原本独立发射的一串随机标签 $X^n$，链式法则给 $I(X^n:Y)=\sum_iI(X_i:Y\mid X_{<i})$。固定前缀 $x_{<i}$ 后，除第 $i$ 位外的寄存器状态 $\tau$ 与 $x_i$ 无关。将联合 POVM 的每个 $M_y$ 用 $I_i\otimes\sqrt{\tau}$ 夹住，再对其他寄存器取偏迹，得到第 $i$ 位上的等效 POVM。每项遂至多为单份 $I_{\rm acc}$，逐份最优测量可取到总和。
+
+HSW 给出另一项任务的可达速率。Alice 从积态序列里挑出一批码字，发送的消息是码本索引，Bob 作联合测量恢复这个索引。码本对各符号诱导的标签通常不再独立。对固定输入系综的无记忆经典–量子信道，每符号任意 $r<\chi$ 可达到任意小的平均块错误率。本例 $\chi\approx0.601$ bit/信号，而单份 $I_{\rm acc}\approx0.399$ bit。一般量子信道还须优化输入系综，见[第 18 章](18-channels-capacities-complexity.md)。[Holevo 1998](https://arxiv.org/abs/quant-ph/9611023) · [Schumacher 与 Westmoreland 1997](https://doi.org/10.1103/PhysRevA.56.131)
 
 （顺手补一句防误推提示：在等先验二元纯态情形下，最大化互信息与最小化猜测错误率碰巧由同一组测量达到；对一般多态或不等先验系综，这两个优化目标对应的最优测量并不相同。）
 
@@ -1323,7 +1335,7 @@ $$
 | :--- | :--- | :--- | :--- |
 | 两两正交的纯态（如 $\{\lvert 0\rangle,\lvert 1\rangle\}$） | 能 | 能 | 用 $\mathrm{CNOT}$ 复制计算基即可同时实现克隆与广播 |
 | 彼此对易的混态（如 $\{\lvert 0\rangle\langle 0\rvert,\ I/2\}$） | **一般不能** | **能** | $\mathrm{CNOT}$ 产生经典相关副本（边缘均正确），但非独立乘积态 |
-| 非对易纯态或混态（如 $\{\lvert 0\rangle\langle 0\rvert,\ \lvert +\rangle\langle +\rvert\}$） | 不能 | 不能 | 广播强迫 DPI 与保真度同时取等，经 Petz 恢复与马尔可夫结构迫使两态对易 |
+| 非对易纯态或混态（如 $\{\lvert 0\rangle\langle 0\rvert,\ \lvert +\rangle\langle +\rvert\}$） | 不能 | 不能 | 两侧偏迹均保持适当的相对熵，原论文的取等条件推出候选态对易 |
 
 表里最值得细品的是中间那一行：**对易混态可以广播，但通常不能克隆！** 动手验证一个 2 比特例子：取彼此对易的两个态 $\rho_0 = |0\rangle\langle 0|$ 与 $\rho_1 = I/2 = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|1\rangle\langle 1|$。引入初始化在 $|0\rangle_{A_2}$ 的辅助比特，施加一次 $\mathrm{CNOT}_{A_1\to A_2}$：
 
@@ -1339,16 +1351,18 @@ $$
 
   对 $A_2$ 或 $A_1$ 求偏迹，两个边缘态确实都是 $I/2 = \rho_1$——这就实现了**完美广播**！但输出联合态是完全相关的经典相关态，绝不是两个独立掷硬币的乘积态 $\rho_1 \otimes \rho_1 = I/4$。其实连经典世界都无法“克隆”一个未知经典概率分布的独立新样本：把一个已经掷完盖住的骰子复印两份，两份点数必然完全绑定，不会变成独立掷两次骰子。
 
-至于为什么**非对易混态连广播都做不到**，用我们刚刚在第 4 节立起来的 **DPI 取等与 Petz 恢复**路径就能严密讲透（绝不靠含糊的“级联放大”跳步！）：
+**为何对易是必要条件。** 纯态边缘迫使联合态因式分解，所以非正交、不同的纯态若能广播，就会令根保真度由 $F$ 降到 $F^2<F$，违反信道单调性。
 
-- **特例（两个非正交纯态 $|\psi\rangle, |\phi\rangle$）**：如果边缘态 $\operatorname{Tr}_{A_2}(\sigma) = |\psi\rangle\langle\psi|$ 是纯态，那它绝不能和 $A_2$ 有任何关联，迫使 $\sigma = |\psi\rangle\langle\psi|\otimes|\psi\rangle\langle\psi|$（纯态广播等价于克隆）。此时输出保真度降为 $F(|\psi\rangle^{\otimes 2}, |\phi\rangle^{\otimes 2}) = |\langle\psi|\phi\rangle|^2 = F(|\psi\rangle,|\phi\rangle)^2 < F(|\psi\rangle,|\phi\rangle)$，直接撞碎第 4.2 节的根保真度单调不减定理！
-- **一般非对易混态对 $\{\rho, \sigma\}$（DPI / Petz 路径，Barnum 等 1996；Kalev & Hen 2008）**：假设存在合法广播信道 $\mathcal B: A \to A_1 A_2$。由于复合映射 $\operatorname{Tr}_{A_2} \circ \mathcal B = \mathrm{id}_A$，把第 4.2 节广义 DPI 连续作用在 $\mathcal B$ 与偏迹 $\operatorname{Tr}_{A_2}$ 上，夹逼立得双向精确取等：
+一般情形取 $\tau=(\rho+\sigma)/2$，它在两候选态的联合支撑上严格为正。设 $\mathcal B$ 能广播二者，线性性随即保证两侧偏迹也还原 $\tau$。对 $\eta=\rho,\sigma$，分别对广播和任一侧偏迹使用 DPI：
 
-  $$
-  D(\rho\Vert\sigma) \ge D\bigl(\mathcal B(\rho)\,\big\Vert\,\mathcal B(\sigma)\bigr) \ge D\bigl(\operatorname{Tr}_{A_2}\mathcal B(\rho)\,\big\Vert\,\operatorname{Tr}_{A_2}\mathcal B(\sigma)\bigr) = D(\rho\Vert\sigma),
-  $$
+$$
+D(\eta\Vert\tau)\ \ge\
+D(\mathcal B(\eta)\Vert\mathcal B(\tau))\ \ge\
+D(\operatorname{Tr}_{A_j}\mathcal B(\eta)\Vert\operatorname{Tr}_{A_j}\mathcal B(\tau))
+= D(\eta\Vert\tau).
+$$
 
-  且根保真度同样满足 $F(\mathcal B(\rho), \mathcal B(\sigma)) = F(\rho, \sigma)$（对另一边 $\operatorname{Tr}_{A_1}$ 亦然）。由第 4.3 节 Petz 恢复定理，这意味着只看 $A_1$ 就能把完整联合态 $\mathcal B(\rho), \mathcal B(\sigma)$ 无损重建出来，只看 $A_2$ 也能无损重建出来！结合下一节量子马尔可夫链的直和分解结构（或 Kalev–Hen 对纯化等距映射的直接线性代数分析），这种对称双向无损复制强迫 $\rho$ 与 $\sigma$ 只能落在彼此正交的经典可区分块上——于是必有 $[\rho, \sigma] = 0$。
+两侧等号满足原始无广播证明的假设。证明的其余部分用两侧偏迹的相对熵取等算子条件及联合输出的支撑，由同一输出的两种表示导出 $[\rho,\sigma]=0$。这里偏迹复合广播只在候选态及其线性张成上等效于恒等；一般算符不需要满足这个条件。完整的算子论证见原论文。充分性则由共同本征基上的等距映射 $|j\rangle\mapsto|j,j\rangle$ 直接给出：输入对角分布 $p_j$ 的两个边缘都为 $\sum_jp_j|j\rangle\langle j|$。[Barnum 等 1996](https://arxiv.org/abs/quant-ph/9511010)
 
 ### 6.2 强次可加性（SSA）、条件互信息与反直觉的 XOR 反例
 
@@ -1472,13 +1486,13 @@ $$
 看一个两行就能算清的经典反例。假设一台有缺陷的随机数发生器吐出一把 $100$ 比特的密钥 $K$：它有 $10\%$ 的概率卡死，直接输出全零串 `00...0`；其余 $90\%$ 的概率才在全部 $2^{100}$ 个比特串里完全均匀随机。算一下这把密钥的 Shannon 熵：
 
 $$
-H(K) = h_2(0.1) + 0.9 \times 100 \approx 0.4690 + 90 = 90.4690\text{ bit}!
+H(K) = h_2(p_0) + (1-p_0)\log_2(2^{100}-1) \approx 90.4690\text{ bit}, \qquad p_0=0.1+0.9\,2^{-100}.
 $$
 
-看平均熵高达 $90.5\text{ bit}$，似乎随机得不得了。可攻击者第一次上来就瞎猜全零串 `00...0`，**直接就有 $10\%$ 的成功率一把猜中整把密钥！** 真正刻画单次最坏猜测安全性的量，不是平均意外程度，而是最大概率的负对数——**最小熵**：
+看平均熵高达 $90.5\text{ bit}$，似乎随机得不得了。可攻击者第一次上来就瞎猜全零串 `00...0`，**猜中整把密钥的概率为 $p_0\approx10\%$。** 真正刻画单次最坏猜测安全性的量，不是平均意外程度，而是最大概率的负对数——**最小熵**：
 
 $$
-H_{\min}(K) = -\log_2\max_k p(k) = -\log_2(0.1) \approx 3.3219\text{ bit}!
+H_{\min}(K) = -\log_2\max_k p(k) = -\log_2 p_0 \approx 3.3219\text{ bit}.
 $$
 
 从 $90.47\text{ bit}$ 暴跌到 $3.32\text{ bit}$，这就是单次与渐近之间的鸿沟。为了把平均熵、最小熵与纯度统进同一根标尺，引入**量子 Rényi 熵族**（Rényi, 1961）：对参数 $\alpha \in (0, 1) \cup (1, \infty)$，定义
@@ -1487,15 +1501,15 @@ $$
 S_\alpha(\rho) = \frac{1}{1 - \alpha}\log_2\operatorname{Tr}\bigl(\rho^\alpha\bigr) = \frac{1}{1 - \alpha}\log_2\left(\sum_j \lambda_j^\alpha\right).
 $$
 
-按 $\alpha$ 递增，量子 Rényi 熵严格单调不增：$S_0(\rho) \ge S_{1/2}(\rho) \ge S_1(\rho) \ge S_2(\rho) \ge S_\infty(\rho)$。拿贯穿全章的平均态 $\bar\rho = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|+\rangle\langle +|$（特征值 $\lambda_+ \approx 0.853553,\ \lambda_- \approx 0.146447$）把五个关键节点全部亲手算一遍：
+按 $\alpha$ 递增，量子 Rényi 熵单调不增：$S_0(\rho) \ge S_{1/2}(\rho) \ge S_1(\rho) \ge S_2(\rho) \ge S_\infty(\rho)$。拿贯穿全章的平均态 $\bar\rho = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|+\rangle\langle +|$（特征值 $\lambda_+ \approx 0.853553,\ \lambda_- \approx 0.146447$）把五个关键节点全部亲手算一遍：
 
 | 阶数 $\alpha$ | 名称与闭式公式 | 对 $\bar\rho$ 的精确数值 | 核心物理 / 操作意义 |
 | :--- | :--- | ---: | :--- |
 | $\alpha \to 0^+$ | 哈特利熵 $S_0(\rho) = \log_2\operatorname{rank}(\rho)$ | $\log_2 2 = 1.0000\text{ bit}$ | 支撑空间维数的对数（最宽松压缩上界） |
-| $\alpha = 1/2$ | **单次最大熵** $H_{\max}(\rho) = 2\log_2\operatorname{Tr}\sqrt{\rho}$ | $2\log_2(\sqrt{\lambda_+}+\sqrt{\lambda_-}) \approx 0.7716\text{ bit}$ | 单次数据压缩所需量子比特数 |
+| $\alpha = 1/2$ | **单次最大熵** $H_{\max}(\rho) = 2\log_2\operatorname{Tr}\sqrt{\rho}$ | $2\log_2(\sqrt{\lambda_+}+\sqrt{\lambda_-}) \approx 0.7716\text{ bit}$ | 单次近似压缩的界，须交代误差指标与容差 |
 | $\alpha \to 1$ | **von Neumann 熵** $S(\rho) = -\operatorname{Tr}(\rho\log_2\rho)$ | $h_2(\lambda_+) \approx 0.6009\text{ bit}$ | $n \to \infty$ 渐近 i.i.d. 压缩极限 |
 | $\alpha = 2$ | **碰撞熵** $S_2(\rho) = -\log_2\operatorname{Tr}(\rho^2)$ | $-\log_2(\lambda_+^2+\lambda_-^2) = -\log_2(3/4) \approx 0.4150\text{ bit}$ | 直接挂钩态纯度 $\operatorname{Tr}(\rho^2)$，隐私放大分析核心 |
-| $\alpha \to \infty$ | **单次最小熵** $H_{\min}(\rho) = -\log_2\lambda_{\max}(\rho)$ | $-\log_2(0.853553) \approx 0.2284\text{ bit}$ | 单次可提取均匀随机性的最坏下界 |
+| $\alpha \to \infty$ | **单次最小熵** $H_{\min}(\rho) = -\log_2\lambda_{\max}(\rho)$ | $-\log_2(0.853553) \approx 0.2284\text{ bit}$ | 经典标签的猜测难度及隐私放大界 |
 
 ### 7.2 条件最小熵、最大熵与最优猜测概率
 
@@ -1507,13 +1521,13 @@ H_{\min}(A\mid B)_\rho = -\inf_{\sigma_B} D_{\max}\bigl(\rho_{AB}\,\big\Vert\,I_
 H_{\max}(A\mid B)_\rho = \sup_{\sigma_B} 2\log_2 F\bigl(\rho_{AB},\ I_A \otimes \sigma_B\bigr).
 $$
 
-（注意 $H_{\max}$ 里的系数 $2$ 严格对应本书的**根保真度** $F$ 口径，因为 $2\log_2 F = \log_2 F^2$。）它们满足极其优美的**三方纯态对偶性**：对任意三方纯态 $|\psi\rangle_{ABC}$，
+优化遍历所有 $\sigma_B\succeq0$ 且 $\operatorname{Tr}\sigma_B=1$ 的密度算符。根保真度公式 $F(P,Q)=\|\sqrt{P}\sqrt{Q}\|_1$ 此处按同一形式扩展到一般正半定算符，因为 $I_A\otimes\sigma_B$ 的迹为 $d_A$。对任意三方纯态 $|\psi\rangle_{ABC}$，存在三方对偶关系
 
 $$
 H_{\min}(A\mid B) + H_{\max}(A\mid C) = 0,
 $$
 
-而且由第 4.2 节 $\alpha \to \infty$ 的广义 DPI，对边信息 $B$ 施加任意 CPTP 信道 $\mathcal E_B$ 绝不会减少条件最小熵：$H_{\min}(A\mid \mathcal E_B(B)) \ge H_{\min}(A\mid B)$。
+若 $\rho_{AB}\preceq\lambda I_A\otimes\sigma_B$，对条件系统 $B$ 作用 CPTP 信道 $\mathcal E_B:B\to B^\prime$，就得到新约束 $\rho_{AB^\prime}\preceq\lambda I_A\otimes\mathcal E_B(\sigma_B)$。右边的条件态仍归一化，故最优 $\lambda$ 只能减小或相等，取负对数得到 $H_{\min}(A\mid B^\prime)\ge H_{\min}(A\mid B)$。若改在 $A$ 上把均匀经典比特复位，最小熵反而从 1 bit 降到 0。[König、Renner 与 Schaffner 2009](https://arxiv.org/abs/0807.1338)
 
 更令人拍案叫绝的是柯尼希、雷纳与沙夫纳（König, Renner, Schaffner, 2009）证明的**操作等价定理**：对任意经典–量子态（cq 态）$\rho_{XE} = \sum_x p_x |x\rangle\langle x|_X \otimes \rho_E^x$，条件最小熵**精确等于**持有量子存储器 $E$ 的窃听者执行最优单次 POVM 猜中 $X$ 的概率之负对数：
 
@@ -1533,7 +1547,7 @@ $$
 
 ### 7.3 平滑熵、剩余哈希引理与第 12 章有限长 QKD 闭环
 
-光有精确的 $H_{\min}$ 还不够灵活——像上面那个 $10\%$ 全零密钥的例子，哪怕只存在 $10^{-9}$ 的极罕见坏事件，精确 $H_{\min}$ 也会被最坏角落拉低。现代有限长量子信息论（Renner, 2005；Tomamichel, 2016）的妙招是允许在纯化距离（$P(\rho,\tilde\rho) = \sqrt{1 - F(\rho,\tilde\rho)^2}$）不超过极小安全容差 $\varepsilon$ 的邻域球内对态做微小平滑，定义**平滑最小熵**与**平滑最大熵**：
+有限长分析可以在误差球内平滑态。对于可能子归一化的 $P,Q$，采用广义根保真度 $\bar F(P,Q)=\|\sqrt P\sqrt Q\|_1+\sqrt{(1-\operatorname{Tr}P)(1-\operatorname{Tr}Q)}$ 和纯化距离 $\sqrt{1-\bar F^2}$。当二者都归一化时退回本书原来的 $F$。在距离不超过 $\varepsilon$ 的球内定义
 
 $$
 H_{\min}^\varepsilon(A\mid B)_\rho = \sup_{\tilde\rho \in \mathcal B^\varepsilon(\rho)} H_{\min}(A\mid B)_{\tilde\rho},
@@ -1541,13 +1555,24 @@ H_{\min}^\varepsilon(A\mid B)_\rho = \sup_{\tilde\rho \in \mathcal B^\varepsilon
 H_{\max}^\varepsilon(A\mid B)_\rho = \inf_{\tilde\rho \in \mathcal B^\varepsilon(\rho)} H_{\max}(A\mid B)_{\tilde\rho}.
 $$
 
-由**量子渐近均分性质**（QAEP，Tomamichel–Colbeck–Renner, 2009），对 $n$ 份独立同分布态 $\rho_{AB}^{\otimes n}$，平滑最小/最大熵均按 $O(1/\sqrt n)$ 阶修正收敛到 von Neumann 条件熵 $S(A\mid B)$。把它直接接入[第 12 章第 3.2 节](12-security-network-frontiers.md)的有限长 QKD，两项核心工具立刻解锁全部安全证明：
+量子渐近均分性质把独立同分布态的每份平滑最小、最大熵与 $S(A\mid B)$ 联系起来。在固定非零误差容差和有限维条件下，每份有限长修正量可为 $O(1/\sqrt n)$。在[第 12 章第 3.2 节](12-security-network-frontiers.md)的有限长 QKD 模型中，需要以下工具。
 
-1. **量子剩余哈希引理**（Quantum Leftover Hash Lemma，Renner, 2005；Tomamichel, 2016）：对经过信息协调泄露了 $\mathrm{leak}_{\mathrm{EC}}$ 比特的长串 $X$，用二通用哈希函数 $F$ 做隐私放大，其迹距离偏差满足 $T\!\left(\rho_{KEF},\, \frac{I_K}{|K|}\otimes\rho_{EF}\right) \le 2\varepsilon' + \frac{1}{2}\sqrt{2^{\ell - H_{\min}^{\varepsilon'}(X\mid E) + \mathrm{leak}_{\mathrm{EC}}}}$。令总可组合安全参数 $\varepsilon = 2\varepsilon' + \varepsilon_{\mathrm{PA}}$（平滑半径 $\varepsilon'$ 与哈希残余项 $\varepsilon_{\mathrm{PA}}$ 之和），可安全提取的密钥长度严格满足
+1. **量子剩余哈希引理。** 令 $E$ 是公开纠错之前的边信息，$C$ 是之后公开的纠错记录，$F$ 是独立且公开的二通用哈希种子，$K$ 是 $\ell$ 位输出。与理想均匀密钥的保守比较为
 
    $$
-   \ell \le H_{\min}^{\varepsilon'}(X\mid E) - \mathrm{leak}_{\mathrm{EC}} - 2\log_2\frac{1}{2\varepsilon_{\mathrm{PA}}}, \qquad \varepsilon = 2\varepsilon' + \varepsilon_{\mathrm{PA}}.
+   T\!\left(\rho_{KECF},\frac{I_K}{2^\ell}\otimes\rho_{ECF}\right)
+   \le 2\varepsilon'+\frac12\,2^{(\ell-H_{\min}^{\varepsilon'}(X\mid EC))/2}.
    $$
+
+   若链式界给出 $H_{\min}^{\varepsilon'}(X\mid EC)\ge H_{\min}^{\varepsilon'}(X\mid E)-\mathrm{leak}_{\mathrm{EC}}$，就可用右边的熵下界计算长度。若输入的熵已经以 $EC$ 为条件，同一记录不用再扣一次。令哈希贡献最多为 $\varepsilon_{\rm PA}$，则证书允许
+
+   $$
+   \ell\le H_{\min}^{\varepsilon'}(X\mid E)-\mathrm{leak}_{\mathrm{EC}}
+          -2\log_2\frac1{2\varepsilon_{\rm PA}},
+   \qquad \varepsilon_{\rm sec}=2\varepsilon'+\varepsilon_{\rm PA}.
+   $$
+
+   这里采用直接比较真实边缘的距离；若具体协议有中止、正确性或其他公开记录，还需纳入对应的协议安全口径。例如均匀位 $K$ 若已被公开为 $C=K$，没有 $C$ 时距离为零。纳入 $C$ 后联合分布为 $(1/2,0,0,1/2)$，理想联合分布的四个分量都是 $1/4$，距离为 $1/2$。[Tomamichel 等 2011](https://arxiv.org/abs/1002.2436)
 
 2. **带量子存储的熵不确定关系**（Berta 等，*Nature Physics* 2010；Tomamichel & Renner，*PRL* 2011）：在 BB84 协议中，用互补基 $Z$ 与 $X$（最大基重叠 $c = \max_{j,k}|\langle z_j|x_k\rangle|^2 = 1/2 \implies \log_2(1/c) = 1$）测量 $n$ 个量子比特，无论窃听者 Eve 采取多么复杂的一般相干攻击，平滑最小熵与平滑最大熵必满足
 
@@ -1606,7 +1631,7 @@ flowchart TD
 - **问“允许放弃，但一旦猜就必须零错误”**：用无歧义态判别（USD），等先验用 IDP 界 $1-s$，不等先验先查 $\eta_1/\eta_0$ 落在 Jaeger–Shimony 哪一区段，多态先检查线性无关（§3.3）。
 - **问“实际态离理想目标有多接近”**：用根保真度 $F(\rho,\sigma)$，阅读外部文献与 SDK 时立刻核对是否平方，并用 Fuchs–van de Graaf 把不保真度 $1-F$ 换算到最坏迹距离（牢记平方根放大，§3.4）。
 - **问“两子系统总共有多少关联”**：用量子互信息 $I(A:B)$；纯二分态可浓缩纠缠用约化熵 $S(\rho_A)$；状态合并净纠缠代价看条件熵 $S(A\mid B)$（§2）。
-- **问“一组量子态最多能传出多少经典信息”**：单份测量看可访问信息 $I_{\mathrm{acc}}$，多份联合解码极限看 Holevo 量 $\chi$（§5）。
+- **问“一组量子态最多能传出多少经典信息”**：单份测量看可访问信息 $I_{\mathrm{acc}}$，固定系综的长码本通信看 Holevo 量 $\chi$（§5）。
 - **问“有限长 QKD 密钥或单次猜测有多安全”**：用量子 Rényi 熵、条件最小熵 $H_{\min}(X\mid E) = -\log_2 p_{\mathrm{guess}}$ 与平滑最小/最大熵（§7）。
 
 #### 初学者最容易踩的七个误区
@@ -1650,16 +1675,18 @@ flowchart TD
 2. 我能区分迹距离、根保真度与平方保真度，算清加权 Helstrom 最优猜对率，并说明为何 $\{|0\rangle,|+\rangle\}$ 存在 $I_{\mathrm{acc}} < \chi$ 间隙；
 3. 我能画出夹心 Rényi DPI 统领保真度单调、SSA、Holevo 界与平滑最小熵的主链，并解释有限长 QKD 为何必须使用量子剩余哈希引理。
 
+[第 12 章](12-security-network-frontiers.md)会把二元熵和纠缠单配性用到量子密钥分发，把态的相似程度用到链路保真度。若想跟踪保密证明中有限样本的代价，可按需在本章第 7 节查最小熵。
+
 ---
 
 ## 自检题
 
-1. 求 $\rho = \operatorname{diag}(0.8, 0.2)$ 的 von Neumann 熵。
-2. 对 Bell 态和经典相关混态分别计算 $S(AB)$、$S(A\mid B)$ 与 $I(A:B)$。
-3. 等概率区分 $|0\rangle$ 与 $(\sqrt 3\,|0\rangle + |1\rangle)/2$，求最优成功概率。
-4. 在本书约定下，求 $|+\rangle$ 与 $I/2$ 的根保真度和迹距离。
-5. 计算等概率 $|0\rangle, |1\rangle$ 编码的 Holevo 量，并说明哪种测量达到它。
-6. 为什么对混合 $\rho_{AB}$，$S(\rho_A)$ 一般不能直接称为纠缠量？
+1. 求 $\rho = \operatorname{diag}(0.8, 0.2)$ 的 von Neumann 熵。 <!-- exercise-id: 13-01 -->
+2. 对 Bell 态和经典相关混态分别计算 $S(AB)$、$S(A\mid B)$ 与 $I(A:B)$。 <!-- exercise-id: 13-02 -->
+3. 等概率区分 $|0\rangle$ 与 $(\sqrt 3\,|0\rangle + |1\rangle)/2$，求最优成功概率。 <!-- exercise-id: 13-03 -->
+4. 在本书约定下，求 $|+\rangle$ 与 $I/2$ 的根保真度和迹距离。 <!-- exercise-id: 13-04 -->
+5. 计算等概率 $|0\rangle, |1\rangle$ 编码的 Holevo 量，并说明哪种测量达到它。 <!-- exercise-id: 13-05 -->
+6. 为什么对混合 $\rho_{AB}$，$S(\rho_A)$ 一般不能直接称为纠缠量？ <!-- exercise-id: 13-06 -->
 
 答案与分步推导见[练习与答案：第 13 章](appendices/exercises.md#第-13-章)。
 
@@ -1667,8 +1694,9 @@ flowchart TD
 
 ## 动手实验与延伸阅读
 
-本章全部数值算例与反例均配有离线可运行的 Python 复核脚本（详细题目与说明见[基础实验册](labs/foundations.md)、[基础实验代码说明](../codes/foundations/README.md)与[代码总说明](../codes/README.md)）：
+本章部分数值算例与反例配有离线可运行的 Python 复核脚本（详细题目与说明见[基础实验册](labs/foundations.md)、[基础实验代码说明](../codes/foundations/README.md)与[代码总说明](../codes/README.md)）：
 
+- **压缩、催化与公开记录**。运行 [第 13、18 章边界算例](../codes/foundations/information_capacity_boundaries.py) `python3 codes/foundations/information_capacity_boundaries.py`，核对三种压缩指标、裸系统与催化联合系统的优超前缀，以及有无公开记录的安全距离。
 - **不等先验 Helstrom 与保真度口径核对**：运行 `python3 codes/foundations/foundations_lab.py --case 13`，复算先验 $0.9/0.1$ 下的加权差矩阵特征值、最优猜对率 $0.952769$，以及根保真度与平方保真度的换算。
 - **后选择滤波与整体 CPTP 收缩检验**：运行 `python3 codes/foundations/diagnostic_lab.py --case 13`，对比滤波后条件迹距离 $T_s \approx 0.9363$、贝叶斯加权条件最优成功率 $0.9760$ 与保留双标记后的整体迹距离 $T_{\mathrm{all}} \approx 0.7065 \le 0.8$。
 - **经典马尔可夫链与 XOR 条件互信息**：运行[条件互信息验算脚本](../codes/algorithms/round71_checks.py)（或通过总入口 `python3 codes/run_all.py` 一并执行），从两张联合概率表直接边缘化求各子系统熵，核验 $I(A:C\mid B) = 0$ 与 XOR 的 $I(A:C\mid B) = 1 > I(A:C) = 0$。

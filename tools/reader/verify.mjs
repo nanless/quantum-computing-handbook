@@ -106,7 +106,11 @@ const report = {
   screenshots: [],
 };
 const build = JSON.parse(await fs.readFile(path.join(root, 'work/research/reader-build-report.json'), 'utf8'));
-const expectedReading = readingPlan(build.pages.filter(p => /^reader\/(?:quantum-mechanics\/)?\d\d-/.test(p.output)).map(p => p.output)).sequence;
+const expectedPlan = readingPlan(build.pages.filter(p => /^reader\/(?:quantum-mechanics\/)?\d\d-/.test(p.output)).map(p => p.output));
+const expectedReading = expectedPlan.sequence;
+const expectedChapterIds = expectedPlan.groups.flatMap(group => group.ids);
+const expectedPartLabels = expectedPlan.groups.map(group => group.label);
+const expectedPositions = expectedReading.map((_, index) => `阅读顺序 ${index + 1} / ${expectedReading.length}`);
 if (JSON.stringify(build.readingOrder) !== JSON.stringify(expectedReading)) {
   throw new Error('Build reading order differs from the pedagogical plan');
 }
@@ -227,8 +231,11 @@ const screenshotTargets = new Set([
 ]);
 
 try {
-  for (const width of [1440, 390]) {
-    const page = await browser.newPage({ viewport: { width, height: 1000 }, deviceScaleFactor: 1 });
+  for (const width of [1440, 390, 320]) {
+    const page = await browser.newPage({
+      viewport: { width, height: 1000 }, deviceScaleFactor: 1,
+      reducedMotion: width === 320 ? 'reduce' : 'no-preference',
+    });
     page.on('pageerror', e => report.errors.push({ width, type: 'javascript', message: e.message }));
     page.on('console', msg => {
       if (msg.type() === 'error') {
@@ -263,6 +270,10 @@ try {
           if (JSON.stringify(actual) !== JSON.stringify(expected)) {
             report.errors.push({ file: entry.output, message: 'pedagogical previous/next navigation differs', expected, actual });
           }
+          const position = await page.locator('.chapter-reading-position').allTextContents();
+          if (JSON.stringify(position) !== JSON.stringify([expectedPositions[at]])) {
+            report.errors.push({ file: entry.output, message: 'chapter reading position differs', expected: expectedPositions[at], actual: position });
+          }
         }
         if (await page.locator('.chapters nav a[href$="quantum-mechanics/index.html"]').count() !== 1) {
           report.errors.push({ file: entry.output, message: 'foundation guide missing from navigation' });
@@ -272,7 +283,23 @@ try {
         );
         const expectedSidebar = expectedReading.map(file => pathToFileURL(path.join(root, file)).href);
         if (JSON.stringify(sidebar) !== JSON.stringify(expectedSidebar)) {
-          report.errors.push({ file: entry.output, message: 'sidebar order differs; mathematics must precede dependent chapters' });
+          report.errors.push({ file: entry.output, message: 'sidebar chapter order differs from the reading plan' });
+        }
+        const sidebarParts = await page.locator('.chapters nav [data-reading-part]').allTextContents();
+        const sidebarPositions = await page.locator('.chapters nav .nav-reading-position').allTextContents();
+        if (JSON.stringify(sidebarParts) !== JSON.stringify(expectedPartLabels) ||
+            JSON.stringify(sidebarPositions) !== JSON.stringify(expectedPositions)) {
+          report.errors.push({ file: entry.output, message: 'sidebar part labels or reading positions differ from the reading plan' });
+        }
+        if (entry.output === 'reader/index.html') {
+          const homeParts = await page.locator('.course-stops > li').evaluateAll(parts => parts.map(part => ({
+            label: `${part.querySelector('span').textContent} · ${part.querySelector('h3').textContent}`,
+            ids: [...part.querySelectorAll('a[data-reading-chapter]')].map(link => link.dataset.readingChapter),
+          })));
+          const expected = expectedPlan.groups.map(({ label, ids }) => ({ label, ids }));
+          if (JSON.stringify(homeParts) !== JSON.stringify(expected)) {
+            report.errors.push({ file: entry.output, message: 'course-home parts and chapters differ from the reading plan', expected, actual: homeParts });
+          }
         }
       }
 
@@ -301,12 +328,16 @@ try {
         }
         for (const img of document.images) if (!img.complete || !img.naturalWidth) failures.push('broken image: ' + img.getAttribute('src'));
         if (document.querySelector('.math-error,.katex-error,pre code.language-mermaid,[data-handbook-math]')) failures.push('unrendered math/diagram');
-        if (document.querySelector('.katex-mathml')) failures.push('unexpected .katex-mathml under Scheme C output:html');
         if (document.styleSheets.length < 2 || getComputedStyle(document.querySelector('header')).position !== 'sticky') failures.push('reader CSS not loaded');
         const katexStrut = document.querySelector('.katex .strut');
         if (katexStrut && getComputedStyle(katexStrut).display !== 'inline-block') failures.push('KaTeX CSS not loaded');
         const katexNodes = [...document.querySelectorAll('main > article .katex')];
         if (katexNodes.some(el => !el.querySelector('.katex-html'))) failures.push('KaTeX node missing .katex-html');
+        if (katexNodes.some(el => !el.querySelector('.katex-mathml math'))) failures.push('KaTeX node missing MathML');
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            getComputedStyle(document.documentElement).scrollBehavior !== 'auto') {
+          failures.push('Smooth scrolling ignores reduced motion');
+        }
         const displayNodes = [...document.querySelectorAll('main > article .katex-display')];
         const displayTex = displayNodes.map(e => e.getAttribute('data-tex') || '');
         if (displayTex.some(t => !t)) failures.push('display math missing data-tex attribute');
@@ -350,6 +381,10 @@ try {
           headings,
           links: [...document.querySelectorAll('a[href]')].map(a => a.href),
           footer: document.querySelector('main footer')?.textContent || '',
+          exerciseIds: {
+            questionIds: [...document.querySelectorAll('main article li[data-exercise-id]')].map(e => e.dataset.exerciseId),
+            answerIds: [...document.querySelectorAll('.solution-item[data-exercise-id], .ex-question-card[data-exercise-id]')].map(e => e.dataset.exerciseId),
+          },
         };
       });
 
@@ -360,6 +395,9 @@ try {
       if (result.displayTex.length !== entry.displayFormulas) report.errors.push({ file: entry.output, width, message: 'display formula count mismatch', expected: entry.displayFormulas, actual: result.displayTex.length });
       if (digest(JSON.stringify(result.displayTex)) !== entry.displayMathDigest) report.errors.push({ file: entry.output, width, message: 'display formula content or order mismatch' });
       if (JSON.stringify(result.headings.map(h => h.id)) !== JSON.stringify(entry.headingIds)) report.errors.push({ file: entry.output, width, message: 'heading sequence mismatch' });
+      if (JSON.stringify(result.exerciseIds) !== JSON.stringify(entry.exerciseIds)) {
+        report.errors.push({ file: entry.output, width, message: 'exercise question or answer identity differs from the verified sources' });
+      }
 
       if (width === 1440) {
         for (const href of new Set(result.links)) {
@@ -383,7 +421,7 @@ try {
         }
       }
 
-      if (screenshotTargets.has(entry.output) || entry.output.startsWith('reader/quantum-mechanics/') || entry.output.startsWith('reader/labs/')) {
+      if (width !== 320 && (screenshotTargets.has(entry.output) || entry.output.startsWith('reader/quantum-mechanics/') || entry.output.startsWith('reader/labs/'))) {
         if (width === 390) await page.locator('.chapters details').evaluate(e => { e.open = false; });
         const name = (entry.output.startsWith('reader/quantum-mechanics/') ? 'qm-' : entry.output.startsWith('reader/labs/') ? 'lab-' : '') + path.basename(entry.output, '.html') + '-' + width + '.png';
         await page.screenshot({ path: path.join(shots, name) });
@@ -445,6 +483,13 @@ try {
             report.errors.push({ width, file: 'reader/index.html', message: `global search returned 0 hits for "${query}"` });
           }
         }
+        const searchInput = page.locator('#qch-global-search-input');
+        await searchInput.fill('表面码');
+        await searchInput.press('ArrowDown');
+        const selected = await searchInput.getAttribute('aria-activedescendant');
+        if (selected !== 'qch-search-option-1' || await page.locator('#qch-search-option-1').getAttribute('aria-selected') !== 'true') {
+          report.errors.push({ width, message: 'Search keyboard selection did not update its accessible active result' });
+        }
         await page.locator('#qch-search-dialog [data-search-close]').click();
       }
 
@@ -469,14 +514,14 @@ try {
         } catch {}
       });
     }
-    if (width === 390) {
+    if (width <= 390) {
       // Mobile sidebar details must default to collapsed (recovers first viewport height).
       const mobileOpenByDefault = await page.locator('.chapters > details').evaluate(e => e.open);
       if (mobileOpenByDefault) {
         report.errors.push({ width, file: 'reader/index.html', message: 'mobile .chapters details must be collapsed by default' });
       }
       await page.locator('.chapters > details > summary').click();
-      const name = 'index-390-navigation-open.png';
+      const name = `index-${width}-navigation-open.png`;
       await page.screenshot({ path: path.join(shots, name) });
       report.screenshots.push('work/rendered/' + name);
     }
@@ -509,7 +554,7 @@ try {
       report.screenshots.push('work/rendered/12-mobile-section-arrival.png');
     }
 
-    // Verify 6-module offline interactive quantum lab at both 1440px and 390px.
+    // Verify the offline lab at each supported viewport.
     const labPath = path.join(root, 'reader/lab/quantum-lab.html');
     const labErrorsBefore = report.errors.length;
     const labExternalBefore = report.externalRequests.length;
@@ -543,6 +588,7 @@ try {
         // 1. MZI
         const mzi120 = M.mziMetrics((2 * Math.PI) / 3, 1);
         approx(mzi120.p0, 0.25, 1e-12, 'MZI 120deg p0');
+        approx(M.mziMetrics(2 * Math.PI / 3, 0.5).p0, 0.375, 1e-12, 'MZI conditional visibility');
         const mziMix = M.mziMetrics(Math.PI, 0);
         approx(mziMix.p0, 0.5, 1e-12, 'MZI V=0 p0');
         if (!mziMix.isMixed) errs.push('MZI V=0 should report isMixed=true');
@@ -563,6 +609,7 @@ try {
         approx(rp.pDecay, (1 - Math.exp(-1)) / 2, 1e-12, 'Ramsey pDecay at 1.5s');
         approx(rp.pWrong, 0, 1e-12, 'Ramsey pitfall pWrong at trough');
         approx(rp.fisherC, 0, 1e-12, 'Ramsey Fisher blind spot at trough');
+        approx(M.ramseyPoint(0, 1, 1.5).fisherFrequency, 0, 1e-12, 'Ramsey at zero interrogation');
         const rpMid = M.ramseyPoint(0.25, 1.0, 1.5);
         approx(rpMid.fisherC, rpMid.vis * rpMid.vis, 1e-12, 'Ramsey peak Fisher F_C = V^2 at mid-fringe');
         // 4. Bell & CHSH
@@ -570,9 +617,15 @@ try {
         approx(bm.entropyA, 1, 1e-12, 'Bell entropyA');
         approx(bm.concurrence, 1, 1e-12, 'Bell concurrence');
         approx(bm.rA.r, 0, 1e-12, 'Bell reduced Bloch length');
+        const weak = M.bellWernerMetrics(Math.PI / 10, 0.46);
+        approx(weak.concurrence, 0.0003812160545376, 1e-12, 'Weak entanglement at a reachable slider setting');
         const ch = M.chshCorrelations(Math.PI / 4, 1, 0, 90, 45, -45);
         approx(ch.S, 2 * Math.SQRT2, 1e-12, 'CHSH Tsirelson S');
         approx(ch.pWin, 0.5 + Math.SQRT2 / 4, 1e-12, 'CHSH win prob');
+        const reversed = M.chshCorrelations(Math.PI / 4, 1, -180, -90, 45, -45);
+        approx(reversed.S, -2 * Math.SQRT2, 1e-12, 'CHSH negative branch');
+        approx(reversed.pWin, 0.5 - Math.SQRT2 / 4, 1e-12, 'CHSH fixed game on negative branch');
+        if (!reversed.violatesBell) errs.push('CHSH negative branch exceeds the absolute local bound');
         const sim = M.simulateChshRounds(Math.PI / 4, 1, 0, 90, 45, -45, 1000, 20261125);
         if (!sim.beatsClassicCI) errs.push('CHSH 1000-round Wilson CI should beat 75%');
         // 5. Grover
@@ -641,6 +694,12 @@ try {
       await page.locator('#grover-step-btn').click();
       if (!((await page.locator('#grover-pgood-val').textContent()) || '').includes('33.01')) {
         report.errors.push({ file: 'reader/lab/quantum-lab.html', message: 'Grover UI step 3 overshoot did not reach 33.01%' });
+      }
+      const targetButton = page.locator('#grover-targets button').first();
+      await targetButton.press('Enter');
+      if (await targetButton.getAttribute('aria-pressed') !== 'true' ||
+          !page.url().endsWith('#tab-grover')) {
+        report.errors.push({ file: 'reader/lab/quantum-lab.html', message: 'Grover keyboard target or tab URL did not update' });
       }
       await page.locator('#tab-surface').click();
       await page.locator('[data-surface-preset="x4x5"]').click();
@@ -800,9 +859,11 @@ try {
 
   // Verify exercises.html sticky chapter chip filtering, collapsible chapters & permanent >=271 two-level hint gate.
   await darkGatePage.goto(pathToFileURL(path.join(root, 'reader/appendices/exercises.html')).href);
-  const exChapterCount = await darkGatePage.locator('details.ex-chapter').count();
-  if (exChapterCount !== 26) {
-    report.errors.push({ file: 'reader/appendices/exercises.html', message: `expected 26 collapsible ex-chapters, found ${exChapterCount}` });
+  const exChapters = await darkGatePage.locator('details.ex-chapter').evaluateAll(chapters => chapters.map(chapter => chapter.dataset.exCh));
+  const exChips = await darkGatePage.locator('.ex-chip[data-ex-filter]:not([data-ex-filter="all"])')
+    .evaluateAll(chips => chips.map(chip => chip.dataset.exFilter));
+  if (JSON.stringify(exChapters) !== JSON.stringify(expectedChapterIds) || JSON.stringify(exChips) !== JSON.stringify(expectedChapterIds)) {
+    report.errors.push({ file: 'reader/appendices/exercises.html', message: 'answers or chapter filters differ from the reading plan', expected: expectedChapterIds, exChapters, exChips });
   }
   const exHintCount = await darkGatePage.locator('details.ex-hint-box').count();
   if (exHintCount < 271) {
@@ -926,7 +987,7 @@ try {
   await fs.mkdir(path.join(root, 'work/research'), { recursive: true });
   await fs.writeFile(path.join(root, 'work/research/reader-verification.json'), reportJson);
   console.log(JSON.stringify({
-    pagesAtTwoWidths: report.pages.length,
+    pagesAtThreeWidths: report.pages.length,
     labChecks: report.labChecks.length,
     darkSvgChecks: report.darkSvgChecks,
     searchChecks: report.searchChecks.length,

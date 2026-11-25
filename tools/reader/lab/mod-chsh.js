@@ -7,6 +7,7 @@
 
   Mods.initChsh = function initChsh(ctx) {
     const { byId, f2, f3, f4, pct } = ctx;
+    const formatConcurrence = value => value > 0 && value < 0.001 ? value.toExponential(3) : f4(value);
     let thetaDeg = 45;
     let pNoise = 1.0;
     let a0 = 0, a1 = 90, b0 = 45, b1 = -45;
@@ -42,12 +43,12 @@
         ${drawMiniBloch(504, 128, 66, bm.rB.rz, 'Bob 约化态 ρ_B = Tr_A(ρ)', 'var(--blue)')}
         <!-- Center entanglement bridge -->
         <rect x="234" y="62" width="172" height="132" rx="8" fill="var(--svg-card)" stroke="var(--line-strong)" stroke-width="1.2"/>
-        <text x="320" y="84" text-anchor="middle" fill="var(--heading)" font-size="11.5" font-weight="700">冯·诺依曼纠缠熵 S(ρ_A)</text>
+        <text x="320" y="84" text-anchor="middle" fill="var(--heading)" font-size="11.5" font-weight="700">约化态的冯·诺依曼熵 S(ρ_A)</text>
         <text x="320" y="114" text-anchor="middle" fill="var(--red)" font-family="var(--mono)" font-size="22" font-weight="800">${f3(bm.entropyA)} bit</text>
         <rect x="252" y="128" width="136" height="10" rx="5" fill="var(--stone)"/>
         <rect x="252" y="128" width="${Math.round(1.36 * entPct)}" height="10" rx="5" fill="var(--red)"/>
         <text x="320" y="158" text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">纯度 Tr(ρ_A²) = ${f3(bm.purityA)}</text>
-        <text x="320" y="177" text-anchor="middle" fill="${bm.concurrence > 0.001 ? 'var(--teal)' : 'var(--muted)'}" font-family="var(--mono)" font-size="10.8" font-weight="700">并发度 C(ρ) = ${f3(bm.concurrence)}</text>
+        <text x="320" y="177" text-anchor="middle" fill="${bm.concurrence > 0 ? 'var(--teal)' : 'var(--muted)'}" font-family="var(--mono)" font-size="10.8" font-weight="700">并发度 C(ρ) = ${formatConcurrence(bm.concurrence)}</text>
       `;
     }
 
@@ -119,10 +120,10 @@
       byId('chsh-b0-out').textContent = `${b0}°`;
       byId('chsh-b1-out').textContent = `${b1}°`;
 
-      byId('chsh-s-val').textContent = `${f4(corr.S)} (经典 ≤ 2, 量子界 2.8284)`;
+      byId('chsh-s-val').textContent = `${f4(corr.S)}（局域界 |S| ≤ 2）`;
       byId('chsh-win-val').textContent = `${pct(corr.pWin)} (经典 ≤ 75.0%)`;
       byId('chsh-ent-val').textContent = `${f4(bm.entropyA)} bit · |r_A|=${f3(bm.rA.r)}`;
-      byId('chsh-conc-val').textContent = `${f4(bm.concurrence)} ${bm.concurrence > 0.001 ? '(纠缠态)' : '(可分态)'}`;
+      byId('chsh-conc-val').textContent = `${formatConcurrence(bm.concurrence)} ${bm.concurrence > 0 ? '(纠缠态)' : '(可分态)'}`;
 
       byId('chsh-bar-win').style.width = (100 * corr.pWin).toFixed(2) + '%';
       byId('chsh-bar-win-out').textContent = pct(corr.pWin);
@@ -130,10 +131,10 @@
       const noteEl = byId('chsh-note');
       noteEl.className = 'note-box';
       if (corr.violatesBell) {
-        noteEl.textContent = `✓ 违背 Bell–CHSH 不等式！理论 S = ${f4(corr.S)} > 2，合作胜率 ${pct(corr.pWin)} 超越经典局域天花板 75%（超出 +${((corr.pWin - 0.75) * 100).toFixed(2)} 个百分点）。点击下方模拟 1,000 局验证统计显著性！`;
-      } else if (bm.concurrence > 0.001) {
+        noteEl.textContent = `理论 |S| = ${f4(corr.absS)} > 2，违背 Bell–CHSH 局域界。固定游戏规则的胜率为 ${pct(corr.pWin)}。当 S 为负时，翻转 Alice 的两个输出标签可得到高胜率的一侧。`;
+      } else if (bm.concurrence > 0) {
         noteEl.classList.add('amber');
-        noteEl.textContent = `当前态仍存在纠缠（C = ${f3(bm.concurrence)} > 0），但该噪声/测量角组合的 S = ${f3(corr.S)} ≤ 2，尚未击穿 CHSH 不等式（提示：Werner 态需 p > 1/√2 ≈ 0.707 且取最优角）。`;
+        noteEl.textContent = `当前态仍存在纠缠（C = ${formatConcurrence(bm.concurrence)} > 0），但该噪声/测量角组合的 |S| = ${f3(corr.absS)} ≤ 2，尚未击穿 CHSH 不等式（提示：Werner 态需 p > 1/√2 ≈ 0.707 且取最优角）。`;
       } else {
         noteEl.classList.add('warn');
         noteEl.textContent = `当前为可分态（C = 0）：无法违背任何 Bell 不等式，最高胜率被死死限制在 75% 以内。`;
@@ -151,10 +152,12 @@
       const thetaRad = (thetaDeg * Math.PI) / 180;
       const sim = M.simulateChshRounds(thetaRad, pNoise, a0, a1, b0, b1, 1000, simSeed);
       const verdict = sim.beatsClassicCI
-        ? '✓ 95% Wilson 下界严格高于 75.0%，现场证伪经典局域隐变量模型！'
-        : '— 95% Wilson 区间未严格超过 75.0%，尚不能在本次抽样中排除经典局域模型。';
+        ? '该模型的模拟样本给出的 95% Wilson 下界高于固定规则的局域胜率上限。'
+        : sim.ci.hi < 0.25
+          ? '该模型的模拟样本给出的 95% Wilson 上界低于固定规则的局域胜率下限。'
+          : '该模拟样本的 95% Wilson 区间与固定规则的局域胜率范围有重合。';
       byId('chsh-sim-out').textContent =
-        `1,000 局实测：胜 ${sim.wins}/1000 = ${pct(sim.winRate)} · 95% Wilson 区间 [${pct(sim.ci.lo)}, ${pct(sim.ci.hi)}] · 经验 Ŝ = ${f3(sim.sHat)}。${verdict}`;
+        `1,000 局模拟：胜 ${sim.wins}/1000 = ${pct(sim.winRate)} · 95% Wilson 区间 [${pct(sim.ci.lo)}, ${pct(sim.ci.hi)}] · 经验 Ŝ = ${f3(sim.sHat)}。${verdict}`;
     }
 
     byId('chsh-theta').addEventListener('input', e => { thetaDeg = Number(e.target.value); updateChsh(true); });

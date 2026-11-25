@@ -301,10 +301,15 @@ def build_fig1_tensor_partial_trace() -> tuple[str, dict[str, object]]:
     assert all(abs(bell_a[i][j] - half_i[i][j]) < 1e-12 for i in range(2) for j in range(2))
     assert all(abs(bell_b[i][j] - half_i[i][j]) < 1e-12 for i in range(2) for j in range(2))
 
+    maximally_mixed = [[.25 if i == j else 0.0 for j in range(4)] for i in range(4)]
+    assert tr_a(maximally_mixed) == bell_a
+    assert tr_b(maximally_mixed) == bell_b
+    assert rho_bell[0][3] == .5 and maximally_mixed[0][3] == 0
+
     el: list[str] = []
     el.extend(
         header(
-            "张量积升维与偏迹降维的互逆结构",
+            "张量积组合系统，偏迹提取边缘",
             "左：印章分块法则将 2×2 矩阵张成 4×4 块矩阵；右：偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）压回 2×2 约化态",
         )
     )
@@ -438,11 +443,11 @@ def build_fig1_tensor_partial_trace() -> tuple[str, dict[str, object]]:
     el.append('<text class="xsb c2-txt" x="732" y="368">Bell 态 → diag(½, ½) = I/2</text>')
     el.append('<text class="xs" x="732" y="386">乘积态 A⊗B → Tr(A)·B = B</text>')
 
-    el.extend(note_bar(502, 404, 424, "仅乘积态可无损还原 ρ_A⊗ρ_B；纠缠态偏迹丢弃关联相干，单端成混态 I/2"))
+    el.extend(note_bar(502, 404, 424, "Bell 态与 I₄/4 的边缘相同；联合矩阵的 (00,11) 元却不同"))
 
     svg = svg_doc(
-        "张量积升维与偏迹降维的互逆结构",
-        "左面板展示 2×2 矩阵 A 与印章 B 通过张量积生成 4×4 块矩阵的升维过程及数值验算；右面板以 Bell 态密度矩阵为例，展示偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）将 4×4 压回 2×2 约化密度矩阵 I/2 的降维结构。",
+        "张量积组合系统，偏迹提取边缘",
+        "左面板展示 2×2 矩阵 A 与印章 B 通过张量积生成 4×4 块矩阵的升维过程及数值验算；右面板以 Bell 态密度矩阵为例，展示偏迹 Tr_B（逐块取迹）与 Tr_A（主对角块相加）从 4×4 矩阵提取 2×2 约化态 I/2。均匀混合态 I₄/4 的两个边缘也都是 I/2，无法只靠边缘确定联合态。",
         el,
     )
     return svg, {"trace_prod": 1.0, "bell_tr_a": bell_a[0][0], "bell_tr_b": bell_b[0][0]}
@@ -468,7 +473,7 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
     el.extend(
         header(
             "双比特 Schmidt 分解曲线与混态纠缠判据决策树",
-            "左：纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的奇异值 (λ₀, λ₁) 与纠缠熵 S(ρ_A)；右：纯态与混态纠缠分层判据",
+            "左：纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的奇异值 (s₀, s₁) 与纠缠熵 S(ρ_A)；右：纯态与混态纠缠分层判据",
         )
     )
 
@@ -479,9 +484,9 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
     el.append('<line class="c2" stroke-width="2.6" x1="74" y1="118" x2="96" y2="118"/>')
     el.append('<text class="xsb c2-txt" x="102" y="122">S(ρ_A) 纠缠熵</text>')
     el.append('<line class="c3" stroke-width="2.2" x1="202" y1="118" x2="224" y2="118"/>')
-    el.append('<text class="xsb c3-txt" x="230" y="122">λ₀ = cosθ</text>')
+    el.append('<text class="xsb c3-txt" x="230" y="122">s₀ = cosθ</text>')
     el.append('<line class="c1" stroke-width="2.2" stroke-dasharray="6 4" x1="316" y1="118" x2="338" y2="118"/>')
-    el.append('<text class="xsb c1-txt" x="344" y="122">λ₁ = sinθ</text>')
+    el.append('<text class="xsb c1-txt" x="344" y="122">s₁ = sinθ</text>')
 
     px0, px1 = 78.0, 444.0
     py0, py1 = 138.0, 352.0
@@ -528,7 +533,7 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
     # Axes box
     el.append(f'<rect class="axis" stroke-width="1.4" x="{px0:.1f}" y="{py0:.1f}" width="{pw:.1f}" height="{ph:.1f}"/>')
     el.append(f'<text class="smb" x="{(px0+px1)/2:.1f}" y="391" text-anchor="middle">叠加角 θ（|ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩）</text>')
-    el.append('<text class="smb" x="34" y="245" transform="rotate(-90 34 245)" text-anchor="middle">奇异值 λᵢ / 纠缠熵 S (ebit)</text>')
+    el.append('<text class="smb" x="34" y="245" transform="rotate(-90 34 245)" text-anchor="middle">奇异值 sᵢ / 纠缠熵 S (ebit)</text>')
 
     # Key point annotations at theta = pi/4
     x_mid = tx(math.pi / 4.0)
@@ -544,7 +549,7 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
     # Callout pill in empty lower-middle triangle (strictly below cos/sin curves)
     el.append('<rect class="pill-bg" x="172" y="275" width="178" height="62" rx="8"/>')
     el.append('<text class="xsb c2-txt" x="261" y="293" text-anchor="middle">θ = π/4（最大纠缠 Bell 态）</text>')
-    el.append('<text class="xs" x="261" y="311" text-anchor="middle">λ₀ = λ₁ = 1/√2 ≈ 0.707</text>')
+    el.append('<text class="xs" x="261" y="311" text-anchor="middle">s₀ = s₁ = 1/√2 ≈ 0.707</text>')
     el.append('<text class="xsb c3-txt" x="261" y="329" text-anchor="middle">S(ρ_A) = 1.00 ebit，r = 2</text>')
 
     el.extend(note_bar(34, 404, 416, "纯态充要：Schmidt 秩 r = 2 ⇔ S(ρ_A) > 0；混态中 S(ρ_A) 失效！"))
@@ -573,21 +578,21 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
 
     # Lower-left box: Strict hierarchy card (x=492..648, w=156, y=285..392)
     el.append('<rect class="subpanel" x="492" y="285" width="156" height="107" rx="9"/>')
-    el.append('<text class="xsb" x="570" y="304" text-anchor="middle">混态判据严格包含链</text>')
-    el.append('<text class="xs c2-txt" x="504" y="324">CHSH 违背 (|S| &gt; 2)</text>')
-    el.append('<text class="xs c4-txt" x="504" y="342">⊂ 纠缠见证 Tr(Wρ)&lt;0</text>')
-    el.append('<text class="xs c1-txt" x="504" y="360">⊂ PPT 负特征值 N&gt;0</text>')
-    el.append('<text class="xs c3-txt" x="504" y="378">⊂ 全部纠缠(含束缚)</text>')
+    el.append('<text class="xsb" x="570" y="304" text-anchor="middle">混态的物理层级</text>')
+    el.append('<text class="xs c2-txt" x="504" y="324">CHSH 等 Bell 违背</text>')
+    el.append('<text class="xs c4-txt" x="504" y="342">⊂ EPR 可导引</text>')
+    el.append('<text class="xs c1-txt" x="504" y="360">⊂ 量子纠缠</text>')
+    el.append('<text class="xs c3-txt" x="504" y="378">例：两比特 Werner 态</text>')
 
     # Right column: Mixed-state 3-tier cascade (x=666..926, w=260)
     # Tier 1: PPT
     el.append('<rect class="c1-soft" x="666" y="175" width="260" height="58" rx="9"/>')
     el.append('<text class="xsb c1-txt" x="678" y="194">① PPT 判据：求部分转置 ρᵀᴮ 特征值</text>')
     el.append('<text class="xs" x="678" y="212">λ_min &lt; 0 ⇒ 必纠缠（负性 N(ρ) &gt; 0）</text>')
-    el.append('<text class="xsb" x="678" y="227">2×2, 2×3 充要；d ≥ 3×3 仅充分</text>')
+    el.append('<text class="xsb" x="678" y="227">2×2、2×3 充要；其他维数仅充分</text>')
 
     el.extend(arrow_line(796, 234, 796, 253, stroke_cls="axis", fill_cls="axis-fill", sw=1.5, length=7.0, half_w=3.2))
-    el.append('<text class="xs" x="804" y="247">λ_min≥0 或需少测</text>')
+    el.append('<text class="xs" x="804" y="247">只测少量关联</text>')
 
     # Tier 2: Entanglement witness
     el.append('<rect class="c4-soft" x="666" y="255" width="260" height="58" rx="9"/>')
@@ -596,19 +601,19 @@ def build_fig2_schmidt_entanglement_tree() -> tuple[str, dict[str, object]]:
     el.append('<text class="xs" x="678" y="307">免完整层析，但依赖测量基校准可信</text>')
 
     el.extend(arrow_line(796, 314, 796, 333, stroke_cls="axis", fill_cls="axis-fill", sw=1.5, length=7.0, half_w=3.2))
-    el.append('<text class="xs" x="804" y="327">零信任/黑盒检验</text>')
+    el.append('<text class="xs" x="804" y="327">仅用输入与输出</text>')
 
     # Tier 3: Bell-CHSH
     el.append('<rect class="c2-soft" x="666" y="335" width="260" height="57" rx="9"/>')
-    el.append('<text class="xsb c2-txt" x="678" y="353">③ Bell–CHSH 检验（设备无关）</text>')
+    el.append('<text class="xsb c2-txt" x="678" y="353">③ Bell 检验（如 CHSH）</text>')
     el.append('<text class="xs" x="678" y="371">|S| &gt; 2 ⇒ 非局域且必纠缠（比纠缠更强）</text>')
-    el.append('<text class="xs" x="678" y="386">仅充分：Werner 态 p∈(1/3, 1/√2] 不违背</text>')
+    el.append('<text class="xs" x="678" y="386">Werner 态 q≤1/√2 不违背 CHSH</text>')
 
-    el.extend(note_bar(492, 404, 434, "速查：2×2 混态首选 PPT/共生度；省测选见证 W；设备无关必测 CHSH"))
+    el.extend(note_bar(492, 404, 434, "2×2 混态可用 PPT；少量校准测量可用见证；黑盒还可用其他 Bell 检验"))
 
     svg = svg_doc(
         "双比特 Schmidt 分解曲线与混态纠缠判据决策树",
-        "左面板绘出双比特纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的 Schmidt 奇异值 (cosθ, sinθ) 与纠缠熵 S(ρ_A) 实算曲线，在 θ=π/4 达最大纠缠 1 ebit；右面板整合纯态与混态纠缠判据决策树，依次覆盖 PPT、纠缠见证与设备无关 Bell-CHSH 检验。",
+        "左面板绘出双比特纯态 |ψ(θ)⟩ = cosθ|00⟩ + sinθ|11⟩ 的 Schmidt 奇异值 (cosθ, sinθ) 与纠缠熵 S(ρ_A) 实算曲线，在 θ=π/4 达最大纠缠 1 ebit；右面板整合纯态与混态纠缠判据决策树，分别列出 PPT、固定纠缠见证和 Bell 检验的条件，并单列非局域、可导引与纠缠的物理层级。",
         el,
     )
     return svg, {"S_pi4": 1.0, "S_pi8": round(s_pi8, 6)}
@@ -1489,9 +1494,9 @@ def build_fig7_color_xzzx_codes() -> tuple[str, dict[str, object]]:
     el.append('<text class="xsb" x="106" y="349">红/绿/蓝面元各载 X 与 Z 稳定子（H_X = H_Z 自对偶）</text>')
     el.append('<circle class="qnode-err" cx="53" cy="368" r="4.8"/>')
     el.append('<text class="xs c2-txt" x="66" y="372">内部单比特错同时点亮 3 色面元（超边，需 Chromobius 解码）</text>')
-    el.append('<text class="xs c3-txt" x="46" y="388">比特密度 (3d²+1)/4 省 ~25%；全 Clifford 横向（逻辑 S = (S†)⊗ⁿ）</text>')
+    el.append('<text class="xs c3-txt" x="46" y="388">横向 S：两子格分别用 S 和 S†；d = 3 可统一用 S†</text>')
 
-    el.extend(note_bar(34, 404, 432, "二维颜色码以权重 6 校验与超边解码为代价，换取全 Clifford 群横向能力"))
+    el.extend(note_bar(34, 404, 432, "权重 6 的面元在均匀 S† 下变号，交错相位门保持原校验扇区"))
 
     # Right panel: XZZX surface code under pure Z bias (x=492..940, w=448)
     el.extend(panel_shell(492, 68, 448, 376, "2. 偏置噪声 XZZX 表面码：纯 Z 错解耦为 1D 对角链"))

@@ -7,6 +7,9 @@ execute vendor files, use cloud accounts, or represent new hardware experiments.
 import json
 import math
 import pathlib
+import sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from validation_reports import write_result
 
 
 def zero_failure_upper(n, alpha=0.05):
@@ -107,8 +110,8 @@ def main():
         'qpd': {'weights': weights, 'conditional_means': means,
                 'gamma': gamma, 'expectation': expectation, 'variance': variance,
                 'independent_CNOT_cut_bounds': {str(k): 9**k for k in range(5)}}}
-    dest = pathlib.Path(__file__).with_name('research-results.json')
-    dest.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
+    dest = pathlib.Path(__file__).resolve().with_name('research-results.json')
+    write_result(dest, json.dumps(report, ensure_ascii=False, indent=2)+'\n')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 

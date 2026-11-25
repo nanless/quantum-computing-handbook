@@ -11,6 +11,37 @@
 
     const binStr = (idx, n) => idx.toString(2).padStart(n, '0');
 
+    function toggleTarget(idx) {
+      const targets = new Set(gState.targets);
+      if (targets.has(idx)) {
+        if (targets.size === 1) return;
+        targets.delete(idx);
+      } else {
+        if (targets.size >= Math.min(2, gState.N - 1)) targets.delete(targets.values().next().value);
+        targets.add(idx);
+      }
+      gState = M.groverInit(gState.n, [...targets]);
+      updateGroverUi();
+    }
+
+    const targetControls = byId('grover-targets');
+    function updateTargetControls(gm) {
+      if (targetControls.childElementCount !== gm.N) {
+        targetControls.replaceChildren();
+        for (let idx = 0; idx < gm.N; idx++) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'btn';
+          button.textContent = `|${binStr(idx, gm.n)}⟩`;
+          button.addEventListener('click', () => toggleTarget(idx));
+          targetControls.appendChild(button);
+        }
+      }
+      Array.from(targetControls.children).forEach((button, idx) => {
+        button.setAttribute('aria-pressed', String(gm.targets.includes(idx)));
+      });
+    }
+
     function renderGroverSvgs(gm) {
       // 1. Signed amplitude bar chart + dashed mean line (bars clickable to toggle marked target!)
       const gx0 = 52, gx1 = 618, yZero = 152, scaleY = 104;
@@ -59,6 +90,7 @@
       const curY = cy - R * gm.gProj;
       const deg = (gm.angle * 180) / Math.PI;
       const th0Deg = (gm.theta0 * 180) / Math.PI;
+      const overshot = gm.fullSteps > gm.kOpt && gm.pGood < gm.pOpt - 1e-12;
 
       byId('grover-plane-svg').innerHTML = `
         <rect x="2" y="2" width="636" height="236" rx="8" fill="var(--svg-bg)" stroke="var(--line)" stroke-width="1"/>
@@ -74,46 +106,33 @@
         <text x="${(sX + 8).toFixed(1)}" y="${(sY - 5).toFixed(1)}" fill="var(--amber)" font-family="var(--mono)" font-size="10.5" font-weight="700">|s⟩ (θ₀=${th0Deg.toFixed(1)}°)</text>
 
         <!-- Current state vector -->
-        <line x1="${cx}" y1="${cy}" x2="${curX.toFixed(1)}" y2="${curY.toFixed(1)}" stroke="${gm.isOvershot ? 'var(--red)' : 'var(--teal)'}" stroke-width="3.2" stroke-linecap="round"/>
-        <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="5.5" fill="${gm.isOvershot ? 'var(--red)' : 'var(--teal)'}" stroke="var(--panel)" stroke-width="2"/>
+        <line x1="${cx}" y1="${cy}" x2="${curX.toFixed(1)}" y2="${curY.toFixed(1)}" stroke="${overshot ? 'var(--red)' : 'var(--teal)'}" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="5.5" fill="${overshot ? 'var(--red)' : 'var(--teal)'}" stroke="var(--panel)" stroke-width="2"/>
 
         <!-- Right side geometry scorecard -->
         <rect x="366" y="42" width="260" height="178" rx="8" fill="var(--svg-card)" stroke="var(--line)" stroke-width="1.2"/>
         <text x="380" y="66" fill="var(--heading)" font-size="12" font-weight="700">当前几何坐标与成功概率</text>
-        <text x="380" y="92" fill="var(--muted)" font-family="var(--mono)" font-size="11">当前极角 α = ${deg.toFixed(1)}°（目标 90°）</text>
+        <text x="380" y="92" fill="var(--muted)" font-family="var(--mono)" font-size="11">当前主值角 α = ${deg.toFixed(1)}°</text>
         <text x="380" y="114" fill="var(--teal)" font-family="var(--mono)" font-size="11.5" font-weight="800">P(命中目标) = sin²α = ${(gm.pGood * 100).toFixed(2)}%</text>
         <text x="380" y="136" fill="var(--blue)" font-family="var(--mono)" font-size="11">P(非目标)   = cos²α = ${(gm.pBad * 100).toFixed(2)}%</text>
-        <text x="380" y="160" fill="var(--muted)" font-family="var(--mono)" font-size="11">最优步数 k* = ${gm.kOpt}（峰值 ${(gm.pOpt * 100).toFixed(2)}%）</text>
-        <text x="380" y="182" fill="${gm.isOvershot ? 'var(--red)' : 'var(--amber)'}" font-size="11" font-weight="700">${gm.halfPhase === 'after_oracle' ? '半拍：已完成 Oracle 翻负，请点 ② 扩散 D！' : gm.isOvershot ? '⚠ 已过旋转（过冲）：继续迭代反而转过头！' : `已完成 ${gm.fullSteps} 步完整 Grover 迭代`}</text>
+        <text x="380" y="160" fill="var(--muted)" font-family="var(--mono)" font-size="11">首峰步数 k* = ${gm.kOpt}（概率 ${(gm.pOpt * 100).toFixed(2)}%）</text>
+        <text x="380" y="182" fill="${overshot ? 'var(--red)' : 'var(--amber)'}" font-size="11" font-weight="700">${gm.halfPhase === 'after_oracle' ? '半拍：已完成 Oracle 翻负，请点 ② 扩散 D！' : overshot ? '当前概率已低于首峰' : `已完成 ${gm.fullSteps} 步完整 Grover 迭代`}</text>
         <text x="380" y="204" fill="var(--muted)" font-size="10.5">n=${gm.n} (N=${gm.N}), 目标数 M=${gm.M}</text>
       `;
 
       // Bind bar clicks for interactive target toggling
       byId('grover-bars-svg').querySelectorAll('[data-grover-toggle]').forEach(g => {
-        g.addEventListener('click', () => {
-          const idx = Number(g.getAttribute('data-grover-toggle'));
-          const cur = new Set(gState.targets);
-          if (cur.has(idx)) {
-            if (cur.size > 1) cur.delete(idx);
-          } else {
-            if (cur.size < Math.min(2, gState.N - 1)) cur.add(idx);
-            else {
-              const first = [...cur][0];
-              cur.delete(first);
-              cur.add(idx);
-            }
-          }
-          gState = M.groverInit(gState.n, [...cur]);
-          updateGroverUi();
-        });
+        g.addEventListener('click', () => toggleTarget(Number(g.dataset.groverToggle)));
       });
     }
 
     function updateGroverUi() {
       const gm = M.groverMetrics(gState);
+      const overshot = gm.fullSteps > gm.kOpt && gm.pGood < gm.pOpt - 1e-12;
+      const fullAngle = (2 * gm.fullSteps + 1) * gm.theta0 * 180 / Math.PI;
       byId('grover-step-val').textContent = gm.halfPhase === 'after_oracle'
         ? `第 ${gm.fullSteps + 1} 步 · 半拍 (Oracle 后)`
-        : `第 ${gm.fullSteps} 步（最优 k* = ${gm.kOpt}）`;
+        : `第 ${gm.fullSteps} 步（首峰 k* = ${gm.kOpt}）`;
       byId('grover-pgood-val').textContent = `${(gm.pGood * 100).toFixed(2)}%`;
       byId('grover-mean-val').textContent = M.fmtFixed(gm.mean, 4);
       byId('grover-angle-val').textContent = `${((gm.angle * 180) / Math.PI).toFixed(1)}° (2θ₀ = ${((2 * gm.theta0 * 180) / Math.PI).toFixed(1)}°)`;
@@ -130,23 +149,24 @@
       if (gm.halfPhase === 'after_oracle') {
         noteEl.classList.add('amber');
         noteEl.textContent = `半拍观察：Oracle 仅把目标态振幅翻负，此时测得目标的概率尚未变化（仍为 ${(gm.pGood * 100).toFixed(2)}%），但全场均值 μ 被拉低到 ${M.fmtFixed(gm.mean, 3)}——现在点击「② 扩散 D」看目标柱怎样被高高撬起！`;
-      } else if (gm.isOvershot) {
+      } else if (overshot) {
         noteEl.classList.add('warn');
-        noteEl.textContent = `⚠ 过旋转陷阱（Overshoot）：第 ${gm.fullSteps} 步已转过 |G⟩ 轴（α = ${((gm.angle * 180) / Math.PI).toFixed(1)}° > 90°），命中概率从最优 ${(gm.pOpt * 100).toFixed(2)}% 骤跌至 ${(gm.pGood * 100).toFixed(2)}%！Grover 不是“步数越多越准”。`;
+        noteEl.textContent = `第 ${gm.fullSteps} 步的累计角为 ${fullAngle.toFixed(1)}°，当前命中率 ${(gm.pGood * 100).toFixed(2)}%，低于首峰的 ${(gm.pOpt * 100).toFixed(2)}%。继续迭代时概率会周期性变化。`;
       } else if (gm.fullSteps === gm.kOpt) {
-        noteEl.textContent = `✓ 到达最优迭代步 k* = ${gm.kOpt}：命中概率达到峰值 ${(gm.pGood * 100).toFixed(2)}%！再多点一步试试观察“过冲跌落”。`;
+        noteEl.textContent = `到达首峰第 ${gm.kOpt} 步，命中概率 ${(gm.pGood * 100).toFixed(2)}%。`;
       } else {
         noteEl.textContent = `均匀叠加态（或未到峰值）：推荐用「① Oracle 反相」→「② 扩散 D」两步拆解，30 秒看懂振幅放大的几何本质。`;
       }
 
       document.querySelectorAll('[data-grover-preset]').forEach(b => {
         const key = b.dataset.groverPreset;
-        const active = (key === 'n2m1' && gm.n === 2 && gm.M === 1)
-          || (key === 'n3m1' && gm.n === 3 && gm.M === 1)
-          || (key === 'n3m2' && gm.n === 3 && gm.M === 2);
+        const active = (key === 'n2m1' && gm.n === 2 && gm.targets.join() === '3')
+          || (key === 'n3m1' && gm.n === 3 && gm.targets.join() === '5')
+          || (key === 'n3m2' && gm.n === 3 && gm.targets.join() === '5,6');
         b.setAttribute('aria-pressed', String(active));
       });
 
+      updateTargetControls(gm);
       renderGroverSvgs(gm);
     }
 

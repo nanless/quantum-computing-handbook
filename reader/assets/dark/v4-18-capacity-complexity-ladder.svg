@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="title desc">
   <title id="title">量子信道容量阶梯与核心计算复杂度类包含谱系</title>
-  <desc id="desc">左面板以精确解析公式绘出单比特擦除信道四类容量阶梯 Q = P = max(0,1−2ε) ≤ C = 1−ε ≤ C_E = 2(1−ε)、单比特退相位量子容量 Q_deph(p) = 1 − h₂(p) 与纯损耗玻色信道 PLOB 双向上界 −log₂(ε)（η = 1 − ε），并标出 ε = 1/2 处可降解/反降解相变点；右面板以嵌套层级展示 P ⊆ BPP ⊆ BQP ⊆ QCMA ⊆ QMA ⊆ QIP = PSPACE ⊆ MIP* = RE。</desc>
+  <desc id="desc">左面板以精确解析公式绘出单比特擦除信道四类容量阶梯 Q = P = max(0,1−2ε) ≤ C = 1−ε ≤ C_E = 2(1−ε)、单比特退相位量子容量 Q_deph(p) = 1 − h₂(p) 与纯损耗玻色信道 PLOB 双向上界 −log₂(ε)（η = 1 − ε），并标出 ε = 1/2 时可降解和反降解同时成立；右面板以嵌套层级展示 P ⊆ BPP ⊆ BQP ⊆ QCMA ⊆ QMA ⊆ QIP = PSPACE ⊆ MIP* = RE。</desc>
   <style>
 :root{color-scheme:dark}
 text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif}
@@ -162,8 +162,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <line class="grid" x1="70.0" y1="129.6" x2="466.0" y2="129.6"/>
   <line class="axis" x1="66.0" y1="129.6" x2="70.0" y2="129.6"/>
   <text class="sm" x="62.0" y="133.6" text-anchor="end">2.0</text>
-  <text class="sm" x="66.0" y="106.0" text-anchor="end">bit/use</text>
-  <text class="smb" x="268.0" y="341.0" text-anchor="middle">擦除/损耗率 ε（透射率 η = 1 − ε；退相位 p = ε）</text>
+  <text class="sm" x="66.0" y="106.0" text-anchor="end">每次使用</text>
+  <text class="smb" x="268.0" y="341.0" text-anchor="middle">曲线参数：擦除 ε、相位翻转 p、纯损耗 1−η</text>
   <line class="guide" x1="268.0" y1="112.0" x2="268.0" y2="306.0"/>
   <text class="sm c1-txt" x="262.0" y="125.0" text-anchor="end">可降解 ε ≤ ½</text>
   <line class="axis" x1="70.0" y1="112.0" x2="70.0" y2="306.0"/>
@@ -181,7 +181,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <circle class="c2-fill" cx="268.0" cy="217.8" r="3.4"/>
   <rect class="pill-bg" x="274.0" y="113.0" width="190.0" height="104.0" rx="6.0"/>
   <line class="c2" x1="282.0" y1="126.0" x2="304.0" y2="126.0" stroke-width="2.1" stroke-dasharray="6 3.5"/>
-  <text class="sm" x="310.0" y="130.0">PLOB −log₂(ε)（纯损耗）</text>
+  <text class="sm" x="310.0" y="130.0">PLOB −log₂(1−η)</text>
   <line class="c5" x1="282.0" y1="145.0" x2="304.0" y2="145.0" stroke-width="2.1" />
   <text class="sm" x="310.0" y="149.0">C_E = 2(1−ε)（纠缠辅助）</text>
   <line class="c3" x1="282.0" y1="164.0" x2="304.0" y2="164.0" stroke-width="2.1" />
@@ -191,8 +191,8 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <line class="c4" x1="282.0" y1="202.0" x2="304.0" y2="202.0" stroke-width="2.1" stroke-dasharray="5 2.5 1.5 2.5"/>
   <text class="sm" x="310.0" y="206.0">Q_deph = 1−h₂(p)（退相位）</text>
   <rect class="note" x="32.0" y="355.0" width="440.0" height="69.0" rx="7.0"/>
-  <text class="smb" x="42.0" y="374.0">ε = ¼ 擦除阶梯：Q = P = 0.50 ≤ C = 0.75 ≤ C_E = 1.50 bit/use</text>
-  <text class="sm" x="42.0" y="394.0">ε = ½ 相变点：右区反降解使 Q = P = 0，但预共享纠缠 C_E &gt; 0 仍非零</text>
+  <text class="smb" x="42.0" y="374.0">ε = ¼：C = 0.75 bit，Q = 0.50 qubit，P = 0.50 私密 bit，C_E = 1.50 bit</text>
+  <text class="sm" x="42.0" y="394.0">ε = ½ 同时可降解、反降解；ε ≥ ½ 时 Q = P = 0</text>
   <text class="sm c2-txt" x="42.0" y="414.0">PLOB 上界 −log₂(1−η) 约束无量子中继的纯损耗光纤双向量子容量</text>
   <rect class="panel" x="496.0" y="64.0" width="444.0" height="370.0" rx="10.0"/>
   <rect class="phead" x="497.0" y="65.0" width="442.0" height="28.0" rx="9.0"/>
@@ -203,7 +203,7 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <text class="sm" x="918.0" y="123.0" text-anchor="end">纠缠多证明者交互验证（含停机问题）</text>
   <rect class="c5-soft" x="518.0" y="132.0" width="400.0" height="234.0" rx="8.0"/>
   <text class="lblb c5-txt" x="530.0" y="153.0">QIP = IP = PSPACE</text>
-  <text class="sm" x="908.0" y="153.0" text-anchor="end">多项式空间 / 3 轮量子交互</text>
+  <text class="sm" x="908.0" y="153.0" text-anchor="end">多项式空间 / 已证三消息并行化</text>
   <rect class="c4-soft" x="528.0" y="162.0" width="380.0" height="198.0" rx="8.0"/>
   <text class="lblb c4-txt" x="540.0" y="183.0">QMA</text>
   <text class="sm" x="898.0" y="183.0" text-anchor="end">量子见证态 + BQP（k-局域哈密顿量）</text>
@@ -221,6 +221,6 @@ text{font-family:system-ui,-apple-system,'PingFang SC','Hiragino Sans GB','Micro
   <text class="sm" x="842.0" y="317.0" text-anchor="end">经典确定性多项式时间</text>
   <rect class="subpanel" x="508.0" y="380.0" width="420.0" height="44.0" rx="7.0"/>
   <text class="smb" x="518.0" y="398.0">已证 P ⊆ NP ⊆ QCMA ⊆ QMA；BQP 与 NP 相互包含关系仍未决</text>
-  <text class="sm" x="518.0" y="416.0">量子采样优势（RCS / IQP / BosonSampling）依赖 PH 不坍塌假设</text>
+  <text class="sm" x="518.0" y="416.0">近似采样难度还依赖各线路族的平均情形猜想</text>
   <text class="sm" x="22.0" y="450.0">数学口径：第 18 章 §5.1–§5.2 与 §7；对数以 2 为底，纯损耗玻色信道透射率 η = 1 − ε，PLOB 上界 −log₂(1−η) 为无中继光纤双向量子容量极限。</text>
 </svg>

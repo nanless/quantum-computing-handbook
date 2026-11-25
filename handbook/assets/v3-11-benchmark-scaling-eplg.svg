@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="v3-11-benchmark-scaling-eplg-title v3-11-benchmark-scaling-eplg-desc">
-  <title id="v3-11-benchmark-scaling-eplg-title">随机基准指数衰减与 100 比特链 EPLG/PEC 采样天花板</title>
-  <desc id="v3-11-benchmark-scaling-eplg-desc">左面板展示随机基准 P(m)=Aα^m+B 剥离 SPAM 截距的指数衰减曲线与无纠错电路存活标度 (1-r)^G；右面板双轴展示 100 比特连通链层保真度 LF=(1-EPLG)^99 与 D=2, 5 周期 PEC 采样放大倍数 LF^(-4D)。</desc>
+  <title id="v3-11-benchmark-scaling-eplg-title">随机基准指数衰减与 100 比特链 EPLG/PEC 采样模型预算</title>
+  <desc id="v3-11-benchmark-scaling-eplg-desc">左面板展示随机基准 P(m)=Aα^m+B 剥离 SPAM 截距的指数衰减曲线与无纠错电路存活标度 (1-r)^G；右面板双轴展示 100 比特连通链层保真度 LF=(1-EPLG)^99 与 D=2, 5 周期 PEC 样本预算 LF^(-4D)。</desc>
   <style>
     :root{color-scheme:light dark}
     .bg{fill:#f8fafc}
@@ -85,7 +85,7 @@
     }
   </style>
   <rect class="bg" width="1000" height="580" rx="20"/>
-  <text class="title ink" x="34" y="44">随机基准指数衰减与 100 比特链 EPLG / PEC 采样天花板</text>
+  <text class="title ink" x="34" y="44">随机基准指数衰减与 100 比特链 EPLG / PEC 采样模型预算</text>
   <text class="subtitle muted" x="34" y="68">左：RB 衰减 P(m)=Aα<tspan dy="-4.5" font-size="9.2">m</tspan><tspan dy="4.5">&#8203;</tspan>+B 剥离 SPAM 截距及门数标度 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan>；右：100 比特链层保真度 LF 与 PEC 采样放大倍数</text>
   <rect class="card" x="32" y="84" width="452" height="446" rx="12"/>
   <text class="h2 ink" x="48" y="108">(a) RB 剥离 SPAM 截距与 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan> 标度</text>
@@ -160,7 +160,7 @@
   <text class="xs ink" x="52" y="403.0" text-anchor="middle" transform="rotate(-90 52 403.0)">存活率 (1−r)<tspan dy="-4.5" font-size="9.2">G</tspan><tspan dy="4.5">&#8203;</tspan></text>
   <text class="xs muted" x="48" y="518">注：α=1−p 为退极化保留底数（§3.1）；相干过旋转可按 O(√r) 偏离 RB。</text>
   <rect class="card" x="500" y="84" width="468" height="446" rx="12"/>
-  <text class="h2 ink" x="516" y="108">(b) 100 比特链层保真度 LF 与 PEC 天花板</text>
+  <text class="h2 ink" x="516" y="108">(b) 100 比特链层保真度 LF 与 PEC 模型预算</text>
   <line class="grid" x1="562.0" y1="134.0" x2="562.0" y2="440.0"/>
   <line class="axis" style="stroke-width:1.3" x1="562.0" y1="440.0" x2="562.0" y2="445.0"/>
   <text class="xs ink" x="562.0" y="462.0" text-anchor="middle">0.0%</text>
@@ -213,7 +213,7 @@
   <rect class="axis" x="562.0" y="134.0" width="326.0" height="306.0"/>
   <text class="lbl ink" x="725.0" y="484.0" text-anchor="middle">每层门错误率 EPLG（%）</text>
   <text class="lbl accent" x="518" y="287.0" text-anchor="middle" transform="rotate(-90 518 287.0)">100 比特链层保真度 LF</text>
-  <text class="lbl warn" x="952" y="287.0" text-anchor="middle" transform="rotate(90 952 287.0)">PEC 采样放大倍数 LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan></text>
-  <text class="xs muted" x="516" y="518">每砖墙周期含奇偶两层并行门（99 条边）；方差开销 ≳ LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan>。</text>
-  <text class="sm muted" x="34" y="554">注：RB 解决单/双门 SPAM 剥离，LF/EPLG 捕捉全链并行串扰，两者共同划定无纠错误差缓解（PEC）的深度上限。</text>
+  <text class="lbl warn" x="952" y="287.0" text-anchor="middle" transform="rotate(90 952 287.0)">PEC 样本预算 LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan></text>
+  <text class="xs muted" x="516" y="518">每周期含奇偶双层（99 边）；模型预算 LF<tspan dy="-4.5" font-size="9.2">−4D</tspan><tspan dy="4.5">&#8203;</tspan>。</text>
+  <text class="sm muted" x="34" y="554">注：右图假设小噪声与独立的 Pauli 因子，实际 PEC 范数由所用逆信道决定。</text>
 </svg>
