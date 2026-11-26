@@ -149,6 +149,7 @@ jobs:
         with:
           artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
           path: ${{ runner.temp }}/release-suite
+          merge-multiple: true
 
       - name: Verify downloaded files, version, and source commit
         env:
@@ -178,6 +179,7 @@ jobs:
         with:
           artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
           path: dist/release
+          merge-multiple: true
 
       - name: Verify uploaded assets and publish new Release
         env:
