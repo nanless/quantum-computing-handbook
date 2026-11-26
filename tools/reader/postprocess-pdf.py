@@ -72,6 +72,7 @@ HEADER_TEXT_COLOR = (0x53 / 255.0, 0x66 / 255.0, 0x60 / 255.0)  # #536660
 MARGIN_X_PT = 15.0 * 72.0 / 25.4  # 15 mm = 42.520 pt
 
 KANGXI_RADICAL_RE = re.compile(r"[\u2e80-\u2eff\u2f00-\u2fdf]")
+CJK_TEXT_RE = re.compile(r"[\u4e00-\u9fff]")
 UNRENDERED_TEX_RE = re.compile(
     r"\\(?:frac|dfrac|tfrac|begin|end|ket|bra|braket|rangle|langle|otimes|"
     r"operatorname|mathbb|mathcal|mathrm|mathbf|sqrt|sum|prod|int)(?![A-Za-z])"
@@ -947,6 +948,18 @@ def render_previews(doc: fitz.Document, preview_pages: dict[str, int], preview_d
     return rendered
 
 
+def prose_line_font_sizes(spans: list[dict], page_height: float) -> list[float]:
+    """Sample CJK glyphs by line, even when Chrome emits a span per glyph."""
+    sizes = []
+    for span in spans:
+        top, bottom = span["bbox"][1], span["bbox"][3]
+        size = float(span["size"])
+        if 37.0 <= top and bottom <= page_height - 37.0 and 7.0 <= size <= 13.0:
+            count = len(CJK_TEXT_RE.findall(span.get("text") or ""))
+            sizes.extend([round(size, 2)] * count)
+    return sizes if len(sizes) >= 6 else []
+
+
 def run_qa_audit(
     final_pdf: Path,
     manifest: dict,
@@ -1093,14 +1106,11 @@ def run_qa_audit(
                 if block.get("type") != 0:
                     continue
                 for line in block.get("lines", []):
-                    for span in line.get("spans", []):
+                    spans = line.get("spans", [])
+                    prose_font_sizes.extend(prose_line_font_sizes(spans, ph))
+                    for span in spans:
                         stext = (span.get("text") or "").strip()
-                        sz = float(span.get("size", 0.0))
                         bbox = span.get("bbox", (0, 0, 0, 0))
-                        if bbox[1] >= 37.0 and bbox[3] <= ph - 37.0:
-                            cjk_len = len(re.findall(r"[\u4e00-\u9fff]", stext))
-                            if cjk_len >= 6 and 7.0 <= sz <= 13.0:
-                                prose_font_sizes.append(round(sz, 2))
                         if len(stext) >= 3 and bbox[2] > margin_limit and len(overflow_samples) < 20:
                             overflow_samples.append({
                                 "page": p1,
@@ -1244,6 +1254,7 @@ def run_qa_audit(
             "sparsePages": sparse_pages[:30],
             "bodyFontPt": {
                 "samples": len(prose_font_sizes),
+                "unit": "CJK characters",
                 "median": median_body_pt,
                 "p10": p10_body_pt,
             },
@@ -1579,6 +1590,7 @@ def main(argv: list[str] | None = None) -> int:
             "kangxiRadicalCount": report["metrics"]["kangxiRadicalCount"],
             "blankPages": report["metrics"]["blankPages"],
             "bodyFontMedianPt": report["metrics"]["bodyFontPt"]["median"],
+            "bodyFontCjkSamples": report["metrics"]["bodyFontPt"]["samples"],
             "taggedPdf": report["metrics"]["taggedPdf"],
             "timingsSec": report["metrics"]["timingsSec"],
             "checks": report["checks"],

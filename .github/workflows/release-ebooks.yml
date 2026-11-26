@@ -89,6 +89,7 @@ jobs:
         run: |
           make test
           python3 tools/reader/test-release-publish.py
+          python3 tools/reader/test-pdf-postprocess.py
           make lint
 
       - name: Build and verify offline web reader
