@@ -1,51 +1,19 @@
-name: Release Ebooks and Offline Reader
+name: Diagnose Linux PDF typography
 
-on:
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: "Existing GitHub Release tag for this commit; leave blank for workflow artifacts only"
-        required: false
-        type: string
-        default: ""
-      prerelease:
-        description: "Mark GitHub Release as pre-release"
-        required: false
-        type: boolean
-        default: false
+on: workflow_dispatch
 
 permissions:
   contents: read
 
-concurrency:
-  group: "release-${{ inputs.release_tag || github.ref }}"
-  cancel-in-progress: false
-
 jobs:
-  build:
+  pdf:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    outputs:
-      source_commit: ${{ steps.identity.outputs.commit }}
-      version: ${{ steps.identity.outputs.version }}
-      suite_artifact_id: ${{ steps.suite.outputs.artifact-id }}
+    timeout-minutes: 30
     env:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set the build version and verify any release tag
-        id: identity
-        env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
-        run: |
-          commit="$(git rev-parse HEAD)"
-          if [ -n "$RELEASE_TAG" ]; then
-            python3 tools/reader/release-publish.py tag --version "$RELEASE_TAG" --commit "$commit"
-          fi
-          version="${RELEASE_TAG:-v0.0.0-ci.${GITHUB_RUN_ID}.${GITHUB_RUN_ATTEMPT}}"
-          printf 'commit=%s\nversion=%s\n' "$commit" "$version" >> "$GITHUB_OUTPUT"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -58,12 +26,6 @@ jobs:
           node-version: "22"
           cache: "npm"
           cache-dependency-path: "tools/reader/package-lock.json"
-
-      - name: Setup Java for EPUBCheck
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
 
       - name: Cache Playwright browsers
         id: playwright-cache
@@ -85,112 +47,27 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r tools/reader/requirements-pdf.txt
 
-      - name: Run offline stdlib experiments and quality gates
-        run: |
-          make test
-          python3 tools/reader/test-release-publish.py
-          make lint
-
-      - name: Build and verify offline web reader
-        run: |
-          node tools/reader/build.mjs
-          node tools/reader/verify.mjs
-
-      - name: Render, post-process and audit the A4 PDF
+      - name: Reproduce the PDF output and font gate
+        id: pdf
         env:
           PDF_PRINT_CONCURRENCY: "2"
-        run: /usr/bin/time -v node tools/reader/build-pdf.mjs
-
-      - name: Build the EPUB 3 ebook
-        env:
-          HANDBOOK_RELEASE_TAG: ${{ inputs.release_tag }}
-        run: node tools/reader/build-epub.mjs
-
-      - name: Validate EPUB against the official checker
         run: |
-          archive="$RUNNER_TEMP/epubcheck-5.4.0.zip"
-          curl --fail --silent --show-error --location --retry 3 \
-            https://github.com/w3c/epubcheck/releases/download/v5.4.0/epubcheck-5.4.0.zip \
-            --output "$archive"
-          printf '%s  %s\n' 33350c61038e71dfb3d45a76aed04bf5481e6d5500cb780f6e98db8bbd15a28c "$archive" | sha256sum -c -
-          unzip -q "$archive" -d "$RUNNER_TEMP"
-          java -jar "$RUNNER_TEMP/epubcheck-5.4.0/epubcheck.jar" dist/quantum-computing-handbook.epub --failonwarnings
+          mkdir -p "$RUNNER_TEMP/pdf-run"
+          rm -f dist/quantum-computing-handbook.pdf work/research/pdf-build-report.json
+          status=0
+          /usr/bin/time -v node tools/reader/build-pdf.mjs || status=$?
+          for file in dist/quantum-computing-handbook.pdf work/research/pdf-build-report.json; do
+            if [ -f "$file" ]; then
+              cp "$file" "$RUNNER_TEMP/pdf-run/"
+            fi
+          done
+          exit "$status"
 
-      - name: Package and verify release suite
-        env:
-          BUILD_VERSION: ${{ steps.identity.outputs.version }}
-          SOURCE_COMMIT: ${{ steps.identity.outputs.commit }}
-        run: |
-          node tools/reader/build-release.mjs --version "$BUILD_VERSION" --source-commit "$SOURCE_COMMIT"
-          python3 tools/reader/release-publish.py suite --version "$BUILD_VERSION" --commit "$SOURCE_COMMIT"
-
-      - name: Upload release suite artifact
-        id: suite
+      - name: Retain the freshly built PDF and QA report
+        if: ${{ always() && steps.pdf.outcome != 'skipped' }}
         uses: actions/upload-artifact@v4
         with:
-          name: handbook-release-suite-${{ github.run_attempt }}
-          path: dist/release/
+          name: linux-pdf-diagnostics
+          path: ${{ runner.temp }}/pdf-run
           if-no-files-found: error
-          compression-level: 0
-          retention-days: 14
-
-  verify:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out the build source
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.build.outputs.source_commit }}
-
-      - name: Download the build artifact by ID
-        uses: actions/download-artifact@v4
-        with:
-          artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
-          path: ${{ runner.temp }}/release-suite
-          merge-multiple: true
-
-      - name: Verify downloaded files, version, and source commit
-        env:
-          BUILD_VERSION: ${{ needs.build.outputs.version }}
-          SOURCE_COMMIT: ${{ needs.build.outputs.source_commit }}
-        run: |
-          cd "$RUNNER_TEMP/release-suite"
-          sha256sum -c SHA256SUMS.txt
-          python3 "$GITHUB_WORKSPACE/tools/reader/release-publish.py" suite \
-            --directory . --version "$BUILD_VERSION" --commit "$SOURCE_COMMIT"
-
-  publish:
-    needs: [build, verify]
-    if: inputs.release_tag != ''
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - name: Check out the validated source commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.build.outputs.source_commit }}
-
-      - name: Download release suite artifact
-        uses: actions/download-artifact@v4
-        with:
-          artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
-          path: dist/release
-          merge-multiple: true
-
-      - name: Verify uploaded assets and publish new Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SOURCE_COMMIT: ${{ needs.build.outputs.source_commit }}
-          INPUT_TAG: ${{ inputs.release_tag }}
-          INPUT_PRERELEASE: ${{ inputs.prerelease }}
-        run: |
-          options=()
-          if [ "$INPUT_PRERELEASE" = "true" ]; then
-            options+=(--prerelease)
-          fi
-          python3 tools/reader/release-publish.py publish --version "$INPUT_TAG" \
-            --commit "$SOURCE_COMMIT" --repository "$GITHUB_REPOSITORY" "${options[@]}"
+          retention-days: 3
