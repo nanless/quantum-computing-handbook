@@ -64,6 +64,7 @@ node tools/reader/build-epub.mjs
 - `.github/workflows/release-ebooks.yml` 通过手动操作触发。留空 `release_tag` 会生成带运行编号和尝试编号的 `v0.0.0-ci.<run>.<attempt>` 测试版本，发布任务会跳过。测试和正式发行都构建 PDF、EPUB、Web ZIP 与代码 ZIP，并生成 `BUILDINFO.json` 和 `SHA256SUMS.txt`。只读任务按制品 ID 下载归档，核对文件、校验和、版本及提交。
 - 发行标签填写已存在且指向构建提交的标签。正式发布复用已经过回读检查的制品，先上传至草稿，下载复核全部制品后再公开。只有发布任务拥有写权限。失败后保留草稿，重跑失败的发布任务会继续使用同一个制品。已公开的发行仅校验。
 - 定位 PDF 构建问题时，在运行日志中打开 A4 PDF 步骤。Chromium 退出和 PDF 合并、链接与书签、字体子集、保存、验收都分别记录开始及结束。成功时还能查看构建耗时和最大常驻内存。EPUB 的构建与 EPUBCheck 各有独立步骤。
+- PDF 按块构建时沿用 Chromium 已写出的页面内容流。合订后执行字体子集化和哈希去重，最终保存压紧交叉引用表并压缩流，由全书验收检查目录跳转、页码、字体与版面。
 
 本地打包使用 `make release VERSION=v1.2.3 EPUBCHECK_JAR=/path/to/epubcheck.jar`。如果本机已有 `epubcheck` 命令，可省略 JAR 参数。正式工作流使用固定版本的官方 EPUBCheck 并拒绝错误与警告。打包前核对 Web、PDF、EPUB 构建时的源文件摘要及各成品摘要。打包器实际离线打开解压后的 Web ZIP，并运行代码 ZIP 适用的公开检查。完整仓库的 vendor 快照仍由 `make test` 校验。
 
