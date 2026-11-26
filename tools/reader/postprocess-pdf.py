@@ -16,8 +16,9 @@ Supports --probe-pages (Pass 1 -> Pass 2 TOC page-number loop), chunked mode
 4. Removes any partial /StructTreeRoot or /MarkInfo when untagged (noting native
    MathML 3 EPUB 3 as the preferred accessible edition), runs doc.subset_fonts(),
    normalizes Kangxi /ToUnicode CMaps, performs two-stage leaf + Image/SMask
-   stream deduplication, and saves with garbage=4, deflate, clean=True, and
-   use_objstms=True.
+   stream deduplication, and saves with garbage=2, deflate, clean=True, and
+   use_objstms=True. The save removes unreferenced objects and compacts the
+   xref table after the explicit hash-based deduplication.
 5. Runs automated publishing QA gates (reporting totalPages, fileSizeMiB,
    embeddedFonts, tocPageNumberCoverage, /PageLabels, and 0-offset alignment).
 """
@@ -1509,7 +1510,9 @@ def main(argv: list[str] | None = None) -> int:
         t_dedup = round(time.time() - t3, 2)
 
         t4 = time.time()
-        save_options = {"garbage": 4, "clean": True}
+        # The explicit deduplicator already handles leaf and image streams.
+        # Avoid MuPDF's quadratic comparison of all reachable PDF objects.
+        save_options = {"garbage": 2, "clean": True}
         log_stage("pdf-final-save", "start", xrefs=doc.xref_length(), **save_options)
         doc.save(
             str(out_tmp),

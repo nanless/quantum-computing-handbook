@@ -61,7 +61,9 @@ node tools/reader/build-epub.mjs
 
 - `.github/workflows/ci.yml`：在 `push` 与 `pull_request` 时运行全套离线验收门禁（`python3 codes/run_all.py`、质量与隐私门禁、算例/题答复核、`build.mjs` 与 `verify.mjs`），显式安装 `fonts-noto-cjk` 与 `fonts-wqy-zenhei` 并缓存 Playwright 浏览器。
 - `.github/workflows/pages.yml`：在主分支更新或手动触发时执行完整离线门禁与构建验证，收紧 `build` job 至只读权限，将 `reader/` 与带 GitHub Releases 入口的 `_pages/dist/index.html` 发布至 GitHub Pages。
-- `.github/workflows/release-ebooks.yml` 通过手动操作触发。留空发行标签时只生成本次工作流制品。填写已存在的发行标签时，工作流在构建和发布前分别核对标签指向构建提交。全套文件包括 PDF、EPUB、Web ZIP、代码 ZIP、`BUILDINFO.json` 和 `SHA256SUMS.txt`。新发行先上传到草稿，下载复核所有制品再公开。失败后保留草稿，同一套制品可重试，已公开的版本只允许比对。
+- `.github/workflows/release-ebooks.yml` 通过手动操作触发。留空 `release_tag` 会生成带运行编号和尝试编号的 `v0.0.0-ci.<run>.<attempt>` 测试版本，发布任务会跳过。测试和正式发行都构建 PDF、EPUB、Web ZIP 与代码 ZIP，并生成 `BUILDINFO.json` 和 `SHA256SUMS.txt`。只读任务按制品 ID 下载归档，核对文件、校验和、版本及提交。
+- 发行标签填写已存在且指向构建提交的标签。正式发布复用已经过回读检查的制品，先上传至草稿，下载复核全部制品后再公开。只有发布任务拥有写权限。失败后保留草稿，重跑失败的发布任务会继续使用同一个制品。已公开的发行仅校验。
+- 定位 PDF 构建问题时，在运行日志中打开 A4 PDF 步骤。Chromium 退出和 PDF 合并、链接与书签、字体子集、保存、验收都分别记录开始及结束。成功时还能查看构建耗时和最大常驻内存。EPUB 的构建与 EPUBCheck 各有独立步骤。
 
 本地打包使用 `make release VERSION=v1.2.3 EPUBCHECK_JAR=/path/to/epubcheck.jar`。如果本机已有 `epubcheck` 命令，可省略 JAR 参数。正式工作流使用固定版本的官方 EPUBCheck 并拒绝错误与警告。打包前核对 Web、PDF、EPUB 构建时的源文件摘要及各成品摘要。打包器实际离线打开解压后的 Web ZIP，并运行代码 ZIP 适用的公开检查。完整仓库的 vendor 快照仍由 `make test` 校验。
 

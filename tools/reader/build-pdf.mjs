@@ -1393,16 +1393,21 @@ ${partGroupsHtml}
     // Close Chrome before Python postprocess to free RAM immediately
     if (browser) {
       const closeStartMs = Date.now();
-      console.error(JSON.stringify({ stage: 'chrome-close', event: 'start', nodeRssBytes: process.memoryUsage().rss, freeSystemBytes: os.freemem() }));
+      fsSync.writeSync(process.stderr.fd, JSON.stringify({
+        stage: 'chrome-close',
+        event: 'start',
+        nodeRssBytes: process.memoryUsage().rss,
+        freeSystemBytes: os.freemem(),
+      }) + '\n');
       await browser.close();
       browser = null;
-      console.error(JSON.stringify({
+      fsSync.writeSync(process.stderr.fd, JSON.stringify({
         stage: 'chrome-close',
         event: 'end',
         elapsedSec: +((Date.now() - closeStartMs) / 1000).toFixed(2),
         nodeRssBytes: process.memoryUsage().rss,
         freeSystemBytes: os.freemem(),
-      }));
+      }) + '\n');
     }
 
     if (!skipPostprocess) {
