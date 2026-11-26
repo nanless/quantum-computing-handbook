@@ -27,13 +27,15 @@ jobs:
     timeout-minutes: 60
     outputs:
       source_commit: ${{ steps.identity.outputs.commit }}
+      version: ${{ steps.identity.outputs.version }}
+      suite_artifact_id: ${{ steps.suite.outputs.artifact-id }}
     env:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Bind the release tag to the checked-out commit
+      - name: Set the build version and verify any release tag
         id: identity
         env:
           RELEASE_TAG: ${{ inputs.release_tag }}
@@ -42,7 +44,8 @@ jobs:
           if [ -n "$RELEASE_TAG" ]; then
             python3 tools/reader/release-publish.py tag --version "$RELEASE_TAG" --commit "$commit"
           fi
-          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          version="${RELEASE_TAG:-v0.0.0-ci.${GITHUB_RUN_ID}.${GITHUB_RUN_ATTEMPT}}"
+          printf 'commit=%s\nversion=%s\n' "$commit" "$version" >> "$GITHUB_OUTPUT"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -93,13 +96,15 @@ jobs:
           node tools/reader/build.mjs
           node tools/reader/verify.mjs
 
-      - name: Build A4 PDF and EPUB 3 ebooks
+      - name: Render, post-process and audit the A4 PDF
         env:
           PDF_PRINT_CONCURRENCY: "2"
+        run: /usr/bin/time -v node tools/reader/build-pdf.mjs
+
+      - name: Build the EPUB 3 ebook
+        env:
           HANDBOOK_RELEASE_TAG: ${{ inputs.release_tag }}
-        run: |
-          node tools/reader/build-pdf.mjs
-          node tools/reader/build-epub.mjs
+        run: node tools/reader/build-epub.mjs
 
       - name: Validate EPUB against the official checker
         run: |
@@ -113,22 +118,50 @@ jobs:
 
       - name: Package and verify release suite
         env:
-          INPUT_TAG: ${{ inputs.release_tag }}
+          BUILD_VERSION: ${{ steps.identity.outputs.version }}
           SOURCE_COMMIT: ${{ steps.identity.outputs.commit }}
         run: |
-          release_tag="${INPUT_TAG:-v1.0.0}"
-          node tools/reader/build-release.mjs --version "$release_tag" --source-commit "$SOURCE_COMMIT"
-          python3 tools/reader/release-publish.py suite --version "$release_tag" --commit "$SOURCE_COMMIT"
+          node tools/reader/build-release.mjs --version "$BUILD_VERSION" --source-commit "$SOURCE_COMMIT"
+          python3 tools/reader/release-publish.py suite --version "$BUILD_VERSION" --commit "$SOURCE_COMMIT"
 
       - name: Upload release suite artifact
+        id: suite
         uses: actions/upload-artifact@v4
         with:
-          name: handbook-release-suite
+          name: handbook-release-suite-${{ github.run_attempt }}
           path: dist/release/
+          if-no-files-found: error
+          compression-level: 0
           retention-days: 14
 
-  publish:
+  verify:
     needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the build source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.build.outputs.source_commit }}
+
+      - name: Download the build artifact by ID
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
+          path: ${{ runner.temp }}/release-suite
+
+      - name: Verify downloaded files, version, and source commit
+        env:
+          BUILD_VERSION: ${{ needs.build.outputs.version }}
+          SOURCE_COMMIT: ${{ needs.build.outputs.source_commit }}
+        run: |
+          cd "$RUNNER_TEMP/release-suite"
+          sha256sum -c SHA256SUMS.txt
+          python3 "$GITHUB_WORKSPACE/tools/reader/release-publish.py" suite \
+            --directory . --version "$BUILD_VERSION" --commit "$SOURCE_COMMIT"
+
+  publish:
+    needs: [build, verify]
     if: inputs.release_tag != ''
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -143,7 +176,7 @@ jobs:
       - name: Download release suite artifact
         uses: actions/download-artifact@v4
         with:
-          name: handbook-release-suite
+          artifact-ids: ${{ needs.build.outputs.suite_artifact_id }}
           path: dist/release
 
       - name: Verify uploaded assets and publish new Release

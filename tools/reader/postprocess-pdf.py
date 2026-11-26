@@ -42,6 +42,11 @@ import fitz  # PyMuPDF
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import BooleanObject
 
+try:
+    import resource
+except ImportError:
+    resource = None
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TMP = Path("/tmp/qch-pdf-build")
@@ -1268,6 +1273,46 @@ def run_qa_audit(
     }
 
 
+def read_cgroup_memory() -> dict:
+    if not sys.platform.startswith("linux"):
+        return {}
+
+    try:
+        membership = Path("/proc/self/cgroup").read_text().splitlines()
+    except OSError:
+        return {}
+    group = next((line.split(":", 2)[2] for line in membership if line.startswith("0::")), None)
+    if group is None:
+        return {}
+    folder = Path("/sys/fs/cgroup") / group.lstrip("/")
+    measurements = {}
+    for key in ("current", "peak", "max"):
+        try:
+            value = (folder / f"memory.{key}").read_text().strip()
+            measurements[key] = value if value == "max" else int(value)
+        except (OSError, ValueError):
+            pass
+    try:
+        measurements["events"] = {
+            key: int(value)
+            for key, value in (line.split() for line in (folder / "memory.events").read_text().splitlines())
+        }
+    except (OSError, ValueError):
+        pass
+    return measurements
+
+
+def log_stage(stage: str, event: str, **details) -> None:
+    message = {"stage": stage, "event": event, **details}
+    if resource is not None:
+        peak_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        message["peakRssBytes"] = peak_rss * (1 if sys.platform == "darwin" else 1024)
+    cgroup_memory = read_cgroup_memory()
+    if cgroup_memory:
+        message["cgroupMemory"] = cgroup_memory
+    print(json.dumps(message, ensure_ascii=False), file=sys.stderr, flush=True)
+
+
 def main(argv: list[str] | None = None) -> int:
     t_start = time.time()
     parser = argparse.ArgumentParser(description="Merge, stamp, link, bookmark, subset, compress, and QA-gate the A4 Handbook PDF.")
@@ -1327,13 +1372,16 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         t0 = time.time()
+        log_stage("pdf-merge", "start", chunks=len(chunk_paths), mupdf=fitz.VersionFitz)
         if is_chunked:
             doc, merge_info, global_dest_map = merge_cover_and_chunks_fitz(cover_path, chunk_paths)
         else:
             doc, merge_info, global_dest_map = merge_cover_and_body_legacy(cover_path, chunk_paths[0], merged_tmp)
         t_merge = round(time.time() - t0, 2)
+        log_stage("pdf-merge", "end", elapsedSec=t_merge, pages=len(doc), xrefs=doc.xref_length())
 
         t2 = time.time()
+        log_stage("pdf-links-and-outline", "start")
         cover_pages = merge_info["coverPages"]
         front_id = (manifest.get("frontmatter") or {}).get("id", "front-readme")
         front_dest = global_dest_map.get(front_id)
@@ -1388,8 +1436,10 @@ def main(argv: list[str] | None = None) -> int:
             page_labels.append({"startpage": body_start_0, "prefix": "", "style": "D", "firstpagenum": 1})
         doc.set_page_labels(page_labels)
         t_links_toc = round(time.time() - t2, 2)
+        log_stage("pdf-links-and-outline", "end", elapsedSec=t_links_toc)
 
         t1 = time.time()
+        log_stage("pdf-running-headers", "start")
         headers_stamped = 0
         if is_chunked:
             skip_pages_0 = set(range(cover_pages)) | toc_pages_0 | part_pages_0
@@ -1400,15 +1450,20 @@ def main(argv: list[str] | None = None) -> int:
                 manifest.get("edition", ""),
             )
         t_stamp = round(time.time() - t1, 2)
+        log_stage("pdf-running-headers", "end", elapsedSec=t_stamp, stampedPages=headers_stamped)
 
         t3 = time.time()
         # Compact and renumber deleted/free xref slots before font subsetting, CMap fix, and deduplication
+        log_stage("pdf-compact", "start", xrefs=doc.xref_length())
         fitz.TOOLS.mupdf_display_errors(False)
         doc.save(str(merged_tmp), garbage=2)
         doc.close()
         doc = fitz.open(str(merged_tmp))
         fitz.TOOLS.mupdf_display_errors(True)
+        log_stage("pdf-compact", "end", elapsedSec=round(time.time() - t3, 2), xrefs=doc.xref_length())
 
+        subset_start = time.time()
+        log_stage("pdf-subset-fonts", "start")
         fonts_before = count_embedded_fonts(doc)
         subset_ok = False
         subset_error = None
@@ -1440,28 +1495,38 @@ def main(argv: list[str] | None = None) -> int:
             "before": fonts_before,
             "after": fonts_after,
         }
+        log_stage("pdf-subset-fonts", "end", elapsedSec=round(time.time() - subset_start, 2), enabled=subset_ok)
 
+        cmap_start = time.time()
+        log_stage("pdf-normalize-cmaps", "start")
         cmap_stats = normalize_kangxi_tounicode_cmaps(doc)
+        log_stage("pdf-normalize-cmaps", "end", elapsedSec=round(time.time() - cmap_start, 2), **cmap_stats)
+        dedup_start = time.time()
+        log_stage("pdf-deduplicate-streams", "start", xrefs=doc.xref_length())
         dedup_stats = deduplicate_identical_streams(doc)
+        log_stage("pdf-deduplicate-streams", "end", elapsedSec=round(time.time() - dedup_start, 2), **dedup_stats)
         dedup_stats["kangxiCmapFix"] = cmap_stats
         t_dedup = round(time.time() - t3, 2)
 
         t4 = time.time()
+        save_options = {"garbage": 4, "clean": True}
+        log_stage("pdf-final-save", "start", xrefs=doc.xref_length(), **save_options)
         doc.save(
             str(out_tmp),
-            garbage=4,
             deflate=True,
             deflate_images=True,
             deflate_fonts=True,
-            clean=True,
             use_objstms=True,
+            **save_options,
         )
         doc.close()
         t_save = round(time.time() - t4, 2)
+        log_stage("pdf-final-save", "end", elapsedSec=t_save, sizeBytes=out_tmp.stat().st_size, **save_options)
 
         os.replace(out_tmp, args.output)
 
         t5 = time.time()
+        log_stage("pdf-qa", "start")
         timings = {
             "merge": t_merge,
             "stampHeadersFooters": t_stamp,
@@ -1488,6 +1553,7 @@ def main(argv: list[str] | None = None) -> int:
         report["metrics"]["timingsSec"]["qaAuditAndPreviews"] = round(time.time() - t5, 2)
         report["metrics"]["timingsSec"]["postprocessTotal"] = round(time.time() - t_start, 2)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        log_stage("pdf-qa", "end", elapsedSec=report["metrics"]["timingsSec"]["qaAuditAndPreviews"], passed=report["passed"])
 
         summary = {
             "output": report["output"],
